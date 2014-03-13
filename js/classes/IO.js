@@ -101,11 +101,11 @@ var IO = function() {
   };
 
   function fixLayerZ() {
-    this.layers.reverse();
-    for(var i = 0; i < this.layers.length; i++) {
-      this.layers[i].z = i;
+    self.layers.reverse();
+    for(var i = 0; i < self.layers.length; i++) {
+      self.layers[i].z = i;
     }
-    this.layers.reverse();
+    self.layers.reverse();
   }
 
 
@@ -158,17 +158,18 @@ var IO = function() {
     signal.layerRemoved.dispatch(self.layers);
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
-    var frame = 0,
-        c = color.rgb(),
+  signal.pixelFilled.add(function(frame, layer, x, y, color) {
+    var c = color.rgb(),
         a = 1;
 
     var newPixel = pixelFromFile([frame, layer, x, y, c.r, c.g, c.b, a]);
     var oldPixel = _.findWhere(self.pixels, {frame: frame, layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
+      console.log('filling pixel', layer, x, y, color);
       self.pixels.push(newPixel);
     }
     else {
+      console.log('replacing pixel', layer, x, y, color);
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
@@ -183,12 +184,12 @@ var IO = function() {
     }
 
     signal.layerContentChanged.dispatch(layer);
+    //signal.frameContentChanged.dispatch();
   });
 
-  signal.pixelCleared.add(function(layer, x, y) {
+  signal.pixelCleared.add(function(frame, layer, x, y) {
 
-    var frame = 0,
-        index = 0;
+    var index = 0;
 
     for(var i = 0; i < self.pixels.length; i++) {
       var p = self.pixels[i];
@@ -200,6 +201,7 @@ var IO = function() {
 
     self.pixels.splice(index, 1);
     signal.layerContentChanged.dispatch(layer);
+    //signal.frameContentChanged.dispatch();
   });
 };
 

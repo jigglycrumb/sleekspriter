@@ -4,11 +4,12 @@ var Editor = function() {
       minZoom = 1,
       self = this;
 
+  this.frame = 1;
   this.zoom = 10;
   this.grid = true;
-  this.layer;
+  this.layer = null;
   this.pixel = {x:0, y:0};
-  this.tool;
+  this.tool = 'BrushTool';
   this.color = Color('#000000');
 
   // signal handlers
@@ -36,6 +37,10 @@ var Editor = function() {
 
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
+  });
+
+  signal.layerRemoved.add(function(layer) {
+    self.layer = null;
   });
 };
 
