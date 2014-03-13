@@ -1109,6 +1109,7 @@ var signal = {
   zoomChanged: new Signal(),
   gridToggled: new Signal()
 
+
   //frameContentChanged: new Signal() // NEW
 };
 var IO = function() {

@@ -1,0 +1,124 @@
+// general styles
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  color: @font-color;
+  line-height: 150%;
+  font-size: @normal;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .letterpress;
+}
+
+h4 {
+  font-size: .7rem;
+  font-weight: normal;
+  margin: 0;
+  padding-left: 7px;
+  border-bottom: 1px solid @dark;
+  .gradient;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #303030;
+  border-radius: 2px;
+  color: @font-color;
+  .gradient-light;
+  position: relative;
+}
+
+button:after {
+  background: none;
+  border-top: 1px solid #909090;
+  border-bottom: 1px solid #6a6a6a;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: -2px;
+  pointer-events: none;
+}
+
+button.small {
+  height: 22px;
+  font-size: @small;
+}
+
+button.tiny {
+  height: 18px;
+}
+
+button.transparent {
+  background: transparent;
+  border: none;
+  outline: none;
+  .letterpress;
+}
+
+button.transparent:after {
+  background: none;
+  border: none;
+}
+
+button.transparent.active,
+button.transparent[disabled] {
+  border-radius: 2px;
+  border-bottom: 1px solid darken(@font-color, 40%);
+  .gradient;
+  .inset-shadow;
+}
+
+input[type=text],
+input[type=number] {
+  background: #3a3a3a;
+  .inset-shadow;
+  border-top: none;
+  border-left: 1px solid #303030;
+  border-right: 1px solid #303030;
+  border-bottom: 1px solid #696969;
+  color: @font-color;
+  position: relative;
+  outline: none;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  outline: none;
+  height: 8px;
+  border-top: 1px solid #232323;
+  border-bottom: 1px solid #696969;
+  border-radius: 50px;
+  .gradient;
+}
+
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance: none !important;
+  width: 11px;
+  height: 11px;
+  border-radius: 6px;
+  border: 1px solid @dark;
+  position: relative;
+  top: -1px;
+  background: lighten(@light, 10%);
+}
+
+input[type=color] {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  background: #535353;
+  width: 32px;
+  height: 34px;
+  margin: 2px 0 2px 2px;
+}
+
+canvas {
+  background: transparent;
+}

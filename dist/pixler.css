@@ -1,0 +1,440 @@
+.debug {
+  box-sizing: border-box;
+  border: 1px solid red;
+}
+.letterpress {
+  text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
+}
+.inset-shadow {
+  -webkit-box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+}
+.gradient {
+  background: #3f3f3f;
+  background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f3f3f), color-stop(100%, #373737));
+  background: -webkit-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -o-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -ms-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
+}
+.gradient-light {
+  background: #747474;
+  background: -moz-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #747474), color-stop(100%, #646464));
+  background: -webkit-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -o-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -ms-linear-gradient(top, #747474 0%, #646464 100%);
+  background: linear-gradient(to bottom, #747474 0%, #646464 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  color: #e7e7e7;
+  line-height: 150%;
+  font-size: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
+}
+h4 {
+  font-size: .7rem;
+  font-weight: normal;
+  margin: 0;
+  padding-left: 7px;
+  border-bottom: 1px solid #262626;
+  background: #3f3f3f;
+  background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f3f3f), color-stop(100%, #373737));
+  background: -webkit-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -o-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -ms-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
+}
+button {
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #303030;
+  border-radius: 2px;
+  color: #e7e7e7;
+  background: #747474;
+  background: -moz-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #747474), color-stop(100%, #646464));
+  background: -webkit-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -o-linear-gradient(top, #747474 0%, #646464 100%);
+  background: -ms-linear-gradient(top, #747474 0%, #646464 100%);
+  background: linear-gradient(to bottom, #747474 0%, #646464 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
+  position: relative;
+}
+button:after {
+  background: none;
+  border-top: 1px solid #909090;
+  border-bottom: 1px solid #6a6a6a;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: -2px;
+  pointer-events: none;
+}
+button.small {
+  height: 22px;
+  font-size: 0.7rem;
+}
+button.tiny {
+  height: 18px;
+}
+button.transparent {
+  background: transparent;
+  border: none;
+  outline: none;
+  text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
+}
+button.transparent:after {
+  background: none;
+  border: none;
+}
+button.transparent.active,
+button.transparent[disabled] {
+  border-radius: 2px;
+  border-bottom: 1px solid #818181;
+  background: #3f3f3f;
+  background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f3f3f), color-stop(100%, #373737));
+  background: -webkit-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -o-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -ms-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
+  -webkit-box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+}
+input[type=text],
+input[type=number] {
+  background: #3a3a3a;
+  -webkit-box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+  border-top: none;
+  border-left: 1px solid #303030;
+  border-right: 1px solid #303030;
+  border-bottom: 1px solid #696969;
+  color: #e7e7e7;
+  position: relative;
+  outline: none;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  outline: none;
+  height: 8px;
+  border-top: 1px solid #232323;
+  border-bottom: 1px solid #696969;
+  border-radius: 50px;
+  background: #3f3f3f;
+  background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f3f3f), color-stop(100%, #373737));
+  background: -webkit-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -o-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -ms-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 11px;
+  height: 11px;
+  border-radius: 6px;
+  border: 1px solid #262626;
+  position: relative;
+  top: -1px;
+  background: #6d6d6d;
+}
+input[type=color] {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  background: #535353;
+  width: 32px;
+  height: 34px;
+  margin: 2px 0 2px 2px;
+}
+canvas {
+  background: transparent;
+}
+.area {
+  position: absolute;
+  z-index: 1;
+}
+.top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 39px;
+  background: #535353;
+  border-top: 1px solid #262626;
+  border-left: 1px solid #262626;
+  border-right: 1px solid #262626;
+}
+.left {
+  top: 40px;
+  left: 0;
+  bottom: 0;
+  width: 43px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.left:after {
+  background: none;
+  width: 0;
+  border-left: 1px solid #3a3a3a;
+  border-right: 1px solid #2d2d2d;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.right {
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  width: 203px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.right:after {
+  background: none;
+  width: 0;
+  border-left: 1px solid #2d2d2d;
+  border-right: 1px solid #3a3a3a;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.center {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #262626;
+  z-index: 0;
+}
+.bottom {
+  left: 43px;
+  right: 203px;
+  bottom: 0;
+  height: 25px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.bottom:after {
+  background: none;
+  height: 0;
+  border-top: 1px solid #2d2d2d;
+  border-bottom: 1px solid #3a3a3a;
+  content: "";
+  display: block;
+  position: absolute;
+  left: -1px;
+  top: 0;
+  right: -1px;
+  pointer-events: none;
+}
+.ToolComponent {
+  height: 40px;
+  line-height: 40px;
+}
+.ToolComponent > i {
+  display: block;
+  float: left;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.ToolComponent span {
+  float: left;
+  font-size: 0.7rem;
+  height: 20px;
+  margin: 9px 5px;
+  line-height: 20px;
+}
+.ToolComponent button {
+  float: left;
+  margin: 8px 2px 0 0;
+}
+.ToolComponent input[type=range] {
+  margin: 15px 5px 0 5px;
+  float: left;
+}
+.ToolComponent input[type=number] {
+  height: 20px;
+  width: 30px;
+  margin: 8px 5px 0 0;
+  float: left;
+  font-size: 0.75rem;
+}
+#ToolBox {
+  float: left;
+  width: 40px;
+  background: #535353;
+  height: 100%;
+}
+#ToolBox > div {
+  border-top: 1px solid #6a6a6a;
+}
+.ToolBoxTool {
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin: 2px 2px 0 2px;
+  font-size: 1.2rem;
+  color: #e7e7e7;
+}
+#StageBox {
+  position: absolute;
+  background: #fff;
+  top: 0;
+  left: 0;
+}
+#StageBox .Layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+#StageBox #Layer-Tools {
+  background: transparent;
+  z-index: 10000000;
+}
+#LayerBox {
+  width: 200px;
+  background: #535353;
+  height: 100%;
+  margin-left: 3px;
+  width: 100%;
+  float: left;
+}
+#LayerBox > div {
+  border-top: 1px solid #6a6a6a;
+}
+#LayerBox .LayerBoxLayer {
+  background: #464646;
+  border-bottom: 1px solid #262626;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 40px;
+}
+#LayerBox .LayerBoxLayer.selected {
+  background: #576579;
+}
+#LayerBox .LayerBoxLayer.selected .preview {
+  border: 1px solid #262626;
+}
+#LayerBox .LayerBoxLayer .visibility {
+  width: 24px;
+  height: 40px;
+  float: left;
+  position: relative;
+}
+#LayerBox .LayerBoxLayer .visibility input[type=checkbox] {
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  float: left;
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+  margin: 0;
+  text-align: center;
+  color: #e7e7e7;
+  font-family: 'FontAwesome';
+  font-size: .8rem;
+  text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
+}
+#LayerBox .LayerBoxLayer .visibility input[type=checkbox]:before {
+  content: "\f070";
+  color: #b4b4b4;
+}
+#LayerBox .LayerBoxLayer .visibility input[type=checkbox]:checked:before {
+  content: "\f06e";
+  color: #e7e7e7;
+}
+#LayerBox .LayerBoxLayer .preview {
+  width: 30px;
+  height: 30px;
+  margin: 4px 0;
+  float: left;
+  background: #fff;
+  border: 1px solid #464646;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+#LayerBox .LayerBoxLayer .name {
+  width: 137px;
+  height: 20px;
+  float: left;
+  margin-left: 5px;
+  font-size: 0.7rem;
+}
+#LayerBox .LayerBoxLayer .name .name-text {
+  display: none;
+  height: 13px;
+  margin-top: 3px;
+  width: 85px;
+}
+#LayerBox .LayerBoxLayer .opacity-slider {
+  margin-left: 5px;
+  width: 90px;
+  float: left;
+}
+#LayerBox .LayerBoxLayer .opacity-number {
+  margin-left: 3px;
+  width: 34px;
+  height: 13px;
+  float: left;
+}
+#LayerBox .actions {
+  height: 20px;
+  line-height: 20px;
+  float: left;
+  position: relative;
+}
+#StatusBar {
+  float: left;
+  margin-top: 2px;
+  font-size: 0.7rem;
+  line-height: 22px;
+  height: 22px;
+  width: 100%;
+  background: #3f3f3f;
+  background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f3f3f), color-stop(100%, #373737));
+  background: -webkit-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -o-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: -ms-linear-gradient(top, #3f3f3f 0%, #373737 100%);
+  background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
+}
+#StatusBar > span {
+  margin-left: 5px;
+}
+#StatusBarButtons {
+  float: right;
+}

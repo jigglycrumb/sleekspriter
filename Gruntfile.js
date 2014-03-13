@@ -4,28 +4,35 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
+          compress: false,
+          yuicompress: false
+        },
+        files: {
+          // target.css file: source.less file
+          "dist/<%= pkg.name %>.css": "less/app.less"
+        }
+      },
+      production: {
+        options: {
           compress: true,
           yuicompress: true,
           optimization: 2
         },
         files: {
           // target.css file: source.less file
-          "css/app.css": "css/app.less"
+          "dist/<%= pkg.name %>.css": "less/app.less"
         }
       }
     },
     watch: {
       styles: {
         // Which files to watch (all .less files recursively in the less directory)
-        files: ['css/**/*.less'],
-        tasks: ['less'],
-        options: {
-          atBegin: true
-        }
+        files: ['less/**/*.less'],
+        tasks: ['less:development'],
       },
       scripts: {
         files: ['js/**/*.js'],
-        tasks: ['concat']
+        tasks: ['concat:js']
       }
     },
     concat: {
@@ -34,7 +41,7 @@ module.exports = function(grunt) {
         banner: "", //added before everything
         footer: "" //added after everything
       },
-      dist: {
+      js: {
         // the files to concatenate
         src: [
           'js/jsx-header.js',
@@ -79,6 +86,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['watch', 'concat']);
+  grunt.registerTask('default', ['watch']);
   grunt.registerTask('build', ['concat', 'uglify']);
 };
