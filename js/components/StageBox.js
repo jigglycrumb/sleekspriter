@@ -35,6 +35,23 @@ var StageBox = React.createClass({
         }, this)}
       </div>
     );
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    }
+  },
+  componentDidMount: function() {
+    this.props.signal.zoomChanged.add(this.onZoomChanged);
+  },
+  onZoomChanged: function() {
+    this.setState({needsRefresh: true});
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      canvas.frame.refresh();
+      this.setState({needsRefresh: false});
+    }
   }
 /*,
   dragStart: function(event) {

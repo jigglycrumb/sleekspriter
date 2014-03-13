@@ -29,7 +29,7 @@ var StageBoxToolsLayer = React.createClass({
         if(this.state.mousedown) {
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          else pixel.fill();
+          else canvas.pixel.fill();
         }
         break;
       case 'EraserTool':
@@ -37,7 +37,7 @@ var StageBoxToolsLayer = React.createClass({
         if(this.state.mousedown) {
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-          else pixel.clear();
+          else canvas.pixel.clear();
         }
         break;
     }

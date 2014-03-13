@@ -42,7 +42,7 @@ module.exports = function(grunt) {
           'js/classes/Signal.js',
           'js/classes/IO.js',
           'js/classes/Editor.js',
-          'js/classes/Pixel.js',
+          'js/classes/Canvas.js',
           'js/components/App.js',
           'js/components/StageBox.js',
           'js/components/StageBoxLayer.js',

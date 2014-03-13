@@ -1108,6 +1108,8 @@ var signal = {
 
   zoomChanged: new Signal(),
   gridToggled: new Signal()
+
+  //frameContentChanged: new Signal() // NEW
 };
 var IO = function() {
 
@@ -1212,11 +1214,11 @@ var IO = function() {
   };
 
   function fixLayerZ() {
-    this.layers.reverse();
-    for(var i = 0; i < this.layers.length; i++) {
-      this.layers[i].z = i;
+    self.layers.reverse();
+    for(var i = 0; i < self.layers.length; i++) {
+      self.layers[i].z = i;
     }
-    this.layers.reverse();
+    self.layers.reverse();
   }
 
 
@@ -1269,17 +1271,18 @@ var IO = function() {
     signal.layerRemoved.dispatch(self.layers);
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
-    var frame = 0,
-        c = color.rgb(),
+  signal.pixelFilled.add(function(frame, layer, x, y, color) {
+    var c = color.rgb(),
         a = 1;
 
     var newPixel = pixelFromFile([frame, layer, x, y, c.r, c.g, c.b, a]);
     var oldPixel = _.findWhere(self.pixels, {frame: frame, layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
+      console.log('filling pixel', layer, x, y, color);
       self.pixels.push(newPixel);
     }
     else {
+      console.log('replacing pixel', layer, x, y, color);
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
@@ -1294,12 +1297,12 @@ var IO = function() {
     }
 
     signal.layerContentChanged.dispatch(layer);
+    //signal.frameContentChanged.dispatch();
   });
 
-  signal.pixelCleared.add(function(layer, x, y) {
+  signal.pixelCleared.add(function(frame, layer, x, y) {
 
-    var frame = 0,
-        index = 0;
+    var index = 0;
 
     for(var i = 0; i < self.pixels.length; i++) {
       var p = self.pixels[i];
@@ -1311,6 +1314,7 @@ var IO = function() {
 
     self.pixels.splice(index, 1);
     signal.layerContentChanged.dispatch(layer);
+    //signal.frameContentChanged.dispatch();
   });
 };
 
@@ -1321,11 +1325,12 @@ var Editor = function() {
       minZoom = 1,
       self = this;
 
+  this.frame = 1;
   this.zoom = 10;
   this.grid = true;
-  this.layer;
+  this.layer = null;
   this.pixel = {x:0, y:0};
-  this.tool;
+  this.tool = 'BrushTool';
   this.color = Color('#000000');
 
   // signal handlers
@@ -1354,43 +1359,84 @@ var Editor = function() {
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
   });
+
+  signal.layerRemoved.add(function(layer) {
+    self.layer = null;
+  });
 };
 
 var editor = new Editor();
-var Pixel = function() {
+var Canvas = function() {
+
   return {
-    fill: function() {
-      var id = 'StageBoxLayer-'+editor.layer;
-      var _canvas = document.getElementById(id),
-          _ctx = _canvas.getContext('2d'),
-          _color = editor.color.hexString(),
-          _x = editor.pixel.x-1,
-          _y = editor.pixel.y-1,
-          _zoom = editor.zoom;
+    frame: {
+      refresh: function() {
+        var pixels = _.where(io.pixels, {frame: editor.frame});
 
-      _ctx.fillStyle = _color;
-      _ctx.fillRect(_x*_zoom, _y*_zoom, _zoom, _zoom);
+        //console.log('refreshing frame '+editor.frame);
 
-      signal.pixelFilled.dispatch(editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
+        pixels.forEach(function(px) {
+          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+        });
+
+        //signal.pixelSelected.dispatch(0, 0);
+      }
     },
-    clear: function() {
-      //console.log('clearing pixel');
+    layer: {
+      refresh: function() {
+        var pixels = _.where(io.pixels, {frame: editor.frame, layer: editor.layer});
 
-      var id = 'StageBoxLayer-'+editor.layer;
-      var _canvas = document.getElementById(id),
-          _ctx = _canvas.getContext('2d'),
-          _x = editor.pixel.x-1,
-          _y = editor.pixel.y-1,
-          _zoom = editor.zoom;
+        //console.log('refreshing layer '+editor.layer);
 
-      _ctx.clearRect(_x*_zoom, _y*_zoom, _zoom, _zoom);
+        pixels.forEach(function(px) {
+          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+        });
 
-      signal.pixelCleared.dispatch(editor.layer, editor.pixel.x, editor.pixel.y);
+        //signal.pixelSelected.dispatch(0, 0);
+      }
+    },
+    pixel: {
+      fill: function(layer, x, y, color) {
+
+        var dispatch = arguments.length == 0 ? true : false,
+            layer = layer || editor.layer,
+            x = x || editor.pixel.x,
+            y = y || editor.pixel.y,
+            color = color || editor.color,
+            ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
+            zoom = editor.zoom;
+
+        color = color.hexString();
+
+        x--;
+        y--;
+
+        ctx.fillStyle = color;
+        ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
+
+        if(dispatch === true) signal.pixelFilled.dispatch(editor.frame, editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
+      },
+      clear: function(layer, x, y) {
+
+        var dispatch = arguments.length == 0 ? true : false,
+            layer = layer || editor.layer,
+            x = x || editor.pixel.x,
+            y = y || editor.pixel.y,
+            ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
+            zoom = editor.zoom;
+
+        x--;
+        y--;
+
+        ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
+
+        if(dispatch !== false) signal.pixelCleared.dispatch(editor.frame, editor.layer, editor.pixel.x, editor.pixel.y);
+      }
     }
-  };
+  }
 };
 
-var pixel = new Pixel();
+var canvas = new Canvas();
 var App = React.createClass({
   render: function() {
     return (
@@ -1412,7 +1458,7 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    console.log('mounted App');
+    //console.log('mounted App');
 
     var self = this,
         subscriptions = [
@@ -1425,6 +1471,7 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged'
+          //'frameContentChanged'
         ];
 
     subscriptions.forEach(function(item) {
@@ -1434,7 +1481,7 @@ var App = React.createClass({
 
   },
   updateProps: function() {
-    console.log('updating App props');
+    //console.log('updating App props');
     this.setProps({
       editor: editor,
       io: io
@@ -1479,6 +1526,23 @@ var StageBox = React.createClass({
         }, this)}
       </div>
     );
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    }
+  },
+  componentDidMount: function() {
+    this.props.signal.zoomChanged.add(this.onZoomChanged);
+  },
+  onZoomChanged: function() {
+    this.setState({needsRefresh: true});
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      canvas.frame.refresh();
+      this.setState({needsRefresh: false});
+    }
   }
 /*,
   dragStart: function(event) {
@@ -1548,7 +1612,7 @@ var StageBoxToolsLayer = React.createClass({
         if(this.state.mousedown) {
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          else pixel.fill();
+          else canvas.pixel.fill();
         }
         break;
       case 'EraserTool':
@@ -1556,7 +1620,7 @@ var StageBoxToolsLayer = React.createClass({
         if(this.state.mousedown) {
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-          else pixel.clear();
+          else canvas.pixel.clear();
         }
         break;
     }
@@ -1677,11 +1741,13 @@ var ToolBox = React.createClass({
         <div>
           <ToolBoxTool id="BrushTool" title="Brush" icon="icon-brush" signal={this.props.signal} />
           <ToolBoxTool id="EraserTool" title="Eraser" icon="fa fa-eraser" signal={this.props.signal} />
+          {/*
           <ToolBoxTool id="EyedropperTool" title="Color picker" icon="" signal={this.props.signal} />
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
           <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="MoveTool" title="Move tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="HandTool" title="Hand tool" icon="icon-magnet" signal={this.props.signal} />
+          */}
           <ToolBoxTool id="ZoomTool" title="Zoom" icon="icon-search" signal={this.props.signal} />
         </div>
       </div>
@@ -1801,16 +1867,28 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerContentChanged.add(this.onLayerContentChanged);
+    this.props.signal.layerContentChanged.add(this.prepareRefresh);
+    this.props.signal.zoomChanged.add(this.prepareRefresh);
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    };
   },
   dispatchLayerSelected: function(event) {
+    //console.log('selecting layer', this.props.layer);
     this.props.signal.layerSelected.dispatch(this.props.layer);
   },
-  onLayerContentChanged: function(layer) {
-    if(layer == this.props.layer) {
+  prepareRefresh: function() {
+    this.setState({needsRefresh: true});
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      //console.log('updating preview', this.props.layer);
       var sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.layer);
       this.getDOMNode().width = this.getDOMNode().width;
       this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
+      this.setState({needsRefresh: false});
     }
   }
 });
@@ -1924,33 +2002,30 @@ function NodeList2Array(NodeList) {
   return [].slice.call(NodeList);
 };
 
-function drawFromIO() {
-  io.pixels.forEach(function(px) {
-    editor.layer = px.layer;
-    editor.pixel = {x: px.x, y: px.y};
-    editor.color = Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
-    pixel.fill();
-  });
-  signal.pixelSelected.dispatch(0, 0);
-}
-
 window.onload = function() {
 
   // load io
   io.fromJSONString(savedFile);
 
-
-  React.renderComponent(<App editor={editor} io={io} pixel={pixel} signal={signal}/>, document.body);
-
-  drawFromIO();
+  // render app
+  React.renderComponent(<App editor={editor} io={io} pixel={canvas.pixel} signal={signal}/>, document.body);
 
   // setup zoom
   signal.zoomChanged.dispatch(editor.zoom);
 
   // select top-most layer
   var topLayer = _.max(io.layers, function(layer) { return layer.z; });
+  console.log('selecting top layer: ', topLayer.id);
   signal.layerSelected.dispatch(topLayer.id);
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
+
+
+  // draw loaded file to stage
+  canvas.frame.refresh();
+  // update layer previews
+  io.layers.forEach(function(layer){
+    signal.layerContentChanged.dispatch(layer.id);
+  })
 };

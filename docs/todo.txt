@@ -1,6 +1,5 @@
 todo
 ----------------------------------------------------------------
-- drawFromIO entfernen, redraw bei zoom
 - statusbar: farbe des aktuellen pixels anzeigen
 - eyedropper tool
 - less datei in mehrere dateien splitten
@@ -9,6 +8,7 @@ todo
 - preview-window
 - hotkeys für tools
 - support für frames
+- workspace in localStorage speichern
 
 - layer per drag & drop sortieren
 - layer mergen

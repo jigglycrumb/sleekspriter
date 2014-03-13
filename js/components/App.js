@@ -19,7 +19,7 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    console.log('mounted App');
+    //console.log('mounted App');
 
     var self = this,
         subscriptions = [
@@ -32,6 +32,7 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged'
+          //'frameContentChanged'
         ];
 
     subscriptions.forEach(function(item) {
@@ -41,7 +42,7 @@ var App = React.createClass({
 
   },
   updateProps: function() {
-    console.log('updating App props');
+    //console.log('updating App props');
     this.setProps({
       editor: editor,
       io: io
