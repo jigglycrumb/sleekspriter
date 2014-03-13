@@ -1,5 +1,8 @@
 todo
 ----------------------------------------------------------------
+- drawFromIO entfernen, redraw bei zoom
+- statusbar: farbe des aktuellen pixels anzeigen
+- eyedropper tool
 - less datei in mehrere dateien splitten
 - toolbox, layerbox: scrollbars wenn bildschirm zu klein
 - brush tool: paletten, auto-palette

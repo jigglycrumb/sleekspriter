@@ -4,7 +4,9 @@ var StatusBar = React.createClass({
 
     return (
       <div id="StatusBar">
-        <div id="StatusBarCoordinates">X: {this.props.editor.pixel.x} | Y: {this.props.editor.pixel.y}</div>
+        <span>X: {this.props.editor.pixel.x}</span>
+        <span>Y: {this.props.editor.pixel.y}</span>
+        <span>Zoom: {this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
             <i className="fa fa-th"></i>

@@ -9,7 +9,7 @@
 @normal: 1rem;
 @small: .7rem;
 
-@selected: #576579; //mediumseagreen;
+@selected: #576579;
 
 
 // mixins
@@ -479,12 +479,11 @@ canvas {
   height: 22px;
   width: 100%;
   .gradient;
-} // #StatusBar
 
-#StatusBarCoordinates {
-  float: left;
-  margin-left: 5px;
-}
+  &>span {
+    margin-left: 5px;
+  }
+} // #StatusBar
 
 #StatusBarButtons {
   float: right;
