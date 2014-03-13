@@ -1,11 +1,13 @@
 todo
 ----------------------------------------------------------------
-- statusbar: farbe des aktuellen pixels anzeigen
-- eyedropper tool
-- less datei in mehrere dateien splitten
+- composite canvas (offscreen)
+- statusbar: farbe des aktuellen pixels anzeigen (braucht composite canvas)
+- preview-window (braucht composite canvas)
+- eyedropper tool (braucht composite canvas)
+
 - toolbox, layerbox: scrollbars wenn bildschirm zu klein
 - brush tool: paletten, auto-palette
-- preview-window
+
 - hotkeys für tools
 - support für frames
 - workspace in localStorage speichern
