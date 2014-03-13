@@ -1,0 +1,34 @@
+todo
+----------------------------------------------------------------
+- less datei in mehrere dateien splitten
+- toolbox, layerbox: scrollbars wenn bildschirm zu klein
+- brush tool: paletten, auto-palette
+- preview-window
+- hotkeys für tools
+- support für frames
+
+- layer per drag & drop sortieren
+- layer mergen
+- hand tool
+- hotkeys für copy/paste, layer merge etc
+
+
+
+später (in node)
+----------------------------------------------------------------
+- speichern/laden in dateien
+- menüs
+  pixler
+    about pixler
+    search for updates
+    preferences
+    quit
+  file
+    new
+    open
+      recent
+    save
+    export
+  layer
+    merge with layer below
+    merge with layer above

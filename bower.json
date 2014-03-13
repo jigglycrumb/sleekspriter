@@ -1,0 +1,23 @@
+{
+  "name": "pixler",
+  "version": "0.0.0",
+  "authors": [
+    "Volker Wieban <me@hpcodecraft.me>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "entypo": "*",
+    "font-awesome": "~4.0.3",
+    "react": "~0.9.0",
+    "underscore": "~1.6.0",
+    "js-signals": "~1.0.0"
+  }
+}

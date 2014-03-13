@@ -1,0 +1,16 @@
+// A *.pixels contains a JSON object that looks like this:
+
+{
+  size: [20,20], // size of a single frame in pixels (width, height)
+  frames: [1,1], // no. of frames x, no. of frames y
+  layers: [ // array of layers, layer id = layer order
+    [0, 'layer 1', 2, 50, 1], // layer id, layer name, layer z, layer opacity (0-100), layer visible (0,1)
+    [1, 'layer 2', 1, 80, 1], // layer id, layer name, layer z, layer opacity (0-100), layer visible (0,1)
+    [2, 'layer 3', 0, 100, 1] // layer id, layer name, layer z, layer opacity (0-100), layer visible (0,1)
+  ],
+  pixels: [ // array of pixels
+    [0, 0, 1, 1, 160, 0, 0, 1] // frame, layer, x, y, r, g, b, a
+  ]
+}
+
+// The object is serialized with JSON.stringify and saved to a file with the .pixels extension.
