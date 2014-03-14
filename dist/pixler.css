@@ -254,6 +254,11 @@ canvas {
   right: -1px;
   pointer-events: none;
 }
+.offscreen {
+  top: 50px;
+  left: 50px;
+  display: none;
+}
 .ToolComponent {
   height: 40px;
   line-height: 40px;
@@ -432,9 +437,24 @@ canvas {
   background: linear-gradient(to bottom, #3f3f3f 0%, #373737 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
 }
-#StatusBar > span {
+#StatusBar > * {
   margin-left: 5px;
+  float: left;
+  min-width: 2rem;
+}
+#StatusBarColor {
+  height: 16px;
+  width: 16px;
+  min-width: 16px;
+  border: 1px solid #535353;
+  margin-top: 2px;
+}
+#StatusBarColorString {
+  min-width: 4rem;
 }
 #StatusBarButtons {
   float: right;
+}
+#CompositeCanvas {
+  background: #fff;
 }

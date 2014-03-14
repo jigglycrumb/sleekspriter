@@ -1,7 +1,5 @@
 todo
 ----------------------------------------------------------------
-- composite canvas (offscreen)
-- statusbar: farbe des aktuellen pixels anzeigen (braucht composite canvas)
 - preview-window (braucht composite canvas)
 - eyedropper tool (braucht composite canvas)
 
@@ -9,8 +7,10 @@ todo
 - brush tool: paletten, auto-palette
 
 - hotkeys für tools
-- support für frames
 - workspace in localStorage speichern
+
+- support für frames
+- frameselector (rechts)
 
 - layer per drag & drop sortieren
 - layer mergen

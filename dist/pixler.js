@@ -1331,6 +1331,7 @@ var Editor = function() {
   this.grid = true;
   this.layer = null;
   this.pixel = {x:0, y:0};
+  this.pixelColor = Color('#000000');
   this.tool = 'BrushTool';
   this.color = Color('#000000');
 
@@ -1454,6 +1455,9 @@ var App = React.createClass({
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
+        </div>
+        <div className="area offscreen">
+          <CompositeCanvas io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );
@@ -1743,7 +1747,7 @@ var ToolBox = React.createClass({
           <ToolBoxTool id="BrushTool" title="Brush" icon="icon-brush" signal={this.props.signal} />
           <ToolBoxTool id="EraserTool" title="Eraser" icon="fa fa-eraser" signal={this.props.signal} />
           {/*
-          <ToolBoxTool id="EyedropperTool" title="Color picker" icon="" signal={this.props.signal} />
+          <ToolBoxTool id="EyedropperTool" title=Eyedropper" icon="icon-hair-cross" signal={this.props.signal} />
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
           <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="MoveTool" title="Move tool" icon="" signal={this.props.signal} />
@@ -1981,11 +1985,12 @@ var ZoomTool = React.createClass({
 var StatusBar = React.createClass({
   render: function() {
     var cssClasses = (this.props.editor.grid === true ? 'active' : '') + ' tiny transparent';
-
     return (
       <div id="StatusBar">
         <span>X: {this.props.editor.pixel.x}</span>
         <span>Y: {this.props.editor.pixel.y}</span>
+        <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
+        <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
         <span>Zoom: {this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
@@ -1997,6 +2002,60 @@ var StatusBar = React.createClass({
   },
   dispatchGridToggled: function(event) {
     this.props.signal.gridToggled.dispatch(!this.props.editor.grid);
+  }
+});
+var CompositeCanvas = React.createClass({
+  render: function() {
+    return (
+      <canvas
+        id="CompositeCanvas"
+        width={this.props.io.size.width*this.props.editor.zoom}
+        height={this.props.io.size.height*this.props.editor.zoom}
+        style={{
+          width: this.props.io.size.width,
+          height: this.props.io.size.height
+        }}
+      ></canvas>
+    );
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    };
+  },
+  componentDidMount: function() {
+    this.props.signal.layerContentChanged.add(this.prepareRefresh);
+    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
+    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
+    this.props.signal.pixelFilled.add(this.prepareRefresh);
+    this.props.signal.pixelCleared.add(this.prepareRefresh);
+
+    this.props.signal.pixelSelected.add(this.getPixelColor);
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      //console.log('drawing CompositeCanvas');
+      var self = this;
+      this.getDOMNode().width = this.getDOMNode().width;
+      this.props.io.layers.forEach(function(layer) {
+        if(layer.visible) {
+          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
+          var ctx = self.getDOMNode().getContext('2d');
+          ctx.globalAlpha = layer.opacity/100;
+          ctx.drawImage(sourceCanvas, 0, 0);
+        }
+      });
+    }
+  },
+  prepareRefresh: function() {
+    this.setState({needsRefresh: true});
+  },
+  getPixelColor: function(x, y) {
+    var ctx = this.getDOMNode().getContext('2d'),
+        px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
+        color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+
+    editor.pixelColor = color;
   }
 });
 function NodeList2Array(NodeList) {

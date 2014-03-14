@@ -15,6 +15,9 @@ var App = React.createClass({
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
         </div>
+        <div className="area offscreen">
+          <CompositeCanvas io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+        </div>
       </div>
     );
   },

@@ -8,10 +8,24 @@
   width: 100%;
   .gradient;
 
-  &>span {
+  &>* {
     margin-left: 5px;
+    float: left;
+    min-width: 2rem;
   }
 } // #StatusBar
+
+#StatusBarColor {
+  height: 16px;
+  width: 16px;
+  min-width: 16px;
+  border: 1px solid @light;
+  margin-top: 2px;
+}
+
+#StatusBarColorString {
+  min-width: 4rem;
+}
 
 #StatusBarButtons {
   float: right;

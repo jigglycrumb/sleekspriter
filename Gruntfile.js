@@ -70,6 +70,7 @@ module.exports = function(grunt) {
           'js/components/HandTool.js',
           'js/components/ZoomTool.js',
           'js/components/StatusBar.js',
+          'js/components/CompositeCanvas.js',
           'js/index.js'
         ],
         // the location of the resulting JS file

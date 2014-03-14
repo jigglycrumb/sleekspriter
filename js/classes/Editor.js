@@ -9,6 +9,7 @@ var Editor = function() {
   this.grid = true;
   this.layer = null;
   this.pixel = {x:0, y:0};
+  this.pixelColor = Color('#000000');
   this.tool = 'BrushTool';
   this.color = Color('#000000');
 
