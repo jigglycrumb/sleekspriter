@@ -13,7 +13,7 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mousedown', this.mousedown);
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
-    this.getDOMNode().addEventListener('mousemove', this.dispatchpixelSelected);
+    this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
   },
   componentDidUpdate: function() {
 
@@ -23,23 +23,21 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
-    switch(this.props.editor.tool) {
-      case 'BrushTool':
-        this.drawPixelCursor();
-        if(this.state.mousedown) {
+    this.drawPixelCursor();
+
+    if(this.state.mousedown) {
+      switch(this.props.editor.tool) {
+        case 'BrushTool':
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
           else canvas.pixel.fill();
-        }
-        break;
-      case 'EraserTool':
-        this.drawPixelCursor();
-        if(this.state.mousedown) {
+          break;
+        case 'EraserTool':
           var layer = io.getLayerById(this.props.editor.layer);
           if(!layer.visible || layer.opacity == 0) alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
           else canvas.pixel.clear();
-        }
-        break;
+          break;
+      }
     }
   },
   getInitialState: function() {
@@ -47,19 +45,14 @@ var StageBoxToolsLayer = React.createClass({
       mousedown: false
     };
   },
-  dispatchpixelSelected: function(event) {
-    switch(this.props.editor.tool) {
-      case 'BrushTool':
-      case 'EraserTool':
-        var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
-            world_y = Math.ceil(event.layerY/this.props.editor.zoom);
-        this.props.signal.pixelSelected.dispatch(world_x, world_y);
-        break;
-    }
+  dispatchPixelSelected: function(event) {
+    var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
+    world_y = Math.ceil(event.layerY/this.props.editor.zoom);
+    this.props.signal.pixelSelected.dispatch(world_x, world_y);
   },
   mousedown: function(event) {
     this.setState({mousedown:true});
-    this.dispatchpixelSelected(event);
+    this.dispatchPixelSelected(event);
   },
   mouseup: function() {
     this.setState({mousedown:false});
@@ -123,8 +116,7 @@ var StageBoxToolsLayer = React.createClass({
   drawGrid: function() {
 
     var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom; //,
-       // grid = this.props.editor.grid;
+        zoom = this.props.editor.zoom;
 
     //console.log('drawing grid', zoom);
 
