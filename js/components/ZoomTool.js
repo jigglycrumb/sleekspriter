@@ -1,35 +1,22 @@
 var ZoomTool = React.createClass({
   render: function() {
+
     var zoom = editor.zoom;
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon-search"></i>
         <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
         <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
-        <input type="range" min="1" max="50" className="zoom-slider" defaultValue={zoom} onChange={this.dispatchZoomChanged} />
+        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <span>Zoom:</span>
-        <input type="number" min="1" max="50" className="zoom-number" defaultValue={zoom} onChange={this.dispatchZoomChanged} />
+        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
       </div>
     );
   },
-  componentDidMount: function() {
-    signal.zoomChanged.add(this.onZoomChanged);
-  },
-  componentWillUnmount: function() {
-    signal.zoomChanged.remove(this.onZoomChanged);
-  },
   dispatchZoomChanged: function(event, zoom) {
     zoom = _.isNull(event) ? zoom : event.target.value;
     signal.zoomChanged.dispatch(zoom);
-  },
-  onZoomChanged: function(zoom) {
-    var node = this.getDOMNode(),
-        slider = node.querySelector('.zoom-slider'),
-        number = node.querySelector('.zoom-number');
-
-    slider.value = zoom;
-    number.value = zoom;
   },
   zoomIn: function() {
     if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);

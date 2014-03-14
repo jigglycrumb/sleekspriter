@@ -1443,9 +1443,11 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="area top"></div>
+        <div className="area top">
+          <ToolContainer editor={this.props.editor} />
+        </div>
         <div className="area left">
-          <ToolBox signal={this.props.signal} />
+          <ToolBox editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area center">
           <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
@@ -1467,6 +1469,7 @@ var App = React.createClass({
 
     var self = this,
         subscriptions = [
+          'toolSelected',
           'gridToggled',
           'pixelSelected',
           'layerRemoved',
@@ -1493,6 +1496,11 @@ var App = React.createClass({
     });
   }
 
+});
+var ToolContainer = React.createClass({
+  render: function() {
+    return window[this.props.editor.tool](this.props);
+  }
 });
 var StageBox = React.createClass({
   render: function() {
@@ -1736,16 +1744,16 @@ var ToolBox = React.createClass({
       <div id="ToolBox">
         <h4>Tools</h4>
         <div>
-          <ToolBoxTool id="BrushTool" title="Brush" icon="icon-brush" signal={this.props.signal} />
-          <ToolBoxTool id="EraserTool" title="Eraser" icon="fa fa-eraser" signal={this.props.signal} />
-          <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="icon-target" signal={this.props.signal} />
+          <ToolBoxTool id="BrushTool" title="Brush" icon="icon-brush" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EraserTool" title="Eraser" icon="fa fa-eraser" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="icon-target" editor={this.props.editor} signal={this.props.signal} />
           {/*
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
           <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="MoveTool" title="Move tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="HandTool" title="Hand tool" icon="icon-magnet" signal={this.props.signal} />
           */}
-          <ToolBoxTool id="ZoomTool" title="Zoom" icon="icon-search" signal={this.props.signal} />
+          <ToolBoxTool id="ZoomTool" title="Zoom" icon="icon-search" editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );
@@ -1755,25 +1763,18 @@ var ToolBox = React.createClass({
 var ToolBoxTool = React.createClass({
   render: function() {
     return (
-      <button id={this.props.id} className="ToolBoxTool transparent" title={this.props.title} onClick={this.dispatchToolSelected.bind(this, this.props.id)}>
-        <i className={this.props.icon}></i>
+      <button
+        id={this.props.id}
+        className="ToolBoxTool transparent"
+        title={this.props.title}
+        disabled={this.props.id == this.props.editor.tool ? true : false}
+        onClick={this.dispatchToolSelected.bind(this, this.props.id)}>
+          <i className={this.props.icon}></i>
       </button>
     );
   },
-  componentDidMount: function() {
-   this.props.signal.toolSelected.add(this.onToolSelected);
-  },
   dispatchToolSelected: function(tool, event) {
     this.props.signal.toolSelected.dispatch(tool);
-  },
-  onToolSelected: function(tool) {
-    if(this.props.id == tool) {
-      this.getDOMNode().disabled = true;
-      React.renderComponent(new window[tool](), document.querySelector('.area.top'));
-    }
-    else {
-      this.getDOMNode().disabled = false;
-    }
   }
 });
 var LayerBox = React.createClass({
@@ -1914,45 +1915,34 @@ var EraserTool = React.createClass({
 });
 var EyedropperTool = React.createClass({
   render: function() {
+    console.log('rendering EyedropperTool', this.props);
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
         <i className="icon-target"></i>
+        <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
       </div>
     );
   }
 });
 var ZoomTool = React.createClass({
   render: function() {
+
     var zoom = editor.zoom;
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon-search"></i>
         <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
         <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
-        <input type="range" min="1" max="50" className="zoom-slider" defaultValue={zoom} onChange={this.dispatchZoomChanged} />
+        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <span>Zoom:</span>
-        <input type="number" min="1" max="50" className="zoom-number" defaultValue={zoom} onChange={this.dispatchZoomChanged} />
+        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
       </div>
     );
   },
-  componentDidMount: function() {
-    signal.zoomChanged.add(this.onZoomChanged);
-  },
-  componentWillUnmount: function() {
-    signal.zoomChanged.remove(this.onZoomChanged);
-  },
   dispatchZoomChanged: function(event, zoom) {
     zoom = _.isNull(event) ? zoom : event.target.value;
     signal.zoomChanged.dispatch(zoom);
-  },
-  onZoomChanged: function(zoom) {
-    var node = this.getDOMNode(),
-        slider = node.querySelector('.zoom-slider'),
-        number = node.querySelector('.zoom-number');
-
-    slider.value = zoom;
-    number.value = zoom;
   },
   zoomIn: function() {
     if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);

@@ -162,12 +162,17 @@ input[type=color] {
   cursor: pointer;
   padding: 0;
   background: #535353;
-  width: 32px;
+  width: 30px;
   height: 34px;
   margin: 2px 0 2px 2px;
 }
 canvas {
   background: transparent;
+}
+.colorswatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #777777;
 }
 .area {
   position: absolute;
@@ -293,6 +298,14 @@ canvas {
   margin: 8px 5px 0 0;
   float: left;
   font-size: 0.75rem;
+}
+.ToolComponent .colorswatch {
+  float: left;
+  margin-top: 7px;
+}
+#EyedropperSwatch {
+  margin-top: 6px;
+  margin-left: 4px;
 }
 #ToolBox {
   float: left;

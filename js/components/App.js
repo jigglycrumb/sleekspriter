@@ -2,9 +2,11 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="area top"></div>
+        <div className="area top">
+          <ToolContainer editor={this.props.editor} />
+        </div>
         <div className="area left">
-          <ToolBox signal={this.props.signal} />
+          <ToolBox editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area center">
           <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
@@ -26,6 +28,7 @@ var App = React.createClass({
 
     var self = this,
         subscriptions = [
+          'toolSelected',
           'gridToggled',
           'pixelSelected',
           'layerRemoved',

@@ -57,6 +57,7 @@ module.exports = function(grunt) {
           'js/classes/Editor.js',
           'js/classes/Canvas.js',
           'js/components/App.js',
+          'js/components/ToolContainer.js',
           'js/components/StageBox.js',
           'js/components/StageBoxLayer.js',
           'js/components/StageBoxToolsLayer.js',
