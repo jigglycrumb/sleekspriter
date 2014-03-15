@@ -1088,7 +1088,7 @@ var signal = {
 
   toolSelected: new Signal(),
 
-  colorPicked: new Signal(),
+  colorSelected: new Signal(),
 
   layerOpacityChanged: new Signal(),
   layerVisibilityChanged: new Signal(),
@@ -1279,11 +1279,11 @@ var IO = function() {
     var newPixel = pixelFromFile([frame, layer, x, y, c.r, c.g, c.b, a]);
     var oldPixel = _.findWhere(self.pixels, {frame: frame, layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', layer, x, y, color);
+      console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
     }
     else {
-      console.log('replacing pixel', layer, x, y, color);
+      console.log('replacing pixel', layer, x, y, color.rgbString());
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
@@ -1344,7 +1344,7 @@ var Editor = function() {
     self.tool = tool;
   });
 
-  signal.colorPicked.add(function(color) {
+  signal.colorSelected.add(function(color) {
     self.color = Color(color);
   });
 
@@ -1465,11 +1465,10 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    //console.log('mounted App');
-
     var self = this,
         subscriptions = [
           'toolSelected',
+          'colorSelected',
           'gridToggled',
           'pixelSelected',
           'layerRemoved',
@@ -1499,6 +1498,7 @@ var App = React.createClass({
 });
 var ToolContainer = React.createClass({
   render: function() {
+    //console.log('rendering '+this.props.editor.tool);
     return window[this.props.editor.tool](this.props);
   }
 });
@@ -1610,6 +1610,8 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
+
+    this.props.signal.toolSelected.add(this.mouseup);
   },
   componentDidUpdate: function() {
 
@@ -1621,17 +1623,32 @@ var StageBoxToolsLayer = React.createClass({
 
     this.drawPixelCursor();
 
+    var self = this;
+
+    function layerVisible() {
+      var layer = io.getLayerById(self.props.editor.layer);
+      return layer.visible && layer.opacity > 0;
+    }
+
     if(this.state.mousedown) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
-          var layer = io.getLayerById(this.props.editor.layer);
-          if(!layer.visible || layer.opacity == 0) alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          else canvas.pixel.fill();
+          if(layerVisible()) canvas.pixel.fill();
+          else {
+            this.mouseup(); // prevent additional alerts
+            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+          }
           break;
         case 'EraserTool':
-          var layer = io.getLayerById(this.props.editor.layer);
-          if(!layer.visible || layer.opacity == 0) alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-          else canvas.pixel.clear();
+          if(layerVisible()) canvas.pixel.clear();
+          else {
+            this.mouseup();  // prevent additional alerts
+            alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
+          }
+          break;
+        case 'EyedropperTool':
+          this.props.signal.toolSelected.dispatch('BrushTool');
+          this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
           break;
       }
     }
@@ -1759,7 +1776,6 @@ var ToolBox = React.createClass({
     );
   }
 });
-// clean
 var ToolBoxTool = React.createClass({
   render: function() {
     return (
@@ -1822,6 +1838,7 @@ var LayerBoxLayer = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
     this.props.signal.layerSelected.add(this.onLayerSelected);
   },
   componentWillUnmount: function() {
@@ -1834,7 +1851,7 @@ var LayerBoxLayer = React.createClass({
     this.props.signal.layerOpacityChanged.dispatch(this.props.layer.id, parseInt(event.target.value, 10));
   },
   dispatchLayerNameChanged: function(event) {
-    if(event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13) {
+    if(event.type == 'blur' || (event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13)) {
       this.refs.nameText.getDOMNode().style.display = 'none';
       this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
       this.refs.nameLabel.getDOMNode().style.display = 'block';
@@ -1895,13 +1912,13 @@ var BrushTool = React.createClass({
     return (
       <div id="Brush-Tool" className="ToolComponent">
         <i className="icon-brush"></i>
-        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" defaultValue={editor.color.hexString()} onChange={this.dispatchColorPicked} />
+        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
       </div>
     );
   },
-  dispatchColorPicked: function(event) {
+  dispatchColorSelected: function(event) {
     var color = event.target.value;
-    signal.colorPicked.dispatch(color);
+    signal.colorSelected.dispatch(color);
   }
 });
 var EraserTool = React.createClass({
@@ -1909,17 +1926,24 @@ var EraserTool = React.createClass({
     return (
       <div id="Eraser-Tool" className="ToolComponent">
         <i className="fa fa-eraser"></i>
+
+        <span className="hint">Click a pixel to erase it.</span>
       </div>
     );
   }
 });
 var EyedropperTool = React.createClass({
   render: function() {
-    console.log('rendering EyedropperTool', this.props);
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
         <i className="icon-target"></i>
         <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
+        <ul>
+          <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>
+          <li>RGB: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.red()+', '+this.props.editor.pixelColor.green()+', '+this.props.editor.pixelColor.blue()}</li>
+        </ul>
+        <span className="hint">Click any non-transparent pixel to pick its color.</span>
+
       </div>
     );
   }
@@ -1934,9 +1958,10 @@ var ZoomTool = React.createClass({
         <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
         <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
-        <span>Zoom:</span>
+        <span>Zoom &times;</span>
         <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
+        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
       </div>
     );
   },
@@ -1973,7 +1998,7 @@ var StatusBar = React.createClass({
         <span>Y: {this.props.editor.pixel.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
-        <span>Zoom: {this.props.editor.zoom}</span>
+        <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
             <i className="fa fa-th"></i>

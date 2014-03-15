@@ -3,7 +3,7 @@ var signal = {
 
   toolSelected: new Signal(),
 
-  colorPicked: new Signal(),
+  colorSelected: new Signal(),
 
   layerOpacityChanged: new Signal(),
   layerVisibilityChanged: new Signal(),

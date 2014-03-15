@@ -24,11 +24,10 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    //console.log('mounted App');
-
     var self = this,
         subscriptions = [
           'toolSelected',
+          'colorSelected',
           'gridToggled',
           'pixelSelected',
           'layerRemoved',

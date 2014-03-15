@@ -3,12 +3,12 @@ var BrushTool = React.createClass({
     return (
       <div id="Brush-Tool" className="ToolComponent">
         <i className="icon-brush"></i>
-        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" defaultValue={editor.color.hexString()} onChange={this.dispatchColorPicked} />
+        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
       </div>
     );
   },
-  dispatchColorPicked: function(event) {
+  dispatchColorSelected: function(event) {
     var color = event.target.value;
-    signal.colorPicked.dispatch(color);
+    signal.colorSelected.dispatch(color);
   }
 });

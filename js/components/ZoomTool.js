@@ -8,9 +8,10 @@ var ZoomTool = React.createClass({
         <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
         <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
-        <span>Zoom:</span>
+        <span>Zoom &times;</span>
         <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
+        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
       </div>
     );
   },

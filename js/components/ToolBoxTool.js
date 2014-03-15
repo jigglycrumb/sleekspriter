@@ -1,4 +1,3 @@
-// clean
 var ToolBoxTool = React.createClass({
   render: function() {
     return (

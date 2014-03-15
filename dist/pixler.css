@@ -29,10 +29,14 @@
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
 }
+html {
+  -webkit-font-smoothing: antialiased;
+}
 body {
   margin: 0;
   padding: 0;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
   color: #e7e7e7;
   line-height: 150%;
   font-size: 1rem;
@@ -43,9 +47,8 @@ body {
 }
 h4 {
   font-size: .7rem;
-  font-weight: normal;
   margin: 0;
-  padding-left: 7px;
+  padding-left: 5px;
   border-bottom: 1px solid #262626;
   background: #3f3f3f;
   background: -moz-linear-gradient(top, #3f3f3f 0%, #373737 100%);
@@ -169,10 +172,17 @@ input[type=color] {
 canvas {
   background: transparent;
 }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 .colorswatch {
   width: 24px;
   height: 24px;
   border: 1px solid #777777;
+}
+.hint {
+  font-style: italic;
 }
 .area {
   position: absolute;
@@ -267,6 +277,7 @@ canvas {
 .ToolComponent {
   height: 40px;
   line-height: 40px;
+  font-size: 0.7rem;
 }
 .ToolComponent > i {
   display: block;
@@ -277,9 +288,8 @@ canvas {
   font-size: 1.2rem;
   text-align: center;
 }
-.ToolComponent span {
+.ToolComponent > span {
   float: left;
-  font-size: 0.7rem;
   height: 20px;
   margin: 9px 5px;
   line-height: 20px;
@@ -297,11 +307,20 @@ canvas {
   width: 30px;
   margin: 8px 5px 0 0;
   float: left;
-  font-size: 0.75rem;
+}
+.ToolComponent ul {
+  float: left;
+  margin: 3px 0 0 5px;
+}
+.ToolComponent li {
+  line-height: 16px;
 }
 .ToolComponent .colorswatch {
   float: left;
   margin-top: 7px;
+}
+.ToolComponent .hint {
+  margin-left: 2em;
 }
 #EyedropperSwatch {
   margin-top: 6px;

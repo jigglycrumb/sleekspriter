@@ -1,12 +1,6 @@
-commit
-----------------------------------------------------------------
-
-
 todo
 ----------------------------------------------------------------
 - preview-window (braucht composite canvas)
-- eyedropper tool (braucht composite canvas)
-
 - toolbox, layerbox: scrollbars wenn bildschirm zu klein
 - brush tool: paletten, auto-palette, darken/lighten brush
 

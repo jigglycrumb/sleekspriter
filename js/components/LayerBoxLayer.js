@@ -16,6 +16,7 @@ var LayerBoxLayer = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
     this.props.signal.layerSelected.add(this.onLayerSelected);
   },
   componentWillUnmount: function() {
@@ -28,7 +29,7 @@ var LayerBoxLayer = React.createClass({
     this.props.signal.layerOpacityChanged.dispatch(this.props.layer.id, parseInt(event.target.value, 10));
   },
   dispatchLayerNameChanged: function(event) {
-    if(event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13) {
+    if(event.type == 'blur' || (event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13)) {
       this.refs.nameText.getDOMNode().style.display = 'none';
       this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
       this.refs.nameLabel.getDOMNode().style.display = 'block';

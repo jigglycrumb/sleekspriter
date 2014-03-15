@@ -22,7 +22,7 @@ var Editor = function() {
     self.tool = tool;
   });
 
-  signal.colorPicked.add(function(color) {
+  signal.colorSelected.add(function(color) {
     self.color = Color(color);
   });
 

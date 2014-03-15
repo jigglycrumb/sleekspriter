@@ -3,6 +3,7 @@
 
   height: 40px;
   line-height: 40px;
+  font-size: @small;
 
   &>i {
     display: block;
@@ -14,9 +15,8 @@
     text-align: center;
   }
 
-  span {
+  &>span {
     float: left;
-    font-size: @small;
     height: 20px;
     margin: 9px 5px;
     line-height: 20px;
@@ -37,17 +37,28 @@
     width: 30px;
     margin: 8px 5px 0 0;
     float: left;
-    font-size: 0.75rem;
+  }
+
+  ul {
+    float: left;
+    margin: 3px 0 0 5px;
+  }
+
+  li {
+    line-height: 16px;
   }
 
   .colorswatch {
     float: left;
     margin-top: 7px;
   }
+
+  .hint {
+    margin-left: 2em;
+  }
 }
 
 #EyedropperSwatch {
   margin-top: 6px;
   margin-left: 4px;
-  //background: #000;
 }

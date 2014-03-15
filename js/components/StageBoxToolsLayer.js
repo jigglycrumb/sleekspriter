@@ -14,6 +14,8 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
+
+    this.props.signal.toolSelected.add(this.mouseup);
   },
   componentDidUpdate: function() {
 
@@ -25,17 +27,32 @@ var StageBoxToolsLayer = React.createClass({
 
     this.drawPixelCursor();
 
+    var self = this;
+
+    function layerVisible() {
+      var layer = io.getLayerById(self.props.editor.layer);
+      return layer.visible && layer.opacity > 0;
+    }
+
     if(this.state.mousedown) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
-          var layer = io.getLayerById(this.props.editor.layer);
-          if(!layer.visible || layer.opacity == 0) alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          else canvas.pixel.fill();
+          if(layerVisible()) canvas.pixel.fill();
+          else {
+            this.mouseup(); // prevent additional alerts
+            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+          }
           break;
         case 'EraserTool':
-          var layer = io.getLayerById(this.props.editor.layer);
-          if(!layer.visible || layer.opacity == 0) alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-          else canvas.pixel.clear();
+          if(layerVisible()) canvas.pixel.clear();
+          else {
+            this.mouseup();  // prevent additional alerts
+            alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
+          }
+          break;
+        case 'EyedropperTool':
+          this.props.signal.toolSelected.dispatch('BrushTool');
+          this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
           break;
       }
     }
