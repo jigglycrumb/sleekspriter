@@ -2,7 +2,7 @@ var LayerBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
     return (
-      <div id="LayerBox">
+      <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
           {this.props.io.layers.map(function(layer) {

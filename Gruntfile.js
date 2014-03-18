@@ -59,22 +59,32 @@ module.exports = function(grunt) {
           'js/classes/Canvas.js',
 
           'js/mixins/FoldableMixin.js',
+          'js/mixins/CompositeCanvasMixin.js',
 
           'js/components/App.js',
           'js/components/ToolContainer.js',
-          'js/components/StageBox.js',
-          'js/components/StageBoxLayer.js',
-          'js/components/StageBoxToolsLayer.js',
-          'js/components/ToolBox.js',
-          'js/components/ToolBoxTool.js',
-          'js/components/LayerBox.js',
-          'js/components/LayerBoxLayer.js',
-          'js/components/LayerBoxLayerPreview.js',
+
           'js/components/BrushTool.js',
           'js/components/EraserTool.js',
           'js/components/EyedropperTool.js',
-          //'js/components/HandTool.js',
           'js/components/ZoomTool.js',
+
+          'js/components/StageBox.js',
+          'js/components/StageBoxLayer.js',
+          'js/components/StageBoxToolsLayer.js',
+
+          'js/components/ToolBox.js',
+          'js/components/ToolBoxTool.js',
+
+          'js/components/PreviewBox.js',
+          'js/components/PreviewBoxPreview.js',
+
+          'js/components/LayerBox.js',
+          'js/components/LayerBoxLayer.js',
+          'js/components/LayerBoxLayerPreview.js',
+
+          //'js/components/HandTool.js',
+
           'js/components/StatusBar.js',
           'js/components/CompositeCanvas.js',
           'js/index.js'

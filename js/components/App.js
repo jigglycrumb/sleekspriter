@@ -12,6 +12,7 @@ var App = React.createClass({
           <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
+          <PreviewBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
           <LayerBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">

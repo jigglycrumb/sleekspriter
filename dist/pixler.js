@@ -1466,6 +1466,37 @@ var FoldableMixin = {
     handle.onclick = null;
   }
 };
+var CompositeCanvasMixin = {
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    };
+  },
+  componentDidMount: function() {
+    this.props.signal.layerContentChanged.add(this.prepareRefresh);
+    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
+    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
+    this.props.signal.pixelFilled.add(this.prepareRefresh);
+    this.props.signal.pixelCleared.add(this.prepareRefresh);
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      var self = this;
+      this.getDOMNode().width = this.getDOMNode().width;
+      this.props.io.layers.forEach(function(layer) {
+        if(layer.visible) {
+          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
+          var ctx = self.getDOMNode().getContext('2d');
+          ctx.globalAlpha = layer.opacity/100;
+          ctx.drawImage(sourceCanvas, 0, 0);
+        }
+      });
+    }
+  },
+  prepareRefresh: function() {
+    this.setState({needsRefresh: true});
+  }
+};
 var App = React.createClass({
   render: function() {
     return (
@@ -1480,6 +1511,7 @@ var App = React.createClass({
           <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
+          <PreviewBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
           <LayerBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
@@ -1527,6 +1559,88 @@ var ToolContainer = React.createClass({
   render: function() {
     //console.log('rendering '+this.props.editor.tool);
     return window[this.props.editor.tool](this.props);
+  }
+});
+var BrushTool = React.createClass({
+  render: function() {
+    return (
+      <div id="Brush-Tool" className="ToolComponent">
+        <i className="icon-brush"></i>
+        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
+      </div>
+    );
+  },
+  dispatchColorSelected: function(event) {
+    var color = event.target.value;
+    signal.colorSelected.dispatch(color);
+  }
+});
+var EraserTool = React.createClass({
+  render: function() {
+    return (
+      <div id="Eraser-Tool" className="ToolComponent">
+        <i className="fa fa-eraser"></i>
+
+        <span className="hint">Click a pixel to erase it.</span>
+      </div>
+    );
+  }
+});
+var EyedropperTool = React.createClass({
+  render: function() {
+    return (
+      <div id="Eyedropper-Tool" className="ToolComponent">
+        <i className="icon-target"></i>
+        <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
+        <ul>
+          <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>
+          <li>RGB: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.red()+', '+this.props.editor.pixelColor.green()+', '+this.props.editor.pixelColor.blue()}</li>
+        </ul>
+        <span className="hint">Click any non-transparent pixel to pick its color.</span>
+
+      </div>
+    );
+  }
+});
+var ZoomTool = React.createClass({
+  render: function() {
+
+    var zoom = editor.zoom;
+    return (
+      <div id="Zoom-Tool" className="ToolComponent">
+        <i className="icon-search"></i>
+        <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
+        <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
+        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
+        <span>Zoom &times;</span>
+        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
+        <button onClick={this.fitToScreen} className="small">Fit to screen</button>
+        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
+      </div>
+    );
+  },
+  dispatchZoomChanged: function(event, zoom) {
+    zoom = _.isNull(event) ? zoom : event.target.value;
+    signal.zoomChanged.dispatch(zoom);
+  },
+  zoomIn: function() {
+    if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);
+  },
+  zoomOut: function() {
+    if(editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, editor.zoom-1);
+  },
+  fitToScreen: function() {
+    var top = 40,
+        bottom = 20,
+        left = 40,
+        right = 200;
+
+    var zoom = Math.floor((window.innerHeight - top - bottom)/io.size.height);
+    if((io.size.width*zoom) > (window.innerWidth - left - right)) {
+      zoom = Math.floor((window.innerWidth - left - right)/io.size.width);
+    }
+
+    this.dispatchZoomChanged(null, zoom);
   }
 });
 var StageBox = React.createClass({
@@ -1820,11 +1934,57 @@ var ToolBoxTool = React.createClass({
     this.props.signal.toolSelected.dispatch(tool);
   }
 });
+var PreviewBox = React.createClass({
+  mixins: [FoldableMixin],
+  render: function() {
+    return (
+      <div id="PreviewBox" className="box">
+        <h4 className="foldable-handle">Preview</h4>
+        <div className="foldable-fold">
+          <PreviewBoxPreview io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+        </div>
+      </div>
+    );
+  }
+});
+var PreviewBoxPreview = React.createClass({
+  mixins: [CompositeCanvasMixin],
+  render: function() {
+
+    var scale = 1,
+        maxWidth = 160,
+        maxHeight = 90;
+
+    if(this.props.io.size.width > this.props.io.size.height) {
+      // scale to width
+      scale = maxWidth/this.props.io.size.width;
+    }
+    else {
+      // scale to height
+      scale = maxHeight/this.props.io.size.height;
+    }
+
+    var cssWidth = this.props.io.size.width*scale,
+        cssHeight = this.props.io.size.height*scale;
+
+    return (
+      <canvas
+        id="PreviewBoxPreview"
+        width={this.props.io.size.width*this.props.editor.zoom}
+        height={this.props.io.size.height*this.props.editor.zoom}
+        style={{
+          width: cssWidth,
+          height: cssHeight,
+        }}>
+      </canvas>
+    );
+  }
+});
 var LayerBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
     return (
-      <div id="LayerBox">
+      <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
           {this.props.io.layers.map(function(layer) {
@@ -1935,88 +2095,6 @@ var LayerBoxLayerPreview = React.createClass({
     }
   }
 });
-var BrushTool = React.createClass({
-  render: function() {
-    return (
-      <div id="Brush-Tool" className="ToolComponent">
-        <i className="icon-brush"></i>
-        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
-      </div>
-    );
-  },
-  dispatchColorSelected: function(event) {
-    var color = event.target.value;
-    signal.colorSelected.dispatch(color);
-  }
-});
-var EraserTool = React.createClass({
-  render: function() {
-    return (
-      <div id="Eraser-Tool" className="ToolComponent">
-        <i className="fa fa-eraser"></i>
-
-        <span className="hint">Click a pixel to erase it.</span>
-      </div>
-    );
-  }
-});
-var EyedropperTool = React.createClass({
-  render: function() {
-    return (
-      <div id="Eyedropper-Tool" className="ToolComponent">
-        <i className="icon-target"></i>
-        <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
-        <ul>
-          <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>
-          <li>RGB: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.red()+', '+this.props.editor.pixelColor.green()+', '+this.props.editor.pixelColor.blue()}</li>
-        </ul>
-        <span className="hint">Click any non-transparent pixel to pick its color.</span>
-
-      </div>
-    );
-  }
-});
-var ZoomTool = React.createClass({
-  render: function() {
-
-    var zoom = editor.zoom;
-    return (
-      <div id="Zoom-Tool" className="ToolComponent">
-        <i className="icon-search"></i>
-        <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
-        <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
-        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
-        <span>Zoom &times;</span>
-        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
-        <button onClick={this.fitToScreen} className="small">Fit to screen</button>
-        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
-      </div>
-    );
-  },
-  dispatchZoomChanged: function(event, zoom) {
-    zoom = _.isNull(event) ? zoom : event.target.value;
-    signal.zoomChanged.dispatch(zoom);
-  },
-  zoomIn: function() {
-    if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);
-  },
-  zoomOut: function() {
-    if(editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, editor.zoom-1);
-  },
-  fitToScreen: function() {
-    var top = 40,
-        bottom = 20,
-        left = 40,
-        right = 200;
-
-    var zoom = Math.floor((window.innerHeight - top - bottom)/io.size.height);
-    if((io.size.width*zoom) > (window.innerWidth - left - right)) {
-      zoom = Math.floor((window.innerWidth - left - right)/io.size.width);
-    }
-
-    this.dispatchZoomChanged(null, zoom);
-  }
-});
 var StatusBar = React.createClass({
   render: function() {
     var cssClasses = (this.props.editor.grid === true ? 'active' : '') + ' tiny transparent';
@@ -2040,6 +2118,7 @@ var StatusBar = React.createClass({
   }
 });
 var CompositeCanvas = React.createClass({
+  mixins: [CompositeCanvasMixin],
   render: function() {
     return (
       <canvas
@@ -2053,37 +2132,8 @@ var CompositeCanvas = React.createClass({
       ></canvas>
     );
   },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    };
-  },
   componentDidMount: function() {
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
-    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-    this.props.signal.pixelFilled.add(this.prepareRefresh);
-    this.props.signal.pixelCleared.add(this.prepareRefresh);
-
     this.props.signal.pixelSelected.add(this.getPixelColor);
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      //console.log('drawing CompositeCanvas');
-      var self = this;
-      this.getDOMNode().width = this.getDOMNode().width;
-      this.props.io.layers.forEach(function(layer) {
-        if(layer.visible) {
-          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
-          var ctx = self.getDOMNode().getContext('2d');
-          ctx.globalAlpha = layer.opacity/100;
-          ctx.drawImage(sourceCanvas, 0, 0);
-        }
-      });
-    }
-  },
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
   },
   getPixelColor: function(x, y) {
     var ctx = this.getDOMNode().getContext('2d'),

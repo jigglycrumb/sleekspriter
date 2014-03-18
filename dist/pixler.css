@@ -180,6 +180,10 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+.area {
+  position: absolute;
+  z-index: 1;
+}
 .colorswatch {
   width: 24px;
   height: 24px;
@@ -191,10 +195,6 @@ ul {
 .foldable-handle {
   cursor: pointer;
 }
-.area {
-  position: absolute;
-  z-index: 1;
-}
 .top {
   top: 0;
   left: 0;
@@ -204,82 +204,6 @@ ul {
   border-top: 1px solid #262626;
   border-left: 1px solid #262626;
   border-right: 1px solid #262626;
-}
-.left {
-  top: 40px;
-  left: 0;
-  bottom: 0;
-  width: 43px;
-  border: 1px solid #262626;
-  background: #262626;
-}
-.left:after {
-  background: none;
-  width: 0;
-  border-left: 1px solid #3a3a3a;
-  border-right: 1px solid #2d2d2d;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-.right {
-  top: 40px;
-  right: 0;
-  bottom: 0;
-  width: 203px;
-  border: 1px solid #262626;
-  background: #262626;
-}
-.right:after {
-  background: none;
-  width: 0;
-  border-left: 1px solid #2d2d2d;
-  border-right: 1px solid #3a3a3a;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-.center {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #262626;
-  z-index: 0;
-}
-.bottom {
-  left: 43px;
-  right: 203px;
-  bottom: 0;
-  height: 25px;
-  border: 1px solid #262626;
-  background: #262626;
-}
-.bottom:after {
-  background: none;
-  height: 0;
-  border-top: 1px solid #2d2d2d;
-  border-bottom: 1px solid #3a3a3a;
-  content: "";
-  display: block;
-  position: absolute;
-  left: -1px;
-  top: 0;
-  right: -1px;
-  pointer-events: none;
-}
-.offscreen {
-  top: 50px;
-  left: 50px;
-  display: none;
 }
 .ToolComponent {
   height: 40px;
@@ -333,6 +257,27 @@ ul {
   margin-top: 6px;
   margin-left: 4px;
 }
+.left {
+  top: 40px;
+  left: 0;
+  bottom: 0;
+  width: 43px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.left:after {
+  background: none;
+  width: 0;
+  border-left: 1px solid #3a3a3a;
+  border-right: 1px solid #2d2d2d;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
 #ToolBox {
   float: left;
   width: 40px;
@@ -350,6 +295,14 @@ ul {
   font-size: 1.2rem;
   color: #e7e7e7;
 }
+.center {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #262626;
+  z-index: 0;
+}
 #StageBox {
   position: absolute;
   background: #fff;
@@ -366,13 +319,35 @@ ul {
   background: transparent;
   z-index: 10000000;
 }
-#LayerBox {
-  width: 200px;
-  background: #535353;
-  height: 100%;
-  margin-left: 3px;
+.right {
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  width: 203px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.right:after {
+  background: none;
+  width: 0;
+  border-left: 1px solid #2d2d2d;
+  border-right: 1px solid #3a3a3a;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.box {
   width: 100%;
   float: left;
+  background: #535353;
+  margin-left: 3px;
+}
+#PreviewBox .foldable-fold {
+  text-align: center;
 }
 #LayerBox > div {
   border-top: 1px solid #6a6a6a;
@@ -455,10 +430,31 @@ ul {
   float: left;
 }
 #LayerBox .actions {
-  height: 20px;
+  height: 23px;
   line-height: 20px;
   float: left;
   position: relative;
+}
+.bottom {
+  left: 43px;
+  right: 203px;
+  bottom: 0;
+  height: 25px;
+  border: 1px solid #262626;
+  background: #262626;
+}
+.bottom:after {
+  background: none;
+  height: 0;
+  border-top: 1px solid #2d2d2d;
+  border-bottom: 1px solid #3a3a3a;
+  content: "";
+  display: block;
+  position: absolute;
+  left: -1px;
+  top: 0;
+  right: -1px;
+  pointer-events: none;
 }
 #StatusBar {
   float: left;
@@ -493,6 +489,11 @@ ul {
 }
 #StatusBarButtons {
   float: right;
+}
+.offscreen {
+  top: 50px;
+  left: 50px;
+  display: none;
 }
 #CompositeCanvas {
   background: #fff;

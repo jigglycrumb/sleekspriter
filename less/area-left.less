@@ -1,4 +1,29 @@
-// left area components
+// left area
+
+.left {
+  top: 40px;
+  left: 0;
+  bottom: 0;
+  width: 43px;
+  //overflow-y: auto;
+  border: 1px solid @dark;
+  background: @dark;
+}
+
+.left:after {
+  background: none;
+  width: 0;
+  border-left: 1px solid #3a3a3a;
+  border-right: 1px solid #2d2d2d;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
 #ToolBox {
   float: left;
   width: 40px;
