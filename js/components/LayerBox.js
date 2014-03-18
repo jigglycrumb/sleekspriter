@@ -1,9 +1,10 @@
 var LayerBox = React.createClass({
+  mixins: [FoldableMixin],
   render: function() {
     return (
       <div id="LayerBox">
-        <h4>Layers</h4>
-        <div>
+        <h4 className="foldable-handle">Layers</h4>
+        <div className="foldable-fold">
           {this.props.io.layers.map(function(layer) {
             var id = 'LayerBoxLayer-'+layer.id;
             return (

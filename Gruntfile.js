@@ -51,11 +51,15 @@ module.exports = function(grunt) {
         // the files to concatenate
         src: [
           'js/jsx-header.js',
+
           'js/classes/color-0.4.4.js',
           'js/classes/Signal.js',
           'js/classes/IO.js',
           'js/classes/Editor.js',
           'js/classes/Canvas.js',
+
+          'js/mixins/FoldableMixin.js',
+
           'js/components/App.js',
           'js/components/ToolContainer.js',
           'js/components/StageBox.js',

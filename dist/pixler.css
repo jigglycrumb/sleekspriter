@@ -29,6 +29,10 @@
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
 }
+* {
+  user-select: none;
+  -webkit-user-select: none;
+}
 html {
   -webkit-font-smoothing: antialiased;
 }
@@ -183,6 +187,9 @@ ul {
 }
 .hint {
   font-style: italic;
+}
+.foldable-handle {
+  cursor: pointer;
 }
 .area {
   position: absolute;
