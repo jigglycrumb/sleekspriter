@@ -1254,7 +1254,7 @@ var IO = function() {
 
     self.layers.splice(index, 0, newLayer);
     fixLayerZ();
-    signal.layerAdded.dispatch(self.layers, newId);
+    signal.layerAdded.dispatch(newId);
   });
 
   signal.layerRemovedFromIO.add(function(layer) {
@@ -1983,6 +1983,11 @@ var PreviewBoxPreview = React.createClass({
 });
 var LayerBox = React.createClass({
   mixins: [FoldableMixin],
+  getInitialState: function() {
+    return {
+      shouldSelectLayer: false
+    }
+  },
   render: function() {
     return (
       <div id="LayerBox" className="box">
@@ -2002,11 +2007,23 @@ var LayerBox = React.createClass({
       </div>
     );
   },
+  componentDidMount: function() {
+    this.props.signal.layerAdded.add(this.onLayerAdded);
+  },
+  componentDidUpdate: function() {
+    if(this.state.shouldSelectLayer !== false) {
+      this.props.signal.layerSelected.dispatch(this.state.shouldSelectLayer);
+      this.setState({ shouldSelectLayer: false });
+    }
+  },
   dispatchLayerAdded: function(event) {
     this.props.signal.layerAddedToIO.dispatch(this.props.editor.layer);
   },
   dispatchLayerRemoved: function(event) {
     this.props.signal.layerRemovedFromIO.dispatch(this.props.editor.layer);
+  },
+  onLayerAdded: function(layer) {
+    this.setState({ shouldSelectLayer: layer });
   }
 });
 var LayerBoxLayer = React.createClass({

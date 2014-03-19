@@ -140,7 +140,7 @@ var IO = function() {
 
     self.layers.splice(index, 0, newLayer);
     fixLayerZ();
-    signal.layerAdded.dispatch(self.layers, newId);
+    signal.layerAdded.dispatch(newId);
   });
 
   signal.layerRemovedFromIO.add(function(layer) {
