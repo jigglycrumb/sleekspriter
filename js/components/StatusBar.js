@@ -10,7 +10,7 @@ var StatusBar = React.createClass({
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
-            <i className="fa fa-th"></i>
+            <i className="flaticon-3x3"></i>
           </button>
         </div>
       </div>

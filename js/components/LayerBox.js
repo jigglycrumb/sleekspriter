@@ -12,8 +12,8 @@ var LayerBox = React.createClass({
             );
           }, this)}
           <div className="actions">
-            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="fa fa-plus"></i></button>
-            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="fa fa-minus"></i></button>
+            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
+            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>

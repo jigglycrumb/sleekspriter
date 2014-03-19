@@ -1564,7 +1564,7 @@ var BrushTool = React.createClass({
   render: function() {
     return (
       <div id="Brush-Tool" className="ToolComponent">
-        <i className="icon-brush"></i>
+        <i className="flaticon-small23"></i>
         <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
       </div>
     );
@@ -1578,7 +1578,7 @@ var EraserTool = React.createClass({
   render: function() {
     return (
       <div id="Eraser-Tool" className="ToolComponent">
-        <i className="fa fa-eraser"></i>
+        <i className="flaticon-double31" style={{position:'relative', left: '0.25em'}}></i>
 
         <span className="hint">Click a pixel to erase it.</span>
       </div>
@@ -1589,12 +1589,13 @@ var EyedropperTool = React.createClass({
   render: function() {
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
-        <i className="icon-target"></i>
+        <i className="flaticon-eyedropper2"></i>
         <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <ul>
           <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>
           <li>RGB: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.red()+', '+this.props.editor.pixelColor.green()+', '+this.props.editor.pixelColor.blue()}</li>
         </ul>
+        <span className="spacer"></span>
         <span className="hint">Click any non-transparent pixel to pick its color.</span>
 
       </div>
@@ -1607,13 +1608,14 @@ var ZoomTool = React.createClass({
     var zoom = editor.zoom;
     return (
       <div id="Zoom-Tool" className="ToolComponent">
-        <i className="icon-search"></i>
-        <button onClick={this.zoomIn} className="small"><i className="fa fa-plus"></i></button>
-        <button onClick={this.zoomOut} className="small"><i className="fa fa-minus"></i></button>
+        <i className="flaticon-magnifier5"></i>
+        <button onClick={this.zoomIn} className="small"><i className="flaticon-plus25"></i></button>
+        <button onClick={this.zoomOut} className="small"><i className="flaticon-minus18"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
         <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
+        <span className="spacer"></span>
         <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
       </div>
     );
@@ -1901,16 +1903,16 @@ var ToolBox = React.createClass({
       <div id="ToolBox">
         <h4>Tools</h4>
         <div>
-          <ToolBoxTool id="BrushTool" title="Brush" icon="icon-brush" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EraserTool" title="Eraser" icon="fa fa-eraser" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="icon-target" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrushTool" title="Brush" icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EraserTool" title="Eraser" icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
           {/*
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
           <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="MoveTool" title="Move tool" icon="" signal={this.props.signal} />
           <ToolBoxTool id="HandTool" title="Hand tool" icon="icon-magnet" signal={this.props.signal} />
           */}
-          <ToolBoxTool id="ZoomTool" title="Zoom" icon="icon-search" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="ZoomTool" title="Zoom" icon="flaticon-magnifier5" editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );
@@ -1993,8 +1995,8 @@ var LayerBox = React.createClass({
             );
           }, this)}
           <div className="actions">
-            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="fa fa-plus"></i></button>
-            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="fa fa-minus"></i></button>
+            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
+            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>
@@ -2106,7 +2108,7 @@ var StatusBar = React.createClass({
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
-            <i className="fa fa-th"></i>
+            <i className="flaticon-3x3"></i>
           </button>
         </div>
       </div>

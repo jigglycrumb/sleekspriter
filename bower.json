@@ -14,8 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "entypo": "*",
-    "font-awesome": "~4.0.3",
     "react": "~0.9.0",
     "underscore": "~1.6.0",
     "js-signals": "~1.0.0"

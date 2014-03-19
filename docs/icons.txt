@@ -1,0 +1,15 @@
+Icons (via flaticon.com)
+-----------------------------
+
+Brush: http://www.flaticon.com/free-icon/small-brush_3594
+Eraser: http://www.flaticon.com/free-icon/double-sided-eraser_25454
+Eyedropper: http://www.flaticon.com/free-icon/eyedropper-tool_40533
+Zoom: http://www.flaticon.com/free-icon/magnifier-lens-outline-with-handle_23759
+
+Plus: http://www.flaticon.com/free-icon/plus-black-symbol_25304
+Minus: http://www.flaticon.com/free-icon/minus-symbol_25232
+
+Eye: http://www.flaticon.com/free-icon/eye-outline_23912
+Eye slashed: http://www.flaticon.com/free-icon/eye-blocked-symbol_24402
+
+Grid: http://www.flaticon.com/free-icon/3x3-grid_8722
