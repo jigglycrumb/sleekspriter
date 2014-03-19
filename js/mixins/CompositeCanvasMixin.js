@@ -15,14 +15,13 @@ var CompositeCanvasMixin = {
     if(this.state.needsRefresh) {
       var self = this;
       this.getDOMNode().width = this.getDOMNode().width;
-      this.props.io.layers.forEach(function(layer) {
-        if(layer.visible) {
-          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
-          var ctx = self.getDOMNode().getContext('2d');
-          ctx.globalAlpha = layer.opacity/100;
-          ctx.drawImage(sourceCanvas, 0, 0);
-        }
-      });
+      for(var i = this.props.io.layers.length -1; i >= 0; i--) {
+        var layer = this.props.io.layers[i];
+        var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
+        var ctx = self.getDOMNode().getContext('2d');
+        ctx.globalAlpha = layer.opacity/100;
+        ctx.drawImage(sourceCanvas, 0, 0);
+      }
     }
   },
   prepareRefresh: function() {

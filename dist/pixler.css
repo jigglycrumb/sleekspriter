@@ -491,8 +491,9 @@ ul {
   float: right;
 }
 .offscreen {
-  top: 50px;
-  left: 50px;
+  top: 16.66666667px;
+  left: 16.66666667px;
+  zoom: 3;
   display: none;
 }
 #CompositeCanvas {

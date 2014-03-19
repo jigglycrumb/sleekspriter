@@ -1,8 +1,11 @@
 // offscreen area
 
+@zoom: 3;
+
 .offscreen {
-  top: 50px;
-  left: 50px;
+  top: 50px/@zoom;
+  left: 50px/@zoom;
+  zoom: @zoom;
   display: none;
 }
 
