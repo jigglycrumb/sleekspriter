@@ -34,9 +34,8 @@
   font-family: Flaticon;
   font-style: normal;
   display: inline-block;
-  width: 1.1em;
-  margin-right: .1em;
   text-align: center;
+  width: 1em;
 }
 [class^="flaticon-"]:before,
 [class*=" flaticon-"]:before,
@@ -45,6 +44,18 @@
   font-size: inherit;
   font-style: normal;
   margin-left: inherit;
+}
+.flaticon-double31:before {
+  position: relative;
+  left: -0.25em;
+}
+.flaticon-plus25:before {
+  position: relative;
+  left: -0.25em;
+}
+.flaticon-minus18:before {
+  position: relative;
+  left: -0.25em;
 }
 * {
   user-select: none;
@@ -235,11 +246,12 @@ ul {
   line-height: 40px;
   font-size: 1.2rem;
   text-align: center;
+  margin-right: 5px;
 }
 .ToolComponent > span {
   float: left;
   height: 20px;
-  margin: 9px 5px;
+  margin: 9px 10px 0 0;
   line-height: 20px;
 }
 .ToolComponent button {
@@ -267,8 +279,9 @@ ul {
   float: left;
   margin-top: 7px;
 }
-.ToolComponent .hint {
-  margin-left: 2em;
+.ToolComponent .spacer {
+  float: left;
+  width: 1.5em;
 }
 #EyedropperSwatch {
   margin-top: 6px;
@@ -400,16 +413,16 @@ ul {
   margin: 0;
   text-align: center;
   color: #e7e7e7;
-  font-family: 'FontAwesome';
+  font-family: 'Flaticon';
   font-size: .8rem;
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:before {
-  content: "\f070";
+  content: "\e004";
   color: #b4b4b4;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:checked:before {
-  content: "\f06e";
+  content: "\e003";
   color: #e7e7e7;
 }
 #LayerBox .LayerBoxLayer .preview {

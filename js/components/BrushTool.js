@@ -2,7 +2,7 @@ var BrushTool = React.createClass({
   render: function() {
     return (
       <div id="Brush-Tool" className="ToolComponent">
-        <i className="icon-brush"></i>
+        <i className="flaticon-small23"></i>
         <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
       </div>
     );
