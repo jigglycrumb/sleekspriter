@@ -29,6 +29,23 @@
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
 }
+[class^="flaticon-"],
+[class*=" flaticon-"] {
+  font-family: Flaticon;
+  font-style: normal;
+  display: inline-block;
+  width: 1.1em;
+  margin-right: .1em;
+  text-align: center;
+}
+[class^="flaticon-"]:before,
+[class*=" flaticon-"]:before,
+[class^="flaticon-"]:after,
+[class*=" flaticon-"]:after {
+  font-size: inherit;
+  font-style: normal;
+  margin-left: inherit;
+}
 * {
   user-select: none;
   -webkit-user-select: none;
