@@ -1368,11 +1368,6 @@ var Editor = function() {
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
   });
-/*
-  signal.layerRemoved.add(function() {
-    self.layer = null;
-  });
-*/
 };
 
 var editor = new Editor();
@@ -1928,12 +1923,16 @@ var ToolBox = React.createClass({
 });
 var ToolBoxTool = React.createClass({
   render: function() {
+    var selected = this.props.id == this.props.editor.tool ? true : false;
+    var cssClasses = 'ToolBoxTool transparent';
+    if(selected) cssClasses+= ' active';
+
     return (
       <button
         id={this.props.id}
-        className="ToolBoxTool transparent"
+        className={cssClasses}
         title={this.props.title}
-        disabled={this.props.id == this.props.editor.tool ? true : false}
+        disabled={selected}
         onClick={this.dispatchToolSelected.bind(this, this.props.id)}>
           <i className={this.props.icon}></i>
       </button>
@@ -1997,6 +1996,7 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
+    var disabled = this.props.io.layers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
@@ -2009,7 +2009,7 @@ var LayerBox = React.createClass({
           }, this)}
           <div className="actions">
             <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
-            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="flaticon-minus18"></i></button>
+            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>

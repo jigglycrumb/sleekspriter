@@ -137,8 +137,7 @@ button.transparent:after {
   background: none;
   border: none;
 }
-button.transparent.active,
-button.transparent[disabled] {
+button.transparent.active {
   border-radius: 2px;
   border-bottom: 1px solid #818181;
   background: #3f3f3f;
@@ -151,6 +150,9 @@ button.transparent[disabled] {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
   -webkit-box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
   box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.75);
+}
+button.transparent:not(.active)[disabled] {
+  color: #818181;
 }
 input[type=text],
 input[type=number] {

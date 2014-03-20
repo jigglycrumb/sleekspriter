@@ -6,6 +6,7 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
+    var disabled = this.props.io.layers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
@@ -18,7 +19,7 @@ var LayerBox = React.createClass({
           }, this)}
           <div className="actions">
             <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
-            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent"><i className="flaticon-minus18"></i></button>
+            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>
