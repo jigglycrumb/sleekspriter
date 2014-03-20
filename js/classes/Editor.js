@@ -14,6 +14,10 @@ var Editor = function() {
   this.color = Color('#000000');
 
   // signal handlers
+  signal.frameSelected.add(function(frame) {
+    self.frame = frame;
+  });
+
   signal.layerSelected.add(function(id) {
     self.layer = id;
   });

@@ -1086,6 +1086,7 @@ function hexDouble(num) {
 var Signal = signals.Signal;
 var signal = {
 
+  frameSelected: new Signal(),
   toolSelected: new Signal(),
 
   colorSelected: new Signal(),
@@ -1108,9 +1109,6 @@ var signal = {
 
   zoomChanged: new Signal(),
   gridToggled: new Signal()
-
-
-  //frameContentChanged: new Signal() // NEW
 };
 var IO = function() {
 
@@ -1305,7 +1303,6 @@ var IO = function() {
     }
 
     signal.layerContentChanged.dispatch(layer);
-    //signal.frameContentChanged.dispatch();
   });
 
   signal.pixelCleared.add(function(frame, layer, x, y) {
@@ -1322,7 +1319,6 @@ var IO = function() {
 
     self.pixels.splice(index, 1);
     signal.layerContentChanged.dispatch(layer);
-    //signal.frameContentChanged.dispatch();
   });
 };
 
@@ -1343,6 +1339,10 @@ var Editor = function() {
   this.color = Color('#000000');
 
   // signal handlers
+  signal.frameSelected.add(function(frame) {
+    self.frame = frame;
+  });
+
   signal.layerSelected.add(function(id) {
     self.layer = id;
   });
@@ -1528,6 +1528,7 @@ var App = React.createClass({
   componentDidMount: function() {
     var self = this,
         subscriptions = [
+          'frameSelected',
           'toolSelected',
           'colorSelected',
           'gridToggled',
@@ -1539,7 +1540,6 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged'
-          //'frameContentChanged'
         ];
 
     subscriptions.forEach(function(item) {
@@ -2131,6 +2131,8 @@ var StatusBar = React.createClass({
         <span>Y: {this.props.editor.pixel.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
+        <span>Frame {this.props.editor.frame}</span>
+        &nbsp;
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
           <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">

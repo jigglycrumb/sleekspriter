@@ -27,6 +27,7 @@ var App = React.createClass({
   componentDidMount: function() {
     var self = this,
         subscriptions = [
+          'frameSelected',
           'toolSelected',
           'colorSelected',
           'gridToggled',
@@ -38,7 +39,6 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged'
-          //'frameContentChanged'
         ];
 
     subscriptions.forEach(function(item) {

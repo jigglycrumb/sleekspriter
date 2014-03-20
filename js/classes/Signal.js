@@ -1,6 +1,7 @@
 var Signal = signals.Signal;
 var signal = {
 
+  frameSelected: new Signal(),
   toolSelected: new Signal(),
 
   colorSelected: new Signal(),
@@ -23,7 +24,4 @@ var signal = {
 
   zoomChanged: new Signal(),
   gridToggled: new Signal()
-
-
-  //frameContentChanged: new Signal() // NEW
 };

@@ -191,7 +191,6 @@ var IO = function() {
     }
 
     signal.layerContentChanged.dispatch(layer);
-    //signal.frameContentChanged.dispatch();
   });
 
   signal.pixelCleared.add(function(frame, layer, x, y) {
@@ -208,7 +207,6 @@ var IO = function() {
 
     self.pixels.splice(index, 1);
     signal.layerContentChanged.dispatch(layer);
-    //signal.frameContentChanged.dispatch();
   });
 };
 
