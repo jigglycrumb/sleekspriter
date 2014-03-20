@@ -39,10 +39,11 @@ var Editor = function() {
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
   });
-
-  signal.layerRemoved.add(function(layer) {
+/*
+  signal.layerRemoved.add(function() {
     self.layer = null;
   });
+*/
 };
 
 var editor = new Editor();

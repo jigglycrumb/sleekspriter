@@ -1267,9 +1267,16 @@ var IO = function() {
       }
     }
 
+    var shouldSelectLayer;
+
+    if(_.isUndefined(self.layers[index+1]))
+      shouldSelectLayer = self.layers[index-1].id;
+    else
+      shouldSelectLayer = self.layers[index+1].id;
+
     self.layers.splice(index, 1);
     fixLayerZ();
-    signal.layerRemoved.dispatch(self.layers);
+    signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
   signal.pixelFilled.add(function(frame, layer, x, y, color) {
@@ -1361,10 +1368,11 @@ var Editor = function() {
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
   });
-
-  signal.layerRemoved.add(function(layer) {
+/*
+  signal.layerRemoved.add(function() {
     self.layer = null;
   });
+*/
 };
 
 var editor = new Editor();
@@ -2008,7 +2016,8 @@ var LayerBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerAdded.add(this.onLayerAdded);
+    this.props.signal.layerAdded.add(this.shouldSelectLayer);
+    this.props.signal.layerRemoved.add(this.shouldSelectLayer);
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
@@ -2022,7 +2031,7 @@ var LayerBox = React.createClass({
   dispatchLayerRemoved: function(event) {
     this.props.signal.layerRemovedFromIO.dispatch(this.props.editor.layer);
   },
-  onLayerAdded: function(layer) {
+  shouldSelectLayer: function(layer) {
     this.setState({ shouldSelectLayer: layer });
   }
 });

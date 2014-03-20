@@ -153,9 +153,16 @@ var IO = function() {
       }
     }
 
+    var shouldSelectLayer;
+
+    if(_.isUndefined(self.layers[index+1]))
+      shouldSelectLayer = self.layers[index-1].id;
+    else
+      shouldSelectLayer = self.layers[index+1].id;
+
     self.layers.splice(index, 1);
     fixLayerZ();
-    signal.layerRemoved.dispatch(self.layers);
+    signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
   signal.pixelFilled.add(function(frame, layer, x, y, color) {
