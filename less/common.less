@@ -47,7 +47,7 @@ body {
   font-weight: 600;
   color: @font-color;
   line-height: 150%;
-  font-size: @normal;
+  font-size: @small;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -55,9 +55,8 @@ body {
 }
 
 h4 {
-  font-size: .7rem;
   margin: 0;
-  padding-left: 5px;
+  padding: 3px 5px;
   border-bottom: 1px solid @dark;
   .gradient;
 }
@@ -88,7 +87,6 @@ button:after {
 
 button.small {
   height: 22px;
-  font-size: @small;
 }
 
 button.tiny {
@@ -188,5 +186,21 @@ ul {
 }
 
 .foldable-handle {
+  position: relative;
+  padding-left: 15px;
   cursor: pointer;
+
+  &:before {
+    font-family: Flaticon;
+    position: absolute;
+    top: 4px;
+    left: 2px;
+    color: darken(@font-color, 20%);
+    content: "\e006"; // flaticon-little9
+  }
+
+  &.folded:before {
+    top: 3px;
+    content: "\e008"; // flaticon-mini7
+  }
 }
