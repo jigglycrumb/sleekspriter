@@ -13,3 +13,6 @@ Eye: http://www.flaticon.com/free-icon/eye-outline_23912
 Eye slashed: http://www.flaticon.com/free-icon/eye-blocked-symbol_24402
 
 Grid: http://www.flaticon.com/free-icon/3x3-grid_8722
+
+Down Arrow: http://www.flaticon.com/free-icon/little-down-triangular-arrow_7629
+Right Arrow: http://www.flaticon.com/free-icon/mini-triangular-arrow-to-right_7520

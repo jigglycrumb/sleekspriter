@@ -33,6 +33,32 @@
   margin-left: 3px;
 }
 
+.actions {
+  height: 23px;
+  line-height: 20px;
+  float: left;
+  position: relative;
+} // .actions
+
+.foldable-handle {
+  position: relative;
+  padding-left: 15px;
+
+  &:before {
+    font-family: Flaticon;
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    color: darken(@font-color, 20%);
+    content: "\e006";
+  }
+
+  &.folded:before {
+    top: 0;
+    content: "\e008";
+  }
+}
+
 #PreviewBox {
   .foldable-fold {
     text-align: center;
@@ -134,11 +160,4 @@
       float: left;
     }
   } // .LayerBoxLayer
-
-  .actions {
-    height: 23px;
-    line-height: 20px;
-    float: left;
-    position: relative;
-  } // .actions
 } // #LayerBox

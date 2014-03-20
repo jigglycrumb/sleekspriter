@@ -1456,9 +1456,11 @@ var FoldableMixin = {
     handle.onclick = function() {
       if(self.state.folded) {
         fold.style.display = 'block';
+        handle.classList.remove('folded');
       }
       else {
         fold.style.display = 'none';
+        handle.classList.add('folded');
       }
       self.setState({folded: !self.state.folded});
     }
@@ -1514,6 +1516,7 @@ var App = React.createClass({
         </div>
         <div className="area right">
           <PreviewBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          <FrameBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
           <LayerBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
@@ -1985,6 +1988,22 @@ var PreviewBoxPreview = React.createClass({
           height: cssHeight,
         }}>
       </canvas>
+    );
+  }
+});
+var FrameBox = React.createClass({
+  mixins: [FoldableMixin],
+  render: function() {
+    return (
+      <div id="FrameBox" className="box">
+        <h4 className="foldable-handle">Frames</h4>
+        <div className="foldable-fold">
+          <div></div>
+          <div className="actions">
+
+          </div>
+        </div>
+      </div>
     );
   }
 });

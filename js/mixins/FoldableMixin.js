@@ -12,9 +12,11 @@ var FoldableMixin = {
     handle.onclick = function() {
       if(self.state.folded) {
         fold.style.display = 'block';
+        handle.classList.remove('folded');
       }
       else {
         fold.style.display = 'none';
+        handle.classList.add('folded');
       }
       self.setState({folded: !self.state.folded});
     }

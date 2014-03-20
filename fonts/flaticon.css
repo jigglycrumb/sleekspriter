@@ -2,13 +2,14 @@
 	font-family: "Flaticon";
 	src: url("flaticon.eot");
 	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
 	url("flaticon.ttf") format("truetype"),
 	url("flaticon.svg") format("svg");
 	font-weight: normal;
 	font-style: normal;
 }
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
         font-size: 20px;
 font-style: normal;
@@ -31,18 +32,21 @@ margin-left: 20px;
 .flaticon-eyedropper2:before {
 	content: "\e005";
 }
-.flaticon-magnifier5:before {
+.flaticon-little9:before {
 	content: "\e006";
 }
-.flaticon-minus18:before {
+.flaticon-magnifier5:before {
 	content: "\e007";
 }
-.flaticon-plus25:before {
+.flaticon-mini7:before {
 	content: "\e008";
 }
-.flaticon-small23:before {
+.flaticon-minus18:before {
 	content: "\e009";
 }
-.flaticon-square41:before {
+.flaticon-plus25:before {
 	content: "\e00a";
+}
+.flaticon-small23:before {
+	content: "\e00b";
 }
