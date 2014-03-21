@@ -1083,6 +1083,7 @@ function hexDouble(num) {
 
 },{"color-convert":3}]},{},[1])
 ;
+'use strict';
 var Signal = signals.Signal;
 var signal = {
 
@@ -1342,7 +1343,7 @@ var Editor = function() {
 
   // signal handlers
   signal.frameSelected.add(function(frame) {
-    self.frame = frame;
+    self.frame = parseInt(frame);
   });
 
   signal.layerSelected.add(function(id) {
@@ -1358,7 +1359,7 @@ var Editor = function() {
   });
 
   signal.zoomChanged.add(function(zoom) {
-    self.zoom = parseInt(zoom, 10) || self.zoom;
+    self.zoom = parseInt(zoom) || self.zoom;
     self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
@@ -1377,8 +1378,13 @@ var Canvas = function() {
 
   return {
     frame: {
-      refresh: function() {
-        var pixels = _.where(io.pixels, {frame: editor.frame});
+      refresh: function(frame) {
+
+        var frame = frame || editor.frame;
+
+        this.clear();
+
+        var pixels = _.where(io.pixels, {frame: frame});
 
         //console.log('refreshing frame '+editor.frame);
 
@@ -1387,6 +1393,12 @@ var Canvas = function() {
         });
 
         //signal.pixelSelected.dispatch(0, 0);
+      },
+      clear: function() {
+        io.layers.forEach(function(layer) {
+          var c = document.getElementById('StageBoxLayer-'+layer.id);
+          c.width = c.width;
+        });
       }
     },
     layer: {
@@ -1480,7 +1492,7 @@ var CopyFrameMixin = {
   },
   componentDidMount: function() {
     this.props.signal.frameContentChanged.add(this.prepareRefresh);
-    //this.props.signal.zoomChanged.add(this.prepareRefresh);
+    //this.props.signal.frameSelected.add(this.prepareRefresh);
   },
   getInitialState: function() {
     return {
@@ -1703,9 +1715,10 @@ var StageBox = React.createClass({
     }
   },
   componentDidMount: function() {
-    this.props.signal.zoomChanged.add(this.onZoomChanged);
+    this.props.signal.zoomChanged.add(this.prepareRefresh);
+    this.props.signal.frameSelected.add(this.prepareRefresh);
   },
-  onZoomChanged: function() {
+  prepareRefresh: function() {
     this.setState({needsRefresh: true});
   },
   componentDidUpdate: function() {
@@ -2042,6 +2055,9 @@ var FrameBoxFrame = React.createClass({
   render: function() {
     var cssClass = 'FrameBoxFrame';
     if(this.props.frame == this.props.editor.frame) cssClass+= ' selected';
+    if(this.props.frame%this.props.io.frames.x == 0) cssClass+= ' right';
+    if(this.props.frame<=this.props.io.frames.x) cssClass+= ' top';
+
     return (
       <canvas
         id={this.props.key}
@@ -2159,6 +2175,7 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.zoomChanged.add(this.prepareRefresh);
   },
@@ -2232,6 +2249,9 @@ var OffscreenFrameCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
+
+    this.props.signal.frameSelected.add(this.prepareRefresh);
+
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
@@ -2241,9 +2261,9 @@ var OffscreenFrameCanvas = React.createClass({
     this.props.signal.pixelSelected.add(this.getPixelColor);
   },
   componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var self = this;
+    if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
       this.getDOMNode().width = this.getDOMNode().width;
+      var self = this;
       for(var i = this.props.io.layers.length -1; i >= 0; i--) {
         var layer = this.props.io.layers[i];
         var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
@@ -2281,6 +2301,17 @@ window.onload = function() {
   // render app
   React.renderComponent(<App editor={editor} io={io} pixel={canvas.pixel} signal={signal}/>, document.body);
 
+  // draw all frames once to stage to initialize offscreen area
+  var totalFrames = io.frames.x * io.frames.y;
+  for(var i = 1; i <= totalFrames; i++) {
+    signal.frameSelected.dispatch(i);
+    //editor.frame = i;
+    canvas.frame.refresh(i);
+  }
+
+  // select the first frame again
+  signal.frameSelected.dispatch(1);
+
   // setup zoom
   signal.zoomChanged.dispatch(editor.zoom);
 
@@ -2291,12 +2322,4 @@ window.onload = function() {
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
-
-
-  // draw loaded file to stage
-  canvas.frame.refresh();
-  // update layer previews
-  io.layers.forEach(function(layer){
-    signal.layerContentChanged.dispatch(layer.id);
-  })
 };

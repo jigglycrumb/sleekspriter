@@ -240,7 +240,7 @@ ul {
   top: 3px;
   content: "\e008";
 }
-.top {
+.area.top {
   top: 0;
   left: 0;
   right: 0;
@@ -303,7 +303,7 @@ ul {
   margin-top: 6px;
   margin-left: 4px;
 }
-.left {
+.area.left {
   top: 40px;
   left: 0;
   bottom: 0;
@@ -311,7 +311,7 @@ ul {
   border: 1px solid #262626;
   background: #262626;
 }
-.left:after {
+.area.left:after {
   background: none;
   width: 0;
   border-left: 1px solid #3a3a3a;
@@ -341,7 +341,7 @@ ul {
   font-size: 1.2rem;
   color: #e7e7e7;
 }
-.center {
+.area.center {
   top: 0;
   left: 0;
   right: 0;
@@ -365,7 +365,7 @@ ul {
   background: transparent;
   z-index: 10000000;
 }
-.right {
+.area.right {
   top: 40px;
   right: 0;
   bottom: 0;
@@ -373,7 +373,7 @@ ul {
   border: 1px solid #262626;
   background: #262626;
 }
-.right:after {
+.area.right:after {
   background: none;
   width: 0;
   border-left: 1px solid #2d2d2d;
@@ -401,18 +401,34 @@ ul {
 #PreviewBox .foldable-fold {
   text-align: center;
 }
+#PreviewBox #PreviewBoxPreview {
+  margin-top: 4px;
+  border: 1px solid #464646;
+}
 #FrameBox #FrameBoxFrames {
-  margin-top: 3px;
+  margin-top: 4px;
   float: left;
-  border: 1px solid #262626;
 }
 #FrameBox .FrameBoxFrame {
   float: left;
-  border: 1px solid #262626;
+  border-top: 1px solid #464646;
+  border-right: 1px solid #464646;
+  border-bottom: none;
+  border-left: none;
+  background: #535353;
   box-sizing: border-box;
 }
+#FrameBox .FrameBoxFrame.top {
+  border-top: none;
+}
+#FrameBox .FrameBoxFrame.right {
+  border-right: none;
+}
 #FrameBox .FrameBoxFrame.selected {
-  border: 2px solid #576579;
+  border: 1px solid #6d7e96;
+  box-shadow: 0 0 1px 0 #6d7e96;
+  -webkit-transform: translate(-1px, 1px);
+  -webkit-transform: scale(1.1);
 }
 #FrameBox .actions {
   width: 90%;
@@ -501,7 +517,7 @@ ul {
   height: 13px;
   float: left;
 }
-.bottom {
+.area.bottom {
   left: 43px;
   right: 203px;
   bottom: 0;
@@ -509,7 +525,7 @@ ul {
   border: 1px solid #262626;
   background: #262626;
 }
-.bottom:after {
+.area.bottom:after {
   background: none;
   height: 0;
   border-top: 1px solid #2d2d2d;
@@ -555,7 +571,7 @@ ul {
 #StatusBarButtons {
   float: right;
 }
-.offscreen {
+.area.offscreen {
   top: 25px;
   left: 25px;
   zoom: 2;

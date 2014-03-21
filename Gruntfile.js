@@ -53,6 +53,8 @@ module.exports = function(grunt) {
           'js/jsx-header.js',
 
           'js/classes/color-0.4.4.js',
+
+          'js/strict.js',
           'js/classes/Signal.js',
           'js/classes/IO.js',
           'js/classes/Editor.js',

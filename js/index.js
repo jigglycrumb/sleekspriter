@@ -10,6 +10,17 @@ window.onload = function() {
   // render app
   React.renderComponent(<App editor={editor} io={io} pixel={canvas.pixel} signal={signal}/>, document.body);
 
+  // draw all frames once to stage to initialize offscreen area
+  var totalFrames = io.frames.x * io.frames.y;
+  for(var i = 1; i <= totalFrames; i++) {
+    signal.frameSelected.dispatch(i);
+    //editor.frame = i;
+    canvas.frame.refresh(i);
+  }
+
+  // select the first frame again
+  signal.frameSelected.dispatch(1);
+
   // setup zoom
   signal.zoomChanged.dispatch(editor.zoom);
 
@@ -20,12 +31,4 @@ window.onload = function() {
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
-
-
-  // draw loaded file to stage
-  canvas.frame.refresh();
-  // update layer previews
-  io.layers.forEach(function(layer){
-    signal.layerContentChanged.dispatch(layer.id);
-  })
 };

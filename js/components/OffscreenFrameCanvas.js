@@ -22,6 +22,9 @@ var OffscreenFrameCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
+
+    this.props.signal.frameSelected.add(this.prepareRefresh);
+
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
@@ -31,9 +34,9 @@ var OffscreenFrameCanvas = React.createClass({
     this.props.signal.pixelSelected.add(this.getPixelColor);
   },
   componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var self = this;
+    if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
       this.getDOMNode().width = this.getDOMNode().width;
+      var self = this;
       for(var i = this.props.io.layers.length -1; i >= 0; i--) {
         var layer = this.props.io.layers[i];
         var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);

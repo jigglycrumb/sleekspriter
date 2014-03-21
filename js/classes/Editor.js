@@ -15,7 +15,7 @@ var Editor = function() {
 
   // signal handlers
   signal.frameSelected.add(function(frame) {
-    self.frame = frame;
+    self.frame = parseInt(frame);
   });
 
   signal.layerSelected.add(function(id) {
@@ -31,7 +31,7 @@ var Editor = function() {
   });
 
   signal.zoomChanged.add(function(zoom) {
-    self.zoom = parseInt(zoom, 10) || self.zoom;
+    self.zoom = parseInt(zoom) || self.zoom;
     self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });

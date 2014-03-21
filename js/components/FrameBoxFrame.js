@@ -3,6 +3,9 @@ var FrameBoxFrame = React.createClass({
   render: function() {
     var cssClass = 'FrameBoxFrame';
     if(this.props.frame == this.props.editor.frame) cssClass+= ' selected';
+    if(this.props.frame%this.props.io.frames.x == 0) cssClass+= ' right';
+    if(this.props.frame<=this.props.io.frames.x) cssClass+= ' top';
+
     return (
       <canvas
         id={this.props.key}

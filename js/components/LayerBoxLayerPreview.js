@@ -8,6 +8,7 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.zoomChanged.add(this.prepareRefresh);
   },

@@ -1,6 +1,6 @@
 // right area
 
-.right {
+.area.right {
   top: 40px;
   right: 0;
   bottom: 0;
@@ -10,7 +10,7 @@
   background: @dark;
 }
 
-.right:after {
+.area.right:after {
   background: none;
   width: 0;
   border-left: 1px solid #2d2d2d;
@@ -44,23 +44,43 @@
   .foldable-fold {
     text-align: center;
   }
+
+  #PreviewBoxPreview {
+    margin-top: 4px;
+    border: 1px solid @medium;
+  }
 }
 
 #FrameBox {
 
   #FrameBoxFrames {
-    margin-top: 3px;
+    margin-top: 4px;
     float: left;
-    border: 1px solid @dark;
   }
 
   .FrameBoxFrame {
     float: left;
-    border: 1px solid @dark;
+    border-top: 1px solid @medium;
+    border-right: 1px solid @medium;
+    border-bottom: none; //1px solid transparent;
+    border-left: none; //1px solid transparent;
+    background: @light;
+
     box-sizing: border-box;
 
+    &.top {
+      border-top: none; //1px solid transparent;
+    }
+
+    &.right {
+      border-right: none; //1px solid transparent;
+    }
+
     &.selected {
-      border: 2px solid @selected;
+      border: 1px solid lighten(@selected, 10%);
+      box-shadow: 0 0 1px 0 lighten(@selected, 10%);
+      -webkit-transform: translate(-1px,1px);
+      -webkit-transform: scale(1.1);
     }
   }
 

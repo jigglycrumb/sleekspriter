@@ -41,9 +41,10 @@ var StageBox = React.createClass({
     }
   },
   componentDidMount: function() {
-    this.props.signal.zoomChanged.add(this.onZoomChanged);
+    this.props.signal.zoomChanged.add(this.prepareRefresh);
+    this.props.signal.frameSelected.add(this.prepareRefresh);
   },
-  onZoomChanged: function() {
+  prepareRefresh: function() {
     this.setState({needsRefresh: true});
   },
   componentDidUpdate: function() {

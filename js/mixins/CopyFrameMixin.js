@@ -5,7 +5,7 @@ var CopyFrameMixin = {
   },
   componentDidMount: function() {
     this.props.signal.frameContentChanged.add(this.prepareRefresh);
-    //this.props.signal.zoomChanged.add(this.prepareRefresh);
+    //this.props.signal.frameSelected.add(this.prepareRefresh);
   },
   getInitialState: function() {
     return {

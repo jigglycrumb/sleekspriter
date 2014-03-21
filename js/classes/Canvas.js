@@ -2,8 +2,13 @@ var Canvas = function() {
 
   return {
     frame: {
-      refresh: function() {
-        var pixels = _.where(io.pixels, {frame: editor.frame});
+      refresh: function(frame) {
+
+        var frame = frame || editor.frame;
+
+        this.clear();
+
+        var pixels = _.where(io.pixels, {frame: frame});
 
         //console.log('refreshing frame '+editor.frame);
 
@@ -12,6 +17,12 @@ var Canvas = function() {
         });
 
         //signal.pixelSelected.dispatch(0, 0);
+      },
+      clear: function() {
+        io.layers.forEach(function(layer) {
+          var c = document.getElementById('StageBoxLayer-'+layer.id);
+          c.width = c.width;
+        });
       }
     },
     layer: {
