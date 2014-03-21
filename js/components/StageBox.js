@@ -24,8 +24,7 @@ var StageBox = React.createClass({
           width={w}
           height={h}
           editor={this.props.editor}
-          signal={this.props.signal}
-        />
+          signal={this.props.signal} />
 
         {this.props.io.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;

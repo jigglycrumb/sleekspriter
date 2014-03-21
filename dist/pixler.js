@@ -1473,42 +1473,6 @@ var FoldableMixin = {
     handle.onclick = null;
   }
 };
-var CompositeCanvasMixin = {
-  propTypes: {
-    frame: React.PropTypes.number.isRequired
-  },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    };
-  },
-  componentDidMount: function() {
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
-    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-    this.props.signal.pixelFilled.add(this.prepareRefresh);
-    this.props.signal.pixelCleared.add(this.prepareRefresh);
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var self = this;
-      this.getDOMNode().width = this.getDOMNode().width;
-      for(var i = this.props.io.layers.length -1; i >= 0; i--) {
-        var layer = this.props.io.layers[i];
-        var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
-        var ctx = self.getDOMNode().getContext('2d');
-        ctx.globalAlpha = layer.opacity/100;
-        ctx.drawImage(sourceCanvas, 0, 0);
-      }
-      this.props.signal.frameContentChanged.dispatch(this.props.frame);
-    }
-  },
-  prepareRefresh: function() {
-    if(this.props.frame == this.props.editor.frame) {
-      this.setState({needsRefresh: true});
-    }
-  }
-};
 // Use only in <canvas> components
 var CopyFrameMixin = {
   propTypes: {
@@ -1722,8 +1686,7 @@ var StageBox = React.createClass({
           width={w}
           height={h}
           editor={this.props.editor}
-          signal={this.props.signal}
-        />
+          signal={this.props.signal} />
 
         {this.props.io.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
@@ -2246,7 +2209,14 @@ var StatusBar = React.createClass({
   }
 });
 var OffscreenFrameCanvas = React.createClass({
-  mixins: [CompositeCanvasMixin],
+  propTypes: {
+    frame: React.PropTypes.number.isRequired
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    };
+  },
   render: function() {
     return (
       <canvas
@@ -2262,14 +2232,41 @@ var OffscreenFrameCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.props.signal.layerContentChanged.add(this.prepareRefresh);
+    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
+    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
+    this.props.signal.pixelFilled.add(this.prepareRefresh);
+    this.props.signal.pixelCleared.add(this.prepareRefresh);
+
     this.props.signal.pixelSelected.add(this.getPixelColor);
   },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      var self = this;
+      this.getDOMNode().width = this.getDOMNode().width;
+      for(var i = this.props.io.layers.length -1; i >= 0; i--) {
+        var layer = this.props.io.layers[i];
+        var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
+        var ctx = self.getDOMNode().getContext('2d');
+        ctx.globalAlpha = layer.opacity/100;
+        ctx.drawImage(sourceCanvas, 0, 0);
+      }
+      this.props.signal.frameContentChanged.dispatch(this.props.frame);
+    }
+  },
+  prepareRefresh: function() {
+    if(this.props.frame == this.props.editor.frame) {
+      this.setState({needsRefresh: true});
+    }
+  },
   getPixelColor: function(x, y) {
-    var ctx = this.getDOMNode().getContext('2d'),
-        px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
-        color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+    if(this.props.frame == this.props.editor.frame) {
+      var ctx = this.getDOMNode().getContext('2d'),
+          px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
+          color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-    editor.pixelColor = color;
+      editor.pixelColor = color;
+    }
   }
 });
 function NodeList2Array(NodeList) {

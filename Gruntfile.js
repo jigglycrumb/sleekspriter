@@ -59,7 +59,6 @@ module.exports = function(grunt) {
           'js/classes/Canvas.js',
 
           'js/mixins/FoldableMixin.js',
-          'js/mixins/CompositeCanvasMixin.js',
           'js/mixins/CopyFrameMixin.js',
 
           'js/components/App.js',
