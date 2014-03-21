@@ -14,7 +14,7 @@ var LayerBox = React.createClass({
           {this.props.io.layers.map(function(layer) {
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} editor={this.props.editor} signal={this.props.signal}/>
             );
           }, this)}
           <div className="actions">

@@ -1,11 +1,13 @@
 var LayerBoxLayer = React.createClass({
   render: function() {
+    var cssClass = 'LayerBoxLayer';
+    if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
     return (
-      <div id={this.props.key} className="LayerBoxLayer">
+      <div id={this.props.key} className={cssClass}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
-        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.zoom} signal={signal}/>
+        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
           <input ref="nameText" className="name-text" type="text" defaultValue={this.props.layer.name} onKeyDown={this.dispatchLayerNameChanged}/>
@@ -17,10 +19,6 @@ var LayerBoxLayer = React.createClass({
   },
   componentDidMount: function() {
     this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
-    this.props.signal.layerSelected.add(this.onLayerSelected);
-  },
-  componentWillUnmount: function() {
-    this.props.signal.layerSelected.remove(this.onLayerSelected);
   },
   dispatchLayerVisibilityChanged: function(event) {
     this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);
@@ -34,14 +32,6 @@ var LayerBoxLayer = React.createClass({
       this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
       this.refs.nameLabel.getDOMNode().style.display = 'block';
       this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
-    }
-  },
-  onLayerSelected: function(layer) {
-    if(this.props.layer.id == layer) {
-      this.getDOMNode().classList.add('selected');
-    }
-    else {
-      this.getDOMNode().classList.remove('selected');
     }
   },
   showNameInput: function() {

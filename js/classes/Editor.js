@@ -5,9 +5,9 @@ var Editor = function() {
       self = this;
 
   this.frame = 1;
+  this.layer = null;
   this.zoom = 10;
   this.grid = true;
-  this.layer = null;
   this.pixel = {x:0, y:0};
   this.pixelColor = Color('#000000');
   this.tool = 'BrushTool';

@@ -1330,9 +1330,9 @@ var Editor = function() {
       self = this;
 
   this.frame = 1;
+  this.layer = null;
   this.zoom = 10;
   this.grid = true;
-  this.layer = null;
   this.pixel = {x:0, y:0};
   this.pixelColor = Color('#000000');
   this.tool = 'BrushTool';
@@ -1994,21 +1994,56 @@ var PreviewBoxPreview = React.createClass({
 var FrameBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
-    var totalFrames = this.props.io.frames.x * this.props.io.frames.y;
+    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+        frames = [],
+        frameSize = Math.floor(180/this.props.io.frames.x),
+        w = frameSize*this.props.io.frames.x,
+        l = (200-w)/2;
+    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+
     return (
       <div id="FrameBox" className="box">
         <h4 className="foldable-handle">Frames</h4>
         <div className="foldable-fold">
-          <div></div>
+          <div id="FrameBoxFrames" style={{width:w, marginLeft:l}}>
+          {frames.map(function(frame) {
+            var id = 'FrameBoxFrame-'+frame;
+            return (
+              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} signal={this.props.signal} />
+            );
+          }, this)}
+          </div>
           <div className="actions">
-            Frame
-            <input type="number" defaultValue={this.props.editor.frame} />
-            of
+            Frame&nbsp;
+            <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.editor.frame} onChange={this.dispatchFrameSelected} />
+            &nbsp;of&nbsp;
             {totalFrames}
           </div>
         </div>
       </div>
     );
+  },
+  dispatchFrameSelected: function(event) {
+    //console.log(event.target.value);
+    this.props.signal.frameSelected.dispatch(event.target.value);
+  }
+});
+var FrameBoxFrame = React.createClass({
+  render: function() {
+    var cssClass = 'FrameBoxFrame';
+    if(this.props.frame == editor.frame) cssClass+= ' selected';
+    return (
+      <canvas
+        id={this.props.key}
+        data-frame={this.props.frame}
+        className={cssClass}
+        style={{width: this.props.size, height: this.props.size}}
+        onClick={this.dispatchFrameSelected}
+      />
+    );
+  },
+  dispatchFrameSelected: function() {
+    this.props.signal.frameSelected.dispatch(this.props.frame);
   }
 });
 var LayerBox = React.createClass({
@@ -2027,7 +2062,7 @@ var LayerBox = React.createClass({
           {this.props.io.layers.map(function(layer) {
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} editor={this.props.editor} signal={this.props.signal}/>
             );
           }, this)}
           <div className="actions">
@@ -2060,12 +2095,14 @@ var LayerBox = React.createClass({
 });
 var LayerBoxLayer = React.createClass({
   render: function() {
+    var cssClass = 'LayerBoxLayer';
+    if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
     return (
-      <div id={this.props.key} className="LayerBoxLayer">
+      <div id={this.props.key} className={cssClass}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
-        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.zoom} signal={signal}/>
+        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
           <input ref="nameText" className="name-text" type="text" defaultValue={this.props.layer.name} onKeyDown={this.dispatchLayerNameChanged}/>
@@ -2077,10 +2114,6 @@ var LayerBoxLayer = React.createClass({
   },
   componentDidMount: function() {
     this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
-    this.props.signal.layerSelected.add(this.onLayerSelected);
-  },
-  componentWillUnmount: function() {
-    this.props.signal.layerSelected.remove(this.onLayerSelected);
   },
   dispatchLayerVisibilityChanged: function(event) {
     this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);
@@ -2094,14 +2127,6 @@ var LayerBoxLayer = React.createClass({
       this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
       this.refs.nameLabel.getDOMNode().style.display = 'block';
       this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
-    }
-  },
-  onLayerSelected: function(layer) {
-    if(this.props.layer.id == layer) {
-      this.getDOMNode().classList.add('selected');
-    }
-    else {
-      this.getDOMNode().classList.remove('selected');
     }
   },
   showNameInput: function() {

@@ -80,6 +80,7 @@ module.exports = function(grunt) {
           'js/components/PreviewBoxPreview.js',
 
           'js/components/FrameBox.js',
+          'js/components/FrameBoxFrame.js',
 
           'js/components/LayerBox.js',
           'js/components/LayerBoxLayer.js',

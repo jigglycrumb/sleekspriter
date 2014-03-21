@@ -152,6 +152,9 @@ button.transparent.active {
 button.transparent:not(.active)[disabled] {
   color: #818181;
 }
+input {
+  -webkit-user-select: text;
+}
 input[type=text],
 input[type=number] {
   background: #3a3a3a;
@@ -277,7 +280,7 @@ ul {
 }
 .ToolComponent input[type=number] {
   height: 20px;
-  width: 30px;
+  width: 2.5em;
   margin: 8px 5px 0 0;
   float: left;
 }
@@ -398,6 +401,27 @@ ul {
 #PreviewBox .foldable-fold {
   text-align: center;
 }
+#FrameBox #FrameBoxFrames {
+  margin-top: 3px;
+  float: left;
+  border: 1px solid #262626;
+}
+#FrameBox .FrameBoxFrame {
+  float: left;
+  border: 1px solid #262626;
+  box-sizing: border-box;
+}
+#FrameBox .FrameBoxFrame.selected {
+  border: 2px solid #576579;
+}
+#FrameBox .actions {
+  width: 90%;
+  margin-left: 5%;
+}
+#FrameBox .frame-number {
+  width: 3.2em;
+  text-align: right;
+}
 #LayerBox > div {
   border-top: 1px solid #6a6a6a;
 }
@@ -473,7 +497,7 @@ ul {
 }
 #LayerBox .LayerBoxLayer .opacity-number {
   margin-left: 3px;
-  width: 34px;
+  width: 3.2em;
   height: 13px;
   float: left;
 }
@@ -535,7 +559,6 @@ ul {
   top: 16.66666667px;
   left: 16.66666667px;
   zoom: 3;
-  display: none;
 }
 #CompositeCanvas {
   background: #fff;
