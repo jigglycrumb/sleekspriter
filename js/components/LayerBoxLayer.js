@@ -7,7 +7,9 @@ var LayerBoxLayer = React.createClass({
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
-        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+        <div className="preview">
+          <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+        </div>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
           <input ref="nameText" className="name-text" type="text" defaultValue={this.props.layer.name} onKeyDown={this.dispatchLayerNameChanged}/>

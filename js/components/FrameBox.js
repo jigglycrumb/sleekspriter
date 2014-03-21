@@ -5,7 +5,9 @@ var FrameBox = React.createClass({
         frames = [],
         frameSize = Math.floor(180/this.props.io.frames.x),
         w = frameSize*this.props.io.frames.x,
-        l = (200-w)/2;
+        l = (200-w)/2,
+        self = this;
+
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
 
     return (
@@ -15,8 +17,20 @@ var FrameBox = React.createClass({
           <div id="FrameBoxFrames" style={{width:w, marginLeft:l}}>
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame;
+
+            var cssClass = 'frame';
+            if(frame == this.props.editor.frame) cssClass+= ' selected';
+            if(frame % this.props.io.frames.x == 0) cssClass+= ' right';
+            if(frame <= this.props.io.frames.x) cssClass+= ' top';
+
+            var clickHandler = function() {
+              self.props.signal.frameSelected.dispatch(frame);
+            }
+
             return (
-              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
+                <FrameBoxFrame frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              </div>
             );
           }, this)}
           </div>
@@ -31,7 +45,6 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    //console.log(event.target.value);
     this.props.signal.frameSelected.dispatch(event.target.value);
   }
 });

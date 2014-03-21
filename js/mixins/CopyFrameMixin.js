@@ -20,6 +20,7 @@ var CopyFrameMixin = {
       //console.log('updating preview', this.props.layer);
       var sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
       this.getDOMNode().width = this.getDOMNode().width;
+      //this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
       this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
       this.setState({needsRefresh: false});
     }

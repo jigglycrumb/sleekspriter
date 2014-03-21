@@ -2,6 +2,29 @@ function NodeList2Array(NodeList) {
   return [].slice.call(NodeList);
 };
 
+function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
+  var w = canvasWidth,
+      h = canvasHeight,
+      style = {};
+
+  if(w > h) {
+    scale = containerSize/w;
+    style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
+  }
+  else {
+    scale = containerSize/h;
+    style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
+  }
+
+  w = Math.round(w*scale);
+  h = Math.round(h*scale);
+
+  style.width = w;
+  style.height = h;
+
+  return style;
+}
+
 window.onload = function() {
 
   // load io

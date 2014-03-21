@@ -3,8 +3,13 @@ var LayerBoxLayerPreview = React.createClass({
      layer: React.PropTypes.number.isRequired // layer id
   },
   render: function() {
+
+    var width = this.props.size.width*this.props.zoom,
+        height = this.props.size.height*this.props.zoom,
+        style = fitCanvasIntoSquareContainer(width, height, 30);
+
     return (
-      <canvas className="preview" width={this.props.size.width*this.props.zoom} height={this.props.size.height*this.props.zoom} onClick={this.dispatchLayerSelected}></canvas>
+      <canvas width={width} height={height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
   },
   componentDidMount: function() {

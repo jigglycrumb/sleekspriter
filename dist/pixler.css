@@ -409,22 +409,23 @@ ul {
   margin-top: 4px;
   float: left;
 }
-#FrameBox .FrameBoxFrame {
+#FrameBox .frame {
   float: left;
   border-top: 1px solid #464646;
   border-right: 1px solid #464646;
   border-bottom: none;
   border-left: none;
   background: #535353;
+  cursor: pointer;
   box-sizing: border-box;
 }
-#FrameBox .FrameBoxFrame.top {
+#FrameBox .frame.top {
   border-top: none;
 }
-#FrameBox .FrameBoxFrame.right {
+#FrameBox .frame.right {
   border-right: none;
 }
-#FrameBox .FrameBoxFrame.selected {
+#FrameBox .frame.selected {
   border: 1px solid #6d7e96;
   box-shadow: 0 0 1px 0 #6d7e96;
   -webkit-transform: translate(-1px, 1px);
@@ -566,17 +567,19 @@ ul {
   margin-top: 2px;
 }
 #StatusBarColorString {
-  min-width: 4rem;
+  min-width: 5rem;
 }
 #StatusBarButtons {
   float: right;
 }
 .area.offscreen {
-  top: 25px;
-  left: 25px;
-  zoom: 2;
+  top: 50px;
+  left: 50px;
+  right: 220px;
+  zoom: 1;
 }
 .OffscreenFrameCanvas {
   background: #fff;
   margin-right: 2px;
+  margin-bottom: 2px;
 }

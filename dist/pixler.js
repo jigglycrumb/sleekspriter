@@ -1507,6 +1507,7 @@ var CopyFrameMixin = {
       //console.log('updating preview', this.props.layer);
       var sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
       this.getDOMNode().width = this.getDOMNode().width;
+      //this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
       this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
       this.setState({needsRefresh: false});
     }
@@ -2020,7 +2021,9 @@ var FrameBox = React.createClass({
         frames = [],
         frameSize = Math.floor(180/this.props.io.frames.x),
         w = frameSize*this.props.io.frames.x,
-        l = (200-w)/2;
+        l = (200-w)/2,
+        self = this;
+
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
 
     return (
@@ -2030,8 +2033,20 @@ var FrameBox = React.createClass({
           <div id="FrameBoxFrames" style={{width:w, marginLeft:l}}>
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame;
+
+            var cssClass = 'frame';
+            if(frame == this.props.editor.frame) cssClass+= ' selected';
+            if(frame % this.props.io.frames.x == 0) cssClass+= ' right';
+            if(frame <= this.props.io.frames.x) cssClass+= ' top';
+
+            var clickHandler = function() {
+              self.props.signal.frameSelected.dispatch(frame);
+            }
+
             return (
-              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
+                <FrameBoxFrame frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              </div>
             );
           }, this)}
           </div>
@@ -2046,34 +2061,23 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    //console.log(event.target.value);
     this.props.signal.frameSelected.dispatch(event.target.value);
   }
 });
 var FrameBoxFrame = React.createClass({
   mixins:[CopyFrameMixin],
   render: function() {
-    var cssClass = 'FrameBoxFrame';
-    if(this.props.frame == this.props.editor.frame) cssClass+= ' selected';
-    if(this.props.frame%this.props.io.frames.x == 0) cssClass+= ' right';
-    if(this.props.frame<=this.props.io.frames.x) cssClass+= ' top';
+
+    var width = this.props.io.size.width*this.props.editor.zoom,
+        height = this.props.io.size.height*this.props.editor.zoom,
+        style = fitCanvasIntoSquareContainer(width, height, this.props.size);
 
     return (
       <canvas
-        id={this.props.key}
-        data-frame={this.props.frame}
-        className={cssClass}
-        width={this.props.io.size.width*this.props.editor.zoom}
-        height={this.props.io.size.height*this.props.editor.zoom}
-        style={{
-          width: this.props.size,
-          height: this.props.size
-        }}
-        onClick={this.dispatchFrameSelected}/>
+        width={width}
+        height={height}
+        style={style} />
     );
-  },
-  dispatchFrameSelected: function() {
-    this.props.signal.frameSelected.dispatch(this.props.frame);
   }
 });
 var LayerBox = React.createClass({
@@ -2132,7 +2136,9 @@ var LayerBoxLayer = React.createClass({
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
-        <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+        <div className="preview">
+          <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+        </div>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
           <input ref="nameText" className="name-text" type="text" defaultValue={this.props.layer.name} onKeyDown={this.dispatchLayerNameChanged}/>
@@ -2170,8 +2176,13 @@ var LayerBoxLayerPreview = React.createClass({
      layer: React.PropTypes.number.isRequired // layer id
   },
   render: function() {
+
+    var width = this.props.size.width*this.props.zoom,
+        height = this.props.size.height*this.props.zoom,
+        style = fitCanvasIntoSquareContainer(width, height, 30);
+
     return (
-      <canvas className="preview" width={this.props.size.width*this.props.zoom} height={this.props.size.height*this.props.zoom} onClick={this.dispatchLayerSelected}></canvas>
+      <canvas width={width} height={height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
   },
   componentDidMount: function() {
@@ -2292,6 +2303,29 @@ var OffscreenFrameCanvas = React.createClass({
 function NodeList2Array(NodeList) {
   return [].slice.call(NodeList);
 };
+
+function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
+  var w = canvasWidth,
+      h = canvasHeight,
+      style = {};
+
+  if(w > h) {
+    scale = containerSize/w;
+    style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
+  }
+  else {
+    scale = containerSize/h;
+    style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
+  }
+
+  w = Math.round(w*scale);
+  h = Math.round(h*scale);
+
+  style.width = w;
+  style.height = h;
+
+  return style;
+}
 
 window.onload = function() {
 
