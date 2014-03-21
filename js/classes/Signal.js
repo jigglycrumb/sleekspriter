@@ -2,6 +2,8 @@ var Signal = signals.Signal;
 var signal = {
 
   frameSelected: new Signal(),
+  frameContentChanged: new Signal(),
+
   toolSelected: new Signal(),
 
   colorSelected: new Signal(),

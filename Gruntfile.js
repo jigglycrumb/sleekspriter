@@ -60,6 +60,7 @@ module.exports = function(grunt) {
 
           'js/mixins/FoldableMixin.js',
           'js/mixins/CompositeCanvasMixin.js',
+          'js/mixins/CopyFrameMixin.js',
 
           'js/components/App.js',
           'js/components/ToolContainer.js',
@@ -89,7 +90,10 @@ module.exports = function(grunt) {
           //'js/components/HandTool.js',
 
           'js/components/StatusBar.js',
-          'js/components/CompositeCanvas.js',
+
+          'js/components/OffscreenFrameCanvas.js',
+
+
           'js/index.js'
         ],
         // the location of the resulting JS file

@@ -1,5 +1,5 @@
 var PreviewBoxPreview = React.createClass({
-  mixins: [CompositeCanvasMixin],
+  mixins: [CopyFrameMixin],
   render: function() {
 
     var scale = 1,

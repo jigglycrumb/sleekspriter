@@ -1,7 +1,13 @@
 var App = React.createClass({
   render: function() {
+
+    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+        frames = [];
+
+    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+
     return (
-      <div>
+      <div id="App">
         <div className="area top">
           <ToolContainer editor={this.props.editor} />
         </div>
@@ -20,7 +26,12 @@ var App = React.createClass({
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area offscreen">
-          <CompositeCanvas io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          {frames.map(function(frame) {
+            var id = 'OffscreenFrameCanvas-'+frame;
+            return (
+              <OffscreenFrameCanvas key={id} frame={frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+            );
+          }, this)}
         </div>
       </div>
     );

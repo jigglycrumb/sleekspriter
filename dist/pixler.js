@@ -1087,6 +1087,8 @@ var Signal = signals.Signal;
 var signal = {
 
   frameSelected: new Signal(),
+  frameContentChanged: new Signal(),
+
   toolSelected: new Signal(),
 
   colorSelected: new Signal(),
@@ -1472,6 +1474,9 @@ var FoldableMixin = {
   }
 };
 var CompositeCanvasMixin = {
+  propTypes: {
+    frame: React.PropTypes.number.isRequired
+  },
   getInitialState: function() {
     return {
       needsRefresh: false
@@ -1495,16 +1500,52 @@ var CompositeCanvasMixin = {
         ctx.globalAlpha = layer.opacity/100;
         ctx.drawImage(sourceCanvas, 0, 0);
       }
+      this.props.signal.frameContentChanged.dispatch(this.props.frame);
     }
   },
   prepareRefresh: function() {
+    if(this.props.frame == this.props.editor.frame) {
+      this.setState({needsRefresh: true});
+    }
+  }
+};
+// Use only in <canvas> components
+var CopyFrameMixin = {
+  propTypes: {
+    frame: React.PropTypes.number.isRequired
+  },
+  componentDidMount: function() {
+    this.props.signal.frameContentChanged.add(this.prepareRefresh);
+    //this.props.signal.zoomChanged.add(this.prepareRefresh);
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false
+    };
+  },
+  prepareRefresh: function() {
     this.setState({needsRefresh: true});
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      //console.log('updating preview', this.props.layer);
+      var sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
+      this.getDOMNode().width = this.getDOMNode().width;
+      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
+      this.setState({needsRefresh: false});
+    }
   }
 };
 var App = React.createClass({
   render: function() {
+
+    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+        frames = [];
+
+    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+
     return (
-      <div>
+      <div id="App">
         <div className="area top">
           <ToolContainer editor={this.props.editor} />
         </div>
@@ -1523,7 +1564,12 @@ var App = React.createClass({
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area offscreen">
-          <CompositeCanvas io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          {frames.map(function(frame) {
+            var id = 'OffscreenFrameCanvas-'+frame;
+            return (
+              <OffscreenFrameCanvas key={id} frame={frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+            );
+          }, this)}
         </div>
       </div>
     );
@@ -1952,14 +1998,14 @@ var PreviewBox = React.createClass({
       <div id="PreviewBox" className="box">
         <h4 className="foldable-handle">Preview</h4>
         <div className="foldable-fold">
-          <PreviewBoxPreview io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          <PreviewBoxPreview frame={this.props.editor.frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );
   }
 });
 var PreviewBoxPreview = React.createClass({
-  mixins: [CompositeCanvasMixin],
+  mixins: [CopyFrameMixin],
   render: function() {
 
     var scale = 1,
@@ -2009,7 +2055,7 @@ var FrameBox = React.createClass({
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame;
             return (
-              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} signal={this.props.signal} />
+              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
           </div>
@@ -2029,17 +2075,22 @@ var FrameBox = React.createClass({
   }
 });
 var FrameBoxFrame = React.createClass({
+  mixins:[CopyFrameMixin],
   render: function() {
     var cssClass = 'FrameBoxFrame';
-    if(this.props.frame == editor.frame) cssClass+= ' selected';
+    if(this.props.frame == this.props.editor.frame) cssClass+= ' selected';
     return (
       <canvas
         id={this.props.key}
         data-frame={this.props.frame}
         className={cssClass}
-        style={{width: this.props.size, height: this.props.size}}
-        onClick={this.dispatchFrameSelected}
-      />
+        width={this.props.io.size.width*this.props.editor.zoom}
+        height={this.props.io.size.height*this.props.editor.zoom}
+        style={{
+          width: this.props.size,
+          height: this.props.size
+        }}
+        onClick={this.dispatchFrameSelected}/>
     );
   },
   dispatchFrameSelected: function() {
@@ -2194,12 +2245,13 @@ var StatusBar = React.createClass({
     this.props.signal.gridToggled.dispatch(!this.props.editor.grid);
   }
 });
-var CompositeCanvas = React.createClass({
+var OffscreenFrameCanvas = React.createClass({
   mixins: [CompositeCanvasMixin],
   render: function() {
     return (
       <canvas
-        id="CompositeCanvas"
+        id={this.props.key}
+        className="OffscreenFrameCanvas"
         width={this.props.io.size.width*this.props.editor.zoom}
         height={this.props.io.size.height*this.props.editor.zoom}
         style={{

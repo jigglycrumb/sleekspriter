@@ -556,10 +556,11 @@ ul {
   float: right;
 }
 .offscreen {
-  top: 16.66666667px;
-  left: 16.66666667px;
-  zoom: 3;
+  top: 25px;
+  left: 25px;
+  zoom: 2;
 }
-#CompositeCanvas {
+.OffscreenFrameCanvas {
   background: #fff;
+  margin-right: 2px;
 }

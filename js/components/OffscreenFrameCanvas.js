@@ -1,9 +1,10 @@
-var CompositeCanvas = React.createClass({
+var OffscreenFrameCanvas = React.createClass({
   mixins: [CompositeCanvasMixin],
   render: function() {
     return (
       <canvas
-        id="CompositeCanvas"
+        id={this.props.key}
+        className="OffscreenFrameCanvas"
         width={this.props.io.size.width*this.props.editor.zoom}
         height={this.props.io.size.height*this.props.editor.zoom}
         style={{

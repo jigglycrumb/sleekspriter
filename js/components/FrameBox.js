@@ -16,7 +16,7 @@ var FrameBox = React.createClass({
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame;
             return (
-              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} signal={this.props.signal} />
+              <FrameBoxFrame key={id} frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
           </div>

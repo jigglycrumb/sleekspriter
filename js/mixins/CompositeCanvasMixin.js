@@ -1,4 +1,7 @@
 var CompositeCanvasMixin = {
+  propTypes: {
+    frame: React.PropTypes.number.isRequired
+  },
   getInitialState: function() {
     return {
       needsRefresh: false
@@ -22,9 +25,12 @@ var CompositeCanvasMixin = {
         ctx.globalAlpha = layer.opacity/100;
         ctx.drawImage(sourceCanvas, 0, 0);
       }
+      this.props.signal.frameContentChanged.dispatch(this.props.frame);
     }
   },
   prepareRefresh: function() {
-    this.setState({needsRefresh: true});
+    if(this.props.frame == this.props.editor.frame) {
+      this.setState({needsRefresh: true});
+    }
   }
 };
