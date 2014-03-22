@@ -31,16 +31,18 @@ var IO = function() {
 
   function layerFromFile(layer) {
     return {
-      id: layer[0],
-      name: layer[1],
-      z: layer[2],
-      opacity: layer[3],
-      visible: !!layer[4]
+      frame: layer[0],
+      id: layer[1],
+      name: layer[2],
+      z: layer[3],
+      opacity: layer[4],
+      visible: !!layer[5]
     };
   };
 
   function layerToFile(layer) {
     return [
+      layer.frame,
       layer.id,
       layer.name,
       layer.z,
