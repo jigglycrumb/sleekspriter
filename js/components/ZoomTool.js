@@ -32,9 +32,9 @@ var ZoomTool = React.createClass({
         left = 40,
         right = 200;
 
-    var zoom = Math.floor((window.innerHeight - top - bottom)/io.size.height);
-    if((io.size.width*zoom) > (window.innerWidth - left - right)) {
-      zoom = Math.floor((window.innerWidth - left - right)/io.size.width);
+    var zoom = Math.floor((window.innerHeight - top - bottom)/file.size.height);
+    if((file.size.width*zoom) > (window.innerWidth - left - right)) {
+      zoom = Math.floor((window.innerWidth - left - right)/file.size.width);
     }
 
     this.dispatchZoomChanged(null, zoom);

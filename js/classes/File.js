@@ -1,4 +1,4 @@
-var IO = function() {
+var File = function() {
 
   this.size = null;
   this.frames = null;
@@ -212,4 +212,4 @@ var IO = function() {
   });
 };
 
-var io = new IO();
+var file = new File();

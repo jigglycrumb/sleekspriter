@@ -1,10 +1,10 @@
 var FrameBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
-    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+    var totalFrames = this.props.file.frames.x * this.props.file.frames.y,
         frames = [],
-        frameSize = Math.floor(180/this.props.io.frames.x),
-        w = frameSize*this.props.io.frames.x,
+        frameSize = Math.floor(180/this.props.file.frames.x),
+        w = frameSize*this.props.file.frames.x,
         l = (200-w)/2,
         self = this;
 
@@ -20,8 +20,8 @@ var FrameBox = React.createClass({
 
             var cssClass = 'frame';
             if(frame == this.props.editor.frame) cssClass+= ' selected';
-            if(frame % this.props.io.frames.x == 0) cssClass+= ' right';
-            if(frame <= this.props.io.frames.x) cssClass+= ' top';
+            if(frame % this.props.file.frames.x == 0) cssClass+= ' right';
+            if(frame <= this.props.file.frames.x) cssClass+= ' top';
 
             var clickHandler = function() {
               self.props.signal.frameSelected.dispatch(frame);
@@ -29,7 +29,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
-                <FrameBoxFrame frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
               </div>
             );
           }, this)}

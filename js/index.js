@@ -28,13 +28,13 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
 window.onload = function() {
 
   // load io
-  io.fromJSONString(savedFile);
+  file.fromJSONString(savedFile);
 
   // render app
-  React.renderComponent(<App editor={editor} io={io} pixel={stage.pixel} signal={signal}/>, document.body);
+  React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
 
   // draw all frames once to stage to initialize offscreen area
-  var totalFrames = io.frames.x * io.frames.y;
+  var totalFrames = file.frames.x * file.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
     //editor.frame = i;
@@ -48,7 +48,7 @@ window.onload = function() {
   signal.zoomChanged.dispatch(editor.zoom);
 
   // select top-most layer
-  var topLayer = _.max(io.layers, function(layer) { return layer.z; });
+  var topLayer = _.max(file.layers, function(layer) { return layer.z; });
   console.log('selecting top layer: ', topLayer.id);
   signal.layerSelected.dispatch(topLayer.id);
 

@@ -1,7 +1,7 @@
 var App = React.createClass({
   render: function() {
 
-    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+    var totalFrames = this.props.file.frames.x * this.props.file.frames.y,
         frames = [];
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
@@ -15,12 +15,12 @@ var App = React.createClass({
           <ToolBox editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area center">
-          <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
+          <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
-          <PreviewBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
-          <FrameBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
-          <LayerBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
@@ -29,7 +29,7 @@ var App = React.createClass({
           {frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              <OffscreenFrameCanvas key={id} frame={frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
         </div>
@@ -63,7 +63,7 @@ var App = React.createClass({
     //console.log('updating App props');
     this.setProps({
       editor: editor,
-      io: io
+      file: file
     });
   }
 

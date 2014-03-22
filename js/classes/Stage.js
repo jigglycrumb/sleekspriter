@@ -8,7 +8,7 @@ var Stage = function() {
 
         this.clear();
 
-        var pixels = _.where(io.pixels, {frame: frame});
+        var pixels = _.where(file.pixels, {frame: frame});
 
         //console.log('refreshing frame '+editor.frame);
 
@@ -19,7 +19,7 @@ var Stage = function() {
         //signal.pixelSelected.dispatch(0, 0);
       },
       clear: function() {
-        io.layers.forEach(function(layer) {
+        file.layers.forEach(function(layer) {
           var c = document.getElementById('StageBoxLayer-'+layer.id);
           c.width = c.width;
         });
@@ -27,7 +27,7 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var pixels = _.where(io.pixels, {frame: editor.frame, layer: editor.layer});
+        var pixels = _.where(file.pixels, {frame: editor.frame, layer: editor.layer});
 
         //console.log('refreshing layer '+editor.layer);
 

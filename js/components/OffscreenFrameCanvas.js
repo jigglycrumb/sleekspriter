@@ -12,11 +12,11 @@ var OffscreenFrameCanvas = React.createClass({
       <canvas
         id={this.props.key}
         className="OffscreenFrameCanvas"
-        width={this.props.io.size.width*this.props.editor.zoom}
-        height={this.props.io.size.height*this.props.editor.zoom}
+        width={this.props.file.size.width*this.props.editor.zoom}
+        height={this.props.file.size.height*this.props.editor.zoom}
         style={{
-          width: this.props.io.size.width,
-          height: this.props.io.size.height
+          width: this.props.file.size.width,
+          height: this.props.file.size.height
         }}
       ></canvas>
     );
@@ -37,8 +37,8 @@ var OffscreenFrameCanvas = React.createClass({
     if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
       this.getDOMNode().width = this.getDOMNode().width;
       var self = this;
-      for(var i = this.props.io.layers.length -1; i >= 0; i--) {
-        var layer = this.props.io.layers[i];
+      for(var i = this.props.file.layers.length -1; i >= 0; i--) {
+        var layer = this.props.file.layers[i];
         var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
         var ctx = self.getDOMNode().getContext('2d');
         ctx.globalAlpha = layer.opacity/100;

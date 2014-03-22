@@ -1,8 +1,8 @@
 var StageBox = React.createClass({
   render: function() {
 
-    var w = this.props.io.size.width*this.props.editor.zoom,
-        h = this.props.io.size.height*this.props.editor.zoom;
+    var w = this.props.file.size.width*this.props.editor.zoom,
+        h = this.props.file.size.height*this.props.editor.zoom;
 
     var top = 40,
         left = 40,
@@ -26,7 +26,7 @@ var StageBox = React.createClass({
           editor={this.props.editor}
           signal={this.props.signal} />
 
-        {this.props.io.layers.map(function(layer) {
+        {this.props.file.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
           return (
             <StageBoxLayer key={id} width={w} height={h} layer={layer}/>

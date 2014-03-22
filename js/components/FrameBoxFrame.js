@@ -2,8 +2,8 @@ var FrameBoxFrame = React.createClass({
   mixins:[CopyFrameMixin],
   render: function() {
 
-    var width = this.props.io.size.width*this.props.editor.zoom,
-        height = this.props.io.size.height*this.props.editor.zoom,
+    var width = this.props.file.size.width*this.props.editor.zoom,
+        height = this.props.file.size.height*this.props.editor.zoom,
         style = fitCanvasIntoSquareContainer(width, height, this.props.size);
 
     return (

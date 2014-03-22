@@ -1113,7 +1113,7 @@ var signal = {
   zoomChanged: new Signal(),
   gridToggled: new Signal()
 };
-var IO = function() {
+var File = function() {
 
   this.size = null;
   this.frames = null;
@@ -1327,7 +1327,7 @@ var IO = function() {
   });
 };
 
-var io = new IO();
+var file = new File();
 var Editor = function() {
 
   var maxZoom = 50,
@@ -1386,7 +1386,7 @@ var Stage = function() {
 
         this.clear();
 
-        var pixels = _.where(io.pixels, {frame: frame});
+        var pixels = _.where(file.pixels, {frame: frame});
 
         //console.log('refreshing frame '+editor.frame);
 
@@ -1397,7 +1397,7 @@ var Stage = function() {
         //signal.pixelSelected.dispatch(0, 0);
       },
       clear: function() {
-        io.layers.forEach(function(layer) {
+        file.layers.forEach(function(layer) {
           var c = document.getElementById('StageBoxLayer-'+layer.id);
           c.width = c.width;
         });
@@ -1405,7 +1405,7 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var pixels = _.where(io.pixels, {frame: editor.frame, layer: editor.layer});
+        var pixels = _.where(file.pixels, {frame: editor.frame, layer: editor.layer});
 
         //console.log('refreshing layer '+editor.layer);
 
@@ -1518,7 +1518,7 @@ var CopyFrameMixin = {
 var App = React.createClass({
   render: function() {
 
-    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+    var totalFrames = this.props.file.frames.x * this.props.file.frames.y,
         frames = [];
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
@@ -1532,12 +1532,12 @@ var App = React.createClass({
           <ToolBox editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area center">
-          <StageBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
+          <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
-          <PreviewBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
-          <FrameBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
-          <LayerBox io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
@@ -1546,7 +1546,7 @@ var App = React.createClass({
           {frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              <OffscreenFrameCanvas key={id} frame={frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
         </div>
@@ -1580,7 +1580,7 @@ var App = React.createClass({
     //console.log('updating App props');
     this.setProps({
       editor: editor,
-      io: io
+      file: file
     });
   }
 
@@ -1667,9 +1667,9 @@ var ZoomTool = React.createClass({
         left = 40,
         right = 200;
 
-    var zoom = Math.floor((window.innerHeight - top - bottom)/io.size.height);
-    if((io.size.width*zoom) > (window.innerWidth - left - right)) {
-      zoom = Math.floor((window.innerWidth - left - right)/io.size.width);
+    var zoom = Math.floor((window.innerHeight - top - bottom)/file.size.height);
+    if((file.size.width*zoom) > (window.innerWidth - left - right)) {
+      zoom = Math.floor((window.innerWidth - left - right)/file.size.width);
     }
 
     this.dispatchZoomChanged(null, zoom);
@@ -1678,8 +1678,8 @@ var ZoomTool = React.createClass({
 var StageBox = React.createClass({
   render: function() {
 
-    var w = this.props.io.size.width*this.props.editor.zoom,
-        h = this.props.io.size.height*this.props.editor.zoom;
+    var w = this.props.file.size.width*this.props.editor.zoom,
+        h = this.props.file.size.height*this.props.editor.zoom;
 
     var top = 40,
         left = 40,
@@ -1703,7 +1703,7 @@ var StageBox = React.createClass({
           editor={this.props.editor}
           signal={this.props.signal} />
 
-        {this.props.io.layers.map(function(layer) {
+        {this.props.file.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
           return (
             <StageBoxLayer key={id} width={w} height={h} layer={layer}/>
@@ -1799,7 +1799,7 @@ var StageBoxToolsLayer = React.createClass({
     var self = this;
 
     function layerVisible() {
-      var layer = io.getLayerById(self.props.editor.layer);
+      var layer = file.getLayerById(self.props.editor.layer);
       return layer.visible && layer.opacity > 0;
     }
 
@@ -1977,7 +1977,7 @@ var PreviewBox = React.createClass({
       <div id="PreviewBox" className="box">
         <h4 className="foldable-handle">Preview</h4>
         <div className="foldable-fold">
-          <PreviewBoxPreview frame={this.props.editor.frame} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+          <PreviewBoxPreview frame={this.props.editor.frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );
@@ -1991,23 +1991,23 @@ var PreviewBoxPreview = React.createClass({
         maxWidth = 160,
         maxHeight = 90;
 
-    if(this.props.io.size.width > this.props.io.size.height) {
+    if(this.props.file.size.width > this.props.file.size.height) {
       // scale to width
-      scale = maxWidth/this.props.io.size.width;
+      scale = maxWidth/this.props.file.size.width;
     }
     else {
       // scale to height
-      scale = maxHeight/this.props.io.size.height;
+      scale = maxHeight/this.props.file.size.height;
     }
 
-    var cssWidth = this.props.io.size.width*scale,
-        cssHeight = this.props.io.size.height*scale;
+    var cssWidth = this.props.file.size.width*scale,
+        cssHeight = this.props.file.size.height*scale;
 
     return (
       <canvas
         id="PreviewBoxPreview"
-        width={this.props.io.size.width*this.props.editor.zoom}
-        height={this.props.io.size.height*this.props.editor.zoom}
+        width={this.props.file.size.width*this.props.editor.zoom}
+        height={this.props.file.size.height*this.props.editor.zoom}
         style={{
           width: cssWidth,
           height: cssHeight,
@@ -2019,10 +2019,10 @@ var PreviewBoxPreview = React.createClass({
 var FrameBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
-    var totalFrames = this.props.io.frames.x * this.props.io.frames.y,
+    var totalFrames = this.props.file.frames.x * this.props.file.frames.y,
         frames = [],
-        frameSize = Math.floor(180/this.props.io.frames.x),
-        w = frameSize*this.props.io.frames.x,
+        frameSize = Math.floor(180/this.props.file.frames.x),
+        w = frameSize*this.props.file.frames.x,
         l = (200-w)/2,
         self = this;
 
@@ -2038,8 +2038,8 @@ var FrameBox = React.createClass({
 
             var cssClass = 'frame';
             if(frame == this.props.editor.frame) cssClass+= ' selected';
-            if(frame % this.props.io.frames.x == 0) cssClass+= ' right';
-            if(frame <= this.props.io.frames.x) cssClass+= ' top';
+            if(frame % this.props.file.frames.x == 0) cssClass+= ' right';
+            if(frame <= this.props.file.frames.x) cssClass+= ' top';
 
             var clickHandler = function() {
               self.props.signal.frameSelected.dispatch(frame);
@@ -2047,7 +2047,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
-                <FrameBoxFrame frame={frame} size={frameSize} io={this.props.io} editor={this.props.editor} signal={this.props.signal} />
+                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
               </div>
             );
           }, this)}
@@ -2070,8 +2070,8 @@ var FrameBoxFrame = React.createClass({
   mixins:[CopyFrameMixin],
   render: function() {
 
-    var width = this.props.io.size.width*this.props.editor.zoom,
-        height = this.props.io.size.height*this.props.editor.zoom,
+    var width = this.props.file.size.width*this.props.editor.zoom,
+        height = this.props.file.size.height*this.props.editor.zoom,
         style = fitCanvasIntoSquareContainer(width, height, this.props.size);
 
     return (
@@ -2090,15 +2090,15 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
-    var disabled = this.props.io.layers.length == 1 ? true : false;
+    var disabled = this.props.file.layers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
-          {this.props.io.layers.map(function(layer) {
+          {this.props.file.layers.map(function(layer) {
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} editor={this.props.editor} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal}/>
             );
           }, this)}
           <div className="actions">
@@ -2252,11 +2252,11 @@ var OffscreenFrameCanvas = React.createClass({
       <canvas
         id={this.props.key}
         className="OffscreenFrameCanvas"
-        width={this.props.io.size.width*this.props.editor.zoom}
-        height={this.props.io.size.height*this.props.editor.zoom}
+        width={this.props.file.size.width*this.props.editor.zoom}
+        height={this.props.file.size.height*this.props.editor.zoom}
         style={{
-          width: this.props.io.size.width,
-          height: this.props.io.size.height
+          width: this.props.file.size.width,
+          height: this.props.file.size.height
         }}
       ></canvas>
     );
@@ -2277,8 +2277,8 @@ var OffscreenFrameCanvas = React.createClass({
     if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
       this.getDOMNode().width = this.getDOMNode().width;
       var self = this;
-      for(var i = this.props.io.layers.length -1; i >= 0; i--) {
-        var layer = this.props.io.layers[i];
+      for(var i = this.props.file.layers.length -1; i >= 0; i--) {
+        var layer = this.props.file.layers[i];
         var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
         var ctx = self.getDOMNode().getContext('2d');
         ctx.globalAlpha = layer.opacity/100;
@@ -2332,13 +2332,13 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
 window.onload = function() {
 
   // load io
-  io.fromJSONString(savedFile);
+  file.fromJSONString(savedFile);
 
   // render app
-  React.renderComponent(<App editor={editor} io={io} pixel={stage.pixel} signal={signal}/>, document.body);
+  React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
 
   // draw all frames once to stage to initialize offscreen area
-  var totalFrames = io.frames.x * io.frames.y;
+  var totalFrames = file.frames.x * file.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
     //editor.frame = i;
@@ -2352,7 +2352,7 @@ window.onload = function() {
   signal.zoomChanged.dispatch(editor.zoom);
 
   // select top-most layer
-  var topLayer = _.max(io.layers, function(layer) { return layer.z; });
+  var topLayer = _.max(file.layers, function(layer) { return layer.z; });
   console.log('selecting top layer: ', topLayer.id);
   signal.layerSelected.dispatch(topLayer.id);
 

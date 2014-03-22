@@ -6,15 +6,15 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
-    var disabled = this.props.io.layers.length == 1 ? true : false;
+    var disabled = this.props.file.layers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
-          {this.props.io.layers.map(function(layer) {
+          {this.props.file.layers.map(function(layer) {
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.io.size} editor={this.props.editor} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal}/>
             );
           }, this)}
           <div className="actions">

@@ -30,7 +30,7 @@ var StageBoxToolsLayer = React.createClass({
     var self = this;
 
     function layerVisible() {
-      var layer = io.getLayerById(self.props.editor.layer);
+      var layer = file.getLayerById(self.props.editor.layer);
       return layer.visible && layer.opacity > 0;
     }
 
