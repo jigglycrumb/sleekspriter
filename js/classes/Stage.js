@@ -1,4 +1,4 @@
-var Canvas = function() {
+var Stage = function() {
 
   return {
     frame: {
@@ -13,7 +13,7 @@ var Canvas = function() {
         //console.log('refreshing frame '+editor.frame);
 
         pixels.forEach(function(px) {
-          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
         //signal.pixelSelected.dispatch(0, 0);
@@ -32,7 +32,7 @@ var Canvas = function() {
         //console.log('refreshing layer '+editor.layer);
 
         pixels.forEach(function(px) {
-          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
         //signal.pixelSelected.dispatch(0, 0);
@@ -79,4 +79,4 @@ var Canvas = function() {
   }
 };
 
-var canvas = new Canvas();
+var stage = new Stage();

@@ -58,7 +58,7 @@ module.exports = function(grunt) {
           'js/classes/Signal.js',
           'js/classes/IO.js',
           'js/classes/Editor.js',
-          'js/classes/Canvas.js',
+          'js/classes/Stage.js',
 
           'js/mixins/FoldableMixin.js',
           'js/mixins/CopyFrameMixin.js',

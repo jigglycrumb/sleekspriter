@@ -37,14 +37,14 @@ var StageBoxToolsLayer = React.createClass({
     if(this.state.mousedown) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
-          if(layerVisible()) canvas.pixel.fill();
+          if(layerVisible()) stage.pixel.fill();
           else {
             this.mouseup(); // prevent additional alerts
             alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
           }
           break;
         case 'EraserTool':
-          if(layerVisible()) canvas.pixel.clear();
+          if(layerVisible()) stage.pixel.clear();
           else {
             this.mouseup();  // prevent additional alerts
             alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');

@@ -49,7 +49,7 @@ var StageBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      canvas.frame.refresh();
+      stage.frame.refresh();
       this.setState({needsRefresh: false});
     }
   }

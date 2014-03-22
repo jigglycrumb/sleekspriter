@@ -1376,7 +1376,7 @@ var Editor = function() {
 };
 
 var editor = new Editor();
-var Canvas = function() {
+var Stage = function() {
 
   return {
     frame: {
@@ -1391,7 +1391,7 @@ var Canvas = function() {
         //console.log('refreshing frame '+editor.frame);
 
         pixels.forEach(function(px) {
-          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
         //signal.pixelSelected.dispatch(0, 0);
@@ -1410,7 +1410,7 @@ var Canvas = function() {
         //console.log('refreshing layer '+editor.layer);
 
         pixels.forEach(function(px) {
-          canvas.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
         //signal.pixelSelected.dispatch(0, 0);
@@ -1457,7 +1457,7 @@ var Canvas = function() {
   }
 };
 
-var canvas = new Canvas();
+var stage = new Stage();
 var FoldableMixin = {
   getInitialState: function() {
     return ({
@@ -1726,7 +1726,7 @@ var StageBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      canvas.frame.refresh();
+      stage.frame.refresh();
       this.setState({needsRefresh: false});
     }
   }
@@ -1806,14 +1806,14 @@ var StageBoxToolsLayer = React.createClass({
     if(this.state.mousedown) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
-          if(layerVisible()) canvas.pixel.fill();
+          if(layerVisible()) stage.pixel.fill();
           else {
             this.mouseup(); // prevent additional alerts
             alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
           }
           break;
         case 'EraserTool':
-          if(layerVisible()) canvas.pixel.clear();
+          if(layerVisible()) stage.pixel.clear();
           else {
             this.mouseup();  // prevent additional alerts
             alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
@@ -2335,14 +2335,14 @@ window.onload = function() {
   io.fromJSONString(savedFile);
 
   // render app
-  React.renderComponent(<App editor={editor} io={io} pixel={canvas.pixel} signal={signal}/>, document.body);
+  React.renderComponent(<App editor={editor} io={io} pixel={stage.pixel} signal={signal}/>, document.body);
 
   // draw all frames once to stage to initialize offscreen area
   var totalFrames = io.frames.x * io.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
     //editor.frame = i;
-    canvas.frame.refresh(i);
+    stage.frame.refresh(i);
   }
 
   // select the first frame again

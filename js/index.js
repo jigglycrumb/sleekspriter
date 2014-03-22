@@ -31,14 +31,14 @@ window.onload = function() {
   io.fromJSONString(savedFile);
 
   // render app
-  React.renderComponent(<App editor={editor} io={io} pixel={canvas.pixel} signal={signal}/>, document.body);
+  React.renderComponent(<App editor={editor} io={io} pixel={stage.pixel} signal={signal}/>, document.body);
 
   // draw all frames once to stage to initialize offscreen area
   var totalFrames = io.frames.x * io.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
     //editor.frame = i;
-    canvas.frame.refresh(i);
+    stage.frame.refresh(i);
   }
 
   // select the first frame again
