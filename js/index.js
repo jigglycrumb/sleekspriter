@@ -44,13 +44,12 @@ window.onload = function() {
   // select the first frame again
   signal.frameSelected.dispatch(1);
 
+  // select top-most layer
+  editor.selectTopLayer();
+
   // setup zoom
   signal.zoomChanged.dispatch(editor.zoom);
 
-  // select top-most layer
-  var topLayer = _.max(file.layers, function(layer) { return layer.z; });
-  console.log('selecting top layer: ', topLayer.id);
-  signal.layerSelected.dispatch(topLayer.id);
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');

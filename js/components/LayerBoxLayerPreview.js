@@ -17,13 +17,18 @@ var LayerBoxLayerPreview = React.createClass({
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.zoomChanged.add(this.prepareRefresh);
   },
+  componentWillUnmount: function() {
+    this.props.signal.frameSelected.remove(this.prepareRefresh);
+    this.props.signal.layerContentChanged.remove(this.prepareRefresh);
+    this.props.signal.zoomChanged.remove(this.prepareRefresh);
+  },
   getInitialState: function() {
     return {
       needsRefresh: false
     };
   },
   dispatchLayerSelected: function(event) {
-    //console.log('selecting layer', this.props.layer);
+    console.log('selecting layer', this.props.layer);
     this.props.signal.layerSelected.dispatch(this.props.layer);
   },
   prepareRefresh: function() {

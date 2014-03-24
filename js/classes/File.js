@@ -31,8 +31,8 @@ var File = function() {
 
   function layerFromFile(layer) {
     return {
-      frame: layer[0],
-      id: layer[1],
+      id: layer[0],
+      frame: layer[1],
       name: layer[2],
       z: layer[3],
       opacity: layer[4],
@@ -42,8 +42,8 @@ var File = function() {
 
   function layerToFile(layer) {
     return [
-      layer.frame,
       layer.id,
+      layer.frame,
       layer.name,
       layer.z,
       layer.opacity,
@@ -102,10 +102,14 @@ var File = function() {
     this.layers = _.sortBy(this.layers, 'z').reverse();
   };
 
-  function fixLayerZ() {
+  function fixLayerZ(frame) {
     self.layers.reverse();
+    var z = 0;
     for(var i = 0; i < self.layers.length; i++) {
-      self.layers[i].z = i;
+      if( self.layers[i].frame == frame) {
+        self.layers[i].z = z;
+        z++;
+      }
     }
     self.layers.reverse();
   }
@@ -137,11 +141,14 @@ var File = function() {
       }
     }
 
+    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
+
     var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, 'new layer', index+1, 100, true]);
+    var newLayer = layerFromFile([newId, editor.frame, 'layer '+newId, newZIndex, 100, true]);
 
     self.layers.splice(index, 0, newLayer);
-    fixLayerZ();
+    fixLayerZ(editor.frame);
     signal.layerAdded.dispatch(newId);
   });
 
@@ -155,15 +162,23 @@ var File = function() {
       }
     }
 
-    var shouldSelectLayer;
+    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var fIndex = 0;
+    for(var i=0; i < frameLayers.length; i++) {
+      if(frameLayers[i].id === layer) {
+        fIndex = i;
+        break;
+      }
+    }
 
-    if(_.isUndefined(self.layers[index+1]))
-      shouldSelectLayer = self.layers[index-1].id;
+    var shouldSelectLayer;
+    if(_.isUndefined(frameLayers[fIndex+1]))
+      shouldSelectLayer = frameLayers[fIndex-1].id;
     else
-      shouldSelectLayer = self.layers[index+1].id;
+      shouldSelectLayer = frameLayers[fIndex+1].id;
 
     self.layers.splice(index, 1);
-    fixLayerZ();
+    fixLayerZ(editor.frame);
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 

@@ -1146,8 +1146,8 @@ var File = function() {
 
   function layerFromFile(layer) {
     return {
-      frame: layer[0],
-      id: layer[1],
+      id: layer[0],
+      frame: layer[1],
       name: layer[2],
       z: layer[3],
       opacity: layer[4],
@@ -1157,8 +1157,8 @@ var File = function() {
 
   function layerToFile(layer) {
     return [
-      layer.frame,
       layer.id,
+      layer.frame,
       layer.name,
       layer.z,
       layer.opacity,
@@ -1217,10 +1217,14 @@ var File = function() {
     this.layers = _.sortBy(this.layers, 'z').reverse();
   };
 
-  function fixLayerZ() {
+  function fixLayerZ(frame) {
     self.layers.reverse();
+    var z = 0;
     for(var i = 0; i < self.layers.length; i++) {
-      self.layers[i].z = i;
+      if( self.layers[i].frame == frame) {
+        self.layers[i].z = z;
+        z++;
+      }
     }
     self.layers.reverse();
   }
@@ -1252,11 +1256,14 @@ var File = function() {
       }
     }
 
+    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
+
     var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, 'new layer', index+1, 100, true]);
+    var newLayer = layerFromFile([newId, editor.frame, 'layer '+newId, newZIndex, 100, true]);
 
     self.layers.splice(index, 0, newLayer);
-    fixLayerZ();
+    fixLayerZ(editor.frame);
     signal.layerAdded.dispatch(newId);
   });
 
@@ -1270,15 +1277,23 @@ var File = function() {
       }
     }
 
-    var shouldSelectLayer;
+    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var fIndex = 0;
+    for(var i=0; i < frameLayers.length; i++) {
+      if(frameLayers[i].id === layer) {
+        fIndex = i;
+        break;
+      }
+    }
 
-    if(_.isUndefined(self.layers[index+1]))
-      shouldSelectLayer = self.layers[index-1].id;
+    var shouldSelectLayer;
+    if(_.isUndefined(frameLayers[fIndex+1]))
+      shouldSelectLayer = frameLayers[fIndex-1].id;
     else
-      shouldSelectLayer = self.layers[index+1].id;
+      shouldSelectLayer = frameLayers[fIndex+1].id;
 
     self.layers.splice(index, 1);
-    fixLayerZ();
+    fixLayerZ(editor.frame);
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
@@ -1343,9 +1358,17 @@ var Editor = function() {
   this.tool = 'BrushTool';
   this.color = Color('#000000');
 
+  this.selectTopLayer = function() {
+    var frameLayers = _.where(file.layers, {frame: this.frame});
+    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
+    //console.log('selecting top layer: ', topLayer.id);
+    signal.layerSelected.dispatch(topLayer.id);
+  }
+
   // signal handlers
   signal.frameSelected.add(function(frame) {
     self.frame = parseInt(frame);
+    self.selectTopLayer();
   });
 
   signal.layerSelected.add(function(id) {
@@ -1705,8 +1728,9 @@ var StageBox = React.createClass({
 
         {this.props.file.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
+          var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            <StageBoxLayer key={id} width={w} height={h} layer={layer}/>
+            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} />
           );
         }, this)}
       </div>
@@ -1749,11 +1773,16 @@ var StageBox = React.createClass({
 });
 var StageBoxLayer = React.createClass({
   render: function() {
+
+    var cssClass = 'Layer';
+    if(this.props.visible === false) cssClass+= ' hidden';
+
     var display = (this.props.layer.visible===true) ? 'block' : 'none';
+
     return (
       <canvas
         id={this.props.key}
-        className="Layer"
+        className={cssClass}
         width={this.props.width}
         height={this.props.height}
         style={{
@@ -2090,15 +2119,17 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
-    var disabled = this.props.file.layers.length == 1 ? true : false;
+    var frameLayers = _.where(this.props.file.layers, {frame: this.props.editor.frame});
+    var disabled = frameLayers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
           {this.props.file.layers.map(function(layer) {
+            var visible = (layer.frame == this.props.editor.frame) ? true : false;
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal} visible={visible} />
             );
           }, this)}
           <div className="actions">
@@ -2133,6 +2164,8 @@ var LayerBoxLayer = React.createClass({
   render: function() {
     var cssClass = 'LayerBoxLayer';
     if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
+    if(this.props.visible === false) cssClass+= ' hidden';
+
     return (
       <div id={this.props.key} className={cssClass}>
         <div className="visibility">
@@ -2152,6 +2185,9 @@ var LayerBoxLayer = React.createClass({
   },
   componentDidMount: function() {
     this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
+  },
+  componentWillUnmount: function() {
+    this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
   },
   dispatchLayerVisibilityChanged: function(event) {
     this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);
@@ -2192,13 +2228,18 @@ var LayerBoxLayerPreview = React.createClass({
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.zoomChanged.add(this.prepareRefresh);
   },
+  componentWillUnmount: function() {
+    this.props.signal.frameSelected.remove(this.prepareRefresh);
+    this.props.signal.layerContentChanged.remove(this.prepareRefresh);
+    this.props.signal.zoomChanged.remove(this.prepareRefresh);
+  },
   getInitialState: function() {
     return {
       needsRefresh: false
     };
   },
   dispatchLayerSelected: function(event) {
-    //console.log('selecting layer', this.props.layer);
+    console.log('selecting layer', this.props.layer);
     this.props.signal.layerSelected.dispatch(this.props.layer);
   },
   prepareRefresh: function() {
@@ -2348,13 +2389,12 @@ window.onload = function() {
   // select the first frame again
   signal.frameSelected.dispatch(1);
 
+  // select top-most layer
+  editor.selectTopLayer();
+
   // setup zoom
   signal.zoomChanged.dispatch(editor.zoom);
 
-  // select top-most layer
-  var topLayer = _.max(file.layers, function(layer) { return layer.z; });
-  console.log('selecting top layer: ', topLayer.id);
-  signal.layerSelected.dispatch(topLayer.id);
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');

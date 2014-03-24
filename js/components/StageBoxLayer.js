@@ -1,10 +1,15 @@
 var StageBoxLayer = React.createClass({
   render: function() {
+
+    var cssClass = 'Layer';
+    if(this.props.visible === false) cssClass+= ' hidden';
+
     var display = (this.props.layer.visible===true) ? 'block' : 'none';
+
     return (
       <canvas
         id={this.props.key}
-        className="Layer"
+        className={cssClass}
         width={this.props.width}
         height={this.props.height}
         style={{

@@ -28,8 +28,9 @@ var StageBox = React.createClass({
 
         {this.props.file.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
+          var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            <StageBoxLayer key={id} width={w} height={h} layer={layer}/>
+            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} />
           );
         }, this)}
       </div>

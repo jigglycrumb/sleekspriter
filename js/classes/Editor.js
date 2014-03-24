@@ -13,9 +13,17 @@ var Editor = function() {
   this.tool = 'BrushTool';
   this.color = Color('#000000');
 
+  this.selectTopLayer = function() {
+    var frameLayers = _.where(file.layers, {frame: this.frame});
+    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
+    //console.log('selecting top layer: ', topLayer.id);
+    signal.layerSelected.dispatch(topLayer.id);
+  }
+
   // signal handlers
   signal.frameSelected.add(function(frame) {
     self.frame = parseInt(frame);
+    self.selectTopLayer();
   });
 
   signal.layerSelected.add(function(id) {

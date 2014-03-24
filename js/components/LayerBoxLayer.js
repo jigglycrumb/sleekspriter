@@ -2,6 +2,8 @@ var LayerBoxLayer = React.createClass({
   render: function() {
     var cssClass = 'LayerBoxLayer';
     if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
+    if(this.props.visible === false) cssClass+= ' hidden';
+
     return (
       <div id={this.props.key} className={cssClass}>
         <div className="visibility">
@@ -21,6 +23,9 @@ var LayerBoxLayer = React.createClass({
   },
   componentDidMount: function() {
     this.refs.nameText.getDOMNode().addEventListener('blur', this.dispatchLayerNameChanged);
+  },
+  componentWillUnmount: function() {
+    this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
   },
   dispatchLayerVisibilityChanged: function(event) {
     this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);

@@ -6,15 +6,17 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
-    var disabled = this.props.file.layers.length == 1 ? true : false;
+    var frameLayers = _.where(this.props.file.layers, {frame: this.props.editor.frame});
+    var disabled = frameLayers.length == 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
           {this.props.file.layers.map(function(layer) {
+            var visible = (layer.frame == this.props.editor.frame) ? true : false;
             var id = 'LayerBoxLayer-'+layer.id;
             return (
-              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal}/>
+              <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal} visible={visible} />
             );
           }, this)}
           <div className="actions">
