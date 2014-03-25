@@ -35,10 +35,14 @@ var LayerBoxLayer = React.createClass({
   },
   dispatchLayerNameChanged: function(event) {
     if(event.type == 'blur' || (event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13)) {
+
       this.refs.nameText.getDOMNode().style.display = 'none';
-      this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
       this.refs.nameLabel.getDOMNode().style.display = 'block';
-      this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
+
+      if(!_.isEmpty(event.target.value.trim())) {
+        this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
+        this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
+      }
     }
   },
   showNameInput: function() {
