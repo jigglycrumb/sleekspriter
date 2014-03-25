@@ -2120,7 +2120,7 @@ var LayerBox = React.createClass({
   },
   render: function() {
     var frameLayers = _.where(this.props.file.layers, {frame: this.props.editor.frame});
-    var disabled = frameLayers.length == 1 ? true : false;
+    var disabled = frameLayers.length <= 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
@@ -2320,10 +2320,12 @@ var OffscreenFrameCanvas = React.createClass({
       var self = this;
       for(var i = this.props.file.layers.length -1; i >= 0; i--) {
         var layer = this.props.file.layers[i];
-        var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
-        var ctx = self.getDOMNode().getContext('2d');
-        ctx.globalAlpha = layer.opacity/100;
-        ctx.drawImage(sourceCanvas, 0, 0);
+        if(layer.visible) {
+          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
+          var ctx = self.getDOMNode().getContext('2d');
+          ctx.globalAlpha = layer.opacity/100;
+          ctx.drawImage(sourceCanvas, 0, 0);
+        }
       }
       this.props.signal.frameContentChanged.dispatch(this.props.frame);
     }

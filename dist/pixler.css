@@ -367,6 +367,7 @@ ul {
 #StageBox #Layer-Tools {
   background: transparent;
   z-index: 10000000;
+  cursor: none;
 }
 .area.right {
   top: 40px;

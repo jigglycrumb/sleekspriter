@@ -7,7 +7,7 @@ var LayerBox = React.createClass({
   },
   render: function() {
     var frameLayers = _.where(this.props.file.layers, {frame: this.props.editor.frame});
-    var disabled = frameLayers.length == 1 ? true : false;
+    var disabled = frameLayers.length <= 1 ? true : false;
     return (
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
