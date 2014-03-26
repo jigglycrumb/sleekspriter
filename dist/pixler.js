@@ -1122,6 +1122,18 @@ var File = function() {
 
   var self = this;
 
+  this.deletePixelsOfFrame = function(frame) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return pixel.frame !== frame;
+    });
+  };
+
+  this.deletePixelsOfLayer = function(layer) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return pixel.layer !== layer;
+    });
+  };
+
   function sizeFromFile(size) {
     return {
       width: size[0],
@@ -1269,6 +1281,10 @@ var File = function() {
 
   signal.layerRemovedFromIO.add(function(layer) {
 
+    // delete layer pixels
+    self.deletePixelsOfLayer(layer);
+
+    // get layer array index of all layers
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
       if(self.layers[i].id === layer) {
@@ -1277,6 +1293,7 @@ var File = function() {
       }
     }
 
+    // get layer array index of frame layers
     var frameLayers = _.where(self.layers, {frame: editor.frame});
     var fIndex = 0;
     for(var i=0; i < frameLayers.length; i++) {
@@ -1286,12 +1303,14 @@ var File = function() {
       }
     }
 
+    // determine next layer to be selected in the UI
     var shouldSelectLayer;
     if(_.isUndefined(frameLayers[fIndex+1]))
       shouldSelectLayer = frameLayers[fIndex-1].id;
     else
       shouldSelectLayer = frameLayers[fIndex+1].id;
 
+    // delete layer, reorder z indices, inform App of update
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame);
     signal.layerRemoved.dispatch(shouldSelectLayer);
