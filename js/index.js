@@ -33,12 +33,16 @@ window.onload = function() {
   // render app
   React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
 
-  // draw all frames once to stage to initialize offscreen area
+
+  // draw all pixels to layers
+  file.pixels.forEach(function(px) {
+    stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+  });
+
+  // select each frame once to initialize previews etc
   var totalFrames = file.frames.x * file.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
-    //editor.frame = i;
-    stage.frame.refresh(i);
   }
 
   // select the first frame again

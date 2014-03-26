@@ -28,8 +28,6 @@ var OffscreenFrameCanvas = React.createClass({
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-    this.props.signal.pixelFilled.add(this.prepareRefresh);
-    this.props.signal.pixelCleared.add(this.prepareRefresh);
 
     this.props.signal.pixelSelected.add(this.getPixelColor);
   },

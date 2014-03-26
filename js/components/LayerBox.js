@@ -38,10 +38,10 @@ var LayerBox = React.createClass({
     }
   },
   dispatchLayerAdded: function(event) {
-    this.props.signal.layerAddedToIO.dispatch(this.props.editor.layer);
+    this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
   },
   dispatchLayerRemoved: function(event) {
-    this.props.signal.layerRemovedFromIO.dispatch(this.props.editor.layer);
+    this.props.signal.file.layerRemoved.dispatch(this.props.editor.layer);
   },
   shouldSelectLayer: function(layer) {
     this.setState({ shouldSelectLayer: layer });

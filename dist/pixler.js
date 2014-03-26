@@ -1087,6 +1087,14 @@ function hexDouble(num) {
 var Signal = signals.Signal;
 var signal = {
 
+  file: {
+    layerAdded: new Signal(),
+    layerRemoved: new Signal(),
+
+    pixelFilled: new Signal(),
+    pixelCleared: new Signal(),
+  },
+
   frameSelected: new Signal(),
   frameContentChanged: new Signal(),
 
@@ -1094,25 +1102,26 @@ var signal = {
 
   colorSelected: new Signal(),
 
+  layerAdded: new Signal(),
+  layerRemoved: new Signal(),
+  layerSelected: new Signal(),
+  layerContentChanged: new Signal(),
   layerOpacityChanged: new Signal(),
   layerVisibilityChanged: new Signal(),
   layerNameChanged: new Signal(),
-  layerSelected: new Signal(),
-  layerAddedToIO: new Signal(),
-  layerRemovedFromIO: new Signal(),
-  layerAdded: new Signal(),
-  layerRemoved: new Signal(),
-  layerContentChanged: new Signal(),
-
 
   pixelSelected: new Signal(),
-  pixelFilled: new Signal(),
-  pixelCleared: new Signal(),
-
 
   zoomChanged: new Signal(),
   gridToggled: new Signal()
 };
+/*
+var oldFn = signals.prototype.dispatch;
+signals.prototype.dispatch = function() {
+  console.log(arguments);
+  oldFn.call(this);
+}
+*/
 var File = function() {
 
   this.size = null;
@@ -1121,12 +1130,6 @@ var File = function() {
   this.pixels = null;
 
   var self = this;
-
-  this.deletePixelsOfFrame = function(frame) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return pixel.frame !== frame;
-    });
-  };
 
   this.deletePixelsOfLayer = function(layer) {
     this.pixels = this.pixels.filter(function(pixel) {
@@ -1180,20 +1183,18 @@ var File = function() {
 
   function pixelFromFile(pixel) {
     return {
-      frame: pixel[0],
-      layer: pixel[1],
-      x: pixel[2],
-      y: pixel[3],
-      r: pixel[4],
-      g: pixel[5],
-      b: pixel[6],
-      a: pixel[7]
+      layer: pixel[0],
+      x: pixel[1],
+      y: pixel[2],
+      r: pixel[3],
+      g: pixel[4],
+      b: pixel[5],
+      a: pixel[6]
     };
   };
 
   function pixelToFile(pixel) {
     return [
-      pixel.frame,
       pixel.layer,
       pixel.x,
       pixel.y,
@@ -1258,7 +1259,7 @@ var File = function() {
     layer.name = name;
   });
 
-  signal.layerAddedToIO.add(function(layer) {
+  signal.file.layerAdded.add(function(layer) {
 
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
@@ -1279,7 +1280,7 @@ var File = function() {
     signal.layerAdded.dispatch(newId);
   });
 
-  signal.layerRemovedFromIO.add(function(layer) {
+  signal.file.layerRemoved.add(function(layer) {
 
     // delete layer pixels
     self.deletePixelsOfLayer(layer);
@@ -1316,12 +1317,12 @@ var File = function() {
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
-  signal.pixelFilled.add(function(frame, layer, x, y, color) {
+  signal.file.pixelFilled.add(function(layer, x, y, color) {
     var c = color.rgb(),
         a = 1;
 
-    var newPixel = pixelFromFile([frame, layer, x, y, c.r, c.g, c.b, a]);
-    var oldPixel = _.findWhere(self.pixels, {frame: frame, layer: layer, x: x, y: y});
+    var newPixel = pixelFromFile([layer, x, y, c.r, c.g, c.b, a]);
+    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
       console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
@@ -1331,7 +1332,7 @@ var File = function() {
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
-        if(p.frame == frame && p.layer == layer && p.x == x && p.y == y) {
+        if(p.layer == layer && p.x == x && p.y == y) {
           p.r = c.r;
           p.g = c.g;
           p.b = c.b;
@@ -1344,8 +1345,14 @@ var File = function() {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.pixelCleared.add(function(frame, layer, x, y) {
+  signal.file.pixelCleared.add(function(layer, x, y) {
 
+
+    self.pixels = _.without(self.pixels, {layer: layer, x: x, y: y});
+
+    console.log('cleared pixel', layer, x, y, self.pixels.length);
+
+    /*
     var index = 0;
 
     for(var i = 0; i < self.pixels.length; i++) {
@@ -1356,7 +1363,10 @@ var File = function() {
       }
     }
 
+
+
     self.pixels.splice(index, 1);
+    */
     signal.layerContentChanged.dispatch(layer);
   });
 };
@@ -1428,9 +1438,16 @@ var Stage = function() {
 
         this.clear();
 
-        var pixels = _.where(file.pixels, {frame: frame});
+        var frameLayers = _.where(file.layers, {frame: editor.frame});
+        var pixels = [];
 
-        //console.log('refreshing frame '+editor.frame);
+        frameLayers.forEach(function(frameLayer) {
+          pixels.push(_.where(file.pixels, {layer: frameLayer.id}));
+        });
+
+        pixels = _.flatten(pixels, true);
+
+        //console.log('refreshing frame '+editor.frame, pixels);
 
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
@@ -1447,7 +1464,7 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var pixels = _.where(file.pixels, {frame: editor.frame, layer: editor.layer});
+        var pixels = _.where(file.pixels, {layer: editor.layer});
 
         //console.log('refreshing layer '+editor.layer);
 
@@ -1477,7 +1494,7 @@ var Stage = function() {
         ctx.fillStyle = color;
         ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.pixelFilled.dispatch(editor.frame, editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
+        if(dispatch === true) signal.file.pixelFilled.dispatch(editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
       },
       clear: function(layer, x, y) {
 
@@ -1493,7 +1510,7 @@ var Stage = function() {
 
         ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch !== false) signal.pixelCleared.dispatch(editor.frame, editor.layer, editor.pixel.x, editor.pixel.y);
+        if(dispatch === true) signal.file.pixelCleared.dispatch(editor.layer, editor.pixel.x, editor.pixel.y);
       }
     }
   }
@@ -2170,10 +2187,10 @@ var LayerBox = React.createClass({
     }
   },
   dispatchLayerAdded: function(event) {
-    this.props.signal.layerAddedToIO.dispatch(this.props.editor.layer);
+    this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
   },
   dispatchLayerRemoved: function(event) {
-    this.props.signal.layerRemovedFromIO.dispatch(this.props.editor.layer);
+    this.props.signal.file.layerRemoved.dispatch(this.props.editor.layer);
   },
   shouldSelectLayer: function(layer) {
     this.setState({ shouldSelectLayer: layer });
@@ -2332,8 +2349,6 @@ var OffscreenFrameCanvas = React.createClass({
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-    this.props.signal.pixelFilled.add(this.prepareRefresh);
-    this.props.signal.pixelCleared.add(this.prepareRefresh);
 
     this.props.signal.pixelSelected.add(this.getPixelColor);
   },
@@ -2403,12 +2418,16 @@ window.onload = function() {
   // render app
   React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
 
-  // draw all frames once to stage to initialize offscreen area
+
+  // draw all pixels to layers
+  file.pixels.forEach(function(px) {
+    stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+  });
+
+  // select each frame once to initialize previews etc
   var totalFrames = file.frames.x * file.frames.y;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
-    //editor.frame = i;
-    stage.frame.refresh(i);
   }
 
   // select the first frame again
