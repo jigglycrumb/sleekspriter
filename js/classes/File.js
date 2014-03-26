@@ -13,6 +13,13 @@ var File = function() {
     });
   };
 
+  this.deletePixel = function(layer, x, y) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
+    });
+  }
+
+
   function sizeFromFile(size) {
     return {
       width: size[0],
@@ -222,27 +229,7 @@ var File = function() {
   });
 
   signal.file.pixelCleared.add(function(layer, x, y) {
-
-
-    self.pixels = _.without(self.pixels, {layer: layer, x: x, y: y});
-
-    console.log('cleared pixel', layer, x, y, self.pixels.length);
-
-    /*
-    var index = 0;
-
-    for(var i = 0; i < self.pixels.length; i++) {
-      var p = self.pixels[i];
-      if(p.frame == frame && p.layer == layer && p.x == x && p.y == y) {
-        index = i;
-        break;
-      }
-    }
-
-
-
-    self.pixels.splice(index, 1);
-    */
+    self.deletePixel(layer, x, y);
     signal.layerContentChanged.dispatch(layer);
   });
 };
