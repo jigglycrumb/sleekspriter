@@ -46,9 +46,9 @@ var Stage = function() {
       }
     },
     pixel: {
-      fill: function(layer, x, y, color) {
+      fill: function(layer, x, y, color, forceDispatch) {
 
-        var dispatch = arguments.length == 0 ? true : false,
+        var dispatch = forceDispatch || arguments.length == 0 ? true : false,
             layer = layer || editor.layer,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
@@ -56,15 +56,13 @@ var Stage = function() {
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
             zoom = editor.zoom;
 
-        color = color.hexString();
-
         x--;
         y--;
 
-        ctx.fillStyle = color;
+        ctx.fillStyle = color.hexString();
         ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelFilled.dispatch(editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
+        if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
       },
       clear: function(layer, x, y) {
 
@@ -80,8 +78,30 @@ var Stage = function() {
 
         ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelCleared.dispatch(editor.layer, editor.pixel.x, editor.pixel.y);
-      }
+        if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
+      },
+      lighten: function(layer, x, y) {
+        var newColor = new Color(editor.layerPixelColor.rgb());
+        var l = newColor.hsl().l;
+        l+= editor.brightnessToolIntensity;
+
+        newColor.values.hsl[2] = l;
+        newColor.setValues("hsl", newColor.values.hsl);
+
+        this.fill(layer, x, y, newColor, true);
+        editor.layerPixelColor = newColor;
+      },
+      darken: function(layer, x, y) {
+        var newColor = new Color(editor.layerPixelColor.rgb());
+        var l = newColor.hsl().l;
+        l-= editor.brightnessToolIntensity;
+
+        newColor.values.hsl[2] = l;
+        newColor.setValues("hsl", newColor.values.hsl);
+
+        this.fill(layer, x, y, newColor, true);
+        editor.layerPixelColor = newColor;
+      },
     }
   }
 };

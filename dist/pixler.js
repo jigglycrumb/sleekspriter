@@ -394,11 +394,11 @@ for (var func in conversions) {
   // export rgb2hsl and ["rgb"]["hsl"]
   exports[from] = exports[from] || {};
 
-  exports[from][to] = exports[func] = (function(func) { 
+  exports[from][to] = exports[func] = (function(func) {
     return function(arg) {
       if (typeof arg == "number")
         arg = Array.prototype.slice.call(arguments);
-      
+
       var val = conversions[func](arg);
       if (typeof val == "string" || val === undefined)
         return val; // keyword
@@ -434,12 +434,12 @@ module.exports = {
   cmyk2hsl: cmyk2hsl,
   cmyk2hsv: cmyk2hsv,
   cmyk2keyword: cmyk2keyword,
-  
+
   keyword2rgb: keyword2rgb,
   keyword2hsl: keyword2hsl,
   keyword2hsv: keyword2hsv,
   keyword2cmyk: keyword2cmyk,
-  
+
   xyz2rgb: xyz2rgb,
 }
 
@@ -455,10 +455,10 @@ function rgb2hsl(rgb) {
 
   if (max == min)
     h = 0;
-  else if (r == max) 
-    h = (g - b) / delta; 
+  else if (r == max)
+    h = (g - b) / delta;
   else if (g == max)
-    h = 2 + (b - r) / delta; 
+    h = 2 + (b - r) / delta;
   else if (b == max)
     h = 4 + (r - g)/ delta;
 
@@ -495,16 +495,16 @@ function rgb2hsv(rgb) {
 
   if (max == min)
     h = 0;
-  else if (r == max) 
-    h = (g - b) / delta; 
+  else if (r == max)
+    h = (g - b) / delta;
   else if (g == max)
-    h = 2 + (b - r) / delta; 
+    h = 2 + (b - r) / delta;
   else if (b == max)
     h = 4 + (r - g) / delta;
 
   h = Math.min(h * 60, 360);
 
-  if (h < 0) 
+  if (h < 0)
     h += 360;
 
   v = ((max / 255) * 1000) / 10;
@@ -517,7 +517,7 @@ function rgb2cmyk(rgb) {
       g = rgb[1] / 255,
       b = rgb[2] / 255,
       c, m, y, k;
-      
+
   k = Math.min(1 - r, 1 - g, 1 - b);
   c = (1 - r - k) / (1 - k);
   m = (1 - g - k) / (1 - k);
@@ -538,7 +538,7 @@ function rgb2xyz(rgb) {
   r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
   g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
   b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
-  
+
   var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
   var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
   var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
@@ -564,7 +564,7 @@ function rgb2lab(rgb) {
   l = (116 * y) - 16;
   a = 500 * (x - y);
   b = 200 * (y - z);
-  
+
   return [l, a, b];
 }
 
@@ -603,7 +603,7 @@ function hsl2rgb(hsl) {
 
     rgb[i] = val * 255;
   }
-  
+
   return rgb;
 }
 
@@ -662,7 +662,7 @@ function hsv2hsl(hsv) {
       v = hsv[2] / 100,
       sl, l;
 
-  l = (2 - s) * v;  
+  l = (2 - s) * v;
   sl = s * v;
   sl /= (l <= 1) ? l : 2 - l;
   l /= 2;
@@ -719,7 +719,7 @@ function xyz2rgb(xyz) {
 
   g = g > 0.0031308 ? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
     : g = (g * 12.92);
-        
+
   b = b > 0.0031308 ? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
     : b = (b * 12.92);
 
@@ -1113,7 +1113,11 @@ var signal = {
   pixelSelected: new Signal(),
 
   zoomChanged: new Signal(),
-  gridToggled: new Signal()
+  gridToggled: new Signal(),
+
+
+  brightnessToolModeChanged: new Signal(),
+  brightnessToolIntensityChanged: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -1371,8 +1375,12 @@ var Editor = function() {
   this.grid = true;
   this.pixel = {x:0, y:0};
   this.pixelColor = Color('#000000');
+  this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
   this.color = Color('#000000');
+
+  this.brightnessToolMode = 'lighten';
+  this.brightnessToolIntensity = 10;
 
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
@@ -1411,6 +1419,14 @@ var Editor = function() {
 
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
+  });
+
+  signal.brightnessToolIntensityChanged.add(function(intensity) {
+    self.brightnessToolIntensity = intensity;
+  });
+
+  signal.brightnessToolModeChanged.add(function(mode){
+    self.brightnessToolMode = mode;
   });
 };
 
@@ -1463,9 +1479,9 @@ var Stage = function() {
       }
     },
     pixel: {
-      fill: function(layer, x, y, color) {
+      fill: function(layer, x, y, color, forceDispatch) {
 
-        var dispatch = arguments.length == 0 ? true : false,
+        var dispatch = forceDispatch || arguments.length == 0 ? true : false,
             layer = layer || editor.layer,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
@@ -1473,15 +1489,13 @@ var Stage = function() {
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
             zoom = editor.zoom;
 
-        color = color.hexString();
-
         x--;
         y--;
 
-        ctx.fillStyle = color;
+        ctx.fillStyle = color.hexString();
         ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelFilled.dispatch(editor.layer, editor.pixel.x, editor.pixel.y, editor.color);
+        if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
       },
       clear: function(layer, x, y) {
 
@@ -1497,8 +1511,30 @@ var Stage = function() {
 
         ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelCleared.dispatch(editor.layer, editor.pixel.x, editor.pixel.y);
-      }
+        if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
+      },
+      lighten: function(layer, x, y) {
+        var newColor = new Color(editor.layerPixelColor.rgb());
+        var l = newColor.hsl().l;
+        l+= editor.brightnessToolIntensity;
+
+        newColor.values.hsl[2] = l;
+        newColor.setValues("hsl", newColor.values.hsl);
+
+        this.fill(layer, x, y, newColor, true);
+        editor.layerPixelColor = newColor;
+      },
+      darken: function(layer, x, y) {
+        var newColor = new Color(editor.layerPixelColor.rgb());
+        var l = newColor.hsl().l;
+        l-= editor.brightnessToolIntensity;
+
+        newColor.values.hsl[2] = l;
+        newColor.setValues("hsl", newColor.values.hsl);
+
+        this.fill(layer, x, y, newColor, true);
+        editor.layerPixelColor = newColor;
+      },
     }
   }
 };
@@ -1572,7 +1608,7 @@ var App = React.createClass({
     return (
       <div id="App">
         <div className="area top">
-          <ToolContainer editor={this.props.editor} />
+          <ToolContainer editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area left">
           <ToolBox editor={this.props.editor} signal={this.props.signal} />
@@ -1613,7 +1649,10 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'zoomChanged'
+          'zoomChanged',
+
+          'brightnessToolModeChanged',
+          'brightnessToolIntensityChanged',
         ];
 
     subscriptions.forEach(function(item) {
@@ -1680,11 +1719,6 @@ var EyedropperTool = React.createClass({
   }
 });
 var BrightnessTool = React.createClass({
-  getInitialState: function() {
-    return {
-      mode: 'lighten' // 'darken'
-    };
-  },
   render: function() {
 
     var lClass = 'small transparent active',
@@ -1692,7 +1726,7 @@ var BrightnessTool = React.createClass({
         dClass = 'small',
         dDisabled = false;
 
-    if(this.state.mode == 'darken') {
+    if(this.props.editor.brightnessToolMode == 'darken') {
         lClass = 'small',
         lDisabled = false,
         dClass = 'small transparent active',
@@ -1704,16 +1738,28 @@ var BrightnessTool = React.createClass({
         <i className="flaticon-sun4"></i>
         <button onClick={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-dark26"></i></button>
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
+
+
+        <input type="range" min="1" max="100" className="brightness-slider" value={this.props.editor.brightnessToolIntensity} onChange={this.setIntensity} />
+        <span>{capitaliseFirstLetter(this.props.editor.brightnessToolMode)} by</span>
+        <input type="number" min="1" max="100" className="brightness-number" value={this.props.editor.brightnessToolIntensity} onChange={this.setIntensity} />
+        <span>%</span>
+
+
         <span className="spacer"></span>
-        <span className="hint">Give me some text.</span>
+        <span className="hint">Make existing pixels brighter or darker with this brush.</span>
       </div>
     );
   },
   selectLightenTool: function() {
-    this.setState({mode: 'lighten'});
+    this.props.signal.brightnessToolModeChanged.dispatch('lighten');
   },
   selectDarkenTool: function() {
-    this.setState({mode: 'darken'});
+    this.props.signal.brightnessToolModeChanged.dispatch('darken');
+  },
+  setIntensity: function(event) {
+    var newIntensity = parseInt(event.target.value);
+    this.props.signal.brightnessToolIntensityChanged.dispatch(newIntensity);
   }
 
 });
@@ -1858,6 +1904,11 @@ var StageBoxLayer = React.createClass({
   }
 });
 var StageBoxToolsLayer = React.createClass({
+  getInitialState: function() {
+    return {
+      mousedown: false,
+    };
+  },
   render: function() {
     return (
       <canvas
@@ -1875,6 +1926,7 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
 
     this.props.signal.toolSelected.add(this.mouseup);
+    this.props.signal.pixelSelected.add(this.getLayerPixelColor);
   },
   componentDidUpdate: function() {
 
@@ -1913,17 +1965,27 @@ var StageBoxToolsLayer = React.createClass({
           this.props.signal.toolSelected.dispatch('BrushTool');
           this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
           break;
+        case 'BrightnessTool':
+          if(layerVisible()) {
+            var alpha = editor.layerPixelColor.alpha();
+            if(alpha > 0) {
+              if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
+              else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+            }
+          }
+          else {
+            this.mouseup(); // prevent additional alerts
+            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+          }
+          break;
       }
     }
   },
-  getInitialState: function() {
-    return {
-      mousedown: false
-    };
-  },
   dispatchPixelSelected: function(event) {
+
     var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
-    world_y = Math.ceil(event.layerY/this.props.editor.zoom);
+        world_y = Math.ceil(event.layerY/this.props.editor.zoom);
+
     this.props.signal.pixelSelected.dispatch(world_x, world_y);
   },
   mousedown: function(event) {
@@ -1935,6 +1997,17 @@ var StageBoxToolsLayer = React.createClass({
   },
   mouseleave: function() {
     this.props.signal.pixelSelected.dispatch(0, 0);
+  },
+  getLayerPixelColor: function(x, y) {
+
+    var layer = file.getLayerById(this.props.editor.layer),
+        ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
+        px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
+        color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+
+    editor.layerPixelColor = color;
+
+    //console.log('getting layer pixel color', x, y, this.props.editor.layerPixelColor.hexString());
   },
   drawPixelCursor: function() {
 
@@ -2412,6 +2485,10 @@ var OffscreenFrameCanvas = React.createClass({
 function NodeList2Array(NodeList) {
   return [].slice.call(NodeList);
 };
+
+function capitaliseFirstLetter(string) { // used in the brightness tool
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,

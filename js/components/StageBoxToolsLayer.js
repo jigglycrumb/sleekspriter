@@ -1,4 +1,9 @@
 var StageBoxToolsLayer = React.createClass({
+  getInitialState: function() {
+    return {
+      mousedown: false,
+    };
+  },
   render: function() {
     return (
       <canvas
@@ -16,6 +21,7 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
 
     this.props.signal.toolSelected.add(this.mouseup);
+    this.props.signal.pixelSelected.add(this.getLayerPixelColor);
   },
   componentDidUpdate: function() {
 
@@ -54,17 +60,27 @@ var StageBoxToolsLayer = React.createClass({
           this.props.signal.toolSelected.dispatch('BrushTool');
           this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
           break;
+        case 'BrightnessTool':
+          if(layerVisible()) {
+            var alpha = editor.layerPixelColor.alpha();
+            if(alpha > 0) {
+              if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
+              else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+            }
+          }
+          else {
+            this.mouseup(); // prevent additional alerts
+            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+          }
+          break;
       }
     }
   },
-  getInitialState: function() {
-    return {
-      mousedown: false
-    };
-  },
   dispatchPixelSelected: function(event) {
+
     var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
-    world_y = Math.ceil(event.layerY/this.props.editor.zoom);
+        world_y = Math.ceil(event.layerY/this.props.editor.zoom);
+
     this.props.signal.pixelSelected.dispatch(world_x, world_y);
   },
   mousedown: function(event) {
@@ -76,6 +92,17 @@ var StageBoxToolsLayer = React.createClass({
   },
   mouseleave: function() {
     this.props.signal.pixelSelected.dispatch(0, 0);
+  },
+  getLayerPixelColor: function(x, y) {
+
+    var layer = file.getLayerById(this.props.editor.layer),
+        ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
+        px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
+        color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+
+    editor.layerPixelColor = color;
+
+    //console.log('getting layer pixel color', x, y, this.props.editor.layerPixelColor.hexString());
   },
   drawPixelCursor: function() {
 

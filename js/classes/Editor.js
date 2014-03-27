@@ -10,8 +10,12 @@ var Editor = function() {
   this.grid = true;
   this.pixel = {x:0, y:0};
   this.pixelColor = Color('#000000');
+  this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
   this.color = Color('#000000');
+
+  this.brightnessToolMode = 'lighten';
+  this.brightnessToolIntensity = 10;
 
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
@@ -50,6 +54,14 @@ var Editor = function() {
 
   signal.gridToggled.add(function(grid) {
     self.grid = grid;
+  });
+
+  signal.brightnessToolIntensityChanged.add(function(intensity) {
+    self.brightnessToolIntensity = intensity;
+  });
+
+  signal.brightnessToolModeChanged.add(function(mode){
+    self.brightnessToolMode = mode;
   });
 };
 

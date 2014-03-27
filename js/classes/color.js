@@ -393,11 +393,11 @@ for (var func in conversions) {
   // export rgb2hsl and ["rgb"]["hsl"]
   exports[from] = exports[from] || {};
 
-  exports[from][to] = exports[func] = (function(func) { 
+  exports[from][to] = exports[func] = (function(func) {
     return function(arg) {
       if (typeof arg == "number")
         arg = Array.prototype.slice.call(arguments);
-      
+
       var val = conversions[func](arg);
       if (typeof val == "string" || val === undefined)
         return val; // keyword
@@ -433,12 +433,12 @@ module.exports = {
   cmyk2hsl: cmyk2hsl,
   cmyk2hsv: cmyk2hsv,
   cmyk2keyword: cmyk2keyword,
-  
+
   keyword2rgb: keyword2rgb,
   keyword2hsl: keyword2hsl,
   keyword2hsv: keyword2hsv,
   keyword2cmyk: keyword2cmyk,
-  
+
   xyz2rgb: xyz2rgb,
 }
 
@@ -454,10 +454,10 @@ function rgb2hsl(rgb) {
 
   if (max == min)
     h = 0;
-  else if (r == max) 
-    h = (g - b) / delta; 
+  else if (r == max)
+    h = (g - b) / delta;
   else if (g == max)
-    h = 2 + (b - r) / delta; 
+    h = 2 + (b - r) / delta;
   else if (b == max)
     h = 4 + (r - g)/ delta;
 
@@ -494,16 +494,16 @@ function rgb2hsv(rgb) {
 
   if (max == min)
     h = 0;
-  else if (r == max) 
-    h = (g - b) / delta; 
+  else if (r == max)
+    h = (g - b) / delta;
   else if (g == max)
-    h = 2 + (b - r) / delta; 
+    h = 2 + (b - r) / delta;
   else if (b == max)
     h = 4 + (r - g) / delta;
 
   h = Math.min(h * 60, 360);
 
-  if (h < 0) 
+  if (h < 0)
     h += 360;
 
   v = ((max / 255) * 1000) / 10;
@@ -516,7 +516,7 @@ function rgb2cmyk(rgb) {
       g = rgb[1] / 255,
       b = rgb[2] / 255,
       c, m, y, k;
-      
+
   k = Math.min(1 - r, 1 - g, 1 - b);
   c = (1 - r - k) / (1 - k);
   m = (1 - g - k) / (1 - k);
@@ -537,7 +537,7 @@ function rgb2xyz(rgb) {
   r = r > 0.04045 ? Math.pow(((r + 0.055) / 1.055), 2.4) : (r / 12.92);
   g = g > 0.04045 ? Math.pow(((g + 0.055) / 1.055), 2.4) : (g / 12.92);
   b = b > 0.04045 ? Math.pow(((b + 0.055) / 1.055), 2.4) : (b / 12.92);
-  
+
   var x = (r * 0.4124) + (g * 0.3576) + (b * 0.1805);
   var y = (r * 0.2126) + (g * 0.7152) + (b * 0.0722);
   var z = (r * 0.0193) + (g * 0.1192) + (b * 0.9505);
@@ -563,7 +563,7 @@ function rgb2lab(rgb) {
   l = (116 * y) - 16;
   a = 500 * (x - y);
   b = 200 * (y - z);
-  
+
   return [l, a, b];
 }
 
@@ -602,7 +602,7 @@ function hsl2rgb(hsl) {
 
     rgb[i] = val * 255;
   }
-  
+
   return rgb;
 }
 
@@ -661,7 +661,7 @@ function hsv2hsl(hsv) {
       v = hsv[2] / 100,
       sl, l;
 
-  l = (2 - s) * v;  
+  l = (2 - s) * v;
   sl = s * v;
   sl /= (l <= 1) ? l : 2 - l;
   l /= 2;
@@ -718,7 +718,7 @@ function xyz2rgb(xyz) {
 
   g = g > 0.0031308 ? ((1.055 * Math.pow(g, 1.0 / 2.4)) - 0.055)
     : g = (g * 12.92);
-        
+
   b = b > 0.0031308 ? ((1.055 * Math.pow(b, 1.0 / 2.4)) - 0.055)
     : b = (b * 12.92);
 

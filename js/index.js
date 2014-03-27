@@ -2,6 +2,10 @@ function NodeList2Array(NodeList) {
   return [].slice.call(NodeList);
 };
 
+function capitaliseFirstLetter(string) { // used in the brightness tool
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
       h = canvasHeight,

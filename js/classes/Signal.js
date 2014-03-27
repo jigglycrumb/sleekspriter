@@ -27,7 +27,11 @@ var signal = {
   pixelSelected: new Signal(),
 
   zoomChanged: new Signal(),
-  gridToggled: new Signal()
+  gridToggled: new Signal(),
+
+
+  brightnessToolModeChanged: new Signal(),
+  brightnessToolIntensityChanged: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;

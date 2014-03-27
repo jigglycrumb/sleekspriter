@@ -9,7 +9,7 @@ var App = React.createClass({
     return (
       <div id="App">
         <div className="area top">
-          <ToolContainer editor={this.props.editor} />
+          <ToolContainer editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area left">
           <ToolBox editor={this.props.editor} signal={this.props.signal} />
@@ -50,7 +50,10 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'zoomChanged'
+          'zoomChanged',
+
+          'brightnessToolModeChanged',
+          'brightnessToolIntensityChanged',
         ];
 
     subscriptions.forEach(function(item) {
