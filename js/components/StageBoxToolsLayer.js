@@ -2,6 +2,9 @@ var StageBoxToolsLayer = React.createClass({
   getInitialState: function() {
     return {
       mousedown: false,
+      last: null, // we need to record the mousedown timestamp because of a chrome bug,
+                  // see https://code.google.com/p/chromium/issues/detail?id=161464
+                  // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
     };
   },
   render: function() {
@@ -77,15 +80,15 @@ var StageBoxToolsLayer = React.createClass({
     }
   },
   dispatchPixelSelected: function(event) {
+    if(event.timeStamp > this.state.last + 10) {
+      var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
+          world_y = Math.ceil(event.layerY/this.props.editor.zoom);
 
-    var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
-        world_y = Math.ceil(event.layerY/this.props.editor.zoom);
-
-    this.props.signal.pixelSelected.dispatch(world_x, world_y);
+      this.props.signal.pixelSelected.dispatch(world_x, world_y);
+    }
   },
   mousedown: function(event) {
-    this.setState({mousedown:true});
-    this.dispatchPixelSelected(event);
+    this.setState({mousedown:true, last: event.timeStamp});
   },
   mouseup: function() {
     this.setState({mousedown:false});
@@ -94,23 +97,18 @@ var StageBoxToolsLayer = React.createClass({
     this.props.signal.pixelSelected.dispatch(0, 0);
   },
   getLayerPixelColor: function(x, y) {
-
     var layer = file.getLayerById(this.props.editor.layer),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
     editor.layerPixelColor = color;
-
-    //console.log('getting layer pixel color', x, y, this.props.editor.layerPixelColor.hexString());
   },
   drawPixelCursor: function() {
 
     var zoom = this.props.editor.zoom,
         x = this.props.editor.pixel.x,
         y = this.props.editor.pixel.y;
-
-    //console.log('drawing cursor', x, y, zoom);
 
     if(x == 0 && y == 0) return;
 
