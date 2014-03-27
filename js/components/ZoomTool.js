@@ -5,8 +5,8 @@ var ZoomTool = React.createClass({
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="flaticon-magnifier5"></i>
-        <button onClick={this.zoomIn} className="small"><i className="flaticon-plus25"></i></button>
-        <button onClick={this.zoomOut} className="small"><i className="flaticon-minus18"></i></button>
+        <button onClick={this.zoomIn} className="small" title="Zoom in"><i className="flaticon-plus25"></i></button>
+        <button onClick={this.zoomOut} className="small" title="Zoom out"><i className="flaticon-minus18"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
         <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />

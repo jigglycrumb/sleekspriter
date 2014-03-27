@@ -20,33 +20,42 @@ margin-left: 20px;
 .flaticon-checkered1:before {
 	content: "\e001";
 }
-.flaticon-double31:before {
+.flaticon-clear3:before {
 	content: "\e002";
 }
-.flaticon-eye46:before {
+.flaticon-dark26:before {
 	content: "\e003";
 }
-.flaticon-eye48:before {
+.flaticon-double31:before {
 	content: "\e004";
 }
-.flaticon-eyedropper2:before {
+.flaticon-eye46:before {
 	content: "\e005";
 }
-.flaticon-little9:before {
+.flaticon-eye48:before {
 	content: "\e006";
 }
-.flaticon-magnifier5:before {
+.flaticon-eyedropper2:before {
 	content: "\e007";
 }
-.flaticon-mini7:before {
+.flaticon-little9:before {
 	content: "\e008";
 }
-.flaticon-minus18:before {
+.flaticon-magnifier5:before {
 	content: "\e009";
 }
-.flaticon-plus25:before {
+.flaticon-mini7:before {
 	content: "\e00a";
 }
-.flaticon-small23:before {
+.flaticon-minus18:before {
 	content: "\e00b";
+}
+.flaticon-plus25:before {
+	content: "\e00c";
+}
+.flaticon-small23:before {
+	content: "\e00d";
+}
+.flaticon-sun4:before {
+	content: "\e00e";
 }

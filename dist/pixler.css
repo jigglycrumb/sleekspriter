@@ -106,6 +106,9 @@ button {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
   position: relative;
 }
+button[disabled] {
+  cursor: auto;
+}
 button:after {
   background: none;
   border-top: 1px solid #909090;
@@ -124,6 +127,13 @@ button.small {
 }
 button.tiny {
   height: 18px;
+}
+button.active {
+  background: #464646;
+  box-shadow: 0 0 2px 0 #e7e7e7;
+}
+button.active:after {
+  border-top: none;
 }
 button.transparent {
   background: transparent;
@@ -237,11 +247,11 @@ ul {
   top: 4px;
   left: 2px;
   color: #b4b4b4;
-  content: "\e006";
+  content: "\e008";
 }
 .foldable-handle.folded:before {
   top: 3px;
-  content: "\e008";
+  content: "\e00a";
 }
 .area.top {
   top: 0;
@@ -482,11 +492,11 @@ ul {
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:before {
-  content: "\e004";
+  content: "\e006";
   color: #b4b4b4;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:checked:before {
-  content: "\e003";
+  content: "\e005";
   color: #e7e7e7;
 }
 #LayerBox .LayerBoxLayer .preview {

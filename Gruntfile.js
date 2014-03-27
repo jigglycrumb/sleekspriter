@@ -69,6 +69,7 @@ module.exports = function(grunt) {
           'js/components/BrushTool.js',
           'js/components/EraserTool.js',
           'js/components/EyedropperTool.js',
+          'js/components/BrightnessTool.js',
           'js/components/ZoomTool.js',
 
           'js/components/StageBox.js',

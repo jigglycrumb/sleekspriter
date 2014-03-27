@@ -71,6 +71,10 @@ button {
   position: relative;
 }
 
+button[disabled] {
+  cursor: auto;
+}
+
 button:after {
   background: none;
   border-top: 1px solid #909090;
@@ -93,6 +97,15 @@ button.tiny {
   height: 18px;
 }
 
+button.active {
+  background: @medium;
+  box-shadow: 0 0 2px 0 @font-color;
+}
+
+button.active:after {
+  border-top: none;
+}
+
 button.transparent {
   background: transparent;
   border: none;
@@ -112,6 +125,7 @@ button.transparent.active {
   .inset-shadow;
 }
 
+// this style makes the delete layer button look disabled when only one layer is left
 button.transparent:not(.active)[disabled] {
   color: darken(@font-color, 40%);
 }
@@ -204,11 +218,11 @@ ul {
     top: 4px;
     left: 2px;
     color: darken(@font-color, 20%);
-    content: "\e006"; // flaticon-little9
+    content: "\e008"; // flaticon-little9
   }
 
   &.folded:before {
     top: 3px;
-    content: "\e008"; // flaticon-mini7
+    content: "\e00a"; // flaticon-mini7
   }
 }

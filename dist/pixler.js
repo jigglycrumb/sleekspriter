@@ -1679,6 +1679,44 @@ var EyedropperTool = React.createClass({
     );
   }
 });
+var BrightnessTool = React.createClass({
+  getInitialState: function() {
+    return {
+      mode: 'lighten' // 'darken'
+    };
+  },
+  render: function() {
+
+    var lClass = 'small active',
+        lDisabled = true,
+        dClass = 'small',
+        dDisabled = false;
+
+    if(this.state.mode == 'darken') {
+        lClass = 'small',
+        lDisabled = false,
+        dClass = 'small active',
+        dDisabled = true;
+    }
+
+    return (
+      <div id="Brightness-Tool" className="ToolComponent">
+        <i className="flaticon-sun4"></i>
+        <button onClick={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-dark26"></i></button>
+        <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
+        <span className="spacer"></span>
+        <span className="hint">Give me some text.</span>
+      </div>
+    );
+  },
+  selectLightenTool: function() {
+    this.setState({mode: 'lighten'});
+  },
+  selectDarkenTool: function() {
+    this.setState({mode: 'darken'});
+  }
+
+});
 var ZoomTool = React.createClass({
   render: function() {
 
@@ -1686,8 +1724,8 @@ var ZoomTool = React.createClass({
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="flaticon-magnifier5"></i>
-        <button onClick={this.zoomIn} className="small"><i className="flaticon-plus25"></i></button>
-        <button onClick={this.zoomOut} className="small"><i className="flaticon-minus18"></i></button>
+        <button onClick={this.zoomIn} className="small" title="Zoom in"><i className="flaticon-plus25"></i></button>
+        <button onClick={this.zoomOut} className="small" title="Zoom out"><i className="flaticon-minus18"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
         <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
@@ -1989,6 +2027,7 @@ var ToolBox = React.createClass({
           <ToolBoxTool id="BrushTool" title="Brush" icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
           <ToolBoxTool id="EraserTool" title="Eraser" icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
           <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrightnessTool" title="Brightness" icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
           {/*
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
           <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
