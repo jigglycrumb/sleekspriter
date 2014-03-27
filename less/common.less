@@ -62,13 +62,13 @@ h4 {
 }
 
 button {
+  position: relative;
   cursor: pointer;
   outline: none;
   border: 1px solid #303030;
   border-radius: 2px;
   color: @font-color;
   .gradient-light;
-  position: relative;
 }
 
 button[disabled] {
@@ -95,15 +95,6 @@ button.small {
 
 button.tiny {
   height: 18px;
-}
-
-button.active {
-  background: @medium;
-  box-shadow: 0 0 2px 0 @font-color;
-}
-
-button.active:after {
-  border-top: none;
 }
 
 button.transparent {

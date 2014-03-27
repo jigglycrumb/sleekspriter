@@ -6,7 +6,7 @@ var BrightnessTool = React.createClass({
   },
   render: function() {
 
-    var lClass = 'small active',
+    var lClass = 'small transparent active',
         lDisabled = true,
         dClass = 'small',
         dDisabled = false;
@@ -14,7 +14,7 @@ var BrightnessTool = React.createClass({
     if(this.state.mode == 'darken') {
         lClass = 'small',
         lDisabled = false,
-        dClass = 'small active',
+        dClass = 'small transparent active',
         dDisabled = true;
     }
 

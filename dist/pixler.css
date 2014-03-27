@@ -91,6 +91,7 @@ h4 {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3f3f3f', endColorstr='#373737', GradientType=0);
 }
 button {
+  position: relative;
   cursor: pointer;
   outline: none;
   border: 1px solid #303030;
@@ -104,7 +105,6 @@ button {
   background: -ms-linear-gradient(top, #747474 0%, #646464 100%);
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
-  position: relative;
 }
 button[disabled] {
   cursor: auto;
@@ -127,13 +127,6 @@ button.small {
 }
 button.tiny {
   height: 18px;
-}
-button.active {
-  background: #464646;
-  box-shadow: 0 0 2px 0 #e7e7e7;
-}
-button.active:after {
-  border-top: none;
 }
 button.transparent {
   background: transparent;
