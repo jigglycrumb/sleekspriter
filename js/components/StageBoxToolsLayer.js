@@ -65,8 +65,9 @@ var StageBoxToolsLayer = React.createClass({
           break;
         case 'BrightnessTool':
           if(layerVisible()) {
-            var alpha = editor.layerPixelColor.alpha();
-            if(alpha > 0) {
+            var px = _.findWhere(file.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y });
+            //console.log(px);
+            if(!_.isUndefined(px)) {
               if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
               else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
             }

@@ -207,11 +207,11 @@ var File = function() {
     var newPixel = pixelFromFile([layer, x, y, c.r, c.g, c.b, a]);
     var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', layer, x, y, color.rgbString());
+      //console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
     }
     else {
-      console.log('replacing pixel', layer, x, y, color.rgbString());
+      //console.log('replacing pixel', layer, x, y, color.rgbString());
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];

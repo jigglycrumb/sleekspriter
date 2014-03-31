@@ -1335,11 +1335,11 @@ var File = function() {
     var newPixel = pixelFromFile([layer, x, y, c.r, c.g, c.b, a]);
     var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', layer, x, y, color.rgbString());
+      //console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
     }
     else {
-      console.log('replacing pixel', layer, x, y, color.rgbString());
+      //console.log('replacing pixel', layer, x, y, color.rgbString());
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
@@ -1415,6 +1415,8 @@ var Editor = function() {
 
   signal.pixelSelected.add(function(x, y) {
     self.pixel = {x: x, y: y};
+
+    //console.log('selected pixel', self.pixel);
   });
 
   signal.gridToggled.add(function(grid) {
@@ -1487,13 +1489,12 @@ var Stage = function() {
             y = y || editor.pixel.y,
             color = color || editor.color,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom;
-
-        x--;
-        y--;
+            zoom = editor.zoom,
+            cX = x -1,
+            cY = y -1;
 
         ctx.fillStyle = color.hexString();
-        ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
+        ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
 
         if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
       },
@@ -1504,16 +1505,17 @@ var Stage = function() {
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom;
+            zoom = editor.zoom,
+            cX = x -1,
+            cY = y -1;
 
-        x--;
-        y--;
-
-        ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
+        ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
 
         if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
       },
       lighten: function(layer, x, y) {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+
         var newColor = new Color(editor.layerPixelColor.rgb());
         var l = newColor.hsl().l;
         l+= editor.brightnessToolIntensity;
@@ -1525,6 +1527,8 @@ var Stage = function() {
         editor.layerPixelColor = newColor;
       },
       darken: function(layer, x, y) {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+
         var newColor = new Color(editor.layerPixelColor.rgb());
         var l = newColor.hsl().l;
         l-= editor.brightnessToolIntensity;
@@ -1970,8 +1974,9 @@ var StageBoxToolsLayer = React.createClass({
           break;
         case 'BrightnessTool':
           if(layerVisible()) {
-            var alpha = editor.layerPixelColor.alpha();
-            if(alpha > 0) {
+            var px = _.findWhere(file.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y });
+            //console.log(px);
+            if(!_.isUndefined(px)) {
               if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
               else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
             }

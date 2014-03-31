@@ -54,13 +54,12 @@ var Stage = function() {
             y = y || editor.pixel.y,
             color = color || editor.color,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom;
-
-        x--;
-        y--;
+            zoom = editor.zoom,
+            cX = x -1,
+            cY = y -1;
 
         ctx.fillStyle = color.hexString();
-        ctx.fillRect(x*zoom, y*zoom, zoom, zoom);
+        ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
 
         if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
       },
@@ -71,16 +70,17 @@ var Stage = function() {
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom;
+            zoom = editor.zoom,
+            cX = x -1,
+            cY = y -1;
 
-        x--;
-        y--;
-
-        ctx.clearRect(x*zoom, y*zoom, zoom, zoom);
+        ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
 
         if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
       },
       lighten: function(layer, x, y) {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+
         var newColor = new Color(editor.layerPixelColor.rgb());
         var l = newColor.hsl().l;
         l+= editor.brightnessToolIntensity;
@@ -92,6 +92,8 @@ var Stage = function() {
         editor.layerPixelColor = newColor;
       },
       darken: function(layer, x, y) {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+
         var newColor = new Color(editor.layerPixelColor.rgb());
         var l = newColor.hsl().l;
         l-= editor.brightnessToolIntensity;

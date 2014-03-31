@@ -50,6 +50,8 @@ var Editor = function() {
 
   signal.pixelSelected.add(function(x, y) {
     self.pixel = {x: x, y: y};
+
+    //console.log('selected pixel', self.pixel);
   });
 
   signal.gridToggled.add(function(grid) {
