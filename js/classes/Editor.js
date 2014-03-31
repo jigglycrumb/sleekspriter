@@ -17,10 +17,23 @@ var Editor = function() {
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
 
+  this.palettes = {
+    auto: [],
+  };
+
+  this.buildAutoPalette = function() {
+    var palette = [];
+    file.pixels.forEach(function(pixel) {
+      var color = Color().rgb(pixel.r, pixel.g, pixel.b);
+      palette.push(color);
+    });
+
+    this.palettes.auto = _.uniq(palette, false, function(i){return i.rgbaString();})
+  };
+
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
     var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    //console.log('selecting top layer: ', topLayer.id);
     signal.layerSelected.dispatch(topLayer.id);
   }
 
@@ -50,8 +63,15 @@ var Editor = function() {
 
   signal.pixelSelected.add(function(x, y) {
     self.pixel = {x: x, y: y};
+  });
 
-    //console.log('selected pixel', self.pixel);
+  signal.pixelFilled.add(function(layer, x, y, color) {
+    self.palettes.auto.push(color);
+    self.palettes.auto = _.uniq(self.palettes.auto, false, function(i){return i.rgbaString();})
+  });
+
+  signal.pixelCleared.add(function() {
+    self.buildAutoPalette();
   });
 
   signal.gridToggled.add(function(grid) {

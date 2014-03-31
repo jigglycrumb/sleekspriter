@@ -280,6 +280,9 @@ ul {
   float: left;
   margin: 8px 2px 0 0;
 }
+.ToolComponent input[type=color] {
+  float: left;
+}
 .ToolComponent input[type=range] {
   margin: 15px 10px 0 10px;
   float: left;
@@ -297,9 +300,14 @@ ul {
 .ToolComponent li {
   line-height: 16px;
 }
+.ToolComponent .palette {
+  float: left;
+}
 .ToolComponent .colorswatch {
   float: left;
-  margin-top: 7px;
+  margin-top: 6px;
+  margin-right: 2px;
+  cursor: pointer;
 }
 .ToolComponent .spacer {
   float: left;

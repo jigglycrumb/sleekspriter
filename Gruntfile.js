@@ -65,6 +65,8 @@ module.exports = function(grunt) {
 
           'js/components/App.js',
           'js/components/ToolContainer.js',
+          'js/components/Palette.js',
+          'js/components/PaletteSwatch.js',
 
           'js/components/BrushTool.js',
           'js/components/EraserTool.js',

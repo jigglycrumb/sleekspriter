@@ -200,7 +200,7 @@ var File = function() {
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
-  signal.file.pixelFilled.add(function(layer, x, y, color) {
+  signal.pixelFilled.add(function(layer, x, y, color) {
     var c = color.rgb(),
         a = 1;
 
@@ -228,7 +228,7 @@ var File = function() {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.file.pixelCleared.add(function(layer, x, y) {
+  signal.pixelCleared.add(function(layer, x, y) {
     self.deletePixel(layer, x, y);
     signal.layerContentChanged.dispatch(layer);
   });

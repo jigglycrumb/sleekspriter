@@ -1090,9 +1090,6 @@ var signal = {
   file: {
     layerAdded: new Signal(),
     layerRemoved: new Signal(),
-
-    pixelFilled: new Signal(),
-    pixelCleared: new Signal(),
   },
 
   frameSelected: new Signal(),
@@ -1111,6 +1108,8 @@ var signal = {
   layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),
+  pixelFilled: new Signal(),
+  pixelCleared: new Signal(),
 
   zoomChanged: new Signal(),
   gridToggled: new Signal(),
@@ -1328,7 +1327,7 @@ var File = function() {
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 
-  signal.file.pixelFilled.add(function(layer, x, y, color) {
+  signal.pixelFilled.add(function(layer, x, y, color) {
     var c = color.rgb(),
         a = 1;
 
@@ -1356,7 +1355,7 @@ var File = function() {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.file.pixelCleared.add(function(layer, x, y) {
+  signal.pixelCleared.add(function(layer, x, y) {
     self.deletePixel(layer, x, y);
     signal.layerContentChanged.dispatch(layer);
   });
@@ -1382,10 +1381,23 @@ var Editor = function() {
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
 
+  this.palettes = {
+    auto: [],
+  };
+
+  this.buildAutoPalette = function() {
+    var palette = [];
+    file.pixels.forEach(function(pixel) {
+      var color = Color().rgb(pixel.r, pixel.g, pixel.b);
+      palette.push(color);
+    });
+
+    this.palettes.auto = _.uniq(palette, false, function(i){return i.rgbaString();})
+  };
+
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
     var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    //console.log('selecting top layer: ', topLayer.id);
     signal.layerSelected.dispatch(topLayer.id);
   }
 
@@ -1415,8 +1427,15 @@ var Editor = function() {
 
   signal.pixelSelected.add(function(x, y) {
     self.pixel = {x: x, y: y};
+  });
 
-    //console.log('selected pixel', self.pixel);
+  signal.pixelFilled.add(function(layer, x, y, color) {
+    self.palettes.auto.push(color);
+    self.palettes.auto = _.uniq(self.palettes.auto, false, function(i){return i.rgbaString();})
+  });
+
+  signal.pixelCleared.add(function() {
+    self.buildAutoPalette();
   });
 
   signal.gridToggled.add(function(grid) {
@@ -1496,7 +1515,7 @@ var Stage = function() {
         ctx.fillStyle = color.hexString();
         ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
+        if(dispatch === true) signal.pixelFilled.dispatch(layer, x, y, color);
       },
       clear: function(layer, x, y) {
 
@@ -1511,7 +1530,7 @@ var Stage = function() {
 
         ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
+        if(dispatch === true) signal.pixelCleared.dispatch(layer, x, y);
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
@@ -1676,16 +1695,47 @@ var App = React.createClass({
 });
 var ToolContainer = React.createClass({
   render: function() {
-    //console.log('rendering '+this.props.editor.tool);
     return window[this.props.editor.tool](this.props);
+  }
+});
+var Palette = React.createClass({
+  render: function() {
+    return (
+      <div className="palette">
+      {this.props.editor.palettes.auto.map(function(color) {
+        return (
+          <PaletteSwatch color={color.hexString()} signal={this.props.signal} />
+        );
+      }, this)}
+      </div>
+    );
+  }
+});
+var PaletteSwatch = React.createClass({
+  propTypes: {
+    color: React.PropTypes.string.isRequired,
+  },
+  render: function() {
+    return (
+      <div
+        className="colorswatch"
+        style={{background: this.props.color}}
+        title={this.props.color}
+        onClick={this.select} />
+    );
+  },
+  select: function() {
+    this.props.signal.colorSelected.dispatch(this.props.color);
   }
 });
 var BrushTool = React.createClass({
   render: function() {
     return (
       <div id="Brush-Tool" className="ToolComponent">
-        <i className="flaticon-small23"></i>
+        <i className="flaticon-small23"/>
         <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
+        <span className="spacer"/>
+        <Palette editor={this.props.editor} signal={this.props.signal} />
       </div>
     );
   },
@@ -2518,8 +2568,11 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
 
 window.onload = function() {
 
-  // load io
+  // load file
   file.fromJSONString(savedFile);
+
+  // init auto palette
+  editor.buildAutoPalette();
 
   // render app
   React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);

@@ -4,9 +4,6 @@ var signal = {
   file: {
     layerAdded: new Signal(),
     layerRemoved: new Signal(),
-
-    pixelFilled: new Signal(),
-    pixelCleared: new Signal(),
   },
 
   frameSelected: new Signal(),
@@ -25,6 +22,8 @@ var signal = {
   layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),
+  pixelFilled: new Signal(),
+  pixelCleared: new Signal(),
 
   zoomChanged: new Signal(),
   gridToggled: new Signal(),

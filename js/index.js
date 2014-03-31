@@ -31,8 +31,11 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
 
 window.onload = function() {
 
-  // load io
+  // load file
   file.fromJSONString(savedFile);
+
+  // init auto palette
+  editor.buildAutoPalette();
 
   // render app
   React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);

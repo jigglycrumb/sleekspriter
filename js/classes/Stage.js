@@ -61,7 +61,7 @@ var Stage = function() {
         ctx.fillStyle = color.hexString();
         ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelFilled.dispatch(layer, x, y, color);
+        if(dispatch === true) signal.pixelFilled.dispatch(layer, x, y, color);
       },
       clear: function(layer, x, y) {
 
@@ -76,7 +76,7 @@ var Stage = function() {
 
         ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.file.pixelCleared.dispatch(layer, x, y);
+        if(dispatch === true) signal.pixelCleared.dispatch(layer, x, y);
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
