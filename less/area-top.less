@@ -16,7 +16,7 @@
   height: 40px;
   line-height: 40px;
 
-  &>i {
+  i.icon {
     display: block;
     float: left;
     width: 40px;
@@ -65,7 +65,39 @@
   }
 
   .palette {
-    float: left;
+    //float: left;
+    //.debug(green);
+
+    .outer {
+      //.debug(yellow);
+
+      width: auto;
+      overflow: auto;
+    }
+
+    .inner {
+      //.debug;
+    }
+
+    .scroll {
+
+      height: 26px;
+      width: 10px;
+      margin-top: 6px;
+
+      i {
+        position: relative;
+        left: -.5em;
+      }
+
+      &.left {
+
+      }
+
+      &.right {
+        //float: right;
+      }
+    }
   }
 
   .colorswatch {

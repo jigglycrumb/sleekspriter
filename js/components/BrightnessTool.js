@@ -15,7 +15,7 @@ var BrightnessTool = React.createClass({
 
     return (
       <div id="Brightness-Tool" className="ToolComponent">
-        <i className="flaticon-sun4"></i>
+        <i className="icon flaticon-sun4"></i>
         <button onClick={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-dark26"></i></button>
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 

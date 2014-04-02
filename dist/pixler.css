@@ -1,7 +1,4 @@
-.debug {
-  box-sizing: border-box;
-  border: 1px solid red;
-}
+@import "../fonts/flaticon.css";
 .letterpress {
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
@@ -28,6 +25,18 @@
   background: -ms-linear-gradient(top, #747474 0%, #646464 100%);
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
+}
+.icon-eye {
+  content: "\e007";
+}
+.icon-eye-slashed {
+  content: "\e008";
+}
+.icon-arrow-down {
+  content: "\e00b";
+}
+.icon-arrow-right {
+  content: "\e00d";
 }
 [class^="flaticon-"],
 [class*=" flaticon-"] {
@@ -240,11 +249,11 @@ ul {
   top: 4px;
   left: 2px;
   color: #b4b4b4;
-  content: "\e008";
+  content: "\e00b";
 }
 .foldable-handle.folded:before {
   top: 3px;
-  content: "\e00a";
+  content: "\e00d";
 }
 .area.top {
   top: 0;
@@ -260,7 +269,7 @@ ul {
   height: 40px;
   line-height: 40px;
 }
-.ToolComponent > i {
+.ToolComponent i.icon {
   display: block;
   float: left;
   width: 40px;
@@ -300,8 +309,18 @@ ul {
 .ToolComponent li {
   line-height: 16px;
 }
-.ToolComponent .palette {
-  float: left;
+.ToolComponent .palette .outer {
+  width: auto;
+  overflow: auto;
+}
+.ToolComponent .palette .scroll {
+  height: 26px;
+  width: 10px;
+  margin-top: 6px;
+}
+.ToolComponent .palette .scroll i {
+  position: relative;
+  left: -0.5em;
 }
 .ToolComponent .colorswatch {
   float: left;
@@ -493,11 +512,11 @@ ul {
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:before {
-  content: "\e006";
+  content: "\e008";
   color: #b4b4b4;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:checked:before {
-  content: "\e005";
+  content: "\e007";
   color: #e7e7e7;
 }
 #LayerBox .LayerBoxLayer .preview {

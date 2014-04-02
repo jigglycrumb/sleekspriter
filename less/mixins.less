@@ -1,7 +1,7 @@
 // mixins
-.debug {
+.debug(@color: red) {
   box-sizing: border-box;
-  border: 1px solid red;
+  border: 1px solid @color;
 }
 
 .letterpress {
@@ -33,4 +33,20 @@
   background: -ms-linear-gradient(top,  #747474 0%,#646464 100%);
   background: linear-gradient(to bottom,  #747474 0%,#646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#747474', endColorstr='#646464',GradientType=0 );
+}
+
+.icon-eye {
+  content: "\e007"; // flaticon-eye46
+}
+
+.icon-eye-slashed {
+  content: "\e008"; // flaticon-eye48
+}
+
+.icon-arrow-down {
+  content: "\e00b"; // flaticon-little9
+}
+
+.icon-arrow-right {
+  content: "\e00d"; // flaticon-mini7
 }

@@ -16,3 +16,8 @@ Grid: http://www.flaticon.com/free-icon/3x3-grid_8722
 
 Down Arrow: http://www.flaticon.com/free-icon/little-down-triangular-arrow_7629
 Right Arrow: http://www.flaticon.com/free-icon/mini-triangular-arrow-to-right_7520
+
+Palette: http://www.flaticon.com/free-icon/color-palette_8718
+
+Left Arrow: http://www.flaticon.com/free-icon/arrow-triangle-left_9918
+Up Arrow: http://www.flaticon.com/free-icon/little-up-arrow-triangle_7645

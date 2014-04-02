@@ -2,7 +2,7 @@ var EyedropperTool = React.createClass({
   render: function() {
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
-        <i className="flaticon-eyedropper2"></i>
+        <i className="icon flaticon-eyedropper2"></i>
         <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <ul>
           <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>

@@ -1702,11 +1702,24 @@ var Palette = React.createClass({
   render: function() {
     return (
       <div className="palette">
-      {this.props.editor.palettes.auto.map(function(color) {
-        return (
-          <PaletteSwatch color={color.hexString()} signal={this.props.signal} />
-        );
-      }, this)}
+        <i className="icon flaticon-color1"/>
+
+        <div className="outer">
+          <button className="scroll left">
+            <i className="flaticon-arrow85"/>
+          </button>
+          <div className="inner">
+            {this.props.editor.palettes.auto.map(function(color) {
+              return (
+                <PaletteSwatch color={color.hexString()} signal={this.props.signal} />
+              );
+            }, this)}
+          </div>
+          <button className="scroll right">
+            <i className="flaticon-mini7"/>
+          </button>
+        </div>
+
       </div>
     );
   }
@@ -1732,8 +1745,8 @@ var BrushTool = React.createClass({
   render: function() {
     return (
       <div id="Brush-Tool" className="ToolComponent">
-        <i className="flaticon-small23"/>
-        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} />
+        <i className="icon flaticon-small23"/>
+        <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} title={editor.color.hexString()} />
         <span className="spacer"/>
         <Palette editor={this.props.editor} signal={this.props.signal} />
       </div>
@@ -1748,7 +1761,7 @@ var EraserTool = React.createClass({
   render: function() {
     return (
       <div id="Eraser-Tool" className="ToolComponent">
-        <i className="flaticon-double31" style={{position:'relative', left: '0.25em'}}></i>
+        <i className="icon flaticon-double31" style={{position:'relative', left: '0.25em'}}></i>
 
         <span className="hint">Click a pixel to erase it.</span>
       </div>
@@ -1759,7 +1772,7 @@ var EyedropperTool = React.createClass({
   render: function() {
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
-        <i className="flaticon-eyedropper2"></i>
+        <i className="icon flaticon-eyedropper2"></i>
         <div id="EyedropperSwatch" className="colorswatch" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <ul>
           <li>Hex: {this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()}</li>
@@ -1789,7 +1802,7 @@ var BrightnessTool = React.createClass({
 
     return (
       <div id="Brightness-Tool" className="ToolComponent">
-        <i className="flaticon-sun4"></i>
+        <i className="icon flaticon-sun4"></i>
         <button onClick={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-dark26"></i></button>
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 
@@ -1823,7 +1836,7 @@ var ZoomTool = React.createClass({
     var zoom = editor.zoom;
     return (
       <div id="Zoom-Tool" className="ToolComponent">
-        <i className="flaticon-magnifier5"></i>
+        <i className="icon flaticon-magnifier5"></i>
         <button onClick={this.zoomIn} className="small" title="Zoom in"><i className="flaticon-plus25"></i></button>
         <button onClick={this.zoomOut} className="small" title="Zoom out"><i className="flaticon-minus18"></i></button>
         <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
