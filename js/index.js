@@ -9,7 +9,8 @@ function capitaliseFirstLetter(string) { // used in the brightness tool
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
       h = canvasHeight,
-      style = {};
+      style = {},
+      scale;
 
   if(w > h) {
     scale = containerSize/w;

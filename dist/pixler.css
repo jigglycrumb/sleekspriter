@@ -309,9 +309,19 @@ ul {
 .ToolComponent li {
   line-height: 16px;
 }
+.ToolComponent .palette {
+  position: relative;
+}
 .ToolComponent .palette .outer {
-  width: auto;
-  overflow: auto;
+  position: absolute;
+  left: 164px;
+  right: 17px;
+  height: 38px;
+  overflow: hidden;
+}
+.ToolComponent .palette .inner {
+  height: 36px;
+  width: 0;
 }
 .ToolComponent .palette .scroll {
   height: 26px;
@@ -321,6 +331,9 @@ ul {
 .ToolComponent .palette .scroll i {
   position: relative;
   left: -0.5em;
+}
+.ToolComponent .palette .scroll.right {
+  float: right;
 }
 .ToolComponent .colorswatch {
   float: left;

@@ -52,8 +52,6 @@ module.exports = function(grunt) {
         src: [
           'js/jsx-header.js',
 
-          'js/classes/color.js',
-
           'js/strict.js',
           'js/classes/Signal.js',
           'js/classes/File.js',

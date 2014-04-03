@@ -1,3 +1,13 @@
+Libraries
+-----------------------------
+
+React: http://facebook.github.io/react/
+UnderscoreJS: http://underscorejs.org
+js-signals: http://millermedeiros.github.io/js-signals/
+color: https://github.com/harthur/color
+simple-tween-js: https://github.com/ashblue/simple-tween-js
+
+
 Icons (via flaticon.com)
 -----------------------------
 

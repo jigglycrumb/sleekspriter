@@ -65,22 +65,27 @@
   }
 
   .palette {
-    //float: left;
     //.debug(green);
+    position: relative;
 
     .outer {
       //.debug(yellow);
-
-      width: auto;
-      overflow: auto;
+      position: absolute;
+      left: 164px;
+      right: 17px;
+      height: 38px;
+      overflow: hidden; //-x: auto;
     }
 
     .inner {
-      //.debug;
+      //.debug(green);
+      height: 36px;
+      width: 0; // this is set via JS in Palette.setInnerWidth
     }
 
     .scroll {
 
+      //position: absolute;
       height: 26px;
       width: 10px;
       margin-top: 6px;
@@ -91,11 +96,11 @@
       }
 
       &.left {
-
+        //left: 50px;
       }
 
       &.right {
-        //float: right;
+        float: right;
       }
     }
   }
@@ -105,6 +110,7 @@
     margin-top: 6px;
     margin-right: 2px;
     cursor: pointer;
+    //display: inline-block;
   }
 
   .spacer {
