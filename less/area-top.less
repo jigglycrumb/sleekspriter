@@ -68,10 +68,46 @@
     //.debug(green);
     position: relative;
 
+    .switch {
+      //.debug(yellow);
+      float: left;
+      position: relative;
+      cursor: pointer;
+      width: 88px;
+
+      .list {
+        width: 100%;
+        float: left;
+        display: none;
+        background: @light;
+        margin-top: -1px;
+
+        li {
+          padding: 5px;
+        }
+
+        li:hover {
+          background: @medium;
+        }
+      }
+    }
+
+    .switch-arrow {
+      position: absolute;
+      top: 9px;
+      left: 3px;
+    }
+
+    .name {
+      float: left;
+      margin-right: 5px;
+      width: 37px;
+    }
+
     .outer {
       //.debug(yellow);
       position: absolute;
-      left: 164px;
+      left: 205px;
       right: 17px;
       height: 38px;
       overflow: hidden; //-x: auto;

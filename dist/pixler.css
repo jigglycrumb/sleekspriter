@@ -312,9 +312,38 @@ ul {
 .ToolComponent .palette {
   position: relative;
 }
+.ToolComponent .palette .switch {
+  float: left;
+  position: relative;
+  cursor: pointer;
+  width: 88px;
+}
+.ToolComponent .palette .switch .list {
+  width: 100%;
+  float: left;
+  display: none;
+  background: #535353;
+  margin-top: -1px;
+}
+.ToolComponent .palette .switch .list li {
+  padding: 5px;
+}
+.ToolComponent .palette .switch .list li:hover {
+  background: #464646;
+}
+.ToolComponent .palette .switch-arrow {
+  position: absolute;
+  top: 9px;
+  left: 3px;
+}
+.ToolComponent .palette .name {
+  float: left;
+  margin-right: 5px;
+  width: 37px;
+}
 .ToolComponent .palette .outer {
   position: absolute;
-  left: 164px;
+  left: 205px;
   right: 17px;
   height: 38px;
   overflow: hidden;
@@ -624,6 +653,7 @@ ul {
   left: 50px;
   right: 220px;
   zoom: 1;
+  display: none;
 }
 .OffscreenFrameCanvas {
   background: #fff;

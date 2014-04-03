@@ -33,6 +33,8 @@ var signal = {
 
   brightnessToolModeChanged: new Signal(),
   brightnessToolIntensityChanged: new Signal(),
+
+  paletteSelected: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -298,8 +300,9 @@ var Editor = function() {
   this.brightnessToolIntensity = 10;
 
   this.palettes = {
-    auto: [],
+    Sprite: [],
   };
+  this.palette = 'Sprite';
 
   this.buildAutoPalette = function() {
     var palette = [];
@@ -308,7 +311,7 @@ var Editor = function() {
       palette.push(color);
     });
 
-    this.palettes.auto = _.uniq(palette, false, function(i){return i.rgbaString();})
+    this.palettes.Sprite = _.uniq(palette, false, function(i){return i.rgbaString();})
   };
 
   this.selectTopLayer = function() {
@@ -346,8 +349,8 @@ var Editor = function() {
   });
 
   signal.pixelFilled.add(function(layer, x, y, color) {
-    self.palettes.auto.push(color);
-    self.palettes.auto = _.uniq(self.palettes.auto, false, function(i){return i.rgbaString();})
+    self.palettes.Sprite.push(color);
+    self.palettes.Sprite = _.uniq(self.palettes.Sprite, false, function(i){return i.rgbaString();})
   });
 
   signal.pixelCleared.add(function() {
@@ -364,6 +367,10 @@ var Editor = function() {
 
   signal.brightnessToolModeChanged.add(function(mode){
     self.brightnessToolMode = mode;
+  });
+
+  signal.paletteSelected.add(function(palette) {
+    self.palette = palette;
   });
 };
 
@@ -616,15 +623,31 @@ var ToolContainer = React.createClass({
 });
 var Palette = React.createClass({
   render: function() {
+
+    var palettes = this.props.editor.palettes,
+        palette = palettes[this.props.editor.palette];
+
     return (
       <div className="palette">
-        <i className="icon flaticon-color1"/>
+        <div className="switch" onClick={this.showPalettes}>
+          <i className="icon flaticon-color1"/>
+          <i className="switch-arrow flaticon-little9"/>
+          <div className="name">{this.props.editor.palette}</div>
+          <ul ref="paletteList" className="list">
+            {Object.keys(palettes).map(function(paletteName) {
+              var p = palettes[paletteName];
+              return (
+                <li key={paletteName} data-palette={paletteName} onClick={this.selectPalette}>{paletteName}</li>
+              );
+            }, this)}
+          </ul>
+        </div>
         <button ref="buttonScrollLeft" className="scroll left" onClick={this.scrollLeft}>
           <i className="flaticon-arrow85"/>
         </button>
         <div className="outer">
           <div className="inner">
-            {this.props.editor.palettes.auto.map(function(color) {
+            {palette.map(function(color) {
               return (
                 <PaletteSwatch key={color.hexString()} color={color.hexString()} signal={this.props.signal} />
               );
@@ -711,7 +734,19 @@ var Palette = React.createClass({
         target = scroll + (swatchWidth*swatchesVisible);
 
     this.scrollTo(target);
-  }
+  },
+  showPalettes: function() {
+    this.refs.paletteList.getDOMNode().style.display = 'block';
+  },
+  hidePalettes: function() {
+    this.refs.paletteList.getDOMNode().style.display = 'none';
+  },
+  selectPalette: function(event) {
+    var palette = event.target.getAttribute('data-palette');
+    this.hidePalettes();
+    this.props.signal.paletteSelected.dispatch(palette);
+    return false;
+  },
 });
 var PaletteSwatch = React.createClass({
   propTypes: {

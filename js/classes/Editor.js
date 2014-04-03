@@ -18,8 +18,9 @@ var Editor = function() {
   this.brightnessToolIntensity = 10;
 
   this.palettes = {
-    auto: [],
+    Sprite: [],
   };
+  this.palette = 'Sprite';
 
   this.buildAutoPalette = function() {
     var palette = [];
@@ -28,7 +29,7 @@ var Editor = function() {
       palette.push(color);
     });
 
-    this.palettes.auto = _.uniq(palette, false, function(i){return i.rgbaString();})
+    this.palettes.Sprite = _.uniq(palette, false, function(i){return i.rgbaString();})
   };
 
   this.selectTopLayer = function() {
@@ -66,8 +67,8 @@ var Editor = function() {
   });
 
   signal.pixelFilled.add(function(layer, x, y, color) {
-    self.palettes.auto.push(color);
-    self.palettes.auto = _.uniq(self.palettes.auto, false, function(i){return i.rgbaString();})
+    self.palettes.Sprite.push(color);
+    self.palettes.Sprite = _.uniq(self.palettes.Sprite, false, function(i){return i.rgbaString();})
   });
 
   signal.pixelCleared.add(function() {
@@ -84,6 +85,10 @@ var Editor = function() {
 
   signal.brightnessToolModeChanged.add(function(mode){
     self.brightnessToolMode = mode;
+  });
+
+  signal.paletteSelected.add(function(palette) {
+    self.palette = palette;
   });
 };
 

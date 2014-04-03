@@ -31,6 +31,8 @@ var signal = {
 
   brightnessToolModeChanged: new Signal(),
   brightnessToolIntensityChanged: new Signal(),
+
+  paletteSelected: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
