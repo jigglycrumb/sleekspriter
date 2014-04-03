@@ -316,7 +316,7 @@ ul {
   float: left;
   position: relative;
   cursor: pointer;
-  width: 88px;
+  width: 103px;
 }
 .ToolComponent .palette .switch .list {
   width: 100%;
@@ -339,11 +339,11 @@ ul {
 .ToolComponent .palette .name {
   float: left;
   margin-right: 5px;
-  width: 37px;
+  width: 52px;
 }
 .ToolComponent .palette .outer {
   position: absolute;
-  left: 205px;
+  left: 220px;
   right: 17px;
   height: 38px;
   overflow: hidden;

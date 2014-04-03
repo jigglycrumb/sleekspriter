@@ -19,17 +19,23 @@ var Editor = function() {
 
   this.palettes = {
     Sprite: [],
+    Gameboy: ['#9bbc0f', '#8bac0f', '#306230', '#0f380f'],
+    Genesis: ['#550055', '#aa55aa', '#ffaaff', '#000055', '#5555aa', '#aaaaff', '#55aaaa', '#005555',
+              '#aaffff', '#005500', '#aaffaa', '#55aa00', '#aaff00', '#aaaa00', '#555500', '#ffff55',
+              '#aaaa55', '#ffffaa', '#ffaa00', '#aa5500', '#ffaa55', '#ff5500', '#ff0000', '#aa0000',
+              '#550000', '#ff5555', '#aa5555', '#ffaaaa', '#ffffff', '#aaaaaa', '#555555', '#000000'],
+
   };
   this.palette = 'Sprite';
 
   this.buildAutoPalette = function() {
     var palette = [];
     file.pixels.forEach(function(pixel) {
-      var color = Color().rgb(pixel.r, pixel.g, pixel.b);
+      var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
       palette.push(color);
     });
 
-    this.palettes.Sprite = _.uniq(palette, false, function(i){return i.rgbaString();})
+    this.palettes.Sprite = _.uniq(palette, false); //, function(i){return i.rgbaString();})
   };
 
   this.selectTopLayer = function() {

@@ -26,7 +26,7 @@ var Palette = React.createClass({
           <div className="inner">
             {palette.map(function(color) {
               return (
-                <PaletteSwatch key={color.hexString()} color={color.hexString()} signal={this.props.signal} />
+                <PaletteSwatch key={color} color={color} signal={this.props.signal} />
               );
             }, this)}
           </div>
@@ -122,6 +122,7 @@ var Palette = React.createClass({
     var palette = event.target.getAttribute('data-palette');
     this.hidePalettes();
     this.props.signal.paletteSelected.dispatch(palette);
+    //this.scrollTo(0);
     return false;
   },
 });
