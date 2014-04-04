@@ -319,7 +319,7 @@ ul {
   width: 103px;
 }
 .ToolComponent .palette .switch .list {
-  width: 200px;
+  width: 250px;
   float: left;
   display: none;
   background: #535353;
@@ -333,7 +333,7 @@ ul {
 }
 .ToolComponent .palette .switch-arrow {
   position: absolute;
-  top: 9px;
+  top: 8px;
   left: 3px;
 }
 .ToolComponent .palette .name {

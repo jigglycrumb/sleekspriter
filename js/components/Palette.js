@@ -19,7 +19,7 @@ var Palette = React.createClass({
             {Object.keys(palettes).map(function(paletteKey) {
               var p = palettes[paletteKey];
               return (
-                <li key={paletteKey} data-palette={paletteKey} onClick={this.selectPalette}>{p.title}</li>
+                <li key={paletteKey} data-palette={paletteKey} onClick={this.selectPalette}>{p.title} ({p.colors.length} colours)</li>
               );
             }, this)}
           </ul>
@@ -133,7 +133,8 @@ var Palette = React.createClass({
 
     this.scrollTo(target);
   },
-  prepareResetScroll: function() {
+  prepareResetScroll: function(palette) {
+    console.log(palette);
     this.setState({resetScroll: true});
   },
   resetScroll: function() {
@@ -146,6 +147,7 @@ var Palette = React.createClass({
     this.refs.paletteList.getDOMNode().style.display = 'none';
   },
   selectPalette: function(event) {
+    event.preventDefault();
     var palette = event.target.getAttribute('data-palette');
     this.hidePalettes();
     this.props.signal.paletteSelected.dispatch(palette);
