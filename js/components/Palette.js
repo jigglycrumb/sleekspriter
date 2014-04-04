@@ -134,7 +134,6 @@ var Palette = React.createClass({
     this.scrollTo(target);
   },
   prepareResetScroll: function(palette) {
-    console.log(palette);
     this.setState({resetScroll: true});
   },
   resetScroll: function() {
@@ -147,8 +146,7 @@ var Palette = React.createClass({
     this.refs.paletteList.getDOMNode().style.display = 'none';
   },
   selectPalette: function(event) {
-    event.preventDefault();
-    var palette = event.target.getAttribute('data-palette');
+    var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
     this.props.signal.paletteSelected.dispatch(palette);
     return false;

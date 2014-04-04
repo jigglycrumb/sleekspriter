@@ -325,7 +325,7 @@ var Editor = function() {
       title: 'Sinclair ZX Spectrum',
       short: 'Spectrum',
       colors: ['#000000', '#0000c0', '#0000ff', '#c00000', '#ff0000', '#c000c0', '#ff00ff', '#00c000',
-               '#00ff00', '#00c0c0', '#00ffff', '#c0c000', '#ffff00', '#c0c0c0', '#ffffff', ],
+               '#00ff00', '#00c0c0', '#00ffff', '#c0c000', '#ffff00', '#c0c0c0', '#ffffff'],
     },
     cga: {
       title: 'Color Graphics Adapter',
@@ -362,7 +362,7 @@ var Editor = function() {
                '#f85898', '#f8a4c0', '#a81000', '#f83800', '#f87858', '#f0d0b0', '#881400', '#e45c10',
                '#fca044', '#fce0a8', '#503000', '#ac7c00', '#f8b800', '#f8d878', '#007800', '#00b800',
                '#b8f818', '#d8f878', '#006800', '#00a800', '#58d854', '#b8f8b8', '#005800', '#00a844',
-               '#58f898', '#b8f8d8', '#004058', '#008888', '#00e8d8', '#00fcfc', ],
+               '#58f898', '#b8f8d8', '#004058', '#008888', '#00e8d8', '#00fcfc'],
     },
     mastersystem: {
       title: 'Sega Master System',
@@ -381,11 +381,11 @@ var Editor = function() {
       short: '2600',
       colors: ['#000000', '#404040', '#6c6c6c', '#909090', '#b0b0b0', '#c8c8c8', '#dcdcdc', '#ececec',
                '#444400', '#646410', '#848424', '#a0a034', '#b8b840', '#d0d050', '#e8e85c', '#fcfc68',
-               '#702800', '#844414', '#985c28', '#985c28', '#bc8c4c', '#cca05c', '#dcb468', '#e8cc7c',
+               '#702800', '#844414', '#985c28', '#ac783c', '#bc8c4c', '#cca05c', '#dcb468', '#e8cc7b',
                '#841800', '#983418', '#ac5030', '#c06848', '#d0805c', '#e09470', '#eca880', '#fcbc94',
                '#880000', '#9c2020', '#b03c3c', '#c05858', '#d07070', '#e08888', '#eca0a0', '#fcb4b4',
-               '#78005c', '#78005c', '#a03c88', '#b0589c', '#c070b0', '#d084c0', '#dc9cd0', '#ecb0e0',
-               '#480078', '#602090', '#783ca4', '#8c58b8', '#a070cc', '#b484dc', '#c49cec', '#d4b0fc'.
+               '#78005c', '#8c2074', '#a03c88', '#b0589c', '#c070b0', '#d084c0', '#dc9cd0', '#ecb0e0',
+               '#480078', '#602090', '#783ca4', '#8c58b8', '#a070cc', '#b484dc', '#c49cec', '#d4b0fc',
                '#140084', '#302098', '#4c3cac', '#6858c0', '#7c70d0', '#9488e0', '#a8a0ec', '#bcb4fc',
                '#000088', '#1c209c', '#3840b0', '#505cc0', '#6874d0', '#7c8ce0', '#90a4ec', '#a4b8fc',
                '#00187c', '#1c3890', '#3854a8', '#5070bc', '#6888cc', '#7c9cdc', '#90b4ec', '#a4c8fc',
@@ -396,12 +396,6 @@ var Editor = function() {
                '#2c3000', '#4c501c', '#687034', '#848c4c', '#9ca864', '#b4c078', '#ccd488', '#e0ec9c',
                '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
     },
-
-
-
-
-
-
   };
   this.palette = 'sprite';
 
@@ -412,7 +406,7 @@ var Editor = function() {
       palette.push(color);
     });
 
-    this.palettes.sprite.colors = _.uniq(palette, false); //, function(i){return i.rgbaString();})
+    this.palettes.sprite.colors = _.uniq(palette, false);
   };
 
   this.selectTopLayer = function() {
@@ -857,7 +851,6 @@ var Palette = React.createClass({
     this.scrollTo(target);
   },
   prepareResetScroll: function(palette) {
-    console.log(palette);
     this.setState({resetScroll: true});
   },
   resetScroll: function() {
@@ -870,8 +863,7 @@ var Palette = React.createClass({
     this.refs.paletteList.getDOMNode().style.display = 'none';
   },
   selectPalette: function(event) {
-    event.preventDefault();
-    var palette = event.target.getAttribute('data-palette');
+    var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
     this.props.signal.paletteSelected.dispatch(palette);
     return false;
