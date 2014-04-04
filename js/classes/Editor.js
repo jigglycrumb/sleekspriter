@@ -18,15 +18,40 @@ var Editor = function() {
   this.brightnessToolIntensity = 10;
 
   this.palettes = {
+    sprite: {
+      title: 'Sprite colors',
+      short: 'Sprite',
+      colors: [],
+    },
+    gameboy: {
+      title: 'Nintendo Gameboy',
+      short: 'NGB',
+      colors: ['#9bbc0f', '#8bac0f', '#306230', '#0f380f'],
+    },
+    mastersystem: {
+      title: 'Sega Master System',
+      short: 'SMS',
+      colors: ['#550055', '#aa55aa', '#ffaaff', '#000055', '#5555aa', '#aaaaff', '#55aaaa', '#005555',
+              '#aaffff', '#005500', '#aaffaa', '#55aa00', '#aaff00', '#aaaa00', '#555500', '#ffff55',
+              '#aaaa55', '#ffffaa', '#ffaa00', '#aa5500', '#ffaa55', '#ff5500', '#ff0000', '#aa0000',
+              '#550000', '#ff5555', '#aa5555', '#ffaaaa', '#ffffff', '#aaaaaa', '#555555', '#000000'],
+    },
+
+
+  };
+
+  /*
+  this.palettes = {
     Sprite: [],
     Gameboy: ['#9bbc0f', '#8bac0f', '#306230', '#0f380f'],
-    Genesis: ['#550055', '#aa55aa', '#ffaaff', '#000055', '#5555aa', '#aaaaff', '#55aaaa', '#005555',
+    MasterSystem: ['#550055', '#aa55aa', '#ffaaff', '#000055', '#5555aa', '#aaaaff', '#55aaaa', '#005555',
               '#aaffff', '#005500', '#aaffaa', '#55aa00', '#aaff00', '#aaaa00', '#555500', '#ffff55',
               '#aaaa55', '#ffffaa', '#ffaa00', '#aa5500', '#ffaa55', '#ff5500', '#ff0000', '#aa0000',
               '#550000', '#ff5555', '#aa5555', '#ffaaaa', '#ffffff', '#aaaaaa', '#555555', '#000000'],
 
   };
-  this.palette = 'Sprite';
+  */
+  this.palette = 'sprite';
 
   this.buildAutoPalette = function() {
     var palette = [];
@@ -35,7 +60,7 @@ var Editor = function() {
       palette.push(color);
     });
 
-    this.palettes.Sprite = _.uniq(palette, false); //, function(i){return i.rgbaString();})
+    this.palettes.sprite.colors = _.uniq(palette, false); //, function(i){return i.rgbaString();})
   };
 
   this.selectTopLayer = function() {
@@ -73,8 +98,8 @@ var Editor = function() {
   });
 
   signal.pixelFilled.add(function(layer, x, y, color) {
-    self.palettes.Sprite.push(color);
-    self.palettes.Sprite = _.uniq(self.palettes.Sprite, false, function(i){return i.rgbaString();})
+    self.palettes.sprite.colors.push(color.hexString());
+    self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
   });
 
   signal.pixelCleared.add(function() {

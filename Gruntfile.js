@@ -102,6 +102,13 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
+    plato: {
+      report: {
+        files: {
+          'report': ['js/classes/*.js', 'js/components/*.js', 'js/mixins/*.js', 'js/*.js']
+        }
+      }
+    },
     uglify: {
       options: {
         banner: ""
@@ -117,6 +124,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-plato');
 
   grunt.registerTask('default', ['watch']);
   grunt.registerTask('build', ['concat', 'uglify']);

@@ -61,7 +61,6 @@ var App = React.createClass({
       self.props.signal[item].add(self.updateProps);
     });
 
-
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -69,6 +68,5 @@ var App = React.createClass({
       editor: editor,
       file: file
     });
-  }
-
+  },
 });

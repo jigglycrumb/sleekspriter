@@ -1,4 +1,9 @@
 var Palette = React.createClass({
+  getInitialState: function() {
+    return {
+      resetScroll: false,
+    };
+  },
   render: function() {
 
     var palettes = this.props.editor.palettes,
@@ -9,12 +14,12 @@ var Palette = React.createClass({
         <div className="switch" onClick={this.showPalettes}>
           <i className="icon flaticon-color1"/>
           <i className="switch-arrow flaticon-little9"/>
-          <div className="name">{this.props.editor.palette}</div>
+          <div className="name">{palette.short}</div>
           <ul ref="paletteList" className="list">
-            {Object.keys(palettes).map(function(paletteName) {
-              var p = palettes[paletteName];
+            {Object.keys(palettes).map(function(paletteKey) {
+              var p = palettes[paletteKey];
               return (
-                <li key={paletteName} data-palette={paletteName} onClick={this.selectPalette}>{paletteName}</li>
+                <li key={paletteKey} data-palette={paletteKey} onClick={this.selectPalette}>{p.title}</li>
               );
             }, this)}
           </ul>
@@ -24,7 +29,7 @@ var Palette = React.createClass({
         </button>
         <div className="outer">
           <div className="inner">
-            {palette.map(function(color) {
+            {palette.colors.map(function(color) {
               return (
                 <PaletteSwatch key={color} color={color} signal={this.props.signal} />
               );
@@ -39,10 +44,16 @@ var Palette = React.createClass({
   },
   componentDidMount: function() {
     this.setInnerWidth();
-    this.scrollTo(0);
+    this.resetScroll();
+    this.props.signal.paletteSelected.add(this.prepareResetScroll);
   },
   componentDidUpdate: function() {
     this.setInnerWidth();
+
+    if(this.state.resetScroll) {
+      this.resetScroll();
+      this.setState({resetScroll:false});
+    }
   },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
@@ -81,9 +92,19 @@ var Palette = React.createClass({
     if(x == 0) this.refs.buttonScrollLeft.getDOMNode().style.visibility = 'hidden';
     else this.refs.buttonScrollLeft.getDOMNode().style.visibility = 'visible';
 
-    var w = this.getInnerWidth() - this.getOuterWidth();
-    if(x >= w) this.refs.buttonScrollRight.getDOMNode().style.visibility = 'hidden';
-    else this.refs.buttonScrollRight.getDOMNode().style.visibility = 'visible';
+    var iw = this.getInnerWidth(),
+        ow = this.getOuterWidth(),
+        w = iw - ow,
+        swatchWidth = 28,
+        swatches = NodeList2Array(this.getDOMNode().querySelectorAll('.inner .colorswatch')).length,
+        swatchesVisible = Math.floor(ow/swatchWidth),
+        pages = Math.ceil(swatches/swatchesVisible);
+
+    if(pages == 1) this.refs.buttonScrollRight.getDOMNode().style.visibility = 'hidden';
+    else {
+      if(x >= w) this.refs.buttonScrollRight.getDOMNode().style.visibility = 'hidden';
+      else this.refs.buttonScrollRight.getDOMNode().style.visibility = 'visible';
+    }
 
     (function animate() {
       if(!tween.expired()) {
@@ -112,6 +133,12 @@ var Palette = React.createClass({
 
     this.scrollTo(target);
   },
+  prepareResetScroll: function() {
+    this.setState({resetScroll: true});
+  },
+  resetScroll: function() {
+    this.scrollTo(0);
+  },
   showPalettes: function() {
     this.refs.paletteList.getDOMNode().style.display = 'block';
   },
@@ -122,7 +149,6 @@ var Palette = React.createClass({
     var palette = event.target.getAttribute('data-palette');
     this.hidePalettes();
     this.props.signal.paletteSelected.dispatch(palette);
-    //this.scrollTo(0);
     return false;
   },
 });

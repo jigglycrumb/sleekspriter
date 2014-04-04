@@ -319,7 +319,7 @@ ul {
   width: 103px;
 }
 .ToolComponent .palette .switch .list {
-  width: 100%;
+  width: 200px;
   float: left;
   display: none;
   background: #535353;
