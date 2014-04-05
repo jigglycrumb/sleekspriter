@@ -617,7 +617,6 @@ var CopyFrameMixin = {
   },
   componentDidMount: function() {
     this.props.signal.frameContentChanged.add(this.prepareRefresh);
-    //this.props.signal.frameSelected.add(this.prepareRefresh);
   },
   getInitialState: function() {
     return {
@@ -629,11 +628,13 @@ var CopyFrameMixin = {
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      //console.log('updating preview', this.props.layer);
-      var sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
-      this.getDOMNode().width = this.getDOMNode().width;
-      //this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
+      var w = this.getDOMNode().clientWidth,
+          h = this.getDOMNode().clientHeight,
+          sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
+
+      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
+      this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
+      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
       this.setState({needsRefresh: false});
     }
   }
@@ -1375,17 +1376,17 @@ var PreviewBoxPreview = React.createClass({
       scale = maxHeight/this.props.file.size.height;
     }
 
-    var cssWidth = this.props.file.size.width*scale,
-        cssHeight = this.props.file.size.height*scale;
+    var width = this.props.file.size.width*scale,
+        height = this.props.file.size.height*scale;
 
     return (
       <canvas
         id="PreviewBoxPreview"
-        width={this.props.file.size.width*this.props.editor.zoom}
-        height={this.props.file.size.height*this.props.editor.zoom}
+        width={width}
+        height={height}
         style={{
-          width: cssWidth,
-          height: cssHeight,
+          width: width,
+          height: height,
         }}>
       </canvas>
     );
@@ -1445,14 +1446,12 @@ var FrameBoxFrame = React.createClass({
   mixins:[CopyFrameMixin],
   render: function() {
 
-    var width = this.props.file.size.width*this.props.editor.zoom,
-        height = this.props.file.size.height*this.props.editor.zoom,
-        style = fitCanvasIntoSquareContainer(width, height, this.props.size);
+    var style = fitCanvasIntoSquareContainer(this.props.file.size.width, this.props.file.size.height, this.props.size);
 
     return (
       <canvas
-        width={width}
-        height={height}
+        width={style.width}
+        height={style.height}
         style={style} />
     );
   }
@@ -1565,23 +1564,19 @@ var LayerBoxLayerPreview = React.createClass({
   },
   render: function() {
 
-    var width = this.props.size.width*this.props.zoom,
-        height = this.props.size.height*this.props.zoom,
-        style = fitCanvasIntoSquareContainer(width, height, 30);
+    var style = fitCanvasIntoSquareContainer(this.props.size.width, this.props.size.height, 30);
 
     return (
-      <canvas width={width} height={height} style={style} onClick={this.dispatchLayerSelected}></canvas>
+      <canvas width={style.width} height={style.height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
   },
   componentDidMount: function() {
     this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.zoomChanged.add(this.prepareRefresh);
   },
   componentWillUnmount: function() {
     this.props.signal.frameSelected.remove(this.prepareRefresh);
     this.props.signal.layerContentChanged.remove(this.prepareRefresh);
-    this.props.signal.zoomChanged.remove(this.prepareRefresh);
   },
   getInitialState: function() {
     return {
@@ -1589,7 +1584,6 @@ var LayerBoxLayerPreview = React.createClass({
     };
   },
   dispatchLayerSelected: function(event) {
-    console.log('selecting layer', this.props.layer);
     this.props.signal.layerSelected.dispatch(this.props.layer);
   },
   prepareRefresh: function() {
@@ -1597,10 +1591,12 @@ var LayerBoxLayerPreview = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      //console.log('updating preview', this.props.layer);
-      var sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.layer);
-      this.getDOMNode().width = this.getDOMNode().width;
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
+      var w = this.getDOMNode().clientWidth,
+          h = this.getDOMNode().clientHeight,
+          sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.layer);
+
+      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
+      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
       this.setState({needsRefresh: false});
     }
   }
@@ -1643,8 +1639,8 @@ var OffscreenFrameCanvas = React.createClass({
       <canvas
         id={this.props.key}
         className="OffscreenFrameCanvas"
-        width={this.props.file.size.width*this.props.editor.zoom}
-        height={this.props.file.size.height*this.props.editor.zoom}
+        width={this.props.file.size.width}
+        height={this.props.file.size.height}
         style={{
           width: this.props.file.size.width,
           height: this.props.file.size.height
@@ -1672,7 +1668,7 @@ var OffscreenFrameCanvas = React.createClass({
           var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
           var ctx = self.getDOMNode().getContext('2d');
           ctx.globalAlpha = layer.opacity/100;
-          ctx.drawImage(sourceCanvas, 0, 0);
+          ctx.drawImage(sourceCanvas, 0, 0, this.props.file.size.width, this.props.file.size.height);
         }
       }
       this.props.signal.frameContentChanged.dispatch(this.props.frame);

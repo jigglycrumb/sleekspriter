@@ -4,23 +4,19 @@ var LayerBoxLayerPreview = React.createClass({
   },
   render: function() {
 
-    var width = this.props.size.width*this.props.zoom,
-        height = this.props.size.height*this.props.zoom,
-        style = fitCanvasIntoSquareContainer(width, height, 30);
+    var style = fitCanvasIntoSquareContainer(this.props.size.width, this.props.size.height, 30);
 
     return (
-      <canvas width={width} height={height} style={style} onClick={this.dispatchLayerSelected}></canvas>
+      <canvas width={style.width} height={style.height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
   },
   componentDidMount: function() {
     this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.zoomChanged.add(this.prepareRefresh);
   },
   componentWillUnmount: function() {
     this.props.signal.frameSelected.remove(this.prepareRefresh);
     this.props.signal.layerContentChanged.remove(this.prepareRefresh);
-    this.props.signal.zoomChanged.remove(this.prepareRefresh);
   },
   getInitialState: function() {
     return {
@@ -28,7 +24,6 @@ var LayerBoxLayerPreview = React.createClass({
     };
   },
   dispatchLayerSelected: function(event) {
-    console.log('selecting layer', this.props.layer);
     this.props.signal.layerSelected.dispatch(this.props.layer);
   },
   prepareRefresh: function() {
@@ -36,10 +31,12 @@ var LayerBoxLayerPreview = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      //console.log('updating preview', this.props.layer);
-      var sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.layer);
-      this.getDOMNode().width = this.getDOMNode().width;
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0);
+      var w = this.getDOMNode().clientWidth,
+          h = this.getDOMNode().clientHeight,
+          sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.layer);
+
+      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
+      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
       this.setState({needsRefresh: false});
     }
   }
