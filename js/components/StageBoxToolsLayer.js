@@ -77,22 +77,35 @@ var StageBoxToolsLayer = React.createClass({
             alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
           }
           break;
+        case 'RectangularSelectionTool':
+
+          break;
       }
     }
   },
   dispatchPixelSelected: function(event) {
     if(event.timeStamp > this.state.last + 10) {
-      var world_x = Math.ceil(event.layerX/this.props.editor.zoom),
-          world_y = Math.ceil(event.layerY/this.props.editor.zoom);
-
-      this.props.signal.pixelSelected.dispatch(world_x, world_y);
+      var world = this.getWorldCoordinates(event);
+      this.props.signal.pixelSelected.dispatch(world.x, world.y);
     }
   },
   mousedown: function(event) {
     this.setState({mousedown:true, last: event.timeStamp});
+
+    switch(this.props.editor.tool) {
+      case 'RectangularSelectionTool':
+        this.props.signal.selectionStarted.dispatch(this.getWorldCoordinates(event));
+        break;
+    }
   },
   mouseup: function() {
     this.setState({mousedown:false});
+
+    switch(this.props.editor.tool) {
+      case 'RectangularSelectionTool':
+        this.props.signal.selectionEnded.dispatch(this.getWorldCoordinates(event));
+        break;
+    }
   },
   mouseleave: function() {
     this.props.signal.pixelSelected.dispatch(0, 0);
@@ -104,6 +117,12 @@ var StageBoxToolsLayer = React.createClass({
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
     editor.layerPixelColor = color;
+  },
+  getWorldCoordinates: function(event) {
+    return {
+      x: Math.ceil(event.layerX/this.props.editor.zoom),
+      y: Math.ceil(event.layerY/this.props.editor.zoom),
+    };
   },
   drawPixelCursor: function() {
 
@@ -182,5 +201,8 @@ var StageBoxToolsLayer = React.createClass({
       ctx.lineTo(canvas.width, y);
       ctx.stroke();
     }
-  }
+  },
+  drawSelection: function(start, end) {
+    console.log(start, end);
+  },
 });

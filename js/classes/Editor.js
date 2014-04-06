@@ -187,6 +187,18 @@ var Editor = function() {
   signal.paletteSelected.add(function(palette) {
     self.palette = palette;
   });
+
+  signal.selectionStarted.add(function(point) {
+    self.selection = {
+      start: point
+    };
+  });
+
+  signal.selectionEnded.add(function(point) {
+    self.selection.end = point;
+
+    console.log(self.selection);
+  });
 };
 
 var editor = new Editor();
