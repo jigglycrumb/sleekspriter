@@ -14,6 +14,7 @@ Icons (via flaticon.com)
 Brush: http://www.flaticon.com/free-icon/small-brush_3594
 Eraser: http://www.flaticon.com/free-icon/double-sided-eraser_25454
 Eyedropper: http://www.flaticon.com/free-icon/eyedropper-tool_40533
+Selection Tool: http://www.flaticon.com/free-icon/selection-symbol-for-interface-of-a-square-of-broken-line_32454
 Zoom: http://www.flaticon.com/free-icon/magnifier-lens-outline-with-handle_23759
 
 Plus: http://www.flaticon.com/free-icon/plus-black-symbol_25304

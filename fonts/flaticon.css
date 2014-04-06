@@ -62,9 +62,12 @@ margin-left: 20px;
 .flaticon-plus25:before {
 	content: "\e00f";
 }
-.flaticon-small23:before {
+.flaticon-selection7:before {
 	content: "\e010";
 }
-.flaticon-sun4:before {
+.flaticon-small23:before {
 	content: "\e011";
+}
+.flaticon-sun4:before {
+	content: "\e012";
 }

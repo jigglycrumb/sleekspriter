@@ -117,6 +117,8 @@ var Editor = function() {
   };
   this.palette = 'sprite';
 
+  this.selection = false;
+
   this.buildAutoPalette = function() {
     var palette = [];
     file.pixels.forEach(function(pixel) {

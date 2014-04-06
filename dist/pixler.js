@@ -399,6 +399,8 @@ var Editor = function() {
   };
   this.palette = 'sprite';
 
+  this.selection = false;
+
   this.buildAutoPalette = function() {
     var palette = [];
     file.pixels.forEach(function(pixel) {
@@ -931,6 +933,17 @@ var EyedropperTool = React.createClass({
     );
   }
 });
+var RectangularSelectionTool = React.createClass({
+  render: function() {
+    return (
+      <div id="RectangularSelection-Tool" className="ToolComponent">
+        <i className="icon flaticon-selection7"></i>
+
+        <span className="hint"></span>
+      </div>
+    );
+  }
+});
 var BrightnessTool = React.createClass({
   render: function() {
 
@@ -1312,6 +1325,7 @@ var ToolBox = React.createClass({
           <ToolBoxTool id="BrushTool" title="Brush" icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
           <ToolBoxTool id="EraserTool" title="Eraser" icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
           <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="RectangularSelectionTool" title="Selection" icon="flaticon-selection7" editor={this.props.editor} signal={this.props.signal} />
           <ToolBoxTool id="BrightnessTool" title="Brightness" icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
           {/*
           <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
