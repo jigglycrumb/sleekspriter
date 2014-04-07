@@ -196,8 +196,10 @@ var Editor = function() {
 
   signal.selectionEnded.add(function(point) {
     self.selection.end = point;
+  });
 
-    console.log(self.selection);
+  signal.selectionCleared.add(function(point) {
+    self.selection = false;
   });
 };
 

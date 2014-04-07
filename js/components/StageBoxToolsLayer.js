@@ -21,7 +21,7 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mousedown', this.mousedown);
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
-    this.getDOMNode().addEventListener('mousemove', this.dispatchPixelSelected);
+    this.getDOMNode().addEventListener('mousemove', this.mousemove);
 
     this.props.signal.toolSelected.add(this.mouseup);
     this.props.signal.pixelSelected.add(this.getLayerPixelColor);
@@ -34,7 +34,12 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
+    if(this.props.editor.selection !== false) {
+      //this.drawSelection(editor.selection.start, editor.selection.end);
+    }
+
     this.drawPixelCursor();
+
 
     var self = this;
 
@@ -78,32 +83,45 @@ var StageBoxToolsLayer = React.createClass({
           }
           break;
         case 'RectangularSelectionTool':
+          if(editor.selection) {
+            this.drawSelection(editor.selection.start, editor.pixel);
+          }
 
           break;
       }
     }
   },
-  dispatchPixelSelected: function(event) {
+  mousemove: function(event) {
+    console.log('mousemove');
+
     if(event.timeStamp > this.state.last + 10) {
       var world = this.getWorldCoordinates(event);
       this.props.signal.pixelSelected.dispatch(world.x, world.y);
     }
   },
   mousedown: function(event) {
+    console.log('mousedown');
+
     this.setState({mousedown:true, last: event.timeStamp});
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        this.props.signal.selectionStarted.dispatch(this.getWorldCoordinates(event));
+        if(!editor.selection) {
+          var world = this.getWorldCoordinates(event);
+          this.props.signal.selectionStarted.dispatch(world);
+        }
         break;
     }
   },
   mouseup: function() {
+    console.log('mouseup');
+
     this.setState({mousedown:false});
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        this.props.signal.selectionEnded.dispatch(this.getWorldCoordinates(event));
+        this.props.signal.selectionCleared.dispatch();
+        //this.props.signal.selectionEnded.dispatch(this.getWorldCoordinates(event));
         break;
     }
   },
@@ -203,6 +221,25 @@ var StageBoxToolsLayer = React.createClass({
     }
   },
   drawSelection: function(start, end) {
+
     console.log(start, end);
+    //return;
+
+    var canvas = this.getDOMNode(),
+        zoom = this.props.editor.zoom,
+        ctx = canvas.getContext('2d'),
+        width = (end.x - start.x),
+        height = (end.y - start.y);
+
+    if(width >= 0) width++;
+    if(height >= 0) height++;
+
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = "#FF0000";
+    ctx.fillStyle = "#FF0000";
+
+    ctx.fillRect((start.x-1)*zoom, (start.y-1)*zoom, width*zoom, height*zoom);
+
+    ctx.globalAlpha = 1;
   },
 });

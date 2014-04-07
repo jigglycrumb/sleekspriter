@@ -653,6 +653,7 @@ ul {
   left: 50px;
   right: 220px;
   zoom: 1;
+  display: none;
 }
 .OffscreenFrameCanvas {
   background: #fff;
