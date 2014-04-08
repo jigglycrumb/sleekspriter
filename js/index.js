@@ -1,4 +1,5 @@
 function NodeList2Array(NodeList) {
+  //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
   return [].slice.call(NodeList);
 };
 

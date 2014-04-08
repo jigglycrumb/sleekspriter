@@ -22,8 +22,6 @@ var Stage = function() {
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
-
-        //signal.pixelSelected.dispatch(0, 0);
       },
       clear: function() {
         file.layers.forEach(function(layer) {
@@ -41,8 +39,6 @@ var Stage = function() {
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
-
-        //signal.pixelSelected.dispatch(0, 0);
       }
     },
     pixel: {

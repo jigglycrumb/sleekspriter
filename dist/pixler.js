@@ -47,6 +47,10 @@ signals.prototype.dispatch = function() {
   oldFn.call(this);
 }
 */
+var Point = function(x, y) {
+  this.x = x;
+  this.y = y;
+};
 var File = function() {
 
   this.size = null;
@@ -291,7 +295,16 @@ var Editor = function() {
       self = this;
 
   this.frame = 1;
+
+
   this.layer = null;
+
+  this.selectTopLayer = function() {
+    var frameLayers = _.where(file.layers, {frame: this.frame});
+    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
+    signal.layerSelected.dispatch(topLayer.id);
+  }
+
   this.zoom = 10;
   this.grid = true;
   this.pixel = {x:0, y:0};
@@ -302,6 +315,9 @@ var Editor = function() {
 
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
+
+
+  this.palette = 'sprite';
 
   this.palettes = {
     sprite: {
@@ -401,9 +417,6 @@ var Editor = function() {
                '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
     },
   };
-  this.palette = 'sprite';
-
-  this.selection = false;
 
   this.buildAutoPalette = function() {
     var palette = [];
@@ -415,11 +428,21 @@ var Editor = function() {
     this.palettes.sprite.colors = _.uniq(palette, false);
   };
 
-  this.selectTopLayer = function() {
-    var frameLayers = _.where(file.layers, {frame: this.frame});
-    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    signal.layerSelected.dispatch(topLayer.id);
-  }
+
+  this.selection = false;
+  this.selectionContains = function(point) {
+    if(this.selection) {
+      if(!_.isUndefined(this.selection.start)
+      && !_.isUndefined(this.selection.end)) {
+        // ok, selection is valid
+        return point.x >= this.selection.start.x
+        && point.x <= this.selection.end.x
+        && point.y >= this.selection.start.y
+        && point.y <= this.selection.end.y;
+      }
+    }
+  };
+
 
   // signal handlers
   signal.frameSelected.add(function(frame) {
@@ -445,8 +468,8 @@ var Editor = function() {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
-  signal.pixelSelected.add(function(x, y) {
-    self.pixel = {x: x, y: y};
+  signal.pixelSelected.add(function(point) {
+    self.pixel = point;
   });
 
   signal.pixelFilled.add(function(layer, x, y, color) {
@@ -481,7 +504,17 @@ var Editor = function() {
   });
 
   signal.selectionEnded.add(function(point) {
+
     self.selection.end = point;
+
+    // switch start & end if start is more "lower right" than end
+    // makes iterating over the selection easier later
+    if(self.selection.start.x > self.selection.end.x
+    || self.selection.start.y > self.selection.end.y) {
+      var temp = self.selection.start;
+      self.selection.start = self.selection.end;
+      self.selection.end = temp;
+    }
   });
 
   signal.selectionCleared.add(function(point) {
@@ -514,8 +547,6 @@ var Stage = function() {
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
-
-        //signal.pixelSelected.dispatch(0, 0);
       },
       clear: function() {
         file.layers.forEach(function(layer) {
@@ -533,8 +564,6 @@ var Stage = function() {
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
-
-        //signal.pixelSelected.dispatch(0, 0);
       }
     },
     pixel: {
@@ -1172,7 +1201,7 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.mousemove);
 
-    this.props.signal.toolSelected.add(this.mouseup);
+    //this.props.signal.toolSelected.add(this.mouseup);
     this.props.signal.pixelSelected.add(this.getLayerPixelColor);
   },
   componentDidUpdate: function() {
@@ -1183,8 +1212,8 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
-    if(this.props.editor.selection !== false) {
-      //this.drawSelection(editor.selection.start, editor.selection.end);
+    if(editor.selection.start instanceof Point && editor.selection.end instanceof Point) {
+      this.drawSelection(editor.selection.start, editor.selection.end);
     }
 
     this.drawPixelCursor();
@@ -1220,7 +1249,6 @@ var StageBoxToolsLayer = React.createClass({
         case 'BrightnessTool':
           if(layerVisible()) {
             var px = _.findWhere(file.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y });
-            //console.log(px);
             if(!_.isUndefined(px)) {
               if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
               else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
@@ -1245,39 +1273,53 @@ var StageBoxToolsLayer = React.createClass({
 
     if(event.timeStamp > this.state.last + 10) {
       var world = this.getWorldCoordinates(event);
-      this.props.signal.pixelSelected.dispatch(world.x, world.y);
+      this.props.signal.pixelSelected.dispatch(world);
     }
   },
   mousedown: function(event) {
     console.log('mousedown');
 
-    this.setState({mousedown:true, last: event.timeStamp});
-
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(!editor.selection) {
-          var world = this.getWorldCoordinates(event);
-          this.props.signal.selectionStarted.dispatch(world);
+        var point = this.getWorldCoordinates(event);
+        if(!editor.selection) { // start new selection
+          console.log('no selection found, starting new selection');
+          this.props.signal.selectionStarted.dispatch(point);
+        }
+        else { // a selection exists already
+          // check if mouse is inside the existing selection
+          if(editor.selectionContains(point)) { // inside selection: move selection
+            console.log('inside selection, would move');
+          }
+          else { // outside selection: drop selection and start a new one
+            console.log('outside selection, starting new selection');
+            this.props.signal.selectionStarted.dispatch(point);
+          }
+
+
         }
         break;
     }
+
+    this.setState({mousedown:true, last: event.timeStamp});
   },
   mouseup: function() {
     console.log('mouseup');
 
-    this.setState({mousedown:false});
-
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        this.props.signal.selectionCleared.dispatch();
-        //this.props.signal.selectionEnded.dispatch(this.getWorldCoordinates(event));
+        //this.props.signal.selectionCleared.dispatch();
+        var point = this.getWorldCoordinates(event);
+        this.props.signal.selectionEnded.dispatch(point);
         break;
     }
+
+    this.setState({mousedown:false});
   },
   mouseleave: function() {
-    this.props.signal.pixelSelected.dispatch(0, 0);
+    this.props.signal.pixelSelected.dispatch(new Point(0, 0));
   },
-  getLayerPixelColor: function(x, y) {
+  getLayerPixelColor: function() {
     var layer = file.getLayerById(this.props.editor.layer),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
@@ -1286,13 +1328,12 @@ var StageBoxToolsLayer = React.createClass({
     editor.layerPixelColor = color;
   },
   getWorldCoordinates: function(event) {
-    return {
-      x: Math.ceil(event.layerX/this.props.editor.zoom),
-      y: Math.ceil(event.layerY/this.props.editor.zoom),
-    };
+    return new Point(
+      Math.ceil(event.layerX/this.props.editor.zoom),
+      Math.ceil(event.layerY/this.props.editor.zoom)
+    );
   },
   drawPixelCursor: function() {
-
     var zoom = this.props.editor.zoom,
         x = this.props.editor.pixel.x,
         y = this.props.editor.pixel.y;
@@ -1343,11 +1384,8 @@ var StageBoxToolsLayer = React.createClass({
     }
   },
   drawGrid: function() {
-
     var canvas = this.getDOMNode(),
         zoom = this.props.editor.zoom;
-
-    //console.log('drawing grid', zoom);
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');
@@ -1370,24 +1408,38 @@ var StageBoxToolsLayer = React.createClass({
     }
   },
   drawSelection: function(start, end) {
-
-    console.log(start, end);
-    //return;
-
     var canvas = this.getDOMNode(),
         zoom = this.props.editor.zoom,
         ctx = canvas.getContext('2d'),
         width = (end.x - start.x),
-        height = (end.y - start.y);
+        height = (end.y - start.y),
+        sx,
+        sy;
 
-    if(width >= 0) width++;
-    if(height >= 0) height++;
+    if(width >= 0) {
+      width++;
+      sx = start.x - 1;
+    }
+    else {
+      width--;
+      sx = start.x;
+    }
+
+    if(height >= 0) {
+      height++;
+      sy = start.y - 1;
+    }
+    else {
+      height--;
+      sy = start.y;
+    }
 
     ctx.globalAlpha = 0.5;
-    ctx.strokeStyle = "#FF0000";
-    ctx.fillStyle = "#FF0000";
+    ctx.strokeStyle = "#0433FF";
+    ctx.fillStyle = "#88E6F2";
 
-    ctx.fillRect((start.x-1)*zoom, (start.y-1)*zoom, width*zoom, height*zoom);
+    ctx.fillRect(sx*zoom, sy*zoom, width*zoom, height*zoom);
+    ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
 
     ctx.globalAlpha = 1;
   },
@@ -1770,10 +1822,10 @@ var OffscreenFrameCanvas = React.createClass({
       this.setState({needsRefresh: true});
     }
   },
-  getPixelColor: function(x, y) {
+  getPixelColor: function(point) {
     if(this.props.frame == this.props.editor.frame) {
       var ctx = this.getDOMNode().getContext('2d'),
-          px = ctx.getImageData(x, y, 1, 1).data,
+          px = ctx.getImageData(point.x, point.y, 1, 1).data,
           color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
       editor.pixelColor = color;
@@ -1781,6 +1833,7 @@ var OffscreenFrameCanvas = React.createClass({
   }
 });
 function NodeList2Array(NodeList) {
+  //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
   return [].slice.call(NodeList);
 };
 

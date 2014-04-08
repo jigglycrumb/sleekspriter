@@ -5,7 +5,16 @@ var Editor = function() {
       self = this;
 
   this.frame = 1;
+
+
   this.layer = null;
+
+  this.selectTopLayer = function() {
+    var frameLayers = _.where(file.layers, {frame: this.frame});
+    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
+    signal.layerSelected.dispatch(topLayer.id);
+  }
+
   this.zoom = 10;
   this.grid = true;
   this.pixel = {x:0, y:0};
@@ -16,6 +25,9 @@ var Editor = function() {
 
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
+
+
+  this.palette = 'sprite';
 
   this.palettes = {
     sprite: {
@@ -115,9 +127,6 @@ var Editor = function() {
                '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
     },
   };
-  this.palette = 'sprite';
-
-  this.selection = false;
 
   this.buildAutoPalette = function() {
     var palette = [];
@@ -129,11 +138,21 @@ var Editor = function() {
     this.palettes.sprite.colors = _.uniq(palette, false);
   };
 
-  this.selectTopLayer = function() {
-    var frameLayers = _.where(file.layers, {frame: this.frame});
-    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    signal.layerSelected.dispatch(topLayer.id);
-  }
+
+  this.selection = false;
+  this.selectionContains = function(point) {
+    if(this.selection) {
+      if(!_.isUndefined(this.selection.start)
+      && !_.isUndefined(this.selection.end)) {
+        // ok, selection is valid
+        return point.x >= this.selection.start.x
+        && point.x <= this.selection.end.x
+        && point.y >= this.selection.start.y
+        && point.y <= this.selection.end.y;
+      }
+    }
+  };
+
 
   // signal handlers
   signal.frameSelected.add(function(frame) {
@@ -159,8 +178,8 @@ var Editor = function() {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
-  signal.pixelSelected.add(function(x, y) {
-    self.pixel = {x: x, y: y};
+  signal.pixelSelected.add(function(point) {
+    self.pixel = point;
   });
 
   signal.pixelFilled.add(function(layer, x, y, color) {
@@ -195,7 +214,17 @@ var Editor = function() {
   });
 
   signal.selectionEnded.add(function(point) {
+
     self.selection.end = point;
+
+    // switch start & end if start is more "lower right" than end
+    // makes iterating over the selection easier later
+    if(self.selection.start.x > self.selection.end.x
+    || self.selection.start.y > self.selection.end.y) {
+      var temp = self.selection.start;
+      self.selection.start = self.selection.end;
+      self.selection.end = temp;
+    }
   });
 
   signal.selectionCleared.add(function(point) {
