@@ -7,6 +7,10 @@ function capitaliseFirstLetter(string) { // used in the brightness tool
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function inArray(array, value) {
+  return array.indexOf(value) > -1;
+}
+
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
       h = canvasHeight,

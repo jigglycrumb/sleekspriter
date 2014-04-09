@@ -5,7 +5,7 @@ var Editor = function() {
       self = this;
 
   this.frame = 1;
-
+  this.lastFrame = 1;
 
   this.layer = null;
 
@@ -158,11 +158,42 @@ var Editor = function() {
     return this.selection.start instanceof Point && this.selection.end instanceof Point;
   };
 
+  this.pixels = [];
+
+  this.saveChanges = function() {
+    console.log('saving changes');
+    // grab all old pixels of current frame
+    var frameLayers = _.pluck(this.pixels, 'layer');
+    var pixels = this.pixels;
+    file.pixels.forEach(function(pixel) {
+      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
+    });
+
+    file.pixels = pixels;
+
+    console.log(pixels.length);
+  };
+
 
   // signal handlers
   signal.frameSelected.add(function(frame) {
+
+    self.saveChanges();
+
     self.frame = parseInt(frame);
     self.selectTopLayer();
+
+    var frameLayers = _.where(file.layers, {frame: self.frame});
+    var pixels = [];
+
+    frameLayers.forEach(function(layer) {
+      var layerPixels = _.where(file.pixels, {layer: layer.id});
+      pixels.push(layerPixels);
+    });
+
+    self.pixels = _.flatten(pixels);
+
+    console.log(self.pixels.length);
   });
 
   signal.layerSelected.add(function(id) {
