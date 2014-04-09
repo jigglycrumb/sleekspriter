@@ -61,19 +61,6 @@ var File = function() {
 
   var self = this;
 
-  this.deletePixelsOfLayer = function(layer) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return pixel.layer !== layer;
-    });
-  };
-
-  this.deletePixel = function(layer, x, y) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
-    });
-  }
-
-
   function sizeFromFile(size) {
     return {
       width: size[0],
@@ -144,6 +131,12 @@ var File = function() {
 
   this.getLayerById = function(id) {
     return _.findWhere(this.layers, {id: id}) || false;
+  };
+
+  this.deletePixelsOfLayer = function(layer) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return pixel.layer !== layer;
+    });
   };
 
   this.toJSONString = function() {
@@ -252,39 +245,6 @@ var File = function() {
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame);
     signal.layerRemoved.dispatch(shouldSelectLayer);
-  });
-
-  signal.pixelFilled.add(function(layer, x, y, color) {
-    var c = color.rgb(),
-        a = 1;
-
-    var newPixel = pixelFromFile([layer, x, y, c.r, c.g, c.b, a]);
-    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
-    if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', layer, x, y, color.rgbString());
-      self.pixels.push(newPixel);
-    }
-    else {
-      //console.log('replacing pixel', layer, x, y, color.rgbString());
-      // replace old pixel
-      for(var i = 0; i < self.pixels.length; i++) {
-        var p = self.pixels[i];
-        if(p.layer == layer && p.x == x && p.y == y) {
-          p.r = c.r;
-          p.g = c.g;
-          p.b = c.b;
-          p.a = a;
-          break;
-        }
-      }
-    }
-
-    signal.layerContentChanged.dispatch(layer);
-  });
-
-  signal.pixelCleared.add(function(layer, x, y) {
-    self.deletePixel(layer, x, y);
-    signal.layerContentChanged.dispatch(layer);
   });
 };
 
@@ -451,6 +411,12 @@ var Editor = function() {
 
   this.pixels = [];
 
+  this.deletePixel = function(layer, x, y) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
+    });
+  };
+
   this.saveChanges = function() {
     console.log('saving changes');
     // grab all old pixels of current frame
@@ -461,8 +427,6 @@ var Editor = function() {
     });
 
     file.pixels = pixels;
-
-    console.log(pixels.length);
   };
 
 
@@ -483,8 +447,6 @@ var Editor = function() {
     });
 
     self.pixels = _.flatten(pixels);
-
-    console.log(self.pixels.length);
   });
 
   signal.layerSelected.add(function(id) {
@@ -509,13 +471,44 @@ var Editor = function() {
     self.pixel = point;
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
+  signal.pixelFilled.add(function(layer, x, y, color) {
+
+    // update sprite palette
     self.palettes.sprite.colors.push(color.hexString());
     self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
+
+    // add/replace pixel
+    var c = color.rgb(),
+        a = 1;
+
+    var newPixel = {layer: layer, x: x, y: y, r: c.r, g: c.g, b: c.b, a: a};
+    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
+    if(_.isUndefined(oldPixel)) {
+      //console.log('filling pixel', layer, x, y, color.rgbString());
+      self.pixels.push(newPixel);
+    }
+    else {
+      //console.log('replacing pixel', layer, x, y, color.rgbString());
+      // replace old pixel
+      for(var i = 0; i < self.pixels.length; i++) {
+        var p = self.pixels[i];
+        if(p.layer == layer && p.x == x && p.y == y) {
+          p.r = c.r;
+          p.g = c.g;
+          p.b = c.b;
+          p.a = a;
+          break;
+        }
+      }
+    }
+
+    signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.pixelCleared.add(function() {
+  signal.pixelCleared.add(function(layer, x, y) {
     self.buildAutoPalette();
+    self.deletePixel(layer, x, y);
+    signal.layerContentChanged.dispatch(layer);
   });
 
   signal.gridToggled.add(function(grid) {
@@ -1821,7 +1814,7 @@ var StatusBar = React.createClass({
         <span>Y: {this.props.editor.pixel.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
-        <span>Frame {this.props.editor.frame}</span>
+        <span>Frame {this.props.editor.frame}, {this.props.editor.pixels.length} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
@@ -1937,6 +1930,11 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   return style;
 }
 
+function minutely() {
+  console.log('running minutely job');
+  editor.saveChanges();
+}
+
 window.onload = function() {
 
   // load file
@@ -1972,4 +1970,6 @@ window.onload = function() {
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
+
+  setInterval(minutely, 60000);
 };

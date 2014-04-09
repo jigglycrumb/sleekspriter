@@ -35,6 +35,11 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   return style;
 }
 
+function minutely() {
+  console.log('running minutely job');
+  editor.saveChanges();
+}
+
 window.onload = function() {
 
   // load file
@@ -70,4 +75,6 @@ window.onload = function() {
 
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
+
+  setInterval(minutely, 60000);
 };

@@ -160,6 +160,12 @@ var Editor = function() {
 
   this.pixels = [];
 
+  this.deletePixel = function(layer, x, y) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
+    });
+  };
+
   this.saveChanges = function() {
     console.log('saving changes');
     // grab all old pixels of current frame
@@ -170,8 +176,6 @@ var Editor = function() {
     });
 
     file.pixels = pixels;
-
-    console.log(pixels.length);
   };
 
 
@@ -192,8 +196,6 @@ var Editor = function() {
     });
 
     self.pixels = _.flatten(pixels);
-
-    console.log(self.pixels.length);
   });
 
   signal.layerSelected.add(function(id) {
@@ -218,13 +220,44 @@ var Editor = function() {
     self.pixel = point;
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
+  signal.pixelFilled.add(function(layer, x, y, color) {
+
+    // update sprite palette
     self.palettes.sprite.colors.push(color.hexString());
     self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
+
+    // add/replace pixel
+    var c = color.rgb(),
+        a = 1;
+
+    var newPixel = {layer: layer, x: x, y: y, r: c.r, g: c.g, b: c.b, a: a};
+    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
+    if(_.isUndefined(oldPixel)) {
+      //console.log('filling pixel', layer, x, y, color.rgbString());
+      self.pixels.push(newPixel);
+    }
+    else {
+      //console.log('replacing pixel', layer, x, y, color.rgbString());
+      // replace old pixel
+      for(var i = 0; i < self.pixels.length; i++) {
+        var p = self.pixels[i];
+        if(p.layer == layer && p.x == x && p.y == y) {
+          p.r = c.r;
+          p.g = c.g;
+          p.b = c.b;
+          p.a = a;
+          break;
+        }
+      }
+    }
+
+    signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.pixelCleared.add(function() {
+  signal.pixelCleared.add(function(layer, x, y) {
     self.buildAutoPalette();
+    self.deletePixel(layer, x, y);
+    signal.layerContentChanged.dispatch(layer);
   });
 
   signal.gridToggled.add(function(grid) {

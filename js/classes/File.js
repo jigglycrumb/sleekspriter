@@ -7,19 +7,6 @@ var File = function() {
 
   var self = this;
 
-  this.deletePixelsOfLayer = function(layer) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return pixel.layer !== layer;
-    });
-  };
-
-  this.deletePixel = function(layer, x, y) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
-    });
-  }
-
-
   function sizeFromFile(size) {
     return {
       width: size[0],
@@ -90,6 +77,12 @@ var File = function() {
 
   this.getLayerById = function(id) {
     return _.findWhere(this.layers, {id: id}) || false;
+  };
+
+  this.deletePixelsOfLayer = function(layer) {
+    this.pixels = this.pixels.filter(function(pixel) {
+      return pixel.layer !== layer;
+    });
   };
 
   this.toJSONString = function() {
@@ -198,39 +191,6 @@ var File = function() {
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame);
     signal.layerRemoved.dispatch(shouldSelectLayer);
-  });
-
-  signal.pixelFilled.add(function(layer, x, y, color) {
-    var c = color.rgb(),
-        a = 1;
-
-    var newPixel = pixelFromFile([layer, x, y, c.r, c.g, c.b, a]);
-    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
-    if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', layer, x, y, color.rgbString());
-      self.pixels.push(newPixel);
-    }
-    else {
-      //console.log('replacing pixel', layer, x, y, color.rgbString());
-      // replace old pixel
-      for(var i = 0; i < self.pixels.length; i++) {
-        var p = self.pixels[i];
-        if(p.layer == layer && p.x == x && p.y == y) {
-          p.r = c.r;
-          p.g = c.g;
-          p.b = c.b;
-          p.a = a;
-          break;
-        }
-      }
-    }
-
-    signal.layerContentChanged.dispatch(layer);
-  });
-
-  signal.pixelCleared.add(function(layer, x, y) {
-    self.deletePixel(layer, x, y);
-    signal.layerContentChanged.dispatch(layer);
   });
 };
 
