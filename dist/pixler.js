@@ -38,6 +38,7 @@ var signal = {
 
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
+  selectionMoved: new Signal(),
   selectionCleared: new Signal(),
 };
 /*
@@ -430,6 +431,7 @@ var Editor = function() {
 
 
   this.selection = false;
+
   this.selectionContains = function(point) {
     if(this.selection) {
       if(!_.isUndefined(this.selection.start)
@@ -441,6 +443,10 @@ var Editor = function() {
         && point.y <= this.selection.end.y;
       }
     }
+  };
+
+  this.selectionActive = function() {
+    return this.selection.start instanceof Point && this.selection.end instanceof Point;
   };
 
 
@@ -519,6 +525,19 @@ var Editor = function() {
 
   signal.selectionCleared.add(function(point) {
     self.selection = false;
+  });
+
+  signal.selectionMoved.add(function(distance) {
+    self.selection = {
+      start: new Point(
+        self.selection.start.x + distance.x,
+        self.selection.start.y + distance.y
+      ),
+      end: new Point(
+        self.selection.end.x + distance.x,
+        self.selection.end.y + distance.y
+      )
+    };
   });
 };
 
@@ -1180,6 +1199,7 @@ var StageBoxToolsLayer = React.createClass({
   getInitialState: function() {
     return {
       mousedown: false,
+      mousedownPoint: new Point(0, 0),
       last: null, // we need to record the mousedown timestamp because of a chrome bug,
                   // see https://code.google.com/p/chromium/issues/detail?id=161464
                   // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
@@ -1200,11 +1220,11 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.mousemove);
-
-    //this.props.signal.toolSelected.add(this.mouseup);
-    this.props.signal.pixelSelected.add(this.getLayerPixelColor);
   },
   componentDidUpdate: function() {
+
+    // called after mousemove
+    // all the canvas drawing happens here
 
     this.getDOMNode().width = this.getDOMNode().width;
 
@@ -1212,12 +1232,7 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
-    if(editor.selection.start instanceof Point && editor.selection.end instanceof Point) {
-      this.drawSelection(editor.selection.start, editor.selection.end);
-    }
-
     this.drawPixelCursor();
-
 
     var self = this;
 
@@ -1260,61 +1275,83 @@ var StageBoxToolsLayer = React.createClass({
           }
           break;
         case 'RectangularSelectionTool':
-          if(editor.selection) {
+          if(editor.selectionActive()) {
+            var distance = new Point(
+              editor.pixel.x - this.state.mousedownPoint.x,
+              editor.pixel.y - this.state.mousedownPoint.y
+            );
+
+            var newStart = new Point(
+              editor.selection.start.x + distance.x,
+              editor.selection.start.y + distance.y
+            );
+
+            var newEnd = new Point(
+              editor.selection.end.x + distance.x,
+              editor.selection.end.y + distance.y
+            );
+
+            this.drawSelection(newStart, newEnd);
+          }
+          else {
+
             this.drawSelection(editor.selection.start, editor.pixel);
           }
 
           break;
       }
     }
+    else { // mouse is not down
+      if(editor.selectionActive()) {
+        this.drawSelection(editor.selection.start, editor.selection.end);
+      }
+    }
   },
   mousemove: function(event) {
-    console.log('mousemove');
+    //console.log('mousemove');
+
+    this.getLayerPixelColor();
 
     if(event.timeStamp > this.state.last + 10) {
-      var world = this.getWorldCoordinates(event);
-      this.props.signal.pixelSelected.dispatch(world);
+      var point = this.getWorldCoordinates(event);
+      this.props.signal.pixelSelected.dispatch(point);
     }
   },
   mousedown: function(event) {
-    console.log('mousedown');
+    //console.log('mousedown');
+
+    var point = this.getWorldCoordinates(event);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        var point = this.getWorldCoordinates(event);
-        if(!editor.selection) { // start new selection
-          console.log('no selection found, starting new selection');
+        if(!editor.selection || !editor.selectionContains(point))
           this.props.signal.selectionStarted.dispatch(point);
-        }
-        else { // a selection exists already
-          // check if mouse is inside the existing selection
-          if(editor.selectionContains(point)) { // inside selection: move selection
-            console.log('inside selection, would move');
-          }
-          else { // outside selection: drop selection and start a new one
-            console.log('outside selection, starting new selection');
-            this.props.signal.selectionStarted.dispatch(point);
-          }
-
-
-        }
         break;
     }
 
-    this.setState({mousedown:true, last: event.timeStamp});
+    this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
   },
-  mouseup: function() {
-    console.log('mouseup');
+  mouseup: function(event) {
+    //console.log('mouseup');
+
+    var point = this.getWorldCoordinates(event);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        //this.props.signal.selectionCleared.dispatch();
-        var point = this.getWorldCoordinates(event);
-        this.props.signal.selectionEnded.dispatch(point);
+        if(editor.selectionActive()) {
+          var distance = new Point(
+            point.x - this.state.mousedownPoint.x,
+            point.y - this.state.mousedownPoint.y
+          );
+          this.props.signal.selectionMoved.dispatch(distance);
+        }
+        else {
+          this.props.signal.selectionEnded.dispatch(point);
+        }
         break;
     }
 
-    this.setState({mousedown:false});
+    this.setState({mousedown: false});
   },
   mouseleave: function() {
     this.props.signal.pixelSelected.dispatch(new Point(0, 0));
@@ -1389,7 +1426,7 @@ var StageBoxToolsLayer = React.createClass({
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');
-    ctx.strokeStyle="#cccccc";
+    ctx.strokeStyle = "#cccccc";
 
     // vertical lines
     for( var x = zoom+0.5; x < canvas.width; x+= zoom) {

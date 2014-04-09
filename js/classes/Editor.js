@@ -140,6 +140,7 @@ var Editor = function() {
 
 
   this.selection = false;
+
   this.selectionContains = function(point) {
     if(this.selection) {
       if(!_.isUndefined(this.selection.start)
@@ -151,6 +152,10 @@ var Editor = function() {
         && point.y <= this.selection.end.y;
       }
     }
+  };
+
+  this.selectionActive = function() {
+    return this.selection.start instanceof Point && this.selection.end instanceof Point;
   };
 
 
@@ -229,6 +234,19 @@ var Editor = function() {
 
   signal.selectionCleared.add(function(point) {
     self.selection = false;
+  });
+
+  signal.selectionMoved.add(function(distance) {
+    self.selection = {
+      start: new Point(
+        self.selection.start.x + distance.x,
+        self.selection.start.y + distance.y
+      ),
+      end: new Point(
+        self.selection.end.x + distance.x,
+        self.selection.end.y + distance.y
+      )
+    };
   });
 };
 

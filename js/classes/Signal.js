@@ -36,6 +36,7 @@ var signal = {
 
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
+  selectionMoved: new Signal(),
   selectionCleared: new Signal(),
 };
 /*
