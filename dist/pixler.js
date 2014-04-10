@@ -1288,7 +1288,13 @@ var StageBoxToolsLayer = React.createClass({
           }
           break;
         case 'EraserTool':
-          if(layerVisible) stage.pixel.clear();
+          if(layerVisible) {
+            if(selectionActive) { // restrict to selection
+              drawLastSelection();
+              if(editor.selectionContains(editor.pixel)) stage.pixel.clear();
+            }
+            else stage.pixel.clear();
+          }
           else {
             this.mouseup();  // prevent additional alerts
             alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
@@ -1300,8 +1306,18 @@ var StageBoxToolsLayer = React.createClass({
           break;
         case 'BrightnessTool':
           if(layerVisible) {
-            var px = _.findWhere(file.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y });
-            if(!_.isUndefined(px)) {
+
+            var px = _.findWhere(editor.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y }),
+                pixelExists = !_.isUndefined(px);
+
+            if(selectionActive) { // restrict to selection
+              drawLastSelection();
+              if(pixelExists && editor.selectionContains(editor.pixel)) {
+                if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
+                else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+              }
+            }
+            else if(pixelExists) {
               if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
               else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
             }
