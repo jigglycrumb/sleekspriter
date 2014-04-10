@@ -1250,32 +1250,45 @@ var StageBoxToolsLayer = React.createClass({
     // called after mousemove
     // all the canvas drawing happens here
 
+    // clear the canvas
     this.getDOMNode().width = this.getDOMNode().width;
+
+    // helper functions
+    function isLayerVisible() {
+      var layer = file.getLayerById(self.props.editor.layer);
+      return layer.visible && layer.opacity > 0;
+    }
+
+    function drawLastSelection() {
+      self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
+    }
+
+    // cache some values
+    var self = this,
+        selectionActive = this.props.editor.selectionActive(),
+        layerVisible = isLayerVisible();
 
     if(this.props.editor.grid === true) {
       this.drawGrid();
     }
 
-    this.drawPixelCursor();
-
-    var self = this;
-
-    function layerVisible() {
-      var layer = file.getLayerById(self.props.editor.layer);
-      return layer.visible && layer.opacity > 0;
-    }
-
     if(this.state.mousedown) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
-          if(layerVisible()) stage.pixel.fill();
+          if(layerVisible) {
+            if(selectionActive) { // restrict to selection
+              drawLastSelection();
+              if(editor.selectionContains(editor.pixel)) stage.pixel.fill();
+            }
+            else stage.pixel.fill();
+          }
           else {
             this.mouseup(); // prevent additional alerts
             alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
           }
           break;
         case 'EraserTool':
-          if(layerVisible()) stage.pixel.clear();
+          if(layerVisible) stage.pixel.clear();
           else {
             this.mouseup();  // prevent additional alerts
             alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
@@ -1286,7 +1299,7 @@ var StageBoxToolsLayer = React.createClass({
           this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
           break;
         case 'BrightnessTool':
-          if(layerVisible()) {
+          if(layerVisible) {
             var px = _.findWhere(file.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y });
             if(!_.isUndefined(px)) {
               if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
@@ -1299,7 +1312,8 @@ var StageBoxToolsLayer = React.createClass({
           }
           break;
         case 'RectangularSelectionTool':
-          if(editor.selectionActive()) {
+          if(selectionActive) { // previous selection available
+                                // we move it instead of drawing a new one
             var distance = new Point(
               editor.pixel.x - this.state.mousedownPoint.x,
               editor.pixel.y - this.state.mousedownPoint.y
@@ -1317,19 +1331,19 @@ var StageBoxToolsLayer = React.createClass({
 
             this.drawSelection(newStart, newEnd);
           }
-          else {
-
+          else { // no previous selection, draw new selection from start to cursor
             this.drawSelection(editor.selection.start, editor.pixel);
           }
-
           break;
       }
     }
     else { // mouse is not down
-      if(editor.selectionActive()) {
-        this.drawSelection(editor.selection.start, editor.selection.end);
+      if(selectionActive) {
+        drawLastSelection();
       }
     }
+
+    this.drawPixelCursor();
   },
   mousemove: function(event) {
     //console.log('mousemove');
