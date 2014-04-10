@@ -149,7 +149,10 @@ var StageBoxToolsLayer = React.createClass({
           this.props.signal.selectionMoved.dispatch(distance);
         }
         else {
-          this.props.signal.selectionEnded.dispatch(point);
+          if(_.isEqual(point, this.state.mousedownPoint))
+            this.props.signal.selectionCleared.dispatch();
+          else
+            this.props.signal.selectionEnded.dispatch(point);
         }
         break;
     }
