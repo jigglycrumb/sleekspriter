@@ -32,6 +32,8 @@ var App = React.createClass({
               <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
+
+          <SelectionPattern />
         </div>
       </div>
     );

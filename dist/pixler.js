@@ -765,6 +765,8 @@ var App = React.createClass({
               <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
             );
           }, this)}
+
+          <SelectionPattern />
         </div>
       </div>
     );
@@ -1244,6 +1246,15 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.mousemove);
+
+    var self = this;
+
+    this.interval = setInterval(function() {
+      if(editor.selectionActive()) self.forceUpdate();
+    }, 200);
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
   },
   componentDidUpdate: function() {
 
@@ -1508,7 +1519,8 @@ var StageBoxToolsLayer = React.createClass({
         width = (end.x - start.x),
         height = (end.y - start.y),
         sx,
-        sy;
+        sy,
+        pattern = ctx.createPattern(document.getElementById('SelectionPattern'), 'repeat');
 
     if(width >= 0) {
       width++;
@@ -1528,14 +1540,8 @@ var StageBoxToolsLayer = React.createClass({
       sy = start.y;
     }
 
-    ctx.globalAlpha = 0.5;
-    ctx.strokeStyle = "#0433FF";
-    ctx.fillStyle = "#88E6F2";
-
-    ctx.fillRect(sx*zoom, sy*zoom, width*zoom, height*zoom);
+    ctx.strokeStyle = pattern;
     ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
-
-    ctx.globalAlpha = 1;
   },
 });
 // clean
@@ -1925,6 +1931,55 @@ var OffscreenFrameCanvas = React.createClass({
       editor.pixelColor = color;
     }
   }
+});
+var SelectionPattern = React.createClass({
+  getInitialState: function() {
+    return {
+      frame: 1,
+      frameCountUp: true,
+    };
+  },
+  render: function() {
+    return (
+      <canvas id="SelectionPattern" width="10" height="10" />
+    );
+  },
+  componentDidMount: function() {
+    this.interval = setInterval(this.tick, 200);
+    this.drawPattern();
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
+  },
+  componentDidUpdate: function() {
+    this.drawPattern();
+  },
+  tick: function() {
+    var frame = this.state.frame,
+        countUp = this.state.frameCountUp;
+
+    if(countUp) {
+      frame++;
+      if(frame == 5) countUp = false;
+    }
+    else {
+      frame--;
+      if(frame == 1) countUp = true;
+    }
+    this.setState({frame: frame, frameCountUp: countUp});
+  },
+  drawPattern: function() {
+
+    var frame = this.state.frame,
+        canvas = this.getDOMNode(),
+        ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, 10, 10);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(frame, 0, 5, 10);
+    ctx.fillRect(0, frame, 10, 5);
+  },
 });
 function NodeList2Array(NodeList) {
   //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler

@@ -23,6 +23,15 @@ var StageBoxToolsLayer = React.createClass({
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
     this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.mousemove);
+
+    var self = this;
+
+    this.interval = setInterval(function() {
+      if(editor.selectionActive()) self.forceUpdate();
+    }, 200);
+  },
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
   },
   componentDidUpdate: function() {
 
@@ -287,7 +296,8 @@ var StageBoxToolsLayer = React.createClass({
         width = (end.x - start.x),
         height = (end.y - start.y),
         sx,
-        sy;
+        sy,
+        pattern = ctx.createPattern(document.getElementById('SelectionPattern'), 'repeat');
 
     if(width >= 0) {
       width++;
@@ -307,13 +317,7 @@ var StageBoxToolsLayer = React.createClass({
       sy = start.y;
     }
 
-    ctx.globalAlpha = 0.5;
-    ctx.strokeStyle = "#0433FF";
-    ctx.fillStyle = "#88E6F2";
-
-    ctx.fillRect(sx*zoom, sy*zoom, width*zoom, height*zoom);
+    ctx.strokeStyle = pattern;
     ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
-
-    ctx.globalAlpha = 1;
   },
 });

@@ -96,6 +96,7 @@ module.exports = function(grunt) {
           'js/components/StatusBar.js',
 
           'js/components/OffscreenFrameCanvas.js',
+          'js/components/SelectionPattern.js',
 
 
           'js/index.js'
