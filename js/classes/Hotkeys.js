@@ -1,6 +1,6 @@
 var Hotkeys = function(signal) {
 
-  var actions = {
+  this.actions = {
     selectBrushTool: {
       key: 'b',
       action: function() { signal.toolSelected.dispatch('BrushTool'); }
@@ -35,8 +35,10 @@ var Hotkeys = function(signal) {
     }
   };
 
-  Object.keys(actions).map(function(action) {
-    var a = actions[action];
+  var self = this;
+
+  Object.keys(this.actions).map(function(action) {
+    var a = self.actions[action];
     Mousetrap.bind(a.key, a.action);
   });
 };

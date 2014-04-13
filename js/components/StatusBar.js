@@ -1,6 +1,8 @@
 var StatusBar = React.createClass({
   render: function() {
-    var cssClasses = (this.props.editor.grid === true ? 'active' : '') + ' tiny transparent';
+    var cssClasses = (this.props.editor.grid === true ? 'active' : '') + ' tiny transparent',
+        toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')';
+
     return (
       <div id="StatusBar">
         <span>X: {this.props.editor.pixel.x}</span>
@@ -11,7 +13,7 @@ var StatusBar = React.createClass({
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">
-          <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title="Toggle grid">
+          <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
           </button>
         </div>
