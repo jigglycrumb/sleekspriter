@@ -26,7 +26,7 @@ var SelectionPattern = React.createClass({
 
     if(countUp) {
       frame++;
-      if(frame == 5) countUp = false;
+      if(frame == 4) countUp = false;
     }
     else {
       frame--;
