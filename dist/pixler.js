@@ -1984,7 +1984,7 @@ var OffscreenFrameCanvas = React.createClass({
   getPixelColor: function(point) {
     if(this.props.frame == this.props.editor.frame) {
       var ctx = this.getDOMNode().getContext('2d'),
-          px = ctx.getImageData(point.x, point.y, 1, 1).data,
+          px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
           color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
       editor.pixelColor = color;

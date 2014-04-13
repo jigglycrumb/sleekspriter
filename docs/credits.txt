@@ -34,3 +34,5 @@ Left Arrow: http://www.flaticon.com/free-icon/arrow-triangle-left_9918
 Up Arrow: http://www.flaticon.com/free-icon/little-up-arrow-triangle_7645
 
 Move Tool: http://www.flaticon.com/free-icon/move-object_14296
+
+Hand Tool: http://www.flaticon.com/free-icon/right-hand_1427
