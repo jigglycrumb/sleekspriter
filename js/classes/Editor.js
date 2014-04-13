@@ -312,6 +312,16 @@ var Editor = function() {
       )
     };
   });
+
+  signal.pixelsMoved.add(function(distance) {
+
+    self.pixels.forEach(function(pixel) {
+      pixel.x += distance.x;
+      pixel.y += distance.y;
+    });
+
+    self.saveChanges();
+  });
 };
 
 var editor = new Editor();

@@ -38,6 +38,8 @@ var signal = {
   selectionEnded: new Signal(),
   selectionMoved: new Signal(),
   selectionCleared: new Signal(),
+
+  pixelsMoved: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;

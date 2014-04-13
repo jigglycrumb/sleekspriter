@@ -72,6 +72,7 @@ module.exports = function(grunt) {
           'js/components/EyedropperTool.js',
           'js/components/RectangularSelectionTool.js',
           'js/components/BrightnessTool.js',
+          'js/components/MoveTool.js',
           'js/components/ZoomTool.js',
 
           'js/components/StageBox.js',

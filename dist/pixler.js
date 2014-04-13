@@ -40,6 +40,8 @@ var signal = {
   selectionEnded: new Signal(),
   selectionMoved: new Signal(),
   selectionCleared: new Signal(),
+
+  pixelsMoved: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -563,6 +565,16 @@ var Editor = function() {
       )
     };
   });
+
+  signal.pixelsMoved.add(function(distance) {
+
+    self.pixels.forEach(function(pixel) {
+      pixel.x += distance.x;
+      pixel.y += distance.y;
+    });
+
+    self.saveChanges();
+  });
 };
 
 var editor = new Editor();
@@ -1081,6 +1093,17 @@ var BrightnessTool = React.createClass({
   }
 
 });
+var MoveTool = React.createClass({
+  render: function() {
+    return (
+      <div id="Move-Tool" className="ToolComponent">
+        <i className="icon flaticon-move11"></i>
+
+        <span className="hint">Move pixels of a layer by dragging.</span>
+      </div>
+    );
+  }
+});
 var ZoomTool = React.createClass({
   render: function() {
 
@@ -1244,7 +1267,7 @@ var StageBoxToolsLayer = React.createClass({
   componentDidMount: function() {
     this.getDOMNode().addEventListener('mousedown', this.mousedown);
     this.getDOMNode().addEventListener('mouseup', this.mouseup);
-    this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
+    //this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
     this.getDOMNode().addEventListener('mousemove', this.mousemove);
 
     var self = this;
@@ -1341,10 +1364,7 @@ var StageBoxToolsLayer = React.createClass({
         case 'RectangularSelectionTool':
           if(selectionActive) { // previous selection available
                                 // we move it instead of drawing a new one
-            var distance = new Point(
-              editor.pixel.x - this.state.mousedownPoint.x,
-              editor.pixel.y - this.state.mousedownPoint.y
-            );
+            var distance = this.getMouseDownDistance();
 
             var newStart = new Point(
               editor.selection.start.x + distance.x,
@@ -1362,6 +1382,21 @@ var StageBoxToolsLayer = React.createClass({
             this.drawSelection(editor.selection.start, editor.pixel);
           }
           break;
+        case 'MoveTool':
+          var layer = editor.layer,
+              distance = this.getMouseDownDistance(),
+              pixels = editor.pixels,
+              canvas = document.getElementById('StageBoxLayer-'+layer),
+              ctx = canvas.getContext('2d');
+
+          canvas.width = canvas.width;
+          pixels.forEach(function(pixel) {
+            if(pixel.layer == layer) {
+              var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+              stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+            }
+          });
+          break;
       }
     }
     else { // mouse is not down
@@ -1372,6 +1407,13 @@ var StageBoxToolsLayer = React.createClass({
 
     this.drawPixelCursor();
   },
+
+
+
+
+
+
+
   mousemove: function(event) {
     //console.log('mousemove');
 
@@ -1399,15 +1441,12 @@ var StageBoxToolsLayer = React.createClass({
   mouseup: function(event) {
     //console.log('mouseup');
 
-    var point = this.getWorldCoordinates(event);
+    var point = this.getWorldCoordinates(event),
+        distance = this.getMouseDownDistance();
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
         if(editor.selectionActive()) {
-          var distance = new Point(
-            point.x - this.state.mousedownPoint.x,
-            point.y - this.state.mousedownPoint.y
-          );
           this.props.signal.selectionMoved.dispatch(distance);
         }
         else {
@@ -1417,13 +1456,26 @@ var StageBoxToolsLayer = React.createClass({
             this.props.signal.selectionEnded.dispatch(point);
         }
         break;
+
+      case 'MoveTool':
+        this.props.signal.pixelsMoved.dispatch(distance);
+        break;
     }
 
     this.setState({mousedown: false});
   },
+
+  /*
   mouseleave: function() {
     this.props.signal.pixelSelected.dispatch(new Point(0, 0));
   },
+  */
+
+
+
+
+
+
   getLayerPixelColor: function() {
     var layer = file.getLayerById(this.props.editor.layer),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
@@ -1438,6 +1490,18 @@ var StageBoxToolsLayer = React.createClass({
       Math.ceil(event.layerY/this.props.editor.zoom)
     );
   },
+  getMouseDownDistance: function() {
+    return new Point(
+      editor.pixel.x - this.state.mousedownPoint.x,
+      editor.pixel.y - this.state.mousedownPoint.y
+    );
+  },
+
+
+
+
+
+
   drawPixelCursor: function() {
     var zoom = this.props.editor.zoom,
         x = this.props.editor.pixel.x,
@@ -1551,18 +1615,13 @@ var ToolBox = React.createClass({
       <div id="ToolBox">
         <h4>Tools</h4>
         <div>
-          <ToolBoxTool id="BrushTool" title="Brush" icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EraserTool" title="Eraser" icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EyedropperTool" title="Eyedropper" icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="RectangularSelectionTool" title="Selection" icon="flaticon-selection7" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="BrightnessTool" title="Brightness" icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
-          {/*
-          <ToolBoxTool id="FillTool" title="Fill tool" icon="icon-bucket" signal={this.props.signal} />
-          <ToolBoxTool id="RectangularSelectionTool" title="Selection tool" icon="" signal={this.props.signal} />
-          <ToolBoxTool id="MoveTool" title="Move tool" icon="" signal={this.props.signal} />
-          <ToolBoxTool id="HandTool" title="Hand tool" icon="icon-magnet" signal={this.props.signal} />
-          */}
-          <ToolBoxTool id="ZoomTool" title="Zoom" icon="flaticon-magnifier5" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrushTool" title="Brush Tool" icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EraserTool" title="Eraser Tool" icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="EyedropperTool" title="Eyedropper Tool" icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="RectangularSelectionTool" title="Selection Tool" icon="flaticon-selection7" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrightnessTool" title="Brightness Tool" icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="MoveTool" title="Move Tool" icon="flaticon-move11" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="ZoomTool" title="Zoom Tool" icon="flaticon-magnifier5" editor={this.props.editor} signal={this.props.signal} />
         </div>
       </div>
     );

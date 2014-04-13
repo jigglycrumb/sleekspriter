@@ -27,16 +27,16 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
 }
 .icon-eye {
-  content: "\e007";
+  content: "\e006";
 }
 .icon-eye-slashed {
-  content: "\e008";
+  content: "\e007";
 }
 .icon-arrow-down {
-  content: "\e00b";
+  content: "\e00a";
 }
 .icon-arrow-right {
-  content: "\e00d";
+  content: "\e00c";
 }
 [class^="flaticon-"],
 [class*=" flaticon-"] {
@@ -249,11 +249,11 @@ ul {
   top: 4px;
   left: 2px;
   color: #b4b4b4;
-  content: "\e00b";
+  content: "\e00a";
 }
 .foldable-handle.folded:before {
   top: 3px;
-  content: "\e00d";
+  content: "\e00c";
 }
 .area.top {
   top: 0;
@@ -554,11 +554,11 @@ ul {
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:before {
-  content: "\e008";
+  content: "\e007";
   color: #b4b4b4;
 }
 #LayerBox .LayerBoxLayer .visibility input[type=checkbox]:checked:before {
-  content: "\e007";
+  content: "\e006";
   color: #e7e7e7;
 }
 #LayerBox .LayerBoxLayer .preview {

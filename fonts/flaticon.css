@@ -20,54 +20,57 @@ margin-left: 20px;
 .flaticon-arrow85:before {
 	content: "\e001";
 }
-.flaticon-checkered1:before {
+.flaticon-clear3:before {
 	content: "\e002";
 }
-.flaticon-clear3:before {
+.flaticon-color1:before {
 	content: "\e003";
 }
-.flaticon-color1:before {
+.flaticon-dark26:before {
 	content: "\e004";
 }
-.flaticon-dark26:before {
+.flaticon-double31:before {
 	content: "\e005";
 }
-.flaticon-double31:before {
+.flaticon-eye46:before {
 	content: "\e006";
 }
-.flaticon-eye46:before {
+.flaticon-eye48:before {
 	content: "\e007";
 }
-.flaticon-eye48:before {
+.flaticon-eyedropper2:before {
 	content: "\e008";
 }
-.flaticon-eyedropper2:before {
+.flaticon-little16:before {
 	content: "\e009";
 }
-.flaticon-little16:before {
+.flaticon-little9:before {
 	content: "\e00a";
 }
-.flaticon-little9:before {
+.flaticon-magnifier5:before {
 	content: "\e00b";
 }
-.flaticon-magnifier5:before {
+.flaticon-mini7:before {
 	content: "\e00c";
 }
-.flaticon-mini7:before {
+.flaticon-minus18:before {
 	content: "\e00d";
 }
-.flaticon-minus18:before {
+.flaticon-move11:before {
 	content: "\e00e";
 }
 .flaticon-plus25:before {
 	content: "\e00f";
 }
-.flaticon-selection7:before {
+.flaticon-right3:before {
 	content: "\e010";
 }
-.flaticon-small23:before {
+.flaticon-selection7:before {
 	content: "\e011";
 }
-.flaticon-sun4:before {
+.flaticon-small23:before {
 	content: "\e012";
+}
+.flaticon-sun4:before {
+	content: "\e013";
 }
