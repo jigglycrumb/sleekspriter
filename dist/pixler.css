@@ -518,6 +518,10 @@ ul {
 #LayerBox > div {
   border-top: 1px solid #6a6a6a;
 }
+#LayerBox .layers {
+  height: 100px;
+  overflow-y: auto;
+}
 #LayerBox .LayerBoxLayer {
   background: #464646;
   border-bottom: 1px solid #262626;

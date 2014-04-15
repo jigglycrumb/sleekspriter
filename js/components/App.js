@@ -57,6 +57,8 @@ var App = React.createClass({
           'brightnessToolModeChanged',
           'brightnessToolIntensityChanged',
           'paletteSelected',
+
+          'selectionCleared',
         ];
 
     subscriptions.forEach(function(item) {

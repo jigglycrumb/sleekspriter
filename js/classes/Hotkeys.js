@@ -32,6 +32,10 @@ var Hotkeys = function(signal) {
     toggleGrid: {
       key: 'g',
       action: function() { signal.gridToggled.dispatch(!editor.grid); }
+    },
+    dropSelection: {
+      key: ['ctrl+d', 'command+d'],
+      action: function() { signal.selectionCleared.dispatch(); }
     }
   };
 
