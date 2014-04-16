@@ -139,7 +139,8 @@ var Editor = function() {
   };
 
 
-  this.selection = false;
+  this.selection = false; // false when no selection is active, array of two points (selection start, selection end) otherwise
+  this.selectedPixels = []; // contains pixels of current layer of current selection
 
   this.selectionContains = function(point) {
     if(this.selection) {
@@ -294,7 +295,18 @@ var Editor = function() {
       self.selection.start = self.selection.end;
       self.selection.end = temp;
     }
+
+    // copy selected pixels to editor.selectedPixels
+    self.buildSelection();
   });
+
+  this.buildSelection = function() {
+    this.selectedPixels = [];
+    this.pixels.forEach(function(pixel) {
+      if(self.selectionContains(pixel) && self.layer == pixel.layer) self.selectedPixels.push(pixel);
+    });
+    console.log('selected '+this.selectedPixels.length+' pixels');
+  }
 
   signal.selectionCleared.add(function(point) {
     self.selection = false;
@@ -311,6 +323,8 @@ var Editor = function() {
         self.selection.end.y + distance.y
       )
     };
+
+    self.buildSelection();
   });
 
   signal.pixelsMoved.add(function(distance) {
