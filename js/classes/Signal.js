@@ -40,6 +40,7 @@ var signal = {
   selectionCleared: new Signal(),
 
   pixelsMoved: new Signal(),
+  boxFolded: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;

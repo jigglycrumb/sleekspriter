@@ -38,6 +38,9 @@ var LayerBox = React.createClass({
       this.props.signal.layerSelected.dispatch(this.state.shouldSelectLayer);
       this.setState({ shouldSelectLayer: false });
     }
+
+    var h = this.calculateHeight();
+    this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
   dispatchLayerAdded: function(event) {
     this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
@@ -47,5 +50,11 @@ var LayerBox = React.createClass({
   },
   shouldSelectLayer: function(layer) {
     this.setState({ shouldSelectLayer: layer });
-  }
+  },
+  calculateHeight: function() {
+    var areaRightHeight = document.querySelector('.area.right').clientHeight,
+        otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight;
+
+    return areaRightHeight - otherBoxesHeight - 47;
+  },
 });

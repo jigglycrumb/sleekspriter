@@ -19,6 +19,7 @@ var FoldableMixin = {
         handle.classList.add('folded');
       }
       self.setState({folded: !self.state.folded});
+      self.props.signal.boxFolded.dispatch();
     }
 
   },

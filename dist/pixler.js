@@ -42,6 +42,7 @@ var signal = {
   selectionCleared: new Signal(),
 
   pixelsMoved: new Signal(),
+  boxFolded: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -770,6 +771,7 @@ var FoldableMixin = {
         handle.classList.add('folded');
       }
       self.setState({folded: !self.state.folded});
+      self.props.signal.boxFolded.dispatch();
     }
 
   },
@@ -827,8 +829,10 @@ var App = React.createClass({
           <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
-          <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
-          <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <div id="layerboxhelper">
+            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          </div>
           <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
@@ -868,6 +872,7 @@ var App = React.createClass({
           'paletteSelected',
 
           'selectionCleared',
+          'boxFolded',
         ];
 
     subscriptions.forEach(function(item) {
@@ -1875,6 +1880,9 @@ var LayerBox = React.createClass({
       this.props.signal.layerSelected.dispatch(this.state.shouldSelectLayer);
       this.setState({ shouldSelectLayer: false });
     }
+
+    var h = this.calculateHeight();
+    this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
   dispatchLayerAdded: function(event) {
     this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
@@ -1884,7 +1892,13 @@ var LayerBox = React.createClass({
   },
   shouldSelectLayer: function(layer) {
     this.setState({ shouldSelectLayer: layer });
-  }
+  },
+  calculateHeight: function() {
+    var areaRightHeight = document.querySelector('.area.right').clientHeight,
+        otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight;
+
+    return areaRightHeight - otherBoxesHeight - 47;
+  },
 });
 var LayerBoxLayer = React.createClass({
   render: function() {

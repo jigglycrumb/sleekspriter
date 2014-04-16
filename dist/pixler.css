@@ -474,6 +474,10 @@ ul {
   float: left;
   position: relative;
 }
+#layerboxhelper {
+  float: left;
+  width: 100%;
+}
 #PreviewBox .foldable-fold {
   text-align: center;
 }
@@ -519,7 +523,6 @@ ul {
   border-top: 1px solid #6a6a6a;
 }
 #LayerBox .layers {
-  height: 100px;
   overflow-y: auto;
 }
 #LayerBox .LayerBoxLayer {

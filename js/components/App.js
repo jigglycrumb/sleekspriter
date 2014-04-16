@@ -18,8 +18,10 @@ var App = React.createClass({
           <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
-          <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
-          <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <div id="layerboxhelper">
+            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          </div>
           <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
         </div>
         <div className="area bottom">
@@ -59,6 +61,7 @@ var App = React.createClass({
           'paletteSelected',
 
           'selectionCleared',
+          'boxFolded',
         ];
 
     subscriptions.forEach(function(item) {
