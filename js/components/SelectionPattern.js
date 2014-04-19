@@ -6,8 +6,10 @@ var SelectionPattern = React.createClass({
     };
   },
   render: function() {
+    var size = this.props.editor.zoom;
+
     return (
-      <canvas id="SelectionPattern" width="10" height="10" />
+      <canvas id="SelectionPattern" width={size} height={size} style={{height: size, width: size}} />
     );
   },
   componentDidMount: function() {
@@ -38,12 +40,14 @@ var SelectionPattern = React.createClass({
 
     var frame = this.state.frame,
         canvas = this.getDOMNode(),
-        ctx = canvas.getContext('2d');
+        ctx = canvas.getContext('2d'),
+        size = this.props.editor.zoom;
 
+    ctx.webkitImageSmoothingEnabled = false;
     ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, 10, 10);
+    ctx.fillRect(0, 0, size, size);
     ctx.fillStyle = '#000';
-    ctx.fillRect(frame, 0, 5, 10);
-    ctx.fillRect(0, frame, 10, 5);
+    ctx.fillRect(frame*(size/10), 0, size/2, size);
+    ctx.fillRect(0, frame*(size/10), size, size/2);
   },
 });

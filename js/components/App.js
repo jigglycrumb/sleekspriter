@@ -35,7 +35,7 @@ var App = React.createClass({
             );
           }, this)}
 
-          <SelectionPattern />
+          <SelectionPattern editor={this.props.editor} />
         </div>
       </div>
     );
