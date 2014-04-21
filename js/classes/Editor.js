@@ -159,7 +159,7 @@ var Editor = function() {
     return this.selection.start instanceof Point && this.selection.end instanceof Point;
   };
 
-  this.pixels = [];
+  this.pixels = []; // contains all pixels of the selected frame
 
   this.deletePixel = function(layer, x, y) {
     this.pixels = this.pixels.filter(function(pixel) {
@@ -171,7 +171,7 @@ var Editor = function() {
     console.log('saving changes');
     // grab all old pixels of current frame
     var frameLayers = _.pluck(this.pixels, 'layer');
-    var pixels = this.pixels;
+    var pixels = this.pixels.slice(0); // slice clones the array
     file.pixels.forEach(function(pixel) {
       if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
     });
@@ -329,10 +329,22 @@ var Editor = function() {
 
   signal.pixelsMoved.add(function(distance) {
 
-    self.pixels.forEach(function(pixel) {
-      pixel.x += distance.x;
-      pixel.y += distance.y;
-    });
+    if(self.selectionActive()) {
+      self.pixels.forEach(function(pixel) {
+        if(pixel.layer == self.layer && self.selectionContains(pixel)) {
+          pixel.x += distance.x;
+          pixel.y += distance.y;
+        }
+      });
+    }
+    else {
+      self.pixels.forEach(function(pixel) {
+        if(pixel.layer == self.layer) {
+          pixel.x += distance.x;
+          pixel.y += distance.y;
+        }
+      });
+    }
 
     self.saveChanges();
   });

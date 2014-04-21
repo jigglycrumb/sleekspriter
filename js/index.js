@@ -76,5 +76,5 @@ window.onload = function() {
   // select brush tool
   signal.toolSelected.dispatch('BrushTool');
 
-  setInterval(minutely, 60000);
+  //setInterval(minutely, 60000);
 };

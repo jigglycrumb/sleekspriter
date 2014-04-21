@@ -139,17 +139,31 @@ var StageBoxToolsLayer = React.createClass({
         case 'MoveTool':
           var layer = editor.layer,
               distance = this.getMouseDownDistance(),
-              pixels = editor.pixels,
+              //pixels = selectionActive ? editor.selectedPixels : editor.pixels,
               canvas = document.getElementById('StageBoxLayer-'+layer),
-              ctx = canvas.getContext('2d');
+              ctx = canvas.getContext('2d');//,
+              //pixels;
 
           canvas.width = canvas.width;
-          pixels.forEach(function(pixel) {
-            if(pixel.layer == layer) {
-              var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-              stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
-            }
-          });
+          if(selectionActive) {
+            editor.pixels.forEach(function(pixel) {
+              if(pixel.layer == layer) {
+                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+                if(editor.selectionContains(pixel))
+                  stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+                else
+                  stage.pixel.fill(layer, pixel.x, pixel.y, color);
+              }
+            });
+          }
+          else {
+            editor.pixels.forEach(function(pixel) {
+              if(pixel.layer == layer) {
+                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+                stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+              }
+            });
+          }
           break;
       }
     }
@@ -179,9 +193,9 @@ var StageBoxToolsLayer = React.createClass({
     }
   },
   mousedown: function(event) {
-    //console.log('mousedown');
-
     var point = this.getWorldCoordinates(event);
+
+    console.log('mousedown', point);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
@@ -193,14 +207,15 @@ var StageBoxToolsLayer = React.createClass({
     this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
   },
   mouseup: function(event) {
-    //console.log('mouseup');
-
     var point = this.getWorldCoordinates(event),
-        distance = this.getMouseDownDistance();
+        distance = this.getMouseDownDistance(),
+        selectionActive = editor.selectionActive();
+
+    console.log('mouseup', point, distance);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(editor.selectionActive()) {
+        if(selectionActive) {
           this.props.signal.selectionMoved.dispatch(distance);
         }
         else {
@@ -212,6 +227,7 @@ var StageBoxToolsLayer = React.createClass({
         break;
 
       case 'MoveTool':
+        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         this.props.signal.pixelsMoved.dispatch(distance);
         break;
     }
