@@ -51,6 +51,20 @@ var StageBoxToolsLayer = React.createClass({
       self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
     }
 
+    function moveSelection(distance) {
+      var newStart = new Point(
+        editor.selection.start.x + distance.x,
+        editor.selection.start.y + distance.y
+      );
+
+      var newEnd = new Point(
+        editor.selection.end.x + distance.x,
+        editor.selection.end.y + distance.y
+      );
+
+      self.drawSelection(newStart, newEnd);
+    }
+
     // cache some values
     var self = this,
         selectionActive = this.props.editor.selectionActive(),
@@ -60,7 +74,7 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
-    if(this.state.mousedown) {
+    if(this.state.mousedown === true) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
           if(layerVisible) {
@@ -119,18 +133,7 @@ var StageBoxToolsLayer = React.createClass({
           if(selectionActive) { // previous selection available
                                 // we move it instead of drawing a new one
             var distance = this.getMouseDownDistance();
-
-            var newStart = new Point(
-              editor.selection.start.x + distance.x,
-              editor.selection.start.y + distance.y
-            );
-
-            var newEnd = new Point(
-              editor.selection.end.x + distance.x,
-              editor.selection.end.y + distance.y
-            );
-
-            this.drawSelection(newStart, newEnd);
+            moveSelection(distance);
           }
           else { // no previous selection, draw new selection from start to cursor
             this.drawSelection(editor.selection.start, editor.pixel);
@@ -146,11 +149,16 @@ var StageBoxToolsLayer = React.createClass({
 
           canvas.width = canvas.width;
           if(selectionActive) {
+
+            moveSelection(distance);
+
             editor.pixels.forEach(function(pixel) {
               if(pixel.layer == layer) {
                 var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-                if(editor.selectionContains(pixel))
-                  stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+                if(editor.selectionContains(pixel)) {
+                  var target = wrapPixel(pixel, distance);
+                  stage.pixel.fill(layer, target.x, target.y, color);
+                }
                 else
                   stage.pixel.fill(layer, pixel.x, pixel.y, color);
               }
@@ -159,8 +167,9 @@ var StageBoxToolsLayer = React.createClass({
           else {
             editor.pixels.forEach(function(pixel) {
               if(pixel.layer == layer) {
-                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-                stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+                    target = wrapPixel(pixel, distance);
+                stage.pixel.fill(layer, target.x, target.y, color);
               }
             });
           }
@@ -195,7 +204,7 @@ var StageBoxToolsLayer = React.createClass({
   mousedown: function(event) {
     var point = this.getWorldCoordinates(event);
 
-    console.log('mousedown', point);
+    //console.log('mousedown', point);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
@@ -211,7 +220,9 @@ var StageBoxToolsLayer = React.createClass({
         distance = this.getMouseDownDistance(),
         selectionActive = editor.selectionActive();
 
-    console.log('mouseup', point, distance);
+    //console.log('mouseup', point, distance);
+
+    this.setState({mousedown: false});
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
@@ -227,12 +238,12 @@ var StageBoxToolsLayer = React.createClass({
         break;
 
       case 'MoveTool':
-        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         this.props.signal.pixelsMoved.dispatch(distance);
+        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         break;
     }
 
-    this.setState({mousedown: false});
+
   },
 
   /*

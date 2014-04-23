@@ -4,7 +4,7 @@ var RectangularSelectionTool = React.createClass({
       <div id="RectangularSelection-Tool" className="ToolComponent">
         <i className="icon flaticon-selection7"></i>
 
-        <span className="hint"></span>
+        <span className="hint">Select some pixels to work with!</span>
       </div>
     );
   }

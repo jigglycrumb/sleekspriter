@@ -394,7 +394,6 @@ var Editor = function() {
 
 
   this.selection = false; // false when no selection is active, array of two points (selection start, selection end) otherwise
-  this.selectedPixels = []; // contains pixels of current layer of current selection
 
   this.selectionContains = function(point) {
     if(this.selection) {
@@ -421,27 +420,7 @@ var Editor = function() {
     });
   };
 
-  this.saveChanges = function() {
-    console.log('saving changes');
-    // grab all old pixels of current frame
-    var frameLayers = _.pluck(this.pixels, 'layer');
-    var pixels = this.pixels.slice(0); // slice clones the array
-    file.pixels.forEach(function(pixel) {
-      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
-    });
-
-    file.pixels = pixels;
-  };
-
-
-  // signal handlers
-  signal.frameSelected.add(function(frame) {
-
-    self.saveChanges();
-
-    self.frame = parseInt(frame);
-    self.selectTopLayer();
-
+  var getFramePixels = function() {
     var frameLayers = _.where(file.layers, {frame: self.frame});
     var pixels = [];
 
@@ -450,7 +429,30 @@ var Editor = function() {
       pixels.push(layerPixels);
     });
 
-    self.pixels = _.flatten(pixels);
+    return _.flatten(pixels);
+  };
+
+  this.saveChanges = function() {
+    //console.log('saving changes');
+
+    // grab all old pixels of current frame
+    var frameLayers = _.pluck(this.pixels, 'layer');
+    var pixels = this.pixels.slice(0); // slice clones the array
+    file.pixels.forEach(function(pixel) {
+      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
+    });
+
+    file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
+    this.pixels = getFramePixels();
+  };
+
+
+  // signal handlers
+  signal.frameSelected.add(function(frame) {
+    self.saveChanges();
+    self.frame = parseInt(frame);
+    self.selectTopLayer();
+    self.pixels = getFramePixels();
   });
 
   signal.layerSelected.add(function(id) {
@@ -549,24 +551,14 @@ var Editor = function() {
       self.selection.start = self.selection.end;
       self.selection.end = temp;
     }
-
-    // copy selected pixels to editor.selectedPixels
-    self.buildSelection();
   });
-
-  this.buildSelection = function() {
-    this.selectedPixels = [];
-    this.pixels.forEach(function(pixel) {
-      if(self.selectionContains(pixel) && self.layer == pixel.layer) self.selectedPixels.push(pixel);
-    });
-    console.log('selected '+this.selectedPixels.length+' pixels');
-  }
 
   signal.selectionCleared.add(function(point) {
     self.selection = false;
   });
 
   signal.selectionMoved.add(function(distance) {
+
     self.selection = {
       start: new Point(
         self.selection.start.x + distance.x,
@@ -577,8 +569,6 @@ var Editor = function() {
         self.selection.end.y + distance.y
       )
     };
-
-    self.buildSelection();
   });
 
   signal.pixelsMoved.add(function(distance) {
@@ -586,16 +576,18 @@ var Editor = function() {
     if(self.selectionActive()) {
       self.pixels.forEach(function(pixel) {
         if(pixel.layer == self.layer && self.selectionContains(pixel)) {
-          pixel.x += distance.x;
-          pixel.y += distance.y;
+          var target = wrapPixel(pixel, distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
         }
       });
     }
     else {
       self.pixels.forEach(function(pixel) {
         if(pixel.layer == self.layer) {
-          pixel.x += distance.x;
-          pixel.y += distance.y;
+          var target = wrapPixel(pixel, distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
         }
       });
     }
@@ -883,6 +875,7 @@ var App = React.createClass({
           'brightnessToolIntensityChanged',
           'paletteSelected',
 
+          'pixelsMoved',
           'selectionCleared',
           'boxFolded',
         ];
@@ -1126,7 +1119,7 @@ var RectangularSelectionTool = React.createClass({
       <div id="RectangularSelection-Tool" className="ToolComponent">
         <i className="icon flaticon-selection7"></i>
 
-        <span className="hint"></span>
+        <span className="hint">Select some pixels to work with!</span>
       </div>
     );
   }
@@ -1380,6 +1373,20 @@ var StageBoxToolsLayer = React.createClass({
       self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
     }
 
+    function moveSelection(distance) {
+      var newStart = new Point(
+        editor.selection.start.x + distance.x,
+        editor.selection.start.y + distance.y
+      );
+
+      var newEnd = new Point(
+        editor.selection.end.x + distance.x,
+        editor.selection.end.y + distance.y
+      );
+
+      self.drawSelection(newStart, newEnd);
+    }
+
     // cache some values
     var self = this,
         selectionActive = this.props.editor.selectionActive(),
@@ -1389,7 +1396,7 @@ var StageBoxToolsLayer = React.createClass({
       this.drawGrid();
     }
 
-    if(this.state.mousedown) {
+    if(this.state.mousedown === true) {
       switch(this.props.editor.tool) {
         case 'BrushTool':
           if(layerVisible) {
@@ -1448,18 +1455,7 @@ var StageBoxToolsLayer = React.createClass({
           if(selectionActive) { // previous selection available
                                 // we move it instead of drawing a new one
             var distance = this.getMouseDownDistance();
-
-            var newStart = new Point(
-              editor.selection.start.x + distance.x,
-              editor.selection.start.y + distance.y
-            );
-
-            var newEnd = new Point(
-              editor.selection.end.x + distance.x,
-              editor.selection.end.y + distance.y
-            );
-
-            this.drawSelection(newStart, newEnd);
+            moveSelection(distance);
           }
           else { // no previous selection, draw new selection from start to cursor
             this.drawSelection(editor.selection.start, editor.pixel);
@@ -1475,11 +1471,16 @@ var StageBoxToolsLayer = React.createClass({
 
           canvas.width = canvas.width;
           if(selectionActive) {
+
+            moveSelection(distance);
+
             editor.pixels.forEach(function(pixel) {
               if(pixel.layer == layer) {
                 var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-                if(editor.selectionContains(pixel))
-                  stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+                if(editor.selectionContains(pixel)) {
+                  var target = wrapPixel(pixel, distance);
+                  stage.pixel.fill(layer, target.x, target.y, color);
+                }
                 else
                   stage.pixel.fill(layer, pixel.x, pixel.y, color);
               }
@@ -1488,8 +1489,9 @@ var StageBoxToolsLayer = React.createClass({
           else {
             editor.pixels.forEach(function(pixel) {
               if(pixel.layer == layer) {
-                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-                stage.pixel.fill(layer, pixel.x+distance.x, pixel.y+distance.y, color);
+                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+                    target = wrapPixel(pixel, distance);
+                stage.pixel.fill(layer, target.x, target.y, color);
               }
             });
           }
@@ -1524,7 +1526,7 @@ var StageBoxToolsLayer = React.createClass({
   mousedown: function(event) {
     var point = this.getWorldCoordinates(event);
 
-    console.log('mousedown', point);
+    //console.log('mousedown', point);
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
@@ -1540,7 +1542,9 @@ var StageBoxToolsLayer = React.createClass({
         distance = this.getMouseDownDistance(),
         selectionActive = editor.selectionActive();
 
-    console.log('mouseup', point, distance);
+    //console.log('mouseup', point, distance);
+
+    this.setState({mousedown: false});
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
@@ -1556,12 +1560,12 @@ var StageBoxToolsLayer = React.createClass({
         break;
 
       case 'MoveTool':
-        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         this.props.signal.pixelsMoved.dispatch(distance);
+        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         break;
     }
 
-    this.setState({mousedown: false});
+
   },
 
   /*
@@ -2174,11 +2178,11 @@ function NodeList2Array(NodeList) {
 
 function capitaliseFirstLetter(string) { // used in the brightness tool
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 function inArray(array, value) {
   return array.indexOf(value) > -1;
-}
+};
 
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
@@ -2202,12 +2206,27 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   style.height = h;
 
   return style;
-}
+};
+
+function wrapPixel(pixel, distance) {
+  var targetX = pixel.x + distance.x,
+      targetY = pixel.y + distance.y;
+
+  if(targetX > file.size.width) targetX -= file.size.width;
+  else if(targetX < 1) targetX += file.size.width;
+  if(targetY > file.size.height) targetY -= file.size.height;
+  else if(targetY < 1) targetY += file.size.height;
+
+  return new Point(targetX, targetY);
+};
+
+
+
 
 function minutely() {
   console.log('running minutely job');
   editor.saveChanges();
-}
+};
 
 window.onload = function() {
 

@@ -140,7 +140,6 @@ var Editor = function() {
 
 
   this.selection = false; // false when no selection is active, array of two points (selection start, selection end) otherwise
-  this.selectedPixels = []; // contains pixels of current layer of current selection
 
   this.selectionContains = function(point) {
     if(this.selection) {
@@ -167,27 +166,7 @@ var Editor = function() {
     });
   };
 
-  this.saveChanges = function() {
-    console.log('saving changes');
-    // grab all old pixels of current frame
-    var frameLayers = _.pluck(this.pixels, 'layer');
-    var pixels = this.pixels.slice(0); // slice clones the array
-    file.pixels.forEach(function(pixel) {
-      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
-    });
-
-    file.pixels = pixels;
-  };
-
-
-  // signal handlers
-  signal.frameSelected.add(function(frame) {
-
-    self.saveChanges();
-
-    self.frame = parseInt(frame);
-    self.selectTopLayer();
-
+  var getFramePixels = function() {
     var frameLayers = _.where(file.layers, {frame: self.frame});
     var pixels = [];
 
@@ -196,7 +175,30 @@ var Editor = function() {
       pixels.push(layerPixels);
     });
 
-    self.pixels = _.flatten(pixels);
+    return _.flatten(pixels);
+  };
+
+  this.saveChanges = function() {
+    //console.log('saving changes');
+
+    // grab all old pixels of current frame
+    var frameLayers = _.pluck(this.pixels, 'layer');
+    var pixels = this.pixels.slice(0); // slice clones the array
+    file.pixels.forEach(function(pixel) {
+      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
+    });
+
+    file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
+    this.pixels = getFramePixels();
+  };
+
+
+  // signal handlers
+  signal.frameSelected.add(function(frame) {
+    self.saveChanges();
+    self.frame = parseInt(frame);
+    self.selectTopLayer();
+    self.pixels = getFramePixels();
   });
 
   signal.layerSelected.add(function(id) {
@@ -295,24 +297,14 @@ var Editor = function() {
       self.selection.start = self.selection.end;
       self.selection.end = temp;
     }
-
-    // copy selected pixels to editor.selectedPixels
-    self.buildSelection();
   });
-
-  this.buildSelection = function() {
-    this.selectedPixels = [];
-    this.pixels.forEach(function(pixel) {
-      if(self.selectionContains(pixel) && self.layer == pixel.layer) self.selectedPixels.push(pixel);
-    });
-    console.log('selected '+this.selectedPixels.length+' pixels');
-  }
 
   signal.selectionCleared.add(function(point) {
     self.selection = false;
   });
 
   signal.selectionMoved.add(function(distance) {
+
     self.selection = {
       start: new Point(
         self.selection.start.x + distance.x,
@@ -323,8 +315,6 @@ var Editor = function() {
         self.selection.end.y + distance.y
       )
     };
-
-    self.buildSelection();
   });
 
   signal.pixelsMoved.add(function(distance) {
@@ -332,16 +322,18 @@ var Editor = function() {
     if(self.selectionActive()) {
       self.pixels.forEach(function(pixel) {
         if(pixel.layer == self.layer && self.selectionContains(pixel)) {
-          pixel.x += distance.x;
-          pixel.y += distance.y;
+          var target = wrapPixel(pixel, distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
         }
       });
     }
     else {
       self.pixels.forEach(function(pixel) {
         if(pixel.layer == self.layer) {
-          pixel.x += distance.x;
-          pixel.y += distance.y;
+          var target = wrapPixel(pixel, distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
         }
       });
     }

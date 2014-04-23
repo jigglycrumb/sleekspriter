@@ -5,11 +5,11 @@ function NodeList2Array(NodeList) {
 
 function capitaliseFirstLetter(string) { // used in the brightness tool
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
+};
 
 function inArray(array, value) {
   return array.indexOf(value) > -1;
-}
+};
 
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
@@ -33,12 +33,27 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   style.height = h;
 
   return style;
-}
+};
+
+function wrapPixel(pixel, distance) {
+  var targetX = pixel.x + distance.x,
+      targetY = pixel.y + distance.y;
+
+  if(targetX > file.size.width) targetX -= file.size.width;
+  else if(targetX < 1) targetX += file.size.width;
+  if(targetY > file.size.height) targetY -= file.size.height;
+  else if(targetY < 1) targetY += file.size.height;
+
+  return new Point(targetX, targetY);
+};
+
+
+
 
 function minutely() {
   console.log('running minutely job');
   editor.saveChanges();
-}
+};
 
 window.onload = function() {
 

@@ -60,6 +60,7 @@ var App = React.createClass({
           'brightnessToolIntensityChanged',
           'paletteSelected',
 
+          'pixelsMoved',
           'selectionCleared',
           'boxFolded',
         ];
