@@ -17,6 +17,10 @@ var Hotkeys = function(signal) {
       key: 'm',
       action: function() { signal.toolSelected.dispatch('RectangularSelectionTool'); }
     },
+    selectPaintBucketTool: {
+      key: 'p',
+      action: function() { signal.toolSelected.dispatch('PaintBucketTool'); }
+    },
     selectBrightnessTool: {
       key: 'o',
       action: function() { signal.toolSelected.dispatch('BrightnessTool'); }

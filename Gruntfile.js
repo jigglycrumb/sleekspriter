@@ -72,6 +72,7 @@ module.exports = function(grunt) {
           'js/components/EraserTool.js',
           'js/components/EyedropperTool.js',
           'js/components/RectangularSelectionTool.js',
+          'js/components/PaintBucketTool.js',
           'js/components/BrightnessTool.js',
           'js/components/MoveTool.js',
           'js/components/ZoomTool.js',

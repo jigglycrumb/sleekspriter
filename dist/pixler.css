@@ -54,17 +54,15 @@
   font-style: normal;
   margin-left: inherit;
 }
-.flaticon-double31:before {
-  position: relative;
-  left: -0.25em;
-}
-.flaticon-plus25:before {
-  position: relative;
-  left: -0.25em;
-}
+.flaticon-plus25:before,
+.flaticon-double31:before,
 .flaticon-minus18:before {
   position: relative;
   left: -0.25em;
+}
+.flaticon-paint2:before,
+.flaticon-selection7:before {
+  font-size: 1.3em;
 }
 * {
   user-select: none;
@@ -416,6 +414,11 @@ ul {
   font-size: 1.2rem;
   color: #e7e7e7;
 }
+#RectangularSelectionTool > i,
+#PaintBucketTool > i {
+  position: relative;
+  left: -0.2em;
+}
 .area.center {
   top: 0;
   left: 0;
@@ -660,6 +663,7 @@ ul {
   left: 50px;
   right: 220px;
   zoom: 1;
+  display: none;
 }
 .OffscreenFrameCanvas {
   background: #fff;

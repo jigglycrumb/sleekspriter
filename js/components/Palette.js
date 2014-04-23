@@ -55,6 +55,9 @@ var Palette = React.createClass({
       this.setState({resetScroll:false});
     }
   },
+  componentDidUnmount: function() {
+    this.props.signal.paletteSelected.remove(this.prepareResetScroll);
+  },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
   },
@@ -134,7 +137,7 @@ var Palette = React.createClass({
     this.scrollTo(target);
   },
   prepareResetScroll: function(palette) {
-    this.setState({resetScroll: true});
+    if(this.isMounted()) this.setState({resetScroll: true});
   },
   resetScroll: function() {
     this.scrollTo(0);

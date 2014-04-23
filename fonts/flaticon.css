@@ -59,18 +59,24 @@ margin-left: 20px;
 .flaticon-move11:before {
 	content: "\e00e";
 }
-.flaticon-plus25:before {
+.flaticon-paint2:before {
 	content: "\e00f";
 }
-.flaticon-right3:before {
+.flaticon-plus25:before {
 	content: "\e010";
 }
-.flaticon-selection7:before {
+.flaticon-right3:before {
 	content: "\e011";
 }
-.flaticon-small23:before {
+.flaticon-selection7:before {
 	content: "\e012";
 }
-.flaticon-sun4:before {
+.flaticon-small23:before {
 	content: "\e013";
+}
+.flaticon-stamp2:before {
+	content: "\e014";
+}
+.flaticon-sun4:before {
+	content: "\e015";
 }

@@ -1,4 +1,4 @@
-Libraries
+Frameworks & Libraries
 -----------------------------
 
 React: http://facebook.github.io/react/
@@ -16,23 +16,18 @@ Eraser: http://www.flaticon.com/free-icon/double-sided-eraser_25454
 Eyedropper: http://www.flaticon.com/free-icon/eyedropper-tool_40533
 Selection Tool: http://www.flaticon.com/free-icon/selection-symbol-for-interface-of-a-square-of-broken-line_32454
 Zoom: http://www.flaticon.com/free-icon/magnifier-lens-outline-with-handle_23759
-
 Plus: http://www.flaticon.com/free-icon/plus-black-symbol_25304
 Minus: http://www.flaticon.com/free-icon/minus-symbol_25232
-
 Eye: http://www.flaticon.com/free-icon/eye-outline_23912
 Eye slashed: http://www.flaticon.com/free-icon/eye-blocked-symbol_24402
-
 Grid: http://www.flaticon.com/free-icon/3x3-grid_8722
-
 Down Arrow: http://www.flaticon.com/free-icon/little-down-triangular-arrow_7629
 Right Arrow: http://www.flaticon.com/free-icon/mini-triangular-arrow-to-right_7520
-
 Palette: http://www.flaticon.com/free-icon/color-palette_8718
-
 Left Arrow: http://www.flaticon.com/free-icon/arrow-triangle-left_9918
 Up Arrow: http://www.flaticon.com/free-icon/little-up-arrow-triangle_7645
-
 Move Tool: http://www.flaticon.com/free-icon/move-object_14296
+Fill Tool: http://www.flaticon.com/free-icon/paint-bucket_1729
 
-Hand Tool: http://www.flaticon.com/free-icon/right-hand_1427
+// Hand Tool: http://www.flaticon.com/free-icon/right-hand_1427
+// Stamp Tool: http://www.flaticon.com/free-icon/stamp-tool-black-shape_16682
