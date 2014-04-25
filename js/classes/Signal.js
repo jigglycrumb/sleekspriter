@@ -41,6 +41,7 @@ var signal = {
 
   pixelsMoved: new Signal(),
   boxFolded: new Signal(),
+  bucketUsed: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;

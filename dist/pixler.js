@@ -43,6 +43,7 @@ var signal = {
 
   pixelsMoved: new Signal(),
   boxFolded: new Signal(),
+  bucketUsed: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -432,6 +433,28 @@ var Editor = function() {
     return _.flatten(pixels);
   };
 
+  var getAdjacentPixels = function(point) {
+
+    var p, arr = [];
+
+    // top
+    p = new Point(point.x, point.y-1);
+    if(p.y > 0) arr.push(p);
+    // right
+    p = new Point(point.x+1, point.y);
+    if(p.x <= file.size.width) arr.push(p);
+    // bottom
+    p = new Point(point.x, point.y+1);
+    if(p.y <= file.size.height) arr.push(p);
+    // left
+    p = new Point(point.x-1, point.y);
+    if(p.x > 0) arr.push(p);
+
+    //console.log('found '+arr.length+' neighbors', arr);
+
+    return arr;
+  };
+
   this.saveChanges = function() {
     //console.log('saving changes');
 
@@ -507,6 +530,8 @@ var Editor = function() {
         }
       }
     }
+
+    self.saveChanges(); // TODO: check if call can be removed
 
     signal.layerContentChanged.dispatch(layer);
   });
@@ -594,6 +619,56 @@ var Editor = function() {
 
     self.saveChanges();
   });
+
+  signal.bucketUsed.add(function(point) {
+
+    var initialPixel = _.findWhere(self.pixels, {x: point.x, y: point.y, layer: self.layer}),
+        initialColor,
+        fillColor = self.color;
+
+    if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
+      initialPixel = {layer: self.layer, x: point.x, y: point.y, r: 0, g: 0, b: 0, a: 0};
+    }
+
+    initialColor = new Color({r: initialPixel.r, g: initialPixel.g, b: initialPixel.b});
+    initialColor.alpha(initialPixel.a);
+
+    var filled = [];
+
+    function rFill(point) {
+
+      //console.log('fill', point.x, point.y);
+
+      filled.push(point);
+
+      var pixel = _.findWhere(self.pixels, {layer: self.layer, x: point.x, y: point.y}),
+          pixelColor;
+
+      if(_.isUndefined(pixel)) {
+        pixelColor = new Color().rgb(0, 0, 0);
+        pixelColor.alpha(0);
+      }
+      else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
+
+      if(pixelColor.rgbString() == initialColor.rgbString()) {
+        stage.pixel.fill(self.layer, point.x, point.y, fillColor, true);
+
+        var neighbors = getAdjacentPixels(point);
+        //console.log('found '+neighbors.length+' neighbors');
+        neighbors.forEach(function(n) {
+          var old = _.findWhere(filled, {x: n.x, y: n.y});
+          if(_.isUndefined(old)) rFill(n);
+        });
+
+      }
+
+
+    }
+
+    rFill(initialPixel);
+  });
+
+
 };
 
 var editor = new Editor();
@@ -1585,6 +1660,10 @@ var StageBoxToolsLayer = React.createClass({
       case 'MoveTool':
         this.props.signal.pixelsMoved.dispatch(distance);
         if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
+        break;
+
+      case 'PaintBucketTool':
+        this.props.signal.bucketUsed.dispatch(point);
         break;
     }
 

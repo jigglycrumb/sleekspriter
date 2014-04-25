@@ -241,6 +241,10 @@ var StageBoxToolsLayer = React.createClass({
         this.props.signal.pixelsMoved.dispatch(distance);
         if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         break;
+
+      case 'PaintBucketTool':
+        this.props.signal.bucketUsed.dispatch(point);
+        break;
     }
 
 
