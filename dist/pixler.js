@@ -435,20 +435,36 @@ var Editor = function() {
 
   var getAdjacentPixels = function(point) {
 
-    var p, arr = [];
+    var p,
+        arr = [],
+        bounds = {
+          top: 1,
+          right: file.size.width,
+          bottom: file.size.height,
+          left: 1,
+        };
+
+    if(self.selectionActive()) {
+      bounds = {
+        top: self.selection.start.y,
+        right: self.selection.end.x,
+        bottom: self.selection.end.y,
+        left: self.selection.start.x,
+      };
+    }
 
     // top
     p = new Point(point.x, point.y-1);
-    if(p.y > 0) arr.push(p);
+    if(p.y >= bounds.top) arr.push(p);
     // right
     p = new Point(point.x+1, point.y);
-    if(p.x <= file.size.width) arr.push(p);
+    if(p.x <= bounds.right) arr.push(p);
     // bottom
     p = new Point(point.x, point.y+1);
-    if(p.y <= file.size.height) arr.push(p);
+    if(p.y <= bounds.bottom) arr.push(p);
     // left
     p = new Point(point.x-1, point.y);
-    if(p.x > 0) arr.push(p);
+    if(p.x >= bounds.left) arr.push(p);
 
     //console.log('found '+arr.length+' neighbors', arr);
 
