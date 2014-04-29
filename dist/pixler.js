@@ -1589,6 +1589,7 @@ var StageBox = React.createClass({
     // }
   },
   useEyedropperTool: function() {
+    if(editor.pixelColor.alpha() == 0) return;
     this.props.signal.toolSelected.dispatch('BrushTool');
     this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
   },
