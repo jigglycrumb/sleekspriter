@@ -62,6 +62,7 @@ module.exports = function(grunt) {
 
           'js/mixins/FoldableMixin.js',
           'js/mixins/CopyFrameMixin.js',
+          'js/mixins/StageBoxCanvasMixin.js',
 
           'js/components/App.js',
           'js/components/ToolContainer.js',
@@ -78,8 +79,10 @@ module.exports = function(grunt) {
           'js/components/ZoomTool.js',
 
           'js/components/StageBox.js',
+          'js/components/StageBoxCursorCanvas.js',
+          'js/components/StageBoxSelectionCanvas.js',
+          'js/components/StageBoxGridCanvas.js',
           'js/components/StageBoxLayer.js',
-          'js/components/StageBoxToolsLayer.js',
 
           'js/components/ToolBox.js',
           'js/components/ToolBoxTool.js',

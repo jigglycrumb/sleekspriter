@@ -155,7 +155,19 @@ var Editor = function() {
   };
 
   this.selectionActive = function() {
-    return this.selection.start instanceof Point && this.selection.end instanceof Point;
+    return this.selection.start instanceof Point
+        && this.selection.end instanceof Point;
+  };
+
+  this.selectionResizing = function() {
+    return this.selection.start instanceof Point
+        && this.selection.cursor instanceof Point;
+  };
+
+  this.selectionMoving = function() {
+    return this.selection.start instanceof Point
+        && this.selection.end instanceof Point
+        && this.selection.distance instanceof Point;
   };
 
   this.pixels = []; // contains all pixels of the selected frame
@@ -325,9 +337,19 @@ var Editor = function() {
     };
   });
 
-  signal.selectionEnded.add(function(point) {
+  signal.selectionResized.add(function(point) {
+    self.selection.cursor = point;
+  });
 
-    self.selection.end = point;
+  signal.selectionUpdated.add(function(distance) {
+    self.selection.distance = distance;
+  });
+
+  signal.selectionEnded.add(function(point) {
+    self.selection = { // reset self selection to remove cursor property as it's no longer needed
+      start: self.selection.start,
+      end: point
+    };
 
     // switch start & end if start is more "lower right" than end
     // makes iterating over the selection easier later

@@ -47,6 +47,10 @@ function wrapPixel(pixel, distance) {
   return new Point(targetX, targetY);
 };
 
+function isLayerVisible() {
+  var layer = file.getLayerById(editor.layer);
+  return layer.visible && layer.opacity > 0;
+};
 
 
 

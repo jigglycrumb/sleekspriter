@@ -40,6 +40,8 @@ var signal = {
   selectionEnded: new Signal(),
   selectionMoved: new Signal(),
   selectionCleared: new Signal(),
+  selectionResized: new Signal(),
+  selectionUpdated: new Signal(),
 
   pixelsMoved: new Signal(),
   boxFolded: new Signal(),
@@ -410,7 +412,19 @@ var Editor = function() {
   };
 
   this.selectionActive = function() {
-    return this.selection.start instanceof Point && this.selection.end instanceof Point;
+    return this.selection.start instanceof Point
+        && this.selection.end instanceof Point;
+  };
+
+  this.selectionResizing = function() {
+    return this.selection.start instanceof Point
+        && this.selection.cursor instanceof Point;
+  };
+
+  this.selectionMoving = function() {
+    return this.selection.start instanceof Point
+        && this.selection.end instanceof Point
+        && this.selection.distance instanceof Point;
   };
 
   this.pixels = []; // contains all pixels of the selected frame
@@ -580,9 +594,19 @@ var Editor = function() {
     };
   });
 
-  signal.selectionEnded.add(function(point) {
+  signal.selectionResized.add(function(point) {
+    self.selection.cursor = point;
+  });
 
-    self.selection.end = point;
+  signal.selectionUpdated.add(function(distance) {
+    self.selection.distance = distance;
+  });
+
+  signal.selectionEnded.add(function(point) {
+    self.selection = { // reset self selection to remove cursor property as it's no longer needed
+      start: self.selection.start,
+      end: point
+    };
 
     // switch start & end if start is more "lower right" than end
     // makes iterating over the selection easier later
@@ -907,6 +931,12 @@ var CopyFrameMixin = {
       this.setState({needsRefresh: false});
     }
   }
+};
+var StageBoxCanvasMixin = {
+  clear: function() {
+    var canvas = this.getDOMNode();
+    canvas.width = canvas.width;
+  },
 };
 var App = React.createClass({
   render: function() {
@@ -1337,6 +1367,16 @@ var ZoomTool = React.createClass({
   }
 });
 var StageBox = React.createClass({
+  getInitialState: function() {
+    return {
+      needsRefresh: false,
+      mousedown: false,
+      mousedownPoint: new Point(0, 0),
+      last: null, // we need to record the mousedown timestamp because of a chrome bug,
+                  // see https://code.google.com/p/chromium/issues/detail?id=161464
+                  // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
+    };
+  },
   render: function() {
 
     var w = this.props.file.size.width*this.props.editor.zoom,
@@ -1356,13 +1396,15 @@ var StageBox = React.createClass({
     csstop = (csstop < top) ? top : csstop;
 
     return (
-      <div id="StageBox" draggable="false" onDragStart={this.dragStart} onDragEnd={this.dragEnd} style={{width: w, height: h, left: cssleft, top: csstop}}>
-        <StageBoxToolsLayer
-          ref="ToolsLayer"
-          width={w}
-          height={h}
-          editor={this.props.editor}
-          signal={this.props.signal} />
+      <div id="StageBox"
+        style={{width: w, height: h, left: cssleft, top: csstop}}
+        onMouseDown={this.mousedown}
+        onMouseMove={this.mousemove}
+        onMouseUp={this.mouseup}>
+
+        <StageBoxCursorCanvas width={w} height={h} editor={this.props.editor} />
+        <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} />
+        <StageBoxGridCanvas width={w} height={h} editor={this.props.editor} />
 
         {this.props.file.layers.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
@@ -1373,11 +1415,6 @@ var StageBox = React.createClass({
         }, this)}
       </div>
     );
-  },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    }
   },
   componentDidMount: function() {
     this.props.signal.zoomChanged.add(this.prepareRefresh);
@@ -1391,286 +1428,99 @@ var StageBox = React.createClass({
       stage.frame.refresh();
       this.setState({needsRefresh: false});
     }
-  }
-/*,
-  dragStart: function(event) {
-    console.log('dragStart', event);
-
-    event.target.style.opacity = 0.4;
-  },
-  dragEnd: function(event) {
-
-    var x = event.nativeEvent.pageX < 0 ? 0 : event.nativeEvent.pageX,
-        y = (event.nativeEvent.pageY < 0 ? 0 : event.nativeEvent.pageY)/editor.zoom;
-
-    console.log('dragEnd', x, y, event.nativeEvent);
-    this.getDOMNode().style.left = x+'px';
-    this.getDOMNode().style.top = y+'px';
-    this.getDOMNode().style.opacity = 1;
-  }*/
-});
-var StageBoxLayer = React.createClass({
-  render: function() {
-
-    var cssClass = 'Layer';
-    if(this.props.visible === false) cssClass+= ' hidden';
-
-    var display = (this.props.layer.visible===true) ? 'block' : 'none';
-
-    return (
-      <canvas
-        id={this.props.key}
-        className={cssClass}
-        width={this.props.width}
-        height={this.props.height}
-        style={{
-          zIndex: this.props.layer.z,
-          opacity: this.props.layer.opacity/100,
-          display: display,
-          width: this.props.width,
-          height: this.props.height
-        }}>
-      </canvas>
-    );
-  }
-});
-var StageBoxToolsLayer = React.createClass({
-  getInitialState: function() {
-    return {
-      mousedown: false,
-      mousedownPoint: new Point(0, 0),
-      last: null, // we need to record the mousedown timestamp because of a chrome bug,
-                  // see https://code.google.com/p/chromium/issues/detail?id=161464
-                  // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
-    };
-  },
-  render: function() {
-    return (
-      <canvas
-        id="Layer-Tools"
-        className="Layer"
-        width={this.props.width}
-        height={this.props.height}>
-      </canvas>
-    );
-  },
-  componentDidMount: function() {
-    this.getDOMNode().addEventListener('mousedown', this.mousedown);
-    this.getDOMNode().addEventListener('mouseup', this.mouseup);
-    //this.getDOMNode().addEventListener('mouseleave', this.mouseleave);
-    this.getDOMNode().addEventListener('mousemove', this.mousemove);
-
-    var self = this;
-
-    this.interval = setInterval(function() {
-      if(editor.selectionActive()) self.forceUpdate();
-    }, 200);
-  },
-  componentWillUnmount: function() {
-    clearInterval(this.interval);
-  },
-  componentDidUpdate: function() {
-
-    // called after mousemove
-    // all the canvas drawing happens here
-
-    // clear the canvas
-    this.getDOMNode().width = this.getDOMNode().width;
-
-    // helper functions
-    function isLayerVisible() {
-      var layer = file.getLayerById(self.props.editor.layer);
-      return layer.visible && layer.opacity > 0;
-    }
-
-    function drawLastSelection() {
-      self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
-    }
-
-    function moveSelection(distance) {
-      var newStart = new Point(
-        editor.selection.start.x + distance.x,
-        editor.selection.start.y + distance.y
-      );
-
-      var newEnd = new Point(
-        editor.selection.end.x + distance.x,
-        editor.selection.end.y + distance.y
-      );
-
-      self.drawSelection(newStart, newEnd);
-    }
-
-    // cache some values
-    var self = this,
-        selectionActive = this.props.editor.selectionActive(),
-        layerVisible = isLayerVisible();
-
-    if(this.props.editor.grid === true) {
-      this.drawGrid();
-    }
-
-    if(this.state.mousedown === true) {
-      switch(this.props.editor.tool) {
-        case 'BrushTool':
-          if(layerVisible) {
-            if(selectionActive) { // restrict to selection
-              drawLastSelection();
-              if(editor.selectionContains(editor.pixel)) stage.pixel.fill();
-            }
-            else stage.pixel.fill();
-          }
-          else {
-            this.mouseup(); // prevent additional alerts
-            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          }
-          break;
-        case 'EraserTool':
-          if(layerVisible) {
-            if(selectionActive) { // restrict to selection
-              drawLastSelection();
-              if(editor.selectionContains(editor.pixel)) stage.pixel.clear();
-            }
-            else stage.pixel.clear();
-          }
-          else {
-            this.mouseup();  // prevent additional alerts
-            alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-          }
-          break;
-        case 'EyedropperTool':
-          this.props.signal.toolSelected.dispatch('BrushTool');
-          this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
-          break;
-        case 'BrightnessTool':
-          if(layerVisible) {
-
-            var px = _.findWhere(editor.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y }),
-                pixelExists = !_.isUndefined(px);
-
-            if(selectionActive) { // restrict to selection
-              drawLastSelection();
-              if(pixelExists && editor.selectionContains(editor.pixel)) {
-                if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-                else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
-              }
-            }
-            else if(pixelExists) {
-              if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-              else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
-            }
-          }
-          else {
-            this.mouseup(); // prevent additional alerts
-            alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-          }
-          break;
-        case 'RectangularSelectionTool':
-          if(selectionActive) { // previous selection available
-                                // we move it instead of drawing a new one
-            var distance = this.getMouseDownDistance();
-            moveSelection(distance);
-          }
-          else { // no previous selection, draw new selection from start to cursor
-            this.drawSelection(editor.selection.start, editor.pixel);
-          }
-          break;
-        case 'MoveTool':
-          var layer = editor.layer,
-              distance = this.getMouseDownDistance(),
-              //pixels = selectionActive ? editor.selectedPixels : editor.pixels,
-              canvas = document.getElementById('StageBoxLayer-'+layer),
-              ctx = canvas.getContext('2d');//,
-              //pixels;
-
-          canvas.width = canvas.width;
-          if(selectionActive) {
-
-            moveSelection(distance);
-
-            editor.pixels.forEach(function(pixel) {
-              if(pixel.layer == layer) {
-                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-                if(editor.selectionContains(pixel)) {
-                  var target = wrapPixel(pixel, distance);
-                  stage.pixel.fill(layer, target.x, target.y, color);
-                }
-                else
-                  stage.pixel.fill(layer, pixel.x, pixel.y, color);
-              }
-            });
-          }
-          else {
-            editor.pixels.forEach(function(pixel) {
-              if(pixel.layer == layer) {
-                var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
-                    target = wrapPixel(pixel, distance);
-                stage.pixel.fill(layer, target.x, target.y, color);
-              }
-            });
-          }
-          break;
-      }
-    }
-    else { // mouse is not down
-      if(selectionActive) {
-        drawLastSelection();
-      }
-    }
-
-    this.drawPixelCursor();
   },
 
-
-
-
-
-
-
-  mousemove: function(event) {
-    //console.log('mousemove');
-
-    this.getLayerPixelColor();
-
-    if(event.timeStamp > this.state.last + 10) {
-      var point = this.getWorldCoordinates(event);
-      this.props.signal.pixelSelected.dispatch(point);
-    }
-  },
   mousedown: function(event) {
+
+    event = event.nativeEvent;
+
     var point = this.getWorldCoordinates(event);
 
-    //console.log('mousedown', point);
-
     switch(this.props.editor.tool) {
+
+      case 'BrushTool':
+        this.useBrushTool();
+        break;
+
+      case 'EraserTool':
+        this.useEraserTool();
+        break;
+
+      case 'BrightnessTool':
+        this.useBrightnessTool();
+        break;
+
       case 'RectangularSelectionTool':
-        if(!editor.selection || !editor.selectionContains(point))
-          this.props.signal.selectionStarted.dispatch(point);
+        this.startRectangularSelection(point);
         break;
     }
 
     this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
   },
+
+  mousemove: function(event) {
+
+    event = event.nativeEvent;
+
+    this.getLayerPixelColor(event);
+
+    var point = this.getWorldCoordinates(event),
+        distance = this.getMouseDownDistance();
+
+    if(event.timeStamp > this.state.last + 10) {
+      this.props.signal.pixelSelected.dispatch(point);
+    }
+
+    if(this.state.mousedown === true) {
+
+      switch(this.props.editor.tool) {
+
+        case 'BrushTool':
+          this.useBrushTool();
+          break;
+
+        case 'EraserTool':
+          this.useEraserTool();
+          break;
+
+        case 'RectangularSelectionTool':
+          if(editor.selectionActive()) this.updateRectangularSelection(distance);
+          else this.resizeRectangularSelection(point);
+          break;
+
+        case 'BrightnessTool':
+          this.useBrightnessTool();
+          break;
+
+        case 'MoveTool':
+          this.useMoveTool();
+          break;
+      }
+    }
+  },
+
   mouseup: function(event) {
+
+    event = event.nativeEvent;
+
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance(),
         selectionActive = editor.selectionActive();
 
-    //console.log('mouseup', point, distance);
-
     this.setState({mousedown: false});
 
     switch(this.props.editor.tool) {
+
+      case 'EyedropperTool':
+        this.useEyedropperTool();
+        break;
+
       case 'RectangularSelectionTool':
-        if(selectionActive) {
-          this.props.signal.selectionMoved.dispatch(distance);
-        }
-        else {
-          if(_.isEqual(point, this.state.mousedownPoint))
-            this.props.signal.selectionCleared.dispatch();
-          else
-            this.props.signal.selectionEnded.dispatch(point);
-        }
+        this.endRectangularSelection(point, distance);
+        break;
+
+      case 'PaintBucketTool':
+        this.usePaintBucketTool(point);
         break;
 
       case 'MoveTool':
@@ -1678,26 +1528,15 @@ var StageBoxToolsLayer = React.createClass({
         if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
         break;
 
-      case 'PaintBucketTool':
-        this.props.signal.bucketUsed.dispatch(point);
-        break;
+
     }
-
-
   },
 
-  /*
-  mouseleave: function() {
-    this.props.signal.pixelSelected.dispatch(new Point(0, 0));
-  },
-  */
 
 
 
 
-
-
-  getLayerPixelColor: function() {
+  getLayerPixelColor: function(event) {
     var layer = file.getLayerById(this.props.editor.layer),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
@@ -1723,6 +1562,137 @@ var StageBoxToolsLayer = React.createClass({
 
 
 
+
+  useBrushTool: function() {
+
+    if(isLayerVisible()) {
+      if(!editor.selectionActive()) stage.pixel.fill();
+      else { // restrict to selection
+        if(editor.selectionContains(editor.pixel)) stage.pixel.fill();
+      }
+    }
+    //else {
+    //  this.mouseup(); // prevent additional alerts
+    //  alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+    //}
+  },
+  useEraserTool: function() {
+    if(isLayerVisible()) {
+      if(!editor.selectionActive()) stage.pixel.clear();
+      else { // restrict to selection
+        if(editor.selectionContains(editor.pixel)) stage.pixel.clear();
+      }
+    }
+    // else {
+      // this.mouseup();  // prevent additional alerts
+      // alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
+    // }
+  },
+  useEyedropperTool: function() {
+    this.props.signal.toolSelected.dispatch('BrushTool');
+    this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
+  },
+  usePaintBucketTool: function(point) {
+    if(isLayerVisible()) {
+      if(editor.selectionActive()) {
+        if(editor.selectionContains(point)) this.props.signal.bucketUsed.dispatch(point);
+      }
+      else this.props.signal.bucketUsed.dispatch(point);
+    }
+  },
+  useBrightnessTool: function() {
+    if(isLayerVisible()) {
+
+      var px = _.findWhere(editor.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y }),
+          pixelExists = !_.isUndefined(px);
+
+      if(pixelExists) {
+        if(!editor.selectionActive()) {
+          if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
+          else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+        }
+        else { // restrict to selection
+          if(editor.selectionContains(editor.pixel)) {
+            if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
+            else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+          }
+        }
+      }
+    }
+    // else {
+      // this.mouseup(); // prevent additional alerts
+      // alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
+    // }
+  },
+  useMoveTool: function() {
+    var layer = editor.layer,
+        distance = this.getMouseDownDistance(),
+        canvas = document.getElementById('StageBoxLayer-'+layer),
+        ctx = canvas.getContext('2d');
+
+    canvas.width = canvas.width;
+
+    if(editor.selectionActive()) {
+
+      this.updateRectangularSelection(distance);
+
+      editor.pixels.forEach(function(pixel) {
+        if(pixel.layer == layer) {
+          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+          if(editor.selectionContains(pixel)) {
+            var target = wrapPixel(pixel, distance);
+            stage.pixel.fill(layer, target.x, target.y, color);
+          }
+          else
+            stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        }
+      });
+    }
+    else {
+      editor.pixels.forEach(function(pixel) {
+        if(pixel.layer == layer) {
+          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+              target = wrapPixel(pixel, distance);
+          stage.pixel.fill(layer, target.x, target.y, color);
+        }
+      });
+    }
+  },
+
+  startRectangularSelection: function(point) {
+    if(!editor.selection || !editor.selectionContains(point))
+      this.props.signal.selectionStarted.dispatch(point);
+  },
+  resizeRectangularSelection: function(point) {
+    this.props.signal.selectionResized.dispatch(point);
+  },
+  updateRectangularSelection: function(distance) {
+    this.props.signal.selectionUpdated.dispatch(distance);
+  },
+  endRectangularSelection: function(point, distance) {
+    if(editor.selectionActive()) {
+      this.props.signal.selectionMoved.dispatch(distance);
+    }
+    else {
+      if(_.isEqual(point, this.state.mousedownPoint))
+        this.props.signal.selectionCleared.dispatch();
+      else
+        this.props.signal.selectionEnded.dispatch(point);
+    }
+  },
+
+});
+var StageBoxCursorCanvas = React.createClass({
+  mixins: [StageBoxCanvasMixin],
+  render: function() {
+    return (
+      <canvas id="StageBoxCursorCanvas" className="Layer" width={this.props.width} height={this.props.height} />
+    );
+  },
+  componentDidUpdate: function() {
+    this.clear();
+    this.drawPixelCursor();
+  },
   drawPixelCursor: function() {
     var zoom = this.props.editor.zoom,
         x = this.props.editor.pixel.x,
@@ -1773,30 +1743,69 @@ var StageBoxToolsLayer = React.createClass({
       ctx.stroke();
     }
   },
-  drawGrid: function() {
-    var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom;
+});
+var StageBoxSelectionCanvas = React.createClass({
+  mixins: [StageBoxCanvasMixin],
+  render: function() {
+    return (
+      <canvas id="StageBoxSelectionCanvas" className="Layer" width={this.props.width} height={this.props.height} />
+    );
+  },
 
-    if(zoom < 3) return;
-    var ctx = canvas.getContext('2d');
-    ctx.strokeStyle = "#cccccc";
+  componentDidUpdate: function(prevProps, prevState) {
 
-    // vertical lines
-    for( var x = zoom+0.5; x < canvas.width; x+= zoom) {
-      ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, canvas.height);
-      ctx.stroke();
+    this.clear();
+
+    var self = this;
+
+    function drawLastSelection() {
+      self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
     }
 
-    // horizontal lines
-    for( var y = zoom+0.5; y < canvas.height; y+= zoom) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(canvas.width, y);
-      ctx.stroke();
+    function moveSelection(distance) {
+      var newStart = new Point(
+        editor.selection.start.x + distance.x,
+        editor.selection.start.y + distance.y
+      );
+
+      var newEnd = new Point(
+        editor.selection.end.x + distance.x,
+        editor.selection.end.y + distance.y
+      );
+
+      self.drawSelection(newStart, newEnd);
+    }
+
+    switch(this.props.editor.tool) {
+      case 'RectangularSelectionTool':
+        if(editor.selectionMoving()) moveSelection(editor.selection.distance);
+        else if(editor.selectionResizing()) {
+          this.drawSelection(editor.selection.start, editor.selection.cursor);
+        }
+        else if(editor.selectionActive()) drawLastSelection();
+        break;
+      case 'MoveTool':
+        if(editor.selectionMoving()) moveSelection(editor.selection.distance);
+        else if(editor.selectionActive()) drawLastSelection();
+        break;
+      default:
+        if(editor.selectionActive()) drawLastSelection();
+        break;
     }
   },
+
+  componentDidMount: function() {
+    // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
+    var self = this;
+    this.interval = setInterval(function() {
+      if(editor.selectionActive()) self.forceUpdate();
+    }, 200);
+  },
+
+  componentWillUnmount: function() {
+    clearInterval(this.interval);
+  },
+
   drawSelection: function(start, end) {
     var canvas = this.getDOMNode(),
         zoom = this.props.editor.zoom,
@@ -1828,6 +1837,69 @@ var StageBoxToolsLayer = React.createClass({
     ctx.strokeStyle = pattern;
     ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
   },
+});
+var StageBoxGridCanvas = React.createClass({
+  mixins: [StageBoxCanvasMixin],
+  render: function() {
+    return (
+      <canvas id="StageBoxGridCanvas" className="Layer" width={this.props.width} height={this.props.height} />
+    );
+  },
+  componentDidUpdate: function() {
+    if(this.props.editor.grid === true) {
+      this.drawGrid();
+    }
+    else this.clear();
+  },
+  drawGrid: function() {
+    var canvas = this.getDOMNode(),
+        zoom = this.props.editor.zoom;
+
+    if(zoom < 3) return;
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle = "#cccccc";
+
+    // vertical lines
+    for(var x = zoom+0.5; x < canvas.width; x+= zoom) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvas.height);
+      ctx.stroke();
+    }
+
+    // horizontal lines
+    for(var y = zoom+0.5; y < canvas.height; y+= zoom) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvas.width, y);
+      ctx.stroke();
+    }
+  },
+});
+var StageBoxLayer = React.createClass({
+  render: function() {
+
+    var cssClass = 'Layer';
+    if(this.props.visible === false) cssClass+= ' hidden';
+
+    var display = (this.props.layer.visible===true) ? 'block' : 'none';
+
+    return (
+      <canvas
+        id={this.props.key}
+        className={cssClass}
+        width={this.props.width}
+        height={this.props.height}
+        style={{
+          zIndex: this.props.layer.z,
+          opacity: this.props.layer.opacity/100,
+          display: display,
+          width: this.props.width,
+          height: this.props.height
+        }}>
+      </canvas>
+    );
+  }
 });
 // clean
 var ToolBox = React.createClass({
@@ -2340,6 +2412,10 @@ function wrapPixel(pixel, distance) {
   return new Point(targetX, targetY);
 };
 
+function isLayerVisible() {
+  var layer = file.getLayerById(editor.layer);
+  return layer.visible && layer.opacity > 0;
+};
 
 
 

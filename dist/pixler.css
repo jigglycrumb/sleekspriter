@@ -432,6 +432,12 @@ ul {
   background: #fff;
   top: 0;
   left: 0;
+  /*
+  #Layer-Tools {
+    //background: transparent;
+    z-index: 10000001;
+  }
+  */
 }
 #StageBox .Layer {
   position: absolute;
@@ -439,10 +445,15 @@ ul {
   left: 0;
   z-index: 0;
 }
-#StageBox #Layer-Tools {
-  background: transparent;
-  z-index: 10000000;
+#StageBox #StageBoxCursorCanvas {
   cursor: none;
+  z-index: 10000002;
+}
+#StageBox #StageBoxSelectionCanvas {
+  z-index: 10000001;
+}
+#StageBox #StageBoxGridCanvas {
+  z-index: 10000000;
 }
 .area.right {
   top: 40px;
