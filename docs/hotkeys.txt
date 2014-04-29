@@ -1,0 +1,16 @@
+Hotkeys
+-------------------------------------
+
+b = select Brush Tool
+e = select Eraser Tool
+i = select Eyedropper Tool
+m = select Rectangular Selection Tool
+p = select Paint Bucket Tool
+o = select Brightness Tool
+v = select Move Tool
+z = select Zoom Tool
+
+g = toggle grid display
+
+ctrl+d,
+cmd+d+ = drop selection
