@@ -55,6 +55,7 @@ module.exports = function(grunt) {
           'js/strict.js',
           'js/classes/Signal.js',
           'js/classes/Point.js',
+          'js/classes/Pixel.js',
           'js/classes/File.js',
           'js/classes/Editor.js',
           'js/classes/Stage.js',

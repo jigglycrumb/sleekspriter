@@ -17,7 +17,7 @@ var Editor = function() {
 
   this.zoom = 10;
   this.grid = true;
-  this.pixel = {x:0, y:0};
+  this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
@@ -283,7 +283,7 @@ var Editor = function() {
     var c = color.rgb(),
         a = 1;
 
-    var newPixel = {layer: layer, x: x, y: y, r: c.r, g: c.g, b: c.b, a: a};
+    var newPixel = new Pixel(layer, x, y, c.r, c.g, c.b, a);
     var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', layer, x, y, color.rgbString());

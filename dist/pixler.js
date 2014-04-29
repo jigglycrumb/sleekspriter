@@ -58,6 +58,26 @@ var Point = function(x, y) {
   this.x = x;
   this.y = y;
 };
+var Pixel = function(layer, x, y, r, g, b, a) {
+  this.layer = layer;
+  this.x = x;
+  this.y = y;
+  this.r = r;
+  this.g = g;
+  this.b = b;
+  this.a = a;
+};
+
+Pixel.prototype = new Point();
+Pixel.prototype.constructor = Pixel;
+
+Pixel.fromArray = function(arr) {
+  return new Pixel(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6]);
+};
+
+Pixel.toArray = function(pixel) {
+  return [pixel.layer, pixel.x, pixel.y, pixel.r, pixel.g, pixel.b, pixel.a];
+};
 var File = function() {
 
   this.size = null;
@@ -111,30 +131,6 @@ var File = function() {
     ];
   };
 
-  function pixelFromFile(pixel) {
-    return {
-      layer: pixel[0],
-      x: pixel[1],
-      y: pixel[2],
-      r: pixel[3],
-      g: pixel[4],
-      b: pixel[5],
-      a: pixel[6]
-    };
-  };
-
-  function pixelToFile(pixel) {
-    return [
-      pixel.layer,
-      pixel.x,
-      pixel.y,
-      pixel.r,
-      pixel.g,
-      pixel.b,
-      pixel.a
-    ];
-  };
-
   this.getLayerById = function(id) {
     return _.findWhere(this.layers, {id: id}) || false;
   };
@@ -150,7 +146,7 @@ var File = function() {
       size: sizeToFile(this.size),
       frames: framesToFile(this.frames),
       layers: this.layers.map(layerToFile),
-      pixels: this.pixels.map(pixelToFile)
+      pixels: this.pixels.map(Pixel.toArray)
     };
     return JSON.stringify(strObj);
   };
@@ -160,7 +156,7 @@ var File = function() {
     this.size = sizeFromFile(json.size);
     this.frames = framesFromFile(json.frames);
     this.layers = json.layers.map(layerFromFile);
-    this.pixels = json.pixels.map(pixelFromFile);
+    this.pixels = json.pixels.map(Pixel.fromArray);
 
     // sort layers by z (top to bottom)
     this.layers = _.sortBy(this.layers, 'z').reverse();
@@ -274,7 +270,7 @@ var Editor = function() {
 
   this.zoom = 10;
   this.grid = true;
-  this.pixel = {x:0, y:0};
+  this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
@@ -540,7 +536,7 @@ var Editor = function() {
     var c = color.rgb(),
         a = 1;
 
-    var newPixel = {layer: layer, x: x, y: y, r: c.r, g: c.g, b: c.b, a: a};
+    var newPixel = new Pixel(layer, x, y, c.r, c.g, c.b, a);
     var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', layer, x, y, color.rgbString());

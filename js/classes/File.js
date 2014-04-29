@@ -51,30 +51,6 @@ var File = function() {
     ];
   };
 
-  function pixelFromFile(pixel) {
-    return {
-      layer: pixel[0],
-      x: pixel[1],
-      y: pixel[2],
-      r: pixel[3],
-      g: pixel[4],
-      b: pixel[5],
-      a: pixel[6]
-    };
-  };
-
-  function pixelToFile(pixel) {
-    return [
-      pixel.layer,
-      pixel.x,
-      pixel.y,
-      pixel.r,
-      pixel.g,
-      pixel.b,
-      pixel.a
-    ];
-  };
-
   this.getLayerById = function(id) {
     return _.findWhere(this.layers, {id: id}) || false;
   };
@@ -90,7 +66,7 @@ var File = function() {
       size: sizeToFile(this.size),
       frames: framesToFile(this.frames),
       layers: this.layers.map(layerToFile),
-      pixels: this.pixels.map(pixelToFile)
+      pixels: this.pixels.map(Pixel.toArray)
     };
     return JSON.stringify(strObj);
   };
@@ -100,7 +76,7 @@ var File = function() {
     this.size = sizeFromFile(json.size);
     this.frames = framesFromFile(json.frames);
     this.layers = json.layers.map(layerFromFile);
-    this.pixels = json.pixels.map(pixelFromFile);
+    this.pixels = json.pixels.map(Pixel.fromArray);
 
     // sort layers by z (top to bottom)
     this.layers = _.sortBy(this.layers, 'z').reverse();
