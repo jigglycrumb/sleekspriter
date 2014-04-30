@@ -61,8 +61,13 @@ var App = React.createClass({
           'paletteSelected',
 
           'pixelsMoved',
+
           'selectionCleared',
+          //'selectionUpdated',
+
           'boxFolded',
+
+
         ];
 
     subscriptions.forEach(function(item) {

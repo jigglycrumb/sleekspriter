@@ -47,6 +47,9 @@ var Hotkeys = function(signal, editor) {
         console.log('key up', editor.tool);
 
         switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            triggerMoveSelection(new Point(0, -1));
+            break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity+1;
             if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
@@ -64,6 +67,9 @@ var Hotkeys = function(signal, editor) {
         console.log('key right', editor.tool);
 
         switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            triggerMoveSelection(new Point(1, 0));
+            break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('darken');
             break;
@@ -80,6 +86,9 @@ var Hotkeys = function(signal, editor) {
         console.log('key down', editor.tool);
 
         switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            triggerMoveSelection(new Point(0, 1));
+            break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity-1;
             if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
@@ -97,6 +106,9 @@ var Hotkeys = function(signal, editor) {
         console.log('key left', editor.tool);
 
         switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            triggerMoveSelection(new Point(-1, 0));
+            break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('lighten');
             break;
@@ -115,6 +127,16 @@ var Hotkeys = function(signal, editor) {
     var a = self.actions[action];
     Mousetrap.bind(a.key, a.action);
   });
+
+
+  function triggerMoveSelection(distance) {
+    if(editor.selectionActive()) {
+      var start = editor.selection.start.translate(distance),
+          end = editor.selection.end.translate(distance);
+      signal.selectionStarted.dispatch(start);
+      signal.selectionEnded.dispatch(end);
+    }
+  }
 };
 
 var hotkeys = new Hotkeys(signal, editor);

@@ -32,3 +32,10 @@ arrow down = decrease intensity
 arrow left = set mode to lighten pixels
 arrow right = set mode to darken pixels
 
+
+When Selection Tool is active
+-------------------------------------
+arrow up = move selection up by 1 pixel
+arrow down = move selection down by 1 pixel
+arrow left = move selection left by 1 pixel
+arrow right = move selection right by 1 pixel
