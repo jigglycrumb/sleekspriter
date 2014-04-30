@@ -58,11 +58,13 @@ module.exports = function(grunt) {
           'js/classes/Pixel.js',
           'js/classes/File.js',
           'js/classes/Stage.js',
-          'js/classes/Hotkeys.js',
+
 
           'js/classes/Editor.js',
           'js/classes/Editor.Palettes.js',
           'js/classes/Editor.Selection.js',
+
+          'js/classes/Hotkeys.js',
 
           'js/mixins/FoldableMixin.js',
           'js/mixins/CopyFrameMixin.js',

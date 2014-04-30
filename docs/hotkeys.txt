@@ -1,6 +1,10 @@
+-------------------------------------
 Hotkeys
 -------------------------------------
 
+
+General
+-------------------------------------
 b = select Brush Tool
 e = select Eraser Tool
 i = select Eyedropper Tool
@@ -9,8 +13,22 @@ p = select Paint Bucket Tool
 o = select Brightness Tool
 v = select Move Tool
 z = select Zoom Tool
-
 g = toggle grid display
+ctrl+d, cmd+d+ = drop selection
 
-ctrl+d,
-cmd+d+ = drop selection
+
+When Zoom Tool is active
+-------------------------------------
+arrow up = zoom in
+arrow down = zoom out
+arrow left = zoom out
+arrow right = zoom in
+
+
+When Brightness Tool is active
+-------------------------------------
+arrow up = increase intensity
+arrow down = decrease intensity
+arrow left = set mode to lighten pixels
+arrow right = set mode to darken pixels
+

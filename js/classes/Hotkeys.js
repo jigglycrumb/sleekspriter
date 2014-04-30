@@ -1,4 +1,4 @@
-var Hotkeys = function(signal) {
+var Hotkeys = function(signal, editor) {
 
   this.actions = {
     selectBrushTool: {
@@ -40,7 +40,73 @@ var Hotkeys = function(signal) {
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
       action: function() { signal.selectionCleared.dispatch(); }
-    }
+    },
+    arrowUp: {
+      key: ['up'],
+      action: function() {
+        console.log('key up', editor.tool);
+
+        switch(editor.tool) {
+          case 'BrightnessTool':
+            var intensity = editor.brightnessToolIntensity+1;
+            if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            break;
+          case 'ZoomTool':
+            var zoom = editor.zoom+1;
+            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            break;
+        }
+      }
+    },
+    arrowRight: {
+      key: ['right'],
+      action: function() {
+        console.log('key right', editor.tool);
+
+        switch(editor.tool) {
+          case 'BrightnessTool':
+            signal.brightnessToolModeChanged.dispatch('darken');
+            break;
+          case 'ZoomTool':
+            var zoom = editor.zoom+1;
+            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            break;
+        }
+      }
+    },
+    arrowDown: {
+      key: ['down'],
+      action: function() {
+        console.log('key down', editor.tool);
+
+        switch(editor.tool) {
+          case 'BrightnessTool':
+            var intensity = editor.brightnessToolIntensity-1;
+            if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            break;
+          case 'ZoomTool':
+            var zoom = editor.zoom-1;
+            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            break;
+        }
+      }
+    },
+    arrowLeft: {
+      key: ['left'],
+      action: function() {
+        console.log('key left', editor.tool);
+
+        switch(editor.tool) {
+          case 'BrightnessTool':
+            signal.brightnessToolModeChanged.dispatch('lighten');
+            break;
+          case 'ZoomTool':
+            var zoom = editor.zoom-1;
+            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            break;
+        }
+      }
+    },
   };
 
   var self = this;
@@ -51,4 +117,4 @@ var Hotkeys = function(signal) {
   });
 };
 
-var hotkeys = new Hotkeys(signal);
+var hotkeys = new Hotkeys(signal, editor);
