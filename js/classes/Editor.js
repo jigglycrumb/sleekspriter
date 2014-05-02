@@ -311,4 +311,7 @@ var Editor = function() {
 
 };
 
+Editor.prototype = Object.create(null);
+Editor.prototype.constructor = Editor;
+
 var editor = new Editor();

@@ -296,11 +296,15 @@ var Stage = function() {
       refresh: function() {
         var pixels = _.where(file.pixels, {layer: editor.layer});
 
-        //console.log('refreshing layer '+editor.layer);
+        this.clear();
 
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
+      },
+      clear: function() {
+        var c = document.getElementById('StageBoxLayer-'+editor.layer);
+        c.width = c.width;
       }
     },
     pixel: {
@@ -680,6 +684,9 @@ var Editor = function() {
 
 };
 
+Editor.prototype = Object.create(null);
+Editor.prototype.constructor = Editor;
+
 var editor = new Editor();
 Editor.prototype.palette = 'sprite';
 
@@ -864,18 +871,34 @@ var Hotkeys = function(signal, editor) {
       key: ['ctrl+d', 'command+d'],
       action: function() { signal.selectionCleared.dispatch(); }
     },
+
+
+
+
+
+
+
+
+
     arrowUp: {
       key: ['up'],
       action: function() {
         console.log('key up', editor.tool);
 
+        var distance = new Point(0, -1);
+
         switch(editor.tool) {
           case 'RectangularSelectionTool':
-            triggerMoveSelection(new Point(0, -1));
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity+1;
             if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -889,12 +912,19 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         console.log('key right', editor.tool);
 
+        var distance = new Point(1, 0);
+
         switch(editor.tool) {
           case 'RectangularSelectionTool':
-            triggerMoveSelection(new Point(1, 0));
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('darken');
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -908,13 +938,20 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         console.log('key down', editor.tool);
 
+        var distance = new Point(0, 1);
+
         switch(editor.tool) {
           case 'RectangularSelectionTool':
-            triggerMoveSelection(new Point(0, 1));
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity-1;
             if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -928,16 +965,96 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         console.log('key left', editor.tool);
 
+        var distance = new Point(-1, 0);
+
         switch(editor.tool) {
           case 'RectangularSelectionTool':
-            triggerMoveSelection(new Point(-1, 0));
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('lighten');
             break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
             if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            break;
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+
+    shiftArrowUp: {
+      key: ['shift+up'],
+      action: function() {
+        var distance = new Point(0, -10);
+        switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+        }
+      }
+    },
+    shiftArrowRight: {
+      key: ['shift+right'],
+      action: function() {
+        var distance = new Point(10, 0);
+        switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+        }
+      }
+    },
+    shiftArrowDown: {
+      key: ['shift+down'],
+      action: function() {
+        var distance = new Point(0, 10);
+        switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+        }
+      }
+    },
+    shiftArrowLeft: {
+      key: ['shift+left'],
+      action: function() {
+        var distance = new Point(-10, 0);
+        switch(editor.tool) {
+          case 'RectangularSelectionTool':
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            break;
+          case 'MoveTool':
+            signal.pixelsMoved.dispatch(distance);
+            stage.layer.refresh();
+            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -950,16 +1067,6 @@ var Hotkeys = function(signal, editor) {
     var a = self.actions[action];
     Mousetrap.bind(a.key, a.action);
   });
-
-
-  function triggerMoveSelection(distance) {
-    if(editor.selectionActive()) {
-      var start = editor.selection.start.translate(distance),
-          end = editor.selection.end.translate(distance);
-      signal.selectionStarted.dispatch(start);
-      signal.selectionEnded.dispatch(end);
-    }
-  }
 };
 
 var hotkeys = new Hotkeys(signal, editor);
@@ -1505,7 +1612,7 @@ var StageBox = React.createClass({
           var id = 'StageBoxLayer-'+layer.id;
           var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} />
+            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} editor={this.props.editor} />
           );
         }, this)}
       </div>
@@ -1721,10 +1828,10 @@ var StageBox = React.createClass({
     // }
   },
   useMoveTool: function() {
+
     var layer = editor.layer,
         distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+layer),
-        ctx = canvas.getContext('2d');
+        canvas = document.getElementById('StageBoxLayer-'+layer);
 
     canvas.width = canvas.width;
 

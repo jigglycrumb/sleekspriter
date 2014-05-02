@@ -42,7 +42,7 @@ var StageBox = React.createClass({
           var id = 'StageBoxLayer-'+layer.id;
           var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} />
+            <StageBoxLayer key={id} width={w} height={h} layer={layer} visible={visible} editor={this.props.editor} />
           );
         }, this)}
       </div>
@@ -258,10 +258,10 @@ var StageBox = React.createClass({
     // }
   },
   useMoveTool: function() {
+
     var layer = editor.layer,
         distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+layer),
-        ctx = canvas.getContext('2d');
+        canvas = document.getElementById('StageBoxLayer-'+layer);
 
     canvas.width = canvas.width;
 

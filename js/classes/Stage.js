@@ -34,11 +34,15 @@ var Stage = function() {
       refresh: function() {
         var pixels = _.where(file.pixels, {layer: editor.layer});
 
-        //console.log('refreshing layer '+editor.layer);
+        this.clear();
 
         pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
+      },
+      clear: function() {
+        var c = document.getElementById('StageBoxLayer-'+editor.layer);
+        c.width = c.width;
       }
     },
     pixel: {
