@@ -342,27 +342,13 @@ var Stage = function() {
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-
-        var newColor = new Color(editor.layerPixelColor.rgb());
-        var l = newColor.hsl().l;
-        l+= editor.brightnessToolIntensity;
-
-        newColor.values.hsl[2] = l;
-        newColor.setValues("hsl", newColor.values.hsl);
-
+        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessToolIntensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },
       darken: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-
-        var newColor = new Color(editor.layerPixelColor.rgb());
-        var l = newColor.hsl().l;
-        l-= editor.brightnessToolIntensity;
-
-        newColor.values.hsl[2] = l;
-        newColor.setValues("hsl", newColor.values.hsl);
-
+        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessToolIntensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },
@@ -883,11 +869,15 @@ var Hotkeys = function(signal, editor) {
     arrowUp: {
       key: ['up'],
       action: function() {
-        console.log('key up', editor.tool);
 
         var distance = new Point(0, -1);
 
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = changeColorLightness(editor.color, 1);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -910,11 +900,15 @@ var Hotkeys = function(signal, editor) {
     arrowRight: {
       key: ['right'],
       action: function() {
-        console.log('key right', editor.tool);
 
         var distance = new Point(1, 0);
 
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = editor.color.rotate(1);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -936,11 +930,15 @@ var Hotkeys = function(signal, editor) {
     arrowDown: {
       key: ['down'],
       action: function() {
-        console.log('key down', editor.tool);
 
         var distance = new Point(0, 1);
 
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = changeColorLightness(editor.color, -1);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -963,11 +961,15 @@ var Hotkeys = function(signal, editor) {
     arrowLeft: {
       key: ['left'],
       action: function() {
-        console.log('key left', editor.tool);
 
         var distance = new Point(-1, 0);
 
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = editor.color.rotate(-1);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -1000,6 +1002,11 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         var distance = new Point(0, -10);
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = changeColorLightness(editor.color, 10);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -1016,6 +1023,11 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         var distance = new Point(10, 0);
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = editor.color.rotate(10);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -1032,6 +1044,11 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         var distance = new Point(0, 10);
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = changeColorLightness(editor.color, -10);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -1048,6 +1065,11 @@ var Hotkeys = function(signal, editor) {
       action: function() {
         var distance = new Point(-10, 0);
         switch(editor.tool) {
+          case 'BrushTool':
+          case 'PaintBucketTool':
+            var color = editor.color.rotate(-10);
+            signal.colorSelected.dispatch(color.rgbString());
+            break;
           case 'RectangularSelectionTool':
             if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
             break;
@@ -2620,7 +2642,17 @@ function isLayerVisible() {
   return layer.visible && layer.opacity > 0;
 };
 
+// fix for color.js darken/lighten functions
+// uses absolute instead of relative strengths and works on black/white
+function changeColorLightness(color, delta) {
+  var newColor = new Color(color.rgb()),
+      l = newColor.hsl().l;
 
+  l+= delta;
+  newColor.values.hsl[2] = l;
+  newColor.setValues("hsl", newColor.values.hsl);
+  return newColor;
+};
 
 function minutely() {
   console.log('running minutely job');

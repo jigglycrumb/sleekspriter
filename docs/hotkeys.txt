@@ -39,3 +39,35 @@ arrow up = move selection up by 1 pixel
 arrow down = move selection down by 1 pixel
 arrow left = move selection left by 1 pixel
 arrow right = move selection right by 1 pixel
+
+shift + arrow up = move selection up by 10 pixels
+shift + arrow down = move selection down by 10 pixels
+shift + arrow left = move selection left by 10 pixels
+shift + arrow right = move selection right by 10 pixels
+
+
+When Move Tool is active
+-------------------------------------
+arrow up = move pixels up by 1 pixel
+arrow down = move pixels down by 1 pixel
+arrow left = move pixels left by 1 pixel
+arrow right = move pixels right by 1 pixel
+
+shift + arrow up = move pixels up by 10 pixels
+shift + arrow down = move pixels down by 10 pixels
+shift + arrow left = move pixels left by 10 pixels
+shift + arrow right = move pixels right by 10 pixels
+
+
+
+When Brush/Paintbucket Tool is active
+-------------------------------------
+arrow up = lighten brush color by 1 percent
+arrow down = darken brush color by 1 percent
+arrow left = rotate brush color hue by -1 degree
+arrow right = rotate brush color hue by 1 degree
+
+shift + arrow up = lighten brush color by 10 percent
+shift + arrow down = darken brush color by 10 percent
+shift + arrow left = rotate brush color hue by -10 degrees
+shift + arrow right = rotate brush color hue by 10 degrees

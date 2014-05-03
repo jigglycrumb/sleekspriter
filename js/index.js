@@ -52,7 +52,17 @@ function isLayerVisible() {
   return layer.visible && layer.opacity > 0;
 };
 
+// fix for color.js darken/lighten functions
+// uses absolute instead of relative strengths and works on black/white
+function changeColorLightness(color, delta) {
+  var newColor = new Color(color.rgb()),
+      l = newColor.hsl().l;
 
+  l+= delta;
+  newColor.values.hsl[2] = l;
+  newColor.setValues("hsl", newColor.values.hsl);
+  return newColor;
+};
 
 function minutely() {
   console.log('running minutely job');
