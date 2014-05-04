@@ -3,7 +3,7 @@ var Point = function(x, y) {
   this.y = y;
 };
 
-Point.prototype = Object.prototype;
+Point.prototype = Object.create(null);
 Point.prototype.constructor = Point;
 
 Point.prototype.translate = function(distance) {

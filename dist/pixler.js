@@ -59,7 +59,7 @@ var Point = function(x, y) {
   this.y = y;
 };
 
-Point.prototype = Object.prototype;
+Point.prototype = Object.create(null);
 Point.prototype.constructor = Point;
 
 Point.prototype.translate = function(distance) {
@@ -1083,6 +1083,72 @@ var Hotkeys = function(signal, editor) {
     var a = self.actions[action];
     Mousetrap.bind(a.key, a.action);
   });
+};
+var Workspace = function() {};
+
+Workspace.prototype = Object.create(null);
+Workspace.prototype.constructor = Workspace;
+
+Workspace.prototype.data = {
+  tool: 'BrushTool',
+  frame: 1,
+  layer: null,
+  palette: 'sprite',
+  color: '#000000',
+  grid: true,
+  zoom: 10,
+  //selection: false,
+  brightnessTool: {
+    mode: 'lighten',
+    intensity: 10,
+  },
+  folds: {
+    preview: false,
+    frames: false,
+    layers: false,
+  },
+};
+
+Workspace.prototype.update = function() {
+  this.data.tool = editor.tool;
+  this.data.frame = editor.frame;
+  this.data.layer = editor.layer;
+  this.data.palette = editor.palette;
+  this.data.color = editor.color.hexString();
+  this.data.grid = editor.grid;
+  this.data.zoom = editor.zoom;
+  //this.data.selection = editor.selection;
+  this.data.brightnessTool.mode = editor.brightnessToolMode;
+  this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
+
+  // TODO: include folds
+};
+
+Workspace.prototype.setup = function() {
+  editor.tool = this.data.tool;
+  editor.frame = this.data.frame;
+  editor.layer = this.data.layer;
+  editor.palette = this.data.palette;
+  editor.color = new Color(this.data.color);
+  editor.grid = this.data.grid;
+  editor.zoom = this.data.zoom;
+  //editor.selection = this.data.selection;
+  editor.brightnessToolMode = this.data.brightnessTool.mode;
+  editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
+
+  // TODO: include folds
+};
+
+Workspace.prototype.load = function() {
+  var json = localStorage.getItem('workspace');
+  this.data = JSON.parse(json);
+  this.setup();
+};
+
+Workspace.prototype.save = function() {
+  this.update();
+  var json = JSON.stringify(this.data);
+  localStorage.setItem('workspace', json);
 };
 var FoldableMixin = {
   getInitialState: function() {
@@ -2648,7 +2714,8 @@ function changeColorLightness(color, delta) {
 
 function minutely() {
   console.log('running minutely job');
-  editor.saveChanges();
+  //editor.saveChanges();
+  workspace.save();
 };
 
 
@@ -2659,9 +2726,13 @@ var stage = new Stage();
 var editor = new Editor();
 var hotkeys = new Hotkeys(signal, editor);
 
+var workspace = new Workspace();
+
 
 
 window.onload = function() {
+
+  workspace.load();
 
   // load file
   file.fromJSONString(savedFile);
@@ -2679,13 +2750,13 @@ window.onload = function() {
   });
 
   // select each frame once to initialize previews etc
-  var totalFrames = file.frames.x * file.frames.y;
+  var totalFrames = file.frames.x * file.frames.y,
+      frame = editor.frame;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
   }
 
-  // select the first frame again
-  signal.frameSelected.dispatch(1);
+  signal.frameSelected.dispatch(frame);
 
   // select top-most layer
   editor.selectTopLayer();
@@ -2695,7 +2766,7 @@ window.onload = function() {
 
 
   // select brush tool
-  signal.toolSelected.dispatch('BrushTool');
+  signal.toolSelected.dispatch(editor.tool);
 
-  //setInterval(minutely, 60000);
+  setInterval(minutely, 60000);
 };

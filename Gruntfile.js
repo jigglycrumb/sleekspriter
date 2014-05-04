@@ -65,6 +65,7 @@ module.exports = function(grunt) {
           'js/classes/Editor.Selection.js',
 
           'js/classes/Hotkeys.js',
+          'js/classes/Workspace.js',
 
           'js/mixins/FoldableMixin.js',
           'js/mixins/CopyFrameMixin.js',

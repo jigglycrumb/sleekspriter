@@ -66,7 +66,8 @@ function changeColorLightness(color, delta) {
 
 function minutely() {
   console.log('running minutely job');
-  editor.saveChanges();
+  //editor.saveChanges();
+  workspace.save();
 };
 
 
@@ -77,9 +78,13 @@ var stage = new Stage();
 var editor = new Editor();
 var hotkeys = new Hotkeys(signal, editor);
 
+var workspace = new Workspace();
+
 
 
 window.onload = function() {
+
+  workspace.load();
 
   // load file
   file.fromJSONString(savedFile);
@@ -97,13 +102,13 @@ window.onload = function() {
   });
 
   // select each frame once to initialize previews etc
-  var totalFrames = file.frames.x * file.frames.y;
+  var totalFrames = file.frames.x * file.frames.y,
+      frame = editor.frame;
   for(var i = 1; i <= totalFrames; i++) {
     signal.frameSelected.dispatch(i);
   }
 
-  // select the first frame again
-  signal.frameSelected.dispatch(1);
+  signal.frameSelected.dispatch(frame);
 
   // select top-most layer
   editor.selectTopLayer();
@@ -113,7 +118,7 @@ window.onload = function() {
 
 
   // select brush tool
-  signal.toolSelected.dispatch('BrushTool');
+  signal.toolSelected.dispatch(editor.tool);
 
-  //setInterval(minutely, 60000);
+  setInterval(minutely, 60000);
 };
