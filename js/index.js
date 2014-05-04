@@ -69,6 +69,16 @@ function minutely() {
   editor.saveChanges();
 };
 
+
+
+// move this into window.onload later
+var file = new File();
+var stage = new Stage();
+var editor = new Editor();
+var hotkeys = new Hotkeys(signal, editor);
+
+
+
 window.onload = function() {
 
   // load file

@@ -169,5 +169,3 @@ var File = function() {
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 };
-
-var file = new File();

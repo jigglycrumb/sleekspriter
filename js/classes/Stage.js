@@ -93,5 +93,3 @@ var Stage = function() {
     }
   }
 };
-
-var stage = new Stage();

@@ -258,8 +258,6 @@ var File = function() {
     signal.layerRemoved.dispatch(shouldSelectLayer);
   });
 };
-
-var file = new File();
 var Stage = function() {
 
   return {
@@ -355,8 +353,6 @@ var Stage = function() {
     }
   }
 };
-
-var stage = new Stage();
 var Editor = function() {
 
   var maxZoom = 50,
@@ -672,8 +668,6 @@ var Editor = function() {
 
 Editor.prototype = Object.create(null);
 Editor.prototype.constructor = Editor;
-
-var editor = new Editor();
 Editor.prototype.palette = 'sprite';
 
 Editor.prototype.palettes = {
@@ -1090,8 +1084,6 @@ var Hotkeys = function(signal, editor) {
     Mousetrap.bind(a.key, a.action);
   });
 };
-
-var hotkeys = new Hotkeys(signal, editor);
 var FoldableMixin = {
   getInitialState: function() {
     return ({
@@ -2658,6 +2650,16 @@ function minutely() {
   console.log('running minutely job');
   editor.saveChanges();
 };
+
+
+
+// move this into window.onload later
+var file = new File();
+var stage = new Stage();
+var editor = new Editor();
+var hotkeys = new Hotkeys(signal, editor);
+
+
 
 window.onload = function() {
 

@@ -274,5 +274,3 @@ var Hotkeys = function(signal, editor) {
     Mousetrap.bind(a.key, a.action);
   });
 };
-
-var hotkeys = new Hotkeys(signal, editor);
