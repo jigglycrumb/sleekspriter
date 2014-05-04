@@ -2728,7 +2728,7 @@ var hotkeys = new Hotkeys(signal, editor);
 
 var workspace = new Workspace();
 
-
+window.onbeforeunload = workspace.save;
 
 window.onload = function() {
 
