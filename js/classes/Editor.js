@@ -1,4 +1,4 @@
-var Editor = function() {
+var Editor = function(signal) {
 
   var maxZoom = 50,
       minZoom = 1,
@@ -58,7 +58,7 @@ var Editor = function() {
           left: 1,
         };
 
-    if(self.selectionActive()) {
+    if(self.selection.isActive) {
       bounds = {
         top: self.selection.start.y,
         right: self.selection.end.x,
@@ -188,59 +188,11 @@ var Editor = function() {
     self.palette = palette;
   });
 
-  signal.selectionStarted.add(function(point) {
-    self.selection = {
-      start: point
-    };
-  });
-
-  signal.selectionResized.add(function(point) {
-    self.selection.cursor = point;
-  });
-
-  signal.selectionUpdated.add(function(distance) {
-    self.selection.distance = distance;
-  });
-
-  signal.selectionEnded.add(function(point) {
-    self.selection = { // reset self selection to remove cursor property as it's no longer needed
-      start: self.selection.start,
-      end: point
-    };
-
-    // switch start & end if start is more "lower right" than end
-    // makes iterating over the selection easier later
-    if(self.selection.start.x > self.selection.end.x
-    || self.selection.start.y > self.selection.end.y) {
-      var temp = self.selection.start;
-      self.selection.start = self.selection.end;
-      self.selection.end = temp;
-    }
-  });
-
-  signal.selectionCleared.add(function(point) {
-    self.selection = false;
-  });
-
-  signal.selectionMoved.add(function(distance) {
-
-    self.selection = {
-      start: new Point(
-        self.selection.start.x + distance.x,
-        self.selection.start.y + distance.y
-      ),
-      end: new Point(
-        self.selection.end.x + distance.x,
-        self.selection.end.y + distance.y
-      )
-    };
-  });
-
   signal.pixelsMoved.add(function(distance) {
 
-    if(self.selectionActive()) {
+    if(self.selection.isActive) {
       self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer && self.selectionContains(pixel)) {
+        if(pixel.layer == self.layer && self.selection.contains(pixel)) {
           var target = wrapPixel(pixel, distance);
           pixel.x = target.x;
           pixel.y = target.y;
@@ -277,12 +229,11 @@ var Editor = function() {
 
     function rFill(point) {
 
-      //console.log('fill', point.x, point.y);
-
       filled.push(point);
 
       var pixel = _.findWhere(self.pixels, {layer: self.layer, x: point.x, y: point.y}),
-          pixelColor;
+          pixelColor,
+          neighbors;
 
       if(_.isUndefined(pixel)) {
         pixelColor = new Color().rgb(0, 0, 0);
@@ -292,24 +243,19 @@ var Editor = function() {
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
         stage.pixel.fill(self.layer, point.x, point.y, fillColor, true);
-
-        var neighbors = getAdjacentPixels(point);
-        //console.log('found '+neighbors.length+' neighbors');
+        neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {
           var old = _.findWhere(filled, {x: n.x, y: n.y});
           if(_.isUndefined(old)) rFill(n);
         });
-
       }
-
-
     }
 
     rFill(initialPixel);
   });
 
-
+  this.selection.init(signal);
 };
 
-Editor.prototype = Object.create(null);
+Editor.prototype = {}; //Object.create(null);
 Editor.prototype.constructor = Editor;

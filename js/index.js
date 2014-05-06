@@ -75,7 +75,7 @@ function minutely() {
 // move this into window.onload later
 var file = new File();
 var stage = new Stage();
-var editor = new Editor();
+var editor = new Editor(signal);
 var hotkeys = new Hotkeys(signal, editor);
 
 var workspace = new Workspace();

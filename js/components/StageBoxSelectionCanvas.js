@@ -13,18 +13,18 @@ var StageBoxSelectionCanvas = React.createClass({
     var self = this;
 
     function drawLastSelection() {
-      self.drawSelection(self.props.editor.selection.start, self.props.editor.selection.end);
+      self.drawSelection(self.props.editor.selection.bounds.start, self.props.editor.selection.bounds.end);
     }
 
     function moveSelection(distance) {
       var newStart = new Point(
-        editor.selection.start.x + distance.x,
-        editor.selection.start.y + distance.y
+        editor.selection.bounds.start.x + distance.x,
+        editor.selection.bounds.start.y + distance.y
       );
 
       var newEnd = new Point(
-        editor.selection.end.x + distance.x,
-        editor.selection.end.y + distance.y
+        editor.selection.bounds.end.x + distance.x,
+        editor.selection.bounds.end.y + distance.y
       );
 
       self.drawSelection(newStart, newEnd);
@@ -32,18 +32,18 @@ var StageBoxSelectionCanvas = React.createClass({
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(editor.selectionMoving()) moveSelection(editor.selection.distance);
-        else if(editor.selectionResizing()) {
-          this.drawSelection(editor.selection.start, editor.selection.cursor);
+        if(editor.selection.isMoving) moveSelection(editor.selection.distance);
+        else if(editor.selection.isResizing) {
+          this.drawSelection(editor.selection.bounds.start, editor.selection.bounds.cursor);
         }
-        else if(editor.selectionActive()) drawLastSelection();
+        else if(editor.selection.isActive) drawLastSelection();
         break;
       case 'MoveTool':
-        if(editor.selectionMoving()) moveSelection(editor.selection.distance);
-        else if(editor.selectionActive()) drawLastSelection();
+        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
+        else if(editor.selection.isActive) drawLastSelection();
         break;
       default:
-        if(editor.selectionActive()) drawLastSelection();
+        if(editor.selection.isActive) drawLastSelection();
         break;
     }
   },
@@ -52,7 +52,7 @@ var StageBoxSelectionCanvas = React.createClass({
     // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
     var self = this;
     this.interval = setInterval(function() {
-      if(editor.selectionActive()) self.forceUpdate();
+      if(editor.selection.isActive) self.forceUpdate();
     }, 200);
   },
 

@@ -63,7 +63,7 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity+1;
@@ -72,7 +72,7 @@ var Hotkeys = function(signal, editor) {
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -94,7 +94,7 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('darken');
@@ -102,7 +102,7 @@ var Hotkeys = function(signal, editor) {
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -124,7 +124,7 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessToolIntensity-1;
@@ -133,7 +133,7 @@ var Hotkeys = function(signal, editor) {
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -155,7 +155,7 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
             signal.brightnessToolModeChanged.dispatch('lighten');
@@ -163,7 +163,7 @@ var Hotkeys = function(signal, editor) {
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -192,12 +192,12 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -213,12 +213,12 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -234,12 +234,12 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -255,12 +255,12 @@ var Hotkeys = function(signal, editor) {
             signal.colorSelected.dispatch(color.rgbString());
             break;
           case 'RectangularSelectionTool':
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
             signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selectionActive()) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }

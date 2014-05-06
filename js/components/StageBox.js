@@ -116,7 +116,7 @@ var StageBox = React.createClass({
           break;
 
         case 'RectangularSelectionTool':
-          if(editor.selectionActive()) this.updateRectangularSelection(distance);
+          if(editor.selection.isActive) this.updateRectangularSelection(distance);
           else this.resizeRectangularSelection(point);
           break;
 
@@ -137,7 +137,7 @@ var StageBox = React.createClass({
 
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance(),
-        selectionActive = editor.selectionActive();
+        selectionActive = editor.selection.isActive;
 
     this.setState({mousedown: false});
 
@@ -198,9 +198,9 @@ var StageBox = React.createClass({
   useBrushTool: function() {
 
     if(isLayerVisible()) {
-      if(!editor.selectionActive()) stage.pixel.fill();
+      if(!editor.selection.isActive) stage.pixel.fill();
       else { // restrict to selection
-        if(editor.selectionContains(editor.pixel)) stage.pixel.fill();
+        if(editor.selection.contains(editor.pixel)) stage.pixel.fill();
       }
     }
     //else {
@@ -210,9 +210,9 @@ var StageBox = React.createClass({
   },
   useEraserTool: function() {
     if(isLayerVisible()) {
-      if(!editor.selectionActive()) stage.pixel.clear();
+      if(!editor.selection.isActive) stage.pixel.clear();
       else { // restrict to selection
-        if(editor.selectionContains(editor.pixel)) stage.pixel.clear();
+        if(editor.selection.contains(editor.pixel)) stage.pixel.clear();
       }
     }
     // else {
@@ -227,8 +227,8 @@ var StageBox = React.createClass({
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
-      if(editor.selectionActive()) {
-        if(editor.selectionContains(point)) this.props.signal.bucketUsed.dispatch(point);
+      if(editor.selection.isActive) {
+        if(editor.selection.contains(point)) this.props.signal.bucketUsed.dispatch(point);
       }
       else this.props.signal.bucketUsed.dispatch(point);
     }
@@ -240,12 +240,12 @@ var StageBox = React.createClass({
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
-        if(!editor.selectionActive()) {
+        if(!editor.selection.isActive) {
           if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
           else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
         }
         else { // restrict to selection
-          if(editor.selectionContains(editor.pixel)) {
+          if(editor.selection.contains(editor.pixel)) {
             if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
             else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
           }
@@ -265,14 +265,14 @@ var StageBox = React.createClass({
 
     canvas.width = canvas.width;
 
-    if(editor.selectionActive()) {
+    if(editor.selection.isActive) {
 
       this.updateRectangularSelection(distance);
 
       editor.pixels.forEach(function(pixel) {
         if(pixel.layer == layer) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-          if(editor.selectionContains(pixel)) {
+          if(editor.selection.contains(pixel)) {
             var target = wrapPixel(pixel, distance);
             stage.pixel.fill(layer, target.x, target.y, color);
           }
@@ -293,7 +293,7 @@ var StageBox = React.createClass({
   },
 
   startRectangularSelection: function(point) {
-    if(!editor.selection || !editor.selectionContains(point))
+    if(!editor.selection || !editor.selection.contains(point))
       this.props.signal.selectionStarted.dispatch(point);
   },
   resizeRectangularSelection: function(point) {
@@ -303,7 +303,7 @@ var StageBox = React.createClass({
     this.props.signal.selectionUpdated.dispatch(distance);
   },
   endRectangularSelection: function(point, distance) {
-    if(editor.selectionActive()) {
+    if(editor.selection.isActive) {
       this.props.signal.selectionMoved.dispatch(distance);
     }
     else {
