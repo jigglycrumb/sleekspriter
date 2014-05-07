@@ -609,7 +609,7 @@ var Editor = function(signal) {
     rFill(initialPixel);
   });
 
-  this.selection.init(signal);
+  this.selection.init(this, signal);
 };
 
 Editor.prototype = {}; //Object.create(null);
@@ -726,7 +726,9 @@ Editor.prototype.buildAutoPalette = function() {
 };
 Editor.prototype.selection = {};
 
-Editor.prototype.selection.init = function(signal) {
+Editor.prototype.selection.init = function(editor, signal) {
+
+  //console.log('selection init', editor, signal);
 
   var self = this;
 
@@ -759,10 +761,34 @@ Editor.prototype.selection.init = function(signal) {
       self.bounds.end = temp;
     }
 
+    //console.log(editor.pixels.length, self.pixels.length);
+
+    // move contained pixels from editor.pixels to editor.selection.pixels
+    self.pixels = _.filter(editor.pixels, function(pixel) {
+        return self.contains(pixel);
+    });
+
+    editor.pixels = _.reject(editor.pixels, function(pixel) {
+        return self.contains(pixel);
+    });
+
+    //console.log(editor.pixels.length, self.pixels.length);
   });
 
   signal.selectionCleared.add(function(point) {
+
+    //console.log('selectionCleared');
+
     self.bounds = false;
+
+    // merge editor.selection.pixels back to editor.pixels
+    self.pixels.forEach(function(pixel) {
+      editor.pixels.push(pixel);
+    });
+
+    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
+
+    self.pixels = [];
   });
 
   signal.selectionMoved.add(function(distance) {
@@ -1954,8 +1980,10 @@ var StageBox = React.createClass({
   },
 
   startRectangularSelection: function(point) {
-    if(!editor.selection || !editor.selection.contains(point))
+    if(!editor.selection || !editor.selection.contains(point)) {
+      this.props.signal.selectionCleared.dispatch();
       this.props.signal.selectionStarted.dispatch(point);
+    }
   },
   resizeRectangularSelection: function(point) {
     this.props.signal.selectionResized.dispatch(point);
@@ -2525,7 +2553,7 @@ var StatusBar = React.createClass({
         <span>Y: {this.props.editor.pixel.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
-        <span>Frame {this.props.editor.frame}, {this.props.editor.pixels.length} pixels</span>
+        <span>Frame {this.props.editor.frame}, {this.props.editor.pixels.length + this.props.editor.selection.pixels.length} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">

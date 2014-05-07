@@ -9,7 +9,7 @@ var StatusBar = React.createClass({
         <span>Y: {this.props.editor.pixel.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
-        <span>Frame {this.props.editor.frame}, {this.props.editor.pixels.length} pixels</span>
+        <span>Frame {this.props.editor.frame}, {this.props.editor.pixels.length + this.props.editor.selection.pixels.length} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom}</span>
         <div id="StatusBarButtons">

@@ -1,6 +1,8 @@
 Editor.prototype.selection = {};
 
-Editor.prototype.selection.init = function(signal) {
+Editor.prototype.selection.init = function(editor, signal) {
+
+  //console.log('selection init', editor, signal);
 
   var self = this;
 
@@ -33,10 +35,34 @@ Editor.prototype.selection.init = function(signal) {
       self.bounds.end = temp;
     }
 
+    //console.log(editor.pixels.length, self.pixels.length);
+
+    // move contained pixels from editor.pixels to editor.selection.pixels
+    self.pixels = _.filter(editor.pixels, function(pixel) {
+        return self.contains(pixel);
+    });
+
+    editor.pixels = _.reject(editor.pixels, function(pixel) {
+        return self.contains(pixel);
+    });
+
+    //console.log(editor.pixels.length, self.pixels.length);
   });
 
   signal.selectionCleared.add(function(point) {
+
+    //console.log('selectionCleared');
+
     self.bounds = false;
+
+    // merge editor.selection.pixels back to editor.pixels
+    self.pixels.forEach(function(pixel) {
+      editor.pixels.push(pixel);
+    });
+
+    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
+
+    self.pixels = [];
   });
 
   signal.selectionMoved.add(function(distance) {

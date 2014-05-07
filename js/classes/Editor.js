@@ -254,7 +254,7 @@ var Editor = function(signal) {
     rFill(initialPixel);
   });
 
-  this.selection.init(signal);
+  this.selection.init(this, signal);
 };
 
 Editor.prototype = {}; //Object.create(null);

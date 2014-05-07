@@ -293,8 +293,10 @@ var StageBox = React.createClass({
   },
 
   startRectangularSelection: function(point) {
-    if(!editor.selection || !editor.selection.contains(point))
+    if(!editor.selection || !editor.selection.contains(point)) {
+      this.props.signal.selectionCleared.dispatch();
       this.props.signal.selectionStarted.dispatch(point);
+    }
   },
   resizeRectangularSelection: function(point) {
     this.props.signal.selectionResized.dispatch(point);
