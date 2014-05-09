@@ -40,6 +40,7 @@ var signal = {
   selectionCleared: new Signal(),
   selectionResized: new Signal(),
   selectionUpdated: new Signal(),
+  selectionPixelsMoved: new Signal(),
 
   pixelsMoved: new Signal(),
   boxFolded: new Signal(),

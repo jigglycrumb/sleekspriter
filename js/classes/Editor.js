@@ -180,7 +180,7 @@ var Editor = function(signal) {
     self.brightnessToolIntensity = intensity;
   });
 
-  signal.brightnessToolModeChanged.add(function(mode){
+  signal.brightnessToolModeChanged.add(function(mode) {
     self.brightnessToolMode = mode;
   });
 
@@ -191,12 +191,12 @@ var Editor = function(signal) {
   signal.pixelsMoved.add(function(distance) {
 
     if(self.selection.isActive) {
-      self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer && self.selection.contains(pixel)) {
+      self.selection.pixels.forEach(function(pixel) {
+        //if(pixel.layer == self.layer && self.selection.contains(pixel)) {
           var target = wrapPixel(pixel, distance);
           pixel.x = target.x;
           pixel.y = target.y;
-        }
+        //}
       });
     }
     else {

@@ -8,18 +8,11 @@ var Stage = function() {
 
         this.clear();
 
-        var frameLayers = _.where(file.layers, {frame: editor.frame});
-        var pixels = [];
-
-        frameLayers.forEach(function(frameLayer) {
-          pixels.push(_.where(file.pixels, {layer: frameLayer.id}));
+        editor.pixels.forEach(function(px) {
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
-        pixels = _.flatten(pixels, true);
-
-        //console.log('refreshing frame '+editor.frame, pixels);
-
-        pixels.forEach(function(px) {
+        editor.selection.pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },
@@ -32,11 +25,16 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var pixels = _.where(file.pixels, {layer: editor.layer});
+        var layerPixels = _.where(editor.pixels, {layer: editor.layer}),
+            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layer});
 
         this.clear();
 
-        pixels.forEach(function(px) {
+        layerPixels.forEach(function(px) {
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+        });
+
+        selectionPixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },

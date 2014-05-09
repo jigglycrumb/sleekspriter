@@ -42,6 +42,7 @@ var signal = {
   selectionCleared: new Signal(),
   selectionResized: new Signal(),
   selectionUpdated: new Signal(),
+  selectionPixelsMoved: new Signal(),
 
   pixelsMoved: new Signal(),
   boxFolded: new Signal(),
@@ -268,18 +269,11 @@ var Stage = function() {
 
         this.clear();
 
-        var frameLayers = _.where(file.layers, {frame: editor.frame});
-        var pixels = [];
-
-        frameLayers.forEach(function(frameLayer) {
-          pixels.push(_.where(file.pixels, {layer: frameLayer.id}));
+        editor.pixels.forEach(function(px) {
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
-        pixels = _.flatten(pixels, true);
-
-        //console.log('refreshing frame '+editor.frame, pixels);
-
-        pixels.forEach(function(px) {
+        editor.selection.pixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },
@@ -292,11 +286,16 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var pixels = _.where(file.pixels, {layer: editor.layer});
+        var layerPixels = _.where(editor.pixels, {layer: editor.layer}),
+            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layer});
 
         this.clear();
 
-        pixels.forEach(function(px) {
+        layerPixels.forEach(function(px) {
+          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+        });
+
+        selectionPixels.forEach(function(px) {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },
@@ -535,7 +534,7 @@ var Editor = function(signal) {
     self.brightnessToolIntensity = intensity;
   });
 
-  signal.brightnessToolModeChanged.add(function(mode){
+  signal.brightnessToolModeChanged.add(function(mode) {
     self.brightnessToolMode = mode;
   });
 
@@ -546,12 +545,12 @@ var Editor = function(signal) {
   signal.pixelsMoved.add(function(distance) {
 
     if(self.selection.isActive) {
-      self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer && self.selection.contains(pixel)) {
+      self.selection.pixels.forEach(function(pixel) {
+        //if(pixel.layer == self.layer && self.selection.contains(pixel)) {
           var target = wrapPixel(pixel, distance);
           pixel.x = target.x;
           pixel.y = target.y;
-        }
+        //}
       });
     }
     else {
@@ -761,8 +760,6 @@ Editor.prototype.selection.init = function(editor, signal) {
       self.bounds.end = temp;
     }
 
-    //console.log(editor.pixels.length, self.pixels.length);
-
     // move contained pixels from editor.pixels to editor.selection.pixels
     self.pixels = _.filter(editor.pixels, function(pixel) {
         return self.contains(pixel);
@@ -771,13 +768,9 @@ Editor.prototype.selection.init = function(editor, signal) {
     editor.pixels = _.reject(editor.pixels, function(pixel) {
         return self.contains(pixel);
     });
-
-    //console.log(editor.pixels.length, self.pixels.length);
   });
 
   signal.selectionCleared.add(function(point) {
-
-    //console.log('selectionCleared');
 
     self.bounds = false;
 
@@ -802,6 +795,19 @@ Editor.prototype.selection.init = function(editor, signal) {
         self.bounds.end.y + distance.y
       )
     };
+  });
+
+  signal.selectionPixelsMoved.add(function(distance) {
+    //console.log('selectionPixelsMoved', distance, self.pixels);
+    self.pixels.forEach(function(p) {
+
+
+      //var target = wrapPixel(p, distance);
+      p.x += distance.x;
+      p.y += distance.y;
+
+    });
+    //console.log('selectionPixelsMoved', self.pixels);
   });
 
 };
@@ -917,9 +923,12 @@ var Hotkeys = function(signal, editor) {
             if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -947,9 +956,12 @@ var Hotkeys = function(signal, editor) {
             signal.brightnessToolModeChanged.dispatch('darken');
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -978,9 +990,12 @@ var Hotkeys = function(signal, editor) {
             if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -1008,9 +1023,12 @@ var Hotkeys = function(signal, editor) {
             signal.brightnessToolModeChanged.dispatch('lighten');
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -1042,9 +1060,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -1063,9 +1084,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -1084,9 +1108,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -1105,9 +1132,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -1139,6 +1169,10 @@ Workspace.prototype.data = {
     mode: 'lighten',
     intensity: 10,
   },
+  selection: {
+    bounds: false,
+    pixels: [],
+  },
   folds: {
     preview: false,
     frames: false,
@@ -1146,6 +1180,8 @@ Workspace.prototype.data = {
   },
 };
 
+
+// update workspace with current editor data
 Workspace.prototype.update = function() {
   this.data.tool = editor.tool;
   this.data.frame = editor.frame;
@@ -1154,13 +1190,18 @@ Workspace.prototype.update = function() {
   this.data.color = editor.color.hexString();
   this.data.grid = editor.grid;
   this.data.zoom = editor.zoom;
-  //this.data.selection = editor.selection;
+  this.data.selection = {
+    bounds: editor.selection.bounds,
+    pixels: editor.selection.pixels,
+  };
   this.data.brightnessTool.mode = editor.brightnessToolMode;
   this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
 
   // TODO: include folds
 };
 
+
+// setup editor from workspace data
 Workspace.prototype.setup = function() {
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
@@ -1169,7 +1210,8 @@ Workspace.prototype.setup = function() {
   editor.color = new Color(this.data.color);
   editor.grid = this.data.grid;
   editor.zoom = this.data.zoom;
-  //editor.selection = this.data.selection;
+  //editor.selection.bounds = this.data.selection.bounds;
+  //editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessToolMode = this.data.brightnessTool.mode;
   editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
 
@@ -1956,16 +1998,15 @@ var StageBox = React.createClass({
 
       this.updateRectangularSelection(distance);
 
+      editor.selection.pixels.forEach(function(pixel) {
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+            target = wrapPixel(pixel, distance);
+        stage.pixel.fill(layer, target.x, target.y, color);
+      });
+
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-          if(editor.selection.contains(pixel)) {
-            var target = wrapPixel(pixel, distance);
-            stage.pixel.fill(layer, target.x, target.y, color);
-          }
-          else
-            stage.pixel.fill(layer, pixel.x, pixel.y, color);
-        }
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+        stage.pixel.fill(layer, pixel.x, pixel.y, color);
       });
     }
     else {
@@ -2085,6 +2126,9 @@ var StageBoxSelectionCanvas = React.createClass({
     }
 
     function moveSelection(distance) {
+
+      //console.log(distance, editor.selection.bounds);
+
       var newStart = new Point(
         editor.selection.bounds.start.x + distance.x,
         editor.selection.bounds.start.y + distance.y
@@ -2100,7 +2144,7 @@ var StageBoxSelectionCanvas = React.createClass({
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(editor.selection.isMoving) moveSelection(editor.selection.distance);
+        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
         else if(editor.selection.isResizing) {
           this.drawSelection(editor.selection.bounds.start, editor.selection.bounds.cursor);
         }

@@ -70,9 +70,12 @@ var Hotkeys = function(signal, editor) {
             if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -100,9 +103,12 @@ var Hotkeys = function(signal, editor) {
             signal.brightnessToolModeChanged.dispatch('darken');
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
@@ -131,9 +137,12 @@ var Hotkeys = function(signal, editor) {
             if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -161,9 +170,12 @@ var Hotkeys = function(signal, editor) {
             signal.brightnessToolModeChanged.dispatch('lighten');
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
@@ -195,9 +207,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -216,9 +231,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -237,9 +255,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }
@@ -258,9 +279,12 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'MoveTool':
-            signal.pixelsMoved.dispatch(distance);
+            if(editor.selection.isActive) {
+              signal.selectionPixelsMoved.dispatch(distance);
+              signal.selectionMoved.dispatch(distance);
+            }
+            else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
         }
       }

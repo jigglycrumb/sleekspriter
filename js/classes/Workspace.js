@@ -16,6 +16,10 @@ Workspace.prototype.data = {
     mode: 'lighten',
     intensity: 10,
   },
+  selection: {
+    bounds: false,
+    pixels: [],
+  },
   folds: {
     preview: false,
     frames: false,
@@ -23,6 +27,8 @@ Workspace.prototype.data = {
   },
 };
 
+
+// update workspace with current editor data
 Workspace.prototype.update = function() {
   this.data.tool = editor.tool;
   this.data.frame = editor.frame;
@@ -31,13 +37,18 @@ Workspace.prototype.update = function() {
   this.data.color = editor.color.hexString();
   this.data.grid = editor.grid;
   this.data.zoom = editor.zoom;
-  //this.data.selection = editor.selection;
+  this.data.selection = {
+    bounds: editor.selection.bounds,
+    pixels: editor.selection.pixels,
+  };
   this.data.brightnessTool.mode = editor.brightnessToolMode;
   this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
 
   // TODO: include folds
 };
 
+
+// setup editor from workspace data
 Workspace.prototype.setup = function() {
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
@@ -46,7 +57,8 @@ Workspace.prototype.setup = function() {
   editor.color = new Color(this.data.color);
   editor.grid = this.data.grid;
   editor.zoom = this.data.zoom;
-  //editor.selection = this.data.selection;
+  //editor.selection.bounds = this.data.selection.bounds;
+  //editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessToolMode = this.data.brightnessTool.mode;
   editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
 

@@ -35,8 +35,6 @@ Editor.prototype.selection.init = function(editor, signal) {
       self.bounds.end = temp;
     }
 
-    //console.log(editor.pixels.length, self.pixels.length);
-
     // move contained pixels from editor.pixels to editor.selection.pixels
     self.pixels = _.filter(editor.pixels, function(pixel) {
         return self.contains(pixel);
@@ -45,13 +43,9 @@ Editor.prototype.selection.init = function(editor, signal) {
     editor.pixels = _.reject(editor.pixels, function(pixel) {
         return self.contains(pixel);
     });
-
-    //console.log(editor.pixels.length, self.pixels.length);
   });
 
   signal.selectionCleared.add(function(point) {
-
-    //console.log('selectionCleared');
 
     self.bounds = false;
 
@@ -76,6 +70,19 @@ Editor.prototype.selection.init = function(editor, signal) {
         self.bounds.end.y + distance.y
       )
     };
+  });
+
+  signal.selectionPixelsMoved.add(function(distance) {
+    //console.log('selectionPixelsMoved', distance, self.pixels);
+    self.pixels.forEach(function(p) {
+
+
+      //var target = wrapPixel(p, distance);
+      p.x += distance.x;
+      p.y += distance.y;
+
+    });
+    //console.log('selectionPixelsMoved', self.pixels);
   });
 
 };

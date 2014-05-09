@@ -269,16 +269,15 @@ var StageBox = React.createClass({
 
       this.updateRectangularSelection(distance);
 
+      editor.selection.pixels.forEach(function(pixel) {
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+            target = wrapPixel(pixel, distance);
+        stage.pixel.fill(layer, target.x, target.y, color);
+      });
+
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-          if(editor.selection.contains(pixel)) {
-            var target = wrapPixel(pixel, distance);
-            stage.pixel.fill(layer, target.x, target.y, color);
-          }
-          else
-            stage.pixel.fill(layer, pixel.x, pixel.y, color);
-        }
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+        stage.pixel.fill(layer, pixel.x, pixel.y, color);
       });
     }
     else {
