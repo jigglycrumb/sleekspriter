@@ -50,6 +50,18 @@ Workspace.prototype.update = function() {
 
 // setup editor from workspace data
 Workspace.prototype.setup = function() {
+
+  var restoreSelectionBounds = function() {
+    var bounds = false;
+    if(!_.isUndefined(this.data.selection.bounds.start) && !_.isUndefined(this.data.selection.bounds.end)) {
+      bounds = {
+        start: new Point(this.data.selection.bounds.start.x, this.data.selection.bounds.start.y),
+        end: new Point(this.data.selection.bounds.end.x, this.data.selection.bounds.end.y),
+      };
+    }
+    return bounds;
+  };
+
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
   editor.layer = this.data.layer;
@@ -57,8 +69,8 @@ Workspace.prototype.setup = function() {
   editor.color = new Color(this.data.color);
   editor.grid = this.data.grid;
   editor.zoom = this.data.zoom;
-  //editor.selection.bounds = this.data.selection.bounds;
-  //editor.selection.pixels = this.data.selection.pixels;
+  editor.selection.bounds = restoreSelectionBounds.call(this);
+  editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessToolMode = this.data.brightnessTool.mode;
   editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
 

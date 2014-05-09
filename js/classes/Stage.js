@@ -13,7 +13,8 @@ var Stage = function() {
         });
 
         editor.selection.pixels.forEach(function(px) {
-          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          if(px.frame == editor.frame)
+            stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },
       clear: function() {

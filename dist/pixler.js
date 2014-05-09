@@ -274,7 +274,8 @@ var Stage = function() {
         });
 
         editor.selection.pixels.forEach(function(px) {
-          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          if(px.frame == editor.frame)
+            stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
       },
       clear: function() {
@@ -725,11 +726,25 @@ Editor.prototype.buildAutoPalette = function() {
 };
 Editor.prototype.selection = {};
 
+Editor.prototype.selection.bounds = false;
+
+Editor.prototype.selection.pixels = [];
+
+
+
 Editor.prototype.selection.init = function(editor, signal) {
 
-  //console.log('selection init', editor, signal);
-
   var self = this;
+
+  function saveAndClearPixels() {
+    // merge editor.selection.pixels back to editor.pixels
+    self.pixels.forEach(function(pixel) {
+      editor.pixels.push(pixel);
+    });
+
+    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
+    self.pixels = [];
+  };
 
   signal.selectionStarted.add(function(point) {
     self.bounds = {
@@ -759,29 +774,11 @@ Editor.prototype.selection.init = function(editor, signal) {
       self.bounds.start = self.bounds.end;
       self.bounds.end = temp;
     }
-
-    // move contained pixels from editor.pixels to editor.selection.pixels
-    self.pixels = _.filter(editor.pixels, function(pixel) {
-        return self.contains(pixel);
-    });
-
-    editor.pixels = _.reject(editor.pixels, function(pixel) {
-        return self.contains(pixel);
-    });
   });
 
   signal.selectionCleared.add(function(point) {
-
     self.bounds = false;
-
-    // merge editor.selection.pixels back to editor.pixels
-    self.pixels.forEach(function(pixel) {
-      editor.pixels.push(pixel);
-    });
-
-    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
-
-    self.pixels = [];
+    saveAndClearPixels();
   });
 
   signal.selectionMoved.add(function(distance) {
@@ -798,23 +795,33 @@ Editor.prototype.selection.init = function(editor, signal) {
   });
 
   signal.selectionPixelsMoved.add(function(distance) {
-    //console.log('selectionPixelsMoved', distance, self.pixels);
     self.pixels.forEach(function(p) {
-
-
-      //var target = wrapPixel(p, distance);
       p.x += distance.x;
       p.y += distance.y;
-
     });
-    //console.log('selectionPixelsMoved', self.pixels);
+  });
+
+  signal.toolSelected.add(function(tool) {
+    if(editor.selection.isActive) {
+      switch(tool) {
+        case 'RectangularSelectionTool':
+          saveAndClearPixels();
+          break;
+        default:
+          // move selected pixels from editor.pixels to editor.selection.pixels
+          self.pixels = _.filter(editor.pixels, function(pixel) {
+              return self.contains(pixel);
+          });
+
+          editor.pixels = _.reject(editor.pixels, function(pixel) {
+              return self.contains(pixel);
+          });
+          break;
+      }
+    }
   });
 
 };
-
-Editor.prototype.selection.bounds = false;
-
-Editor.prototype.selection.pixels = [];
 
 Editor.prototype.selection.contains = function(point) {
   if(this.isActive)
@@ -1203,6 +1210,18 @@ Workspace.prototype.update = function() {
 
 // setup editor from workspace data
 Workspace.prototype.setup = function() {
+
+  var restoreSelectionBounds = function() {
+    var bounds = false;
+    if(!_.isUndefined(this.data.selection.bounds.start) && !_.isUndefined(this.data.selection.bounds.end)) {
+      bounds = {
+        start: new Point(this.data.selection.bounds.start.x, this.data.selection.bounds.start.y),
+        end: new Point(this.data.selection.bounds.end.x, this.data.selection.bounds.end.y),
+      };
+    }
+    return bounds;
+  };
+
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
   editor.layer = this.data.layer;
@@ -1210,8 +1229,8 @@ Workspace.prototype.setup = function() {
   editor.color = new Color(this.data.color);
   editor.grid = this.data.grid;
   editor.zoom = this.data.zoom;
-  //editor.selection.bounds = this.data.selection.bounds;
-  //editor.selection.pixels = this.data.selection.pixels;
+  editor.selection.bounds = restoreSelectionBounds.call(this);
+  editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessToolMode = this.data.brightnessTool.mode;
   editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
 
@@ -2119,43 +2138,38 @@ var StageBoxSelectionCanvas = React.createClass({
 
     this.clear();
 
-    var self = this;
-
     function drawLastSelection() {
-      self.drawSelection(self.props.editor.selection.bounds.start, self.props.editor.selection.bounds.end);
+      this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.end);
     }
 
     function moveSelection(distance) {
-
-      //console.log(distance, editor.selection.bounds);
-
       var newStart = new Point(
-        editor.selection.bounds.start.x + distance.x,
-        editor.selection.bounds.start.y + distance.y
+        this.props.editor.selection.bounds.start.x + distance.x,
+        this.props.editor.selection.bounds.start.y + distance.y
       );
 
       var newEnd = new Point(
-        editor.selection.bounds.end.x + distance.x,
-        editor.selection.bounds.end.y + distance.y
+        this.props.editor.selection.bounds.end.x + distance.x,
+        this.props.editor.selection.bounds.end.y + distance.y
       );
 
-      self.drawSelection(newStart, newEnd);
+      this.drawSelection(newStart, newEnd);
     }
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
-        else if(editor.selection.isResizing) {
-          this.drawSelection(editor.selection.bounds.start, editor.selection.bounds.cursor);
+        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isResizing) {
+          this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.cursor);
         }
-        else if(editor.selection.isActive) drawLastSelection();
+        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
       case 'MoveTool':
-        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
-        else if(editor.selection.isActive) drawLastSelection();
+        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
       default:
-        if(editor.selection.isActive) drawLastSelection();
+        if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
     }
   },
@@ -2851,5 +2865,5 @@ window.onload = function() {
   // select brush tool
   signal.toolSelected.dispatch(editor.tool);
 
-  setInterval(minutely, 60000);
+  //setInterval(minutely, 60000);
 };

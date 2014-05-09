@@ -10,43 +10,38 @@ var StageBoxSelectionCanvas = React.createClass({
 
     this.clear();
 
-    var self = this;
-
     function drawLastSelection() {
-      self.drawSelection(self.props.editor.selection.bounds.start, self.props.editor.selection.bounds.end);
+      this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.end);
     }
 
     function moveSelection(distance) {
-
-      //console.log(distance, editor.selection.bounds);
-
       var newStart = new Point(
-        editor.selection.bounds.start.x + distance.x,
-        editor.selection.bounds.start.y + distance.y
+        this.props.editor.selection.bounds.start.x + distance.x,
+        this.props.editor.selection.bounds.start.y + distance.y
       );
 
       var newEnd = new Point(
-        editor.selection.bounds.end.x + distance.x,
-        editor.selection.bounds.end.y + distance.y
+        this.props.editor.selection.bounds.end.x + distance.x,
+        this.props.editor.selection.bounds.end.y + distance.y
       );
 
-      self.drawSelection(newStart, newEnd);
+      this.drawSelection(newStart, newEnd);
     }
 
     switch(this.props.editor.tool) {
       case 'RectangularSelectionTool':
-        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
-        else if(editor.selection.isResizing) {
-          this.drawSelection(editor.selection.bounds.start, editor.selection.bounds.cursor);
+        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isResizing) {
+          this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.cursor);
         }
-        else if(editor.selection.isActive) drawLastSelection();
+        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
       case 'MoveTool':
-        if(editor.selection.isMoving) moveSelection(editor.selection.bounds.distance);
-        else if(editor.selection.isActive) drawLastSelection();
+        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
       default:
-        if(editor.selection.isActive) drawLastSelection();
+        if(this.props.editor.selection.isActive) drawLastSelection.call(this);
         break;
     }
   },

@@ -1,10 +1,24 @@
 Editor.prototype.selection = {};
 
+Editor.prototype.selection.bounds = false;
+
+Editor.prototype.selection.pixels = [];
+
+
+
 Editor.prototype.selection.init = function(editor, signal) {
 
-  //console.log('selection init', editor, signal);
-
   var self = this;
+
+  function saveAndClearPixels() {
+    // merge editor.selection.pixels back to editor.pixels
+    self.pixels.forEach(function(pixel) {
+      editor.pixels.push(pixel);
+    });
+
+    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
+    self.pixels = [];
+  };
 
   signal.selectionStarted.add(function(point) {
     self.bounds = {
@@ -34,29 +48,11 @@ Editor.prototype.selection.init = function(editor, signal) {
       self.bounds.start = self.bounds.end;
       self.bounds.end = temp;
     }
-
-    // move contained pixels from editor.pixels to editor.selection.pixels
-    self.pixels = _.filter(editor.pixels, function(pixel) {
-        return self.contains(pixel);
-    });
-
-    editor.pixels = _.reject(editor.pixels, function(pixel) {
-        return self.contains(pixel);
-    });
   });
 
   signal.selectionCleared.add(function(point) {
-
     self.bounds = false;
-
-    // merge editor.selection.pixels back to editor.pixels
-    self.pixels.forEach(function(pixel) {
-      editor.pixels.push(pixel);
-    });
-
-    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
-
-    self.pixels = [];
+    saveAndClearPixels();
   });
 
   signal.selectionMoved.add(function(distance) {
@@ -73,23 +69,33 @@ Editor.prototype.selection.init = function(editor, signal) {
   });
 
   signal.selectionPixelsMoved.add(function(distance) {
-    //console.log('selectionPixelsMoved', distance, self.pixels);
     self.pixels.forEach(function(p) {
-
-
-      //var target = wrapPixel(p, distance);
       p.x += distance.x;
       p.y += distance.y;
-
     });
-    //console.log('selectionPixelsMoved', self.pixels);
+  });
+
+  signal.toolSelected.add(function(tool) {
+    if(editor.selection.isActive) {
+      switch(tool) {
+        case 'RectangularSelectionTool':
+          saveAndClearPixels();
+          break;
+        default:
+          // move selected pixels from editor.pixels to editor.selection.pixels
+          self.pixels = _.filter(editor.pixels, function(pixel) {
+              return self.contains(pixel);
+          });
+
+          editor.pixels = _.reject(editor.pixels, function(pixel) {
+              return self.contains(pixel);
+          });
+          break;
+      }
+    }
   });
 
 };
-
-Editor.prototype.selection.bounds = false;
-
-Editor.prototype.selection.pixels = [];
 
 Editor.prototype.selection.contains = function(point) {
   if(this.isActive)
