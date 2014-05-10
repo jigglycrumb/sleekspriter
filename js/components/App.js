@@ -19,10 +19,10 @@ var App = React.createClass({
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
-            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="preview" />
+            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="frames" />
           </div>
-          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="layers" />
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
@@ -55,19 +55,12 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged',
-
           'brightnessToolModeChanged',
           'brightnessToolIntensityChanged',
           'paletteSelected',
-
           'pixelsMoved',
-
           'selectionCleared',
-          //'selectionUpdated',
-
           'boxFolded',
-
-
         ];
 
     subscriptions.forEach(function(item) {

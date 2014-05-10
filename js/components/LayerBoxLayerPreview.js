@@ -11,10 +11,12 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.props.signal.boxFolded.add(this.prepareRefresh);
     this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
   },
   componentWillUnmount: function() {
+    this.props.signal.boxFolded.remove(this.prepareRefresh);
     this.props.signal.frameSelected.remove(this.prepareRefresh);
     this.props.signal.layerContentChanged.remove(this.prepareRefresh);
   },

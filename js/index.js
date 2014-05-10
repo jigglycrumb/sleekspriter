@@ -1,3 +1,11 @@
+function showOffScreen() {
+  document.querySelector('.area.offscreen').style.display = 'block';
+};
+
+function hideOffScreen() {
+  document.querySelector('.area.offscreen').style.display = 'none';
+};
+
 function NodeList2Array(NodeList) {
   //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
   return [].slice.call(NodeList);
@@ -93,7 +101,9 @@ window.onload = function() {
   editor.buildAutoPalette();
 
   // render app
-  React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
+  React.renderComponent(
+    <App editor={editor} file={file} pixel={stage.pixel} signal={signal} workspace={workspace} />
+    , document.body);
 
 
   // draw all pixels to layers

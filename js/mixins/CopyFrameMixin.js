@@ -16,14 +16,17 @@ var CopyFrameMixin = {
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      var w = this.getDOMNode().clientWidth,
-          h = this.getDOMNode().clientHeight,
-          sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
-
-      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
-      this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
+      this.drawFrame();
       this.setState({needsRefresh: false});
     }
-  }
+  },
+  drawFrame: function() {
+    var w = this.getDOMNode().clientWidth,
+        h = this.getDOMNode().clientHeight,
+        sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
+
+    this.getDOMNode().width = this.getDOMNode().width; // clear canvas
+    this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
+    this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
+  },
 };

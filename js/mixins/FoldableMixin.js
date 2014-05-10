@@ -9,19 +9,25 @@ var FoldableMixin = {
         handle = this.getDOMNode().querySelector('.foldable-handle'),
         fold = this.getDOMNode().querySelector('.foldable-fold');
 
-    handle.onclick = function() {
-      if(self.state.folded) {
-        fold.style.display = 'block';
-        handle.classList.remove('folded');
-      }
-      else {
+    function doFold(isFolded) {
+      if(isFolded) {
         fold.style.display = 'none';
         handle.classList.add('folded');
       }
-      self.setState({folded: !self.state.folded});
-      self.props.signal.boxFolded.dispatch();
-    }
+      else {
+        fold.style.display = 'block';
+        handle.classList.remove('folded');
+      }
+    };
 
+    handle.onclick = function() {
+      workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
+      doFold(workspace.data.folds[self.props.fold]);
+      workspace.save();
+      self.props.signal.boxFolded.dispatch();
+    };
+
+    doFold(self.props.workspace.data.folds[self.props.fold]);
   },
   componentWillUnmount: function() {
     var handle = this.getDOMNode().querySelector('.foldable-handle');

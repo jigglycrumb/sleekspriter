@@ -43,8 +43,8 @@ var signal = {
   selectionPixelsMoved: new Signal(),
 
   pixelsMoved: new Signal(),
-  boxFolded: new Signal(),
   bucketUsed: new Signal(),
+  boxFolded: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;

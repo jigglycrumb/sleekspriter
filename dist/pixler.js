@@ -45,8 +45,8 @@ var signal = {
   selectionPixelsMoved: new Signal(),
 
   pixelsMoved: new Signal(),
-  boxFolded: new Signal(),
   bucketUsed: new Signal(),
+  boxFolded: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -1187,7 +1187,6 @@ Workspace.prototype.data = {
   },
 };
 
-
 // update workspace with current editor data
 Workspace.prototype.update = function() {
   this.data.tool = editor.tool;
@@ -1259,19 +1258,25 @@ var FoldableMixin = {
         handle = this.getDOMNode().querySelector('.foldable-handle'),
         fold = this.getDOMNode().querySelector('.foldable-fold');
 
-    handle.onclick = function() {
-      if(self.state.folded) {
-        fold.style.display = 'block';
-        handle.classList.remove('folded');
-      }
-      else {
+    function doFold(isFolded) {
+      if(isFolded) {
         fold.style.display = 'none';
         handle.classList.add('folded');
       }
-      self.setState({folded: !self.state.folded});
-      self.props.signal.boxFolded.dispatch();
-    }
+      else {
+        fold.style.display = 'block';
+        handle.classList.remove('folded');
+      }
+    };
 
+    handle.onclick = function() {
+      workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
+      doFold(workspace.data.folds[self.props.fold]);
+      workspace.save();
+      self.props.signal.boxFolded.dispatch();
+    };
+
+    doFold(self.props.workspace.data.folds[self.props.fold]);
   },
   componentWillUnmount: function() {
     var handle = this.getDOMNode().querySelector('.foldable-handle');
@@ -1296,16 +1301,19 @@ var CopyFrameMixin = {
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      var w = this.getDOMNode().clientWidth,
-          h = this.getDOMNode().clientHeight,
-          sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
-
-      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
-      this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
+      this.drawFrame();
       this.setState({needsRefresh: false});
     }
-  }
+  },
+  drawFrame: function() {
+    var w = this.getDOMNode().clientWidth,
+        h = this.getDOMNode().clientHeight,
+        sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
+
+    this.getDOMNode().width = this.getDOMNode().width; // clear canvas
+    this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
+    this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
+  },
 };
 var StageBoxCanvasMixin = {
   clear: function() {
@@ -1334,10 +1342,10 @@ var App = React.createClass({
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
-            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="preview" />
+            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="frames" />
           </div>
-          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="layers" />
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} signal={this.props.signal} />
@@ -1370,19 +1378,12 @@ var App = React.createClass({
           'layerOpacityChanged',
           'layerNameChanged',
           'zoomChanged',
-
           'brightnessToolModeChanged',
           'brightnessToolIntensityChanged',
           'paletteSelected',
-
           'pixelsMoved',
-
           'selectionCleared',
-          //'selectionUpdated',
-
           'boxFolded',
-
-
         ];
 
     subscriptions.forEach(function(item) {
@@ -2570,10 +2571,12 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
+    this.props.signal.boxFolded.add(this.prepareRefresh);
     this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
   },
   componentWillUnmount: function() {
+    this.props.signal.boxFolded.remove(this.prepareRefresh);
     this.props.signal.frameSelected.remove(this.prepareRefresh);
     this.props.signal.layerContentChanged.remove(this.prepareRefresh);
   },
@@ -2743,6 +2746,14 @@ var SelectionPattern = React.createClass({
     ctx.fillRect(0, frame*(size/10), size, size/2);
   },
 });
+function showOffScreen() {
+  document.querySelector('.area.offscreen').style.display = 'block';
+};
+
+function hideOffScreen() {
+  document.querySelector('.area.offscreen').style.display = 'none';
+};
+
 function NodeList2Array(NodeList) {
   //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
   return [].slice.call(NodeList);
@@ -2838,7 +2849,9 @@ window.onload = function() {
   editor.buildAutoPalette();
 
   // render app
-  React.renderComponent(<App editor={editor} file={file} pixel={stage.pixel} signal={signal}/>, document.body);
+  React.renderComponent(
+    <App editor={editor} file={file} pixel={stage.pixel} signal={signal} workspace={workspace} />
+    , document.body);
 
 
   // draw all pixels to layers

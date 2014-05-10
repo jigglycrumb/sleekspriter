@@ -27,7 +27,6 @@ Workspace.prototype.data = {
   },
 };
 
-
 // update workspace with current editor data
 Workspace.prototype.update = function() {
   this.data.tool = editor.tool;
