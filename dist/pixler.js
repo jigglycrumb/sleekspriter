@@ -273,10 +273,13 @@ var Stage = function() {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
-        editor.selection.pixels.forEach(function(px) {
-          if(px.frame == editor.frame)
-            stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
-        });
+        if(editor.selection.pixels.length > 0) {
+          var framelayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
+
+          editor.selection.pixels.forEach(function(px) {
+            if(inArray(framelayers, px.layer)) stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          });
+        }
       },
       clear: function() {
         file.layers.forEach(function(layer) {
@@ -380,6 +383,13 @@ var Editor = function(signal) {
 
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
+
+  this.offset = {
+    top: 40,
+    right: 205,
+    bottom: 27,
+    left: 45,
+  };
 
 
   this.pixels = []; // contains all pixels of the selected frame
@@ -1734,16 +1744,10 @@ var ZoomTool = React.createClass({
     if(editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, editor.zoom-1);
   },
   fitToScreen: function() {
-    var top = 40,
-        bottom = 20,
-        left = 40,
-        right = 200;
-
-    var zoom = Math.floor((window.innerHeight - top - bottom)/file.size.height);
-    if((file.size.width*zoom) > (window.innerWidth - left - right)) {
-      zoom = Math.floor((window.innerWidth - left - right)/file.size.width);
+    var zoom = Math.floor((window.innerHeight - editor.offset.top - editor.offset.bottom)/file.size.height);
+    if((file.size.width*zoom) > (window.innerWidth - editor.offset.left - editor.offset.right)) {
+      zoom = Math.floor((window.innerWidth - editor.offset.left - editor.offset.right)/file.size.width);
     }
-
     this.dispatchZoomChanged(null, zoom);
   }
 });
@@ -1761,24 +1765,24 @@ var StageBox = React.createClass({
   render: function() {
 
     var w = this.props.file.size.width*this.props.editor.zoom,
-        h = this.props.file.size.height*this.props.editor.zoom;
+        h = this.props.file.size.height*this.props.editor.zoom,
+        centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
+        centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 
-    var top = 40,
-        left = 40,
-        right = 200,
-        bottom = 20,
-        x = window.innerWidth/2,
-        y = window.innerHeight/2;
+    var css = {
+      width: w,
+      height: h,
+    };
 
-    var cssleft = x-(w/2)-((right-left)/2),
-        csstop = y-(h/2)+((top-bottom)/2);
+    if( w > centerAreaWidth ) css.left = 0;
+    else css.left = (centerAreaWidth - w)/2;
 
-    cssleft = (cssleft < left) ? left : cssleft;
-    csstop = (csstop < top) ? top : csstop;
+    if( h > centerAreaHeight ) css.top = 0;
+    else css.top = (centerAreaHeight - h)/2;
 
     return (
       <div id="StageBox"
-        style={{width: w, height: h, left: cssleft, top: csstop}}
+        style={css}
         onMouseDown={this.mousedown}
         onMouseMove={this.mousemove}
         onMouseUp={this.mouseup}>

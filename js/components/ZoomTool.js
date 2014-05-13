@@ -27,16 +27,10 @@ var ZoomTool = React.createClass({
     if(editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, editor.zoom-1);
   },
   fitToScreen: function() {
-    var top = 40,
-        bottom = 20,
-        left = 40,
-        right = 200;
-
-    var zoom = Math.floor((window.innerHeight - top - bottom)/file.size.height);
-    if((file.size.width*zoom) > (window.innerWidth - left - right)) {
-      zoom = Math.floor((window.innerWidth - left - right)/file.size.width);
+    var zoom = Math.floor((window.innerHeight - editor.offset.top - editor.offset.bottom)/file.size.height);
+    if((file.size.width*zoom) > (window.innerWidth - editor.offset.left - editor.offset.right)) {
+      zoom = Math.floor((window.innerWidth - editor.offset.left - editor.offset.right)/file.size.width);
     }
-
     this.dispatchZoomChanged(null, zoom);
   }
 });

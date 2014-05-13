@@ -12,10 +12,13 @@ var Stage = function() {
           stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
         });
 
-        editor.selection.pixels.forEach(function(px) {
-          if(px.frame == editor.frame)
-            stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
-        });
+        if(editor.selection.pixels.length > 0) {
+          var framelayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
+
+          editor.selection.pixels.forEach(function(px) {
+            if(inArray(framelayers, px.layer)) stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          });
+        }
       },
       clear: function() {
         file.layers.forEach(function(layer) {

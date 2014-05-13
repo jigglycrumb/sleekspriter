@@ -12,24 +12,24 @@ var StageBox = React.createClass({
   render: function() {
 
     var w = this.props.file.size.width*this.props.editor.zoom,
-        h = this.props.file.size.height*this.props.editor.zoom;
+        h = this.props.file.size.height*this.props.editor.zoom,
+        centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
+        centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 
-    var top = 40,
-        left = 40,
-        right = 200,
-        bottom = 20,
-        x = window.innerWidth/2,
-        y = window.innerHeight/2;
+    var css = {
+      width: w,
+      height: h,
+    };
 
-    var cssleft = x-(w/2)-((right-left)/2),
-        csstop = y-(h/2)+((top-bottom)/2);
+    if( w > centerAreaWidth ) css.left = 0;
+    else css.left = (centerAreaWidth - w)/2;
 
-    cssleft = (cssleft < left) ? left : cssleft;
-    csstop = (csstop < top) ? top : csstop;
+    if( h > centerAreaHeight ) css.top = 0;
+    else css.top = (centerAreaHeight - h)/2;
 
     return (
       <div id="StageBox"
-        style={{width: w, height: h, left: cssleft, top: csstop}}
+        style={css}
         onMouseDown={this.mousedown}
         onMouseMove={this.mousemove}
         onMouseUp={this.mouseup}>

@@ -26,6 +26,13 @@ var Editor = function(signal) {
   this.brightnessToolMode = 'lighten';
   this.brightnessToolIntensity = 10;
 
+  this.offset = {
+    top: 40,
+    right: 205,
+    bottom: 27,
+    left: 45,
+  };
+
 
   this.pixels = []; // contains all pixels of the selected frame
 
