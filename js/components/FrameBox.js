@@ -24,7 +24,7 @@ var FrameBox = React.createClass({
             if(frame <= this.props.file.frames.x) cssClass+= ' top';
 
             var clickHandler = function() {
-              self.props.signal.frameSelected.dispatch(frame);
+              channel.publish('app.frame.select', {frame: frame});
             }
 
             return (
@@ -45,6 +45,6 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    this.props.signal.frameSelected.dispatch(event.target.value);
+    channel.publish('app.frame.select', {frame: event.target.value});
   }
 });

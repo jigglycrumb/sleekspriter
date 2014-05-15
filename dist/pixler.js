@@ -8,12 +8,9 @@ var signal = {
     layerRemoved: new Signal(),
   },
 
-  frameSelected: new Signal(),
+
   frameContentChanged: new Signal(),
 
-  toolSelected: new Signal(),
-
-  colorSelected: new Signal(),
 
   layerAdded: new Signal(),
   layerRemoved: new Signal(),
@@ -27,14 +24,8 @@ var signal = {
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  zoomChanged: new Signal(),
-  gridToggled: new Signal(),
-
-
   brightnessToolModeChanged: new Signal(),
   brightnessToolIntensityChanged: new Signal(),
-
-  paletteSelected: new Signal(),
 
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
@@ -46,7 +37,7 @@ var signal = {
 
   pixelsMoved: new Signal(),
   bucketUsed: new Signal(),
-  boxFolded: new Signal(),
+
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -465,30 +456,41 @@ var Editor = function(signal) {
   };
 
 
-  // signal handlers
-  signal.frameSelected.add(function(frame) {
+
+  channel.subscribe('stage.grid.toggle', function(data, envelope) {
+    self.grid = data.grid;
+  });
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
     self.saveChanges();
-    self.frame = parseInt(frame);
+    self.frame = parseInt(data.frame);
     self.selectTopLayer();
     self.pixels = getFramePixels();
   });
 
-  signal.layerSelected.add(function(id) {
-    self.layer = id;
+  channel.subscribe('app.palette.select', function(data, envelope) {
+    self.palette = data.palette;
   });
 
-  signal.toolSelected.add(function(tool) {
-    self.tool = tool;
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    self.tool = data.tool;
   });
 
-  signal.colorSelected.add(function(color) {
-    self.color = Color(color);
+  channel.subscribe('app.color.select', function(data, envelope) {
+    self.color = new Color(data.color);
   });
 
-  signal.zoomChanged.add(function(zoom) {
-    self.zoom = parseInt(zoom) || self.zoom;
+  channel.subscribe('stage.zoom.select', function(data, envelope) {
+    self.zoom = parseInt(data.zoom) || self.zoom;
     self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
+  });
+
+
+  // signal handlers
+
+  signal.layerSelected.add(function(id) {
+    self.layer = id;
   });
 
   signal.pixelSelected.add(function(point) {
@@ -537,20 +539,12 @@ var Editor = function(signal) {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.gridToggled.add(function(grid) {
-    self.grid = grid;
-  });
-
   signal.brightnessToolIntensityChanged.add(function(intensity) {
     self.brightnessToolIntensity = intensity;
   });
 
   signal.brightnessToolModeChanged.add(function(mode) {
     self.brightnessToolMode = mode;
-  });
-
-  signal.paletteSelected.add(function(palette) {
-    self.palette = palette;
   });
 
   signal.pixelsMoved.add(function(distance) {
@@ -811,9 +805,10 @@ Editor.prototype.selection.init = function(editor, signal) {
     });
   });
 
-  signal.toolSelected.add(function(tool) {
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
-      switch(tool) {
+      switch(data.tool) {
         case 'RectangularSelectionTool':
           saveAndClearPixels();
           break;
@@ -873,39 +868,39 @@ var Hotkeys = function(signal, editor) {
   this.actions = {
     selectBrushTool: {
       key: 'b',
-      action: function() { signal.toolSelected.dispatch('BrushTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'BrushTool'}); }
     },
     selectEraserTool: {
       key: 'e',
-      action: function() { signal.toolSelected.dispatch('EraserTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'EraserTool'}); }
     },
     selectEyedropperTool: {
       key: 'i',
-      action: function() { signal.toolSelected.dispatch('EyedropperTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'EyedropperTool'}); }
     },
     selectRectangularSelectionTool: {
       key: 'm',
-      action: function() { signal.toolSelected.dispatch('RectangularSelectionTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'RectangularSelectionTool'}); }
     },
     selectPaintBucketTool: {
       key: 'p',
-      action: function() { signal.toolSelected.dispatch('PaintBucketTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'PaintBucketTool'}); }
     },
     selectBrightnessTool: {
       key: 'o',
-      action: function() { signal.toolSelected.dispatch('BrightnessTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'BrightnessTool'}); }
     },
     selectMoveTool: {
       key: 'v',
-      action: function() { signal.toolSelected.dispatch('MoveTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'MoveTool'}); }
     },
     selectZoomTool: {
       key: 'z',
-      action: function() { signal.toolSelected.dispatch('ZoomTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'ZoomTool'}); }
     },
     toggleGrid: {
       key: 'g',
-      action: function() { signal.gridToggled.dispatch(!editor.grid); }
+      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid}); }
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
@@ -930,7 +925,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, 1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -949,7 +944,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
-            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -964,7 +959,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -982,7 +977,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
-            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -997,7 +992,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, -1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1016,7 +1011,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
-            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -1031,7 +1026,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(-1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1049,7 +1044,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
-            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -1071,7 +1066,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, 10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1095,7 +1090,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1119,7 +1114,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, -10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1143,7 +1138,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(-10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -1281,7 +1276,7 @@ var FoldableMixin = {
       workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
       doFold(workspace.data.folds[self.props.fold]);
       workspace.save();
-      self.props.signal.boxFolded.dispatch();
+      channel.publish('app.box.toggle');
     };
 
     doFold(self.props.workspace.data.folds[self.props.fold]);
@@ -1374,10 +1369,6 @@ var App = React.createClass({
   componentDidMount: function() {
     var self = this,
         subscriptions = [
-          'frameSelected',
-          'toolSelected',
-          'colorSelected',
-          'gridToggled',
           'pixelSelected',
           'layerRemoved',
           'layerAdded',
@@ -1385,19 +1376,27 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'zoomChanged',
           'brightnessToolModeChanged',
           'brightnessToolIntensityChanged',
-          'paletteSelected',
           'pixelsMoved',
           'selectionCleared',
-          'boxFolded',
         ];
 
     subscriptions.forEach(function(item) {
       self.props.signal[item].add(self.updateProps);
+
+
     });
 
+
+    channel.subscribe('stage.grid.toggle', this.updateProps);
+    channel.subscribe('stage.zoom.select', this.updateProps);
+
+    channel.subscribe('app.tool.select', this.updateProps);
+    channel.subscribe('app.color.select', this.updateProps);
+    channel.subscribe('app.frame.select', this.updateProps);
+    channel.subscribe('app.palette.select', this.updateProps);
+    channel.subscribe('app.box.toggle', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -1459,7 +1458,10 @@ var Palette = React.createClass({
   componentDidMount: function() {
     this.setInnerWidth();
     this.resetScroll();
-    this.props.signal.paletteSelected.add(this.prepareResetScroll);
+
+    this.subscriptions = [
+      channel.subscribe('app.palette.select', this.prepareResetScroll)
+    ];
   },
   componentDidUpdate: function() {
     this.setInnerWidth();
@@ -1470,7 +1472,9 @@ var Palette = React.createClass({
     }
   },
   componentDidUnmount: function() {
-    this.props.signal.paletteSelected.remove(this.prepareResetScroll);
+    this.subscriptions.forEach(function(subscription) {
+      subscription.unsubscribe();
+    });
   },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
@@ -1565,7 +1569,7 @@ var Palette = React.createClass({
   selectPalette: function(event) {
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
-    this.props.signal.paletteSelected.dispatch(palette);
+    channel.publish('app.palette.select', {palette: palette});
     return false;
   },
 });
@@ -1583,7 +1587,7 @@ var PaletteSwatch = React.createClass({
     );
   },
   select: function() {
-    this.props.signal.colorSelected.dispatch(this.props.color);
+    channel.publish('app.color.select', {color: this.props.color});
   }
 });
 var BrushTool = React.createClass({
@@ -1599,7 +1603,7 @@ var BrushTool = React.createClass({
   },
   dispatchColorSelected: function(event) {
     var color = event.target.value;
-    signal.colorSelected.dispatch(color);
+    channel.publish('app.color.select', {color: color});
   }
 });
 var EraserTool = React.createClass({
@@ -1654,7 +1658,7 @@ var PaintBucketTool = React.createClass({
   },
   dispatchColorSelected: function(event) {
     var color = event.target.value;
-    signal.colorSelected.dispatch(color);
+    channel.publish('app.color.select', {color: color});
   }
 });
 var BrightnessTool = React.createClass({
@@ -1733,7 +1737,7 @@ var ZoomTool = React.createClass({
   },
   dispatchZoomChanged: function(event, zoom) {
     zoom = _.isNull(event) ? zoom : event.target.value;
-    signal.zoomChanged.dispatch(zoom);
+    channel.publish('stage.zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
     if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);
@@ -1800,8 +1804,10 @@ var StageBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.zoomChanged.add(this.prepareRefresh);
-    this.props.signal.frameSelected.add(this.prepareRefresh);
+    this.subscriptions = [
+      channel.subscribe('app.frame.select', this.prepareRefresh),
+      channel.subscribe('stage.zoom.select', this.prepareRefresh),
+    ];
   },
   prepareRefresh: function() {
     this.setState({needsRefresh: true});
@@ -1973,8 +1979,8 @@ var StageBox = React.createClass({
   },
   useEyedropperTool: function() {
     if(editor.pixelColor.alpha() == 0) return;
-    this.props.signal.toolSelected.dispatch('BrushTool');
-    this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
+    channel.publish('app.tool.select', {tool: 'BrushTool'});
+    channel.publish('app.color.select', {color: editor.pixelColor.hexString()});
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
@@ -2333,8 +2339,8 @@ var ToolBoxTool = React.createClass({
       </button>
     );
   },
-  dispatchToolSelected: function(tool, event) {
-    this.props.signal.toolSelected.dispatch(tool);
+  dispatchToolSelected: function(tool) {
+    channel.publish('app.tool.select', {tool: tool});
   }
 });
 var PreviewBox = React.createClass({
@@ -2409,7 +2415,7 @@ var FrameBox = React.createClass({
             if(frame <= this.props.file.frames.x) cssClass+= ' top';
 
             var clickHandler = function() {
-              self.props.signal.frameSelected.dispatch(frame);
+              channel.publish('app.frame.select', {frame: frame});
             }
 
             return (
@@ -2430,7 +2436,7 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    this.props.signal.frameSelected.dispatch(event.target.value);
+    channel.publish('app.frame.select', {frame: event.target.value});
   }
 });
 var FrameBoxFrame = React.createClass({
@@ -2573,14 +2579,19 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.boxFolded.add(this.prepareRefresh);
-    this.props.signal.frameSelected.add(this.prepareRefresh);
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
+
+    this.subscriptions = [
+      channel.subscribe('app.frame.select', this.prepareRefresh),
+      channel.subscribe('app.box.toggle', this.prepareRefresh)
+    ];
   },
   componentWillUnmount: function() {
-    this.props.signal.boxFolded.remove(this.prepareRefresh);
-    this.props.signal.frameSelected.remove(this.prepareRefresh);
     this.props.signal.layerContentChanged.remove(this.prepareRefresh);
+
+    this.subscriptions.forEach(function(subscription) {
+      subscription.unsubscribe();
+    });
   },
   getInitialState: function() {
     return {
@@ -2628,7 +2639,7 @@ var StatusBar = React.createClass({
     );
   },
   dispatchGridToggled: function(event) {
-    this.props.signal.gridToggled.dispatch(!this.props.editor.grid);
+    channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid});
   }
 });
 var OffscreenFrameCanvas = React.createClass({
@@ -2656,13 +2667,16 @@ var OffscreenFrameCanvas = React.createClass({
   },
   componentDidMount: function() {
 
-    this.props.signal.frameSelected.add(this.prepareRefresh);
-
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
 
     this.props.signal.pixelSelected.add(this.getPixelColor);
+
+    this.subscriptions = [
+      channel.subscribe('app.frame.select', this.prepareRefresh)
+
+    ];
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
@@ -2831,6 +2845,9 @@ function minutely() {
 
 
 // move this into window.onload later
+
+var channel = postal.channel();
+
 var file = new File();
 var stage = new Stage();
 var editor = new Editor(signal);
@@ -2865,20 +2882,19 @@ window.onload = function() {
   var totalFrames = file.frames.x * file.frames.y,
       frame = editor.frame;
   for(var i = 1; i <= totalFrames; i++) {
-    signal.frameSelected.dispatch(i);
+    channel.publish('app.frame.select', {frame: i});
   }
 
-  signal.frameSelected.dispatch(frame);
+  channel.publish('app.frame.select', {frame: frame});
 
   // select top-most layer
   editor.selectTopLayer();
 
-  // setup zoom
-  signal.zoomChanged.dispatch(editor.zoom);
-
+  // set inital zoom
+  channel.publish('stage.zoom.select', {zoom: editor.zoom});
 
   // select brush tool
-  signal.toolSelected.dispatch(editor.tool);
+  channel.publish('app.tool.select', {tool: 'BrushTool'});
 
   //setInterval(minutely, 60000);
 };

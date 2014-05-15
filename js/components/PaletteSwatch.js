@@ -12,6 +12,6 @@ var PaletteSwatch = React.createClass({
     );
   },
   select: function() {
-    this.props.signal.colorSelected.dispatch(this.props.color);
+    channel.publish('app.color.select', {color: this.props.color});
   }
 });

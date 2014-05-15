@@ -21,6 +21,6 @@ var StatusBar = React.createClass({
     );
   },
   dispatchGridToggled: function(event) {
-    this.props.signal.gridToggled.dispatch(!this.props.editor.grid);
+    channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid});
   }
 });

@@ -45,7 +45,10 @@ var Palette = React.createClass({
   componentDidMount: function() {
     this.setInnerWidth();
     this.resetScroll();
-    this.props.signal.paletteSelected.add(this.prepareResetScroll);
+
+    this.subscriptions = [
+      channel.subscribe('app.palette.select', this.prepareResetScroll)
+    ];
   },
   componentDidUpdate: function() {
     this.setInnerWidth();
@@ -56,7 +59,9 @@ var Palette = React.createClass({
     }
   },
   componentDidUnmount: function() {
-    this.props.signal.paletteSelected.remove(this.prepareResetScroll);
+    this.subscriptions.forEach(function(subscription) {
+      subscription.unsubscribe();
+    });
   },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
@@ -151,7 +156,7 @@ var Palette = React.createClass({
   selectPalette: function(event) {
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
-    this.props.signal.paletteSelected.dispatch(palette);
+    channel.publish('app.palette.select', {palette: palette});
     return false;
   },
 });

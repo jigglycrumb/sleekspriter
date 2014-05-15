@@ -24,7 +24,7 @@ var FoldableMixin = {
       workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
       doFold(workspace.data.folds[self.props.fold]);
       workspace.save();
-      self.props.signal.boxFolded.dispatch();
+      channel.publish('app.box.toggle');
     };
 
     doFold(self.props.workspace.data.folds[self.props.fold]);

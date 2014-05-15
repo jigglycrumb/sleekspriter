@@ -3,39 +3,39 @@ var Hotkeys = function(signal, editor) {
   this.actions = {
     selectBrushTool: {
       key: 'b',
-      action: function() { signal.toolSelected.dispatch('BrushTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'BrushTool'}); }
     },
     selectEraserTool: {
       key: 'e',
-      action: function() { signal.toolSelected.dispatch('EraserTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'EraserTool'}); }
     },
     selectEyedropperTool: {
       key: 'i',
-      action: function() { signal.toolSelected.dispatch('EyedropperTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'EyedropperTool'}); }
     },
     selectRectangularSelectionTool: {
       key: 'm',
-      action: function() { signal.toolSelected.dispatch('RectangularSelectionTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'RectangularSelectionTool'}); }
     },
     selectPaintBucketTool: {
       key: 'p',
-      action: function() { signal.toolSelected.dispatch('PaintBucketTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'PaintBucketTool'}); }
     },
     selectBrightnessTool: {
       key: 'o',
-      action: function() { signal.toolSelected.dispatch('BrightnessTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'BrightnessTool'}); }
     },
     selectMoveTool: {
       key: 'v',
-      action: function() { signal.toolSelected.dispatch('MoveTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'MoveTool'}); }
     },
     selectZoomTool: {
       key: 'z',
-      action: function() { signal.toolSelected.dispatch('ZoomTool'); }
+      action: function() { channel.publish('app.tool.select', {tool: 'ZoomTool'}); }
     },
     toggleGrid: {
       key: 'g',
-      action: function() { signal.gridToggled.dispatch(!editor.grid); }
+      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid}); }
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
@@ -60,7 +60,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, 1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -79,7 +79,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
-            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -94,7 +94,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -112,7 +112,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom+1;
-            if(zoom <= 50) signal.zoomChanged.dispatch(zoom);
+            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -127,7 +127,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, -1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -146,7 +146,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
-            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -161,7 +161,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(-1);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -179,7 +179,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'ZoomTool':
             var zoom = editor.zoom-1;
-            if(zoom >= 1) signal.zoomChanged.dispatch(zoom);
+            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -201,7 +201,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, 10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -225,7 +225,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -249,7 +249,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color, -10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
@@ -273,7 +273,7 @@ var Hotkeys = function(signal, editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.rotate(-10);
-            signal.colorSelected.dispatch(color.rgbString());
+            channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);

@@ -18,7 +18,7 @@ var ZoomTool = React.createClass({
   },
   dispatchZoomChanged: function(event, zoom) {
     zoom = _.isNull(event) ? zoom : event.target.value;
-    signal.zoomChanged.dispatch(zoom);
+    channel.publish('stage.zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
     if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);

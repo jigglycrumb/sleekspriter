@@ -49,8 +49,10 @@ var StageBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.zoomChanged.add(this.prepareRefresh);
-    this.props.signal.frameSelected.add(this.prepareRefresh);
+    this.subscriptions = [
+      channel.subscribe('app.frame.select', this.prepareRefresh),
+      channel.subscribe('stage.zoom.select', this.prepareRefresh),
+    ];
   },
   prepareRefresh: function() {
     this.setState({needsRefresh: true});
@@ -222,8 +224,8 @@ var StageBox = React.createClass({
   },
   useEyedropperTool: function() {
     if(editor.pixelColor.alpha() == 0) return;
-    this.props.signal.toolSelected.dispatch('BrushTool');
-    this.props.signal.colorSelected.dispatch(editor.pixelColor.hexString());
+    channel.publish('app.tool.select', {tool: 'BrushTool'});
+    channel.publish('app.color.select', {color: editor.pixelColor.hexString()});
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {

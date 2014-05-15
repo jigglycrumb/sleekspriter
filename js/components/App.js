@@ -43,10 +43,6 @@ var App = React.createClass({
   componentDidMount: function() {
     var self = this,
         subscriptions = [
-          'frameSelected',
-          'toolSelected',
-          'colorSelected',
-          'gridToggled',
           'pixelSelected',
           'layerRemoved',
           'layerAdded',
@@ -54,19 +50,27 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'zoomChanged',
           'brightnessToolModeChanged',
           'brightnessToolIntensityChanged',
-          'paletteSelected',
           'pixelsMoved',
           'selectionCleared',
-          'boxFolded',
         ];
 
     subscriptions.forEach(function(item) {
       self.props.signal[item].add(self.updateProps);
+
+
     });
 
+
+    channel.subscribe('stage.grid.toggle', this.updateProps);
+    channel.subscribe('stage.zoom.select', this.updateProps);
+
+    channel.subscribe('app.tool.select', this.updateProps);
+    channel.subscribe('app.color.select', this.updateProps);
+    channel.subscribe('app.frame.select', this.updateProps);
+    channel.subscribe('app.palette.select', this.updateProps);
+    channel.subscribe('app.box.toggle', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');

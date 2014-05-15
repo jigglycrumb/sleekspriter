@@ -23,13 +23,16 @@ var OffscreenFrameCanvas = React.createClass({
   },
   componentDidMount: function() {
 
-    this.props.signal.frameSelected.add(this.prepareRefresh);
-
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
     this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
     this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
 
     this.props.signal.pixelSelected.add(this.getPixelColor);
+
+    this.subscriptions = [
+      channel.subscribe('app.frame.select', this.prepareRefresh)
+
+    ];
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {

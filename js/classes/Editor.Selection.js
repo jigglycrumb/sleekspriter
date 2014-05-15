@@ -75,9 +75,10 @@ Editor.prototype.selection.init = function(editor, signal) {
     });
   });
 
-  signal.toolSelected.add(function(tool) {
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
-      switch(tool) {
+      switch(data.tool) {
         case 'RectangularSelectionTool':
           saveAndClearPixels();
           break;

@@ -81,6 +81,9 @@ function minutely() {
 
 
 // move this into window.onload later
+
+var channel = postal.channel();
+
 var file = new File();
 var stage = new Stage();
 var editor = new Editor(signal);
@@ -115,20 +118,19 @@ window.onload = function() {
   var totalFrames = file.frames.x * file.frames.y,
       frame = editor.frame;
   for(var i = 1; i <= totalFrames; i++) {
-    signal.frameSelected.dispatch(i);
+    channel.publish('app.frame.select', {frame: i});
   }
 
-  signal.frameSelected.dispatch(frame);
+  channel.publish('app.frame.select', {frame: frame});
 
   // select top-most layer
   editor.selectTopLayer();
 
-  // setup zoom
-  signal.zoomChanged.dispatch(editor.zoom);
-
+  // set inital zoom
+  channel.publish('stage.zoom.select', {zoom: editor.zoom});
 
   // select brush tool
-  signal.toolSelected.dispatch(editor.tool);
+  channel.publish('app.tool.select', {tool: 'BrushTool'});
 
   //setInterval(minutely, 60000);
 };

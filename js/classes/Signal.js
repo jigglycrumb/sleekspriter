@@ -6,12 +6,9 @@ var signal = {
     layerRemoved: new Signal(),
   },
 
-  frameSelected: new Signal(),
+
   frameContentChanged: new Signal(),
 
-  toolSelected: new Signal(),
-
-  colorSelected: new Signal(),
 
   layerAdded: new Signal(),
   layerRemoved: new Signal(),
@@ -25,14 +22,8 @@ var signal = {
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  zoomChanged: new Signal(),
-  gridToggled: new Signal(),
-
-
   brightnessToolModeChanged: new Signal(),
   brightnessToolIntensityChanged: new Signal(),
-
-  paletteSelected: new Signal(),
 
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
@@ -44,7 +35,7 @@ var signal = {
 
   pixelsMoved: new Signal(),
   bucketUsed: new Signal(),
-  boxFolded: new Signal(),
+
 };
 /*
 var oldFn = signals.prototype.dispatch;

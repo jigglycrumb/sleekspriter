@@ -107,30 +107,41 @@ var Editor = function(signal) {
   };
 
 
-  // signal handlers
-  signal.frameSelected.add(function(frame) {
+
+  channel.subscribe('stage.grid.toggle', function(data, envelope) {
+    self.grid = data.grid;
+  });
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
     self.saveChanges();
-    self.frame = parseInt(frame);
+    self.frame = parseInt(data.frame);
     self.selectTopLayer();
     self.pixels = getFramePixels();
   });
 
-  signal.layerSelected.add(function(id) {
-    self.layer = id;
+  channel.subscribe('app.palette.select', function(data, envelope) {
+    self.palette = data.palette;
   });
 
-  signal.toolSelected.add(function(tool) {
-    self.tool = tool;
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    self.tool = data.tool;
   });
 
-  signal.colorSelected.add(function(color) {
-    self.color = Color(color);
+  channel.subscribe('app.color.select', function(data, envelope) {
+    self.color = new Color(data.color);
   });
 
-  signal.zoomChanged.add(function(zoom) {
-    self.zoom = parseInt(zoom) || self.zoom;
+  channel.subscribe('stage.zoom.select', function(data, envelope) {
+    self.zoom = parseInt(data.zoom) || self.zoom;
     self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
+  });
+
+
+  // signal handlers
+
+  signal.layerSelected.add(function(id) {
+    self.layer = id;
   });
 
   signal.pixelSelected.add(function(point) {
@@ -179,20 +190,12 @@ var Editor = function(signal) {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.gridToggled.add(function(grid) {
-    self.grid = grid;
-  });
-
   signal.brightnessToolIntensityChanged.add(function(intensity) {
     self.brightnessToolIntensity = intensity;
   });
 
   signal.brightnessToolModeChanged.add(function(mode) {
     self.brightnessToolMode = mode;
-  });
-
-  signal.paletteSelected.add(function(palette) {
-    self.palette = palette;
   });
 
   signal.pixelsMoved.add(function(distance) {

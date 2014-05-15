@@ -11,6 +11,6 @@ var BrushTool = React.createClass({
   },
   dispatchColorSelected: function(event) {
     var color = event.target.value;
-    signal.colorSelected.dispatch(color);
+    channel.publish('app.color.select', {color: color});
   }
 });
