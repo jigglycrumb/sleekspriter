@@ -14,8 +14,6 @@ var signal = {
   layerRemoved: new Signal(),
   layerSelected: new Signal(),
   layerContentChanged: new Signal(),
-  layerOpacityChanged: new Signal(),
-  layerVisibilityChanged: new Signal(),
   layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),

@@ -47,8 +47,6 @@ var App = React.createClass({
           'layerRemoved',
           'layerAdded',
           'layerSelected',
-          'layerVisibilityChanged',
-          'layerOpacityChanged',
           'layerNameChanged',
           'pixelsMoved',
           'selectionCleared',
@@ -56,8 +54,6 @@ var App = React.createClass({
 
     subscriptions.forEach(function(item) {
       self.props.signal[item].add(self.updateProps);
-
-
     });
 
 
@@ -72,6 +68,9 @@ var App = React.createClass({
 
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
+
+    channel.subscribe('file.layer.opacity.select', this.updateProps);
+    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');

@@ -4,7 +4,7 @@ var StageBoxLayer = React.createClass({
     var cssClass = 'Layer';
     if(this.props.visible === false) cssClass+= ' hidden';
 
-    var display = (this.props.layer.visible===true) ? 'block' : 'none';
+    var display = (this.props.layer.visible === true) ? 'block' : 'none';
 
     return (
       <canvas

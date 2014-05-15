@@ -94,18 +94,18 @@ var File = function() {
     self.layers.reverse();
   }
 
+  channel.subscribe('file.layer.opacity.select', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.opacity = data.opacity;
+  });
+
+  channel.subscribe('file.layer.visibility.toggle', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.visible = data.visible;
+  });
+
 
   // signal handlers
-  signal.layerOpacityChanged.add(function(id, opacity) {
-    var layer = self.getLayerById(id);
-    layer.opacity = opacity;
-  });
-
-  signal.layerVisibilityChanged.add(function(id, visible) {
-    var layer = self.getLayerById(id);
-    layer.visible = visible;
-  });
-
   signal.layerNameChanged.add(function(id, name) {
     var layer = self.getLayerById(id);
     layer.name = name;

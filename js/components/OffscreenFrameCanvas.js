@@ -24,14 +24,12 @@ var OffscreenFrameCanvas = React.createClass({
   componentDidMount: function() {
 
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
-    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-
     this.props.signal.pixelSelected.add(this.getPixelColor);
 
     this.subscriptions = [
-      channel.subscribe('app.frame.select', this.prepareRefresh)
-
+      channel.subscribe('app.frame.select', this.prepareRefresh),
+      channel.subscribe('file.layer.opacity.select', this.prepareRefresh),
+      channel.subscribe('file.layer.visibility.toggle', this.prepareRefresh),
     ];
   },
   componentDidUpdate: function() {

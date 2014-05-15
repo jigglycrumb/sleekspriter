@@ -16,8 +16,6 @@ var signal = {
   layerRemoved: new Signal(),
   layerSelected: new Signal(),
   layerContentChanged: new Signal(),
-  layerOpacityChanged: new Signal(),
-  layerVisibilityChanged: new Signal(),
   layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),
@@ -172,18 +170,18 @@ var File = function() {
     self.layers.reverse();
   }
 
+  channel.subscribe('file.layer.opacity.select', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.opacity = data.opacity;
+  });
+
+  channel.subscribe('file.layer.visibility.toggle', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.visible = data.visible;
+  });
+
 
   // signal handlers
-  signal.layerOpacityChanged.add(function(id, opacity) {
-    var layer = self.getLayerById(id);
-    layer.opacity = opacity;
-  });
-
-  signal.layerVisibilityChanged.add(function(id, visible) {
-    var layer = self.getLayerById(id);
-    layer.visible = visible;
-  });
-
   signal.layerNameChanged.add(function(id, name) {
     var layer = self.getLayerById(id);
     layer.name = name;
@@ -1379,8 +1377,6 @@ var App = React.createClass({
           'layerRemoved',
           'layerAdded',
           'layerSelected',
-          'layerVisibilityChanged',
-          'layerOpacityChanged',
           'layerNameChanged',
           'pixelsMoved',
           'selectionCleared',
@@ -1388,8 +1384,6 @@ var App = React.createClass({
 
     subscriptions.forEach(function(item) {
       self.props.signal[item].add(self.updateProps);
-
-
     });
 
 
@@ -1404,6 +1398,9 @@ var App = React.createClass({
 
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
+
+    channel.subscribe('file.layer.opacity.select', this.updateProps);
+    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -2278,7 +2275,7 @@ var StageBoxLayer = React.createClass({
     var cssClass = 'Layer';
     if(this.props.visible === false) cssClass+= ' hidden';
 
-    var display = (this.props.layer.visible===true) ? 'block' : 'none';
+    var display = (this.props.layer.visible === true) ? 'block' : 'none';
 
     return (
       <canvas
@@ -2550,10 +2547,10 @@ var LayerBoxLayer = React.createClass({
     this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
   },
   dispatchLayerVisibilityChanged: function(event) {
-    this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);
+    channel.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
   },
   dispatchLayerOpacityChanged: function(event) {
-    this.props.signal.layerOpacityChanged.dispatch(this.props.layer.id, parseInt(event.target.value, 10));
+    channel.publish('file.layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
   },
   dispatchLayerNameChanged: function(event) {
     if(event.type == 'blur' || (event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13)) {
@@ -2675,14 +2672,12 @@ var OffscreenFrameCanvas = React.createClass({
   componentDidMount: function() {
 
     this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.layerVisibilityChanged.add(this.prepareRefresh);
-    this.props.signal.layerOpacityChanged.add(this.prepareRefresh);
-
     this.props.signal.pixelSelected.add(this.getPixelColor);
 
     this.subscriptions = [
-      channel.subscribe('app.frame.select', this.prepareRefresh)
-
+      channel.subscribe('app.frame.select', this.prepareRefresh),
+      channel.subscribe('file.layer.opacity.select', this.prepareRefresh),
+      channel.subscribe('file.layer.visibility.toggle', this.prepareRefresh),
     ];
   },
   componentDidUpdate: function() {

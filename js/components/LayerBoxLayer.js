@@ -28,10 +28,10 @@ var LayerBoxLayer = React.createClass({
     this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
   },
   dispatchLayerVisibilityChanged: function(event) {
-    this.props.signal.layerVisibilityChanged.dispatch(this.props.layer.id, event.target.checked);
+    channel.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
   },
   dispatchLayerOpacityChanged: function(event) {
-    this.props.signal.layerOpacityChanged.dispatch(this.props.layer.id, parseInt(event.target.value, 10));
+    channel.publish('file.layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
   },
   dispatchLayerNameChanged: function(event) {
     if(event.type == 'blur' || (event.nativeEvent.type == 'keydown' && event.nativeEvent.which == 13)) {
