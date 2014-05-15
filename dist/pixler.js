@@ -1212,8 +1212,6 @@ Workspace.prototype.update = function() {
   };
   this.data.brightnessTool.mode = editor.brightnessToolMode;
   this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
-
-  // TODO: include folds
 };
 
 
@@ -1242,14 +1240,14 @@ Workspace.prototype.setup = function() {
   editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessToolMode = this.data.brightnessTool.mode;
   editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
-
-  // TODO: include folds
 };
 
 Workspace.prototype.load = function() {
   var json = localStorage.getItem('workspace');
-  this.data = JSON.parse(json);
-  this.setup();
+  if(json) {
+    this.data = JSON.parse(json);
+    this.setup();
+  }
 };
 
 Workspace.prototype.save = function() {
