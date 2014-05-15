@@ -24,9 +24,6 @@ var signal = {
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  brightnessToolModeChanged: new Signal(),
-  brightnessToolIntensityChanged: new Signal(),
-
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
   selectionMoved: new Signal(),
@@ -862,12 +859,12 @@ Editor.prototype.brightnessTool.intensity = 10;
 Editor.prototype.brightnessTool.init = function() {
   var self = this;
 
-  signal.brightnessToolIntensityChanged.add(function(intensity) {
-    self.intensity = intensity;
+  channel.subscribe('app.brightnesstool.mode.select', function(data, envelope) {
+    self.mode = data.mode;
   });
 
-  signal.brightnessToolModeChanged.add(function(mode) {
-    self.mode = mode;
+  channel.subscribe('app.brightnesstool.intensity.select', function(data, envelope) {
+    self.intensity = data.intensity;
   });
 };
 var Hotkeys = function(signal, editor) {
@@ -939,7 +936,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity+1;
-            if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            if(intensity <= 100) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -972,7 +969,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            signal.brightnessToolModeChanged.dispatch('darken');
+            channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -1006,7 +1003,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity-1;
-            if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            if(intensity >= 1) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -1039,7 +1036,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            signal.brightnessToolModeChanged.dispatch('lighten');
+            channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -1385,8 +1382,6 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'brightnessToolModeChanged',
-          'brightnessToolIntensityChanged',
           'pixelsMoved',
           'selectionCleared',
         ];
@@ -1406,6 +1401,9 @@ var App = React.createClass({
     channel.subscribe('app.frame.select', this.updateProps);
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
+
+    channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
+    channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -1704,14 +1702,14 @@ var BrightnessTool = React.createClass({
     );
   },
   selectLightenTool: function() {
-    this.props.signal.brightnessToolModeChanged.dispatch('lighten');
+    channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
   },
   selectDarkenTool: function() {
-    this.props.signal.brightnessToolModeChanged.dispatch('darken');
+    channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
   },
   setIntensity: function(event) {
     var newIntensity = parseInt(event.target.value);
-    this.props.signal.brightnessToolIntensityChanged.dispatch(newIntensity);
+    channel.publish('app.brightnesstool.intensity.select', {intensity: newIntensity});
   }
 
 });

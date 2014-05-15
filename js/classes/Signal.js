@@ -22,9 +22,6 @@ var signal = {
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  brightnessToolModeChanged: new Signal(),
-  brightnessToolIntensityChanged: new Signal(),
-
   selectionStarted: new Signal(),
   selectionEnded: new Signal(),
   selectionMoved: new Signal(),

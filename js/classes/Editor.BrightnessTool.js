@@ -6,11 +6,11 @@ Editor.prototype.brightnessTool.intensity = 10;
 Editor.prototype.brightnessTool.init = function() {
   var self = this;
 
-  signal.brightnessToolIntensityChanged.add(function(intensity) {
-    self.intensity = intensity;
+  channel.subscribe('app.brightnesstool.mode.select', function(data, envelope) {
+    self.mode = data.mode;
   });
 
-  signal.brightnessToolModeChanged.add(function(mode) {
-    self.mode = mode;
+  channel.subscribe('app.brightnesstool.intensity.select', function(data, envelope) {
+    self.intensity = data.intensity;
   });
 };

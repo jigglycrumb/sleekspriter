@@ -50,8 +50,6 @@ var App = React.createClass({
           'layerVisibilityChanged',
           'layerOpacityChanged',
           'layerNameChanged',
-          'brightnessToolModeChanged',
-          'brightnessToolIntensityChanged',
           'pixelsMoved',
           'selectionCleared',
         ];
@@ -71,6 +69,9 @@ var App = React.createClass({
     channel.subscribe('app.frame.select', this.updateProps);
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
+
+    channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
+    channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');

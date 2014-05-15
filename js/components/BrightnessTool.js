@@ -32,14 +32,14 @@ var BrightnessTool = React.createClass({
     );
   },
   selectLightenTool: function() {
-    this.props.signal.brightnessToolModeChanged.dispatch('lighten');
+    channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
   },
   selectDarkenTool: function() {
-    this.props.signal.brightnessToolModeChanged.dispatch('darken');
+    channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
   },
   setIntensity: function(event) {
     var newIntensity = parseInt(event.target.value);
-    this.props.signal.brightnessToolIntensityChanged.dispatch(newIntensity);
+    channel.publish('app.brightnesstool.intensity.select', {intensity: newIntensity});
   }
 
 });

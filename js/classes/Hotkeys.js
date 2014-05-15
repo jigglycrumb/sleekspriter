@@ -67,7 +67,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity+1;
-            if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            if(intensity <= 100) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -100,7 +100,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            signal.brightnessToolModeChanged.dispatch('darken');
+            channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -134,7 +134,7 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity-1;
-            if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
+            if(intensity >= 1) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
@@ -167,7 +167,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            signal.brightnessToolModeChanged.dispatch('lighten');
+            channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
