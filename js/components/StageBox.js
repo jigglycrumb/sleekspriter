@@ -243,13 +243,13 @@ var StageBox = React.createClass({
 
       if(pixelExists) {
         if(!editor.selection.isActive) {
-          if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-          else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+          if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
+          else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
         }
         else { // restrict to selection
           if(editor.selection.contains(editor.pixel)) {
-            if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-            else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+            if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
+            else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
           }
         }
       }

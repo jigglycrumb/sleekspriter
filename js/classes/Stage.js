@@ -82,13 +82,13 @@ var Stage = function() {
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessToolIntensity);
+        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },
       darken: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessToolIntensity);
+        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },

@@ -63,6 +63,7 @@ module.exports = function(grunt) {
           'js/classes/Editor.js',
           'js/classes/Editor.Palettes.js',
           'js/classes/Editor.Selection.js',
+          'js/classes/Editor.BrightnessTool.js',
 
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',

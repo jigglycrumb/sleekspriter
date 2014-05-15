@@ -334,13 +334,13 @@ var Stage = function() {
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessToolIntensity);
+        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },
       darken: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessToolIntensity);
+        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
         this.fill(layer, x, y, newColor, true);
         editor.layerPixelColor = newColor;
       },
@@ -371,9 +371,6 @@ var Editor = function(signal) {
   this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
   this.color = Color('#000000');
-
-  this.brightnessToolMode = 'lighten';
-  this.brightnessToolIntensity = 10;
 
   this.offset = {
     top: 40,
@@ -539,14 +536,6 @@ var Editor = function(signal) {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.brightnessToolIntensityChanged.add(function(intensity) {
-    self.brightnessToolIntensity = intensity;
-  });
-
-  signal.brightnessToolModeChanged.add(function(mode) {
-    self.brightnessToolMode = mode;
-  });
-
   signal.pixelsMoved.add(function(distance) {
 
     if(self.selection.isActive) {
@@ -614,6 +603,8 @@ var Editor = function(signal) {
   });
 
   this.selection.init(this, signal);
+
+  this.brightnessTool.init();
 };
 
 Editor.prototype = {}; //Object.create(null);
@@ -863,6 +854,22 @@ Object.defineProperty(Editor.prototype.selection, 'isMoving', {
         && this.bounds.distance instanceof Point;
   }
 });
+Editor.prototype.brightnessTool = {};
+
+Editor.prototype.brightnessTool.mode = 'lighten';
+Editor.prototype.brightnessTool.intensity = 10;
+
+Editor.prototype.brightnessTool.init = function() {
+  var self = this;
+
+  signal.brightnessToolIntensityChanged.add(function(intensity) {
+    self.intensity = intensity;
+  });
+
+  signal.brightnessToolModeChanged.add(function(mode) {
+    self.mode = mode;
+  });
+};
 var Hotkeys = function(signal, editor) {
 
   this.actions = {
@@ -931,7 +938,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            var intensity = editor.brightnessToolIntensity+1;
+            var intensity = editor.brightnessTool.intensity+1;
             if(intensity <= 100) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
@@ -998,7 +1005,7 @@ var Hotkeys = function(signal, editor) {
             if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
             break;
           case 'BrightnessTool':
-            var intensity = editor.brightnessToolIntensity-1;
+            var intensity = editor.brightnessTool.intensity-1;
             if(intensity >= 1) signal.brightnessToolIntensityChanged.dispatch(intensity);
             break;
           case 'MoveTool':
@@ -1205,8 +1212,10 @@ Workspace.prototype.update = function() {
     bounds: editor.selection.bounds,
     pixels: editor.selection.pixels,
   };
-  this.data.brightnessTool.mode = editor.brightnessToolMode;
-  this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
+  this.data.brightnessTool = {
+    mode: editor.brightnessTool.mode,
+    intensity: editor.brightnessTool.intensity,
+  };
 };
 
 
@@ -1233,8 +1242,8 @@ Workspace.prototype.setup = function() {
   editor.zoom = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
   editor.selection.pixels = this.data.selection.pixels;
-  editor.brightnessToolMode = this.data.brightnessTool.mode;
-  editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
+  editor.brightnessTool.mode = this.data.brightnessTool.mode;
+  editor.brightnessTool.intensity = this.data.brightnessTool.intensity;
 };
 
 Workspace.prototype.load = function() {
@@ -1669,7 +1678,7 @@ var BrightnessTool = React.createClass({
         dClass = 'small',
         dDisabled = false;
 
-    if(this.props.editor.brightnessToolMode == 'darken') {
+    if(this.props.editor.brightnessTool.mode == 'darken') {
         lClass = 'small',
         lDisabled = false,
         dClass = 'small transparent active',
@@ -1683,9 +1692,9 @@ var BrightnessTool = React.createClass({
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 
 
-        <input type="range" min="1" max="100" className="brightness-slider" value={this.props.editor.brightnessToolIntensity} onChange={this.setIntensity} />
-        <span>{capitaliseFirstLetter(this.props.editor.brightnessToolMode)} by</span>
-        <input type="number" min="1" max="100" className="brightness-number" value={this.props.editor.brightnessToolIntensity} onChange={this.setIntensity} />
+        <input type="range" min="1" max="100" className="brightness-slider" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
+        <span>{capitaliseFirstLetter(this.props.editor.brightnessTool.mode)} by</span>
+        <input type="number" min="1" max="100" className="brightness-number" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>%</span>
 
 
@@ -1998,13 +2007,13 @@ var StageBox = React.createClass({
 
       if(pixelExists) {
         if(!editor.selection.isActive) {
-          if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-          else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+          if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
+          else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
         }
         else { // restrict to selection
           if(editor.selection.contains(editor.pixel)) {
-            if(editor.brightnessToolMode == 'lighten') stage.pixel.lighten();
-            else if(editor.brightnessToolMode == 'darken') stage.pixel.darken();
+            if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
+            else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
           }
         }
       }
@@ -2894,7 +2903,7 @@ window.onload = function() {
   channel.publish('stage.zoom.select', {zoom: editor.zoom});
 
   // select brush tool
-  channel.publish('app.tool.select', {tool: 'BrushTool'});
+  channel.publish('app.tool.select', {tool: editor.tool});
 
   //setInterval(minutely, 60000);
 };

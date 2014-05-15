@@ -130,7 +130,7 @@ window.onload = function() {
   channel.publish('stage.zoom.select', {zoom: editor.zoom});
 
   // select brush tool
-  channel.publish('app.tool.select', {tool: 'BrushTool'});
+  channel.publish('app.tool.select', {tool: editor.tool});
 
   //setInterval(minutely, 60000);
 };

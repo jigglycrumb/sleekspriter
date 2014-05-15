@@ -23,9 +23,6 @@ var Editor = function(signal) {
   this.tool = 'BrushTool';
   this.color = Color('#000000');
 
-  this.brightnessToolMode = 'lighten';
-  this.brightnessToolIntensity = 10;
-
   this.offset = {
     top: 40,
     right: 205,
@@ -190,14 +187,6 @@ var Editor = function(signal) {
     signal.layerContentChanged.dispatch(layer);
   });
 
-  signal.brightnessToolIntensityChanged.add(function(intensity) {
-    self.brightnessToolIntensity = intensity;
-  });
-
-  signal.brightnessToolModeChanged.add(function(mode) {
-    self.brightnessToolMode = mode;
-  });
-
   signal.pixelsMoved.add(function(distance) {
 
     if(self.selection.isActive) {
@@ -265,6 +254,8 @@ var Editor = function(signal) {
   });
 
   this.selection.init(this, signal);
+
+  this.brightnessTool.init();
 };
 
 Editor.prototype = {}; //Object.create(null);

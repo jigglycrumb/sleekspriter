@@ -40,8 +40,10 @@ Workspace.prototype.update = function() {
     bounds: editor.selection.bounds,
     pixels: editor.selection.pixels,
   };
-  this.data.brightnessTool.mode = editor.brightnessToolMode;
-  this.data.brightnessTool.intensity = editor.brightnessToolIntensity;
+  this.data.brightnessTool = {
+    mode: editor.brightnessTool.mode,
+    intensity: editor.brightnessTool.intensity,
+  };
 };
 
 
@@ -68,8 +70,8 @@ Workspace.prototype.setup = function() {
   editor.zoom = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
   editor.selection.pixels = this.data.selection.pixels;
-  editor.brightnessToolMode = this.data.brightnessTool.mode;
-  editor.brightnessToolIntensity = this.data.brightnessTool.intensity;
+  editor.brightnessTool.mode = this.data.brightnessTool.mode;
+  editor.brightnessTool.intensity = this.data.brightnessTool.intensity;
 };
 
 Workspace.prototype.load = function() {
