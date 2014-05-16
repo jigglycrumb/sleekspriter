@@ -1,4 +1,4 @@
-var Hotkeys = function(signal, editor) {
+var Hotkeys = function(editor) {
 
   this.actions = {
     selectBrushTool: {

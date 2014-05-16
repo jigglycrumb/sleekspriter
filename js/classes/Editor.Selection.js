@@ -6,7 +6,7 @@ Editor.prototype.selection.pixels = [];
 
 
 
-Editor.prototype.selection.init = function(editor, signal) {
+Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 

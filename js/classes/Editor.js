@@ -1,4 +1,4 @@
-var Editor = function(signal) {
+var Editor = function() {
 
   var maxZoom = 50,
       minZoom = 1,
@@ -247,7 +247,7 @@ var Editor = function(signal) {
   });
 
   // init subclasses
-  this.selection.init(this, signal);
+  this.selection.init(this);
   this.brightnessTool.init();
 };
 

@@ -17,7 +17,7 @@ var LayerBox = React.createClass({
               var visible = (layer.frame == this.props.editor.frame) ? true : false;
               var id = 'LayerBoxLayer-'+layer.id;
               return (
-                <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal} visible={visible} />
+                <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} visible={visible} />
               );
             }, this)}
           </div>

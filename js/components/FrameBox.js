@@ -29,7 +29,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
-                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} />
               </div>
             );
           }, this)}

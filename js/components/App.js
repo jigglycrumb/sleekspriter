@@ -9,29 +9,29 @@ var App = React.createClass({
     return (
       <div id="App">
         <div className="area top">
-          <ToolContainer editor={this.props.editor} signal={this.props.signal} />
+          <ToolContainer editor={this.props.editor} />
         </div>
         <div className="area left">
-          <ToolBox editor={this.props.editor} signal={this.props.signal} />
+          <ToolBox editor={this.props.editor} />
         </div>
         <div className="area center">
-          <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
+          <StageBox file={this.props.file} editor={this.props.editor} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="preview" />
-            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="frames" />
+            <PreviewBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="preview" />
+            <FrameBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
           </div>
-          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="layers" />
+          <LayerBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
         </div>
         <div className="area bottom">
-          <StatusBar editor={this.props.editor} signal={this.props.signal} />
+          <StatusBar editor={this.props.editor} />
         </div>
         <div className="area offscreen">
           {frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} />
             );
           }, this)}
 

@@ -86,8 +86,8 @@ var channel = postal.channel();
 
 var file = new File();
 var stage = new Stage();
-var editor = new Editor(signal);
-var hotkeys = new Hotkeys(signal, editor);
+var editor = new Editor();
+var hotkeys = new Hotkeys(editor);
 
 var workspace = new Workspace();
 
@@ -105,7 +105,7 @@ window.onload = function() {
 
   // render app
   React.renderComponent(
-    <App editor={editor} file={file} pixel={stage.pixel} signal={signal} workspace={workspace} />
+    <App editor={editor} file={file} pixel={stage.pixel} workspace={workspace} />
     , document.body);
 
 

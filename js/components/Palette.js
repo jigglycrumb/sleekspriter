@@ -31,7 +31,7 @@ var Palette = React.createClass({
           <div className="inner">
             {palette.colors.map(function(color) {
               return (
-                <PaletteSwatch key={color} color={color} signal={this.props.signal} />
+                <PaletteSwatch key={color} color={color} />
               );
             }, this)}
           </div>

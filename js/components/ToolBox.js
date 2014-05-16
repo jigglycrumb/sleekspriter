@@ -17,14 +17,14 @@ var ToolBox = React.createClass({
       <div id="ToolBox">
         <h4>Tools</h4>
         <div>
-          <ToolBoxTool id="BrushTool" title={titles.brushTool} icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EraserTool" title={titles.eraserTool} icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EyedropperTool" title={titles.eyedropperTool} icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="RectangularSelectionTool" title={titles.rectangularSelectionTool} icon="flaticon-selection7" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="PaintBucketTool" title={titles.paintBucketTool} icon="flaticon-paint2" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="BrightnessTool" title={titles.brightnessTool} icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="MoveTool" title={titles.moveTool} icon="flaticon-move11" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="ZoomTool" title={titles.zoomTool} icon="flaticon-magnifier5" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrushTool" title={titles.brushTool} icon="flaticon-small23" editor={this.props.editor} />
+          <ToolBoxTool id="EraserTool" title={titles.eraserTool} icon="flaticon-double31" editor={this.props.editor} />
+          <ToolBoxTool id="EyedropperTool" title={titles.eyedropperTool} icon="flaticon-eyedropper2" editor={this.props.editor} />
+          <ToolBoxTool id="RectangularSelectionTool" title={titles.rectangularSelectionTool} icon="flaticon-selection7" editor={this.props.editor} />
+          <ToolBoxTool id="PaintBucketTool" title={titles.paintBucketTool} icon="flaticon-paint2" editor={this.props.editor} />
+          <ToolBoxTool id="BrightnessTool" title={titles.brightnessTool} icon="flaticon-sun4" editor={this.props.editor} />
+          <ToolBoxTool id="MoveTool" title={titles.moveTool} icon="flaticon-move11" editor={this.props.editor} />
+          <ToolBoxTool id="ZoomTool" title={titles.zoomTool} icon="flaticon-magnifier5" editor={this.props.editor} />
         </div>
       </div>
     );

@@ -1,17 +1,5 @@
 /** @jsx React.DOM */
 'use strict';
-var Signal = signals.Signal;
-var signal = {
-
-
-};
-/*
-var oldFn = signals.prototype.dispatch;
-signals.prototype.dispatch = function() {
-  console.log(arguments);
-  oldFn.call(this);
-}
-*/
 var Point = function(x, y) {
   this.x = x;
   this.y = y;
@@ -311,7 +299,7 @@ var Stage = function() {
     }
   }
 };
-var Editor = function(signal) {
+var Editor = function() {
 
   var maxZoom = 50,
       minZoom = 1,
@@ -560,7 +548,7 @@ var Editor = function(signal) {
   });
 
   // init subclasses
-  this.selection.init(this, signal);
+  this.selection.init(this);
   this.brightnessTool.init();
 };
 
@@ -684,7 +672,7 @@ Editor.prototype.selection.pixels = [];
 
 
 
-Editor.prototype.selection.init = function(editor, signal) {
+Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
@@ -825,7 +813,7 @@ Editor.prototype.brightnessTool.init = function() {
     self.intensity = data.intensity;
   });
 };
-var Hotkeys = function(signal, editor) {
+var Hotkeys = function(editor) {
 
   this.actions = {
     selectBrushTool: {
@@ -1299,29 +1287,29 @@ var App = React.createClass({
     return (
       <div id="App">
         <div className="area top">
-          <ToolContainer editor={this.props.editor} signal={this.props.signal} />
+          <ToolContainer editor={this.props.editor} />
         </div>
         <div className="area left">
-          <ToolBox editor={this.props.editor} signal={this.props.signal} />
+          <ToolBox editor={this.props.editor} />
         </div>
         <div className="area center">
-          <StageBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} pixel={this.props.pixel}/>
+          <StageBox file={this.props.file} editor={this.props.editor} pixel={this.props.pixel}/>
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="preview" />
-            <FrameBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="frames" />
+            <PreviewBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="preview" />
+            <FrameBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
           </div>
-          <LayerBox file={this.props.file} editor={this.props.editor} signal={this.props.signal} workspace={this.props.workspace} fold="layers" />
+          <LayerBox file={this.props.file} editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
         </div>
         <div className="area bottom">
-          <StatusBar editor={this.props.editor} signal={this.props.signal} />
+          <StatusBar editor={this.props.editor} />
         </div>
         <div className="area offscreen">
           {frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+              <OffscreenFrameCanvas key={id} frame={frame} file={this.props.file} editor={this.props.editor} />
             );
           }, this)}
 
@@ -1401,7 +1389,7 @@ var Palette = React.createClass({
           <div className="inner">
             {palette.colors.map(function(color) {
               return (
-                <PaletteSwatch key={color} color={color} signal={this.props.signal} />
+                <PaletteSwatch key={color} color={color} />
               );
             }, this)}
           </div>
@@ -1554,7 +1542,7 @@ var BrushTool = React.createClass({
         <i className="icon flaticon-small23"/>
         <input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} title={editor.color.hexString()} />
         <span className="spacer"/>
-        <Palette editor={this.props.editor} signal={this.props.signal} />
+        <Palette editor={this.props.editor} />
       </div>
     );
   },
@@ -1609,7 +1597,7 @@ var PaintBucketTool = React.createClass({
         <i className="icon flaticon-paint2"/>
         <input type="color" id="PaintBucket-Colorpicker" className="ColorSwatch" value={editor.color.hexString()} onChange={this.dispatchColorSelected} title={editor.color.hexString()} />
         <span className="spacer"/>
-        <Palette editor={this.props.editor} signal={this.props.signal} />
+        <Palette editor={this.props.editor} />
       </div>
     );
   },
@@ -2266,14 +2254,14 @@ var ToolBox = React.createClass({
       <div id="ToolBox">
         <h4>Tools</h4>
         <div>
-          <ToolBoxTool id="BrushTool" title={titles.brushTool} icon="flaticon-small23" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EraserTool" title={titles.eraserTool} icon="flaticon-double31" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="EyedropperTool" title={titles.eyedropperTool} icon="flaticon-eyedropper2" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="RectangularSelectionTool" title={titles.rectangularSelectionTool} icon="flaticon-selection7" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="PaintBucketTool" title={titles.paintBucketTool} icon="flaticon-paint2" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="BrightnessTool" title={titles.brightnessTool} icon="flaticon-sun4" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="MoveTool" title={titles.moveTool} icon="flaticon-move11" editor={this.props.editor} signal={this.props.signal} />
-          <ToolBoxTool id="ZoomTool" title={titles.zoomTool} icon="flaticon-magnifier5" editor={this.props.editor} signal={this.props.signal} />
+          <ToolBoxTool id="BrushTool" title={titles.brushTool} icon="flaticon-small23" editor={this.props.editor} />
+          <ToolBoxTool id="EraserTool" title={titles.eraserTool} icon="flaticon-double31" editor={this.props.editor} />
+          <ToolBoxTool id="EyedropperTool" title={titles.eyedropperTool} icon="flaticon-eyedropper2" editor={this.props.editor} />
+          <ToolBoxTool id="RectangularSelectionTool" title={titles.rectangularSelectionTool} icon="flaticon-selection7" editor={this.props.editor} />
+          <ToolBoxTool id="PaintBucketTool" title={titles.paintBucketTool} icon="flaticon-paint2" editor={this.props.editor} />
+          <ToolBoxTool id="BrightnessTool" title={titles.brightnessTool} icon="flaticon-sun4" editor={this.props.editor} />
+          <ToolBoxTool id="MoveTool" title={titles.moveTool} icon="flaticon-move11" editor={this.props.editor} />
+          <ToolBoxTool id="ZoomTool" title={titles.zoomTool} icon="flaticon-magnifier5" editor={this.props.editor} />
         </div>
       </div>
     );
@@ -2307,7 +2295,7 @@ var PreviewBox = React.createClass({
       <div id="PreviewBox" className="box">
         <h4 className="foldable-handle">Preview</h4>
         <div className="foldable-fold">
-          <PreviewBoxPreview frame={this.props.editor.frame} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+          <PreviewBoxPreview frame={this.props.editor.frame} file={this.props.file} editor={this.props.editor} />
         </div>
       </div>
     );
@@ -2377,7 +2365,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
-                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} signal={this.props.signal} />
+                <FrameBoxFrame frame={frame} size={frameSize} file={this.props.file} editor={this.props.editor} />
               </div>
             );
           }, this)}
@@ -2429,7 +2417,7 @@ var LayerBox = React.createClass({
               var visible = (layer.frame == this.props.editor.frame) ? true : false;
               var id = 'LayerBoxLayer-'+layer.id;
               return (
-                <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} signal={this.props.signal} visible={visible} />
+                <LayerBoxLayer key={id} layer={layer} size={this.props.file.size} editor={this.props.editor} visible={visible} />
               );
             }, this)}
           </div>
@@ -2482,7 +2470,7 @@ var LayerBoxLayer = React.createClass({
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
         <div className="preview">
-          <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} signal={this.props.signal}/>
+          <LayerBoxLayerPreview ref="preview" layer={this.props.layer.id} size={this.props.size} zoom={this.props.editor.zoom} />
         </div>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
@@ -2800,8 +2788,8 @@ var channel = postal.channel();
 
 var file = new File();
 var stage = new Stage();
-var editor = new Editor(signal);
-var hotkeys = new Hotkeys(signal, editor);
+var editor = new Editor();
+var hotkeys = new Hotkeys(editor);
 
 var workspace = new Workspace();
 
@@ -2819,7 +2807,7 @@ window.onload = function() {
 
   // render app
   React.renderComponent(
-    <App editor={editor} file={file} pixel={stage.pixel} signal={signal} workspace={workspace} />
+    <App editor={editor} file={file} pixel={stage.pixel} workspace={workspace} />
     , document.body);
 
 
