@@ -6,31 +6,18 @@ var signal = {
     layerRemoved: new Signal(),
   },
 
-
   frameContentChanged: new Signal(),
-
 
   layerAdded: new Signal(),
   layerRemoved: new Signal(),
-  layerSelected: new Signal(),
   layerContentChanged: new Signal(),
-  layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  selectionStarted: new Signal(),
-  selectionEnded: new Signal(),
-  selectionMoved: new Signal(),
-  selectionCleared: new Signal(),
-  selectionResized: new Signal(),
-  selectionUpdated: new Signal(),
-  selectionPixelsMoved: new Signal(),
-
   pixelsMoved: new Signal(),
   bucketUsed: new Signal(),
-
 };
 /*
 var oldFn = signals.prototype.dispatch;

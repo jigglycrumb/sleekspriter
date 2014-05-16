@@ -8,31 +8,18 @@ var signal = {
     layerRemoved: new Signal(),
   },
 
-
   frameContentChanged: new Signal(),
-
 
   layerAdded: new Signal(),
   layerRemoved: new Signal(),
-  layerSelected: new Signal(),
   layerContentChanged: new Signal(),
-  layerNameChanged: new Signal(),
 
   pixelSelected: new Signal(),
   pixelFilled: new Signal(),
   pixelCleared: new Signal(),
 
-  selectionStarted: new Signal(),
-  selectionEnded: new Signal(),
-  selectionMoved: new Signal(),
-  selectionCleared: new Signal(),
-  selectionResized: new Signal(),
-  selectionUpdated: new Signal(),
-  selectionPixelsMoved: new Signal(),
-
   pixelsMoved: new Signal(),
   bucketUsed: new Signal(),
-
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -180,12 +167,12 @@ var File = function() {
     layer.visible = data.visible;
   });
 
+  channel.subscribe('file.layer.name.select', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.name = data.name;
+  });
 
   // signal handlers
-  signal.layerNameChanged.add(function(id, name) {
-    var layer = self.getLayerById(id);
-    layer.name = name;
-  });
 
   signal.file.layerAdded.add(function(layer) {
 
@@ -356,8 +343,8 @@ var Editor = function(signal) {
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
     var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    signal.layerSelected.dispatch(topLayer.id);
-  }
+    channel.publish('app.layer.select', {layer: topLayer.id});
+  };
 
   this.zoom = 10;
   this.grid = true;
@@ -478,12 +465,13 @@ var Editor = function(signal) {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
+  channel.subscribe('app.layer.select', function(data, envelope) {
+    self.layer = data.layer;
+  });
+
+
 
   // signal handlers
-
-  signal.layerSelected.add(function(id) {
-    self.layer = id;
-  });
 
   signal.pixelSelected.add(function(point) {
     self.pixel = point;
@@ -736,62 +724,6 @@ Editor.prototype.selection.init = function(editor, signal) {
     self.pixels = [];
   };
 
-  signal.selectionStarted.add(function(point) {
-    self.bounds = {
-      start: point
-    };
-  });
-
-  signal.selectionResized.add(function(point) {
-    self.bounds.cursor = point;
-  });
-
-  signal.selectionUpdated.add(function(distance) {
-    self.bounds.distance = distance;
-  });
-
-  signal.selectionEnded.add(function(point) {
-    self.bounds = { // reset self selection to remove cursor property as it's no longer needed
-      start: self.bounds.start,
-      end: point
-    };
-
-    // switch start & end if start is more "lower right" than end
-    // makes iterating over the selection easier later
-    if(self.bounds.start.x > self.bounds.end.x
-    || self.bounds.start.y > self.bounds.end.y) {
-      var temp = self.bounds.start;
-      self.bounds.start = self.bounds.end;
-      self.bounds.end = temp;
-    }
-  });
-
-  signal.selectionCleared.add(function(point) {
-    self.bounds = false;
-    saveAndClearPixels();
-  });
-
-  signal.selectionMoved.add(function(distance) {
-    self.bounds = {
-      start: new Point(
-        self.bounds.start.x + distance.x,
-        self.bounds.start.y + distance.y
-      ),
-      end: new Point(
-        self.bounds.end.x + distance.x,
-        self.bounds.end.y + distance.y
-      )
-    };
-  });
-
-  signal.selectionPixelsMoved.add(function(distance) {
-    self.pixels.forEach(function(p) {
-      p.x += distance.x;
-      p.y += distance.y;
-    });
-  });
-
-
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -812,6 +744,60 @@ Editor.prototype.selection.init = function(editor, signal) {
     }
   });
 
+  channel.subscribe('stage.selection.start', function(data, envelope) {
+    self.bounds = {
+      start: data.point
+    };
+  });
+
+  channel.subscribe('stage.selection.end', function(data, envelope) {
+    self.bounds = { // reset self selection to remove cursor property as it's no longer needed
+      start: self.bounds.start,
+      end: data.point
+    };
+
+    // switch start & end if start is more "lower right" than end
+    // makes iterating over the selection easier later
+    if(self.bounds.start.x > self.bounds.end.x
+    || self.bounds.start.y > self.bounds.end.y) {
+      var temp = self.bounds.start;
+      self.bounds.start = self.bounds.end;
+      self.bounds.end = temp;
+    }
+  });
+
+  channel.subscribe('stage.selection.resize', function(data, envelope) {
+    self.bounds.cursor = data.point;
+  });
+
+  channel.subscribe('stage.selection.update', function(data, envelope) {
+    self.bounds.distance = data.distance;
+  });
+
+  channel.subscribe('stage.selection.move.bounds', function(data, envelope) {
+    self.bounds = {
+      start: new Point(
+        self.bounds.start.x + data.distance.x,
+        self.bounds.start.y + data.distance.y
+      ),
+      end: new Point(
+        self.bounds.end.x + data.distance.x,
+        self.bounds.end.y + data.distance.y
+      )
+    };
+  });
+
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    self.pixels.forEach(function(p) {
+      p.x += data.distance.x;
+      p.y += data.distance.y;
+    });
+  });
+
+  channel.subscribe('stage.selection.clear', function(data, envelope) {
+    self.bounds = false;
+    saveAndClearPixels();
+  });
 };
 
 Editor.prototype.selection.contains = function(point) {
@@ -906,7 +892,7 @@ var Hotkeys = function(signal, editor) {
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
-      action: function() { signal.selectionCleared.dispatch(); }
+      action: function() { channel.publish('stage.selection.clear'); }
     },
 
 
@@ -930,7 +916,7 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity+1;
@@ -938,8 +924,8 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -964,15 +950,15 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'BrightnessTool':
             channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -997,7 +983,7 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity-1;
@@ -1005,8 +991,8 @@ var Hotkeys = function(signal, editor) {
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1031,15 +1017,15 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'BrightnessTool':
             channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1071,12 +1057,12 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1095,12 +1081,12 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1119,12 +1105,12 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1143,12 +1129,12 @@ var Hotkeys = function(signal, editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) signal.selectionMoved.dispatch(distance);
+            if(editor.selection.isActive) channel.publish('stage.selection.move.bounds', {distance: distance});
             break;
           case 'MoveTool':
             if(editor.selection.isActive) {
-              signal.selectionPixelsMoved.dispatch(distance);
-              signal.selectionMoved.dispatch(distance);
+              channel.publish('stage.selection.move.pixels', {distance: distance});
+              channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else signal.pixelsMoved.dispatch(distance);
             stage.layer.refresh();
@@ -1376,10 +1362,7 @@ var App = React.createClass({
           'pixelSelected',
           'layerRemoved',
           'layerAdded',
-          'layerSelected',
-          'layerNameChanged',
           'pixelsMoved',
-          'selectionCleared',
         ];
 
     subscriptions.forEach(function(item) {
@@ -1395,12 +1378,14 @@ var App = React.createClass({
     channel.subscribe('app.frame.select', this.updateProps);
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
+    channel.subscribe('app.layer.select', this.updateProps);
 
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
 
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+    channel.subscribe('file.layer.name.select', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -1918,7 +1903,7 @@ var StageBox = React.createClass({
 
       case 'MoveTool':
         this.props.signal.pixelsMoved.dispatch(distance);
-        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
+        if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
 
@@ -2054,25 +2039,25 @@ var StageBox = React.createClass({
 
   startRectangularSelection: function(point) {
     if(!editor.selection || !editor.selection.contains(point)) {
-      this.props.signal.selectionCleared.dispatch();
-      this.props.signal.selectionStarted.dispatch(point);
+      channel.publish('stage.selection.clear');
+      channel.publish('stage.selection.start', {point: point});
     }
   },
   resizeRectangularSelection: function(point) {
-    this.props.signal.selectionResized.dispatch(point);
+    channel.publish('stage.selection.resize', {point: point});
   },
   updateRectangularSelection: function(distance) {
-    this.props.signal.selectionUpdated.dispatch(distance);
+    channel.publish('stage.selection.update', {distance: distance});
   },
   endRectangularSelection: function(point, distance) {
     if(editor.selection.isActive) {
-      this.props.signal.selectionMoved.dispatch(distance);
+      channel.publish('stage.selection.move.bounds', {distance: distance});
     }
     else {
       if(_.isEqual(point, this.state.mousedownPoint))
-        this.props.signal.selectionCleared.dispatch();
+        channel.publish('stage.selection.clear');
       else
-        this.props.signal.selectionEnded.dispatch(point);
+        channel.publish('stage.selection.end', {point: point});
     }
   },
 
@@ -2494,7 +2479,7 @@ var LayerBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
-      this.props.signal.layerSelected.dispatch(this.state.shouldSelectLayer);
+      channel.publish('app.layer.select', {layer: this.state.shouldSelectLayer});
       this.setState({ shouldSelectLayer: false });
     }
 
@@ -2560,7 +2545,7 @@ var LayerBoxLayer = React.createClass({
 
       if(!_.isEmpty(event.target.value.trim())) {
         this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
-        this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
+        channel.publish('file.layer.name.select', {layer: this.props.layer.id, name: event.target.value});
       }
     }
   },
@@ -2602,8 +2587,8 @@ var LayerBoxLayerPreview = React.createClass({
       needsRefresh: false
     };
   },
-  dispatchLayerSelected: function(event) {
-    this.props.signal.layerSelected.dispatch(this.props.layer);
+  dispatchLayerSelected: function() {
+    channel.publish('app.layer.select', {layer: this.props.layer});
   },
   prepareRefresh: function() {
     this.setState({needsRefresh: true});

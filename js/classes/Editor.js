@@ -12,8 +12,8 @@ var Editor = function(signal) {
   this.selectTopLayer = function() {
     var frameLayers = _.where(file.layers, {frame: this.frame});
     var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    signal.layerSelected.dispatch(topLayer.id);
-  }
+    channel.publish('app.layer.select', {layer: topLayer.id});
+  };
 
   this.zoom = 10;
   this.grid = true;
@@ -134,12 +134,13 @@ var Editor = function(signal) {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
+  channel.subscribe('app.layer.select', function(data, envelope) {
+    self.layer = data.layer;
+  });
+
+
 
   // signal handlers
-
-  signal.layerSelected.add(function(id) {
-    self.layer = id;
-  });
 
   signal.pixelSelected.add(function(point) {
     self.pixel = point;

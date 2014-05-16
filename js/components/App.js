@@ -46,10 +46,7 @@ var App = React.createClass({
           'pixelSelected',
           'layerRemoved',
           'layerAdded',
-          'layerSelected',
-          'layerNameChanged',
           'pixelsMoved',
-          'selectionCleared',
         ];
 
     subscriptions.forEach(function(item) {
@@ -65,12 +62,14 @@ var App = React.createClass({
     channel.subscribe('app.frame.select', this.updateProps);
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
+    channel.subscribe('app.layer.select', this.updateProps);
 
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
 
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+    channel.subscribe('file.layer.name.select', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');

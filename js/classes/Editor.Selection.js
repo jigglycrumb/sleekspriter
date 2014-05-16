@@ -20,62 +20,6 @@ Editor.prototype.selection.init = function(editor, signal) {
     self.pixels = [];
   };
 
-  signal.selectionStarted.add(function(point) {
-    self.bounds = {
-      start: point
-    };
-  });
-
-  signal.selectionResized.add(function(point) {
-    self.bounds.cursor = point;
-  });
-
-  signal.selectionUpdated.add(function(distance) {
-    self.bounds.distance = distance;
-  });
-
-  signal.selectionEnded.add(function(point) {
-    self.bounds = { // reset self selection to remove cursor property as it's no longer needed
-      start: self.bounds.start,
-      end: point
-    };
-
-    // switch start & end if start is more "lower right" than end
-    // makes iterating over the selection easier later
-    if(self.bounds.start.x > self.bounds.end.x
-    || self.bounds.start.y > self.bounds.end.y) {
-      var temp = self.bounds.start;
-      self.bounds.start = self.bounds.end;
-      self.bounds.end = temp;
-    }
-  });
-
-  signal.selectionCleared.add(function(point) {
-    self.bounds = false;
-    saveAndClearPixels();
-  });
-
-  signal.selectionMoved.add(function(distance) {
-    self.bounds = {
-      start: new Point(
-        self.bounds.start.x + distance.x,
-        self.bounds.start.y + distance.y
-      ),
-      end: new Point(
-        self.bounds.end.x + distance.x,
-        self.bounds.end.y + distance.y
-      )
-    };
-  });
-
-  signal.selectionPixelsMoved.add(function(distance) {
-    self.pixels.forEach(function(p) {
-      p.x += distance.x;
-      p.y += distance.y;
-    });
-  });
-
-
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -96,6 +40,60 @@ Editor.prototype.selection.init = function(editor, signal) {
     }
   });
 
+  channel.subscribe('stage.selection.start', function(data, envelope) {
+    self.bounds = {
+      start: data.point
+    };
+  });
+
+  channel.subscribe('stage.selection.end', function(data, envelope) {
+    self.bounds = { // reset self selection to remove cursor property as it's no longer needed
+      start: self.bounds.start,
+      end: data.point
+    };
+
+    // switch start & end if start is more "lower right" than end
+    // makes iterating over the selection easier later
+    if(self.bounds.start.x > self.bounds.end.x
+    || self.bounds.start.y > self.bounds.end.y) {
+      var temp = self.bounds.start;
+      self.bounds.start = self.bounds.end;
+      self.bounds.end = temp;
+    }
+  });
+
+  channel.subscribe('stage.selection.resize', function(data, envelope) {
+    self.bounds.cursor = data.point;
+  });
+
+  channel.subscribe('stage.selection.update', function(data, envelope) {
+    self.bounds.distance = data.distance;
+  });
+
+  channel.subscribe('stage.selection.move.bounds', function(data, envelope) {
+    self.bounds = {
+      start: new Point(
+        self.bounds.start.x + data.distance.x,
+        self.bounds.start.y + data.distance.y
+      ),
+      end: new Point(
+        self.bounds.end.x + data.distance.x,
+        self.bounds.end.y + data.distance.y
+      )
+    };
+  });
+
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    self.pixels.forEach(function(p) {
+      p.x += data.distance.x;
+      p.y += data.distance.y;
+    });
+  });
+
+  channel.subscribe('stage.selection.clear', function(data, envelope) {
+    self.bounds = false;
+    saveAndClearPixels();
+  });
 };
 
 Editor.prototype.selection.contains = function(point) {

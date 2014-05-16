@@ -159,7 +159,7 @@ var StageBox = React.createClass({
 
       case 'MoveTool':
         this.props.signal.pixelsMoved.dispatch(distance);
-        if(selectionActive) this.props.signal.selectionMoved.dispatch(distance);
+        if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
 
@@ -295,25 +295,25 @@ var StageBox = React.createClass({
 
   startRectangularSelection: function(point) {
     if(!editor.selection || !editor.selection.contains(point)) {
-      this.props.signal.selectionCleared.dispatch();
-      this.props.signal.selectionStarted.dispatch(point);
+      channel.publish('stage.selection.clear');
+      channel.publish('stage.selection.start', {point: point});
     }
   },
   resizeRectangularSelection: function(point) {
-    this.props.signal.selectionResized.dispatch(point);
+    channel.publish('stage.selection.resize', {point: point});
   },
   updateRectangularSelection: function(distance) {
-    this.props.signal.selectionUpdated.dispatch(distance);
+    channel.publish('stage.selection.update', {distance: distance});
   },
   endRectangularSelection: function(point, distance) {
     if(editor.selection.isActive) {
-      this.props.signal.selectionMoved.dispatch(distance);
+      channel.publish('stage.selection.move.bounds', {distance: distance});
     }
     else {
       if(_.isEqual(point, this.state.mousedownPoint))
-        this.props.signal.selectionCleared.dispatch();
+        channel.publish('stage.selection.clear');
       else
-        this.props.signal.selectionEnded.dispatch(point);
+        channel.publish('stage.selection.end', {point: point});
     }
   },
 

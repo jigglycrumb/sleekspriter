@@ -104,12 +104,12 @@ var File = function() {
     layer.visible = data.visible;
   });
 
+  channel.subscribe('file.layer.name.select', function(data, envelope) {
+    var layer = self.getLayerById(data.layer);
+    layer.name = data.name;
+  });
 
   // signal handlers
-  signal.layerNameChanged.add(function(id, name) {
-    var layer = self.getLayerById(id);
-    layer.name = name;
-  });
 
   signal.file.layerAdded.add(function(layer) {
 

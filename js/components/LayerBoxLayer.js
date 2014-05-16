@@ -41,7 +41,7 @@ var LayerBoxLayer = React.createClass({
 
       if(!_.isEmpty(event.target.value.trim())) {
         this.refs.nameLabel.getDOMNode().innerHTML = event.target.value;
-        this.props.signal.layerNameChanged.dispatch(this.props.layer.id, event.target.value);
+        channel.publish('file.layer.name.select', {layer: this.props.layer.id, name: event.target.value});
       }
     }
   },

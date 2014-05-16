@@ -30,8 +30,8 @@ var LayerBoxLayerPreview = React.createClass({
       needsRefresh: false
     };
   },
-  dispatchLayerSelected: function(event) {
-    this.props.signal.layerSelected.dispatch(this.props.layer);
+  dispatchLayerSelected: function() {
+    channel.publish('app.layer.select', {layer: this.props.layer});
   },
   prepareRefresh: function() {
     this.setState({needsRefresh: true});
