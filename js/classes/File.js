@@ -109,13 +109,10 @@ var File = function() {
     layer.name = data.name;
   });
 
-  // signal handlers
-
-  signal.file.layerAdded.add(function(layer) {
-
+  channel.subscribe('file.layer.add', function(data, envelope) {
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === layer) {
+      if(self.layers[i].id === data.layer) {
         index = i;
         break;
       }
@@ -129,18 +126,18 @@ var File = function() {
 
     self.layers.splice(index, 0, newLayer);
     fixLayerZ(editor.frame);
-    signal.layerAdded.dispatch(newId);
+
+    channel.publish('app.layer.add', {layer: newId});
   });
 
-  signal.file.layerRemoved.add(function(layer) {
-
+  channel.subscribe('file.layer.delete', function(data, envelope) {
     // delete layer pixels
-    self.deletePixelsOfLayer(layer);
+    self.deletePixelsOfLayer(data.layer);
 
     // get layer array index of all layers
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === layer) {
+      if(self.layers[i].id === data.layer) {
         index = i;
         break;
       }
@@ -150,7 +147,7 @@ var File = function() {
     var frameLayers = _.where(self.layers, {frame: editor.frame});
     var fIndex = 0;
     for(var i=0; i < frameLayers.length; i++) {
-      if(frameLayers[i].id === layer) {
+      if(frameLayers[i].id === data.layer) {
         fIndex = i;
         break;
       }
@@ -166,6 +163,7 @@ var File = function() {
     // delete layer, reorder z indices, inform App of update
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame);
-    signal.layerRemoved.dispatch(shouldSelectLayer);
+
+    channel.publish('app.layer.delete', {layer: shouldSelectLayer});
   });
 };

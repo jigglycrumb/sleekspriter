@@ -41,18 +41,6 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    var self = this,
-        subscriptions = [
-          'pixelSelected',
-          'layerRemoved',
-          'layerAdded',
-          'pixelsMoved',
-        ];
-
-    subscriptions.forEach(function(item) {
-      self.props.signal[item].add(self.updateProps);
-    });
-
 
     channel.subscribe('stage.grid.toggle', this.updateProps);
     channel.subscribe('stage.zoom.select', this.updateProps);
@@ -67,9 +55,15 @@ var App = React.createClass({
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
 
+    //channel.subscribe('app.layer.add', this.updateProps);
+
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     channel.subscribe('file.layer.name.select', this.updateProps);
+
+
+    channel.subscribe('stage.pixel.select', this.updateProps);
+    channel.subscribe('stage.tool.move', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');

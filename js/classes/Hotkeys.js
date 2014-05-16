@@ -74,7 +74,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -107,7 +107,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -141,7 +141,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -174,7 +174,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -211,7 +211,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -235,7 +235,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -259,7 +259,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -283,7 +283,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }

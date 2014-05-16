@@ -4,7 +4,7 @@ var CopyFrameMixin = {
     frame: React.PropTypes.number.isRequired
   },
   componentDidMount: function() {
-    this.props.signal.frameContentChanged.add(this.prepareRefresh);
+    channel.subscribe('stage.frame.update', this.prepareRefresh);
   },
   getInitialState: function() {
     return {

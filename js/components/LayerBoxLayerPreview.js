@@ -11,16 +11,13 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-
     this.subscriptions = [
       channel.subscribe('app.frame.select', this.prepareRefresh),
-      channel.subscribe('app.box.toggle', this.prepareRefresh)
+      channel.subscribe('app.box.toggle', this.prepareRefresh),
+      channel.subscribe('stage.layer.update', this.prepareRefresh),
     ];
   },
   componentWillUnmount: function() {
-    this.props.signal.layerContentChanged.remove(this.prepareRefresh);
-
     this.subscriptions.forEach(function(subscription) {
       subscription.unsubscribe();
     });

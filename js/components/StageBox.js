@@ -102,7 +102,7 @@ var StageBox = React.createClass({
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10) {
-      this.props.signal.pixelSelected.dispatch(point);
+      channel.publish('stage.pixel.select', {point: point});
     }
 
     if(this.state.mousedown === true) {
@@ -158,7 +158,7 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
-        this.props.signal.pixelsMoved.dispatch(distance);
+        channel.publish('stage.tool.move', {distance: distance});
         if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
@@ -230,9 +230,9 @@ var StageBox = React.createClass({
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
       if(editor.selection.isActive) {
-        if(editor.selection.contains(point)) this.props.signal.bucketUsed.dispatch(point);
+        if(editor.selection.contains(point)) channel.publish('stage.tool.paintbucket', {point: point});
       }
-      else this.props.signal.bucketUsed.dispatch(point);
+      else channel.publish('stage.tool.paintbucket', {point: point});
     }
   },
   useBrightnessTool: function() {

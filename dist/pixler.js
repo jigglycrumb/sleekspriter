@@ -3,23 +3,7 @@
 var Signal = signals.Signal;
 var signal = {
 
-  file: {
-    layerAdded: new Signal(),
-    layerRemoved: new Signal(),
-  },
 
-  frameContentChanged: new Signal(),
-
-  layerAdded: new Signal(),
-  layerRemoved: new Signal(),
-  layerContentChanged: new Signal(),
-
-  pixelSelected: new Signal(),
-  pixelFilled: new Signal(),
-  pixelCleared: new Signal(),
-
-  pixelsMoved: new Signal(),
-  bucketUsed: new Signal(),
 };
 /*
 var oldFn = signals.prototype.dispatch;
@@ -172,13 +156,10 @@ var File = function() {
     layer.name = data.name;
   });
 
-  // signal handlers
-
-  signal.file.layerAdded.add(function(layer) {
-
+  channel.subscribe('file.layer.add', function(data, envelope) {
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === layer) {
+      if(self.layers[i].id === data.layer) {
         index = i;
         break;
       }
@@ -192,18 +173,18 @@ var File = function() {
 
     self.layers.splice(index, 0, newLayer);
     fixLayerZ(editor.frame);
-    signal.layerAdded.dispatch(newId);
+
+    channel.publish('app.layer.add', {layer: newId});
   });
 
-  signal.file.layerRemoved.add(function(layer) {
-
+  channel.subscribe('file.layer.delete', function(data, envelope) {
     // delete layer pixels
-    self.deletePixelsOfLayer(layer);
+    self.deletePixelsOfLayer(data.layer);
 
     // get layer array index of all layers
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === layer) {
+      if(self.layers[i].id === data.layer) {
         index = i;
         break;
       }
@@ -213,7 +194,7 @@ var File = function() {
     var frameLayers = _.where(self.layers, {frame: editor.frame});
     var fIndex = 0;
     for(var i=0; i < frameLayers.length; i++) {
-      if(frameLayers[i].id === layer) {
+      if(frameLayers[i].id === data.layer) {
         fIndex = i;
         break;
       }
@@ -229,7 +210,8 @@ var File = function() {
     // delete layer, reorder z indices, inform App of update
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame);
-    signal.layerRemoved.dispatch(shouldSelectLayer);
+
+    channel.publish('app.layer.delete', {layer: shouldSelectLayer});
   });
 };
 var Stage = function() {
@@ -297,7 +279,7 @@ var Stage = function() {
         ctx.fillStyle = color.hexString();
         ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.pixelFilled.dispatch(layer, x, y, color);
+        if(dispatch === true) channel.publish('stage.pixel.fill', {layer: layer, x: x, y: y, color: color.hexString()});
       },
       clear: function(layer, x, y) {
 
@@ -312,7 +294,7 @@ var Stage = function() {
 
         ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
 
-        if(dispatch === true) signal.pixelCleared.dispatch(layer, x, y);
+        if(dispatch === true) channel.publish('stage.pixel.clear', {layer: layer, x: x, y: y});
       },
       lighten: function(layer, x, y) {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
@@ -469,26 +451,27 @@ var Editor = function(signal) {
     self.layer = data.layer;
   });
 
-
-
-  // signal handlers
-
-  signal.pixelSelected.add(function(point) {
-    self.pixel = point;
+  channel.subscribe('stage.pixel.select', function(data, envelope) {
+    self.pixel = data.point;
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
+  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+    self.buildAutoPalette();
+    self.deletePixel(data.layer, data.x, data.y);
+    channel.publish('stage.layer.update', {layer: data.layer});
+  });
 
+  channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // update sprite palette
-    self.palettes.sprite.colors.push(color.hexString());
+    self.palettes.sprite.colors.push(data.color);
     self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
 
     // add/replace pixel
-    var c = color.rgb(),
+    var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(layer, x, y, c.r, c.g, c.b, a);
-    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
+    var newPixel = new Pixel(data.layer, data.x, data.y, c.r, c.g, c.b, a);
+    var oldPixel = _.findWhere(self.pixels, {layer: data.layer, x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
@@ -498,7 +481,7 @@ var Editor = function(signal) {
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
-        if(p.layer == layer && p.x == x && p.y == y) {
+        if(p.layer == data.layer && p.x == data.x && p.y == data.y) {
           p.r = c.r;
           p.g = c.g;
           p.b = c.b;
@@ -510,47 +493,17 @@ var Editor = function(signal) {
 
     self.saveChanges(); // TODO: check if call can be removed
 
-    signal.layerContentChanged.dispatch(layer);
+    channel.publish('stage.layer.update', {layer: data.layer});
   });
 
-  signal.pixelCleared.add(function(layer, x, y) {
-    self.buildAutoPalette();
-    self.deletePixel(layer, x, y);
-    signal.layerContentChanged.dispatch(layer);
-  });
 
-  signal.pixelsMoved.add(function(distance) {
-
-    if(self.selection.isActive) {
-      self.selection.pixels.forEach(function(pixel) {
-        //if(pixel.layer == self.layer && self.selection.contains(pixel)) {
-          var target = wrapPixel(pixel, distance);
-          pixel.x = target.x;
-          pixel.y = target.y;
-        //}
-      });
-    }
-    else {
-      self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer) {
-          var target = wrapPixel(pixel, distance);
-          pixel.x = target.x;
-          pixel.y = target.y;
-        }
-      });
-    }
-
-    self.saveChanges();
-  });
-
-  signal.bucketUsed.add(function(point) {
-
-    var initialPixel = _.findWhere(self.pixels, {x: point.x, y: point.y, layer: self.layer}),
+  channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
+    var initialPixel = _.findWhere(self.pixels, {x: data.point.x, y: data.point.y, layer: self.layer}),
         initialColor,
         fillColor = self.color;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
-      initialPixel = {layer: self.layer, x: point.x, y: point.y, r: 0, g: 0, b: 0, a: 0};
+      initialPixel = {layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
     }
 
     initialColor = new Color({r: initialPixel.r, g: initialPixel.g, b: initialPixel.b});
@@ -585,8 +538,29 @@ var Editor = function(signal) {
     rFill(initialPixel);
   });
 
-  this.selection.init(this, signal);
+  channel.subscribe('stage.tool.move', function(data, envelope) {
+    if(self.selection.isActive) {
+      self.selection.pixels.forEach(function(pixel) {
+        var target = wrapPixel(pixel, data.distance);
+        pixel.x = target.x;
+        pixel.y = target.y;
+      });
+    }
+    else {
+      self.pixels.forEach(function(pixel) {
+        if(pixel.layer == self.layer) {
+          var target = wrapPixel(pixel, data.distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
+        }
+      });
+    }
 
+    self.saveChanges();
+  });
+
+  // init subclasses
+  this.selection.init(this, signal);
   this.brightnessTool.init();
 };
 
@@ -927,7 +901,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -960,7 +934,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -994,7 +968,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -1027,7 +1001,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
           case 'ZoomTool':
@@ -1064,7 +1038,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -1088,7 +1062,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -1112,7 +1086,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -1136,7 +1110,7 @@ var Hotkeys = function(signal, editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else signal.pixelsMoved.dispatch(distance);
+            else channel.publish('stage.tool.move', {distance: distance});
             stage.layer.refresh();
             break;
         }
@@ -1282,7 +1256,7 @@ var CopyFrameMixin = {
     frame: React.PropTypes.number.isRequired
   },
   componentDidMount: function() {
-    this.props.signal.frameContentChanged.add(this.prepareRefresh);
+    channel.subscribe('stage.frame.update', this.prepareRefresh);
   },
   getInitialState: function() {
     return {
@@ -1357,18 +1331,6 @@ var App = React.createClass({
     );
   },
   componentDidMount: function() {
-    var self = this,
-        subscriptions = [
-          'pixelSelected',
-          'layerRemoved',
-          'layerAdded',
-          'pixelsMoved',
-        ];
-
-    subscriptions.forEach(function(item) {
-      self.props.signal[item].add(self.updateProps);
-    });
-
 
     channel.subscribe('stage.grid.toggle', this.updateProps);
     channel.subscribe('stage.zoom.select', this.updateProps);
@@ -1383,9 +1345,15 @@ var App = React.createClass({
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
 
+    //channel.subscribe('app.layer.add', this.updateProps);
+
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     channel.subscribe('file.layer.name.select', this.updateProps);
+
+
+    channel.subscribe('stage.pixel.select', this.updateProps);
+    channel.subscribe('stage.tool.move', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
@@ -1846,7 +1814,7 @@ var StageBox = React.createClass({
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10) {
-      this.props.signal.pixelSelected.dispatch(point);
+      channel.publish('stage.pixel.select', {point: point});
     }
 
     if(this.state.mousedown === true) {
@@ -1902,7 +1870,7 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
-        this.props.signal.pixelsMoved.dispatch(distance);
+        channel.publish('stage.tool.move', {distance: distance});
         if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
@@ -1974,9 +1942,9 @@ var StageBox = React.createClass({
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
       if(editor.selection.isActive) {
-        if(editor.selection.contains(point)) this.props.signal.bucketUsed.dispatch(point);
+        if(editor.selection.contains(point)) channel.publish('stage.tool.paintbucket', {point: point});
       }
-      else this.props.signal.bucketUsed.dispatch(point);
+      else channel.publish('stage.tool.paintbucket', {point: point});
     }
   },
   useBrightnessTool: function() {
@@ -2474,8 +2442,8 @@ var LayerBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerAdded.add(this.shouldSelectLayer);
-    this.props.signal.layerRemoved.add(this.shouldSelectLayer);
+    channel.subscribe('app.layer.add', this.shouldSelectLayer);
+    channel.subscribe('app.layer.delete', this.shouldSelectLayer);
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
@@ -2486,14 +2454,14 @@ var LayerBox = React.createClass({
     var h = this.calculateHeight();
     this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
-  dispatchLayerAdded: function(event) {
-    this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
+  dispatchLayerAdded: function() {
+    channel.publish('file.layer.add', {layer: this.props.editor.layer});
   },
-  dispatchLayerRemoved: function(event) {
-    this.props.signal.file.layerRemoved.dispatch(this.props.editor.layer);
+  dispatchLayerRemoved: function() {
+    channel.publish('file.layer.delete', {layer: this.props.editor.layer});
   },
-  shouldSelectLayer: function(layer) {
-    this.setState({ shouldSelectLayer: layer });
+  shouldSelectLayer: function(data) {
+    this.setState({ shouldSelectLayer: data.layer });
   },
   calculateHeight: function() {
     var areaRightHeight = document.querySelector('.area.right').clientHeight,
@@ -2568,16 +2536,13 @@ var LayerBoxLayerPreview = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-
     this.subscriptions = [
       channel.subscribe('app.frame.select', this.prepareRefresh),
-      channel.subscribe('app.box.toggle', this.prepareRefresh)
+      channel.subscribe('app.box.toggle', this.prepareRefresh),
+      channel.subscribe('stage.layer.update', this.prepareRefresh),
     ];
   },
   componentWillUnmount: function() {
-    this.props.signal.layerContentChanged.remove(this.prepareRefresh);
-
     this.subscriptions.forEach(function(subscription) {
       subscription.unsubscribe();
     });
@@ -2655,14 +2620,12 @@ var OffscreenFrameCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
-
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.pixelSelected.add(this.getPixelColor);
-
     this.subscriptions = [
       channel.subscribe('app.frame.select', this.prepareRefresh),
       channel.subscribe('file.layer.opacity.select', this.prepareRefresh),
       channel.subscribe('file.layer.visibility.toggle', this.prepareRefresh),
+      channel.subscribe('stage.layer.update', this.prepareRefresh),
+      channel.subscribe('stage.pixel.select', this.getPixelColor),
     ];
   },
   componentDidUpdate: function() {
@@ -2678,7 +2641,7 @@ var OffscreenFrameCanvas = React.createClass({
           ctx.drawImage(sourceCanvas, 0, 0, this.props.file.size.width, this.props.file.size.height);
         }
       }
-      this.props.signal.frameContentChanged.dispatch(this.props.frame);
+      channel.publish('stage.frame.update', {frame: this.props.frame});
     }
   },
   prepareRefresh: function() {
@@ -2686,10 +2649,10 @@ var OffscreenFrameCanvas = React.createClass({
       this.setState({needsRefresh: true});
     }
   },
-  getPixelColor: function(point) {
+  getPixelColor: function(data) {
     if(this.props.frame == this.props.editor.frame) {
       var ctx = this.getDOMNode().getContext('2d'),
-          px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
+          px = ctx.getImageData(data.point.x-1, data.point.y-1, 1, 1).data,
           color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
       editor.pixelColor = color;

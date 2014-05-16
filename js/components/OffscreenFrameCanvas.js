@@ -22,14 +22,12 @@ var OffscreenFrameCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
-
-    this.props.signal.layerContentChanged.add(this.prepareRefresh);
-    this.props.signal.pixelSelected.add(this.getPixelColor);
-
     this.subscriptions = [
       channel.subscribe('app.frame.select', this.prepareRefresh),
       channel.subscribe('file.layer.opacity.select', this.prepareRefresh),
       channel.subscribe('file.layer.visibility.toggle', this.prepareRefresh),
+      channel.subscribe('stage.layer.update', this.prepareRefresh),
+      channel.subscribe('stage.pixel.select', this.getPixelColor),
     ];
   },
   componentDidUpdate: function() {
@@ -45,7 +43,7 @@ var OffscreenFrameCanvas = React.createClass({
           ctx.drawImage(sourceCanvas, 0, 0, this.props.file.size.width, this.props.file.size.height);
         }
       }
-      this.props.signal.frameContentChanged.dispatch(this.props.frame);
+      channel.publish('stage.frame.update', {frame: this.props.frame});
     }
   },
   prepareRefresh: function() {
@@ -53,10 +51,10 @@ var OffscreenFrameCanvas = React.createClass({
       this.setState({needsRefresh: true});
     }
   },
-  getPixelColor: function(point) {
+  getPixelColor: function(data) {
     if(this.props.frame == this.props.editor.frame) {
       var ctx = this.getDOMNode().getContext('2d'),
-          px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
+          px = ctx.getImageData(data.point.x-1, data.point.y-1, 1, 1).data,
           color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
       editor.pixelColor = color;

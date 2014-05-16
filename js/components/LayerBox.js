@@ -30,8 +30,8 @@ var LayerBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.props.signal.layerAdded.add(this.shouldSelectLayer);
-    this.props.signal.layerRemoved.add(this.shouldSelectLayer);
+    channel.subscribe('app.layer.add', this.shouldSelectLayer);
+    channel.subscribe('app.layer.delete', this.shouldSelectLayer);
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
@@ -42,14 +42,14 @@ var LayerBox = React.createClass({
     var h = this.calculateHeight();
     this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
-  dispatchLayerAdded: function(event) {
-    this.props.signal.file.layerAdded.dispatch(this.props.editor.layer);
+  dispatchLayerAdded: function() {
+    channel.publish('file.layer.add', {layer: this.props.editor.layer});
   },
-  dispatchLayerRemoved: function(event) {
-    this.props.signal.file.layerRemoved.dispatch(this.props.editor.layer);
+  dispatchLayerRemoved: function() {
+    channel.publish('file.layer.delete', {layer: this.props.editor.layer});
   },
-  shouldSelectLayer: function(layer) {
-    this.setState({ shouldSelectLayer: layer });
+  shouldSelectLayer: function(data) {
+    this.setState({ shouldSelectLayer: data.layer });
   },
   calculateHeight: function() {
     var areaRightHeight = document.querySelector('.area.right').clientHeight,

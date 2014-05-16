@@ -138,26 +138,27 @@ var Editor = function(signal) {
     self.layer = data.layer;
   });
 
-
-
-  // signal handlers
-
-  signal.pixelSelected.add(function(point) {
-    self.pixel = point;
+  channel.subscribe('stage.pixel.select', function(data, envelope) {
+    self.pixel = data.point;
   });
 
-  signal.pixelFilled.add(function(layer, x, y, color) {
+  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+    self.buildAutoPalette();
+    self.deletePixel(data.layer, data.x, data.y);
+    channel.publish('stage.layer.update', {layer: data.layer});
+  });
 
+  channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // update sprite palette
-    self.palettes.sprite.colors.push(color.hexString());
+    self.palettes.sprite.colors.push(data.color);
     self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
 
     // add/replace pixel
-    var c = color.rgb(),
+    var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(layer, x, y, c.r, c.g, c.b, a);
-    var oldPixel = _.findWhere(self.pixels, {layer: layer, x: x, y: y});
+    var newPixel = new Pixel(data.layer, data.x, data.y, c.r, c.g, c.b, a);
+    var oldPixel = _.findWhere(self.pixels, {layer: data.layer, x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', layer, x, y, color.rgbString());
       self.pixels.push(newPixel);
@@ -167,7 +168,7 @@ var Editor = function(signal) {
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
-        if(p.layer == layer && p.x == x && p.y == y) {
+        if(p.layer == data.layer && p.x == data.x && p.y == data.y) {
           p.r = c.r;
           p.g = c.g;
           p.b = c.b;
@@ -179,47 +180,17 @@ var Editor = function(signal) {
 
     self.saveChanges(); // TODO: check if call can be removed
 
-    signal.layerContentChanged.dispatch(layer);
+    channel.publish('stage.layer.update', {layer: data.layer});
   });
 
-  signal.pixelCleared.add(function(layer, x, y) {
-    self.buildAutoPalette();
-    self.deletePixel(layer, x, y);
-    signal.layerContentChanged.dispatch(layer);
-  });
 
-  signal.pixelsMoved.add(function(distance) {
-
-    if(self.selection.isActive) {
-      self.selection.pixels.forEach(function(pixel) {
-        //if(pixel.layer == self.layer && self.selection.contains(pixel)) {
-          var target = wrapPixel(pixel, distance);
-          pixel.x = target.x;
-          pixel.y = target.y;
-        //}
-      });
-    }
-    else {
-      self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer) {
-          var target = wrapPixel(pixel, distance);
-          pixel.x = target.x;
-          pixel.y = target.y;
-        }
-      });
-    }
-
-    self.saveChanges();
-  });
-
-  signal.bucketUsed.add(function(point) {
-
-    var initialPixel = _.findWhere(self.pixels, {x: point.x, y: point.y, layer: self.layer}),
+  channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
+    var initialPixel = _.findWhere(self.pixels, {x: data.point.x, y: data.point.y, layer: self.layer}),
         initialColor,
         fillColor = self.color;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
-      initialPixel = {layer: self.layer, x: point.x, y: point.y, r: 0, g: 0, b: 0, a: 0};
+      initialPixel = {layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
     }
 
     initialColor = new Color({r: initialPixel.r, g: initialPixel.g, b: initialPixel.b});
@@ -254,8 +225,29 @@ var Editor = function(signal) {
     rFill(initialPixel);
   });
 
-  this.selection.init(this, signal);
+  channel.subscribe('stage.tool.move', function(data, envelope) {
+    if(self.selection.isActive) {
+      self.selection.pixels.forEach(function(pixel) {
+        var target = wrapPixel(pixel, data.distance);
+        pixel.x = target.x;
+        pixel.y = target.y;
+      });
+    }
+    else {
+      self.pixels.forEach(function(pixel) {
+        if(pixel.layer == self.layer) {
+          var target = wrapPixel(pixel, data.distance);
+          pixel.x = target.x;
+          pixel.y = target.y;
+        }
+      });
+    }
 
+    self.saveChanges();
+  });
+
+  // init subclasses
+  this.selection.init(this, signal);
   this.brightnessTool.init();
 };
 
