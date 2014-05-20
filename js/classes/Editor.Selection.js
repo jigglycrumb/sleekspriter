@@ -20,6 +20,10 @@ Editor.prototype.selection.init = function(editor) {
     self.pixels = [];
   };
 
+  function pixelHasBeenSelected(pixel) {
+    return self.contains(pixel) && pixel.layer == editor.layer;
+  };
+
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -28,13 +32,8 @@ Editor.prototype.selection.init = function(editor) {
           break;
         default:
           // move selected pixels from editor.pixels to editor.selection.pixels
-          self.pixels = _.filter(editor.pixels, function(pixel) {
-              return self.contains(pixel);
-          });
-
-          editor.pixels = _.reject(editor.pixels, function(pixel) {
-              return self.contains(pixel);
-          });
+          self.pixels = _.filter(editor.pixels, pixelHasBeenSelected);
+          editor.pixels = _.reject(editor.pixels, pixelHasBeenSelected);
           break;
       }
     }

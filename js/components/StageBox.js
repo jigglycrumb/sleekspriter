@@ -158,8 +158,18 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
-        channel.publish('stage.tool.move', {distance: distance});
-        if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
+
+
+        if(editor.selection.isActive) {
+          channel.publish('stage.selection.move.pixels', {distance: distance});
+          channel.publish('stage.selection.move.bounds', {distance: distance});
+        }
+        else channel.publish('stage.tool.move', {distance: distance});
+        //stage.layer.refresh();
+
+
+        //channel.publish('stage.tool.move', {distance: distance});
+        //if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
 
@@ -272,14 +282,21 @@ var StageBox = React.createClass({
       this.updateRectangularSelection(distance);
 
       editor.selection.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
-            target = wrapPixel(pixel, distance);
-        stage.pixel.fill(layer, target.x, target.y, color);
+
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+
+        //if(pixel.layer == layer) {
+          var target = wrapPixel(pixel, distance);
+          stage.pixel.fill(layer, target.x, target.y, color);
+        //}
+        //else stage.pixel.fill(layer, pixel.x, pixel.y, color);
       });
 
       editor.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-        stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        if(pixel.layer == layer) {
+          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+          stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        }
       });
     }
     else {

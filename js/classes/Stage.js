@@ -50,6 +50,8 @@ var Stage = function() {
     pixel: {
       fill: function(layer, x, y, color, forceDispatch) {
 
+        //console.log('filling pixel', layer, x, y);
+
         var dispatch = forceDispatch || arguments.length == 0 ? true : false,
             layer = layer || editor.layer,
             x = x || editor.pixel.x,

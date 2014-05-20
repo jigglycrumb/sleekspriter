@@ -254,6 +254,8 @@ var Stage = function() {
     pixel: {
       fill: function(layer, x, y, color, forceDispatch) {
 
+        //console.log('filling pixel', layer, x, y);
+
         var dispatch = forceDispatch || arguments.length == 0 ? true : false,
             layer = layer || editor.layer,
             x = x || editor.pixel.x,
@@ -686,6 +688,10 @@ Editor.prototype.selection.init = function(editor) {
     self.pixels = [];
   };
 
+  function pixelHasBeenSelected(pixel) {
+    return self.contains(pixel) && pixel.layer == editor.layer;
+  };
+
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -694,13 +700,8 @@ Editor.prototype.selection.init = function(editor) {
           break;
         default:
           // move selected pixels from editor.pixels to editor.selection.pixels
-          self.pixels = _.filter(editor.pixels, function(pixel) {
-              return self.contains(pixel);
-          });
-
-          editor.pixels = _.reject(editor.pixels, function(pixel) {
-              return self.contains(pixel);
-          });
+          self.pixels = _.filter(editor.pixels, pixelHasBeenSelected);
+          editor.pixels = _.reject(editor.pixels, pixelHasBeenSelected);
           break;
       }
     }
@@ -1858,8 +1859,18 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
-        channel.publish('stage.tool.move', {distance: distance});
-        if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
+
+
+        if(editor.selection.isActive) {
+          channel.publish('stage.selection.move.pixels', {distance: distance});
+          channel.publish('stage.selection.move.bounds', {distance: distance});
+        }
+        else channel.publish('stage.tool.move', {distance: distance});
+        //stage.layer.refresh();
+
+
+        //channel.publish('stage.tool.move', {distance: distance});
+        //if(selectionActive) channel.publish('stage.selection.move.bounds', {distance: distance});
         break;
 
 
@@ -1972,14 +1983,21 @@ var StageBox = React.createClass({
       this.updateRectangularSelection(distance);
 
       editor.selection.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
-            target = wrapPixel(pixel, distance);
-        stage.pixel.fill(layer, target.x, target.y, color);
+
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+
+        //if(pixel.layer == layer) {
+          var target = wrapPixel(pixel, distance);
+          stage.pixel.fill(layer, target.x, target.y, color);
+        //}
+        //else stage.pixel.fill(layer, pixel.x, pixel.y, color);
       });
 
       editor.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-        stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        if(pixel.layer == layer) {
+          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+          stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        }
       });
     }
     else {
@@ -2700,6 +2718,8 @@ var SelectionPattern = React.createClass({
     ctx.fillRect(0, frame*(size/10), size, size/2);
   },
 });
+// Debug helpers
+
 function showOffScreen() {
   document.querySelector('.area.offscreen').style.display = 'block';
 };
@@ -2707,6 +2727,27 @@ function showOffScreen() {
 function hideOffScreen() {
   document.querySelector('.area.offscreen').style.display = 'none';
 };
+
+function redrawFromFile() {
+  console.log('redrawing from file');
+
+  file.layers.forEach(function(layer) {
+    var canvas = document.getElementById('StageBoxLayer-'+layer.id);
+        canvas.width = canvas.width;
+  });
+
+  var frameLayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
+  //console.log(frameLayers);
+
+  file.pixels.forEach(function(pixel) {
+    if(inArray(frameLayers, pixel.layer)) {
+      var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
+      stage.pixel.fill(pixel.layer, pixel.x, pixel.y, color);
+    }
+  });
+};
+
+// -----------------------------------------------------------------------
 
 function NodeList2Array(NodeList) {
   //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
@@ -2784,7 +2825,16 @@ function minutely() {
 
 // move this into window.onload later
 
-var channel = postal.channel();
+var channel = postal.channel('pixler');
+var wireTap = new postal.diagnostics.DiagnosticsWireTap({
+    name: "console",
+    filters: [
+        //{ channel: "pixler" },
+        //{ data: { foo: /bar/ } },
+        { topic: "stage.pixel.fill" }
+    ],
+    //active: false,
+});
 
 var file = new File();
 var stage = new Stage();
