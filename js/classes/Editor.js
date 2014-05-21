@@ -157,21 +157,21 @@ var Editor = function() {
     var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(data.layer, data.x, data.y, c.r, c.g, c.b, a);
+    var newPixel = new Pixel(data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.pixels, {layer: data.layer, x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', layer, x, y, color.rgbString());
+      //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.pixels.push(newPixel);
     }
     else {
-      //console.log('replacing pixel', layer, x, y, color.rgbString());
+      //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < self.pixels.length; i++) {
         var p = self.pixels[i];
         if(p.layer == data.layer && p.x == data.x && p.y == data.y) {
-          p.r = c.r;
-          p.g = c.g;
-          p.b = c.b;
+          p.r = c.red();
+          p.g = c.green();
+          p.b = c.blue();
           p.a = a;
           break;
         }

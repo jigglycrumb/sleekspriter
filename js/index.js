@@ -113,7 +113,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         //{ data: { foo: /bar/ } },
         { topic: "stage.pixel.fill" }
     ],
-    //active: false,
+    active: false,
 });
 
 var file = new File();
