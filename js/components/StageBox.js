@@ -169,7 +169,7 @@ var StageBox = React.createClass({
 
 
   getLayerPixelColor: function(event) {
-    var layer = file.getLayerById(this.props.editor.layer),
+    var layer = file.getLayerById(this.props.editor.layers.selected),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
@@ -236,7 +236,7 @@ var StageBox = React.createClass({
   useBrightnessTool: function() {
     if(isLayerVisible()) {
 
-      var px = _.findWhere(editor.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y }),
+      var px = _.findWhere(editor.pixels, {layer: editor.layers.selected, x: editor.pixel.x, y: editor.pixel.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -259,7 +259,7 @@ var StageBox = React.createClass({
   },
   useMoveTool: function() {
 
-    var layer = editor.layer,
+    var layer = editor.layers.selected,
         distance = this.getMouseDownDistance(),
         canvas = document.getElementById('StageBoxLayer-'+layer);
 

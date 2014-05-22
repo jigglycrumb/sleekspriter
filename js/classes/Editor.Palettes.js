@@ -1,6 +1,26 @@
-Editor.prototype.palette = 'sprite';
+Editor.prototype.palettes = {};
+Editor.prototype.palettes.selected = 'sprite';
 
-Editor.prototype.palettes = {
+Editor.prototype.palettes.init = function() {
+  console.log('palette init');
+
+  var self = this;
+
+  channel.subscribe('app.palette.select', function(data, envelope) {
+    self.selected = data.palette;
+  });
+};
+
+Editor.prototype.palettes.buildAuto = function() {
+  var palette = [];
+  file.pixels.forEach(function(pixel) {
+    var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
+    palette.push(color);
+  });
+  this.available.sprite.colors = _.uniq(palette, false);
+};
+
+Editor.prototype.palettes.available = {
   sprite: {
     title: 'Sprite colours',
     short: 'Sprite',
@@ -97,14 +117,4 @@ Editor.prototype.palettes = {
              '#2c3000', '#4c501c', '#687034', '#848c4c', '#9ca864', '#b4c078', '#ccd488', '#e0ec9c',
              '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
   },
-};
-
-Editor.prototype.buildAutoPalette = function() {
-  var palette = [];
-  file.pixels.forEach(function(pixel) {
-    var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
-    palette.push(color);
-  });
-
-  this.palettes.sprite.colors = _.uniq(palette, false);
 };

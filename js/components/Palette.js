@@ -6,8 +6,8 @@ var Palette = React.createClass({
   },
   render: function() {
 
-    var palettes = this.props.editor.palettes,
-        palette = palettes[this.props.editor.palette];
+    var palettes = this.props.editor.palettes.available,
+        palette = palettes[this.props.editor.palettes.selected];
 
     return (
       <div className="palette">

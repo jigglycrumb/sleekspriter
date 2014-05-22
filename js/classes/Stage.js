@@ -13,7 +13,7 @@ var Stage = function() {
         });
 
         if(editor.selection.pixels.length > 0) {
-          var framelayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
+          var framelayers = editor.layers.getIds();
 
           editor.selection.pixels.forEach(function(px) {
             if(inArray(framelayers, px.layer)) stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
@@ -29,8 +29,8 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var layerPixels = _.where(editor.pixels, {layer: editor.layer}),
-            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layer});
+        var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
+            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected});
 
         this.clear();
 
@@ -43,7 +43,7 @@ var Stage = function() {
         });
       },
       clear: function() {
-        var c = document.getElementById('StageBoxLayer-'+editor.layer);
+        var c = document.getElementById('StageBoxLayer-'+editor.layers.selected);
         c.width = c.width;
       }
     },
@@ -53,7 +53,7 @@ var Stage = function() {
         //console.log('filling pixel', layer, x, y);
 
         var dispatch = forceDispatch || arguments.length == 0 ? true : false,
-            layer = layer || editor.layer,
+            layer = layer || editor.layers.selected,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             color = color || editor.color,
@@ -70,7 +70,7 @@ var Stage = function() {
       clear: function(layer, x, y) {
 
         var dispatch = arguments.length == 0 ? true : false,
-            layer = layer || editor.layer,
+            layer = layer || editor.layers.selected,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),

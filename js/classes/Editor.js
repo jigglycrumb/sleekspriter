@@ -7,14 +7,6 @@ var Editor = function() {
   this.frame = 1;
   this.lastFrame = 1;
 
-  this.layer = null;
-
-  this.selectTopLayer = function() {
-    var frameLayers = _.where(file.layers, {frame: this.frame});
-    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    channel.publish('app.layer.select', {layer: topLayer.id});
-  };
-
   this.zoom = 10;
   this.grid = true;
   this.pixel = new Point(0, 0);
@@ -90,10 +82,8 @@ var Editor = function() {
   };
 
   this.saveChanges = function() {
-    //console.log('saving changes');
-
     // grab all old pixels of current frame
-    var frameLayers = _.pluck(this.pixels, 'layer');
+    var frameLayers = this.layers.getIds();
     var pixels = this.pixels.slice(0); // slice clones the array
     file.pixels.forEach(function(pixel) {
       if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
@@ -112,12 +102,8 @@ var Editor = function() {
   channel.subscribe('app.frame.select', function(data, envelope) {
     self.saveChanges();
     self.frame = parseInt(data.frame);
-    self.selectTopLayer();
+    self.layers.selectTop();
     self.pixels = getFramePixels();
-  });
-
-  channel.subscribe('app.palette.select', function(data, envelope) {
-    self.palette = data.palette;
   });
 
   channel.subscribe('app.tool.select', function(data, envelope) {
@@ -134,24 +120,20 @@ var Editor = function() {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
-    self.layer = data.layer;
-  });
-
   channel.subscribe('stage.pixel.select', function(data, envelope) {
     self.pixel = data.point;
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    self.buildAutoPalette();
+    self.palettes.buildAuto();
     self.deletePixel(data.layer, data.x, data.y);
     channel.publish('stage.layer.update', {layer: data.layer});
   });
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // update sprite palette
-    self.palettes.sprite.colors.push(data.color);
-    self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
+    self.palettes.available.sprite.colors.push(data.color);
+    self.palettes.available.sprite.colors = _.uniq(self.palettes.available.sprite.colors, false);
 
     // add/replace pixel
     var c = new Color(data.color),
@@ -247,8 +229,10 @@ var Editor = function() {
   });
 
   // init subclasses
+  this.layers.init();
   this.selection.init(this);
   this.brightnessTool.init();
+  this.palettes.init();
 };
 
 Editor.prototype = {}; //Object.create(null);

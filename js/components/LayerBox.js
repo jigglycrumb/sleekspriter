@@ -43,10 +43,10 @@ var LayerBox = React.createClass({
     this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
   dispatchLayerAdded: function() {
-    channel.publish('file.layer.add', {layer: this.props.editor.layer});
+    channel.publish('file.layer.add', {layer: this.props.editor.layers.selected});
   },
   dispatchLayerRemoved: function() {
-    channel.publish('file.layer.delete', {layer: this.props.editor.layer});
+    channel.publish('file.layer.delete', {layer: this.props.editor.layers.selected});
   },
   shouldSelectLayer: function(data) {
     this.setState({ shouldSelectLayer: data.layer });

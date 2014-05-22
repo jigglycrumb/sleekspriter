@@ -217,7 +217,7 @@ var Stage = function() {
         });
 
         if(editor.selection.pixels.length > 0) {
-          var framelayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
+          var framelayers = editor.layers.getIds();
 
           editor.selection.pixels.forEach(function(px) {
             if(inArray(framelayers, px.layer)) stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
@@ -233,8 +233,8 @@ var Stage = function() {
     },
     layer: {
       refresh: function() {
-        var layerPixels = _.where(editor.pixels, {layer: editor.layer}),
-            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layer});
+        var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
+            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected});
 
         this.clear();
 
@@ -247,7 +247,7 @@ var Stage = function() {
         });
       },
       clear: function() {
-        var c = document.getElementById('StageBoxLayer-'+editor.layer);
+        var c = document.getElementById('StageBoxLayer-'+editor.layers.selected);
         c.width = c.width;
       }
     },
@@ -257,7 +257,7 @@ var Stage = function() {
         //console.log('filling pixel', layer, x, y);
 
         var dispatch = forceDispatch || arguments.length == 0 ? true : false,
-            layer = layer || editor.layer,
+            layer = layer || editor.layers.selected,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             color = color || editor.color,
@@ -274,7 +274,7 @@ var Stage = function() {
       clear: function(layer, x, y) {
 
         var dispatch = arguments.length == 0 ? true : false,
-            layer = layer || editor.layer,
+            layer = layer || editor.layers.selected,
             x = x || editor.pixel.x,
             y = y || editor.pixel.y,
             ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
@@ -309,14 +309,6 @@ var Editor = function() {
 
   this.frame = 1;
   this.lastFrame = 1;
-
-  this.layer = null;
-
-  this.selectTopLayer = function() {
-    var frameLayers = _.where(file.layers, {frame: this.frame});
-    var topLayer = _.max(frameLayers, function(layer) { return layer.z; });
-    channel.publish('app.layer.select', {layer: topLayer.id});
-  };
 
   this.zoom = 10;
   this.grid = true;
@@ -393,10 +385,8 @@ var Editor = function() {
   };
 
   this.saveChanges = function() {
-    //console.log('saving changes');
-
     // grab all old pixels of current frame
-    var frameLayers = _.pluck(this.pixels, 'layer');
+    var frameLayers = this.layers.getIds();
     var pixels = this.pixels.slice(0); // slice clones the array
     file.pixels.forEach(function(pixel) {
       if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
@@ -415,12 +405,8 @@ var Editor = function() {
   channel.subscribe('app.frame.select', function(data, envelope) {
     self.saveChanges();
     self.frame = parseInt(data.frame);
-    self.selectTopLayer();
+    self.layers.selectTop();
     self.pixels = getFramePixels();
-  });
-
-  channel.subscribe('app.palette.select', function(data, envelope) {
-    self.palette = data.palette;
   });
 
   channel.subscribe('app.tool.select', function(data, envelope) {
@@ -437,24 +423,20 @@ var Editor = function() {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
-    self.layer = data.layer;
-  });
-
   channel.subscribe('stage.pixel.select', function(data, envelope) {
     self.pixel = data.point;
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    self.buildAutoPalette();
+    self.palettes.buildAuto();
     self.deletePixel(data.layer, data.x, data.y);
     channel.publish('stage.layer.update', {layer: data.layer});
   });
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // update sprite palette
-    self.palettes.sprite.colors.push(data.color);
-    self.palettes.sprite.colors = _.uniq(self.palettes.sprite.colors, false);
+    self.palettes.available.sprite.colors.push(data.color);
+    self.palettes.available.sprite.colors = _.uniq(self.palettes.available.sprite.colors, false);
 
     // add/replace pixel
     var c = new Color(data.color),
@@ -550,15 +532,61 @@ var Editor = function() {
   });
 
   // init subclasses
+  this.layers.init();
   this.selection.init(this);
   this.brightnessTool.init();
+  this.palettes.init();
 };
 
 Editor.prototype = {}; //Object.create(null);
 Editor.prototype.constructor = Editor;
-Editor.prototype.palette = 'sprite';
+Editor.prototype.layers = {};
+Editor.prototype.layers.selected = null;
+Editor.prototype.layers.frame = {};
 
-Editor.prototype.palettes = {
+Editor.prototype.layers.init = function() {
+  var self = this;
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
+    self.frame = _.where(file.layers, {frame: data.frame});
+  });
+
+  channel.subscribe('app.layer.select', function(data, envelope) {
+    self.selected = data.layer;
+  });
+};
+
+Editor.prototype.layers.getIds = function() {
+  return _.pluck(this.frame, 'id');
+};
+
+Editor.prototype.layers.selectTop = function() {
+  var topLayer = _.max(this.frame, function(layer) { return layer.z; });
+  channel.publish('app.layer.select', {layer: topLayer.id});
+};
+Editor.prototype.palettes = {};
+Editor.prototype.palettes.selected = 'sprite';
+
+Editor.prototype.palettes.init = function() {
+  console.log('palette init');
+
+  var self = this;
+
+  channel.subscribe('app.palette.select', function(data, envelope) {
+    self.selected = data.palette;
+  });
+};
+
+Editor.prototype.palettes.buildAuto = function() {
+  var palette = [];
+  file.pixels.forEach(function(pixel) {
+    var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
+    palette.push(color);
+  });
+  this.available.sprite.colors = _.uniq(palette, false);
+};
+
+Editor.prototype.palettes.available = {
   sprite: {
     title: 'Sprite colours',
     short: 'Sprite',
@@ -656,16 +684,6 @@ Editor.prototype.palettes = {
              '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
   },
 };
-
-Editor.prototype.buildAutoPalette = function() {
-  var palette = [];
-  file.pixels.forEach(function(pixel) {
-    var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
-    palette.push(color);
-  });
-
-  this.palettes.sprite.colors = _.uniq(palette, false);
-};
 Editor.prototype.selection = {};
 
 Editor.prototype.selection.bounds = false;
@@ -689,7 +707,7 @@ Editor.prototype.selection.init = function(editor) {
   };
 
   function pixelHasBeenSelected(pixel) {
-    return self.contains(pixel) && pixel.layer == editor.layer;
+    return self.contains(pixel) && pixel.layer == editor.layers.selected;
   };
 
   channel.subscribe('app.tool.select', function(data, envelope) {
@@ -1147,8 +1165,8 @@ Workspace.prototype.data = {
 Workspace.prototype.update = function() {
   this.data.tool = editor.tool;
   this.data.frame = editor.frame;
-  this.data.layer = editor.layer;
-  this.data.palette = editor.palette;
+  this.data.layer = editor.layers.selected;
+  this.data.palette = editor.palettes.selected;
   this.data.color = editor.color.hexString();
   this.data.grid = editor.grid;
   this.data.zoom = editor.zoom;
@@ -1179,8 +1197,8 @@ Workspace.prototype.setup = function() {
 
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
-  editor.layer = this.data.layer;
-  editor.palette = this.data.palette;
+  editor.layers.selected = this.data.layer;
+  editor.palettes.selected = this.data.palette;
   editor.color = new Color(this.data.color);
   editor.grid = this.data.grid;
   editor.zoom = this.data.zoom;
@@ -1365,8 +1383,8 @@ var Palette = React.createClass({
   },
   render: function() {
 
-    var palettes = this.props.editor.palettes,
-        palette = palettes[this.props.editor.palette];
+    var palettes = this.props.editor.palettes.available,
+        palette = palettes[this.props.editor.palettes.selected];
 
     return (
       <div className="palette">
@@ -1870,7 +1888,7 @@ var StageBox = React.createClass({
 
 
   getLayerPixelColor: function(event) {
-    var layer = file.getLayerById(this.props.editor.layer),
+    var layer = file.getLayerById(this.props.editor.layers.selected),
         ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
@@ -1937,7 +1955,7 @@ var StageBox = React.createClass({
   useBrightnessTool: function() {
     if(isLayerVisible()) {
 
-      var px = _.findWhere(editor.pixels, {layer: editor.layer, x: editor.pixel.x, y: editor.pixel.y }),
+      var px = _.findWhere(editor.pixels, {layer: editor.layers.selected, x: editor.pixel.x, y: editor.pixel.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -1960,7 +1978,7 @@ var StageBox = React.createClass({
   },
   useMoveTool: function() {
 
-    var layer = editor.layer,
+    var layer = editor.layers.selected,
         distance = this.getMouseDownDistance(),
         canvas = document.getElementById('StageBoxLayer-'+layer);
 
@@ -2449,10 +2467,10 @@ var LayerBox = React.createClass({
     this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
   },
   dispatchLayerAdded: function() {
-    channel.publish('file.layer.add', {layer: this.props.editor.layer});
+    channel.publish('file.layer.add', {layer: this.props.editor.layers.selected});
   },
   dispatchLayerRemoved: function() {
-    channel.publish('file.layer.delete', {layer: this.props.editor.layer});
+    channel.publish('file.layer.delete', {layer: this.props.editor.layers.selected});
   },
   shouldSelectLayer: function(data) {
     this.setState({ shouldSelectLayer: data.layer });
@@ -2467,7 +2485,7 @@ var LayerBox = React.createClass({
 var LayerBoxLayer = React.createClass({
   render: function() {
     var cssClass = 'LayerBoxLayer';
-    if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
+    if(this.props.layer.id == this.props.editor.layers.selected) cssClass+= ' selected';
     if(this.props.visible === false) cssClass+= ' hidden';
 
     return (
@@ -2724,8 +2742,7 @@ function redrawFromFile() {
         canvas.width = canvas.width;
   });
 
-  var frameLayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
-  //console.log(frameLayers);
+  var frameLayers = editor.layers.getIds();
 
   file.pixels.forEach(function(pixel) {
     if(inArray(frameLayers, pixel.layer)) {
@@ -2787,7 +2804,7 @@ function wrapPixel(pixel, distance) {
 };
 
 function isLayerVisible() {
-  var layer = file.getLayerById(editor.layer);
+  var layer = file.getLayerById(editor.layers.selected);
   return layer.visible && layer.opacity > 0;
 };
 
@@ -2841,7 +2858,7 @@ window.onload = function() {
   file.fromJSONString(savedFile);
 
   // init auto palette
-  editor.buildAutoPalette();
+  editor.palettes.buildAuto();
 
   // render app
   React.renderComponent(
@@ -2864,7 +2881,7 @@ window.onload = function() {
   channel.publish('app.frame.select', {frame: frame});
 
   // select top-most layer
-  editor.selectTopLayer();
+  editor.layers.selectTop();
 
   // set inital zoom
   channel.publish('stage.zoom.select', {zoom: editor.zoom});

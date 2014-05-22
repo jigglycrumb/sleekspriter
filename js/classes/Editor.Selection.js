@@ -21,7 +21,7 @@ Editor.prototype.selection.init = function(editor) {
   };
 
   function pixelHasBeenSelected(pixel) {
-    return self.contains(pixel) && pixel.layer == editor.layer;
+    return self.contains(pixel) && pixel.layer == editor.layers.selected;
   };
 
   channel.subscribe('app.tool.select', function(data, envelope) {

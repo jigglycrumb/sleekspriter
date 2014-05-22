@@ -1,7 +1,7 @@
 var LayerBoxLayer = React.createClass({
   render: function() {
     var cssClass = 'LayerBoxLayer';
-    if(this.props.layer.id == this.props.editor.layer) cssClass+= ' selected';
+    if(this.props.layer.id == this.props.editor.layers.selected) cssClass+= ' selected';
     if(this.props.visible === false) cssClass+= ' hidden';
 
     return (

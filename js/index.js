@@ -16,8 +16,7 @@ function redrawFromFile() {
         canvas.width = canvas.width;
   });
 
-  var frameLayers = _.pluck(_.where(file.layers, {frame: editor.frame}), 'id');
-  //console.log(frameLayers);
+  var frameLayers = editor.layers.getIds();
 
   file.pixels.forEach(function(pixel) {
     if(inArray(frameLayers, pixel.layer)) {
@@ -79,7 +78,7 @@ function wrapPixel(pixel, distance) {
 };
 
 function isLayerVisible() {
-  var layer = file.getLayerById(editor.layer);
+  var layer = file.getLayerById(editor.layers.selected);
   return layer.visible && layer.opacity > 0;
 };
 
@@ -133,7 +132,7 @@ window.onload = function() {
   file.fromJSONString(savedFile);
 
   // init auto palette
-  editor.buildAutoPalette();
+  editor.palettes.buildAuto();
 
   // render app
   React.renderComponent(
@@ -156,7 +155,7 @@ window.onload = function() {
   channel.publish('app.frame.select', {frame: frame});
 
   // select top-most layer
-  editor.selectTopLayer();
+  editor.layers.selectTop();
 
   // set inital zoom
   channel.publish('stage.zoom.select', {zoom: editor.zoom});
