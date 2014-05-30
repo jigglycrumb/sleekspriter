@@ -169,7 +169,7 @@ window.onload = function() {
 
   // render app
   React.renderComponent(
-    <App editor={editor} pixel={stage.pixel} workspace={workspace} />
+    <App editor={editor} workspace={workspace} />
     , document.body);
 };
 

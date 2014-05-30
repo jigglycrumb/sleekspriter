@@ -72,6 +72,12 @@ var FoldableMixin = {
   }
 };
 /** @jsx React.DOM */
+var ResetStateMixin = {
+  resetState: function() {
+    this.setState(this.getInitialState());
+  },
+};
+/** @jsx React.DOM */
 var StageBoxCanvasMixin = {
   clear: function() {
     var canvas = this.getDOMNode();
@@ -96,7 +102,7 @@ var App = React.createClass({displayName: 'App',
           ToolBox( {editor:this.props.editor} )
         ),
         React.DOM.div( {className:"area center"}, 
-          StageBox( {editor:this.props.editor, pixel:this.props.pixel})
+          StageBox( {editor:this.props.editor} )
         ),
         React.DOM.div( {className:"area right"}, 
           React.DOM.div( {id:"layerboxhelper"}, 
@@ -159,9 +165,7 @@ var App = React.createClass({displayName: 'App',
   },
   updateProps: function() {
     //console.log('updating App props');
-    this.setProps({
-      editor: editor
-    });
+    this.setProps({editor: editor});
   },
   componentWillReceiveProps: function(props) {
     //console.log(props);
@@ -470,8 +474,15 @@ var LayerBoxLayer = React.createClass({displayName: 'LayerBoxLayer',
 });
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview',
+  mixins:[ResetStateMixin],
   propTypes: {
      id: React.PropTypes.number.isRequired // layer id
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false,
+      data: null,
+    };
   },
   render: function() {
 
@@ -483,7 +494,7 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
   },
   componentDidMount: function() {
     this.subscriptions = [
-      //channel.subscribe('stage.pixel.fill', this.prepareRefresh),
+      channel.subscribe('stage.pixel.fill', this.prepareRefresh),
       // channel.subscribe('app.frame.select', this.prepareRefresh),
       // channel.subscribe('app.box.toggle', this.prepareRefresh),
       // channel.subscribe('stage.layer.update', this.prepareRefresh),
@@ -494,19 +505,19 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
       subscription.unsubscribe();
     });
   },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    };
-  },
   dispatchLayerSelected: function() {
     channel.publish('app.layer.select', {layer: this.props.id});
   },
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
+  prepareRefresh: function(data) {
+    if(this.props.id == data.layer) {
+      this.setState({needsRefresh: true, data: data});
+    }
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
+      console.log(this.state.data);
+      //console.log('refreshing preview for layer '+this.props.id);
+      /*
       var w = this.getDOMNode().clientWidth,
           h = this.getDOMNode().clientHeight,
           sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.id);
@@ -514,8 +525,11 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
       this.getDOMNode().width = this.getDOMNode().width; // clear canvas
       this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
       this.setState({needsRefresh: false});
+
+      */
+      this.resetState();
     }
-  }
+  },
 });
 /** @jsx React.DOM */
 var MoveTool = React.createClass({displayName: 'MoveTool',
@@ -1758,7 +1772,7 @@ window.onload = function() {
 
   // render app
   React.renderComponent(
-    App( {editor:editor, pixel:stage.pixel, workspace:workspace} )
+    App( {editor:editor, workspace:workspace} )
     , document.body);
 };
 

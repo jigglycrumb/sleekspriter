@@ -1,7 +1,14 @@
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({
+  mixins:[ResetStateMixin],
   propTypes: {
      id: React.PropTypes.number.isRequired // layer id
+  },
+  getInitialState: function() {
+    return {
+      needsRefresh: false,
+      data: null,
+    };
   },
   render: function() {
 
@@ -13,7 +20,7 @@ var LayerBoxLayerPreview = React.createClass({
   },
   componentDidMount: function() {
     this.subscriptions = [
-      //channel.subscribe('stage.pixel.fill', this.prepareRefresh),
+      channel.subscribe('stage.pixel.fill', this.prepareRefresh),
       // channel.subscribe('app.frame.select', this.prepareRefresh),
       // channel.subscribe('app.box.toggle', this.prepareRefresh),
       // channel.subscribe('stage.layer.update', this.prepareRefresh),
@@ -24,19 +31,19 @@ var LayerBoxLayerPreview = React.createClass({
       subscription.unsubscribe();
     });
   },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    };
-  },
   dispatchLayerSelected: function() {
     channel.publish('app.layer.select', {layer: this.props.id});
   },
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
+  prepareRefresh: function(data) {
+    if(this.props.id == data.layer) {
+      this.setState({needsRefresh: true, data: data});
+    }
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
+      console.log(this.state.data);
+      //console.log('refreshing preview for layer '+this.props.id);
+      /*
       var w = this.getDOMNode().clientWidth,
           h = this.getDOMNode().clientHeight,
           sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.id);
@@ -44,6 +51,9 @@ var LayerBoxLayerPreview = React.createClass({
       this.getDOMNode().width = this.getDOMNode().width; // clear canvas
       this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
       this.setState({needsRefresh: false});
+
+      */
+      this.resetState();
     }
-  }
+  },
 });

@@ -16,7 +16,7 @@ var App = React.createClass({
           <ToolBox editor={this.props.editor} />
         </div>
         <div className="area center">
-          <StageBox editor={this.props.editor} pixel={this.props.pixel}/>
+          <StageBox editor={this.props.editor} />
         </div>
         <div className="area right">
           <div id="layerboxhelper">
@@ -79,9 +79,7 @@ var App = React.createClass({
   },
   updateProps: function() {
     //console.log('updating App props');
-    this.setProps({
-      editor: editor
-    });
+    this.setProps({editor: editor});
   },
   componentWillReceiveProps: function(props) {
     //console.log(props);
