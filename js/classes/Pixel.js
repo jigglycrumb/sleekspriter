@@ -55,6 +55,8 @@ Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
+  //console.log('filling pixel', canvas.clientWidth, fileWidth);
+
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
 };

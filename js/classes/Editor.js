@@ -176,7 +176,7 @@ var Editor = function() {
 
     self.saveChanges(); // TODO: check if call can be removed
 
-    channel.publish('stage.layer.update', {layer: data.layer});
+    //channel.publish('stage.layer.update', {layer: data.layer});
   });
 
 
@@ -209,7 +209,13 @@ var Editor = function() {
       else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
-        stage.pixel.fill(self.layer, point.x, point.y, fillColor, true);
+        channel.publish('stage.pixel.fill', {
+          layer: self.layers.selected,
+          x: point.x,
+          y: point.y,
+          color: fillColor.hexString()
+        });
+
         neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {
           var old = _.findWhere(filled, {x: n.x, y: n.y});

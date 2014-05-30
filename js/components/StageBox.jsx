@@ -41,9 +41,15 @@ var StageBox = React.createClass({
 
         {this.props.editor.layers.frame.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
-          //var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            <StageBoxLayer key={id} width={w} height={h} layer={layer} editor={this.props.editor} />
+            <StageBoxLayer
+              key={id}
+              csswidth={w}
+              cssheight={h} 
+              width={this.props.editor.size.width}
+              height={this.props.editor.size.width}
+              id={layer.id}
+              layer={layer} />
           );
         }, this)}
       </div>
@@ -197,29 +203,46 @@ var StageBox = React.createClass({
 
 
   useBrushTool: function() {
-
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) stage.pixel.fill();
+      if(!editor.selection.isActive) {
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: editor.color.hexString()
+        });
+      }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) stage.pixel.fill();
+        if(editor.selection.contains(editor.pixel)) {
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: editor.pixel.x,
+            y: editor.pixel.y,
+            color: editor.color.hexString()
+          });
+        }
       }
     }
-    //else {
-    //  this.mouseup(); // prevent additional alerts
-    //  alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-    //}
   },
   useEraserTool: function() {
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) stage.pixel.clear();
+      if(!editor.selection.isActive) {
+        channel.publish('stage.pixel.clear', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+        });
+      }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) stage.pixel.clear();
+        if(editor.selection.contains(editor.pixel)) {
+          channel.publish('stage.pixel.clear', {
+            layer: editor.layers.selected,
+            x: editor.pixel.x,
+            y: editor.pixel.y,
+          });
+        }
       }
     }
-    // else {
-      // this.mouseup();  // prevent additional alerts
-      // alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-    // }
   },
   useEyedropperTool: function() {
     if(editor.pixelColor.alpha() == 0) return;
@@ -237,32 +260,49 @@ var StageBox = React.createClass({
   useBrightnessTool: function() {
     if(isLayerVisible()) {
 
+      function lighten() {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: newColor.hexString()
+        });
+      };
+
+      function darken() {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: newColor.hexString()
+        });
+      };
+
       var px = _.findWhere(editor.pixels, {layer: editor.layers.selected, x: editor.pixel.x, y: editor.pixel.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
         if(!editor.selection.isActive) {
-          if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
-          else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
+          if(editor.brightnessTool.mode == 'lighten') lighten();
+          else if(editor.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
           if(editor.selection.contains(editor.pixel)) {
-            if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
-            else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
+            if(editor.brightnessTool.mode == 'lighten') lighten();
+            else if(editor.brightnessTool.mode == 'darken') darken();
           }
         }
       }
     }
-    // else {
-      // this.mouseup(); // prevent additional alerts
-      // alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-    // }
   },
   useMoveTool: function() {
 
-    var layer = editor.layers.selected,
-        distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+layer);
+    var distance = this.getMouseDownDistance(),
+        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected);
 
     canvas.width = canvas.width;
 
@@ -271,29 +311,41 @@ var StageBox = React.createClass({
       this.updateRectangularSelection(distance);
 
       editor.selection.pixels.forEach(function(pixel) {
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+            target = wrapPixel(pixel, distance);
 
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-
-        //if(pixel.layer == layer) {
-          var target = wrapPixel(pixel, distance);
-          stage.pixel.fill(layer, target.x, target.y, color);
-        //}
-        //else stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: target.x,
+          y: target.y,
+          color: color.hexString()
+        });
       });
 
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
+        if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-          stage.pixel.fill(layer, pixel.x, pixel.y, color);
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: pixel.x,
+            y: pixel.y,
+            color: color.hexString()
+          });
         }
       });
     }
     else {
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
+        if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
               target = wrapPixel(pixel, distance);
-          stage.pixel.fill(layer, target.x, target.y, color);
+
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: target.x,
+            y: target.y,
+            color: color.hexString()
+          });
         }
       });
     }

@@ -21660,6 +21660,8 @@ Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
+  //console.log('filling pixel', canvas.clientWidth, fileWidth);
+
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
 };
@@ -21856,9 +21858,6 @@ var Stage = function() {
 
   return {
 
-
-
-
     frame: {
       refresh: function(frame) {
 
@@ -21867,14 +21866,28 @@ var Stage = function() {
         this.clear();
 
         editor.pixels.forEach(function(px) {
-          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+          channel.publish('stage.pixel.fill', {
+            layer: px.layer,
+            x: px.x,
+            y: px.y,
+            color: color.hexString()
+          });
         });
 
         if(editor.selection.pixels.length > 0) {
           var framelayers = editor.layers.getIds();
 
           editor.selection.pixels.forEach(function(px) {
-            if(inArray(framelayers, px.layer)) stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+            if(inArray(framelayers, px.layer)) {
+              var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+              channel.publish('stage.pixel.fill', {
+                layer: px.layer,
+                x: px.x,
+                y: px.y,
+                color: color.hexString()
+              });
+            }
           });
         }
       },
@@ -21897,11 +21910,23 @@ var Stage = function() {
         this.clear();
 
         layerPixels.forEach(function(px) {
-          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+          channel.publish('stage.pixel.fill', {
+            layer: px.layer,
+            x: px.x,
+            y: px.y,
+            color: color.hexString()
+          });
         });
 
         selectionPixels.forEach(function(px) {
-          stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+          channel.publish('stage.pixel.fill', {
+            layer: px.layer,
+            x: px.x,
+            y: px.y,
+            color: color.hexString()
+          });
         });
       },
       clear: function() {
@@ -21909,61 +21934,6 @@ var Stage = function() {
         c.width = c.width;
       }
     },
-
-
-
-
-
-
-
-    pixel: {
-      fill: function(layer, x, y, color, forceDispatch) {
-
-        //console.log('filling pixel', layer, x, y);
-
-        var dispatch = forceDispatch || arguments.length == 0 ? true : false,
-            layer = layer || editor.layers.selected,
-            x = x || editor.pixel.x,
-            y = y || editor.pixel.y,
-            color = color || editor.color,
-            ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom,
-            cX = x -1,
-            cY = y -1;
-
-        ctx.fillStyle = color.hexString();
-        ctx.fillRect(cX*zoom, cY*zoom, zoom, zoom);
-
-        if(dispatch === true) channel.publish('stage.pixel.fill', {layer: layer, x: x, y: y, color: color.hexString()});
-      },
-      clear: function(layer, x, y) {
-
-        var dispatch = arguments.length == 0 ? true : false,
-            layer = layer || editor.layers.selected,
-            x = x || editor.pixel.x,
-            y = y || editor.pixel.y,
-            ctx = document.getElementById('StageBoxLayer-'+layer).getContext('2d'),
-            zoom = editor.zoom,
-            cX = x -1,
-            cY = y -1;
-
-        ctx.clearRect(cX*zoom, cY*zoom, zoom, zoom);
-
-        if(dispatch === true) channel.publish('stage.pixel.clear', {layer: layer, x: x, y: y});
-      },
-      lighten: function(layer, x, y) {
-        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
-        this.fill(layer, x, y, newColor, true);
-        editor.layerPixelColor = newColor;
-      },
-      darken: function(layer, x, y) {
-        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
-        this.fill(layer, x, y, newColor, true);
-        editor.layerPixelColor = newColor;
-      },
-    }
   }
 };
 var Editor = function() {
@@ -22144,7 +22114,7 @@ var Editor = function() {
 
     self.saveChanges(); // TODO: check if call can be removed
 
-    channel.publish('stage.layer.update', {layer: data.layer});
+    //channel.publish('stage.layer.update', {layer: data.layer});
   });
 
 
@@ -22177,7 +22147,13 @@ var Editor = function() {
       else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
-        stage.pixel.fill(self.layer, point.x, point.y, fillColor, true);
+        channel.publish('stage.pixel.fill', {
+          layer: self.layers.selected,
+          x: point.x,
+          y: point.y,
+          color: fillColor.hexString()
+        });
+
         neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {
           var old = _.findWhere(filled, {x: n.x, y: n.y});
@@ -22897,7 +22873,7 @@ Workspace.prototype.save = function() {
 // Use only in <canvas> components
 var CopyFrameMixin = {
   propTypes: {
-    frame: React.PropTypes.number.isRequired
+    frame: React.PropTypes.number.isRequired, // frame id
   },
   componentDidMount: function() {
     this.subscription = channel.subscribe('stage.frame.update', this.prepareRefresh);
@@ -22964,6 +22940,43 @@ var FoldableMixin = {
     var handle = this.getDOMNode().querySelector('.foldable-handle');
     handle.onclick = null;
   }
+};
+var LayerCanvasMixin = {
+  getInitialState: function() {
+    return {
+      needsRefresh: false,
+      data: null,
+      topic: null,
+      subscriptions: {
+        'stage.pixel.fill': this.checkRefresh,
+        'stage.pixel.clear': this.checkRefresh,
+      },
+    };
+  },
+  checkRefresh: function(data, envelope) {
+    if(this.props.id == data.layer) {
+      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+    }
+  },
+  componentDidUpdate: function() {
+    if(this.state.needsRefresh) {
+      var x = this.state.data.x,
+          y = this.state.data.y,
+          canvas = this.getDOMNode();
+
+      switch(this.state.topic) {
+        case 'stage.pixel.fill':
+          var color = this.state.data.color;
+          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
+          break;
+        case 'stage.pixel.clear':
+          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
+          break;
+      }
+
+      this.resetState();
+    }
+  },
 };
 var PostalSubscriptionMixin = {
   componentDidMount: function() {
@@ -23044,6 +23057,9 @@ var App = React.createClass({displayName: 'App',
     channel.subscribe('app.pixel.select', this.updateProps);
     channel.subscribe('stage.grid.toggle', this.updateProps);
     channel.subscribe('stage.zoom.select', this.updateProps);
+
+    channel.subscribe('file.layer.opacity.select', this.updateProps);
+    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     return;
 
     //channel.subscribe('stage.grid.toggle', this.updateProps);
@@ -23062,8 +23078,7 @@ var App = React.createClass({displayName: 'App',
 
     //channel.subscribe('app.layer.add', this.updateProps);
 
-    channel.subscribe('file.layer.opacity.select', this.updateProps);
-    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+
     channel.subscribe('file.layer.name.select', this.updateProps);
 
 
@@ -23383,53 +23398,18 @@ var LayerBoxLayer = React.createClass({displayName: 'LayerBoxLayer',
 });
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview',
-  mixins:[ResetStateMixin, PostalSubscriptionMixin],
   propTypes: {
      id: React.PropTypes.number.isRequired,  // layer id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
   },
-  getInitialState: function() {
-    return {
-      needsRefresh: false,
-      data: null,
-      topic: null,
-      subscriptions: {
-        'stage.pixel.fill': this.checkRefresh,
-        'stage.pixel.clear': this.checkRefresh,
-      },
-    };
-  },
+  mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
     var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
     return (
       React.DOM.canvas( {width:style.width, height:style.height, style:style})
     );
-  },
-  checkRefresh: function(data, envelope) {
-    if(this.props.id == data.layer) {
-      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
-    }
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var x = this.state.data.x,
-          y = this.state.data.y,
-          canvas = this.getDOMNode();
-
-      switch(this.state.topic) {
-        case 'stage.pixel.fill':
-          var color = this.state.data.color;
-          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
-          break;
-        case 'stage.pixel.clear':
-          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
-          break;
-      }
-
-      this.resetState();
-    }
-  },
+  }
 });
 /** @jsx React.DOM */
 var MoveTool = React.createClass({displayName: 'MoveTool',
@@ -23721,7 +23701,7 @@ var PreviewBox = React.createClass({displayName: 'PreviewBox',
       React.DOM.div( {id:"PreviewBox", className:"box"}, 
         React.DOM.h4( {className:"foldable-handle"}, "Preview"),
         React.DOM.div( {className:"foldable-fold"}, 
-          PreviewBoxPreview( {frame:this.props.editor.frame, size:this.props.editor.size} )
+          PreviewBoxPreview( {frame:this.props.editor.frame, width:this.props.editor.size.width, height:this.props.editor.size.height} )
         )
       )
     );
@@ -23730,23 +23710,28 @@ var PreviewBox = React.createClass({displayName: 'PreviewBox',
 /** @jsx React.DOM */
 var PreviewBoxPreview = React.createClass({displayName: 'PreviewBoxPreview',
   mixins: [CopyFrameMixin],
+  propTypes: {
+     frame: React.PropTypes.number.isRequired,  // frame id, required for CopyFrameMixin
+     width: React.PropTypes.number.isRequired, // file width
+     height: React.PropTypes.number.isRequired, // file height
+  },
   render: function() {
 
     var scale = 1,
         maxWidth = 160,
         maxHeight = 90;
 
-    if(this.props.size.width > this.props.size.height) {
+    if(this.props.width > this.props.height) {
       // scale to width
-      scale = maxWidth/this.props.size.width;
+      scale = maxWidth/this.props.width;
     }
     else {
       // scale to height
-      scale = maxHeight/this.props.size.height;
+      scale = maxHeight/this.props.height;
     }
 
-    var width = this.props.size.width*scale,
-        height = this.props.size.height*scale;
+    var width = this.props.width*scale,
+        height = this.props.height*scale;
 
     return (
       React.DOM.canvas(
@@ -23870,9 +23855,15 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
         this.props.editor.layers.frame.map(function(layer) {
           var id = 'StageBoxLayer-'+layer.id;
-          //var visible = (layer.frame == this.props.editor.frame) ? true : false;
           return (
-            StageBoxLayer( {key:id, width:w, height:h, layer:layer, editor:this.props.editor} )
+            StageBoxLayer(
+              {key:id,
+              csswidth:w,
+              cssheight:h, 
+              width:this.props.editor.size.width,
+              height:this.props.editor.size.width,
+              id:layer.id,
+              layer:layer} )
           );
         }, this)
       )
@@ -24026,29 +24017,46 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
 
   useBrushTool: function() {
-
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) stage.pixel.fill();
+      if(!editor.selection.isActive) {
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: editor.color.hexString()
+        });
+      }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) stage.pixel.fill();
+        if(editor.selection.contains(editor.pixel)) {
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: editor.pixel.x,
+            y: editor.pixel.y,
+            color: editor.color.hexString()
+          });
+        }
       }
     }
-    //else {
-    //  this.mouseup(); // prevent additional alerts
-    //  alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-    //}
   },
   useEraserTool: function() {
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) stage.pixel.clear();
+      if(!editor.selection.isActive) {
+        channel.publish('stage.pixel.clear', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+        });
+      }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) stage.pixel.clear();
+        if(editor.selection.contains(editor.pixel)) {
+          channel.publish('stage.pixel.clear', {
+            layer: editor.layers.selected,
+            x: editor.pixel.x,
+            y: editor.pixel.y,
+          });
+        }
       }
     }
-    // else {
-      // this.mouseup();  // prevent additional alerts
-      // alert('You are trying to erase on an invisible layer. Please make the layer visible and try again.');
-    // }
   },
   useEyedropperTool: function() {
     if(editor.pixelColor.alpha() == 0) return;
@@ -24066,32 +24074,49 @@ var StageBox = React.createClass({displayName: 'StageBox',
   useBrightnessTool: function() {
     if(isLayerVisible()) {
 
+      function lighten() {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: newColor.hexString()
+        });
+      };
+
+      function darken() {
+        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: editor.pixel.x,
+          y: editor.pixel.y,
+          color: newColor.hexString()
+        });
+      };
+
       var px = _.findWhere(editor.pixels, {layer: editor.layers.selected, x: editor.pixel.x, y: editor.pixel.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
         if(!editor.selection.isActive) {
-          if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
-          else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
+          if(editor.brightnessTool.mode == 'lighten') lighten();
+          else if(editor.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
           if(editor.selection.contains(editor.pixel)) {
-            if(editor.brightnessTool.mode == 'lighten') stage.pixel.lighten();
-            else if(editor.brightnessTool.mode == 'darken') stage.pixel.darken();
+            if(editor.brightnessTool.mode == 'lighten') lighten();
+            else if(editor.brightnessTool.mode == 'darken') darken();
           }
         }
       }
     }
-    // else {
-      // this.mouseup(); // prevent additional alerts
-      // alert('You are trying to paint on an invisible layer. Please make the layer visible and try again.');
-    // }
   },
   useMoveTool: function() {
 
-    var layer = editor.layers.selected,
-        distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+layer);
+    var distance = this.getMouseDownDistance(),
+        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected);
 
     canvas.width = canvas.width;
 
@@ -24100,29 +24125,41 @@ var StageBox = React.createClass({displayName: 'StageBox',
       this.updateRectangularSelection(distance);
 
       editor.selection.pixels.forEach(function(pixel) {
+        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+            target = wrapPixel(pixel, distance);
 
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-
-        //if(pixel.layer == layer) {
-          var target = wrapPixel(pixel, distance);
-          stage.pixel.fill(layer, target.x, target.y, color);
-        //}
-        //else stage.pixel.fill(layer, pixel.x, pixel.y, color);
+        channel.publish('stage.pixel.fill', {
+          layer: editor.layers.selected,
+          x: target.x,
+          y: target.y,
+          color: color.hexString()
+        });
       });
 
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
+        if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
-          stage.pixel.fill(layer, pixel.x, pixel.y, color);
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: pixel.x,
+            y: pixel.y,
+            color: color.hexString()
+          });
         }
       });
     }
     else {
       editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == layer) {
+        if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
               target = wrapPixel(pixel, distance);
-          stage.pixel.fill(layer, target.x, target.y, color);
+
+          channel.publish('stage.pixel.fill', {
+            layer: editor.layers.selected,
+            x: target.x,
+            y: target.y,
+            color: color.hexString()
+          });
         }
       });
     }
@@ -24260,24 +24297,30 @@ var StageBoxGridCanvas = React.createClass({displayName: 'StageBoxGridCanvas',
 });
 /** @jsx React.DOM */
 var StageBoxLayer = React.createClass({displayName: 'StageBoxLayer',
+  propTypes: {
+     id: React.PropTypes.number.isRequired,  // layer id
+     width: React.PropTypes.number.isRequired, // file width
+     height: React.PropTypes.number.isRequired, // file height
+  },
+  mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
     var display = (this.props.layer.visible === true) ? 'block' : 'none';
     return (
       React.DOM.canvas(
         {id:this.props.key,
         className:"Layer",
-        width:this.props.width,
-        height:this.props.height,
+        width:this.props.csswidth,
+        height:this.props.cssheight,
         style:{
           zIndex: this.props.layer.z,
           opacity: this.props.layer.opacity/100,
           display: display,
-          width: this.props.width,
-          height: this.props.height
+          width: this.props.csswidth,
+          height: this.props.cssheight
         }}
       )
     );
-  }
+  },
 });
 /** @jsx React.DOM */
 var StageBoxSelectionCanvas = React.createClass({displayName: 'StageBoxSelectionCanvas',
@@ -24520,7 +24563,12 @@ function redrawFromFile() {
   file.pixels.forEach(function(pixel) {
     if(inArray(frameLayers, pixel.layer)) {
       var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
-      stage.pixel.fill(pixel.layer, pixel.x, pixel.y, color);
+      channel.publish('stage.pixel.fill', {
+        layer: pixel.layer,
+        x: pixel.x,
+        y: pixel.y,
+        color: color.hexString()
+      });
     }
   });
 };
@@ -24635,7 +24683,13 @@ window.onload = function() {
   /*
   // draw all pixels to layers
   file.pixels.forEach(function(px) {
-    stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+    var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+    channel.publish('stage.pixel.fill', {
+      layer: px.layer,
+      x: px.x,
+      y: px.y,
+      color: color.hexString()
+    });
   });
   */
 

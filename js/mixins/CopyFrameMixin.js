@@ -1,7 +1,7 @@
 // Use only in <canvas> components
 var CopyFrameMixin = {
   propTypes: {
-    frame: React.PropTypes.number.isRequired
+    frame: React.PropTypes.number.isRequired, // frame id
   },
   componentDidMount: function() {
     this.subscription = channel.subscribe('stage.frame.update', this.prepareRefresh);

@@ -6,7 +6,7 @@ var PreviewBox = React.createClass({
       <div id="PreviewBox" className="box">
         <h4 className="foldable-handle">Preview</h4>
         <div className="foldable-fold">
-          <PreviewBoxPreview frame={this.props.editor.frame} size={this.props.editor.size} />
+          <PreviewBoxPreview frame={this.props.editor.frame} width={this.props.editor.size.width} height={this.props.editor.size.height} />
         </div>
       </div>
     );

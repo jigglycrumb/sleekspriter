@@ -50,6 +50,9 @@ var App = React.createClass({
     channel.subscribe('app.pixel.select', this.updateProps);
     channel.subscribe('stage.grid.toggle', this.updateProps);
     channel.subscribe('stage.zoom.select', this.updateProps);
+
+    channel.subscribe('file.layer.opacity.select', this.updateProps);
+    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     return;
 
     //channel.subscribe('stage.grid.toggle', this.updateProps);
@@ -68,8 +71,7 @@ var App = React.createClass({
 
     //channel.subscribe('app.layer.add', this.updateProps);
 
-    channel.subscribe('file.layer.opacity.select', this.updateProps);
-    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+
     channel.subscribe('file.layer.name.select', this.updateProps);
 
 

@@ -22,7 +22,12 @@ function redrawFromFile() {
   file.pixels.forEach(function(pixel) {
     if(inArray(frameLayers, pixel.layer)) {
       var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
-      stage.pixel.fill(pixel.layer, pixel.x, pixel.y, color);
+      channel.publish('stage.pixel.fill', {
+        layer: pixel.layer,
+        x: pixel.x,
+        y: pixel.y,
+        color: color.hexString()
+      });
     }
   });
 };
@@ -137,7 +142,13 @@ window.onload = function() {
   /*
   // draw all pixels to layers
   file.pixels.forEach(function(px) {
-    stage.pixel.fill(px.layer, px.x, px.y, Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')'));
+    var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+    channel.publish('stage.pixel.fill', {
+      layer: px.layer,
+      x: px.x,
+      y: px.y,
+      color: color.hexString()
+    });
   });
   */
 
