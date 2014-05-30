@@ -18,3 +18,11 @@ Pixel.fromArray = function(arr) {
 Pixel.toArray = function(pixel) {
   return [pixel.layer, pixel.x, pixel.y, pixel.r, pixel.g, pixel.b, pixel.a];
 };
+
+Pixel.fill = function(canvas, x, y, color) {
+  console.log('das lamm!');
+};
+
+Pixel.clear = function(canvas, x, y) {
+  console.log('der habicht!');
+};

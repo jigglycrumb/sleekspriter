@@ -21623,6 +21623,14 @@ Pixel.fromArray = function(arr) {
 Pixel.toArray = function(pixel) {
   return [pixel.layer, pixel.x, pixel.y, pixel.r, pixel.g, pixel.b, pixel.a];
 };
+
+Pixel.fill = function(canvas, x, y, color) {
+  console.log('das lamm!');
+};
+
+Pixel.clear = function(canvas, x, y) {
+  console.log('der habicht!');
+};
 var File = function() {
 
   this.size = null;
@@ -23340,9 +23348,7 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
     };
   },
   render: function() {
-
     var style = fitCanvasIntoSquareContainer(this.props.size.width, this.props.size.height, 30);
-
     return (
       React.DOM.canvas( {width:style.width, height:style.height, style:style, onClick:this.dispatchLayerSelected})
     );
@@ -23358,6 +23364,20 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
       console.log(this.state);
+
+      var x = this.state.data.x,
+          y = this.state.data.y,
+          ctx = this.getDOMNode().getContext('2d');
+
+      switch(this.state.topic) {
+        case 'stage.pixel.fill':
+          var color = this.state.data.color;
+
+          break;
+        case 'stage.pixel.clear':
+
+          break;
+      }
 
 
       //console.log('refreshing preview for layer '+this.props.id);

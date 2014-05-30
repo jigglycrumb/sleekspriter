@@ -16,9 +16,7 @@ var LayerBoxLayerPreview = React.createClass({
     };
   },
   render: function() {
-
     var style = fitCanvasIntoSquareContainer(this.props.size.width, this.props.size.height, 30);
-
     return (
       <canvas width={style.width} height={style.height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
@@ -34,6 +32,20 @@ var LayerBoxLayerPreview = React.createClass({
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
       console.log(this.state);
+
+      var x = this.state.data.x,
+          y = this.state.data.y,
+          ctx = this.getDOMNode().getContext('2d');
+
+      switch(this.state.topic) {
+        case 'stage.pixel.fill':
+          var color = this.state.data.color;
+
+          break;
+        case 'stage.pixel.clear':
+
+          break;
+      }
 
 
       //console.log('refreshing preview for layer '+this.props.id);
