@@ -26,11 +26,17 @@ module.exports = function(grunt) {
 
 
     react: {
-
-      concat: {
+      mixins: {
+        files: {
+          'js/build/react-mixins.js': [
+            'js/mixins/*.js',
+            'js/mixins/*.jsx',
+          ]
+        }
+      },
+      components: {
         files: {
           'js/build/react-components.js': [
-            'js/mixins/*.jsx',
             'js/components/*.jsx',
             'js/index.jsx',
           ]
@@ -75,6 +81,7 @@ module.exports = function(grunt) {
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',
 
+          'js/build/react-mixins.js',
           'js/build/react-components.js',
         ],
         // the location of the resulting JS file

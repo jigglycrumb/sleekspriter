@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var FoldableMixin = {
   getInitialState: function() {
     return ({

@@ -98,7 +98,6 @@ function minutely() {
 };
 
 
-
 // move this into window.onload later
 
 var channel = postal.channel('pixler');

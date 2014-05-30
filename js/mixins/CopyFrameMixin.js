@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 // Use only in <canvas> components
 var CopyFrameMixin = {
   propTypes: {

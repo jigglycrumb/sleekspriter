@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({
-  mixins:[ResetStateMixin],
+  mixins:[ResetStateMixin, PostalSubscriptionMixin],
   propTypes: {
      id: React.PropTypes.number.isRequired // layer id
   },
@@ -8,6 +8,11 @@ var LayerBoxLayerPreview = React.createClass({
     return {
       needsRefresh: false,
       data: null,
+      topic: null,
+      subscriptions: {
+        'stage.pixel.fill': this.prepareRefresh,
+        'stage.pixel.clear': this.prepareRefresh,
+      },
     };
   },
   render: function() {
@@ -18,30 +23,19 @@ var LayerBoxLayerPreview = React.createClass({
       <canvas width={style.width} height={style.height} style={style} onClick={this.dispatchLayerSelected}></canvas>
     );
   },
-  componentDidMount: function() {
-    this.subscriptions = [
-      channel.subscribe('stage.pixel.fill', this.prepareRefresh),
-      // channel.subscribe('app.frame.select', this.prepareRefresh),
-      // channel.subscribe('app.box.toggle', this.prepareRefresh),
-      // channel.subscribe('stage.layer.update', this.prepareRefresh),
-    ];
-  },
-  componentWillUnmount: function() {
-    this.subscriptions.forEach(function(subscription) {
-      subscription.unsubscribe();
-    });
-  },
   dispatchLayerSelected: function() {
     channel.publish('app.layer.select', {layer: this.props.id});
   },
-  prepareRefresh: function(data) {
+  prepareRefresh: function(data, envelope) {
     if(this.props.id == data.layer) {
-      this.setState({needsRefresh: true, data: data});
+      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
     }
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      console.log(this.state.data);
+      console.log(this.state);
+
+
       //console.log('refreshing preview for layer '+this.props.id);
       /*
       var w = this.getDOMNode().clientWidth,

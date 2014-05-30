@@ -22836,7 +22836,6 @@ Workspace.prototype.save = function() {
   var json = JSON.stringify(this.data);
   localStorage.setItem('workspace', json);
 };
-/** @jsx React.DOM */
 // Use only in <canvas> components
 var CopyFrameMixin = {
   propTypes: {
@@ -22872,7 +22871,6 @@ var CopyFrameMixin = {
     this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
   },
 };
-/** @jsx React.DOM */
 var FoldableMixin = {
   getInitialState: function() {
     return ({
@@ -22909,13 +22907,27 @@ var FoldableMixin = {
     handle.onclick = null;
   }
 };
-/** @jsx React.DOM */
+var PostalSubscriptionMixin = {
+  componentDidMount: function() {
+    this.subscriptions = [];
+    for(var x in this.state.subscriptions) {
+      var topic = x,
+          callback = this.state.subscriptions[x];
+
+      channel.subscribe(topic, callback);
+    }
+  },
+  componentWillUnmount: function() {
+    this.subscriptions.forEach(function(subscription) {
+      subscription.unsubscribe();
+    });
+  },
+};
 var ResetStateMixin = {
   resetState: function() {
     this.setState(this.getInitialState());
   },
 };
-/** @jsx React.DOM */
 var StageBoxCanvasMixin = {
   clear: function() {
     var canvas = this.getDOMNode();
@@ -23312,7 +23324,7 @@ var LayerBoxLayer = React.createClass({displayName: 'LayerBoxLayer',
 });
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview',
-  mixins:[ResetStateMixin],
+  mixins:[ResetStateMixin, PostalSubscriptionMixin],
   propTypes: {
      id: React.PropTypes.number.isRequired // layer id
   },
@@ -23320,6 +23332,11 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
     return {
       needsRefresh: false,
       data: null,
+      topic: null,
+      subscriptions: {
+        'stage.pixel.fill': this.prepareRefresh,
+        'stage.pixel.clear': this.prepareRefresh,
+      },
     };
   },
   render: function() {
@@ -23330,30 +23347,19 @@ var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview
       React.DOM.canvas( {width:style.width, height:style.height, style:style, onClick:this.dispatchLayerSelected})
     );
   },
-  componentDidMount: function() {
-    this.subscriptions = [
-      channel.subscribe('stage.pixel.fill', this.prepareRefresh),
-      // channel.subscribe('app.frame.select', this.prepareRefresh),
-      // channel.subscribe('app.box.toggle', this.prepareRefresh),
-      // channel.subscribe('stage.layer.update', this.prepareRefresh),
-    ];
-  },
-  componentWillUnmount: function() {
-    this.subscriptions.forEach(function(subscription) {
-      subscription.unsubscribe();
-    });
-  },
   dispatchLayerSelected: function() {
     channel.publish('app.layer.select', {layer: this.props.id});
   },
-  prepareRefresh: function(data) {
+  prepareRefresh: function(data, envelope) {
     if(this.props.id == data.layer) {
-      this.setState({needsRefresh: true, data: data});
+      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
     }
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      console.log(this.state.data);
+      console.log(this.state);
+
+
       //console.log('refreshing preview for layer '+this.props.id);
       /*
       var w = this.getDOMNode().clientWidth,
@@ -24537,7 +24543,6 @@ function minutely() {
   //editor.saveChanges();
   workspace.save();
 };
-
 
 
 // move this into window.onload later
