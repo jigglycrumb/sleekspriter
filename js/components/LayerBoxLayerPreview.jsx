@@ -2,7 +2,9 @@
 var LayerBoxLayerPreview = React.createClass({
   mixins:[ResetStateMixin, PostalSubscriptionMixin],
   propTypes: {
-     id: React.PropTypes.number.isRequired // layer id
+     id: React.PropTypes.number.isRequired,  // layer id
+     width: React.PropTypes.number.isRequired, // file width
+     height: React.PropTypes.number.isRequired, // file height
   },
   getInitialState: function() {
     return {
@@ -10,55 +12,38 @@ var LayerBoxLayerPreview = React.createClass({
       data: null,
       topic: null,
       subscriptions: {
-        'stage.pixel.fill': this.prepareRefresh,
-        'stage.pixel.clear': this.prepareRefresh,
+        'stage.pixel.fill': this.checkRefresh,
+        'stage.pixel.clear': this.checkRefresh,
       },
     };
   },
   render: function() {
-    var style = fitCanvasIntoSquareContainer(this.props.size.width, this.props.size.height, 30);
+    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
     return (
-      <canvas width={style.width} height={style.height} style={style} onClick={this.dispatchLayerSelected}></canvas>
+      <canvas width={style.width} height={style.height} style={style}></canvas>
     );
   },
-  dispatchLayerSelected: function() {
-    channel.publish('app.layer.select', {layer: this.props.id});
-  },
-  prepareRefresh: function(data, envelope) {
+  checkRefresh: function(data, envelope) {
     if(this.props.id == data.layer) {
       this.setState({needsRefresh: true, data: data, topic: envelope.topic});
     }
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      console.log(this.state);
-
       var x = this.state.data.x,
           y = this.state.data.y,
-          ctx = this.getDOMNode().getContext('2d');
+          canvas = this.getDOMNode();
 
       switch(this.state.topic) {
         case 'stage.pixel.fill':
           var color = this.state.data.color;
-
+          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
           break;
         case 'stage.pixel.clear':
-
+          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
           break;
       }
 
-
-      //console.log('refreshing preview for layer '+this.props.id);
-      /*
-      var w = this.getDOMNode().clientWidth,
-          h = this.getDOMNode().clientHeight,
-          sourceCanvas = document.getElementById('StageBoxLayer-'+this.props.id);
-
-      this.getDOMNode().width = this.getDOMNode().width; // clear canvas
-      this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
-      this.setState({needsRefresh: false});
-
-      */
       this.resetState();
     }
   },

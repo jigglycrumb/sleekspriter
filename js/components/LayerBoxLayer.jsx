@@ -6,15 +6,13 @@ var LayerBoxLayer = React.createClass({
   render: function() {
     var cssClass = 'LayerBoxLayer';
     if(this.props.layer.id == this.props.editor.layers.selected) cssClass+= ' selected';
-    //if(this.props.visible === false) cssClass+= ' hidden';
-
     return (
       <div id={this.props.key} className={cssClass}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
-        <div className="preview">
-          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} size={this.props.editor.size} />
+        <div className="preview" onClick={this.dispatchLayerSelected}>
+          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.editor.size.width} height={this.props.editor.size.height} />
         </div>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>
@@ -30,6 +28,9 @@ var LayerBoxLayer = React.createClass({
   },
   componentWillUnmount: function() {
     this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
+  },
+  dispatchLayerSelected: function() {
+    channel.publish('app.layer.select', {layer: this.props.layer.id});
   },
   dispatchLayerVisibilityChanged: function(event) {
     channel.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
