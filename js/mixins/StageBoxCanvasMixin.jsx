@@ -1,0 +1,7 @@
+/** @jsx React.DOM */
+var StageBoxCanvasMixin = {
+  clear: function() {
+    var canvas = this.getDOMNode();
+    canvas.width = canvas.width;
+  },
+};

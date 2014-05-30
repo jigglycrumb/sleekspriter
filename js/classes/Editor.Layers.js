@@ -1,6 +1,6 @@
 Editor.prototype.layers = {};
 Editor.prototype.layers.selected = null;
-Editor.prototype.layers.frame = {};
+Editor.prototype.layers.frame = [];
 
 Editor.prototype.layers.init = function() {
   var self = this;

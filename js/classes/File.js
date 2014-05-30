@@ -80,6 +80,8 @@ var File = function() {
 
     // sort layers by z (top to bottom)
     this.layers = _.sortBy(this.layers, 'z').reverse();
+
+    channel.publish('file.load', {size: this.size, frames: this.frames});
   };
 
   function fixLayerZ(frame) {

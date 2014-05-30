@@ -2,8 +2,6 @@ Editor.prototype.palettes = {};
 Editor.prototype.palettes.selected = 'sprite';
 
 Editor.prototype.palettes.init = function() {
-  console.log('palette init');
-
   var self = this;
 
   channel.subscribe('app.palette.select', function(data, envelope) {

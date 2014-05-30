@@ -7,6 +7,9 @@ var Editor = function() {
   this.frame = 1;
   this.lastFrame = 1;
 
+  this.frames = {x: 0, y: 0};
+  this.size = {width: 0, height: 0};
+
   this.zoom = 10;
   this.grid = true;
   this.pixel = new Point(0, 0);
@@ -94,6 +97,17 @@ var Editor = function() {
   };
 
 
+  // init subclasses
+  this.layers.init();
+  this.selection.init(this);
+  this.brightnessTool.init();
+  this.palettes.init();
+
+
+  channel.subscribe('file.load', function(data, envelope) {
+    self.size = data.size;
+    self.frames = data.frames;
+  });
 
   channel.subscribe('stage.grid.toggle', function(data, envelope) {
     self.grid = data.grid;
@@ -120,7 +134,7 @@ var Editor = function() {
     self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
-  channel.subscribe('stage.pixel.select', function(data, envelope) {
+  channel.subscribe('app.pixel.select', function(data, envelope) {
     self.pixel = data.point;
   });
 
@@ -228,11 +242,7 @@ var Editor = function() {
     self.saveChanges();
   });
 
-  // init subclasses
-  this.layers.init();
-  this.selection.init(this);
-  this.brightnessTool.init();
-  this.palettes.init();
+
 };
 
 Editor.prototype = {}; //Object.create(null);

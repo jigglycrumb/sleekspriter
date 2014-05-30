@@ -1,6 +1,10 @@
 var Stage = function() {
 
   return {
+
+
+
+
     frame: {
       refresh: function(frame) {
 
@@ -21,12 +25,16 @@ var Stage = function() {
         }
       },
       clear: function() {
-        file.layers.forEach(function(layer) {
+        editor.layers.frame.forEach(function(layer) {
           var c = document.getElementById('StageBoxLayer-'+layer.id);
           c.width = c.width;
         });
       }
     },
+
+
+
+
     layer: {
       refresh: function() {
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
@@ -47,6 +55,13 @@ var Stage = function() {
         c.width = c.width;
       }
     },
+
+
+
+
+
+
+
     pixel: {
       fill: function(layer, x, y, color, forceDispatch) {
 

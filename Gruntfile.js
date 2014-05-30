@@ -1,12 +1,11 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+
+
     less: {
       development: {
-        options: {
-          compress: false,
-          yuicompress: false
-        },
         files: {
           // target.css file: source.less file
           "dist/<%= pkg.name %>.css": "less/app.less"
@@ -15,32 +14,33 @@ module.exports = function(grunt) {
       production: {
         options: {
           compress: true,
-          yuicompress: true,
-          optimization: 2
+          cleancss: true,
         },
         files: {
           // target.css file: source.less file
-          "dist/<%= pkg.name %>.css": "less/app.less"
+          "dist/<%= pkg.name %>-min.css": "less/app.less"
         }
       }
     },
-    watch: {
-      styles: {
-        // Which files to watch (all .less files recursively in the less directory)
-        files: ['less/**/*.less'],
-        tasks: ['less:development'],
-      },
-      scripts: {
-        files: ['js/**/*.js'],
-        tasks: ['concat:js']
-      },
-      livereload: {
-        // Here we watch the files the less task will compile to
-        // These files are sent to the live reload server after less compiles to them
-        options: { livereload: true },
-        files: ['dist/**/*'],
+
+
+
+    react: {
+
+      concat: {
+        files: {
+          'js/build/react-components.js': [
+            'js/mixins/*.jsx',
+            'js/components/*.jsx',
+            'js/index.jsx',
+          ]
+        }
       },
     },
+
+
+
+
     concat: {
       options: {
         separator: "\n", //add a new line after each file
@@ -50,7 +50,14 @@ module.exports = function(grunt) {
       js: {
         // the files to concatenate
         src: [
-          'js/jsx-header.js',
+          'bower_components/underscore/underscore.js',
+          'bower_components/postal.js/lib/postal.js',
+          'bower_components/postal.diagnostics/src/postal.diagnostics.js',
+          'bower_components/mousetrap/mousetrap.js',
+          'bower_components/react/react.js',
+          'js/lib/color.js',
+          'js/lib/tween.js',
+
 
           'js/strict.js',
           'js/classes/Point.js',
@@ -68,73 +75,62 @@ module.exports = function(grunt) {
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',
 
-          'js/mixins/FoldableMixin.js',
-          'js/mixins/CopyFrameMixin.js',
-          'js/mixins/StageBoxCanvasMixin.js',
-
-          'js/components/App.js',
-          'js/components/ToolContainer.js',
-          'js/components/Palette.js',
-          'js/components/PaletteSwatch.js',
-
-          'js/components/BrushTool.js',
-          'js/components/EraserTool.js',
-          'js/components/EyedropperTool.js',
-          'js/components/RectangularSelectionTool.js',
-          'js/components/PaintBucketTool.js',
-          'js/components/BrightnessTool.js',
-          'js/components/MoveTool.js',
-          'js/components/ZoomTool.js',
-
-          'js/components/StageBox.js',
-          'js/components/StageBoxCursorCanvas.js',
-          'js/components/StageBoxSelectionCanvas.js',
-          'js/components/StageBoxGridCanvas.js',
-          'js/components/StageBoxLayer.js',
-
-          'js/components/ToolBox.js',
-          'js/components/ToolBoxTool.js',
-
-          'js/components/PreviewBox.js',
-          'js/components/PreviewBoxPreview.js',
-
-          'js/components/FrameBox.js',
-          'js/components/FrameBoxFrame.js',
-
-          'js/components/LayerBox.js',
-          'js/components/LayerBoxLayer.js',
-          'js/components/LayerBoxLayerPreview.js',
-
-          //'js/components/HandTool.js',
-
-          'js/components/StatusBar.js',
-
-          'js/components/OffscreenFrameCanvas.js',
-          'js/components/SelectionPattern.js',
-
-
-          'js/index.js'
+          'js/build/react-components.js',
         ],
         // the location of the resulting JS file
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
-    plato: {
-      report: {
-        files: {
-          'report': ['js/classes/*.js', 'js/components/*.js', 'js/mixins/*.js', 'js/*.js']
-        }
-      }
-    },
+
+
+
     uglify: {
       options: {
         banner: ""
       },
       build: {
         src: 'dist/<%= pkg.name %>.js',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/<%= pkg.name %>-min.js'
       }
-    }
+    },
+
+
+    watch: {
+      styles: {
+        // Which files to watch (all .less files recursively in the less directory)
+        files: ['less/**/*.less'],
+        tasks: ['less:development'],
+      },
+      react: {
+        files: ['js/**/*.jsx'],
+        tasks: ['react']
+      },
+      scripts: {
+        files: ['js/**/*.js'],
+        tasks: ['concat']
+      },
+      /*
+      uglify: {
+        files: ['dist/<%= pkg.name %>.js'],
+        tasks: ['uglify']
+      },
+      */
+      livereload: {
+        // Here we watch the files the less task will compile to
+        // These files are sent to the live reload server after less compiles to them
+        options: { livereload: true },
+        files: ['dist/**/*'],
+      },
+    },
+
+
+    plato: {
+      report: {
+        files: {
+          'report': ['js/**/*.js', 'js/**/*.jsx']
+        }
+      }
+    },
   });
 
   grunt.loadNpmTasks('grunt-contrib-less');
@@ -142,7 +138,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-plato');
+  grunt.loadNpmTasks('grunt-react');
 
   grunt.registerTask('default', ['watch']);
+  grunt.registerTask('css', ['less']);
+  grunt.registerTask('jsx', ['react']);
+  grunt.registerTask('js', ['concat']);
+  grunt.registerTask('min', ['uglify']);
+  grunt.registerTask('report', ['plato']);
   grunt.registerTask('build', ['concat', 'uglify']);
 };

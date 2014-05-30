@@ -14,7 +14,8 @@
     "grunt-contrib-watch": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-uglify": "latest",
-    "grunt-plato": "^1.0.0"
+    "grunt-plato": "latest",
+    "grunt-react": "latest"
   },
   "window": {
     "title": "pixler",
