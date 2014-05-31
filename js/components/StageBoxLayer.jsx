@@ -1,10 +1,5 @@
 /** @jsx React.DOM */
 var StageBoxLayer = React.createClass({
-  propTypes: {
-     id: React.PropTypes.number.isRequired,  // layer id
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
-  },
   mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
     var display = (this.props.layer.visible === true) ? 'block' : 'none';

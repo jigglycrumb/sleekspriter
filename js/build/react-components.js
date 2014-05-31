@@ -32,7 +32,12 @@ var App = React.createClass({displayName: 'App',
           frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              OffscreenFrameCanvas( {key:id, frame:frame, editor:this.props.editor} )
+              OffscreenFrameCanvas(
+                {key:id,
+                id:frame,
+                width:this.props.editor.size.width,
+                height:this.props.editor.size.height,
+                selectedframe:this.props.editor.frame} )
             );
           }, this),
 
@@ -55,37 +60,23 @@ var App = React.createClass({displayName: 'App',
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     return;
 
-    //channel.subscribe('stage.grid.toggle', this.updateProps);
-    //channel.subscribe('stage.zoom.select', this.updateProps);
-
-
-
-
-
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
-
-
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
-
-    //channel.subscribe('app.layer.add', this.updateProps);
-
-
     channel.subscribe('file.layer.name.select', this.updateProps);
-
-
-
     channel.subscribe('stage.tool.move', this.updateProps);
-
+    //channel.subscribe('app.layer.add', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
-    this.setProps({editor: editor});
+    this.setProps({editor: editor, workspace: workspace});
   },
+  /*
   componentWillReceiveProps: function(props) {
-    //console.log(props);
-  }
+    console.log(props);
+  },
+  */
 });
 /** @jsx React.DOM */
 var BrightnessTool = React.createClass({displayName: 'BrightnessTool',
@@ -234,11 +225,15 @@ var FrameBox = React.createClass({displayName: 'FrameBox',
 
             var clickHandler = function() {
               channel.publish('app.frame.select', {frame: frame});
-            }
+            };
 
             return (
               React.DOM.div( {key:id, className:cssClass, style:{width:frameSize, height:frameSize}, onClick:clickHandler}, 
-                FrameBoxFrame( {frame:frame, size:frameSize, editor:this.props.editor} )
+                FrameBoxFrame(
+                  {id:frame,
+                  width:this.props.editor.size.width,
+                  height:this.props.editor.size.height,
+                  size:frameSize} )
               )
             );
           }, this)
@@ -254,16 +249,14 @@ var FrameBox = React.createClass({displayName: 'FrameBox',
     );
   },
   dispatchFrameSelected: function(event) {
-    channel.publish('app.frame.select', {frame: event.target.value});
+    channel.publish('app.frame.select', {frame: parseInt(event.target.value)});
   }
 });
 /** @jsx React.DOM */
 var FrameBoxFrame = React.createClass({displayName: 'FrameBoxFrame',
-  mixins:[CopyFrameMixin],
+  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
-
-    var style = fitCanvasIntoSquareContainer(this.props.editor.size.width, this.props.editor.size.height, this.props.size);
-
+    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
     return (
       React.DOM.canvas(
         {width:style.width,
@@ -391,11 +384,6 @@ var LayerBoxLayer = React.createClass({displayName: 'LayerBoxLayer',
 });
 /** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview',
-  propTypes: {
-     id: React.PropTypes.number.isRequired,  // layer id
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
-  },
   mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
     var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
@@ -418,68 +406,26 @@ var MoveTool = React.createClass({displayName: 'MoveTool',
 });
 /** @jsx React.DOM */
 var OffscreenFrameCanvas = React.createClass({displayName: 'OffscreenFrameCanvas',
-  propTypes: {
-    frame: React.PropTypes.number.isRequired
-  },
-  getInitialState: function() {
-    return {
-      needsRefresh: false,
-    };
-  },
+  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
     return (
       React.DOM.canvas(
         {id:this.props.key,
         className:"OffscreenFrameCanvas",
-        width:this.props.editor.size.width,
-        height:this.props.editor.size.height,
+        width:this.props.width,
+        height:this.props.height,
         style:{
-          width: this.props.editor.size.width,
-          height: this.props.editor.size.height
+          width: this.props.width,
+          height: this.props.height
         }}
       )
     );
   },
   componentDidMount: function() {
-    //this.subscription = channel.subscribe('stage.layer.update', this.prepareRefresh);
-    /*
-    this.subscriptions = [
-      channel.subscribe('app.frame.select', this.prepareRefresh),
-      channel.subscribe('file.layer.opacity.select', this.prepareRefresh),
-      channel.subscribe('file.layer.visibility.toggle', this.prepareRefresh),
-      channel.subscribe('stage.layer.update', this.prepareRefresh),
-      channel.subscribe('app.pixel.select', this.getPixelColor),
-    ];
-    */
-
-  },
-  componentWillUnmount: function() {
-    this.subscription.unsubscribe();
-  },
-  componentDidUpdate: function() {
-    //console.log('update, state: ', this.state);
-    if(this.state.needsRefresh && (this.props.frame == this.props.editor.frame)) {
-      this.getDOMNode().width = this.getDOMNode().width;
-      var self = this;
-      for(var i = this.props.editor.layers.frame.length -1; i >= 0; i--) {
-        var layer = this.props.editor.layers.frame[i];
-        if(layer.visible) {
-          var sourceCanvas = document.getElementById('StageBoxLayer-'+layer.id);
-          var ctx = self.getDOMNode().getContext('2d');
-          ctx.globalAlpha = layer.opacity/100;
-          ctx.drawImage(sourceCanvas, 0, 0, this.props.editor.size.width, this.props.editor.size.height);
-        }
-      }
-      //channel.publish('stage.frame.update', {frame: this.props.frame});
-    }
-  },
-  prepareRefresh: function(data) {
-    if(this.props.frame == this.props.editor.frame) {
-      this.setState({needsRefresh: true});
-    }
+    this.subscriptions.push(channel.subscribe('app.pixel.select', this.getPixelColor));
   },
   getPixelColor: function(data) {
-    if(this.props.frame == this.props.editor.frame) {
+    if(this.props.id == this.props.selectedframe) {
       var ctx = this.getDOMNode().getContext('2d'),
           px = ctx.getImageData(data.point.x-1, data.point.y-1, 1, 1).data,
           color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
@@ -694,7 +640,7 @@ var PreviewBox = React.createClass({displayName: 'PreviewBox',
       React.DOM.div( {id:"PreviewBox", className:"box"}, 
         React.DOM.h4( {className:"foldable-handle"}, "Preview"),
         React.DOM.div( {className:"foldable-fold"}, 
-          PreviewBoxPreview( {frame:this.props.editor.frame, width:this.props.editor.size.width, height:this.props.editor.size.height} )
+          PreviewBoxPreview( {id:this.props.editor.frame, width:this.props.editor.size.width, height:this.props.editor.size.height} )
         )
       )
     );
@@ -702,12 +648,7 @@ var PreviewBox = React.createClass({displayName: 'PreviewBox',
 });
 /** @jsx React.DOM */
 var PreviewBoxPreview = React.createClass({displayName: 'PreviewBoxPreview',
-  mixins: [CopyFrameMixin],
-  propTypes: {
-     frame: React.PropTypes.number.isRequired,  // frame id, required for CopyFrameMixin
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
-  },
+  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
 
     var scale = 1,
@@ -809,7 +750,7 @@ var SelectionPattern = React.createClass({displayName: 'SelectionPattern',
 var StageBox = React.createClass({displayName: 'StageBox',
   getInitialState: function() {
     return {
-      needsRefresh: false,
+      //needsRefresh: false,
       mousedown: false,
       mousedownPoint: new Point(0, 0),
       last: null, // we need to record the mousedown timestamp because of a chrome bug,
@@ -868,15 +809,18 @@ var StageBox = React.createClass({displayName: 'StageBox',
       //channel.subscribe('stage.zoom.select', this.prepareRefresh),
     ];
   },
+  /*
   prepareRefresh: function() {
     this.setState({needsRefresh: true});
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      stage.frame.refresh();
+      //stage.frame.refresh();
+
       this.setState({needsRefresh: false});
     }
   },
+  */
 
   mousedown: function(event) {
 
@@ -1013,6 +957,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -1022,6 +967,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -1035,6 +981,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.clear', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -1043,6 +990,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.clear', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -1071,6 +1019,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -1082,6 +1031,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -1122,6 +1072,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
             target = wrapPixel(pixel, distance);
 
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: target.x,
           y: target.y,
@@ -1133,6 +1084,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: pixel.x,
             y: pixel.y,
@@ -1148,6 +1100,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
               target = wrapPixel(pixel, distance);
 
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: target.x,
             y: target.y,
@@ -1290,11 +1243,6 @@ var StageBoxGridCanvas = React.createClass({displayName: 'StageBoxGridCanvas',
 });
 /** @jsx React.DOM */
 var StageBoxLayer = React.createClass({displayName: 'StageBoxLayer',
-  propTypes: {
-     id: React.PropTypes.number.isRequired,  // layer id
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
-  },
   mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
     var display = (this.props.layer.visible === true) ? 'block' : 'none';
@@ -1557,6 +1505,7 @@ function redrawFromFile() {
     if(inArray(frameLayers, pixel.layer)) {
       var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
       channel.publish('stage.pixel.fill', {
+        frame: file.getFrameIdForLayer(pixel.layer),
         layer: pixel.layer,
         x: pixel.x,
         y: pixel.y,
@@ -1643,9 +1592,11 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        { channel: "pixler" },
+        //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
-        //{ topic: "stage.pixel.fill" }
+        //{ topic: "stage.pixel.fill" },
+        //{ topic: "stage.pixel.clear" },
+        { topic: "app.frame.select" },
     ],
     active: false,
 });
@@ -1678,6 +1629,7 @@ window.onload = function() {
   file.pixels.forEach(function(px) {
     var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
     channel.publish('stage.pixel.fill', {
+      frame: file.getFrameIdForLayer(px.layer),
       layer: px.layer,
       x: px.x,
       y: px.y,

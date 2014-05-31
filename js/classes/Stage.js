@@ -12,6 +12,7 @@ var Stage = function() {
         editor.pixels.forEach(function(px) {
           var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
           channel.publish('stage.pixel.fill', {
+            frame: frame,
             layer: px.layer,
             x: px.x,
             y: px.y,
@@ -26,6 +27,7 @@ var Stage = function() {
             if(inArray(framelayers, px.layer)) {
               var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
               channel.publish('stage.pixel.fill', {
+                frame: frame,
                 layer: px.layer,
                 x: px.x,
                 y: px.y,
@@ -49,13 +51,15 @@ var Stage = function() {
     layer: {
       refresh: function() {
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
-            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected});
+            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
+            frame = file.getFrameForLayer(editor.layers.selected);
 
         this.clear();
 
         layerPixels.forEach(function(px) {
           var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
           channel.publish('stage.pixel.fill', {
+            frame: frame,
             layer: px.layer,
             x: px.x,
             y: px.y,
@@ -66,6 +70,7 @@ var Stage = function() {
         selectionPixels.forEach(function(px) {
           var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
           channel.publish('stage.pixel.fill', {
+            frame: frame,
             layer: px.layer,
             x: px.x,
             y: px.y,

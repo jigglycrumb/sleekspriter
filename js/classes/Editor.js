@@ -210,6 +210,7 @@ var Editor = function() {
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
         channel.publish('stage.pixel.fill', {
+          frame: self.frame,
           layer: self.layers.selected,
           x: point.x,
           y: point.y,

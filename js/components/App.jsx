@@ -32,7 +32,12 @@ var App = React.createClass({
           {frames.map(function(frame) {
             var id = 'OffscreenFrameCanvas-'+frame;
             return (
-              <OffscreenFrameCanvas key={id} frame={frame} editor={this.props.editor} />
+              <OffscreenFrameCanvas
+                key={id}
+                id={frame}
+                width={this.props.editor.size.width}
+                height={this.props.editor.size.height}
+                selectedframe={this.props.editor.frame} />
             );
           }, this)}
 
@@ -55,35 +60,21 @@ var App = React.createClass({
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     return;
 
-    //channel.subscribe('stage.grid.toggle', this.updateProps);
-    //channel.subscribe('stage.zoom.select', this.updateProps);
-
-
-
-
-
     channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
-
-
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
-
-    //channel.subscribe('app.layer.add', this.updateProps);
-
-
     channel.subscribe('file.layer.name.select', this.updateProps);
-
-
-
     channel.subscribe('stage.tool.move', this.updateProps);
-
+    //channel.subscribe('app.layer.add', this.updateProps);
   },
   updateProps: function() {
     //console.log('updating App props');
-    this.setProps({editor: editor});
+    this.setProps({editor: editor, workspace: workspace});
   },
+  /*
   componentWillReceiveProps: function(props) {
-    //console.log(props);
-  }
+    console.log(props);
+  },
+  */
 });

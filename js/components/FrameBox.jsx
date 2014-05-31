@@ -26,11 +26,15 @@ var FrameBox = React.createClass({
 
             var clickHandler = function() {
               channel.publish('app.frame.select', {frame: frame});
-            }
+            };
 
             return (
               <div key={id} className={cssClass} style={{width:frameSize, height:frameSize}} onClick={clickHandler}>
-                <FrameBoxFrame frame={frame} size={frameSize} editor={this.props.editor} />
+                <FrameBoxFrame
+                  id={frame}
+                  width={this.props.editor.size.width}
+                  height={this.props.editor.size.height}
+                  size={frameSize} />
               </div>
             );
           }, this)}
@@ -46,6 +50,6 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    channel.publish('app.frame.select', {frame: event.target.value});
+    channel.publish('app.frame.select', {frame: parseInt(event.target.value)});
   }
 });

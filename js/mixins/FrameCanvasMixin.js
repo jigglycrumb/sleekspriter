@@ -1,9 +1,10 @@
-var LayerCanvasMixin = {
+var FrameCanvasMixin = {
   propTypes: {
-     id: React.PropTypes.number.isRequired,  // layer id
+     id: React.PropTypes.number.isRequired,  // frame id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
   },
+
   getInitialState: function() {
     return {
       needsRefresh: false,
@@ -16,7 +17,7 @@ var LayerCanvasMixin = {
     };
   },
   checkRefresh: function(data, envelope) {
-    if(this.props.id == data.layer) {
+    if(this.props.id == data.frame) {
       this.setState({needsRefresh: true, data: data, topic: envelope.topic});
     }
   },
@@ -25,6 +26,8 @@ var LayerCanvasMixin = {
       var x = this.state.data.x,
           y = this.state.data.y,
           canvas = this.getDOMNode();
+
+      // TODO: consider layers, clear to pixel below, don't fill if there's a pixel above
 
       switch(this.state.topic) {
         case 'stage.pixel.fill':

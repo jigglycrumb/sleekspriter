@@ -23,6 +23,7 @@ function redrawFromFile() {
     if(inArray(frameLayers, pixel.layer)) {
       var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
       channel.publish('stage.pixel.fill', {
+        frame: file.getFrameIdForLayer(pixel.layer),
         layer: pixel.layer,
         x: pixel.x,
         y: pixel.y,
@@ -109,9 +110,11 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        { channel: "pixler" },
+        //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
-        //{ topic: "stage.pixel.fill" }
+        //{ topic: "stage.pixel.fill" },
+        //{ topic: "stage.pixel.clear" },
+        { topic: "app.frame.select" },
     ],
     active: false,
 });
@@ -144,6 +147,7 @@ window.onload = function() {
   file.pixels.forEach(function(px) {
     var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
     channel.publish('stage.pixel.fill', {
+      frame: file.getFrameIdForLayer(px.layer),
       layer: px.layer,
       x: px.x,
       y: px.y,

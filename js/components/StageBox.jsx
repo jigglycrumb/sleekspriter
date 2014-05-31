@@ -2,7 +2,7 @@
 var StageBox = React.createClass({
   getInitialState: function() {
     return {
-      needsRefresh: false,
+      //needsRefresh: false,
       mousedown: false,
       mousedownPoint: new Point(0, 0),
       last: null, // we need to record the mousedown timestamp because of a chrome bug,
@@ -61,15 +61,18 @@ var StageBox = React.createClass({
       //channel.subscribe('stage.zoom.select', this.prepareRefresh),
     ];
   },
+  /*
   prepareRefresh: function() {
     this.setState({needsRefresh: true});
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      stage.frame.refresh();
+      //stage.frame.refresh();
+
       this.setState({needsRefresh: false});
     }
   },
+  */
 
   mousedown: function(event) {
 
@@ -206,6 +209,7 @@ var StageBox = React.createClass({
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -215,6 +219,7 @@ var StageBox = React.createClass({
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -228,6 +233,7 @@ var StageBox = React.createClass({
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.clear', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -236,6 +242,7 @@ var StageBox = React.createClass({
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.clear', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -264,6 +271,7 @@ var StageBox = React.createClass({
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -275,6 +283,7 @@ var StageBox = React.createClass({
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -315,6 +324,7 @@ var StageBox = React.createClass({
             target = wrapPixel(pixel, distance);
 
         channel.publish('stage.pixel.fill', {
+          frame: editor.frame,
           layer: editor.layers.selected,
           x: target.x,
           y: target.y,
@@ -326,6 +336,7 @@ var StageBox = React.createClass({
         if(pixel.layer == editor.layers.selected) {
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: pixel.x,
             y: pixel.y,
@@ -341,6 +352,7 @@ var StageBox = React.createClass({
               target = wrapPixel(pixel, distance);
 
           channel.publish('stage.pixel.fill', {
+            frame: editor.frame,
             layer: editor.layers.selected,
             x: target.x,
             y: target.y,

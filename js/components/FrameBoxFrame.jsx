@@ -1,10 +1,8 @@
 /** @jsx React.DOM */
 var FrameBoxFrame = React.createClass({
-  mixins:[CopyFrameMixin],
+  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
-
-    var style = fitCanvasIntoSquareContainer(this.props.editor.size.width, this.props.editor.size.height, this.props.size);
-
+    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
     return (
       <canvas
         width={style.width}

@@ -84,6 +84,10 @@ var File = function() {
     channel.publish('file.load', {size: this.size, frames: this.frames});
   };
 
+  this.getFrameIdForLayer = function(layer)  {
+    return _.findWhere(this.layers, {id: layer}).frame;
+  };
+
   function fixLayerZ(frame) {
     self.layers.reverse();
     var z = 0;

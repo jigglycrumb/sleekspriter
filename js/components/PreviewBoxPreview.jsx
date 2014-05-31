@@ -1,11 +1,6 @@
 /** @jsx React.DOM */
 var PreviewBoxPreview = React.createClass({
-  mixins: [CopyFrameMixin],
-  propTypes: {
-     frame: React.PropTypes.number.isRequired,  // frame id, required for CopyFrameMixin
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
-  },
+  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
 
     var scale = 1,
