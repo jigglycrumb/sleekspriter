@@ -15,7 +15,8 @@
     "grunt-contrib-concat": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-plato": "latest",
-    "grunt-react": "latest"
+    "grunt-react": "latest",
+    "grunt-jsdoc": "^0.5.4"
   },
   "window": {
     "title": "pixler",

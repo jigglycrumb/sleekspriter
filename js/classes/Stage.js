@@ -52,7 +52,7 @@ var Stage = function() {
       refresh: function() {
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
-            frame = file.getFrameForLayer(editor.layers.selected);
+            frame = editor.frame;
 
         this.clear();
 

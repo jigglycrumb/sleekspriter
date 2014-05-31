@@ -21590,6 +21590,12 @@ function hexDouble(num) {
     };
 }(window));
 'use strict';
+/**
+ * Creates a new Point
+ * @constructor
+ * @param {Number} x - point x coordinate
+ * @param {Number} y - point y coordinate
+ */
 var Point = function(x, y) {
   this.x = x;
   this.y = y;
@@ -21598,6 +21604,12 @@ var Point = function(x, y) {
 Point.prototype = Object.create(null);
 Point.prototype.constructor = Point;
 
+/**
+ * Moves a point by a given distance
+ * @constructor
+ * @param {Object} distance - Point with distance coordinates
+ * @return {Object} the updated Point
+ */
 Point.prototype.translate = function(distance) {
   this.x += distance.x;
   this.y += distance.y;
@@ -21912,7 +21924,7 @@ var Stage = function() {
       refresh: function() {
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
-            frame = file.getFrameForLayer(editor.layers.selected);
+            frame = editor.frame;
 
         this.clear();
 

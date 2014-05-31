@@ -1,4 +1,5 @@
 bower_components/*
+doc/*
 node_modules/*
-docs/todo.txt
 report/*
+resources/todo.txt
