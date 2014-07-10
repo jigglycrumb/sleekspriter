@@ -5,6 +5,8 @@ var Stage = function() {
     frame: {
       refresh: function(frame) {
 
+        console.log('refreshing frame '+frame);
+
         var frame = frame || editor.frame;
 
         this.clear();
@@ -50,6 +52,9 @@ var Stage = function() {
 
     layer: {
       refresh: function() {
+
+        console.log('refreshing layer '+editor.layers.selected );
+
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
             frame = editor.frame;

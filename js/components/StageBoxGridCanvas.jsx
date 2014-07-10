@@ -23,20 +23,20 @@ var StageBoxGridCanvas = React.createClass({
     var ctx = canvas.getContext('2d');
     ctx.strokeStyle = "#cccccc";
 
+    ctx.beginPath();
+
     // vertical lines
     for(var x = zoom+0.5; x < canvas.width; x+= zoom) {
-      ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, canvas.height);
-      ctx.stroke();
     }
 
     // horizontal lines
     for(var y = zoom+0.5; y < canvas.height; y+= zoom) {
-      ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(canvas.width, y);
-      ctx.stroke();
     }
+
+    ctx.stroke();
   },
 });

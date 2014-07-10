@@ -43,19 +43,17 @@ Pixel.toArray = function(pixel) {
 /**
  * Paints a pixel to a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
- * @param {Number} fileWidth - the width of the currently opened file
- * @param {Number} fileHeight - the height of the currently opened file
  * @param {Number} x - pixel x-coordinate
  * @param {Number} y - pixel y-coordinate
  * @param {String} color - hex-string of color to paint
  */
-Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
-  var scale = canvas.clientWidth/fileWidth,
+Pixel.fill = function(canvas, x, y, color) {
+  var scale = canvas.width/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
-  //console.log('filling pixel', canvas.clientWidth, fileWidth);
+  //console.log('filling pixel', cX, cY, scale);
 
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
@@ -64,13 +62,11 @@ Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
 /**
  * Clear a pixel from a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
- * @param {Number} fileWidth - the width of the currently opened file
- * @param {Number} fileHeight - the height of the currently opened file
  * @param {Number} x - pixel x-coordinate
  * @param {Number} y - pixel y-coordinate
  */
-Pixel.clear = function(canvas, fileWidth, fileHeight, x, y) {
-  var scale = canvas.clientWidth/fileWidth,
+Pixel.clear = function(canvas, x, y) {
+  var scale = canvas.clientWidth/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');

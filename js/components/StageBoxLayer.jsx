@@ -7,14 +7,14 @@ var StageBoxLayer = React.createClass({
       <canvas
         id={this.props.key}
         className="Layer"
-        width={this.props.csswidth}
-        height={this.props.cssheight}
+        width={this.props.width}
+        height={this.props.height}
         style={{
           zIndex: this.props.layer.z,
           opacity: this.props.layer.opacity/100,
           display: display,
-          width: this.props.csswidth,
-          height: this.props.cssheight
+          //width: this.props.width,
+          //height: this.props.height
         }}>
       </canvas>
     );

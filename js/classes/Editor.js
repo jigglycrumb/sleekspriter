@@ -10,7 +10,7 @@ var Editor = function() {
   this.frames = {x: 0, y: 0};
   this.size = {width: 0, height: 0};
 
-  this.zoom = 10;
+  this.zoom = 5;
   this.grid = true;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');

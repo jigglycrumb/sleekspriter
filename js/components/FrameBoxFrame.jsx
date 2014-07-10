@@ -2,12 +2,9 @@
 var FrameBoxFrame = React.createClass({
   mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
-    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
+    var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
     return (
-      <canvas
-        width={style.width}
-        height={style.height}
-        style={style} />
+      <canvas width={fit.width} height={fit.height} style={fit.style}/>
     );
   }
 });

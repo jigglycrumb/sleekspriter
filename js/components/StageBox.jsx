@@ -44,10 +44,8 @@ var StageBox = React.createClass({
           return (
             <StageBoxLayer
               key={id}
-              csswidth={w}
-              cssheight={h} 
-              width={this.props.editor.size.width}
-              height={this.props.editor.size.width}
+              width={w}
+              height={h}
               id={layer.id}
               layer={layer} />
           );

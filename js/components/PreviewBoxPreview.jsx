@@ -16,6 +16,8 @@ var PreviewBoxPreview = React.createClass({
       scale = maxHeight/this.props.height;
     }
 
+    scale = Math.floor(scale);
+
     var width = this.props.width*scale,
         height = this.props.height*scale;
 
@@ -24,11 +26,7 @@ var PreviewBoxPreview = React.createClass({
         id="PreviewBoxPreview"
         width={width}
         height={height}
-        style={{
-          width: width,
-          height: height,
-        }}>
-      </canvas>
+      ></canvas>
     );
   }
 });

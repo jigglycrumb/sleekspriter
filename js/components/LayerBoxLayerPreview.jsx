@@ -2,9 +2,9 @@
 var LayerBoxLayerPreview = React.createClass({
   mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
-    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
+    var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
     return (
-      <canvas width={style.width} height={style.height} style={style}></canvas>
+      <canvas width={fit.width} height={fit.height} style={fit.style}></canvas>
     );
   }
 });

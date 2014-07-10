@@ -21660,19 +21660,17 @@ Pixel.toArray = function(pixel) {
 /**
  * Paints a pixel to a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
- * @param {Number} fileWidth - the width of the currently opened file
- * @param {Number} fileHeight - the height of the currently opened file
  * @param {Number} x - pixel x-coordinate
  * @param {Number} y - pixel y-coordinate
  * @param {String} color - hex-string of color to paint
  */
-Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
-  var scale = canvas.clientWidth/fileWidth,
+Pixel.fill = function(canvas, x, y, color) {
+  var scale = canvas.width/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
-  //console.log('filling pixel', canvas.clientWidth, fileWidth);
+  //console.log('filling pixel', cX, cY, scale);
 
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
@@ -21681,13 +21679,11 @@ Pixel.fill = function(canvas, fileWidth, fileHeight, x, y, color) {
 /**
  * Clear a pixel from a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
- * @param {Number} fileWidth - the width of the currently opened file
- * @param {Number} fileHeight - the height of the currently opened file
  * @param {Number} x - pixel x-coordinate
  * @param {Number} y - pixel y-coordinate
  */
-Pixel.clear = function(canvas, fileWidth, fileHeight, x, y) {
-  var scale = canvas.clientWidth/fileWidth,
+Pixel.clear = function(canvas, x, y) {
+  var scale = canvas.clientWidth/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
@@ -21877,6 +21873,8 @@ var Stage = function() {
     frame: {
       refresh: function(frame) {
 
+        console.log('refreshing frame '+frame);
+
         var frame = frame || editor.frame;
 
         this.clear();
@@ -21922,6 +21920,9 @@ var Stage = function() {
 
     layer: {
       refresh: function() {
+
+        console.log('refreshing layer '+editor.layers.selected );
+
         var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
             frame = editor.frame;
@@ -21969,7 +21970,7 @@ var Editor = function() {
   this.frames = {x: 0, y: 0};
   this.size = {width: 0, height: 0};
 
-  this.zoom = 10;
+  this.zoom = 5;
   this.grid = true;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
@@ -22892,41 +22893,6 @@ Workspace.prototype.save = function() {
   var json = JSON.stringify(this.data);
   localStorage.setItem('workspace', json);
 };
-// Use only in <canvas> components
-var CopyFrameMixin = {
-  propTypes: {
-    frame: React.PropTypes.number.isRequired, // frame id
-  },
-  componentDidMount: function() {
-    this.subscription = channel.subscribe('stage.frame.update', this.prepareRefresh);
-  },
-  compontentWillUnmount: function() {
-    this.subscription.unsubscribe();
-  },
-  getInitialState: function() {
-    return {
-      needsRefresh: false
-    };
-  },
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      this.drawFrame();
-      this.setState({needsRefresh: false});
-    }
-  },
-  drawFrame: function() {
-    var w = this.getDOMNode().clientWidth,
-        h = this.getDOMNode().clientHeight,
-        sourceCanvas = document.getElementById('OffscreenFrameCanvas-'+this.props.frame);
-
-    this.getDOMNode().width = this.getDOMNode().width; // clear canvas
-    this.getDOMNode().getContext('2d').webkitImageSmoothingEnabled = false;
-    this.getDOMNode().getContext('2d').drawImage(sourceCanvas, 0, 0, w, h);
-  },
-};
 var FoldableMixin = {
   getInitialState: function() {
     return ({
@@ -22997,10 +22963,10 @@ var FrameCanvasMixin = {
       switch(this.state.topic) {
         case 'stage.pixel.fill':
           var color = this.state.data.color;
-          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
+          Pixel.fill(canvas, x, y, color);
           break;
         case 'stage.pixel.clear':
-          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
+          Pixel.clear(canvas, x, y);
           break;
       }
 
@@ -23031,7 +22997,9 @@ var LayerCanvasMixin = {
     }
   },
   componentDidUpdate: function() {
+
     if(this.state.needsRefresh) {
+
       var x = this.state.data.x,
           y = this.state.data.y,
           canvas = this.getDOMNode();
@@ -23039,10 +23007,10 @@ var LayerCanvasMixin = {
       switch(this.state.topic) {
         case 'stage.pixel.fill':
           var color = this.state.data.color;
-          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
+          Pixel.fill(canvas, x, y, color);
           break;
         case 'stage.pixel.clear':
-          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
+          Pixel.clear(canvas, x, y);
           break;
       }
 
@@ -23335,12 +23303,9 @@ var FrameBox = React.createClass({displayName: 'FrameBox',
 var FrameBoxFrame = React.createClass({displayName: 'FrameBoxFrame',
   mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
-    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
+    var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
     return (
-      React.DOM.canvas(
-        {width:style.width,
-        height:style.height,
-        style:style} )
+      React.DOM.canvas( {width:fit.width, height:fit.height, style:fit.style})
     );
   }
 });
@@ -23465,9 +23430,9 @@ var LayerBoxLayer = React.createClass({displayName: 'LayerBoxLayer',
 var LayerBoxLayerPreview = React.createClass({displayName: 'LayerBoxLayerPreview',
   mixins:[ResetStateMixin, PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
-    var style = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
+    var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
     return (
-      React.DOM.canvas( {width:style.width, height:style.height, style:style})
+      React.DOM.canvas( {width:fit.width, height:fit.height, style:fit.style})
     );
   }
 });
@@ -23492,11 +23457,7 @@ var OffscreenFrameCanvas = React.createClass({displayName: 'OffscreenFrameCanvas
         {id:this.props.key,
         className:"OffscreenFrameCanvas",
         width:this.props.width,
-        height:this.props.height,
-        style:{
-          width: this.props.width,
-          height: this.props.height
-        }}
+        height:this.props.height}
       )
     );
   },
@@ -23743,6 +23704,8 @@ var PreviewBoxPreview = React.createClass({displayName: 'PreviewBoxPreview',
       scale = maxHeight/this.props.height;
     }
 
+    scale = Math.floor(scale);
+
     var width = this.props.width*scale,
         height = this.props.height*scale;
 
@@ -23750,11 +23713,7 @@ var PreviewBoxPreview = React.createClass({displayName: 'PreviewBoxPreview',
       React.DOM.canvas(
         {id:"PreviewBoxPreview",
         width:width,
-        height:height,
-        style:{
-          width: width,
-          height: height,
-        }}
+        height:height}
       )
     );
   }
@@ -23871,10 +23830,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
           return (
             StageBoxLayer(
               {key:id,
-              csswidth:w,
-              cssheight:h, 
-              width:this.props.editor.size.width,
-              height:this.props.editor.size.width,
+              width:w,
+              height:h,
               id:layer.id,
               layer:layer} )
           );
@@ -24249,33 +24206,29 @@ var StageBoxCursorCanvas = React.createClass({displayName: 'StageBoxCursorCanvas
       bottom++;
     }
 
+    ctx.beginPath();
+
     if(x > 1) {
-      ctx.beginPath();
       ctx.moveTo(left, 0);
       ctx.lineTo(left, canvas.height);
-      ctx.stroke();
     }
 
     if(x < (canvas.width/zoom)) {
-      ctx.beginPath();
       ctx.moveTo(right, 0);
       ctx.lineTo(right, canvas.height);
-      ctx.stroke();
     }
 
     if(y > 1) {
-      ctx.beginPath();
       ctx.moveTo(0, top);
       ctx.lineTo(canvas.width, top);
-      ctx.stroke();
     }
 
     if(y < (canvas.height/zoom)) {
-      ctx.beginPath();
       ctx.moveTo(0, bottom);
       ctx.lineTo(canvas.width, bottom);
-      ctx.stroke();
     }
+
+    ctx.stroke();
   },
 });
 /** @jsx React.DOM */
@@ -24303,21 +24256,21 @@ var StageBoxGridCanvas = React.createClass({displayName: 'StageBoxGridCanvas',
     var ctx = canvas.getContext('2d');
     ctx.strokeStyle = "#cccccc";
 
+    ctx.beginPath();
+
     // vertical lines
     for(var x = zoom+0.5; x < canvas.width; x+= zoom) {
-      ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, canvas.height);
-      ctx.stroke();
     }
 
     // horizontal lines
     for(var y = zoom+0.5; y < canvas.height; y+= zoom) {
-      ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(canvas.width, y);
-      ctx.stroke();
     }
+
+    ctx.stroke();
   },
 });
 /** @jsx React.DOM */
@@ -24329,14 +24282,14 @@ var StageBoxLayer = React.createClass({displayName: 'StageBoxLayer',
       React.DOM.canvas(
         {id:this.props.key,
         className:"Layer",
-        width:this.props.csswidth,
-        height:this.props.cssheight,
+        width:this.props.width,
+        height:this.props.height,
         style:{
           zIndex: this.props.layer.z,
           opacity: this.props.layer.opacity/100,
           display: display,
-          width: this.props.csswidth,
-          height: this.props.cssheight
+          //width: this.props.width,
+          //height: this.props.height
         }}
       )
     );
@@ -24611,22 +24564,20 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
       style = {},
       scale;
 
-  if(w > h) {
-    scale = containerSize/w;
-    style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
-  }
-  else {
-    scale = containerSize/h;
-    style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
-  }
+  if(w > h) scale = Math.floor(containerSize/w);
+  else scale = Math.floor(containerSize/h);
+
+  style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
+  style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
 
   w = Math.round(w*scale);
   h = Math.round(h*scale);
 
-  style.width = w;
-  style.height = h;
-
-  return style;
+  return {
+    width: w,
+    height: h,
+    style: style
+  }
 };
 
 function wrapPixel(pixel, distance) {
@@ -24671,11 +24622,11 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        //{ channel: "pixler" },
+        { channel: "pixler" },
         //{ data: { foo: /bar/ } },
         //{ topic: "stage.pixel.fill" },
         //{ topic: "stage.pixel.clear" },
-        { topic: "app.frame.select" },
+        //{ topic: "app.frame.select" },
     ],
     active: false,
 });

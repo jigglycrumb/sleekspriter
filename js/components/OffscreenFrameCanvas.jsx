@@ -8,10 +8,6 @@ var OffscreenFrameCanvas = React.createClass({
         className="OffscreenFrameCanvas"
         width={this.props.width}
         height={this.props.height}
-        style={{
-          width: this.props.width,
-          height: this.props.height
-        }}
       ></canvas>
     );
   },

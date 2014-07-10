@@ -1,4 +1,3 @@
-@import "../fonts/flaticon.css";
 .letterpress {
   text-shadow: 0 -1px 1px #262626, 0 1px 1px #6a6a6a;
 }
@@ -216,6 +215,13 @@ input[type=color] {
 }
 canvas {
   background: transparent;
+  /*
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+  */
 }
 ul {
   list-style-type: none;
@@ -509,7 +515,6 @@ ul {
   border-left: none;
   background: #535353;
   cursor: pointer;
-  box-sizing: border-box;
 }
 #FrameBox .frame.top {
   border-top: none;
@@ -520,8 +525,6 @@ ul {
 #FrameBox .frame.selected {
   border: 1px solid #6d7e96;
   box-shadow: 0 0 1px 0 #6d7e96;
-  -webkit-transform: translate(-1px, 1px);
-  -webkit-transform: scale(1.1);
 }
 #FrameBox .actions {
   width: 90%;

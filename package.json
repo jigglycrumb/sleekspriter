@@ -2,12 +2,10 @@
   "name": "pixler",
   "version": "0.0.0",
   "description": "A pixel art editor",
+  "private": true,
   "main": "./index.html",
-  "scripts": {
-    "test": ""
-  },
   "author": "Volker Wieban",
-  "license": "ISC",
+  "license": "All rights reserved",
   "devDependencies": {
     "grunt": "latest",
     "grunt-contrib-less": "latest",
@@ -16,7 +14,11 @@
     "grunt-contrib-uglify": "latest",
     "grunt-plato": "latest",
     "grunt-react": "latest",
-    "grunt-jsdoc": "^0.5.4"
+    "grunt-jsdoc": "^0.5.4",
+    "grunt-contrib-node-webkit": "0.0.1",
+    "grunt-contrib-csslint": "^0.2.0",
+    "load-grunt-tasks": "^0.4.0",
+    "grunt-contrib-jshint": "^0.10.0"
   },
   "window": {
     "title": "pixler",

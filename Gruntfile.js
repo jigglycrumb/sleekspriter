@@ -1,8 +1,7 @@
 module.exports = function(grunt) {
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
-
 
     less: {
       development: {
@@ -25,10 +24,27 @@ module.exports = function(grunt) {
 
 
 
+    csslint: {
+      strict: {
+        options: {
+          import: 2
+        },
+        src: ['dist/<%= pkg.name %>.css']
+      },
+      lax: {
+        options: {
+          import: false
+        },
+        src: ['dist/<%= pkg.name %>.css']
+      }
+    },
+
+
+
     react: {
       mixins: {
         files: {
-          'js/build/react-mixins.js': [
+          'build/js/react-mixins.js': [
             'js/mixins/*.js',
             'js/mixins/*.jsx',
           ]
@@ -36,16 +52,13 @@ module.exports = function(grunt) {
       },
       components: {
         files: {
-          'js/build/react-components.js': [
+          'build/js/react-components.js': [
             'js/components/*.jsx',
             'js/index.jsx',
           ]
         }
       },
     },
-
-
-
 
     concat: {
       options: {
@@ -81,14 +94,18 @@ module.exports = function(grunt) {
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',
 
-          'js/build/react-mixins.js',
-          'js/build/react-components.js',
+          'build/js/react-mixins.js',
+          'build/js/react-components.js',
         ],
         // the location of the resulting JS file
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
 
+
+    jshint: {
+      dist: ['dist/<%= pkg.name %>.js']
+    },
 
 
     uglify: {
@@ -100,7 +117,6 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>-min.js'
       }
     },
-
 
     watch: {
       styles: {
@@ -116,12 +132,6 @@ module.exports = function(grunt) {
         files: ['js/**/*.js'],
         tasks: ['concat']
       },
-      /*
-      uglify: {
-        files: ['dist/<%= pkg.name %>.js'],
-        tasks: ['uglify']
-      },
-      */
       livereload: {
         // Here we watch the files the less task will compile to
         // These files are sent to the live reload server after less compiles to them
@@ -130,7 +140,6 @@ module.exports = function(grunt) {
       },
     },
 
-
     plato: {
       report: {
         files: {
@@ -138,20 +147,29 @@ module.exports = function(grunt) {
         }
       }
     },
+
+    jsdoc : {
+      dist : {
+        src: ['js/classes/*.js'],
+        options: {
+          destination: 'doc'
+        }
+      }
+    },
   });
 
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-csslint');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-plato');
   grunt.loadNpmTasks('grunt-react');
 
   grunt.registerTask('default', ['watch']);
-  grunt.registerTask('css', ['less']);
-  grunt.registerTask('jsx', ['react']);
-  grunt.registerTask('js', ['concat']);
-  grunt.registerTask('min', ['uglify']);
-  grunt.registerTask('report', ['plato']);
-  grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('dev', ['less', 'react', 'concat']);
+  grunt.registerTask('build', ['less', 'react', 'concat', 'uglify', 'plato', 'jsdoc']);
 };

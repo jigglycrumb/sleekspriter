@@ -21,7 +21,9 @@ var LayerCanvasMixin = {
     }
   },
   componentDidUpdate: function() {
+
     if(this.state.needsRefresh) {
+
       var x = this.state.data.x,
           y = this.state.data.y,
           canvas = this.getDOMNode();
@@ -29,10 +31,10 @@ var LayerCanvasMixin = {
       switch(this.state.topic) {
         case 'stage.pixel.fill':
           var color = this.state.data.color;
-          Pixel.fill(canvas, this.props.width, this.props.height, x, y, color);
+          Pixel.fill(canvas, x, y, color);
           break;
         case 'stage.pixel.clear':
-          Pixel.clear(canvas, this.props.width, this.props.height, x, y);
+          Pixel.clear(canvas, x, y);
           break;
       }
 

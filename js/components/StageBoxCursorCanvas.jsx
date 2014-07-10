@@ -32,32 +32,28 @@ var StageBoxCursorCanvas = React.createClass({
       bottom++;
     }
 
+    ctx.beginPath();
+
     if(x > 1) {
-      ctx.beginPath();
       ctx.moveTo(left, 0);
       ctx.lineTo(left, canvas.height);
-      ctx.stroke();
     }
 
     if(x < (canvas.width/zoom)) {
-      ctx.beginPath();
       ctx.moveTo(right, 0);
       ctx.lineTo(right, canvas.height);
-      ctx.stroke();
     }
 
     if(y > 1) {
-      ctx.beginPath();
       ctx.moveTo(0, top);
       ctx.lineTo(canvas.width, top);
-      ctx.stroke();
     }
 
     if(y < (canvas.height/zoom)) {
-      ctx.beginPath();
       ctx.moveTo(0, bottom);
       ctx.lineTo(canvas.width, bottom);
-      ctx.stroke();
     }
+
+    ctx.stroke();
   },
 });

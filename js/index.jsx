@@ -50,22 +50,20 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
       style = {},
       scale;
 
-  if(w > h) {
-    scale = containerSize/w;
-    style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
-  }
-  else {
-    scale = containerSize/h;
-    style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
-  }
+  if(w > h) scale = Math.floor(containerSize/w);
+  else scale = Math.floor(containerSize/h);
+
+  style.marginTop = Math.floor((containerSize - Math.round(h*scale))/2);
+  style.marginLeft = Math.floor((containerSize - Math.round(w*scale))/2);
 
   w = Math.round(w*scale);
   h = Math.round(h*scale);
 
-  style.width = w;
-  style.height = h;
-
-  return style;
+  return {
+    width: w,
+    height: h,
+    style: style
+  }
 };
 
 function wrapPixel(pixel, distance) {
@@ -110,11 +108,11 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        //{ channel: "pixler" },
+        { channel: "pixler" },
         //{ data: { foo: /bar/ } },
         //{ topic: "stage.pixel.fill" },
         //{ topic: "stage.pixel.clear" },
-        { topic: "app.frame.select" },
+        //{ topic: "app.frame.select" },
     ],
     active: false,
 });
