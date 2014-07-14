@@ -26176,7 +26176,6 @@ var ZoomTool = React.createClass({displayName: 'ZoomTool',
     this.dispatchZoomChanged(null, zoom);
   }
 });
-/** @jsx React.DOM */
 // Debug helpers
 
 function showOffScreen() {
@@ -26358,9 +26357,7 @@ window.onload = function() {
 
   //setInterval(minutely, 60000);
 
-  // render app
-  React.renderComponent(
-    App( {editor:editor, workspace:workspace} )
-    , document.body);
+  // render UI
+  React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
 };
 

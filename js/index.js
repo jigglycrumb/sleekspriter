@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 // Debug helpers
 
 function showOffScreen() {
@@ -113,7 +112,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         //{ topic: "stage.pixel.fill" },
         //{ topic: "stage.pixel.clear" },
         //{ topic: "app.frame.select" },
-        //{ topic: "stage.zoom.select" },
+        { topic: "stage.zoom.select" },
     ],
     //active: false,
 });
@@ -180,9 +179,7 @@ window.onload = function() {
 
   //setInterval(minutely, 60000);
 
-  // render app
-  React.renderComponent(
-    <App editor={editor} workspace={workspace} />
-    , document.body);
+  // render UI
+  React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
 };
 

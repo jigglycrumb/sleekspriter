@@ -52,10 +52,7 @@ module.exports = function(grunt) {
       },
       components: {
         files: {
-          'build/js/react-components.js': [
-            'js/components/*.jsx',
-            'js/index.jsx',
-          ]
+          'build/js/react-components.js': ['js/components/*.jsx']
         }
       },
     },
@@ -96,6 +93,7 @@ module.exports = function(grunt) {
 
           'build/js/react-mixins.js',
           'build/js/react-components.js',
+          'js/index.js',
         ],
         // the location of the resulting JS file
         dest: 'dist/<%= pkg.name %>.js'
