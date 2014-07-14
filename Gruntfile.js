@@ -73,7 +73,7 @@ module.exports = function(grunt) {
           'bower_components/postal.js/lib/postal.js',
           'bower_components/postal.diagnostics/src/postal.diagnostics.js',
           'bower_components/mousetrap/mousetrap.js',
-          'bower_components/react/react.js',
+          'bower_components/react/react-with-addons.js',
           'js/lib/color.js',
           'js/lib/tween.js',
 

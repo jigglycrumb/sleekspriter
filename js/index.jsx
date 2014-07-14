@@ -108,13 +108,14 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        { channel: "pixler" },
+        //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
         //{ topic: "stage.pixel.fill" },
         //{ topic: "stage.pixel.clear" },
         //{ topic: "app.frame.select" },
+        //{ topic: "stage.zoom.select" },
     ],
-    active: false,
+    //active: false,
 });
 
 

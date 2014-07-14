@@ -515,14 +515,30 @@ ul {
   border-left: none;
   background: #535353;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 #FrameBox .frame.top {
   border-top: none;
 }
+#FrameBox .frame.top.selected {
+  margin-bottom: -2px;
+  top: -1px;
+}
 #FrameBox .frame.right {
   border-right: none;
 }
+#FrameBox .frame.bottom {
+  border-bottom: none;
+}
+#FrameBox .frame.left {
+  border-left: none;
+}
 #FrameBox .frame.selected {
+  z-index: 2;
+  left: -1px;
+  margin-bottom: -1px;
+  margin-right: -1px;
   border: 1px solid #6d7e96;
   box-shadow: 0 0 1px 0 #6d7e96;
 }
