@@ -4,11 +4,12 @@ var Editor = function() {
       minZoom = 1,
       self = this;
 
+  //this.file = false;
   this.frame = 1;
   this.lastFrame = 1;
 
-  this.frames = {x: 0, y: 0};
-  this.size = {width: 0, height: 0};
+  //this.frames = {x: 0, y: 0};
+  //this.size = {width: 0, height: 0};
 
   this.zoom = 5;
   this.grid = true;
@@ -26,7 +27,7 @@ var Editor = function() {
   };
 
 
-  this.pixels = []; // contains all pixels of the selected frame
+  //this.pixels = []; // contains all pixels of the selected frame
 
   this.deletePixel = function(layer, x, y) {
     this.pixels = this.pixels.filter(function(pixel) {
@@ -35,6 +36,7 @@ var Editor = function() {
   };
 
   var getFramePixels = function() {
+    console.log('getting pixels for frame '+self.frame);
     var frameLayers = _.where(file.layers, {frame: self.frame});
     var pixels = [];
 
@@ -85,39 +87,46 @@ var Editor = function() {
   };
 
   this.saveChanges = function() {
+    console.log('saving changes to file');
+
+    return;
+
     // grab all old pixels of current frame
     var frameLayers = this.layers.getIds();
-    var pixels = this.pixels.slice(0); // slice clones the array
+    var pixels = this.pixels.frame.slice(0); // slice clones the array
     file.pixels.forEach(function(pixel) {
       if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
     });
 
     file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
-    this.pixels = getFramePixels();
+    //this.pixels = getFramePixels(); // check if needed
   };
 
 
   // init subclasses
+  this.file.init();
   this.layers.init();
+  this.pixels.init();
   this.selection.init(this);
   this.brightnessTool.init();
   this.palettes.init();
 
-
+  /*
   channel.subscribe('file.load', function(data, envelope) {
     self.size = data.size;
     self.frames = data.frames;
   });
+  */
 
   channel.subscribe('stage.grid.toggle', function(data, envelope) {
     self.grid = data.grid;
   });
 
   channel.subscribe('app.frame.select', function(data, envelope) {
-    self.saveChanges();
+    //self.saveChanges();
     self.frame = parseInt(data.frame);
-    self.layers.selectTop();
-    self.pixels = getFramePixels();
+    //self.layers.selectTop();
+    //self.pixels = getFramePixels();
   });
 
   channel.subscribe('app.tool.select', function(data, envelope) {
@@ -252,5 +261,5 @@ var Editor = function() {
 
 };
 
-Editor.prototype = {}; //Object.create(null);
+Editor.prototype = {};
 Editor.prototype.constructor = Editor;

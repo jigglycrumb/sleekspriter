@@ -12,7 +12,7 @@ var LayerBoxLayer = React.createClass({
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
         <div className="preview" onClick={this.dispatchLayerSelected}>
-          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.editor.size.width} height={this.props.editor.size.height} />
+          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.editor.file.size.width} height={this.props.editor.file.size.height} />
         </div>
         <div className="name">
           <label ref="nameLabel" className="name-label" onClick={this.showNameInput}>{this.props.layer.name}</label>

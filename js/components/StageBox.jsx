@@ -12,8 +12,8 @@ var StageBox = React.createClass({
   },
   render: function() {
 
-    var w = this.props.editor.size.width*this.props.editor.zoom,
-        h = this.props.editor.size.height*this.props.editor.zoom,
+    var w = this.props.editor.file.size.width*this.props.editor.zoom,
+        h = this.props.editor.file.size.height*this.props.editor.zoom,
         centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
         centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 
@@ -289,7 +289,7 @@ var StageBox = React.createClass({
         });
       };
 
-      var px = _.findWhere(editor.pixels, {layer: editor.layers.selected, x: editor.pixel.x, y: editor.pixel.y }),
+      var px = _.findWhere(editor.pixels.layer, {x: editor.pixel.x, y: editor.pixel.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -330,8 +330,8 @@ var StageBox = React.createClass({
         });
       });
 
-      editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == editor.layers.selected) {
+      editor.pixels.layer.forEach(function(pixel) {
+
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
           channel.publish('stage.pixel.fill', {
             frame: editor.frame,
@@ -340,12 +340,12 @@ var StageBox = React.createClass({
             y: pixel.y,
             color: color.hexString()
           });
-        }
+
       });
     }
     else {
-      editor.pixels.forEach(function(pixel) {
-        if(pixel.layer == editor.layers.selected) {
+      editor.pixels.layer.forEach(function(pixel) {
+
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
               target = wrapPixel(pixel, distance);
 
@@ -356,7 +356,7 @@ var StageBox = React.createClass({
             y: target.y,
             color: color.hexString()
           });
-        }
+
       });
     }
   },

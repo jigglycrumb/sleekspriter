@@ -4,6 +4,7 @@ Workspace.prototype = Object.create(null);
 Workspace.prototype.constructor = Workspace;
 
 Workspace.prototype.data = {
+  file: false,
   tool: 'BrushTool',
   frame: 1,
   layer: null,
@@ -29,6 +30,7 @@ Workspace.prototype.data = {
 
 // update workspace with current editor data
 Workspace.prototype.update = function() {
+  this.data.file = editor.file.name;
   this.data.tool = editor.tool;
   this.data.frame = editor.frame;
   this.data.layer = editor.layers.selected;
@@ -61,6 +63,7 @@ Workspace.prototype.setup = function() {
     return bounds;
   };
 
+  editor.file.name = this.data.file;
   editor.tool = this.data.tool;
   editor.frame = this.data.frame;
   editor.layers.selected = this.data.layer;
@@ -87,3 +90,8 @@ Workspace.prototype.save = function() {
   var json = JSON.stringify(this.data);
   localStorage.setItem('workspace', json);
 };
+
+Workspace.prototype.clear = function() {
+  localStorage.removeItem('workspace');
+  document.location.reload();
+}

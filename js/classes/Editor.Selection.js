@@ -11,12 +11,12 @@ Editor.prototype.selection.init = function(editor) {
   var self = this;
 
   function saveAndClearPixels() {
-    // merge editor.selection.pixels back to editor.pixels
+    // merge editor.selection.pixels back to editor.layer.pixels
     self.pixels.forEach(function(pixel) {
-      editor.pixels.push(pixel);
+      editor.pixels.layer.push(pixel);
     });
 
-    editor.pixels = _.unique(editor.pixels, function(p) { return p.layer+','+p.x+','+p.y });
+    editor.pixels.layer = _.unique(editor.pixels.layer, function(p) { return p.layer+','+p.x+','+p.y });
     self.pixels = [];
   };
 
@@ -31,9 +31,9 @@ Editor.prototype.selection.init = function(editor) {
           saveAndClearPixels();
           break;
         default:
-          // move selected pixels from editor.pixels to editor.selection.pixels
-          self.pixels = _.filter(editor.pixels, pixelHasBeenSelected);
-          editor.pixels = _.reject(editor.pixels, pixelHasBeenSelected);
+          // move selected pixels from editor.pixels.layer to editor.selection.pixels
+          self.pixels = _.filter(editor.pixels.layer, pixelHasBeenSelected);
+          editor.pixels.layer = _.reject(editor.pixels.layer, pixelHasBeenSelected);
           break;
       }
     }

@@ -13,8 +13,6 @@ var StageBoxLayer = React.createClass({
           zIndex: this.props.layer.z,
           opacity: this.props.layer.opacity/100,
           display: display,
-          //width: this.props.width,
-          //height: this.props.height
         }}>
       </canvas>
     );

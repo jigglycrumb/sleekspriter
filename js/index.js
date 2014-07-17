@@ -111,10 +111,10 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         //{ data: { foo: /bar/ } },
         //{ topic: "stage.pixel.fill" },
         //{ topic: "stage.pixel.clear" },
-        //{ topic: "app.frame.select" },
-        { topic: "stage.zoom.select" },
+        { topic: "app.frame.select" },
+        { topic: "app.layer.select" },
     ],
-    //active: false,
+    active: false,
 });
 
 
@@ -122,28 +122,34 @@ var file = new File();
 var stage = new Stage();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
-
 var workspace = new Workspace();
 
-window.onbeforeunload = workspace.save;
+workspace.load();
 
-window.onload = function() {
+if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
+  // nothing to see here yet
+  console.log('no file in workspace found');
+}
+else { // re-open last file
+  File.load(workspace.data.file, fileLoaded);
+}
 
-  //workspace.load();
+function fileLoaded(json) {
+  console.log('file loaded');
 
-  // load file
-  file.fromJSONString(savedFile);
+  // init file
+  file.fromJSON(json);
 
   // init auto palette
   editor.palettes.buildAuto();
 
-
-
+  // select last selected frame (also initializes layers)
+  channel.publish('app.frame.select', {frame: editor.frame});
 
   /*
   // draw all pixels to layers
   file.pixels.forEach(function(px) {
-    var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+    var color = new Color(px.toRgba());
     channel.publish('stage.pixel.fill', {
       frame: file.getFrameIdForLayer(px.layer),
       layer: px.layer,
@@ -154,32 +160,62 @@ window.onload = function() {
   });
   */
 
-  // select each frame once to initialize previews etc
-  /*
-  var totalFrames = file.frames.x * file.frames.y,
-      frame = editor.frame;
-  for(var i = 1; i <= totalFrames; i++) {
-    channel.publish('app.frame.select', {frame: i});
-  }
-  */
-
-  //channel.publish('app.frame.select', {frame: frame});
-  channel.publish('app.frame.select', {frame: 1});
-  /*
-
-  // select top-most layer
-  editor.layers.selectTop();
-
-  // set inital zoom
-  channel.publish('stage.zoom.select', {zoom: editor.zoom});
-
-  // select brush tool
-  channel.publish('app.tool.select', {tool: editor.tool});
-  */
-
-  //setInterval(minutely, 60000);
-
   // render UI
   React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
-};
+}
 
+
+// //window.onbeforeunload = workspace.save;
+
+// window.onload = function() {
+
+//   workspace.load();
+
+//   // load file
+//   file.fromJSONString(savedFile);
+
+//   // init auto palette
+//   //editor.palettes.buildAuto();
+
+//   /*
+//   // draw all pixels to layers
+//   file.pixels.forEach(function(px) {
+//     var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+//     channel.publish('stage.pixel.fill', {
+//       frame: file.getFrameIdForLayer(px.layer),
+//       layer: px.layer,
+//       x: px.x,
+//       y: px.y,
+//       color: color.hexString()
+//     });
+//   });
+//   */
+
+//   // select each frame once to initialize previews etc
+
+//   var totalFrames = file.frames.x * file.frames.y,
+//       frame = editor.frame;
+//   for(var i = 1; i <= totalFrames; i++) {
+//     channel.publish('app.frame.select', {frame: i});
+//   }
+
+
+//   //channel.publish('app.frame.select', {frame: frame});
+//   //channel.publish('app.frame.select', {frame: 1});
+//   /*
+
+//   // select top-most layer
+//   editor.layers.selectTop();
+
+//   // set inital zoom
+//   channel.publish('stage.zoom.select', {zoom: editor.zoom});
+
+//   // select brush tool
+//   channel.publish('app.tool.select', {tool: editor.tool});
+//   */
+
+//   //setInterval(minutely, 60000);
+
+//   // render UI
+//   React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
+// };

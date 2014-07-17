@@ -71,6 +71,8 @@ module.exports = function(grunt) {
           'bower_components/postal.diagnostics/src/postal.diagnostics.js',
           'bower_components/mousetrap/mousetrap.js',
           'bower_components/react/react-with-addons.js',
+          'bower_components/zepto/zepto.js',
+
           'js/lib/color.js',
           'js/lib/tween.js',
 
@@ -83,7 +85,9 @@ module.exports = function(grunt) {
 
 
           'js/classes/Editor.js',
+          'js/classes/Editor.File.js',
           'js/classes/Editor.Layers.js',
+          'js/classes/Editor.Pixels.js',
           'js/classes/Editor.Palettes.js',
           'js/classes/Editor.Selection.js',
           'js/classes/Editor.BrightnessTool.js',

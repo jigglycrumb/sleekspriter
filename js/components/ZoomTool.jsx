@@ -22,15 +22,15 @@ var ZoomTool = React.createClass({
     channel.publish('stage.zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
-    if(editor.zoom+1 <= 50) this.dispatchZoomChanged(null, editor.zoom+1);
+    if(this.props.editor.zoom+1 <= 50) this.dispatchZoomChanged(null, this.props.editor.zoom+1);
   },
   zoomOut: function() {
-    if(editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, editor.zoom-1);
+    if(this.props.editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, this.props.editor.zoom-1);
   },
   fitToScreen: function() {
-    var zoom = Math.floor((window.innerHeight - editor.offset.top - editor.offset.bottom)/file.size.height);
-    if((file.size.width*zoom) > (window.innerWidth - editor.offset.left - editor.offset.right)) {
-      zoom = Math.floor((window.innerWidth - editor.offset.left - editor.offset.right)/file.size.width);
+    var zoom = Math.floor((window.innerHeight - this.props.editor.offset.top - this.props.editor.offset.bottom)/this.props.editor.file.size.height);
+    if((this.props.editor.file.size.width*zoom) > (window.innerWidth - this.props.editor.offset.left - this.props.editor.offset.right)) {
+      zoom = Math.floor((window.innerWidth - this.props.editor.offset.left - this.props.editor.offset.right)/this.props.editor.file.size.width);
     }
     this.dispatchZoomChanged(null, zoom);
   }

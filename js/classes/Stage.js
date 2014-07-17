@@ -1,5 +1,16 @@
 var Stage = function() {
 
+  function fillPixel(frame, pixel) {
+    var color = new Color(pixel.toRgba());
+    channel.publish('stage.pixel.fill', {
+      frame: frame,
+      layer: pixel.layer,
+      x: pixel.x,
+      y: pixel.y,
+      color: color.hexString()
+    });
+  };
+
   return {
 
     frame: {
@@ -11,8 +22,8 @@ var Stage = function() {
 
         this.clear();
 
-        editor.pixels.forEach(function(px) {
-          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+        editor.pixels.frame.forEach(function(px) {
+          var color = new Color(px.toRgba());
           channel.publish('stage.pixel.fill', {
             frame: frame,
             layer: px.layer,
@@ -27,7 +38,7 @@ var Stage = function() {
 
           editor.selection.pixels.forEach(function(px) {
             if(inArray(framelayers, px.layer)) {
-              var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+              var color = new Color(px.toRgba());
               channel.publish('stage.pixel.fill', {
                 frame: frame,
                 layer: px.layer,
@@ -55,14 +66,14 @@ var Stage = function() {
 
         console.log('refreshing layer '+editor.layers.selected );
 
-        var layerPixels = _.where(editor.pixels, {layer: editor.layers.selected}),
+        var layerPixels = editor.pixels.layer,
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
             frame = editor.frame;
 
         this.clear();
 
         layerPixels.forEach(function(px) {
-          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+          var color = new Color(px.toRgba());
           channel.publish('stage.pixel.fill', {
             frame: frame,
             layer: px.layer,
@@ -73,7 +84,7 @@ var Stage = function() {
         });
 
         selectionPixels.forEach(function(px) {
-          var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
+          var color = new Color(px.toRgba());
           channel.publish('stage.pixel.fill', {
             frame: frame,
             layer: px.layer,

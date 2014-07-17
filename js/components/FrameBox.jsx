@@ -5,12 +5,12 @@ var FrameBox = React.createClass({
     var containerStyle = {},
         frameStyle = {},
         frames = [], // array for mapping the frame components
-        totalFrames = this.props.editor.frames.x * this.props.editor.frames.y,
-        frameSize = Math.floor(180/this.props.editor.frames.x)-1;
+        totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
+        frameSize = Math.floor(180/this.props.editor.file.frames.x)-1;
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
 
-    containerStyle.width = ((frameSize+1)*this.props.editor.frames.x);
+    containerStyle.width = ((frameSize+1)*this.props.editor.file.frames.x);
     containerStyle.marginLeft = (200-containerStyle.width)/2;
 
     frameStyle.width = frameSize;
@@ -26,10 +26,10 @@ var FrameBox = React.createClass({
                 classes = React.addons.classSet({
                   'frame': true,
                   'selected': frame == this.props.editor.frame,
-                  'top': frame <= this.props.editor.frames.x,
-                  'right': frame % this.props.editor.frames.x == 0,
-                  'bottom': frame > totalFrames - this.props.editor.frames.x,
-                  'left': (frame-1) % this.props.editor.frames.x == 0,
+                  'top': frame <= this.props.editor.file.frames.x,
+                  'right': frame % this.props.editor.file.frames.x == 0,
+                  'bottom': frame > totalFrames - this.props.editor.file.frames.x,
+                  'left': (frame-1) % this.props.editor.file.frames.x == 0,
                 });
 
             var clickHandler = function() {
@@ -40,8 +40,8 @@ var FrameBox = React.createClass({
               <div key={id} className={classes} style={frameStyle} onClick={clickHandler}>
                 <FrameBoxFrame
                   id={frame}
-                  width={this.props.editor.size.width}
-                  height={this.props.editor.size.height}
+                  width={this.props.editor.file.size.width}
+                  height={this.props.editor.file.size.height}
                   size={frameSize} />
               </div>
             );

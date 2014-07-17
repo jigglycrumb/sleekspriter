@@ -2,7 +2,7 @@
 var App = React.createClass({
   render: function() {
 
-    var totalFrames = this.props.editor.frames.x * this.props.editor.frames.y,
+    var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
         frames = [];
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
@@ -35,8 +35,8 @@ var App = React.createClass({
               <OffscreenFrameCanvas
                 key={id}
                 id={frame}
-                width={this.props.editor.size.width}
-                height={this.props.editor.size.height}
+                width={this.props.editor.file.size.width}
+                height={this.props.editor.file.size.height}
                 selectedframe={this.props.editor.frame} />
             );
           }, this)}
@@ -53,6 +53,8 @@ var App = React.createClass({
     channel.subscribe('app.tool.select', this.updateProps);
     channel.subscribe('app.color.select', this.updateProps);
     channel.subscribe('app.pixel.select', this.updateProps);
+    channel.subscribe('app.palette.select', this.updateProps);
+
     channel.subscribe('stage.grid.toggle', this.updateProps);
     channel.subscribe('stage.zoom.select', this.updateProps);
 
@@ -60,7 +62,6 @@ var App = React.createClass({
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
     return;
 
-    channel.subscribe('app.palette.select', this.updateProps);
     channel.subscribe('app.box.toggle', this.updateProps);
     channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
     channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
