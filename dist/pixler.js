@@ -25260,19 +25260,10 @@ var Stage = function() {
 };
 var Editor = function() {
 
-  var maxZoom = 50,
-      minZoom = 1,
-      self = this;
+  var self = this;
 
-  //this.file = false;
   this.frame = 1;
   this.lastFrame = 1;
-
-  //this.frames = {x: 0, y: 0};
-  //this.size = {width: 0, height: 0};
-
-  this.zoom = 5;
-  this.grid = true;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
@@ -25285,9 +25276,6 @@ var Editor = function() {
     bottom: 27,
     left: 45,
   };
-
-
-  //this.pixels = []; // contains all pixels of the selected frame
 
   this.deletePixel = function(layer, x, y) {
     this.pixels = this.pixels.filter(function(pixel) {
@@ -25370,17 +25358,8 @@ var Editor = function() {
   this.selection.init(this);
   this.brightnessTool.init();
   this.palettes.init();
-
-  /*
-  channel.subscribe('file.load', function(data, envelope) {
-    self.size = data.size;
-    self.frames = data.frames;
-  });
-  */
-
-  channel.subscribe('stage.grid.toggle', function(data, envelope) {
-    self.grid = data.grid;
-  });
+  this.zoom.init();
+  this.grid.init();
 
   channel.subscribe('app.frame.select', function(data, envelope) {
     //self.saveChanges();
@@ -25395,12 +25374,6 @@ var Editor = function() {
 
   channel.subscribe('app.color.select', function(data, envelope) {
     self.color = new Color(data.color);
-  });
-
-  channel.subscribe('stage.zoom.select', function(data, envelope) {
-    self.zoom = parseInt(data.zoom) || self.zoom;
-    self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
-    self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
   channel.subscribe('app.pixel.select', function(data, envelope) {
@@ -25444,8 +25417,6 @@ var Editor = function() {
     }
 
     self.saveChanges(); // TODO: check if call can be removed
-
-    //channel.publish('stage.layer.update', {layer: data.layer});
   });
 
 
@@ -25853,6 +25824,31 @@ Editor.prototype.brightnessTool.init = function() {
     self.intensity = data.intensity;
   });
 };
+Editor.prototype.zoom = {};
+Editor.prototype.zoom.min = 1;
+Editor.prototype.zoom.max = 50;
+Editor.prototype.zoom.current = 5;
+
+Editor.prototype.zoom.init = function() {
+  var self = this;
+
+  channel.subscribe('stage.zoom.select', function(data, envelope) {
+    self.current = parseInt(data.zoom) || self.current;
+    self.current = self.current > self.max ? self.max : self.current;
+    self.current = self.current < self.min ? self.min : self.current;
+  });
+};
+Editor.prototype.grid = {};
+Editor.prototype.grid.enabled = true;
+
+Editor.prototype.grid.init = function() {
+  var self = this;
+
+  channel.subscribe('stage.grid.toggle', function(data, envelope) {
+    console.log('toggling grid', data);
+    self.enabled = data.grid;
+  });
+};
 var Hotkeys = function(editor) {
 
   this.actions = {
@@ -25890,7 +25886,7 @@ var Hotkeys = function(editor) {
     },
     toggleGrid: {
       key: 'g',
-      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid}); }
+      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid.enabled}); }
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
@@ -25933,7 +25929,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom+1;
+            var zoom = editor.zoom.current+1;
             if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -25966,7 +25962,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom+1;
+            var zoom = editor.zoom.current+1;
             if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -26000,7 +25996,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom-1;
+            var zoom = editor.zoom.current-1;
             if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -26033,7 +26029,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom-1;
+            var zoom = editor.zoom.current-1;
             if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -26191,8 +26187,8 @@ Workspace.prototype.update = function() {
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
   this.data.color = editor.color.hexString();
-  this.data.grid = editor.grid;
-  this.data.zoom = editor.zoom;
+  this.data.grid = editor.grid.enabled;
+  this.data.zoom = editor.zoom.current;
   this.data.selection = {
     bounds: editor.selection.bounds,
     pixels: editor.selection.pixels,
@@ -26224,8 +26220,8 @@ Workspace.prototype.setup = function() {
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
   editor.color = new Color(this.data.color);
-  editor.grid = this.data.grid;
-  editor.zoom = this.data.zoom;
+  editor.grid.enabled = this.data.grid;
+  editor.zoom.current = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
   editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessTool.mode = this.data.brightnessTool.mode;
@@ -27105,7 +27101,7 @@ var SelectionPattern = React.createClass({displayName: 'SelectionPattern',
     };
   },
   render: function() {
-    var size = this.props.editor.zoom;
+    var size = this.props.editor.zoom.current;
 
     return (
       React.DOM.canvas( {id:"SelectionPattern", width:size, height:size, style:{height: size, width: size}} )
@@ -27140,7 +27136,7 @@ var SelectionPattern = React.createClass({displayName: 'SelectionPattern',
     var frame = this.state.frame,
         canvas = this.getDOMNode(),
         ctx = canvas.getContext('2d'),
-        size = this.props.editor.zoom;
+        size = this.props.editor.zoom.current;
 
     ctx.webkitImageSmoothingEnabled = false;
     ctx.fillStyle = '#fff';
@@ -27164,8 +27160,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
   },
   render: function() {
 
-    var w = this.props.editor.file.size.width*this.props.editor.zoom,
-        h = this.props.editor.file.size.height*this.props.editor.zoom,
+    var w = this.props.editor.file.size.width*this.props.editor.zoom.current,
+        h = this.props.editor.file.size.height*this.props.editor.zoom.current,
         centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
         centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 
@@ -27338,8 +27334,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
   },
   getWorldCoordinates: function(event) {
     return new Point(
-      Math.ceil(event.layerX/this.props.editor.zoom),
-      Math.ceil(event.layerY/this.props.editor.zoom)
+      Math.ceil(event.layerX/this.props.editor.zoom.current),
+      Math.ceil(event.layerY/this.props.editor.zoom.current)
     );
   },
   getMouseDownDistance: function() {
@@ -27551,7 +27547,7 @@ var StageBoxCursorCanvas = React.createClass({displayName: 'StageBoxCursorCanvas
     this.drawPixelCursor();
   },
   drawPixelCursor: function() {
-    var zoom = this.props.editor.zoom,
+    var zoom = this.props.editor.zoom.current,
         x = this.props.editor.pixel.x,
         y = this.props.editor.pixel.y;
 
@@ -27606,17 +27602,15 @@ var StageBoxGridCanvas = React.createClass({displayName: 'StageBoxGridCanvas',
     );
   },
   componentDidMount: function() {
-    if(this.props.editor.grid === true) this.drawGrid();
+    if(this.props.editor.grid.enabled === true) this.drawGrid();
   },
   componentDidUpdate: function() {
-    if(this.props.editor.grid === true) {
-      this.drawGrid();
-    }
+    if(this.props.editor.grid.enabled === true) this.drawGrid();
     else this.clear();
   },
   drawGrid: function() {
     var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom;
+        zoom = this.props.editor.zoom.current;
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');
@@ -27722,7 +27716,7 @@ var StageBoxSelectionCanvas = React.createClass({displayName: 'StageBoxSelection
 
   drawSelection: function(start, end) {
     var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom,
+        zoom = this.props.editor.zoom.current,
         ctx = canvas.getContext('2d'),
         width = (end.x - start.x),
         height = (end.y - start.y),
@@ -27755,8 +27749,12 @@ var StageBoxSelectionCanvas = React.createClass({displayName: 'StageBoxSelection
 /** @jsx React.DOM */
 var StatusBar = React.createClass({displayName: 'StatusBar',
   render: function() {
-    var cssClasses = (this.props.editor.grid === true ? 'active' : '') + ' tiny transparent',
-        toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')';
+    var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
+        cssClasses = React.addons.classSet({
+          tiny: true,
+          transparent: true,
+          active: this.props.editor.grid.enabled,
+        });
 
     return (
       React.DOM.div( {id:"StatusBar"}, 
@@ -27766,7 +27764,7 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
         React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()),
         React.DOM.span(null, "Frame ", this.props.editor.frame,", ", this.props.editor.pixels.frame.length + this.props.editor.selection.pixels.length, " pixels"),
         " ",
-        React.DOM.span(null, "Zoom ×",this.props.editor.zoom),
+        React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
         React.DOM.div( {id:"StatusBarButtons"}, 
           React.DOM.button( {id:"toggleGrid", className:cssClasses, onClick:this.dispatchGridToggled, title:toggleGridTitle}, 
             React.DOM.i( {className:"flaticon-3x3"})
@@ -27776,7 +27774,7 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
     );
   },
   dispatchGridToggled: function(event) {
-    channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid});
+    channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid.enabled});
   }
 });
 /** @jsx React.DOM */
@@ -27843,18 +27841,18 @@ var ToolContainer = React.createClass({displayName: 'ToolContainer',
 var ZoomTool = React.createClass({displayName: 'ZoomTool',
   render: function() {
 
-    var zoom = editor.zoom;
+    var zoom = editor.zoom.current;
     return (
       React.DOM.div( {id:"Zoom-Tool", className:"ToolComponent"}, 
         React.DOM.i( {className:"icon flaticon-magnifier5"}),
         React.DOM.button( {onClick:this.zoomIn, className:"small", title:"Zoom in"}, React.DOM.i( {className:"flaticon-plus25"})),
         React.DOM.button( {onClick:this.zoomOut, className:"small", title:"Zoom out"}, React.DOM.i( {className:"flaticon-minus18"})),
-        React.DOM.input( {type:"range", min:"1", max:"50", className:"zoom-slider", value:this.props.editor.zoom, onChange:this.dispatchZoomChanged} ),
+        React.DOM.input( {type:"range", min:"1", max:"50", className:"zoom-slider", value:this.props.editor.zoom.current, onChange:this.dispatchZoomChanged} ),
         React.DOM.span(null, "Zoom ×"),
-        React.DOM.input( {type:"number", min:"1", max:"50", className:"zoom-number", value:this.props.editor.zoom, onChange:this.dispatchZoomChanged} ),
+        React.DOM.input( {type:"number", min:"1", max:"50", className:"zoom-number", value:this.props.editor.zoom.current, onChange:this.dispatchZoomChanged} ),
         React.DOM.button( {onClick:this.fitToScreen, className:"small"}, "Fit to screen"),
         React.DOM.span( {className:"spacer"}),
-        React.DOM.span( {className:"hint"}, "A pixel in your sprite is now ", this.props.editor.zoom, " pixels on your screen.")
+        React.DOM.span( {className:"hint"}, "A pixel in your sprite is now ", this.props.editor.zoom.current, " pixels on your screen.")
       )
     );
   },
@@ -27863,10 +27861,10 @@ var ZoomTool = React.createClass({displayName: 'ZoomTool',
     channel.publish('stage.zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
-    if(this.props.editor.zoom+1 <= 50) this.dispatchZoomChanged(null, this.props.editor.zoom+1);
+    if(this.props.editor.zoom.current+1 <= this.props.editor.zoom.max) this.dispatchZoomChanged(null, this.props.editor.zoom.current+1);
   },
   zoomOut: function() {
-    if(this.props.editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, this.props.editor.zoom-1);
+    if(this.props.editor.zoom.current-1 >= this.props.editor.zoom.min) this.dispatchZoomChanged(null, this.props.editor.zoom.current-1);
   },
   fitToScreen: function() {
     var zoom = Math.floor((window.innerHeight - this.props.editor.offset.top - this.props.editor.offset.bottom)/this.props.editor.file.size.height);
@@ -28086,7 +28084,7 @@ function fileLoaded(json) {
 //   editor.layers.selectTop();
 
 //   // set inital zoom
-//   channel.publish('stage.zoom.select', {zoom: editor.zoom});
+//   channel.publish('stage.zoom.select', {zoom: editor.zoom.current});
 
 //   // select brush tool
 //   channel.publish('app.tool.select', {tool: editor.tool});

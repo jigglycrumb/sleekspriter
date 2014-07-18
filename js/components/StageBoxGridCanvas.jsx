@@ -7,17 +7,15 @@ var StageBoxGridCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
-    if(this.props.editor.grid === true) this.drawGrid();
+    if(this.props.editor.grid.enabled === true) this.drawGrid();
   },
   componentDidUpdate: function() {
-    if(this.props.editor.grid === true) {
-      this.drawGrid();
-    }
+    if(this.props.editor.grid.enabled === true) this.drawGrid();
     else this.clear();
   },
   drawGrid: function() {
     var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom;
+        zoom = this.props.editor.zoom.current;
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');

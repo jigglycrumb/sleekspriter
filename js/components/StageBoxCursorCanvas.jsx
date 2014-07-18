@@ -11,7 +11,7 @@ var StageBoxCursorCanvas = React.createClass({
     this.drawPixelCursor();
   },
   drawPixelCursor: function() {
-    var zoom = this.props.editor.zoom,
+    var zoom = this.props.editor.zoom.current,
         x = this.props.editor.pixel.x,
         y = this.props.editor.pixel.y;
 

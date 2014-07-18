@@ -7,7 +7,7 @@ var SelectionPattern = React.createClass({
     };
   },
   render: function() {
-    var size = this.props.editor.zoom;
+    var size = this.props.editor.zoom.current;
 
     return (
       <canvas id="SelectionPattern" width={size} height={size} style={{height: size, width: size}} />
@@ -42,7 +42,7 @@ var SelectionPattern = React.createClass({
     var frame = this.state.frame,
         canvas = this.getDOMNode(),
         ctx = canvas.getContext('2d'),
-        size = this.props.editor.zoom;
+        size = this.props.editor.zoom.current;
 
     ctx.webkitImageSmoothingEnabled = false;
     ctx.fillStyle = '#fff';

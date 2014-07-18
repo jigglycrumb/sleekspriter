@@ -36,8 +36,8 @@ Workspace.prototype.update = function() {
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
   this.data.color = editor.color.hexString();
-  this.data.grid = editor.grid;
-  this.data.zoom = editor.zoom;
+  this.data.grid = editor.grid.enabled;
+  this.data.zoom = editor.zoom.current;
   this.data.selection = {
     bounds: editor.selection.bounds,
     pixels: editor.selection.pixels,
@@ -69,8 +69,8 @@ Workspace.prototype.setup = function() {
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
   editor.color = new Color(this.data.color);
-  editor.grid = this.data.grid;
-  editor.zoom = this.data.zoom;
+  editor.grid.enabled = this.data.grid;
+  editor.zoom.current = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
   editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessTool.mode = this.data.brightnessTool.mode;

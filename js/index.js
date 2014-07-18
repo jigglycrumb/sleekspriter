@@ -208,7 +208,7 @@ function fileLoaded(json) {
 //   editor.layers.selectTop();
 
 //   // set inital zoom
-//   channel.publish('stage.zoom.select', {zoom: editor.zoom});
+//   channel.publish('stage.zoom.select', {zoom: editor.zoom.current});
 
 //   // select brush tool
 //   channel.publish('app.tool.select', {tool: editor.tool});

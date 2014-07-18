@@ -1,18 +1,9 @@
 var Editor = function() {
 
-  var maxZoom = 50,
-      minZoom = 1,
-      self = this;
+  var self = this;
 
-  //this.file = false;
   this.frame = 1;
   this.lastFrame = 1;
-
-  //this.frames = {x: 0, y: 0};
-  //this.size = {width: 0, height: 0};
-
-  this.zoom = 5;
-  this.grid = true;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
@@ -25,9 +16,6 @@ var Editor = function() {
     bottom: 27,
     left: 45,
   };
-
-
-  //this.pixels = []; // contains all pixels of the selected frame
 
   this.deletePixel = function(layer, x, y) {
     this.pixels = this.pixels.filter(function(pixel) {
@@ -110,17 +98,8 @@ var Editor = function() {
   this.selection.init(this);
   this.brightnessTool.init();
   this.palettes.init();
-
-  /*
-  channel.subscribe('file.load', function(data, envelope) {
-    self.size = data.size;
-    self.frames = data.frames;
-  });
-  */
-
-  channel.subscribe('stage.grid.toggle', function(data, envelope) {
-    self.grid = data.grid;
-  });
+  this.zoom.init();
+  this.grid.init();
 
   channel.subscribe('app.frame.select', function(data, envelope) {
     //self.saveChanges();
@@ -135,12 +114,6 @@ var Editor = function() {
 
   channel.subscribe('app.color.select', function(data, envelope) {
     self.color = new Color(data.color);
-  });
-
-  channel.subscribe('stage.zoom.select', function(data, envelope) {
-    self.zoom = parseInt(data.zoom) || self.zoom;
-    self.zoom = self.zoom > maxZoom ? maxZoom : self.zoom;
-    self.zoom = self.zoom < minZoom ? minZoom : self.zoom;
   });
 
   channel.subscribe('app.pixel.select', function(data, envelope) {
@@ -184,8 +157,6 @@ var Editor = function() {
     }
 
     self.saveChanges(); // TODO: check if call can be removed
-
-    //channel.publish('stage.layer.update', {layer: data.layer});
   });
 
 

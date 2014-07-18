@@ -35,7 +35,7 @@ var Hotkeys = function(editor) {
     },
     toggleGrid: {
       key: 'g',
-      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid}); }
+      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid.enabled}); }
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
@@ -78,7 +78,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom+1;
+            var zoom = editor.zoom.current+1;
             if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -111,7 +111,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom+1;
+            var zoom = editor.zoom.current+1;
             if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -145,7 +145,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom-1;
+            var zoom = editor.zoom.current-1;
             if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }
@@ -178,7 +178,7 @@ var Hotkeys = function(editor) {
             stage.layer.refresh();
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom-1;
+            var zoom = editor.zoom.current-1;
             if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
             break;
         }

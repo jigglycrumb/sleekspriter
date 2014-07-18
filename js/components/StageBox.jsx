@@ -12,8 +12,8 @@ var StageBox = React.createClass({
   },
   render: function() {
 
-    var w = this.props.editor.file.size.width*this.props.editor.zoom,
-        h = this.props.editor.file.size.height*this.props.editor.zoom,
+    var w = this.props.editor.file.size.width*this.props.editor.zoom.current,
+        h = this.props.editor.file.size.height*this.props.editor.zoom.current,
         centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
         centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 
@@ -186,8 +186,8 @@ var StageBox = React.createClass({
   },
   getWorldCoordinates: function(event) {
     return new Point(
-      Math.ceil(event.layerX/this.props.editor.zoom),
-      Math.ceil(event.layerY/this.props.editor.zoom)
+      Math.ceil(event.layerX/this.props.editor.zoom.current),
+      Math.ceil(event.layerY/this.props.editor.zoom.current)
     );
   },
   getMouseDownDistance: function() {

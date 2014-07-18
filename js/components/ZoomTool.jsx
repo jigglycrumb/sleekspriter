@@ -2,18 +2,18 @@
 var ZoomTool = React.createClass({
   render: function() {
 
-    var zoom = editor.zoom;
+    var zoom = editor.zoom.current;
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon flaticon-magnifier5"></i>
         <button onClick={this.zoomIn} className="small" title="Zoom in"><i className="flaticon-plus25"></i></button>
         <button onClick={this.zoomOut} className="small" title="Zoom out"><i className="flaticon-minus18"></i></button>
-        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
+        <input type="range" min="1" max="50" className="zoom-slider" value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
-        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom} onChange={this.dispatchZoomChanged} />
+        <input type="number" min="1" max="50" className="zoom-number" value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
         <span className="spacer"></span>
-        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom} pixels on your screen.</span>
+        <span className="hint">A pixel in your sprite is now {this.props.editor.zoom.current} pixels on your screen.</span>
       </div>
     );
   },
@@ -22,10 +22,10 @@ var ZoomTool = React.createClass({
     channel.publish('stage.zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
-    if(this.props.editor.zoom+1 <= 50) this.dispatchZoomChanged(null, this.props.editor.zoom+1);
+    if(this.props.editor.zoom.current+1 <= this.props.editor.zoom.max) this.dispatchZoomChanged(null, this.props.editor.zoom.current+1);
   },
   zoomOut: function() {
-    if(this.props.editor.zoom-1 >= 1 ) this.dispatchZoomChanged(null, this.props.editor.zoom-1);
+    if(this.props.editor.zoom.current-1 >= this.props.editor.zoom.min) this.dispatchZoomChanged(null, this.props.editor.zoom.current-1);
   },
   fitToScreen: function() {
     var zoom = Math.floor((window.innerHeight - this.props.editor.offset.top - this.props.editor.offset.bottom)/this.props.editor.file.size.height);
