@@ -317,8 +317,8 @@ var StageBox = React.createClass({
 
       this.updateRectangularSelection(distance);
 
-      editor.selection.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+      editor.pixels.selection.forEach(function(pixel) {
+        var color = new Color(pixel.toRgb()),
             target = wrapPixel(pixel, distance);
 
         channel.publish('stage.pixel.fill', {
@@ -332,7 +332,7 @@ var StageBox = React.createClass({
 
       editor.pixels.layer.forEach(function(pixel) {
 
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+          var color = new Color(pixel.toRgb());
           channel.publish('stage.pixel.fill', {
             frame: editor.frame.selected,
             layer: editor.layers.selected,
@@ -346,7 +346,7 @@ var StageBox = React.createClass({
     else {
       editor.pixels.layer.forEach(function(pixel) {
 
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+          var color = new Color(pixel.toRgb()),
               target = wrapPixel(pixel, distance);
 
           channel.publish('stage.pixel.fill', {

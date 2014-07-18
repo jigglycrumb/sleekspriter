@@ -1,15 +1,13 @@
 Editor.prototype.selection = {};
-
 Editor.prototype.selection.bounds = false;
 
-Editor.prototype.selection.pixels = [];
-
-
+//Editor.prototype.selection.pixels = [];
 
 Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
+  /*
   function saveAndClearPixels() {
     // merge editor.selection.pixels back to editor.layer.pixels
     self.pixels.forEach(function(pixel) {
@@ -19,11 +17,30 @@ Editor.prototype.selection.init = function(editor) {
     editor.pixels.layer = _.unique(editor.pixels.layer, function(p) { return p.layer+','+p.x+','+p.y });
     self.pixels = [];
   };
+  */
 
+  /*
   function pixelHasBeenSelected(pixel) {
     return self.contains(pixel) && pixel.layer == editor.layers.selected;
   };
+  */
 
+
+  /*
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    self.pixels.forEach(function(p) {
+      p.x += data.distance.x;
+      p.y += data.distance.y;
+    });
+  });
+  */
+
+  channel.subscribe('stage.selection.clear', function(data, envelope) {
+    self.bounds = false;
+    // saveAndClearPixels();
+  });
+
+  /*
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -38,6 +55,31 @@ Editor.prototype.selection.init = function(editor) {
       }
     }
   });
+  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   channel.subscribe('stage.selection.start', function(data, envelope) {
     self.bounds = {
@@ -82,17 +124,6 @@ Editor.prototype.selection.init = function(editor) {
     };
   });
 
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    self.pixels.forEach(function(p) {
-      p.x += data.distance.x;
-      p.y += data.distance.y;
-    });
-  });
-
-  channel.subscribe('stage.selection.clear', function(data, envelope) {
-    self.bounds = false;
-    saveAndClearPixels();
-  });
 };
 
 Editor.prototype.selection.contains = function(point) {

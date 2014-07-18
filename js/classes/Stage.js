@@ -33,10 +33,10 @@ var Stage = function() {
           });
         });
 
-        if(editor.selection.pixels.length > 0) {
+        if(editor.pixels.selection.length > 0) {
           var framelayers = editor.layers.getIds();
 
-          editor.selection.pixels.forEach(function(px) {
+          editor.pixels.selection.forEach(function(px) {
             if(inArray(framelayers, px.layer)) {
               var color = new Color(px.toRgba());
               channel.publish('stage.pixel.fill', {
@@ -67,7 +67,7 @@ var Stage = function() {
         console.log('refreshing layer '+editor.layers.selected );
 
         var layerPixels = editor.pixels.layer,
-            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
+            selectionPixels = _.where(editor.pixels.selection, {layer: editor.layers.selected}),
             frame = editor.frame.selected;
 
         this.clear();

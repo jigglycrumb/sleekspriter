@@ -25190,10 +25190,10 @@ var Stage = function() {
           });
         });
 
-        if(editor.selection.pixels.length > 0) {
+        if(editor.pixels.selection.length > 0) {
           var framelayers = editor.layers.getIds();
 
-          editor.selection.pixels.forEach(function(px) {
+          editor.pixels.selection.forEach(function(px) {
             if(inArray(framelayers, px.layer)) {
               var color = new Color(px.toRgba());
               channel.publish('stage.pixel.fill', {
@@ -25224,7 +25224,7 @@ var Stage = function() {
         console.log('refreshing layer '+editor.layers.selected );
 
         var layerPixels = editor.pixels.layer,
-            selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
+            selectionPixels = _.where(editor.pixels.selection, {layer: editor.layers.selected}),
             frame = editor.frame.selected;
 
         this.clear();
@@ -25534,9 +25534,24 @@ Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null;
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
+Editor.prototype.pixels.selection = [];
 
 Editor.prototype.pixels.init = function() {
   var self = this;
+
+  // merges selection to layer and clears selection
+  function saveAndClearSelection() {
+    self.selection.forEach(function(pixel) {
+      self.layer.push(pixel);
+    });
+
+    self.layer = _.unique(self.layer, function(p) { return p.layer+','+p.x+','+p.y });
+    self.selection = [];
+  };
+
+  function pixelHasBeenSelected(pixel) {
+    return editor.selection.contains(pixel) && pixel.layer == editor.layers.selected;
+  };
 
   channel.subscribe('app.frame.select', function(data, envelope) {
     self.frame = _.where(file.pixels, {frame: data.frame});
@@ -25545,6 +25560,31 @@ Editor.prototype.pixels.init = function() {
   channel.subscribe('app.layer.select', function(data, envelope) {
     self.layer = _.where(self.frame, {layer: data.layer});
   });
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    if(editor.selection.isActive) {
+      switch(data.tool) {
+        case 'RectangularSelectionTool':
+          saveAndClearSelection();
+          break;
+        default:
+          // move selected pixels from layer to selection
+          self.selection = _.filter(self.layer, pixelHasBeenSelected);
+          self.layer = _.reject(self.layer, pixelHasBeenSelected);
+          break;
+      }
+    }
+  });
+
+
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    self.selection.forEach(function(p) {
+      p.x += data.distance.x;
+      p.y += data.distance.y;
+    });
+  });
+
+  channel.subscribe('stage.selection.clear', saveAndClearSelection);
 };
 Editor.prototype.palettes = {};
 Editor.prototype.palettes.selected = 'sprite';
@@ -25665,17 +25705,15 @@ Editor.prototype.palettes.available = {
   },
 };
 Editor.prototype.selection = {};
-
 Editor.prototype.selection.bounds = false;
 
-Editor.prototype.selection.pixels = [];
-
-
+//Editor.prototype.selection.pixels = [];
 
 Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
+  /*
   function saveAndClearPixels() {
     // merge editor.selection.pixels back to editor.layer.pixels
     self.pixels.forEach(function(pixel) {
@@ -25685,11 +25723,30 @@ Editor.prototype.selection.init = function(editor) {
     editor.pixels.layer = _.unique(editor.pixels.layer, function(p) { return p.layer+','+p.x+','+p.y });
     self.pixels = [];
   };
+  */
 
+  /*
   function pixelHasBeenSelected(pixel) {
     return self.contains(pixel) && pixel.layer == editor.layers.selected;
   };
+  */
 
+
+  /*
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    self.pixels.forEach(function(p) {
+      p.x += data.distance.x;
+      p.y += data.distance.y;
+    });
+  });
+  */
+
+  channel.subscribe('stage.selection.clear', function(data, envelope) {
+    self.bounds = false;
+    // saveAndClearPixels();
+  });
+
+  /*
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -25704,6 +25761,31 @@ Editor.prototype.selection.init = function(editor) {
       }
     }
   });
+  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   channel.subscribe('stage.selection.start', function(data, envelope) {
     self.bounds = {
@@ -25748,17 +25830,6 @@ Editor.prototype.selection.init = function(editor) {
     };
   });
 
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    self.pixels.forEach(function(p) {
-      p.x += data.distance.x;
-      p.y += data.distance.y;
-    });
-  });
-
-  channel.subscribe('stage.selection.clear', function(data, envelope) {
-    self.bounds = false;
-    saveAndClearPixels();
-  });
 };
 
 Editor.prototype.selection.contains = function(point) {
@@ -26178,7 +26249,7 @@ Workspace.prototype.update = function() {
   this.data.zoom = editor.zoom.current;
   this.data.selection = {
     bounds: editor.selection.bounds,
-    pixels: editor.selection.pixels,
+    //pixels: editor.selection.pixels,
   };
   this.data.brightnessTool = {
     mode: editor.brightnessTool.mode,
@@ -26210,7 +26281,7 @@ Workspace.prototype.setup = function() {
   editor.grid.enabled = this.data.grid;
   editor.zoom.current = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
-  editor.selection.pixels = this.data.selection.pixels;
+  //editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessTool.mode = this.data.brightnessTool.mode;
   editor.brightnessTool.intensity = this.data.brightnessTool.intensity;
 };
@@ -27452,8 +27523,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
       this.updateRectangularSelection(distance);
 
-      editor.selection.pixels.forEach(function(pixel) {
-        var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+      editor.pixels.selection.forEach(function(pixel) {
+        var color = new Color(pixel.toRgb()),
             target = wrapPixel(pixel, distance);
 
         channel.publish('stage.pixel.fill', {
@@ -27467,7 +27538,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
       editor.pixels.layer.forEach(function(pixel) {
 
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
+          var color = new Color(pixel.toRgb());
           channel.publish('stage.pixel.fill', {
             frame: editor.frame.selected,
             layer: editor.layers.selected,
@@ -27481,7 +27552,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
     else {
       editor.pixels.layer.forEach(function(pixel) {
 
-          var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')'),
+          var color = new Color(pixel.toRgb()),
               target = wrapPixel(pixel, distance);
 
           channel.publish('stage.pixel.fill', {
@@ -27749,7 +27820,7 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
         React.DOM.span(null, "Y: ", this.props.editor.pixel.y),
         React.DOM.div( {id:"StatusBarColor", style:{background: this.props.editor.pixelColor.rgbaString()}}),
         React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()),
-        React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length + this.props.editor.selection.pixels.length, " pixels"),
+        React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length + this.props.editor.pixels.selection.length, " pixels"),
         " ",
         React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
         React.DOM.div( {id:"StatusBarButtons"}, 
