@@ -37,7 +37,7 @@ var App = React.createClass({
                 id={frame}
                 width={this.props.editor.file.size.width}
                 height={this.props.editor.file.size.height}
-                selectedframe={this.props.editor.frame} />
+                selectedframe={this.props.editor.frame.selected} />
             );
           }, this)}
 

@@ -25096,14 +25096,14 @@ var File = function() {
       }
     }
 
-    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var frameLayers = _.where(self.layers, {frame: editor.frame.selected});
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, editor.frame, 'layer '+newId, newZIndex, 100, true]);
+    var newLayer = layerFromFile([newId, editor.frame.selected, 'layer '+newId, newZIndex, 100, true]);
 
     self.layers.splice(index, 0, newLayer);
-    fixLayerZ(editor.frame);
+    fixLayerZ(editor.frame.selected);
 
     channel.publish('app.layer.add', {layer: newId});
   });
@@ -25122,7 +25122,7 @@ var File = function() {
     }
 
     // get layer array index of frame layers
-    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var frameLayers = _.where(self.layers, {frame: editor.frame.selected});
     var fIndex = 0;
     for(var i=0; i < frameLayers.length; i++) {
       if(frameLayers[i].id === data.layer) {
@@ -25140,7 +25140,7 @@ var File = function() {
 
     // delete layer, reorder z indices, inform App of update
     self.layers.splice(index, 1);
-    fixLayerZ(editor.frame);
+    fixLayerZ(editor.frame.selected);
 
     channel.publish('app.layer.delete', {layer: shouldSelectLayer});
   });
@@ -25175,7 +25175,7 @@ var Stage = function() {
 
         console.log('refreshing frame '+frame);
 
-        var frame = frame || editor.frame;
+        var frame = frame || editor.frame.selected;
 
         this.clear();
 
@@ -25225,7 +25225,7 @@ var Stage = function() {
 
         var layerPixels = editor.pixels.layer,
             selectionPixels = _.where(editor.selection.pixels, {layer: editor.layers.selected}),
-            frame = editor.frame;
+            frame = editor.frame.selected;
 
         this.clear();
 
@@ -25262,8 +25262,6 @@ var Editor = function() {
 
   var self = this;
 
-  this.frame = 1;
-  this.lastFrame = 1;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
@@ -25281,19 +25279,6 @@ var Editor = function() {
     this.pixels = this.pixels.filter(function(pixel) {
       return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
     });
-  };
-
-  var getFramePixels = function() {
-    console.log('getting pixels for frame '+self.frame);
-    var frameLayers = _.where(file.layers, {frame: self.frame});
-    var pixels = [];
-
-    frameLayers.forEach(function(layer) {
-      var layerPixels = _.where(file.pixels, {layer: layer.id});
-      pixels.push(layerPixels);
-    });
-
-    return _.flatten(pixels);
   };
 
   var getAdjacentPixels = function(point) {
@@ -25347,12 +25332,12 @@ var Editor = function() {
     });
 
     file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
-    //this.pixels = getFramePixels(); // check if needed
   };
 
 
   // init subclasses
   this.file.init();
+  this.frame.init();
   this.layers.init();
   this.pixels.init();
   this.selection.init(this);
@@ -25360,13 +25345,6 @@ var Editor = function() {
   this.palettes.init();
   this.zoom.init();
   this.grid.init();
-
-  channel.subscribe('app.frame.select', function(data, envelope) {
-    //self.saveChanges();
-    self.frame = parseInt(data.frame);
-    //self.layers.selectTop();
-    //self.pixels = getFramePixels();
-  });
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;
@@ -25450,7 +25428,7 @@ var Editor = function() {
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
         channel.publish('stage.pixel.fill', {
-          frame: self.frame,
+          frame: self.frame.selected,
           layer: self.layers.selected,
           x: point.x,
           y: point.y,
@@ -25505,6 +25483,16 @@ Editor.prototype.file.init = function() {
   channel.subscribe('file.load', function(data, envelope) {
     self.size = data.size;
     self.frames = data.frames;
+  });
+};
+Editor.prototype.frame = {};
+Editor.prototype.frame.selected = 1;
+
+Editor.prototype.frame.init = function() {
+  var self = this;
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
+    self.selected = parseInt(data.frame);
   });
 };
 Editor.prototype.layers = {};
@@ -25845,7 +25833,6 @@ Editor.prototype.grid.init = function() {
   var self = this;
 
   channel.subscribe('stage.grid.toggle', function(data, envelope) {
-    console.log('toggling grid', data);
     self.enabled = data.grid;
   });
 };
@@ -26183,7 +26170,7 @@ Workspace.prototype.data = {
 Workspace.prototype.update = function() {
   this.data.file = editor.file.name;
   this.data.tool = editor.tool;
-  this.data.frame = editor.frame;
+  this.data.frame = editor.frame.selected;
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
   this.data.color = editor.color.hexString();
@@ -26216,7 +26203,7 @@ Workspace.prototype.setup = function() {
 
   editor.file.name = this.data.file;
   editor.tool = this.data.tool;
-  editor.frame = this.data.frame;
+  editor.frame.selected = this.data.frame;
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
   editor.color = new Color(this.data.color);
@@ -26437,7 +26424,7 @@ var App = React.createClass({displayName: 'App',
                 id:frame,
                 width:this.props.editor.file.size.width,
                 height:this.props.editor.file.size.height,
-                selectedframe:this.props.editor.frame} )
+                selectedframe:this.props.editor.frame.selected} )
             );
           }, this),
 
@@ -26625,7 +26612,7 @@ var FrameBox = React.createClass({displayName: 'FrameBox',
             var id = 'FrameBoxFrame-'+frame,
                 classes = React.addons.classSet({
                   'frame': true,
-                  'selected': frame == this.props.editor.frame,
+                  'selected': frame == this.props.editor.frame.selected,
                   'top': frame <= this.props.editor.file.frames.x,
                   'right': frame % this.props.editor.file.frames.x == 0,
                   'bottom': frame > totalFrames - this.props.editor.file.frames.x,
@@ -26649,7 +26636,7 @@ var FrameBox = React.createClass({displayName: 'FrameBox',
           ),
           React.DOM.div( {className:"actions"}, 
             "Frame ",
-            React.DOM.input( {type:"number", className:"frame-number", min:"1", max:totalFrames, value:this.props.editor.frame, onChange:this.dispatchFrameSelected} ),
+            React.DOM.input( {type:"number", className:"frame-number", min:"1", max:totalFrames, value:this.props.editor.frame.selected, onChange:this.dispatchFrameSelected} ),
             " of ",
             totalFrames
           )
@@ -27042,7 +27029,7 @@ var PreviewBox = React.createClass({displayName: 'PreviewBox',
       React.DOM.div( {id:"PreviewBox", className:"box"}, 
         React.DOM.h4( {className:"foldable-handle"}, "Preview"),
         React.DOM.div( {className:"foldable-fold"}, 
-          PreviewBoxPreview( {id:this.props.editor.frame, width:this.props.editor.file.size.width, height:this.props.editor.file.size.height} )
+          PreviewBoxPreview( {id:this.props.editor.frame.selected, width:this.props.editor.file.size.width, height:this.props.editor.file.size.height} )
         )
       )
     );
@@ -27355,7 +27342,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.fill', {
-          frame: editor.frame,
+          frame: editor.frame.selected,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -27365,7 +27352,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.fill', {
-            frame: editor.frame,
+            frame: editor.frame.selected,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -27379,7 +27366,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         channel.publish('stage.pixel.clear', {
-          frame: editor.frame,
+          frame: editor.frame.selected,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -27388,7 +27375,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
           channel.publish('stage.pixel.clear', {
-            frame: editor.frame,
+            frame: editor.frame.selected,
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
@@ -27417,7 +27404,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
-          frame: editor.frame,
+          frame: editor.frame.selected,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -27429,7 +27416,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
         channel.publish('stage.pixel.fill', {
-          frame: editor.frame,
+          frame: editor.frame.selected,
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
@@ -27470,7 +27457,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
             target = wrapPixel(pixel, distance);
 
         channel.publish('stage.pixel.fill', {
-          frame: editor.frame,
+          frame: editor.frame.selected,
           layer: editor.layers.selected,
           x: target.x,
           y: target.y,
@@ -27482,7 +27469,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
           var color = new Color('rgb('+pixel.r+', '+pixel.g+', '+pixel.b+')');
           channel.publish('stage.pixel.fill', {
-            frame: editor.frame,
+            frame: editor.frame.selected,
             layer: editor.layers.selected,
             x: pixel.x,
             y: pixel.y,
@@ -27498,7 +27485,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
               target = wrapPixel(pixel, distance);
 
           channel.publish('stage.pixel.fill', {
-            frame: editor.frame,
+            frame: editor.frame.selected,
             layer: editor.layers.selected,
             x: target.x,
             y: target.y,
@@ -27762,7 +27749,7 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
         React.DOM.span(null, "Y: ", this.props.editor.pixel.y),
         React.DOM.div( {id:"StatusBarColor", style:{background: this.props.editor.pixelColor.rgbaString()}}),
         React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()),
-        React.DOM.span(null, "Frame ", this.props.editor.frame,", ", this.props.editor.pixels.frame.length + this.props.editor.selection.pixels.length, " pixels"),
+        React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length + this.props.editor.selection.pixels.length, " pixels"),
         " ",
         React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
         React.DOM.div( {id:"StatusBarButtons"}, 
@@ -27970,13 +27957,6 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-function minutely() {
-  console.log('running minutely job');
-  //editor.saveChanges();
-  workspace.save();
-};
-
-
 // move this into window.onload later
 
 var channel = postal.channel('pixler');
@@ -27985,12 +27965,12 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     filters: [
         //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
-        //{ topic: "stage.pixel.fill" },
-        //{ topic: "stage.pixel.clear" },
-        { topic: "app.frame.select" },
-        { topic: "app.layer.select" },
+        { topic: "stage.pixel.fill" },
+        { topic: "stage.pixel.clear" },
+        //{ topic: "app.frame.select" },
+        //{ topic: "app.layer.select" },
     ],
-    active: false,
+    //active: false,
 });
 
 
@@ -28020,7 +28000,7 @@ function fileLoaded(json) {
   editor.palettes.buildAuto();
 
   // select last selected frame (also initializes layers)
-  channel.publish('app.frame.select', {frame: editor.frame});
+  channel.publish('app.frame.select', {frame: editor.frame.selected});
 
   /*
   // draw all pixels to layers
@@ -28045,14 +28025,6 @@ function fileLoaded(json) {
 
 // window.onload = function() {
 
-//   workspace.load();
-
-//   // load file
-//   file.fromJSONString(savedFile);
-
-//   // init auto palette
-//   //editor.palettes.buildAuto();
-
 //   /*
 //   // draw all pixels to layers
 //   file.pixels.forEach(function(px) {
@@ -28070,7 +28042,7 @@ function fileLoaded(json) {
 //   // select each frame once to initialize previews etc
 
 //   var totalFrames = file.frames.x * file.frames.y,
-//       frame = editor.frame;
+//       frame = editor.frame.selected;
 //   for(var i = 1; i <= totalFrames; i++) {
 //     channel.publish('app.frame.select', {frame: i});
 //   }
@@ -28078,20 +28050,11 @@ function fileLoaded(json) {
 
 //   //channel.publish('app.frame.select', {frame: frame});
 //   //channel.publish('app.frame.select', {frame: 1});
-//   /*
-
-//   // select top-most layer
-//   editor.layers.selectTop();
 
 //   // set inital zoom
 //   channel.publish('stage.zoom.select', {zoom: editor.zoom.current});
 
 //   // select brush tool
 //   channel.publish('app.tool.select', {tool: editor.tool});
-//   */
 
-//   //setInterval(minutely, 60000);
-
-//   // render UI
-//   React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
 // };

@@ -86,6 +86,7 @@ module.exports = function(grunt) {
 
           'js/classes/Editor.js',
           'js/classes/Editor.File.js',
+          'js/classes/Editor.Frame.js',
           'js/classes/Editor.Layers.js',
           'js/classes/Editor.Pixels.js',
           'js/classes/Editor.Palettes.js',

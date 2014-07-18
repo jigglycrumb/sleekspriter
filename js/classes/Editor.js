@@ -2,8 +2,6 @@ var Editor = function() {
 
   var self = this;
 
-  this.frame = 1;
-  this.lastFrame = 1;
   this.pixel = new Point(0, 0);
   this.pixelColor = Color('#000000');
   this.layerPixelColor = Color('#000000');
@@ -21,19 +19,6 @@ var Editor = function() {
     this.pixels = this.pixels.filter(function(pixel) {
       return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
     });
-  };
-
-  var getFramePixels = function() {
-    console.log('getting pixels for frame '+self.frame);
-    var frameLayers = _.where(file.layers, {frame: self.frame});
-    var pixels = [];
-
-    frameLayers.forEach(function(layer) {
-      var layerPixels = _.where(file.pixels, {layer: layer.id});
-      pixels.push(layerPixels);
-    });
-
-    return _.flatten(pixels);
   };
 
   var getAdjacentPixels = function(point) {
@@ -87,12 +72,12 @@ var Editor = function() {
     });
 
     file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
-    //this.pixels = getFramePixels(); // check if needed
   };
 
 
   // init subclasses
   this.file.init();
+  this.frame.init();
   this.layers.init();
   this.pixels.init();
   this.selection.init(this);
@@ -100,13 +85,6 @@ var Editor = function() {
   this.palettes.init();
   this.zoom.init();
   this.grid.init();
-
-  channel.subscribe('app.frame.select', function(data, envelope) {
-    //self.saveChanges();
-    self.frame = parseInt(data.frame);
-    //self.layers.selectTop();
-    //self.pixels = getFramePixels();
-  });
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;
@@ -190,7 +168,7 @@ var Editor = function() {
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
         channel.publish('stage.pixel.fill', {
-          frame: self.frame,
+          frame: self.frame.selected,
           layer: self.layers.selected,
           x: point.x,
           y: point.y,

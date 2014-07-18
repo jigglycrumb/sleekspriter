@@ -25,7 +25,7 @@ var FrameBox = React.createClass({
             var id = 'FrameBoxFrame-'+frame,
                 classes = React.addons.classSet({
                   'frame': true,
-                  'selected': frame == this.props.editor.frame,
+                  'selected': frame == this.props.editor.frame.selected,
                   'top': frame <= this.props.editor.file.frames.x,
                   'right': frame % this.props.editor.file.frames.x == 0,
                   'bottom': frame > totalFrames - this.props.editor.file.frames.x,
@@ -49,7 +49,7 @@ var FrameBox = React.createClass({
           </div>
           <div className="actions">
             Frame&nbsp;
-            <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.editor.frame} onChange={this.dispatchFrameSelected} />
+            <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.editor.frame.selected} onChange={this.dispatchFrameSelected} />
             &nbsp;of&nbsp;
             {totalFrames}
           </div>

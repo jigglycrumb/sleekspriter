@@ -146,14 +146,14 @@ var File = function() {
       }
     }
 
-    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var frameLayers = _.where(self.layers, {frame: editor.frame.selected});
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, editor.frame, 'layer '+newId, newZIndex, 100, true]);
+    var newLayer = layerFromFile([newId, editor.frame.selected, 'layer '+newId, newZIndex, 100, true]);
 
     self.layers.splice(index, 0, newLayer);
-    fixLayerZ(editor.frame);
+    fixLayerZ(editor.frame.selected);
 
     channel.publish('app.layer.add', {layer: newId});
   });
@@ -172,7 +172,7 @@ var File = function() {
     }
 
     // get layer array index of frame layers
-    var frameLayers = _.where(self.layers, {frame: editor.frame});
+    var frameLayers = _.where(self.layers, {frame: editor.frame.selected});
     var fIndex = 0;
     for(var i=0; i < frameLayers.length; i++) {
       if(frameLayers[i].id === data.layer) {
@@ -190,7 +190,7 @@ var File = function() {
 
     // delete layer, reorder z indices, inform App of update
     self.layers.splice(index, 1);
-    fixLayerZ(editor.frame);
+    fixLayerZ(editor.frame.selected);
 
     channel.publish('app.layer.delete', {layer: shouldSelectLayer});
   });

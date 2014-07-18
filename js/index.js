@@ -94,13 +94,6 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-function minutely() {
-  console.log('running minutely job');
-  //editor.saveChanges();
-  workspace.save();
-};
-
-
 // move this into window.onload later
 
 var channel = postal.channel('pixler');
@@ -109,12 +102,12 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     filters: [
         //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
-        //{ topic: "stage.pixel.fill" },
-        //{ topic: "stage.pixel.clear" },
-        { topic: "app.frame.select" },
-        { topic: "app.layer.select" },
+        { topic: "stage.pixel.fill" },
+        { topic: "stage.pixel.clear" },
+        //{ topic: "app.frame.select" },
+        //{ topic: "app.layer.select" },
     ],
-    active: false,
+    //active: false,
 });
 
 
@@ -144,7 +137,7 @@ function fileLoaded(json) {
   editor.palettes.buildAuto();
 
   // select last selected frame (also initializes layers)
-  channel.publish('app.frame.select', {frame: editor.frame});
+  channel.publish('app.frame.select', {frame: editor.frame.selected});
 
   /*
   // draw all pixels to layers
@@ -169,14 +162,6 @@ function fileLoaded(json) {
 
 // window.onload = function() {
 
-//   workspace.load();
-
-//   // load file
-//   file.fromJSONString(savedFile);
-
-//   // init auto palette
-//   //editor.palettes.buildAuto();
-
 //   /*
 //   // draw all pixels to layers
 //   file.pixels.forEach(function(px) {
@@ -194,7 +179,7 @@ function fileLoaded(json) {
 //   // select each frame once to initialize previews etc
 
 //   var totalFrames = file.frames.x * file.frames.y,
-//       frame = editor.frame;
+//       frame = editor.frame.selected;
 //   for(var i = 1; i <= totalFrames; i++) {
 //     channel.publish('app.frame.select', {frame: i});
 //   }
@@ -202,20 +187,11 @@ function fileLoaded(json) {
 
 //   //channel.publish('app.frame.select', {frame: frame});
 //   //channel.publish('app.frame.select', {frame: 1});
-//   /*
-
-//   // select top-most layer
-//   editor.layers.selectTop();
 
 //   // set inital zoom
 //   channel.publish('stage.zoom.select', {zoom: editor.zoom.current});
 
 //   // select brush tool
 //   channel.publish('app.tool.select', {tool: editor.tool});
-//   */
 
-//   //setInterval(minutely, 60000);
-
-//   // render UI
-//   React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
 // };
