@@ -24838,7 +24838,7 @@ var Point = function(x, y) {
   this.y = y;
 };
 
-Point.prototype = Object.create(null);
+Point.prototype = {};
 Point.prototype.constructor = Point;
 
 /**
@@ -24877,7 +24877,7 @@ var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
   this.z = z;
 };
 
-Pixel.prototype = new Point();
+Pixel.prototype = Point.prototype;
 Pixel.prototype.constructor = Pixel;
 
 /**
@@ -24894,6 +24894,16 @@ Pixel.prototype.toRgba = function() {
  */
 Pixel.prototype.toRgb = function() {
   return 'rgb('+this.r+','+this.g+','+this.b+')';
+};
+
+Pixel.prototype.toHex = function() {
+  var pad = function(s) {
+    return s.length == 1 ? '0'+s : s;
+  };
+
+  return '#'+pad(this.r.toString(16))
+            +pad(this.g.toString(16))
+            +pad(this.b.toString(16));
 };
 
 /**
@@ -24931,6 +24941,19 @@ Pixel.fill = function(canvas, x, y, color) {
 
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
+};
+
+
+// temporary, publishes a stage.pixel.fill message. eventually merge with Pixel.fill
+Pixel.publish = function(frame, layer, x, y, z, color) {
+  channel.publish('stage.pixel.fill', {
+    frame: frame, // frame ID
+    layer: layer, // layer ID
+    x: x, // pixel x
+    y: y, // pixel y
+    z: z, // layer z
+    color: color, // fill color hexstring
+  });
 };
 
 /**
@@ -25157,17 +25180,6 @@ File.load = function(file, callback) {
 }
 var Stage = function() {
 
-  function fillPixel(frame, pixel) {
-    var color = new Color(pixel.toRgba());
-    channel.publish('stage.pixel.fill', {
-      frame: frame,
-      layer: pixel.layer,
-      x: pixel.x,
-      y: pixel.y,
-      color: color.hexString()
-    });
-  };
-
   return {
 
     frame: {
@@ -25181,29 +25193,14 @@ var Stage = function() {
 
         editor.pixels.frame.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         if(editor.pixels.selection.length > 0) {
           var framelayers = editor.layers.getIds();
 
           editor.pixels.selection.forEach(function(px) {
-            if(inArray(framelayers, px.layer)) {
-              var color = new Color(px.toRgba());
-              channel.publish('stage.pixel.fill', {
-                frame: frame,
-                layer: px.layer,
-                x: px.x,
-                y: px.y,
-                color: color.hexString()
-              });
-            }
+            if(inArray(framelayers, px.layer)) Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
           });
         }
       },
@@ -25231,24 +25228,12 @@ var Stage = function() {
 
         layerPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         selectionPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
       },
       clear: function() {
@@ -25373,18 +25358,18 @@ var Editor = function() {
     var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a);
-    var oldPixel = _.findWhere(self.pixels, {layer: data.layer, x: data.x, y: data.y});
+    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
+    var oldPixel = _.findWhere(self.pixels.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
-      self.pixels.push(newPixel);
+      self.pixels.layer.push(newPixel);
     }
     else {
       //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
-      for(var i = 0; i < self.pixels.length; i++) {
-        var p = self.pixels[i];
-        if(p.layer == data.layer && p.x == data.x && p.y == data.y) {
+      for(var i = 0; i < self.pixels.layer.length; i++) {
+        var p = self.pixels.layer[i];
+        if(p.x == data.x && p.y == data.y) {
           p.r = c.red();
           p.g = c.green();
           p.b = c.blue();
@@ -25399,12 +25384,12 @@ var Editor = function() {
 
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
-    var initialPixel = _.findWhere(self.pixels, {x: data.point.x, y: data.point.y, layer: self.layer}),
+    var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
         initialColor,
         fillColor = self.color;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
-      initialPixel = {layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
+      initialPixel = {frame: self.frame.selected, layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
     }
 
     initialColor = new Color({r: initialPixel.r, g: initialPixel.g, b: initialPixel.b});
@@ -25416,7 +25401,7 @@ var Editor = function() {
 
       filled.push(point);
 
-      var pixel = _.findWhere(self.pixels, {layer: self.layer, x: point.x, y: point.y}),
+      var pixel = _.findWhere(self.pixels.layer, {x: point.x, y: point.y}),
           pixelColor,
           neighbors;
 
@@ -25427,13 +25412,7 @@ var Editor = function() {
       else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
-        channel.publish('stage.pixel.fill', {
-          frame: self.frame.selected,
-          layer: self.layers.selected,
-          x: point.x,
-          y: point.y,
-          color: fillColor.hexString()
-        });
+        Pixel.publish(self.frame.selected, self.layers.selected, point.x, point.y, file.getLayerById(self.layers.selected).z, fillColor.hexString());
 
         neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {
@@ -27208,7 +27187,6 @@ var SelectionPattern = React.createClass({displayName: 'SelectionPattern',
 var StageBox = React.createClass({displayName: 'StageBox',
   getInitialState: function() {
     return {
-      //needsRefresh: false,
       mousedown: false,
       mousedownPoint: new Point(0, 0),
       last: null, // we need to record the mousedown timestamp because of a chrome bug,
@@ -27259,24 +27237,6 @@ var StageBox = React.createClass({displayName: 'StageBox',
       )
     );
   },
-  componentDidMount: function() {
-    this.subscriptions = [
-      //channel.subscribe('app.frame.select', this.prepareRefresh),
-      //channel.subscribe('stage.zoom.select', this.prepareRefresh),
-    ];
-  },
-  /*
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      //stage.frame.refresh();
-
-      this.setState({needsRefresh: false});
-    }
-  },
-  */
 
   mousedown: function(event) {
 
@@ -27383,8 +27343,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
 
   getLayerPixelColor: function(event) {
-    var layer = file.getLayerById(this.props.editor.layers.selected),
-        ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
+    var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
@@ -27412,23 +27371,13 @@ var StageBox = React.createClass({displayName: 'StageBox',
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: editor.color.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+                      file.getLayerById(editor.layers.selected).z, editor.color.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: editor.pixel.x,
-            y: editor.pixel.y,
-            color: editor.color.hexString()
-          });
+          Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+                        file.getLayerById(editor.layers.selected).z, editor.color.hexString());
         }
       }
     }
@@ -27474,25 +27423,15 @@ var StageBox = React.createClass({displayName: 'StageBox',
       function lighten() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: newColor.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+              file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: newColor.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+              file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       var px = _.findWhere(editor.pixels.layer, {x: editor.pixel.x, y: editor.pixel.y }),
@@ -27523,46 +27462,19 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
       this.updateRectangularSelection(distance);
 
-      editor.pixels.selection.forEach(function(pixel) {
-        var color = new Color(pixel.toRgb()),
-            target = wrapPixel(pixel, distance);
-
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: target.x,
-          y: target.y,
-          color: color.hexString()
-        });
+      editor.pixels.selection.forEach(function(px) {
+        var target = wrapPixel(px, distance);
+        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
       });
 
-      editor.pixels.layer.forEach(function(pixel) {
-
-          var color = new Color(pixel.toRgb());
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: pixel.x,
-            y: pixel.y,
-            color: color.hexString()
-          });
-
+      editor.pixels.layer.forEach(function(px) {
+        Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
       });
     }
     else {
-      editor.pixels.layer.forEach(function(pixel) {
-
-          var color = new Color(pixel.toRgb()),
-              target = wrapPixel(pixel, distance);
-
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: target.x,
-            y: target.y,
-            color: color.hexString()
-          });
-
+      editor.pixels.layer.forEach(function(px) {
+        var target = wrapPixel(pixel, distance);
+        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
       });
     }
   },
@@ -27945,23 +27857,19 @@ function hideOffScreen() {
 function redrawFromFile() {
   console.log('redrawing from file');
 
+  // clear all layer canvases
   file.layers.forEach(function(layer) {
     var canvas = document.getElementById('StageBoxLayer-'+layer.id);
         canvas.width = canvas.width;
   });
 
+  // get frame layer IDs
   var frameLayers = editor.layers.getIds();
 
-  file.pixels.forEach(function(pixel) {
-    if(inArray(frameLayers, pixel.layer)) {
-      var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
-      channel.publish('stage.pixel.fill', {
-        frame: file.getFrameIdForLayer(pixel.layer),
-        layer: pixel.layer,
-        x: pixel.x,
-        y: pixel.y,
-        color: color.hexString()
-      });
+  // draw all pixels that belong to frame
+  file.pixels.forEach(function(px) {
+    if(inArray(frameLayers, px.layer)) {
+      Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
     }
   });
 };
@@ -28076,14 +27984,7 @@ function fileLoaded(json) {
   /*
   // draw all pixels to layers
   file.pixels.forEach(function(px) {
-    var color = new Color(px.toRgba());
-    channel.publish('stage.pixel.fill', {
-      frame: file.getFrameIdForLayer(px.layer),
-      layer: px.layer,
-      x: px.x,
-      y: px.y,
-      color: color.hexString()
-    });
+    Pixel.publish(file.getFrameIdForLayer(px.layer), px.layer, px.x, px.y, px.z, px.toHex());
   });
   */
 
@@ -28096,19 +27997,6 @@ function fileLoaded(json) {
 
 // window.onload = function() {
 
-//   /*
-//   // draw all pixels to layers
-//   file.pixels.forEach(function(px) {
-//     var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
-//     channel.publish('stage.pixel.fill', {
-//       frame: file.getFrameIdForLayer(px.layer),
-//       layer: px.layer,
-//       x: px.x,
-//       y: px.y,
-//       color: color.hexString()
-//     });
-//   });
-//   */
 
 //   // select each frame once to initialize previews etc
 

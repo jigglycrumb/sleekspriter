@@ -113,18 +113,18 @@ var Editor = function() {
     var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a);
-    var oldPixel = _.findWhere(self.pixels, {layer: data.layer, x: data.x, y: data.y});
+    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
+    var oldPixel = _.findWhere(self.pixels.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
-      self.pixels.push(newPixel);
+      self.pixels.layer.push(newPixel);
     }
     else {
       //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
-      for(var i = 0; i < self.pixels.length; i++) {
-        var p = self.pixels[i];
-        if(p.layer == data.layer && p.x == data.x && p.y == data.y) {
+      for(var i = 0; i < self.pixels.layer.length; i++) {
+        var p = self.pixels.layer[i];
+        if(p.x == data.x && p.y == data.y) {
           p.r = c.red();
           p.g = c.green();
           p.b = c.blue();
@@ -139,12 +139,12 @@ var Editor = function() {
 
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
-    var initialPixel = _.findWhere(self.pixels, {x: data.point.x, y: data.point.y, layer: self.layer}),
+    var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
         initialColor,
         fillColor = self.color;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
-      initialPixel = {layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
+      initialPixel = {frame: self.frame.selected, layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
     }
 
     initialColor = new Color({r: initialPixel.r, g: initialPixel.g, b: initialPixel.b});
@@ -156,7 +156,7 @@ var Editor = function() {
 
       filled.push(point);
 
-      var pixel = _.findWhere(self.pixels, {layer: self.layer, x: point.x, y: point.y}),
+      var pixel = _.findWhere(self.pixels.layer, {x: point.x, y: point.y}),
           pixelColor,
           neighbors;
 
@@ -167,13 +167,7 @@ var Editor = function() {
       else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
-        channel.publish('stage.pixel.fill', {
-          frame: self.frame.selected,
-          layer: self.layers.selected,
-          x: point.x,
-          y: point.y,
-          color: fillColor.hexString()
-        });
+        Pixel.publish(self.frame.selected, self.layers.selected, point.x, point.y, file.getLayerById(self.layers.selected).z, fillColor.hexString());
 
         neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {

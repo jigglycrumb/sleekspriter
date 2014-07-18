@@ -23,7 +23,7 @@ var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
   this.z = z;
 };
 
-Pixel.prototype = new Point();
+Pixel.prototype = Point.prototype;
 Pixel.prototype.constructor = Pixel;
 
 /**
@@ -40,6 +40,16 @@ Pixel.prototype.toRgba = function() {
  */
 Pixel.prototype.toRgb = function() {
   return 'rgb('+this.r+','+this.g+','+this.b+')';
+};
+
+Pixel.prototype.toHex = function() {
+  var pad = function(s) {
+    return s.length == 1 ? '0'+s : s;
+  };
+
+  return '#'+pad(this.r.toString(16))
+            +pad(this.g.toString(16))
+            +pad(this.b.toString(16));
 };
 
 /**
@@ -77,6 +87,19 @@ Pixel.fill = function(canvas, x, y, color) {
 
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
+};
+
+
+// temporary, publishes a stage.pixel.fill message. eventually merge with Pixel.fill
+Pixel.publish = function(frame, layer, x, y, z, color) {
+  channel.publish('stage.pixel.fill', {
+    frame: frame, // frame ID
+    layer: layer, // layer ID
+    x: x, // pixel x
+    y: y, // pixel y
+    z: z, // layer z
+    color: color, // fill color hexstring
+  });
 };
 
 /**

@@ -9,7 +9,7 @@ var Point = function(x, y) {
   this.y = y;
 };
 
-Point.prototype = Object.create(null);
+Point.prototype = {};
 Point.prototype.constructor = Point;
 
 /**

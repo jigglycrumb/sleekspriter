@@ -2,7 +2,6 @@
 var StageBox = React.createClass({
   getInitialState: function() {
     return {
-      //needsRefresh: false,
       mousedown: false,
       mousedownPoint: new Point(0, 0),
       last: null, // we need to record the mousedown timestamp because of a chrome bug,
@@ -53,24 +52,6 @@ var StageBox = React.createClass({
       </div>
     );
   },
-  componentDidMount: function() {
-    this.subscriptions = [
-      //channel.subscribe('app.frame.select', this.prepareRefresh),
-      //channel.subscribe('stage.zoom.select', this.prepareRefresh),
-    ];
-  },
-  /*
-  prepareRefresh: function() {
-    this.setState({needsRefresh: true});
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      //stage.frame.refresh();
-
-      this.setState({needsRefresh: false});
-    }
-  },
-  */
 
   mousedown: function(event) {
 
@@ -177,8 +158,7 @@ var StageBox = React.createClass({
 
 
   getLayerPixelColor: function(event) {
-    var layer = file.getLayerById(this.props.editor.layers.selected),
-        ctx = document.getElementById('StageBoxLayer-'+layer.id).getContext('2d'),
+    var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
@@ -206,23 +186,13 @@ var StageBox = React.createClass({
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: editor.color.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+                      file.getLayerById(editor.layers.selected).z, editor.color.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: editor.pixel.x,
-            y: editor.pixel.y,
-            color: editor.color.hexString()
-          });
+          Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+                        file.getLayerById(editor.layers.selected).z, editor.color.hexString());
         }
       }
     }
@@ -268,25 +238,15 @@ var StageBox = React.createClass({
       function lighten() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: newColor.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+              file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
-          color: newColor.hexString()
-        });
+        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+              file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       var px = _.findWhere(editor.pixels.layer, {x: editor.pixel.x, y: editor.pixel.y }),
@@ -317,46 +277,19 @@ var StageBox = React.createClass({
 
       this.updateRectangularSelection(distance);
 
-      editor.pixels.selection.forEach(function(pixel) {
-        var color = new Color(pixel.toRgb()),
-            target = wrapPixel(pixel, distance);
-
-        channel.publish('stage.pixel.fill', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: target.x,
-          y: target.y,
-          color: color.hexString()
-        });
+      editor.pixels.selection.forEach(function(px) {
+        var target = wrapPixel(px, distance);
+        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
       });
 
-      editor.pixels.layer.forEach(function(pixel) {
-
-          var color = new Color(pixel.toRgb());
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: pixel.x,
-            y: pixel.y,
-            color: color.hexString()
-          });
-
+      editor.pixels.layer.forEach(function(px) {
+        Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
       });
     }
     else {
-      editor.pixels.layer.forEach(function(pixel) {
-
-          var color = new Color(pixel.toRgb()),
-              target = wrapPixel(pixel, distance);
-
-          channel.publish('stage.pixel.fill', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: target.x,
-            y: target.y,
-            color: color.hexString()
-          });
-
+      editor.pixels.layer.forEach(function(px) {
+        var target = wrapPixel(pixel, distance);
+        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
       });
     }
   },

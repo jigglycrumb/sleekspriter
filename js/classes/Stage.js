@@ -1,16 +1,5 @@
 var Stage = function() {
 
-  function fillPixel(frame, pixel) {
-    var color = new Color(pixel.toRgba());
-    channel.publish('stage.pixel.fill', {
-      frame: frame,
-      layer: pixel.layer,
-      x: pixel.x,
-      y: pixel.y,
-      color: color.hexString()
-    });
-  };
-
   return {
 
     frame: {
@@ -24,29 +13,14 @@ var Stage = function() {
 
         editor.pixels.frame.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         if(editor.pixels.selection.length > 0) {
           var framelayers = editor.layers.getIds();
 
           editor.pixels.selection.forEach(function(px) {
-            if(inArray(framelayers, px.layer)) {
-              var color = new Color(px.toRgba());
-              channel.publish('stage.pixel.fill', {
-                frame: frame,
-                layer: px.layer,
-                x: px.x,
-                y: px.y,
-                color: color.hexString()
-              });
-            }
+            if(inArray(framelayers, px.layer)) Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
           });
         }
       },
@@ -74,24 +48,12 @@ var Stage = function() {
 
         layerPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         selectionPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          channel.publish('stage.pixel.fill', {
-            frame: frame,
-            layer: px.layer,
-            x: px.x,
-            y: px.y,
-            color: color.hexString()
-          });
+          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
       },
       clear: function() {

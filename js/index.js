@@ -11,23 +11,19 @@ function hideOffScreen() {
 function redrawFromFile() {
   console.log('redrawing from file');
 
+  // clear all layer canvases
   file.layers.forEach(function(layer) {
     var canvas = document.getElementById('StageBoxLayer-'+layer.id);
         canvas.width = canvas.width;
   });
 
+  // get frame layer IDs
   var frameLayers = editor.layers.getIds();
 
-  file.pixels.forEach(function(pixel) {
-    if(inArray(frameLayers, pixel.layer)) {
-      var color = new Color({r: pixel.r, g: pixel.g, b: pixel.b});
-      channel.publish('stage.pixel.fill', {
-        frame: file.getFrameIdForLayer(pixel.layer),
-        layer: pixel.layer,
-        x: pixel.x,
-        y: pixel.y,
-        color: color.hexString()
-      });
+  // draw all pixels that belong to frame
+  file.pixels.forEach(function(px) {
+    if(inArray(frameLayers, px.layer)) {
+      Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
     }
   });
 };
@@ -142,14 +138,7 @@ function fileLoaded(json) {
   /*
   // draw all pixels to layers
   file.pixels.forEach(function(px) {
-    var color = new Color(px.toRgba());
-    channel.publish('stage.pixel.fill', {
-      frame: file.getFrameIdForLayer(px.layer),
-      layer: px.layer,
-      x: px.x,
-      y: px.y,
-      color: color.hexString()
-    });
+    Pixel.publish(file.getFrameIdForLayer(px.layer), px.layer, px.x, px.y, px.z, px.toHex());
   });
   */
 
@@ -162,19 +151,6 @@ function fileLoaded(json) {
 
 // window.onload = function() {
 
-//   /*
-//   // draw all pixels to layers
-//   file.pixels.forEach(function(px) {
-//     var color = new Color('rgba('+px.r+','+px.g+','+px.b+','+px.a+')');
-//     channel.publish('stage.pixel.fill', {
-//       frame: file.getFrameIdForLayer(px.layer),
-//       layer: px.layer,
-//       x: px.x,
-//       y: px.y,
-//       color: color.hexString()
-//     });
-//   });
-//   */
 
 //   // select each frame once to initialize previews etc
 
