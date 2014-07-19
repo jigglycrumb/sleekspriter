@@ -26,6 +26,9 @@ Editor.prototype.pixels.init = function() {
     self.layer = self.layer.filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
+
+
+    // TODO: save changes
   };
 
 

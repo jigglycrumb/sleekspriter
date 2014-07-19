@@ -13,7 +13,9 @@ Editor.prototype.palettes.init = function() {
     self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
   });
 
-  channel.subscribe('stage.pixel.clear', self.buildAuto);
+  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+    self.buildAuto();
+  });
 };
 
 Editor.prototype.palettes.buildAuto = function() {

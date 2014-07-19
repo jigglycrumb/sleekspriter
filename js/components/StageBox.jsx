@@ -205,6 +205,7 @@ var StageBox = React.createClass({
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
+          z: file.getLayerById(editor.layers.selected).z,
         });
       }
       else { // restrict to selection
@@ -214,6 +215,7 @@ var StageBox = React.createClass({
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
+            z: file.getLayerById(editor.layers.selected).z,
           });
         }
       }

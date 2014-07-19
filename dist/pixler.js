@@ -25210,7 +25210,9 @@ File.prototype = {};
 
 
 File.load = function(file, callback) {
-  console.log('loading file '+file);
+
+  console.info('File: '+file);
+
   var url = 'mock/loadfile.php?file=' + file;
   $.getJSON(url, callback);
 }
@@ -25598,7 +25600,9 @@ Editor.prototype.palettes.init = function() {
     self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
   });
 
-  channel.subscribe('stage.pixel.clear', self.buildAuto);
+  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+    self.buildAuto();
+  });
 };
 
 Editor.prototype.palettes.buildAuto = function() {
@@ -26278,7 +26282,7 @@ var FrameCanvasMixin = {
      id: React.PropTypes.number.isRequired,  // frame id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
-     alwaysRefresh: React.PropTypes.bool, //
+     alwaysRefresh: React.PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -26315,9 +26319,13 @@ var FrameCanvasMixin = {
           if(pixelsAbove.length === 0) Pixel.paint(canvas, x, y, this.state.data.color);
           break;
 
-        // TODO: consider layers, clear to pixel below
         case 'stage.pixel.clear':
-          Pixel.clear(canvas, x, y);
+          var pixelsAbove = this.getPixelsAbove(x, y, z);
+          if(pixelsAbove.length === 0) {
+            var pixelBelow = this.getPixelBelow(x, y, z);
+            if(pixelBelow === false) Pixel.clear(canvas, x, y);
+            else Pixel.paint(canvas, x, y, pixelBelow.toHex());
+          }
           break;
 
         case 'app.frame.select':
@@ -26331,6 +26339,17 @@ var FrameCanvasMixin = {
   getPixelsAbove: function(x, y, z) {
     return _.filter(editor.pixels.frame, function(px) {
       return px.x == x && px.y == y && px.z > z;
+    });
+  },
+  getPixelBelow: function(x, y, z) {
+    var below = _.filter(editor.pixels.frame, function(px) {
+      return px.x == x && px.y == y && px.z < z;
+    });
+
+    if(below.length == 0) return false;
+
+    return _.max(below, function(px) {
+      return px.z;
     });
   },
   paintFrame: function(frame) {
@@ -27393,6 +27412,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
           layer: editor.layers.selected,
           x: editor.pixel.x,
           y: editor.pixel.y,
+          z: file.getLayerById(editor.layers.selected).z,
         });
       }
       else { // restrict to selection
@@ -27402,6 +27422,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
             layer: editor.layers.selected,
             x: editor.pixel.x,
             y: editor.pixel.y,
+            z: file.getLayerById(editor.layers.selected).z,
           });
         }
       }
@@ -27956,7 +27977,7 @@ workspace.load();
 
 if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
   // nothing to see here yet
-  console.log('no file in workspace found');
+  console.warn('no file in workspace found');
 }
 else { // re-open last file
   File.load(workspace.data.file, fileLoaded);

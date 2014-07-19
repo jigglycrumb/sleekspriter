@@ -107,7 +107,7 @@ workspace.load();
 
 if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
   // nothing to see here yet
-  console.log('no file in workspace found');
+  console.warn('no file in workspace found');
 }
 else { // re-open last file
   File.load(workspace.data.file, fileLoaded);

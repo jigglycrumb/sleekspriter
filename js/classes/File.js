@@ -201,7 +201,9 @@ File.prototype = {};
 
 
 File.load = function(file, callback) {
-  console.log('loading file '+file);
+
+  console.info('File: '+file);
+
   var url = 'mock/loadfile.php?file=' + file;
   $.getJSON(url, callback);
 }
