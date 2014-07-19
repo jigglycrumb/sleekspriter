@@ -186,12 +186,12 @@ var StageBox = React.createClass({
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
                       file.getLayerById(editor.layers.selected).z, editor.color.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
-          Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+          Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
                         file.getLayerById(editor.layers.selected).z, editor.color.hexString());
         }
       }
@@ -238,14 +238,14 @@ var StageBox = React.createClass({
       function lighten() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
-        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
-        Pixel.publish(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
@@ -278,18 +278,18 @@ var StageBox = React.createClass({
       this.updateRectangularSelection(distance);
 
       editor.pixels.selection.forEach(function(px) {
-        var target = wrapPixel(px, distance);
-        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
+        px.wrap(distance);
+        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
       });
 
       editor.pixels.layer.forEach(function(px) {
-        Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
       });
     }
     else {
       editor.pixels.layer.forEach(function(px) {
-        var target = wrapPixel(pixel, distance);
-        Pixel.publish(px.frame, px.layer, target.x, target.y, px.z, px.toHex());
+        px.wrap(distance);
+        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
       });
     }
   },

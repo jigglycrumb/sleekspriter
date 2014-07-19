@@ -26,6 +26,14 @@ var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
 Pixel.prototype = Point.prototype;
 Pixel.prototype.constructor = Pixel;
 
+Object.defineProperty(Pixel.prototype, 'isTransparent', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    return this.a == 0 ? true: false;
+  }
+});
+
 /**
  * Creates CSS rgba() string from pixel values
  * @return {String} The rgba string
@@ -42,6 +50,10 @@ Pixel.prototype.toRgb = function() {
   return 'rgb('+this.r+','+this.g+','+this.b+')';
 };
 
+/**
+ * Creates a hex string from pixel color values
+ * @return {String} The hex string
+ */
 Pixel.prototype.toHex = function() {
   var pad = function(s) {
     return s.length == 1 ? '0'+s : s;
@@ -77,21 +89,27 @@ Pixel.toArray = function(pixel) {
  * @param {Number} y - pixel y-coordinate
  * @param {String} color - hex-string of color to paint
  */
-Pixel.fill = function(canvas, x, y, color) {
+Pixel.paint = function(canvas, x, y, color) {
   var scale = canvas.width/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
-
-  //console.log('filling pixel', cX, cY, scale);
 
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
 };
 
 
-// temporary, publishes a stage.pixel.fill message. eventually merge with Pixel.fill
-Pixel.publish = function(frame, layer, x, y, z, color) {
+/**
+ * Publishes a stage.pixel.fill message
+ * @param  {Number} frame The frame ID
+ * @param  {Number} layer The layer ID
+ * @param  {Number} x     Pixel x
+ * @param  {Number} y     Pixel y
+ * @param  {Number} z     Layer z
+ * @param  {String} color Pixel color hex string
+ */
+Pixel.add = function(frame, layer, x, y, z, color) {
   channel.publish('stage.pixel.fill', {
     frame: frame, // frame ID
     layer: layer, // layer ID

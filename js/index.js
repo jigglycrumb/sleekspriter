@@ -13,8 +13,10 @@ function redrawFromFile() {
 
   // clear all layer canvases
   file.layers.forEach(function(layer) {
-    var canvas = document.getElementById('StageBoxLayer-'+layer.id);
-        canvas.width = canvas.width;
+    if(editor.frame.selected === layer.frame) {
+      var canvas = document.getElementById('StageBoxLayer-'+layer.id);
+      canvas.width = canvas.width;
+    }
   });
 
   // get frame layer IDs
@@ -23,7 +25,7 @@ function redrawFromFile() {
   // draw all pixels that belong to frame
   file.pixels.forEach(function(px) {
     if(inArray(frameLayers, px.layer)) {
-      Pixel.publish(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+      Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
     }
   });
 };
@@ -61,18 +63,6 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   }
 };
 
-function wrapPixel(pixel, distance) {
-  var targetX = pixel.x + distance.x,
-      targetY = pixel.y + distance.y;
-
-  if(targetX > file.size.width) targetX -= file.size.width;
-  else if(targetX < 1) targetX += file.size.width;
-  if(targetY > file.size.height) targetY -= file.size.height;
-  else if(targetY < 1) targetY += file.size.height;
-
-  return new Point(targetX, targetY);
-};
-
 function isLayerVisible() {
   var layer = file.getLayerById(editor.layers.selected);
   return layer.visible && layer.opacity > 0;
@@ -99,11 +89,11 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         //{ channel: "pixler" },
         //{ data: { foo: /bar/ } },
         { topic: "stage.pixel.fill" },
-        { topic: "stage.pixel.clear" },
+        //{ topic: "stage.pixel.clear" },
         //{ topic: "app.frame.select" },
         //{ topic: "app.layer.select" },
     ],
-    //active: false,
+    active: false,
 });
 
 
@@ -124,7 +114,6 @@ else { // re-open last file
 }
 
 function fileLoaded(json) {
-  console.log('file loaded');
 
   // init file
   file.fromJSON(json);
@@ -132,42 +121,12 @@ function fileLoaded(json) {
   // init auto palette
   editor.palettes.buildAuto();
 
-  // select last selected frame (also initializes layers)
+  // select last selected frame
   channel.publish('app.frame.select', {frame: editor.frame.selected});
-
-  /*
-  // draw all pixels to layers
-  file.pixels.forEach(function(px) {
-    Pixel.publish(file.getFrameIdForLayer(px.layer), px.layer, px.x, px.y, px.z, px.toHex());
-  });
-  */
 
   // render UI
   React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
 }
 
-
-// //window.onbeforeunload = workspace.save;
-
-// window.onload = function() {
-
-
-//   // select each frame once to initialize previews etc
-
-//   var totalFrames = file.frames.x * file.frames.y,
-//       frame = editor.frame.selected;
-//   for(var i = 1; i <= totalFrames; i++) {
-//     channel.publish('app.frame.select', {frame: i});
-//   }
-
-
-//   //channel.publish('app.frame.select', {frame: frame});
-//   //channel.publish('app.frame.select', {frame: 1});
-
-//   // set inital zoom
-//   channel.publish('stage.zoom.select', {zoom: editor.zoom.current});
-
-//   // select brush tool
-//   channel.publish('app.tool.select', {tool: editor.tool});
-
-// };
+// window.onbeforeunload = workspace.save;
+// window.onload = function() {};

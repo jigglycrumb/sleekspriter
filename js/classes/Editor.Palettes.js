@@ -7,15 +7,21 @@ Editor.prototype.palettes.init = function() {
   channel.subscribe('app.palette.select', function(data, envelope) {
     self.selected = data.palette;
   });
+
+  channel.subscribe('stage.pixel.fill', function(data, envelope) {
+    self.available.sprite.colors.push(data.color);
+    self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
+  });
+
+  channel.subscribe('stage.pixel.clear', self.buildAuto);
 };
 
 Editor.prototype.palettes.buildAuto = function() {
   var palette = [];
-  file.pixels.forEach(function(pixel) {
-    var color = Color().rgb(pixel.r, pixel.g, pixel.b).hexString();
-    palette.push(color);
+  file.pixels.forEach(function(px) {
+    palette.push(px.toHex());
   });
-  this.available.sprite.colors = _.uniq(palette, false);
+  this.available.sprite.colors = _.unique(palette, false);
 };
 
 Editor.prototype.palettes.available = {

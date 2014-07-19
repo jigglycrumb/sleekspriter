@@ -14,7 +14,6 @@ Point.prototype.constructor = Point;
 
 /**
  * Moves a point by a given distance
- * @constructor
  * @param {Object} distance - Point with distance coordinates
  * @return {Object} the updated Point
  */
@@ -23,3 +22,22 @@ Point.prototype.translate = function(distance) {
   this.y += distance.y;
   return this;
 }
+
+/**
+ * Moves a point by a given distance, wrapping around if the canvas end is reached
+ * @param {Object} distance - Point with distance coordinates
+ * @return {Object} the updated Point
+ */
+Point.prototype.wrap = function(distance) {
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(targetX > editor.file.size.width) targetX -= editor.file.size.width;
+  else if(targetX < 1) targetX += editor.file.size.width;
+  if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
+  else if(targetY < 1) targetY += editor.file.size.height;
+
+  this.x = targetX;
+  this.y = targetY;
+  return this;
+};

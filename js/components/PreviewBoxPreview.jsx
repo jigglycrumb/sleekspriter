@@ -22,11 +22,7 @@ var PreviewBoxPreview = React.createClass({
         height = this.props.height*scale;
 
     return (
-      <canvas
-        id="PreviewBoxPreview"
-        width={width}
-        height={height}
-      ></canvas>
+      <canvas id="PreviewBoxPreview" width={width} height={height}></canvas>
     );
   }
 });

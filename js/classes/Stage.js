@@ -13,14 +13,14 @@ var Stage = function() {
 
         editor.pixels.frame.forEach(function(px) {
           var color = new Color(px.toRgba());
-          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
+          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         if(editor.pixels.selection.length > 0) {
           var framelayers = editor.layers.getIds();
 
           editor.pixels.selection.forEach(function(px) {
-            if(inArray(framelayers, px.layer)) Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
+            if(inArray(framelayers, px.layer)) Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
           });
         }
       },
@@ -48,12 +48,12 @@ var Stage = function() {
 
         layerPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
+          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
 
         selectionPixels.forEach(function(px) {
           var color = new Color(px.toRgba());
-          Pixel.publish(frame, px.layer, px.x, px.y, px.z, px.toHex());
+          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
         });
       },
       clear: function() {

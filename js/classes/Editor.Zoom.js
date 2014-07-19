@@ -1,7 +1,7 @@
 Editor.prototype.zoom = {};
 Editor.prototype.zoom.min = 1;
 Editor.prototype.zoom.max = 50;
-Editor.prototype.zoom.current = 5;
+Editor.prototype.zoom.current = 10;
 
 Editor.prototype.zoom.init = function() {
   var self = this;

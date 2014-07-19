@@ -15,12 +15,6 @@ var Editor = function() {
     left: 45,
   };
 
-  this.deletePixel = function(layer, x, y) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return !(pixel.layer == layer && pixel.x == x && pixel.y == y);
-    });
-  };
-
   var getAdjacentPixels = function(point) {
 
     var p,
@@ -59,10 +53,9 @@ var Editor = function() {
     return arr;
   };
 
+  /*
   this.saveChanges = function() {
     console.log('saving changes to file');
-
-    return;
 
     // grab all old pixels of current frame
     var frameLayers = this.layers.getIds();
@@ -73,6 +66,7 @@ var Editor = function() {
 
     file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
   };
+  */
 
 
   // init subclasses
@@ -97,46 +91,6 @@ var Editor = function() {
   channel.subscribe('app.pixel.select', function(data, envelope) {
     self.pixel = data.point;
   });
-
-  channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    self.palettes.buildAuto();
-    self.deletePixel(data.layer, data.x, data.y);
-    channel.publish('stage.layer.update', {layer: data.layer});
-  });
-
-  channel.subscribe('stage.pixel.fill', function(data, envelope) {
-    // update sprite palette
-    self.palettes.available.sprite.colors.push(data.color);
-    self.palettes.available.sprite.colors = _.uniq(self.palettes.available.sprite.colors, false);
-
-    // add/replace pixel
-    var c = new Color(data.color),
-        a = 1;
-
-    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
-    var oldPixel = _.findWhere(self.pixels.layer, {x: data.x, y: data.y});
-    if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
-      self.pixels.layer.push(newPixel);
-    }
-    else {
-      //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
-      // replace old pixel
-      for(var i = 0; i < self.pixels.layer.length; i++) {
-        var p = self.pixels.layer[i];
-        if(p.x == data.x && p.y == data.y) {
-          p.r = c.red();
-          p.g = c.green();
-          p.b = c.blue();
-          p.a = a;
-          break;
-        }
-      }
-    }
-
-    self.saveChanges(); // TODO: check if call can be removed
-  });
-
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
     var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
@@ -167,7 +121,7 @@ var Editor = function() {
       else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
       if(pixelColor.rgbString() == initialColor.rgbString()) {
-        Pixel.publish(self.frame.selected, self.layers.selected, point.x, point.y, file.getLayerById(self.layers.selected).z, fillColor.hexString());
+        Pixel.add(self.frame.selected, self.layers.selected, point.x, point.y, file.getLayerById(self.layers.selected).z, fillColor.hexString());
 
         neighbors = getAdjacentPixels(point);
         neighbors.forEach(function(n) {
@@ -179,28 +133,6 @@ var Editor = function() {
 
     rFill(initialPixel);
   });
-
-  channel.subscribe('stage.tool.move', function(data, envelope) {
-    if(self.selection.isActive) {
-      self.selection.pixels.forEach(function(pixel) {
-        var target = wrapPixel(pixel, data.distance);
-        pixel.x = target.x;
-        pixel.y = target.y;
-      });
-    }
-    else {
-      self.pixels.forEach(function(pixel) {
-        if(pixel.layer == self.layer) {
-          var target = wrapPixel(pixel, data.distance);
-          pixel.x = target.x;
-          pixel.y = target.y;
-        }
-      });
-    }
-
-    self.saveChanges();
-  });
-
 
 };
 

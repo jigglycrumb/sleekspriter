@@ -7,79 +7,9 @@ Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
-  /*
-  function saveAndClearPixels() {
-    // merge editor.selection.pixels back to editor.layer.pixels
-    self.pixels.forEach(function(pixel) {
-      editor.pixels.layer.push(pixel);
-    });
-
-    editor.pixels.layer = _.unique(editor.pixels.layer, function(p) { return p.layer+','+p.x+','+p.y });
-    self.pixels = [];
-  };
-  */
-
-  /*
-  function pixelHasBeenSelected(pixel) {
-    return self.contains(pixel) && pixel.layer == editor.layers.selected;
-  };
-  */
-
-
-  /*
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    self.pixels.forEach(function(p) {
-      p.x += data.distance.x;
-      p.y += data.distance.y;
-    });
-  });
-  */
-
   channel.subscribe('stage.selection.clear', function(data, envelope) {
     self.bounds = false;
-    // saveAndClearPixels();
   });
-
-  /*
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    if(editor.selection.isActive) {
-      switch(data.tool) {
-        case 'RectangularSelectionTool':
-          saveAndClearPixels();
-          break;
-        default:
-          // move selected pixels from editor.pixels.layer to editor.selection.pixels
-          self.pixels = _.filter(editor.pixels.layer, pixelHasBeenSelected);
-          editor.pixels.layer = _.reject(editor.pixels.layer, pixelHasBeenSelected);
-          break;
-      }
-    }
-  });
-  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   channel.subscribe('stage.selection.start', function(data, envelope) {
     self.bounds = {

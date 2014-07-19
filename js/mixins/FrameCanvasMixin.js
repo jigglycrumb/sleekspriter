@@ -3,6 +3,7 @@ var FrameCanvasMixin = {
      id: React.PropTypes.number.isRequired,  // frame id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
+     alwaysRefresh: React.PropTypes.bool, //
   },
 
   getInitialState: function() {
@@ -13,33 +14,59 @@ var FrameCanvasMixin = {
       subscriptions: {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
+        'app.frame.select': this.checkRefresh,
       },
     };
   },
   checkRefresh: function(data, envelope) {
-    if(this.props.id == data.frame) {
+    if(this.props.id === data.frame || this.props.alwaysRefresh === true) {
       this.setState({needsRefresh: true, data: data, topic: envelope.topic});
     }
   },
+  componentDidMount: function() {
+    this.paintFrame(this.props.id);
+  },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      var x = this.state.data.x,
+      var frame = this.state.data.frame,
+          x = this.state.data.x,
           y = this.state.data.y,
+          z = this.state.data.z,
           canvas = this.getDOMNode();
-
-      // TODO: consider layers, clear to pixel below, don't fill if there's a pixel above
 
       switch(this.state.topic) {
         case 'stage.pixel.fill':
-          var color = this.state.data.color;
-          Pixel.fill(canvas, x, y, color);
+          var pixelsAbove = this.getPixelsAbove(x, y, z);
+          if(pixelsAbove.length === 0) Pixel.paint(canvas, x, y, this.state.data.color);
           break;
+
+        // TODO: consider layers, clear to pixel below
         case 'stage.pixel.clear':
           Pixel.clear(canvas, x, y);
+          break;
+
+        case 'app.frame.select':
+          this.paintFrame(frame);
           break;
       }
 
       this.resetState();
     }
+  },
+  getPixelsAbove: function(x, y, z) {
+    return _.filter(editor.pixels.frame, function(px) {
+      return px.x == x && px.y == y && px.z > z;
+    });
+  },
+  paintFrame: function(frame) {
+    var canvas = this.getDOMNode();
+    canvas.width = canvas.width;
+
+    file.pixels.forEach(function(px) {
+      if(px.frame === frame) {
+        var pixelsAbove = this.getPixelsAbove(px.x, px.y, px.z);
+        if(pixelsAbove.length === 0) Pixel.paint(canvas, px.x, px.y, px.toHex());
+      }
+    }, this);
   },
 };
