@@ -65,6 +65,14 @@ Pixel.prototype.toHex = function() {
 };
 
 /**
+ * Creates a unique string from pixel values
+ * @return {String} The unique id
+ */
+Pixel.prototype.uid = function() {
+  return btoa(this.layer+':'+this.x+':'+this.y);
+};
+
+/**
  * Creates a new pixel from flat array
  * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]
  * @return {Object} The pixel object

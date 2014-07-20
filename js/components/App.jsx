@@ -60,6 +60,8 @@ var App = React.createClass({
 
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+
+    channel.subscribe('file.save', this.updateProps);
     return;
 
     channel.subscribe('app.box.toggle', this.updateProps);
@@ -70,12 +72,6 @@ var App = React.createClass({
     //channel.subscribe('app.layer.add', this.updateProps);
   },
   updateProps: function() {
-    //console.log('updating App props');
     this.setProps({editor: editor, workspace: workspace});
-  },
-  /*
-  componentWillReceiveProps: function(props) {
-    console.log(props);
-  },
-  */
+  }
 });

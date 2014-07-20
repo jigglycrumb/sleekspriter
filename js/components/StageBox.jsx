@@ -154,6 +154,8 @@ var StageBox = React.createClass({
         else channel.publish('stage.tool.move', {distance: distance});
         break;
     }
+
+    this.props.editor.pixels.save();
   },
 
 

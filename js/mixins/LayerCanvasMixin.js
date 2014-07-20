@@ -17,9 +17,11 @@ var LayerCanvasMixin = {
     };
   },
   checkRefresh: function(data, envelope) {
-    var isStageLayer = this.getDOMNode().classList.contains('Layer');
-    if(this.props.id == data.layer || (envelope.topic == 'stage.zoom.select' && isStageLayer === true)) {
-      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+    if(this.isMounted()) {
+      var isStageLayer = this.getDOMNode().classList.contains('Layer');
+      if(this.props.id == data.layer || (envelope.topic == 'stage.zoom.select' && isStageLayer === true)) {
+        this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+      }
     }
   },
   componentDidMount: function() {
@@ -56,7 +58,7 @@ var LayerCanvasMixin = {
           layer = this.props.id;
       canvas.width = canvas.width;
 
-      file.pixels.forEach(function(px) {
+      editor.pixels.frame.forEach(function(px) {
         if(px.layer === layer) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }

@@ -24937,6 +24937,14 @@ Pixel.prototype.toHex = function() {
 };
 
 /**
+ * Creates a unique string from pixel values
+ * @return {String} The unique id
+ */
+Pixel.prototype.uid = function() {
+  return btoa(this.layer+':'+this.x+':'+this.y);
+};
+
+/**
  * Creates a new pixel from flat array
  * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]
  * @return {Object} The pixel object
@@ -25131,6 +25139,10 @@ var File = function() {
     self.layers.reverse();
   }
 
+  channel.subscribe('file.save', function(data, envelope) {
+    self.save();
+  });
+
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.opacity = data.opacity;
@@ -25207,6 +25219,9 @@ var File = function() {
 
 
 File.prototype = {};
+File.prototype.save = function() {
+  console.log('saving file to disk');
+};
 
 
 File.load = function(file, callback) {
@@ -25215,7 +25230,7 @@ File.load = function(file, callback) {
 
   var url = 'mock/loadfile.php?file=' + file;
   $.getJSON(url, callback);
-}
+};
 var Stage = function() {
 
   return {
@@ -25481,20 +25496,18 @@ Editor.prototype.layers.selectTop = function() {
 };
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null;
+Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
-Editor.prototype.pixels.selection = [];
+Editor.prototype.pixels.file = [];
 
 Editor.prototype.pixels.init = function() {
   var self = this;
 
   // merges selection to layer and clears selection
   function saveAndClearSelection() {
-    self.selection.forEach(function(pixel) {
-      self.layer.push(pixel);
-    });
-
-    self.layer = _.unique(self.layer, function(p) { return p.layer+','+p.x+','+p.y });
+    console.log('saveAndClearSelection');
+    self.merge('selection', 'layer');
     self.selection = [];
   };
 
@@ -25515,6 +25528,45 @@ Editor.prototype.pixels.init = function() {
 
 
   // message handlers
+  channel.subscribe('file.load', function() {
+    self.file = file.pixels;
+  });
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
+    self.frame = _.where(self.file, {frame: data.frame});
+  });
+
+  channel.subscribe('app.layer.select', function(data, envelope) {
+    self.layer = _.where(self.frame, {layer: data.layer});
+  });
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    if(editor.selection.isActive) {
+      switch(data.tool) {
+        case 'RectangularSelectionTool':
+          saveAndClearSelection();
+          break;
+        default:
+          // move selected pixels from layer to selection
+          self.selection = _.filter(self.layer, pixelHasBeenSelected);
+          self.layer = _.reject(self.layer, pixelHasBeenSelected);
+          break;
+      }
+    }
+  });
+
+  channel.subscribe('stage.tool.move', function(data, envelope) {
+    var wrapPixel = function(px) { px.wrap(data.distance) };
+    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
+    else self.layer.forEach(wrapPixel);
+  });
+
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    var translatePixel = function(px) { px.translate(data.distance) };
+    self.selection.forEach(translatePixel);
+  });
+
+  channel.subscribe('stage.selection.clear', saveAndClearSelection);
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // add/replace pixel
@@ -25546,44 +25598,30 @@ Editor.prototype.pixels.init = function() {
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
     deletePixel(data.layer, data.x, data.y);
   });
+};
 
-  channel.subscribe('app.frame.select', function(data, envelope) {
-    self.frame = _.where(file.pixels, {frame: data.frame});
-  });
+/**
+ * Merges pixels from one array to another
+ * @param  {Pixel[]} from The source pixels
+ * @param  {Pixel[]} to   The destination pixels
+ */
+Editor.prototype.pixels.merge = function(from, to) {
+  console.log('merging pixels from '+from+' to '+to);
+  this[from].forEach(function(px) {
+    this[to].push(px);
+  }, this);
+  this[to] = _.unique(this[to], function(px) { return px.uid() });
+};
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
-    self.layer = _.where(self.frame, {layer: data.layer});
-  });
-
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    if(editor.selection.isActive) {
-      switch(data.tool) {
-        case 'RectangularSelectionTool':
-          saveAndClearSelection();
-          break;
-        default:
-          // move selected pixels from layer to selection
-          self.selection = _.filter(self.layer, pixelHasBeenSelected);
-          self.layer = _.reject(self.layer, pixelHasBeenSelected);
-          break;
-      }
-    }
-  });
-
-  channel.subscribe('stage.tool.move', function(data, envelope) {
-    var wrapPixel = function(px) { px.wrap(data.distance) };
-    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
-    else self.layer.forEach(wrapPixel);
-  });
-
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    self.selection.forEach(function(p) {
-      p.x += data.distance.x;
-      p.y += data.distance.y;
-    });
-  });
-
-  channel.subscribe('stage.selection.clear', saveAndClearSelection);
+/**
+ * Save updated pixels
+ */
+Editor.prototype.pixels.save = function() {
+  console.log('saving pixels...');
+  this.merge('layer', 'frame');
+  this.merge('frame', 'file');
+  file.pixels = this.file;
+  channel.publish('file.save');
 };
 Editor.prototype.palettes = {};
 Editor.prototype.palettes.selected = 'sprite';
@@ -26383,9 +26421,11 @@ var LayerCanvasMixin = {
     };
   },
   checkRefresh: function(data, envelope) {
-    var isStageLayer = this.getDOMNode().classList.contains('Layer');
-    if(this.props.id == data.layer || (envelope.topic == 'stage.zoom.select' && isStageLayer === true)) {
-      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+    if(this.isMounted()) {
+      var isStageLayer = this.getDOMNode().classList.contains('Layer');
+      if(this.props.id == data.layer || (envelope.topic == 'stage.zoom.select' && isStageLayer === true)) {
+        this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+      }
     }
   },
   componentDidMount: function() {
@@ -26422,7 +26462,7 @@ var LayerCanvasMixin = {
           layer = this.props.id;
       canvas.width = canvas.width;
 
-      file.pixels.forEach(function(px) {
+      editor.pixels.frame.forEach(function(px) {
         if(px.layer === layer) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }
@@ -26519,6 +26559,8 @@ var App = React.createClass({displayName: 'App',
 
     channel.subscribe('file.layer.opacity.select', this.updateProps);
     channel.subscribe('file.layer.visibility.toggle', this.updateProps);
+
+    channel.subscribe('file.save', this.updateProps);
     return;
 
     channel.subscribe('app.box.toggle', this.updateProps);
@@ -26529,14 +26571,8 @@ var App = React.createClass({displayName: 'App',
     //channel.subscribe('app.layer.add', this.updateProps);
   },
   updateProps: function() {
-    //console.log('updating App props');
     this.setProps({editor: editor, workspace: workspace});
-  },
-  /*
-  componentWillReceiveProps: function(props) {
-    console.log(props);
-  },
-  */
+  }
 });
 /** @jsx React.DOM */
 var BrightnessTool = React.createClass({displayName: 'BrightnessTool',
@@ -27361,6 +27397,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
         else channel.publish('stage.tool.move', {distance: distance});
         break;
     }
+
+    this.props.editor.pixels.save();
   },
 
 

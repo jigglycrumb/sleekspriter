@@ -122,6 +122,10 @@ var File = function() {
     self.layers.reverse();
   }
 
+  channel.subscribe('file.save', function(data, envelope) {
+    self.save();
+  });
+
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.opacity = data.opacity;
@@ -198,6 +202,9 @@ var File = function() {
 
 
 File.prototype = {};
+File.prototype.save = function() {
+  console.log('saving file to disk');
+};
 
 
 File.load = function(file, callback) {
@@ -206,4 +213,4 @@ File.load = function(file, callback) {
 
   var url = 'mock/loadfile.php?file=' + file;
   $.getJSON(url, callback);
-}
+};

@@ -1,19 +1,17 @@
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null;
+Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
-Editor.prototype.pixels.selection = [];
+Editor.prototype.pixels.file = [];
 
 Editor.prototype.pixels.init = function() {
   var self = this;
 
   // merges selection to layer and clears selection
   function saveAndClearSelection() {
-    self.selection.forEach(function(pixel) {
-      self.layer.push(pixel);
-    });
-
-    self.layer = _.unique(self.layer, function(p) { return p.layer+','+p.x+','+p.y });
+    console.log('saveAndClearSelection');
+    self.merge('selection', 'layer');
     self.selection = [];
   };
 
@@ -26,9 +24,6 @@ Editor.prototype.pixels.init = function() {
     self.layer = self.layer.filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
-
-
-    // TODO: save changes
   };
 
 
@@ -37,6 +32,45 @@ Editor.prototype.pixels.init = function() {
 
 
   // message handlers
+  channel.subscribe('file.load', function() {
+    self.file = file.pixels;
+  });
+
+  channel.subscribe('app.frame.select', function(data, envelope) {
+    self.frame = _.where(self.file, {frame: data.frame});
+  });
+
+  channel.subscribe('app.layer.select', function(data, envelope) {
+    self.layer = _.where(self.frame, {layer: data.layer});
+  });
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    if(editor.selection.isActive) {
+      switch(data.tool) {
+        case 'RectangularSelectionTool':
+          saveAndClearSelection();
+          break;
+        default:
+          // move selected pixels from layer to selection
+          self.selection = _.filter(self.layer, pixelHasBeenSelected);
+          self.layer = _.reject(self.layer, pixelHasBeenSelected);
+          break;
+      }
+    }
+  });
+
+  channel.subscribe('stage.tool.move', function(data, envelope) {
+    var wrapPixel = function(px) { px.wrap(data.distance) };
+    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
+    else self.layer.forEach(wrapPixel);
+  });
+
+  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+    var translatePixel = function(px) { px.translate(data.distance) };
+    self.selection.forEach(translatePixel);
+  });
+
+  channel.subscribe('stage.selection.clear', saveAndClearSelection);
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // add/replace pixel
@@ -68,42 +102,28 @@ Editor.prototype.pixels.init = function() {
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
     deletePixel(data.layer, data.x, data.y);
   });
+};
 
-  channel.subscribe('app.frame.select', function(data, envelope) {
-    self.frame = _.where(file.pixels, {frame: data.frame});
-  });
+/**
+ * Merges pixels from one array to another
+ * @param  {Pixel[]} from The source pixels
+ * @param  {Pixel[]} to   The destination pixels
+ */
+Editor.prototype.pixels.merge = function(from, to) {
+  console.log('merging pixels from '+from+' to '+to);
+  this[from].forEach(function(px) {
+    this[to].push(px);
+  }, this);
+  this[to] = _.unique(this[to], function(px) { return px.uid() });
+};
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
-    self.layer = _.where(self.frame, {layer: data.layer});
-  });
-
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    if(editor.selection.isActive) {
-      switch(data.tool) {
-        case 'RectangularSelectionTool':
-          saveAndClearSelection();
-          break;
-        default:
-          // move selected pixels from layer to selection
-          self.selection = _.filter(self.layer, pixelHasBeenSelected);
-          self.layer = _.reject(self.layer, pixelHasBeenSelected);
-          break;
-      }
-    }
-  });
-
-  channel.subscribe('stage.tool.move', function(data, envelope) {
-    var wrapPixel = function(px) { px.wrap(data.distance) };
-    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
-    else self.layer.forEach(wrapPixel);
-  });
-
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    self.selection.forEach(function(p) {
-      p.x += data.distance.x;
-      p.y += data.distance.y;
-    });
-  });
-
-  channel.subscribe('stage.selection.clear', saveAndClearSelection);
+/**
+ * Save updated pixels
+ */
+Editor.prototype.pixels.save = function() {
+  console.log('saving pixels...');
+  this.merge('layer', 'frame');
+  this.merge('frame', 'file');
+  file.pixels = this.file;
+  channel.publish('file.save');
 };
