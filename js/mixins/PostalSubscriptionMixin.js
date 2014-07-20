@@ -1,11 +1,13 @@
 var PostalSubscriptionMixin = {
   componentDidMount: function() {
     this.subscriptions = [];
-    for(var x in this.state.subscriptions) {
-      var topic = x,
-          callback = this.state.subscriptions[x];
+    if("undefined" !== typeof this.state.subscriptions) {
+      for(var x in this.state.subscriptions) {
+        var topic = x,
+            callback = this.state.subscriptions[x];
 
-      channel.subscribe(topic, callback);
+        this.subscriptions.push(channel.subscribe(topic, callback));
+      }
     }
   },
   componentWillUnmount: function() {

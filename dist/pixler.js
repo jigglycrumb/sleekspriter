@@ -26476,11 +26476,13 @@ var LayerCanvasMixin = {
 var PostalSubscriptionMixin = {
   componentDidMount: function() {
     this.subscriptions = [];
-    for(var x in this.state.subscriptions) {
-      var topic = x,
-          callback = this.state.subscriptions[x];
+    if("undefined" !== typeof this.state.subscriptions) {
+      for(var x in this.state.subscriptions) {
+        var topic = x,
+            callback = this.state.subscriptions[x];
 
-      channel.subscribe(topic, callback);
+        this.subscriptions.push(channel.subscribe(topic, callback));
+      }
     }
   },
   componentWillUnmount: function() {
@@ -26502,6 +26504,29 @@ var StageBoxCanvasMixin = {
 };
 /** @jsx React.DOM */
 var App = React.createClass({displayName: 'App',
+  mixins: [PostalSubscriptionMixin],
+  getInitialState: function() {
+    return {
+      subscriptions: {
+        'app.frame.select': this.updateProps,
+        'app.layer.select': this.updateProps,
+        'app.tool.select': this.updateProps,
+        'app.color.select': this.updateProps,
+        'app.pixel.select': this.updateProps,
+        'app.palette.select': this.updateProps,
+        'app.brightnesstool.mode.select': this.updateProps,
+        'app.brightnesstool.intensity.select': this.updateProps,
+
+        'stage.grid.toggle': this.updateProps,
+        'stage.zoom.select': this.updateProps,
+
+        'file.layer.opacity.select': this.updateProps,
+        'file.layer.visibility.toggle': this.updateProps,
+
+        'file.save': this.updateProps,
+      }
+    }
+  },
   render: function() {
 
     var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
@@ -26548,31 +26573,14 @@ var App = React.createClass({displayName: 'App',
       )
     );
   },
+  /*
   componentDidMount: function() {
-
-    channel.subscribe('app.frame.select', this.updateProps);
-    channel.subscribe('app.layer.select', this.updateProps);
-    channel.subscribe('app.tool.select', this.updateProps);
-    channel.subscribe('app.color.select', this.updateProps);
-    channel.subscribe('app.pixel.select', this.updateProps);
-    channel.subscribe('app.palette.select', this.updateProps);
-
-    channel.subscribe('stage.grid.toggle', this.updateProps);
-    channel.subscribe('stage.zoom.select', this.updateProps);
-
-    channel.subscribe('file.layer.opacity.select', this.updateProps);
-    channel.subscribe('file.layer.visibility.toggle', this.updateProps);
-
-    channel.subscribe('file.save', this.updateProps);
-    return;
-
     channel.subscribe('app.box.toggle', this.updateProps);
-    channel.subscribe('app.brightnesstool.mode.select', this.updateProps);
-    channel.subscribe('app.brightnesstool.intensity.select', this.updateProps);
     channel.subscribe('file.layer.name.select', this.updateProps);
     channel.subscribe('stage.tool.move', this.updateProps);
     //channel.subscribe('app.layer.add', this.updateProps);
   },
+  */
   updateProps: function() {
     this.setProps({editor: editor, workspace: workspace});
   }
