@@ -25516,8 +25516,8 @@ Editor.prototype.pixels.init = function() {
     return editor.selection.contains(pixel) && pixel.layer == editor.layers.selected;
   };
 
-  function deletePixel(layer, x, y) {
-    self.layer = self.layer.filter(function(px) {
+  function deletePixel(from, layer, x, y) {
+    self[from] = self[from].filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
   };
@@ -25596,7 +25596,10 @@ Editor.prototype.pixels.init = function() {
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    deletePixel(data.layer, data.x, data.y);
+    deletePixel('selection', data.layer, data.x, data.y);
+    deletePixel('layer', data.layer, data.x, data.y);
+    deletePixel('frame', data.layer, data.x, data.y);
+    deletePixel('file', data.layer, data.x, data.y);
   });
 };
 
