@@ -271,9 +271,9 @@ var StageBox = React.createClass({
     }
   },
   useMoveTool: function() {
-
     var distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected);
+        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
+        canvasPixel;
 
     canvas.width = canvas.width;
 
@@ -282,18 +282,18 @@ var StageBox = React.createClass({
       this.updateRectangularSelection(distance);
 
       editor.pixels.selection.forEach(function(px) {
-        px.wrap(distance);
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        canvasPixel = px.wrap(distance, true);
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
 
       editor.pixels.layer.forEach(function(px) {
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
     }
     else {
       editor.pixels.layer.forEach(function(px) {
-        px.wrap(distance);
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        canvasPixel = px.wrap(distance, true);
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
     }
   },

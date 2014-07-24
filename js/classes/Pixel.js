@@ -72,6 +72,54 @@ Pixel.prototype.uid = function() {
   return btoa(this.layer+':'+this.x+':'+this.y);
 };
 
+
+/**
+ * Moves a pixel by a given distance
+ * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original pixel
+ * @return {Object} the updated Pixel
+ */
+Pixel.prototype.translate = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(simulate === true) {
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
+  return this;
+}
+
+/**
+ * Moves a pixel by a given distance, wrapping around if the canvas end is reached
+ * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original pixel
+ * @return {Object} the updated Pixel
+ */
+Pixel.prototype.wrap = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(targetX > editor.file.size.width) targetX -= editor.file.size.width;
+  else if(targetX < 1) targetX += editor.file.size.width;
+  if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
+  else if(targetY < 1) targetY += editor.file.size.height;
+
+  if(simulate === true) {
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
+  return this;
+};
+
 /**
  * Creates a new pixel from flat array
  * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]

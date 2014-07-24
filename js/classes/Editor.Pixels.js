@@ -80,11 +80,11 @@ Editor.prototype.pixels.init = function() {
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.layer.push(newPixel);
     }
     else {
-      //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < self.layer.length; i++) {
         var p = self.layer[i];
@@ -113,7 +113,7 @@ Editor.prototype.pixels.init = function() {
  * @param  {Pixel[]} to   The destination pixels
  */
 Editor.prototype.pixels.merge = function(from, to) {
-  console.log('merging pixels from '+from+' to '+to);
+  // console.log('merging pixels from '+from+' to '+to);
   this[from].forEach(function(px) {
     this[to].push(px);
   }, this);
@@ -125,8 +125,17 @@ Editor.prototype.pixels.merge = function(from, to) {
  */
 Editor.prototype.pixels.save = function() {
   console.log('saving pixels...');
+  this.log();
   this.merge('layer', 'frame');
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
+  this.log();
+};
+
+Editor.prototype.pixels.log = function() {
+  console.log('selection: '+this.selection.length+' '
+              +'layer: '+this.layer.length+' '
+              +'frame: '+this.frame.length+' '
+              +'file: '+this.file.length);
 };

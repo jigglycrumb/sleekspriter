@@ -20,7 +20,7 @@ Editor.prototype.palettes.init = function() {
 
 Editor.prototype.palettes.buildAuto = function() {
   var palette = [];
-  file.pixels.forEach(function(px) {
+  editor.pixels.file.forEach(function(px) {
     palette.push(px.toHex());
   });
   this.available.sprite.colors = _.unique(palette, false);

@@ -15,20 +15,33 @@ Point.prototype.constructor = Point;
 /**
  * Moves a point by a given distance
  * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original point
  * @return {Object} the updated Point
  */
-Point.prototype.translate = function(distance) {
-  this.x += distance.x;
-  this.y += distance.y;
+Point.prototype.translate = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(simulate === true) {
+    return new Point(targetX, targetY);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
   return this;
 }
 
 /**
  * Moves a point by a given distance, wrapping around if the canvas end is reached
  * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original point
  * @return {Object} the updated Point
  */
-Point.prototype.wrap = function(distance) {
+Point.prototype.wrap = function(distance, simulate) {
+  simulate = simulate || false;
+
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
 
@@ -36,6 +49,10 @@ Point.prototype.wrap = function(distance) {
   else if(targetX < 1) targetX += editor.file.size.width;
   if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
   else if(targetY < 1) targetY += editor.file.size.height;
+
+  if(simulate === true) {
+    return new Point(targetX, targetY);
+  }
 
   this.x = targetX;
   this.y = targetY;

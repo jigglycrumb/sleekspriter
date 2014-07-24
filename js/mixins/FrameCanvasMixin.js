@@ -77,7 +77,7 @@ var FrameCanvasMixin = {
     var canvas = this.getDOMNode();
     canvas.width = canvas.width;
 
-    file.pixels.forEach(function(px) {
+    editor.pixels.file.forEach(function(px) {
       if(px.frame === frame) {
         var pixelsAbove = this.getPixelsAbove(px.x, px.y, px.z);
         if(pixelsAbove.length === 0) Pixel.paint(canvas, px.x, px.y, px.toHex());

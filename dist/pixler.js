@@ -24844,20 +24844,33 @@ Point.prototype.constructor = Point;
 /**
  * Moves a point by a given distance
  * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original point
  * @return {Object} the updated Point
  */
-Point.prototype.translate = function(distance) {
-  this.x += distance.x;
-  this.y += distance.y;
+Point.prototype.translate = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(simulate === true) {
+    return new Point(targetX, targetY);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
   return this;
 }
 
 /**
  * Moves a point by a given distance, wrapping around if the canvas end is reached
  * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original point
  * @return {Object} the updated Point
  */
-Point.prototype.wrap = function(distance) {
+Point.prototype.wrap = function(distance, simulate) {
+  simulate = simulate || false;
+
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
 
@@ -24865,6 +24878,10 @@ Point.prototype.wrap = function(distance) {
   else if(targetX < 1) targetX += editor.file.size.width;
   if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
   else if(targetY < 1) targetY += editor.file.size.height;
+
+  if(simulate === true) {
+    return new Point(targetX, targetY);
+  }
 
   this.x = targetX;
   this.y = targetY;
@@ -24942,6 +24959,54 @@ Pixel.prototype.toHex = function() {
  */
 Pixel.prototype.uid = function() {
   return btoa(this.layer+':'+this.x+':'+this.y);
+};
+
+
+/**
+ * Moves a pixel by a given distance
+ * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original pixel
+ * @return {Object} the updated Pixel
+ */
+Pixel.prototype.translate = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(simulate === true) {
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
+  return this;
+}
+
+/**
+ * Moves a pixel by a given distance, wrapping around if the canvas end is reached
+ * @param {Object} distance - Point with distance coordinates
+ * @param {Bool} simulate - Do not modify the original pixel
+ * @return {Object} the updated Pixel
+ */
+Pixel.prototype.wrap = function(distance, simulate) {
+  simulate = simulate || false;
+
+  var targetX = this.x + distance.x,
+      targetY = this.y + distance.y;
+
+  if(targetX > editor.file.size.width) targetX -= editor.file.size.width;
+  else if(targetX < 1) targetX += editor.file.size.width;
+  if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
+  else if(targetY < 1) targetY += editor.file.size.height;
+
+  if(simulate === true) {
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+  }
+
+  this.x = targetX;
+  this.y = targetY;
+  return this;
 };
 
 /**
@@ -25351,22 +25416,6 @@ var Editor = function() {
     return arr;
   };
 
-  /*
-  this.saveChanges = function() {
-    console.log('saving changes to file');
-
-    // grab all old pixels of current frame
-    var frameLayers = this.layers.getIds();
-    var pixels = this.pixels.frame.slice(0); // slice clones the array
-    file.pixels.forEach(function(pixel) {
-      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
-    });
-
-    file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
-  };
-  */
-
-
   // init subclasses
   this.file.init();
   this.frame.init();
@@ -25576,11 +25625,11 @@ Editor.prototype.pixels.init = function() {
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      //console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.layer.push(newPixel);
     }
     else {
-      //console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < self.layer.length; i++) {
         var p = self.layer[i];
@@ -25609,7 +25658,7 @@ Editor.prototype.pixels.init = function() {
  * @param  {Pixel[]} to   The destination pixels
  */
 Editor.prototype.pixels.merge = function(from, to) {
-  console.log('merging pixels from '+from+' to '+to);
+  // console.log('merging pixels from '+from+' to '+to);
   this[from].forEach(function(px) {
     this[to].push(px);
   }, this);
@@ -25621,10 +25670,19 @@ Editor.prototype.pixels.merge = function(from, to) {
  */
 Editor.prototype.pixels.save = function() {
   console.log('saving pixels...');
+  this.log();
   this.merge('layer', 'frame');
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
+  this.log();
+};
+
+Editor.prototype.pixels.log = function() {
+  console.log('selection: '+this.selection.length+' '
+              +'layer: '+this.layer.length+' '
+              +'frame: '+this.frame.length+' '
+              +'file: '+this.file.length);
 };
 Editor.prototype.palettes = {};
 Editor.prototype.palettes.selected = 'sprite';
@@ -25648,7 +25706,7 @@ Editor.prototype.palettes.init = function() {
 
 Editor.prototype.palettes.buildAuto = function() {
   var palette = [];
-  file.pixels.forEach(function(px) {
+  editor.pixels.file.forEach(function(px) {
     palette.push(px.toHex());
   });
   this.available.sprite.colors = _.unique(palette, false);
@@ -26397,7 +26455,7 @@ var FrameCanvasMixin = {
     var canvas = this.getDOMNode();
     canvas.width = canvas.width;
 
-    file.pixels.forEach(function(px) {
+    editor.pixels.file.forEach(function(px) {
       if(px.frame === frame) {
         var pixelsAbove = this.getPixelsAbove(px.x, px.y, px.z);
         if(pixelsAbove.length === 0) Pixel.paint(canvas, px.x, px.y, px.toHex());
@@ -27527,7 +27585,10 @@ var StageBox = React.createClass({displayName: 'StageBox',
   useMoveTool: function() {
 
     var distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected);
+        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
+        canvasPixel;
+
+    console.log('useMoveTool', distance, editor.pixels.layer.length);
 
     canvas.width = canvas.width;
 
@@ -27536,18 +27597,18 @@ var StageBox = React.createClass({displayName: 'StageBox',
       this.updateRectangularSelection(distance);
 
       editor.pixels.selection.forEach(function(px) {
-        px.wrap(distance);
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        canvasPixel = px.wrap(distance, true);
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
 
       editor.pixels.layer.forEach(function(px) {
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
     }
     else {
       editor.pixels.layer.forEach(function(px) {
-        px.wrap(distance);
-        Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
+        canvasPixel = px.wrap(distance, true);
+        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
       });
     }
   },
@@ -27942,7 +28003,7 @@ function redrawFromFile() {
   var frameLayers = editor.layers.getIds();
 
   // draw all pixels that belong to frame
-  file.pixels.forEach(function(px) {
+  editor.pixels.file.forEach(function(px) {
     if(inArray(frameLayers, px.layer)) {
       Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
     }
@@ -28005,12 +28066,12 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        //{ channel: "pixler" },
-        //{ data: { foo: /bar/ } },
-        { topic: "stage.pixel.fill" },
-        //{ topic: "stage.pixel.clear" },
-        //{ topic: "app.frame.select" },
-        //{ topic: "app.layer.select" },
+        // { channel: "pixler" },
+        // { data: { foo: /bar/ } },
+        // { topic: "stage.pixel.fill" },
+        // { topic: "stage.pixel.clear" },
+        // { topic: "app.frame.select" },
+        // { topic: "app.layer.select" },
     ],
     active: false,
 });

@@ -53,22 +53,6 @@ var Editor = function() {
     return arr;
   };
 
-  /*
-  this.saveChanges = function() {
-    console.log('saving changes to file');
-
-    // grab all old pixels of current frame
-    var frameLayers = this.layers.getIds();
-    var pixels = this.pixels.frame.slice(0); // slice clones the array
-    file.pixels.forEach(function(pixel) {
-      if(!inArray(frameLayers, pixel.layer)) pixels.push(pixel);
-    });
-
-    file.pixels = _.unique(pixels, function(p) { return p.layer+','+p.x+','+p.y });
-  };
-  */
-
-
   // init subclasses
   this.file.init();
   this.frame.init();

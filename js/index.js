@@ -23,7 +23,7 @@ function redrawFromFile() {
   var frameLayers = editor.layers.getIds();
 
   // draw all pixels that belong to frame
-  file.pixels.forEach(function(px) {
+  editor.pixels.file.forEach(function(px) {
     if(inArray(frameLayers, px.layer)) {
       Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
     }
@@ -86,12 +86,12 @@ var channel = postal.channel('pixler');
 var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     name: "console",
     filters: [
-        //{ channel: "pixler" },
-        //{ data: { foo: /bar/ } },
-        { topic: "stage.pixel.fill" },
-        //{ topic: "stage.pixel.clear" },
-        //{ topic: "app.frame.select" },
-        //{ topic: "app.layer.select" },
+        // { channel: "pixler" },
+        // { data: { foo: /bar/ } },
+        // { topic: "stage.pixel.fill" },
+        // { topic: "stage.pixel.clear" },
+        // { topic: "app.frame.select" },
+        // { topic: "app.layer.select" },
     ],
     active: false,
 });
