@@ -76,13 +76,10 @@ module.exports = function(grunt) {
           'js/lib/color.js',
           'js/lib/tween.js',
 
-
           'js/strict.js',
           'js/classes/Point.js',
           'js/classes/Pixel.js',
           'js/classes/File.js',
-          'js/classes/Stage.js',
-
 
           'js/classes/Editor.js',
           'js/classes/Editor.File.js',

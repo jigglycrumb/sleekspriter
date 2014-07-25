@@ -25296,71 +25296,6 @@ File.load = function(file, callback) {
   var url = 'mock/loadfile.php?file=' + file;
   $.getJSON(url, callback);
 };
-var Stage = function() {
-
-  return {
-
-    frame: {
-      refresh: function(frame) {
-
-        console.log('refreshing frame '+frame);
-
-        var frame = frame || editor.frame.selected;
-
-        this.clear();
-
-        editor.pixels.frame.forEach(function(px) {
-          var color = new Color(px.toRgba());
-          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
-        });
-
-        if(editor.pixels.selection.length > 0) {
-          var framelayers = editor.layers.getIds();
-
-          editor.pixels.selection.forEach(function(px) {
-            if(inArray(framelayers, px.layer)) Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
-          });
-        }
-      },
-      clear: function() {
-        editor.layers.frame.forEach(function(layer) {
-          var c = document.getElementById('StageBoxLayer-'+layer.id);
-          c.width = c.width;
-        });
-      }
-    },
-
-
-
-
-    layer: {
-      refresh: function() {
-
-        console.log('refreshing layer '+editor.layers.selected );
-
-        var layerPixels = editor.pixels.layer,
-            selectionPixels = _.where(editor.pixels.selection, {layer: editor.layers.selected}),
-            frame = editor.frame.selected;
-
-        this.clear();
-
-        layerPixels.forEach(function(px) {
-          var color = new Color(px.toRgba());
-          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
-        });
-
-        selectionPixels.forEach(function(px) {
-          var color = new Color(px.toRgba());
-          Pixel.add(frame, px.layer, px.x, px.y, px.z, px.toHex());
-        });
-      },
-      clear: function() {
-        var c = document.getElementById('StageBoxLayer-'+editor.layers.selected);
-        c.width = c.width;
-      }
-    },
-  }
-};
 var Editor = function() {
 
   var self = this;
@@ -27583,12 +27518,9 @@ var StageBox = React.createClass({displayName: 'StageBox',
     }
   },
   useMoveTool: function() {
-
     var distance = this.getMouseDownDistance(),
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
         canvasPixel;
-
-    console.log('useMoveTool', distance, editor.pixels.layer.length);
 
     canvas.width = canvas.width;
 
@@ -28003,10 +27935,8 @@ function redrawFromFile() {
   var frameLayers = editor.layers.getIds();
 
   // draw all pixels that belong to frame
-  editor.pixels.file.forEach(function(px) {
-    if(inArray(frameLayers, px.layer)) {
-      Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
-    }
+  editor.pixels.frame.forEach(function(px) {
+    Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
   });
 };
 
@@ -28078,7 +28008,6 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
 
 
 var file = new File();
-var stage = new Stage();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();

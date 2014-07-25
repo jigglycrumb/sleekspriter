@@ -23,10 +23,8 @@ function redrawFromFile() {
   var frameLayers = editor.layers.getIds();
 
   // draw all pixels that belong to frame
-  editor.pixels.file.forEach(function(px) {
-    if(inArray(frameLayers, px.layer)) {
-      Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
-    }
+  editor.pixels.frame.forEach(function(px) {
+    Pixel.add(px.frame, px.layer, px.x, px.y, px.z, px.toHex());
   });
 };
 
@@ -98,7 +96,6 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
 
 
 var file = new File();
-var stage = new Stage();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
