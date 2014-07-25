@@ -59,7 +59,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, 1);
+            var color = changeColorLightness(editor.color.brush, 1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -93,7 +93,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(1);
+            var color = editor.color.brush.rotate(1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -126,7 +126,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, -1);
+            var color = changeColorLightness(editor.color.brush, -1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -160,7 +160,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(-1);
+            var color = editor.color.brush.rotate(-1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -200,7 +200,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, 10);
+            var color = changeColorLightness(editor.color.brush, 10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -224,7 +224,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(10);
+            var color = editor.color.brush.rotate(10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -248,7 +248,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, -10);
+            var color = changeColorLightness(editor.color.brush, -10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -272,7 +272,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(-10);
+            var color = editor.color.brush.rotate(-10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':

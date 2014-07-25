@@ -24945,7 +24945,7 @@ Pixel.prototype.toRgb = function() {
  */
 Pixel.prototype.toHex = function() {
   var pad = function(s) {
-    return s.length == 1 ? '0'+s : s;
+    return (s.length == 1 ? '0'+s : s).toUpperCase();
   };
 
   return '#'+pad(this.r.toString(16))
@@ -25300,12 +25300,7 @@ var Editor = function() {
 
   var self = this;
 
-  this.pixel = new Point(0, 0);
-  this.pixelColor = Color('#000000');
-  this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
-  this.color = Color('#000000');
-
   this.offset = {
     top: 40,
     right: 205,
@@ -25361,17 +25356,11 @@ var Editor = function() {
   this.palettes.init();
   this.zoom.init();
   this.grid.init();
+  this.cursor.init();
+  this.color.init();
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;
-  });
-
-  channel.subscribe('app.color.select', function(data, envelope) {
-    self.color = new Color(data.color);
-  });
-
-  channel.subscribe('app.pixel.select', function(data, envelope) {
-    self.pixel = data.point;
   });
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
@@ -25479,7 +25468,7 @@ Editor.prototype.layers.selectTop = function() {
   channel.publish('app.layer.select', {layer: topLayer.id});
 };
 Editor.prototype.pixels = {};
-Editor.prototype.pixels.selected = null;
+Editor.prototype.pixels.selected = null; // ?
 Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
@@ -25560,11 +25549,11 @@ Editor.prototype.pixels.init = function() {
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+      console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.layer.push(newPixel);
     }
     else {
-      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+      console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < self.layer.length; i++) {
         var p = self.layer[i];
@@ -25878,6 +25867,28 @@ Editor.prototype.grid.init = function() {
     self.enabled = data.grid;
   });
 };
+Editor.prototype.cursor = {};
+Editor.prototype.cursor.position = new Point(1,1);
+
+Editor.prototype.cursor.init = function() {
+  var self = this;
+
+  channel.subscribe('app.cursor.set', function(data, envelope) {
+    self.position = data.position;
+  });
+};
+Editor.prototype.color = {};
+Editor.prototype.color.brush = new Color('#000000');
+Editor.prototype.color.layer = new Color('#000000');
+Editor.prototype.color.frame = new Color('#000000');
+
+Editor.prototype.color.init = function() {
+  var self = this;
+
+  channel.subscribe('app.color.select', function(data, envelope) {
+    self.brush = new Color(data.color);
+  });
+};
 var Hotkeys = function(editor) {
 
   this.actions = {
@@ -25939,7 +25950,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, 1);
+            var color = changeColorLightness(editor.color.brush, 1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -25973,7 +25984,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(1);
+            var color = editor.color.brush.rotate(1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26006,7 +26017,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, -1);
+            var color = changeColorLightness(editor.color.brush, -1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26040,7 +26051,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(-1);
+            var color = editor.color.brush.rotate(-1);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26080,7 +26091,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, 10);
+            var color = changeColorLightness(editor.color.brush, 10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26104,7 +26115,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(10);
+            var color = editor.color.brush.rotate(10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26128,7 +26139,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color, -10);
+            var color = changeColorLightness(editor.color.brush, -10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26152,7 +26163,7 @@ var Hotkeys = function(editor) {
         switch(editor.tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.rotate(-10);
+            var color = editor.color.brush.rotate(-10);
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
@@ -26215,7 +26226,7 @@ Workspace.prototype.update = function() {
   this.data.frame = editor.frame.selected;
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
-  this.data.color = editor.color.hexString();
+  this.data.color = editor.color.brush.hexString();
   this.data.grid = editor.grid.enabled;
   this.data.zoom = editor.zoom.current;
   this.data.selection = {
@@ -26248,7 +26259,7 @@ Workspace.prototype.setup = function() {
   editor.frame.selected = this.data.frame;
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
-  editor.color = new Color(this.data.color);
+  editor.color.brush = new Color(this.data.color);
   editor.grid.enabled = this.data.grid;
   editor.zoom.current = this.data.zoom;
   editor.selection.bounds = restoreSelectionBounds.call(this);
@@ -26509,7 +26520,7 @@ var App = React.createClass({displayName: 'App',
         'app.layer.select': this.updateProps,
         'app.tool.select': this.updateProps,
         'app.color.select': this.updateProps,
-        'app.pixel.select': this.updateProps,
+        'app.cursor.set': this.updateProps,
         'app.palette.select': this.updateProps,
         'app.brightnesstool.mode.select': this.updateProps,
         'app.brightnesstool.intensity.select': this.updateProps,
@@ -26635,10 +26646,11 @@ var BrightnessTool = React.createClass({displayName: 'BrightnessTool',
 /** @jsx React.DOM */
 var BrushTool = React.createClass({displayName: 'BrushTool',
   render: function() {
+    var hex = editor.color.brush.hexString();
     return (
       React.DOM.div( {id:"Brush-Tool", className:"ToolComponent"}, 
         React.DOM.i( {className:"icon flaticon-small23"}),
-        React.DOM.input( {type:"color", id:"Brush-Colorpicker", className:"ColorSwatch", value:editor.color.hexString(), onChange:this.dispatchColorSelected, title:editor.color.hexString()} ),
+        React.DOM.input( {type:"color", id:"Brush-Colorpicker", className:"ColorSwatch", value:hex, onChange:this.dispatchColorSelected, title:hex} ),
         React.DOM.span( {className:"spacer"}),
         Palette( {editor:this.props.editor} )
       )
@@ -26686,13 +26698,14 @@ var EraserTool = React.createClass({displayName: 'EraserTool',
 /** @jsx React.DOM */
 var EyedropperTool = React.createClass({displayName: 'EyedropperTool',
   render: function() {
+    var color = this.props.editor.color.frame;
     return (
       React.DOM.div( {id:"Eyedropper-Tool", className:"ToolComponent"}, 
         React.DOM.i( {className:"icon flaticon-eyedropper2"}),
-        React.DOM.div( {id:"EyedropperSwatch", className:"colorswatch", style:{background: this.props.editor.pixelColor.rgbaString()}}),
+        React.DOM.div( {id:"EyedropperSwatch", className:"colorswatch", style:{background: color.rgbaString()}}),
         React.DOM.ul(null, 
-          React.DOM.li(null, "Hex: ", this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.hexString()),
-          React.DOM.li(null, "RGB: ", this.props.editor.pixelColor.alpha() == 0 ? '': this.props.editor.pixelColor.red()+', '+this.props.editor.pixelColor.green()+', '+this.props.editor.pixelColor.blue())
+          React.DOM.li(null, "Hex: ", color.alpha() == 0 ? '': color.hexString()),
+          React.DOM.li(null, "RGB: ", color.alpha() == 0 ? '': color.red()+', '+color.green()+', '+color.blue())
         ),
         React.DOM.span( {className:"spacer"}),
         React.DOM.span( {className:"hint"}, "Click any non-transparent pixel to pick its color.")
@@ -26927,25 +26940,26 @@ var OffscreenFrameCanvas = React.createClass({displayName: 'OffscreenFrameCanvas
     );
   },
   componentDidMount: function() {
-    this.subscriptions.push(channel.subscribe('app.pixel.select', this.getPixelColor));
+    this.subscriptions.push(channel.subscribe('app.cursor.set', this.getPixelColor));
   },
   getPixelColor: function(data) {
     if(this.props.id == this.props.selectedframe) {
       var ctx = this.getDOMNode().getContext('2d'),
-          px = ctx.getImageData(data.point.x-1, data.point.y-1, 1, 1).data,
-          color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+          px = ctx.getImageData(data.position.x-1, data.position.y-1, 1, 1).data,
+          color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-      editor.pixelColor = color;
+      editor.color.frame = color;
     }
   }
 });
 /** @jsx React.DOM */
 var PaintBucketTool = React.createClass({displayName: 'PaintBucketTool',
   render: function() {
+    var hex = editor.color.brush.hexString();
     return (
       React.DOM.div( {id:"PaintBucket-Tool", className:"ToolComponent"}, 
         React.DOM.i( {className:"icon flaticon-paint2"}),
-        React.DOM.input( {type:"color", id:"PaintBucket-Colorpicker", className:"ColorSwatch", value:editor.color.hexString(), onChange:this.dispatchColorSelected, title:editor.color.hexString()} ),
+        React.DOM.input( {type:"color", id:"PaintBucket-Colorpicker", className:"ColorSwatch", value:hex, onChange:this.dispatchColorSelected, title:hex} ),
         React.DOM.span( {className:"spacer"}),
         Palette( {editor:this.props.editor} )
       )
@@ -27342,7 +27356,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10) {
-      channel.publish('app.pixel.select', {point: point});
+      channel.publish('app.cursor.set', {position: point});
     }
 
     if(this.state.mousedown === true) {
@@ -27413,9 +27427,9 @@ var StageBox = React.createClass({displayName: 'StageBox',
   getLayerPixelColor: function(event) {
     var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
-        color = Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+        color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-    editor.layerPixelColor = color;
+    editor.color.layer = color;
   },
   getWorldCoordinates: function(event) {
     return new Point(
@@ -27425,8 +27439,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
   },
   getMouseDownDistance: function() {
     return new Point(
-      editor.pixel.x - this.state.mousedownPoint.x,
-      editor.pixel.y - this.state.mousedownPoint.y
+      editor.cursor.position.x - this.state.mousedownPoint.x,
+      editor.cursor.position.y - this.state.mousedownPoint.y
     );
   },
 
@@ -27439,13 +27453,13 @@ var StageBox = React.createClass({displayName: 'StageBox',
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
-                      file.getLayerById(editor.layers.selected).z, editor.color.hexString());
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+                      file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.pixel)) {
-          Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
-                        file.getLayerById(editor.layers.selected).z, editor.color.hexString());
+          Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+                        file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
       }
     }
@@ -27456,8 +27470,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
         channel.publish('stage.pixel.clear', {
           frame: editor.frame.selected,
           layer: editor.layers.selected,
-          x: editor.pixel.x,
-          y: editor.pixel.y,
+          x: editor.cursor.position.x,
+          y: editor.cursor.position.y,
           z: file.getLayerById(editor.layers.selected).z,
         });
       }
@@ -27466,8 +27480,8 @@ var StageBox = React.createClass({displayName: 'StageBox',
           channel.publish('stage.pixel.clear', {
             frame: editor.frame.selected,
             layer: editor.layers.selected,
-            x: editor.pixel.x,
-            y: editor.pixel.y,
+            x: editor.cursor.position.x,
+            y: editor.cursor.position.y,
             z: file.getLayerById(editor.layers.selected).z,
           });
         }
@@ -27475,9 +27489,9 @@ var StageBox = React.createClass({displayName: 'StageBox',
     }
   },
   useEyedropperTool: function() {
-    if(editor.pixelColor.alpha() == 0) return;
+    if(editor.color.frame.alpha() == 0) return; // skip transparent pixels
     channel.publish('app.tool.select', {tool: 'BrushTool'});
-    channel.publish('app.color.select', {color: editor.pixelColor.hexString()});
+    channel.publish('app.color.select', {color: editor.color.frame.hexString()});
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
@@ -27491,20 +27505,20 @@ var StageBox = React.createClass({displayName: 'StageBox',
     if(isLayerVisible()) {
 
       function lighten() {
-        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, editor.brightnessTool.intensity);
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+        if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.color.layer, editor.brightnessTool.intensity);
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
-        if(editor.layerPixelColor.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.layerPixelColor, -editor.brightnessTool.intensity);
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.pixel.x, editor.pixel.y,
+        if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(editor.color.layer, -editor.brightnessTool.intensity);
+        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
-      var px = _.findWhere(editor.pixels.layer, {x: editor.pixel.x, y: editor.pixel.y }),
+      var px = _.findWhere(editor.pixels.layer, {x: editor.cursor.position.x, y: editor.cursor.position.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -27588,8 +27602,8 @@ var StageBoxCursorCanvas = React.createClass({displayName: 'StageBoxCursorCanvas
   },
   drawPixelCursor: function() {
     var zoom = this.props.editor.zoom.current,
-        x = this.props.editor.pixel.x,
-        y = this.props.editor.pixel.y;
+        x = this.props.editor.cursor.position.x,
+        y = this.props.editor.cursor.position.y;
 
     if(x == 0 && y == 0) return;
 
@@ -27798,10 +27812,10 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
 
     return (
       React.DOM.div( {id:"StatusBar"}, 
-        React.DOM.span(null, "X: ", this.props.editor.pixel.x),
-        React.DOM.span(null, "Y: ", this.props.editor.pixel.y),
-        React.DOM.div( {id:"StatusBarColor", style:{background: this.props.editor.pixelColor.rgbaString()}}),
-        React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()),
+        React.DOM.span(null, "X: ", this.props.editor.cursor.position.x),
+        React.DOM.span(null, "Y: ", this.props.editor.cursor.position.y),
+        React.DOM.div( {id:"StatusBarColor", style:{background: this.props.editor.color.frame.rgbaString()}}),
+        React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.color.frame.alpha() == 0 ? 'transparent': this.props.editor.color.frame.hexString()),
         React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length + this.props.editor.pixels.selection.length, " pixels"),
         " ",
         React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
@@ -28004,6 +28018,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // { data: { foo: /bar/ } },
         // { topic: "stage.pixel.fill" },
         // { topic: "stage.pixel.clear" },
+        // { topic: "app.cursor.set" },
         // { topic: "app.frame.select" },
         // { topic: "app.layer.select" },
     ],

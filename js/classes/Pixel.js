@@ -56,7 +56,7 @@ Pixel.prototype.toRgb = function() {
  */
 Pixel.prototype.toHex = function() {
   var pad = function(s) {
-    return s.length == 1 ? '0'+s : s;
+    return (s.length == 1 ? '0'+s : s).toUpperCase();
   };
 
   return '#'+pad(this.r.toString(16))

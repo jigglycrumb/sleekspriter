@@ -2,12 +2,7 @@ var Editor = function() {
 
   var self = this;
 
-  this.pixel = new Point(0, 0);
-  this.pixelColor = Color('#000000');
-  this.layerPixelColor = Color('#000000');
   this.tool = 'BrushTool';
-  this.color = Color('#000000');
-
   this.offset = {
     top: 40,
     right: 205,
@@ -63,17 +58,11 @@ var Editor = function() {
   this.palettes.init();
   this.zoom.init();
   this.grid.init();
+  this.cursor.init();
+  this.color.init();
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;
-  });
-
-  channel.subscribe('app.color.select', function(data, envelope) {
-    self.color = new Color(data.color);
-  });
-
-  channel.subscribe('app.pixel.select', function(data, envelope) {
-    self.pixel = data.point;
   });
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {

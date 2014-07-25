@@ -10,10 +10,10 @@ var StatusBar = React.createClass({
 
     return (
       <div id="StatusBar">
-        <span>X: {this.props.editor.pixel.x}</span>
-        <span>Y: {this.props.editor.pixel.y}</span>
-        <div id="StatusBarColor" style={{background: this.props.editor.pixelColor.rgbaString()}}></div>
-        <span id="StatusBarColorString">{this.props.editor.pixelColor.alpha() == 0 ? 'transparent': this.props.editor.pixelColor.hexString()}</span>
+        <span>X: {this.props.editor.cursor.position.x}</span>
+        <span>Y: {this.props.editor.cursor.position.y}</span>
+        <div id="StatusBarColor" style={{background: this.props.editor.color.frame.rgbaString()}}></div>
+        <span id="StatusBarColorString">{this.props.editor.color.frame.alpha() == 0 ? 'transparent': this.props.editor.color.frame.hexString()}</span>
         <span>Frame {this.props.editor.frame.selected}, {this.props.editor.pixels.frame.length + this.props.editor.pixels.selection.length} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom.current}</span>

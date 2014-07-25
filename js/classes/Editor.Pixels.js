@@ -1,5 +1,5 @@
 Editor.prototype.pixels = {};
-Editor.prototype.pixels.selected = null;
+Editor.prototype.pixels.selected = null; // ?
 Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
@@ -80,11 +80,11 @@ Editor.prototype.pixels.init = function() {
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.layer, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+      console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.layer.push(newPixel);
     }
     else {
-      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+      console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < self.layer.length; i++) {
         var p = self.layer[i];
