@@ -24,12 +24,11 @@ var FrameCanvasMixin = {
     }
   },
   componentDidMount: function() {
-    this.paintFrame(this.props.id);
+    this.paintFrame();
   },
   componentDidUpdate: function() {
     if(this.state.needsRefresh) {
-      var frame = this.state.data.frame,
-          x = this.state.data.x,
+      var x = this.state.data.x,
           y = this.state.data.y,
           z = this.state.data.z,
           canvas = this.getDOMNode();
@@ -37,12 +36,12 @@ var FrameCanvasMixin = {
       switch(this.state.topic) {
         case 'stage.pixel.fill':
           var pixelsAbove = this.getPixelsAbove(x, y, z);
-          if(pixelsAbove.length === 0) Pixel.paint(canvas, x, y, this.state.data.color);
+          if(pixelsAbove === false) Pixel.paint(canvas, x, y, this.state.data.color);
           break;
 
         case 'stage.pixel.clear':
           var pixelsAbove = this.getPixelsAbove(x, y, z);
-          if(pixelsAbove.length === 0) {
+          if(pixelsAbove === false) {
             var pixelBelow = this.getPixelBelow(x, y, z);
             if(pixelBelow === false) Pixel.clear(canvas, x, y);
             else Pixel.paint(canvas, x, y, pixelBelow.toHex());
@@ -50,7 +49,7 @@ var FrameCanvasMixin = {
           break;
 
         case 'app.frame.select':
-          this.paintFrame(frame);
+          this.paintFrame();
           break;
       }
 
@@ -58,14 +57,17 @@ var FrameCanvasMixin = {
     }
   },
   getPixelsAbove: function(x, y, z) {
-    return _.filter(editor.pixels.frame, function(px) {
-      return px.x == x && px.y == y && px.z > z;
-    });
+    var above = editor.pixels.frame.filter(function(px) {
+      return px.frame == this.props.id && px.x == x && px.y == y && px.z > z;
+    }, this);
+
+    if(above.length == 0) return false;
+    return above;
   },
   getPixelBelow: function(x, y, z) {
-    var below = _.filter(editor.pixels.frame, function(px) {
-      return px.x == x && px.y == y && px.z < z;
-    });
+    var below = editor.pixels.frame.filter(function(px) {
+      return px.frame == this.props.id && px.x == x && px.y == y && px.z < z;
+    }, this);
 
     if(below.length == 0) return false;
 
@@ -73,14 +75,16 @@ var FrameCanvasMixin = {
       return px.z;
     });
   },
-  paintFrame: function(frame) {
-    var canvas = this.getDOMNode();
+  paintFrame: function() {
+    var canvas = this.getDOMNode(),
+        pixels = editor.frame.selected == this.props.id ? editor.pixels.frame : editor.pixels.file;
+
     canvas.width = canvas.width;
 
-    editor.pixels.file.forEach(function(px) {
-      if(px.frame === frame) {
+    pixels.forEach(function(px) {
+      if(px.frame === this.props.id) {
         var pixelsAbove = this.getPixelsAbove(px.x, px.y, px.z);
-        if(pixelsAbove.length === 0) Pixel.paint(canvas, px.x, px.y, px.toHex());
+        if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
       }
     }, this);
   },
