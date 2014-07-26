@@ -1,5 +1,13 @@
 // Debug helpers
 
+function resetWorkspace() {
+  console.log('resetting workspace');
+  localStorage.removeItem('workspace');
+  editor.file.name = 'coin.pixels';
+  workspace.save();
+  document.location.reload();
+};
+
 function showOffScreen() {
   document.querySelector('.area.offscreen').style.display = 'block';
 };
@@ -91,6 +99,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // { topic: "app.cursor.set" },
         // { topic: "app.frame.select" },
         // { topic: "app.layer.select" },
+        {topic: 'canvas.update'}
     ],
     active: false,
 });
@@ -115,9 +124,6 @@ function fileLoaded(json) {
 
   // init file
   file.fromJSON(json);
-
-  // init auto palette
-  editor.palettes.buildAuto();
 
   // select last selected frame
   channel.publish('app.frame.select', {frame: editor.frame.selected});

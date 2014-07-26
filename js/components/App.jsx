@@ -15,6 +15,7 @@ var App = React.createClass({
 
         'stage.grid.toggle': this.updateProps,
         'stage.zoom.select': this.updateProps,
+        //'stage.tool.move': this.updateProps,
 
         'file.layer.opacity.select': this.updateProps,
         'file.layer.visibility.toggle': this.updateProps,
@@ -69,14 +70,6 @@ var App = React.createClass({
       </div>
     );
   },
-  /*
-  componentDidMount: function() {
-    channel.subscribe('app.box.toggle', this.updateProps);
-    channel.subscribe('file.layer.name.select', this.updateProps);
-    channel.subscribe('stage.tool.move', this.updateProps);
-    //channel.subscribe('app.layer.add', this.updateProps);
-  },
-  */
   updateProps: function() {
     this.setProps({editor: editor, workspace: workspace});
   }

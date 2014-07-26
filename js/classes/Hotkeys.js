@@ -75,7 +75,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -108,7 +107,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -142,7 +140,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -175,7 +172,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -212,7 +208,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -236,7 +231,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -260,7 +254,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -284,7 +277,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }

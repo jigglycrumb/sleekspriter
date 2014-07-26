@@ -13,6 +13,7 @@ var LayerCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
+        'canvas.update': this.checkRefresh,
       },
     };
   },
@@ -47,6 +48,10 @@ var LayerCanvasMixin = {
         case 'stage.zoom.select':
           this.paintLayer();
           break;
+
+        case 'canvas.update':
+          this.previewLayer();
+          break;
       }
 
       this.resetState();
@@ -62,6 +67,17 @@ var LayerCanvasMixin = {
         if(px.layer === layer) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }
+      }, this);
+    }
+  },
+  previewLayer: function() {
+    if(this.isMounted()) {
+      var canvas = this.getDOMNode(),
+          layer = this.props.id;
+      canvas.width = canvas.width;
+
+      editor.pixels.preview.forEach(function(px) {
+        Pixel.paint(canvas, px.x, px.y, px.toHex());
       }, this);
     }
   },

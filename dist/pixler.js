@@ -25469,6 +25469,7 @@ Editor.prototype.layers.selectTop = function() {
 };
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null; // ?
+Editor.prototype.pixels.preview = [];
 Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
@@ -25494,11 +25495,6 @@ Editor.prototype.pixels.init = function() {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
   };
-
-
-
-
-
 
   // message handlers
   channel.subscribe('file.load', function() {
@@ -25574,7 +25570,7 @@ Editor.prototype.pixels.init = function() {
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
   });
-};
+}; // Editor.prototype.pixels.init
 
 /**
  * Merges pixels from one array to another
@@ -25624,6 +25620,10 @@ Editor.prototype.palettes.init = function() {
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
+    self.buildAuto();
+  });
+
+  channel.subscribe('file.load', function(data, envelope) {
     self.buildAuto();
   });
 };
@@ -25966,7 +25966,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -25999,7 +25998,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -26033,7 +26031,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -26066,7 +26063,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -26103,7 +26099,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -26127,7 +26122,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -26151,7 +26145,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -26175,7 +26168,6 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
             else channel.publish('stage.tool.move', {distance: distance});
-            stage.layer.refresh();
             break;
         }
       }
@@ -26339,6 +26331,7 @@ var FrameCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
+        'canvas.update': this.checkRefresh,
       },
     };
   },
@@ -26428,6 +26421,7 @@ var LayerCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
+        'canvas.update': this.checkRefresh,
       },
     };
   },
@@ -26462,6 +26456,10 @@ var LayerCanvasMixin = {
         case 'stage.zoom.select':
           this.paintLayer();
           break;
+
+        case 'canvas.update':
+          this.previewLayer();
+          break;
       }
 
       this.resetState();
@@ -26477,6 +26475,17 @@ var LayerCanvasMixin = {
         if(px.layer === layer) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }
+      }, this);
+    }
+  },
+  previewLayer: function() {
+    if(this.isMounted()) {
+      var canvas = this.getDOMNode(),
+          layer = this.props.id;
+      canvas.width = canvas.width;
+
+      editor.pixels.preview.forEach(function(px) {
+        Pixel.paint(canvas, px.x, px.y, px.toHex());
       }, this);
     }
   },
@@ -26527,6 +26536,7 @@ var App = React.createClass({displayName: 'App',
 
         'stage.grid.toggle': this.updateProps,
         'stage.zoom.select': this.updateProps,
+        //'stage.tool.move': this.updateProps,
 
         'file.layer.opacity.select': this.updateProps,
         'file.layer.visibility.toggle': this.updateProps,
@@ -26581,14 +26591,6 @@ var App = React.createClass({displayName: 'App',
       )
     );
   },
-  /*
-  componentDidMount: function() {
-    channel.subscribe('app.box.toggle', this.updateProps);
-    channel.subscribe('file.layer.name.select', this.updateProps);
-    channel.subscribe('stage.tool.move', this.updateProps);
-    //channel.subscribe('app.layer.add', this.updateProps);
-  },
-  */
   updateProps: function() {
     this.setProps({editor: editor, workspace: workspace});
   }
@@ -27540,7 +27542,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
         canvasPixel;
 
-    canvas.width = canvas.width;
+    editor.pixels.preview = [];
 
     if(editor.selection.isActive) {
 
@@ -27548,19 +27550,24 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
       editor.pixels.selection.forEach(function(px) {
         canvasPixel = px.wrap(distance, true);
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(canvasPixel);
       });
 
       editor.pixels.layer.forEach(function(px) {
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(px);
       });
     }
     else {
       editor.pixels.layer.forEach(function(px) {
         canvasPixel = px.wrap(distance, true);
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(canvasPixel);
       });
     }
+
+    channel.publish('canvas.update', {
+      frame: editor.frame.selected,
+      layer: editor.layers.selected,
+    });
   },
 
   startRectangularSelection: function(point) {
@@ -27930,6 +27937,14 @@ var ZoomTool = React.createClass({displayName: 'ZoomTool',
 });
 // Debug helpers
 
+function resetWorkspace() {
+  console.log('resetting workspace');
+  localStorage.removeItem('workspace');
+  editor.file.name = 'coin.pixels';
+  workspace.save();
+  document.location.reload();
+};
+
 function showOffScreen() {
   document.querySelector('.area.offscreen').style.display = 'block';
 };
@@ -28021,6 +28036,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // { topic: "app.cursor.set" },
         // { topic: "app.frame.select" },
         // { topic: "app.layer.select" },
+        {topic: 'canvas.update'}
     ],
     active: false,
 });
@@ -28045,9 +28061,6 @@ function fileLoaded(json) {
 
   // init file
   file.fromJSON(json);
-
-  // init auto palette
-  editor.palettes.buildAuto();
 
   // select last selected frame
   channel.publish('app.frame.select', {frame: editor.frame.selected});

@@ -15,6 +15,7 @@ var FrameCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
+        'canvas.update': this.checkRefresh,
       },
     };
   },

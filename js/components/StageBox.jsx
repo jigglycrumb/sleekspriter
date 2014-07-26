@@ -275,7 +275,7 @@ var StageBox = React.createClass({
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
         canvasPixel;
 
-    canvas.width = canvas.width;
+    editor.pixels.preview = [];
 
     if(editor.selection.isActive) {
 
@@ -283,19 +283,24 @@ var StageBox = React.createClass({
 
       editor.pixels.selection.forEach(function(px) {
         canvasPixel = px.wrap(distance, true);
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(canvasPixel);
       });
 
       editor.pixels.layer.forEach(function(px) {
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(px);
       });
     }
     else {
       editor.pixels.layer.forEach(function(px) {
         canvasPixel = px.wrap(distance, true);
-        Pixel.paint(canvas, canvasPixel.x, canvasPixel.y, canvasPixel.toHex());
+        editor.pixels.preview.push(canvasPixel);
       });
     }
+
+    channel.publish('canvas.update', {
+      frame: editor.frame.selected,
+      layer: editor.layers.selected,
+    });
   },
 
   startRectangularSelection: function(point) {

@@ -1,5 +1,6 @@
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null; // ?
+Editor.prototype.pixels.preview = [];
 Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
@@ -25,11 +26,6 @@ Editor.prototype.pixels.init = function() {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
   };
-
-
-
-
-
 
   // message handlers
   channel.subscribe('file.load', function() {
@@ -105,7 +101,7 @@ Editor.prototype.pixels.init = function() {
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
   });
-};
+}; // Editor.prototype.pixels.init
 
 /**
  * Merges pixels from one array to another

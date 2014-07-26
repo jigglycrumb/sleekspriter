@@ -16,6 +16,10 @@ Editor.prototype.palettes.init = function() {
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
     self.buildAuto();
   });
+
+  channel.subscribe('file.load', function(data, envelope) {
+    self.buildAuto();
+  });
 };
 
 Editor.prototype.palettes.buildAuto = function() {
