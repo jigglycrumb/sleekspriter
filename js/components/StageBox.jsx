@@ -90,7 +90,7 @@ var StageBox = React.createClass({
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance();
 
-    if(event.timeStamp > this.state.last + 10) {
+    if(event.timeStamp > this.state.last + 10 && point.x > 0 && point.y > 0) {
       channel.publish('app.cursor.set', {position: point});
     }
 
