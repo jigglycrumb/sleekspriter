@@ -13,7 +13,8 @@ var LayerCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
-        'canvas.update': this.checkRefresh,
+        'canvas.refresh': this.checkRefresh,
+        'canvas.preview': this.checkRefresh,
       },
     };
   },
@@ -46,10 +47,11 @@ var LayerCanvasMixin = {
           break;
 
         case 'stage.zoom.select':
+        case 'canvas.refresh':
           this.paintLayer();
           break;
 
-        case 'canvas.update':
+        case 'canvas.preview':
           this.previewLayer();
           break;
       }

@@ -25470,7 +25470,7 @@ Editor.prototype.layers.selectTop = function() {
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null; // ?
 Editor.prototype.pixels.preview = [];
-Editor.prototype.pixels.selection = [];
+// Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
 Editor.prototype.pixels.file = [];
@@ -25478,12 +25478,14 @@ Editor.prototype.pixels.file = [];
 Editor.prototype.pixels.init = function() {
   var self = this;
 
+  /*
   // merges selection to layer and clears selection
   function saveAndClearSelection() {
     console.log('saveAndClearSelection');
     self.merge('selection', 'layer');
     self.selection = [];
   };
+  */
 
   // check if a pixel is inside selection bounds
   function pixelHasBeenSelected(pixel) {
@@ -25509,6 +25511,7 @@ Editor.prototype.pixels.init = function() {
     self.layer = _.where(self.frame, {layer: data.layer});
   });
 
+  /*
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -25523,19 +25526,23 @@ Editor.prototype.pixels.init = function() {
       }
     }
   });
+  */
 
-  channel.subscribe('stage.tool.move', function(data, envelope) {
+  channel.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };
-    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
-    else self.layer.forEach(wrapPixel);
+    self.layer.forEach(wrapPixel);
+    channel.publish('canvas.refresh', {
+      frame: editor.frame.selected,
+      layer: editor.layers.selected,
+    });
   });
 
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    var translatePixel = function(px) { px.translate(data.distance) };
-    self.selection.forEach(translatePixel);
-  });
+  // channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+  //   var translatePixel = function(px) { px.translate(data.distance) };
+  //   self.selection.forEach(translatePixel);
+  // });
 
-  channel.subscribe('stage.selection.clear', saveAndClearSelection);
+  // channel.subscribe('stage.selection.clear', saveAndClearSelection);
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // add/replace pixel
@@ -25565,7 +25572,7 @@ Editor.prototype.pixels.init = function() {
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    deletePixel('selection', data.layer, data.x, data.y);
+    //deletePixel('selection', data.layer, data.x, data.y);
     deletePixel('layer', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
@@ -25599,7 +25606,7 @@ Editor.prototype.pixels.save = function() {
 };
 
 Editor.prototype.pixels.log = function() {
-  console.log('selection: '+this.selection.length+' '
+  console.log('preview: '+this.preview.length+' '
               +'layer: '+this.layer.length+' '
               +'frame: '+this.frame.length+' '
               +'file: '+this.file.length);
@@ -25965,7 +25972,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -25997,7 +26004,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -26030,7 +26037,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -26062,7 +26069,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -26098,7 +26105,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -26121,7 +26128,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -26144,7 +26151,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -26167,7 +26174,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -26331,7 +26338,8 @@ var FrameCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
-        'canvas.update': this.checkRefresh,
+        'canvas.refresh': this.checkRefresh,
+        'canvas.preview': this.checkRefresh,
       },
     };
   },
@@ -26366,10 +26374,11 @@ var FrameCanvasMixin = {
           break;
 
         case 'app.frame.select':
+        case 'canvas.refresh':
           this.paintFrame();
           break;
 
-        case 'canvas.update':
+        case 'canvas.preview':
           this.previewFrame();
           break;
       }
@@ -26440,7 +26449,8 @@ var LayerCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
-        'canvas.update': this.checkRefresh,
+        'canvas.refresh': this.checkRefresh,
+        'canvas.preview': this.checkRefresh,
       },
     };
   },
@@ -26473,10 +26483,11 @@ var LayerCanvasMixin = {
           break;
 
         case 'stage.zoom.select':
+        case 'canvas.refresh':
           this.paintLayer();
           break;
 
-        case 'canvas.update':
+        case 'canvas.preview':
           this.previewLayer();
           break;
       }
@@ -27437,7 +27448,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
           channel.publish('stage.selection.move.pixels', {distance: distance});
           channel.publish('stage.selection.move.bounds', {distance: distance});
         }
-        else channel.publish('stage.tool.move', {distance: distance});
+        else channel.publish('pixels.move', {distance: distance});
         break;
     }
 
@@ -27478,7 +27489,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
                       file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) {
+        if(editor.selection.contains(editor.cursor.position)) {
           Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
                         file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
@@ -27497,7 +27508,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
         });
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) {
+        if(editor.selection.contains(editor.cursor.position)) {
           channel.publish('stage.pixel.clear', {
             frame: editor.frame.selected,
             layer: editor.layers.selected,
@@ -27548,7 +27559,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
           else if(editor.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
-          if(editor.selection.contains(editor.pixel)) {
+          if(editor.selection.contains(editor.cursor.position)) {
             if(editor.brightnessTool.mode == 'lighten') lighten();
             else if(editor.brightnessTool.mode == 'darken') darken();
           }
@@ -27567,13 +27578,10 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
       this.updateRectangularSelection(distance);
 
-      editor.pixels.selection.forEach(function(px) {
-        canvasPixel = px.wrap(distance, true);
-        editor.pixels.preview.push(canvasPixel);
-      });
-
       editor.pixels.layer.forEach(function(px) {
-        editor.pixels.preview.push(px);
+        if(editor.selection.contains(px)) canvasPixel = px.wrap(distance, true);
+        else canvasPixel = px;
+        editor.pixels.preview.push(canvasPixel);
       });
     }
     else {
@@ -27583,7 +27591,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
       });
     }
 
-    channel.publish('canvas.update', {
+    channel.publish('canvas.preview', {
       frame: editor.frame.selected,
       layer: editor.layers.selected,
     });
@@ -27842,7 +27850,7 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
         React.DOM.span(null, "Y: ", this.props.editor.cursor.position.y),
         React.DOM.div( {id:"StatusBarColor", style:{background: this.props.editor.color.frame.rgbaString()}}),
         React.DOM.span( {id:"StatusBarColorString"}, this.props.editor.color.frame.alpha() == 0 ? 'transparent': this.props.editor.color.frame.hexString()),
-        React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length + this.props.editor.pixels.selection.length, " pixels"),
+        React.DOM.span(null, "Frame ", this.props.editor.frame.selected,", ", this.props.editor.pixels.frame.length, " pixels"),
         " ",
         React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
         React.DOM.div( {id:"StatusBarButtons"}, 
@@ -28050,12 +28058,9 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     filters: [
         // { channel: "pixler" },
         // { data: { foo: /bar/ } },
-        // { topic: "stage.pixel.fill" },
-        // { topic: "stage.pixel.clear" },
-        // { topic: "app.cursor.set" },
-        // { topic: "app.frame.select" },
-        // { topic: "app.layer.select" },
-        {topic: 'canvas.update'}
+        {topic: 'pixels.move'},
+        {topic: 'canvas.refresh'},
+        {topic: 'canvas.preview'},
     ],
     active: false,
 });

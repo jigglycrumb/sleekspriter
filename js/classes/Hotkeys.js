@@ -74,7 +74,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -106,7 +106,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -139,7 +139,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -171,7 +171,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -207,7 +207,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -230,7 +230,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -253,7 +253,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }
@@ -276,7 +276,7 @@ var Hotkeys = function(editor) {
               channel.publish('stage.selection.move.pixels', {distance: distance});
               channel.publish('stage.selection.move.bounds', {distance: distance});
             }
-            else channel.publish('stage.tool.move', {distance: distance});
+            else channel.publish('pixels.move', {distance: distance});
             break;
         }
       }

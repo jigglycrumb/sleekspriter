@@ -1,7 +1,7 @@
 Editor.prototype.pixels = {};
 Editor.prototype.pixels.selected = null; // ?
 Editor.prototype.pixels.preview = [];
-Editor.prototype.pixels.selection = [];
+// Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
 Editor.prototype.pixels.file = [];
@@ -9,12 +9,14 @@ Editor.prototype.pixels.file = [];
 Editor.prototype.pixels.init = function() {
   var self = this;
 
+  /*
   // merges selection to layer and clears selection
   function saveAndClearSelection() {
     console.log('saveAndClearSelection');
     self.merge('selection', 'layer');
     self.selection = [];
   };
+  */
 
   // check if a pixel is inside selection bounds
   function pixelHasBeenSelected(pixel) {
@@ -40,6 +42,7 @@ Editor.prototype.pixels.init = function() {
     self.layer = _.where(self.frame, {layer: data.layer});
   });
 
+  /*
   channel.subscribe('app.tool.select', function(data, envelope) {
     if(editor.selection.isActive) {
       switch(data.tool) {
@@ -54,19 +57,23 @@ Editor.prototype.pixels.init = function() {
       }
     }
   });
+  */
 
-  channel.subscribe('stage.tool.move', function(data, envelope) {
+  channel.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };
-    if(editor.selection.isActive) self.selection.forEach(wrapPixel);
-    else self.layer.forEach(wrapPixel);
+    self.layer.forEach(wrapPixel);
+    channel.publish('canvas.refresh', {
+      frame: editor.frame.selected,
+      layer: editor.layers.selected,
+    });
   });
 
-  channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-    var translatePixel = function(px) { px.translate(data.distance) };
-    self.selection.forEach(translatePixel);
-  });
+  // channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
+  //   var translatePixel = function(px) { px.translate(data.distance) };
+  //   self.selection.forEach(translatePixel);
+  // });
 
-  channel.subscribe('stage.selection.clear', saveAndClearSelection);
+  // channel.subscribe('stage.selection.clear', saveAndClearSelection);
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // add/replace pixel
@@ -96,7 +103,7 @@ Editor.prototype.pixels.init = function() {
   });
 
   channel.subscribe('stage.pixel.clear', function(data, envelope) {
-    deletePixel('selection', data.layer, data.x, data.y);
+    //deletePixel('selection', data.layer, data.x, data.y);
     deletePixel('layer', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
@@ -130,7 +137,7 @@ Editor.prototype.pixels.save = function() {
 };
 
 Editor.prototype.pixels.log = function() {
-  console.log('selection: '+this.selection.length+' '
+  console.log('preview: '+this.preview.length+' '
               +'layer: '+this.layer.length+' '
               +'frame: '+this.frame.length+' '
               +'file: '+this.file.length);

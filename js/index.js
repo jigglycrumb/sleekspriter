@@ -94,12 +94,9 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     filters: [
         // { channel: "pixler" },
         // { data: { foo: /bar/ } },
-        // { topic: "stage.pixel.fill" },
-        // { topic: "stage.pixel.clear" },
-        // { topic: "app.cursor.set" },
-        // { topic: "app.frame.select" },
-        // { topic: "app.layer.select" },
-        {topic: 'canvas.update'}
+        {topic: 'pixels.move'},
+        {topic: 'canvas.refresh'},
+        {topic: 'canvas.preview'},
     ],
     active: false,
 });

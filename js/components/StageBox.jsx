@@ -151,7 +151,7 @@ var StageBox = React.createClass({
           channel.publish('stage.selection.move.pixels', {distance: distance});
           channel.publish('stage.selection.move.bounds', {distance: distance});
         }
-        else channel.publish('stage.tool.move', {distance: distance});
+        else channel.publish('pixels.move', {distance: distance});
         break;
     }
 
@@ -192,7 +192,7 @@ var StageBox = React.createClass({
                       file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) {
+        if(editor.selection.contains(editor.cursor.position)) {
           Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
                         file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
@@ -211,7 +211,7 @@ var StageBox = React.createClass({
         });
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.pixel)) {
+        if(editor.selection.contains(editor.cursor.position)) {
           channel.publish('stage.pixel.clear', {
             frame: editor.frame.selected,
             layer: editor.layers.selected,
@@ -262,7 +262,7 @@ var StageBox = React.createClass({
           else if(editor.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
-          if(editor.selection.contains(editor.pixel)) {
+          if(editor.selection.contains(editor.cursor.position)) {
             if(editor.brightnessTool.mode == 'lighten') lighten();
             else if(editor.brightnessTool.mode == 'darken') darken();
           }
@@ -281,13 +281,10 @@ var StageBox = React.createClass({
 
       this.updateRectangularSelection(distance);
 
-      editor.pixels.selection.forEach(function(px) {
-        canvasPixel = px.wrap(distance, true);
-        editor.pixels.preview.push(canvasPixel);
-      });
-
       editor.pixels.layer.forEach(function(px) {
-        editor.pixels.preview.push(px);
+        if(editor.selection.contains(px)) canvasPixel = px.wrap(distance, true);
+        else canvasPixel = px;
+        editor.pixels.preview.push(canvasPixel);
       });
     }
     else {
@@ -297,7 +294,7 @@ var StageBox = React.createClass({
       });
     }
 
-    channel.publish('canvas.update', {
+    channel.publish('canvas.preview', {
       frame: editor.frame.selected,
       layer: editor.layers.selected,
     });

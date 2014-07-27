@@ -15,7 +15,8 @@ var FrameCanvasMixin = {
         'stage.pixel.fill': this.checkRefresh,
         'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
-        'canvas.update': this.checkRefresh,
+        'canvas.refresh': this.checkRefresh,
+        'canvas.preview': this.checkRefresh,
       },
     };
   },
@@ -50,10 +51,11 @@ var FrameCanvasMixin = {
           break;
 
         case 'app.frame.select':
+        case 'canvas.refresh':
           this.paintFrame();
           break;
 
-        case 'canvas.update':
+        case 'canvas.preview':
           this.previewFrame();
           break;
       }
