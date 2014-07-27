@@ -1,23 +1,20 @@
 Editor.prototype.selection = {};
 Editor.prototype.selection.bounds = false;
-
-//Editor.prototype.selection.pixels = [];
-
 Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
-  channel.subscribe('stage.selection.clear', function(data, envelope) {
+  channel.subscribe('selection.clear', function(data, envelope) {
     self.bounds = false;
   });
 
-  channel.subscribe('stage.selection.start', function(data, envelope) {
+  channel.subscribe('selection.start', function(data, envelope) {
     self.bounds = {
       start: data.point
     };
   });
 
-  channel.subscribe('stage.selection.end', function(data, envelope) {
+  channel.subscribe('selection.end', function(data, envelope) {
     self.bounds = { // reset self selection to remove cursor property as it's no longer needed
       start: self.bounds.start,
       end: data.point
@@ -33,15 +30,15 @@ Editor.prototype.selection.init = function(editor) {
     }
   });
 
-  channel.subscribe('stage.selection.resize', function(data, envelope) {
+  channel.subscribe('selection.resize', function(data, envelope) {
     self.bounds.cursor = data.point;
   });
 
-  channel.subscribe('stage.selection.update', function(data, envelope) {
+  channel.subscribe('selection.preview', function(data, envelope) {
     self.bounds.distance = data.distance;
   });
 
-  channel.subscribe('stage.selection.move.bounds', function(data, envelope) {
+  channel.subscribe('selection.move', function(data, envelope) {
     self.bounds = {
       start: new Point(
         self.bounds.start.x + data.distance.x,

@@ -73,7 +73,7 @@ Editor.prototype.pixels.init = function() {
   //   self.selection.forEach(translatePixel);
   // });
 
-  // channel.subscribe('stage.selection.clear', saveAndClearSelection);
+  // channel.subscribe('selection.clear', saveAndClearSelection);
 
   channel.subscribe('stage.pixel.fill', function(data, envelope) {
     // add/replace pixel

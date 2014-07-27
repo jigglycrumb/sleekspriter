@@ -107,7 +107,7 @@ var StageBox = React.createClass({
           break;
 
         case 'RectangularSelectionTool':
-          if(editor.selection.isActive) this.updateRectangularSelection(distance);
+          if(editor.selection.isActive) this.previewRectangularSelection(distance);
           else this.resizeRectangularSelection(point);
           break;
 
@@ -127,8 +127,7 @@ var StageBox = React.createClass({
     event = event.nativeEvent;
 
     var point = this.getWorldCoordinates(event),
-        distance = this.getMouseDownDistance(),
-        selectionActive = editor.selection.isActive;
+        distance = this.getMouseDownDistance();
 
     this.setState({mousedown: false});
 
@@ -148,8 +147,8 @@ var StageBox = React.createClass({
 
       case 'MoveTool':
         if(editor.selection.isActive) {
-          channel.publish('stage.selection.move.pixels', {distance: distance});
-          channel.publish('stage.selection.move.bounds', {distance: distance});
+          //channel.publish('stage.selection.move.pixels', {distance: distance});
+          channel.publish('selection.move', {distance: distance});
         }
         else channel.publish('pixels.move', {distance: distance});
         break;
@@ -279,7 +278,7 @@ var StageBox = React.createClass({
 
     if(editor.selection.isActive) {
 
-      this.updateRectangularSelection(distance);
+      this.previewRectangularSelection(distance);
 
       editor.pixels.layer.forEach(function(px) {
         if(editor.selection.contains(px)) canvasPixel = px.wrap(distance, true);
@@ -302,25 +301,25 @@ var StageBox = React.createClass({
 
   startRectangularSelection: function(point) {
     if(!editor.selection || !editor.selection.contains(point)) {
-      channel.publish('stage.selection.clear');
-      channel.publish('stage.selection.start', {point: point});
+      channel.publish('selection.clear');
+      channel.publish('selection.start', {point: point});
     }
   },
   resizeRectangularSelection: function(point) {
-    channel.publish('stage.selection.resize', {point: point});
+    channel.publish('selection.resize', {point: point});
   },
-  updateRectangularSelection: function(distance) {
-    channel.publish('stage.selection.update', {distance: distance});
+  previewRectangularSelection: function(distance) {
+    channel.publish('selection.preview', {distance: distance});
   },
   endRectangularSelection: function(point, distance) {
     if(editor.selection.isActive) {
-      channel.publish('stage.selection.move.bounds', {distance: distance});
+      channel.publish('selection.move', {distance: distance});
     }
     else {
       if(_.isEqual(point, this.state.mousedownPoint))
-        channel.publish('stage.selection.clear');
+        channel.publish('selection.clear');
       else
-        channel.publish('stage.selection.end', {point: point});
+        channel.publish('selection.end', {point: point});
     }
   },
 
