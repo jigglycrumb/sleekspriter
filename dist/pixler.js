@@ -25374,6 +25374,7 @@ var Editor = function() {
   this.grid.init();
   this.cursor.init();
   this.color.init();
+  this.background.init();
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;
@@ -25909,6 +25910,16 @@ Editor.prototype.color.init = function() {
     self.brush = new Color(data.color);
   });
 };
+Editor.prototype.background = {};
+Editor.prototype.background.type = 'pattern';
+Editor.prototype.background.value = 'checkerboard';
+
+Editor.prototype.background.init = function() {
+  var self = this;
+
+  console.log('background init');
+
+};
 var Hotkeys = function(editor) {
 
   this.actions = {
@@ -26229,6 +26240,10 @@ Workspace.prototype.data = {
     frames: false,
     layers: false,
   },
+  background: {
+    type: 'pattern',
+    value: 'checkerboard',
+  },
 };
 
 // update workspace with current editor data
@@ -26248,6 +26263,10 @@ Workspace.prototype.update = function() {
   this.data.brightnessTool = {
     mode: editor.brightnessTool.mode,
     intensity: editor.brightnessTool.intensity,
+  };
+  this.data.background = {
+    type: editor.background.type,
+    value: editor.background.value,
   };
 };
 
@@ -26278,6 +26297,8 @@ Workspace.prototype.setup = function() {
   //editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessTool.mode = this.data.brightnessTool.mode;
   editor.brightnessTool.intensity = this.data.brightnessTool.intensity;
+  editor.background.type = this.data.background.type;
+  editor.background.value = this.data.background.value;
 };
 
 Workspace.prototype.load = function() {
@@ -27360,7 +27381,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
           );
         }, this),
 
-        StageBoxBackground(null )
+        StageBoxBackground( {type:this.props.editor.background.type, value:this.props.editor.background.value} )
       )
     );
   },
@@ -27630,9 +27651,26 @@ var StageBox = React.createClass({displayName: 'StageBox',
 });
 /** @jsx React.DOM */
 var StageBoxBackground = React.createClass({displayName: 'StageBoxBackground',
+  propTypes: {
+    type: React.PropTypes.oneOf(['color','pattern','image']).isRequired,
+    value: React.PropTypes.string.isRequired,
+  },
   render: function() {
+
+    var style = {},
+        classes = {};
+
+    switch(this.props.type) {
+      case 'color':
+        style.backgroundColor = this.props.value;
+        break;
+      case 'pattern':
+        classes[this.props.value] = true;
+        break;
+    }
+
     return (
-      React.DOM.div( {id:"StageBoxBackground"})
+      React.DOM.div( {id:"StageBoxBackground", className:React.addons.classSet(classes), style:style})
     )
   }
 });
@@ -27716,7 +27754,7 @@ var StageBoxGridCanvas = React.createClass({displayName: 'StageBoxGridCanvas',
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');
-    ctx.strokeStyle = "#cccccc";
+    ctx.strokeStyle = "#828282";
 
     ctx.beginPath();
 
@@ -27979,8 +28017,8 @@ var ZoomTool = React.createClass({displayName: 'ZoomTool',
 // Debug helpers
 
 function resetWorkspace() {
-  console.log('resetting workspace');
   localStorage.removeItem('workspace');
+  workspace.setup();
   editor.file.name = 'coin.pixels';
   workspace.save();
   document.location.reload();

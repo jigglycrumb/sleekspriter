@@ -93,6 +93,7 @@ module.exports = function(grunt) {
           'js/classes/Editor.Grid.js',
           'js/classes/Editor.Cursor.js',
           'js/classes/Editor.Color.js',
+          'js/classes/Editor.Background.js',
 
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',

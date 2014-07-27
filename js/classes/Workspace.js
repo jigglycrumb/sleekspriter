@@ -26,6 +26,10 @@ Workspace.prototype.data = {
     frames: false,
     layers: false,
   },
+  background: {
+    type: 'pattern',
+    value: 'checkerboard',
+  },
 };
 
 // update workspace with current editor data
@@ -45,6 +49,10 @@ Workspace.prototype.update = function() {
   this.data.brightnessTool = {
     mode: editor.brightnessTool.mode,
     intensity: editor.brightnessTool.intensity,
+  };
+  this.data.background = {
+    type: editor.background.type,
+    value: editor.background.value,
   };
 };
 
@@ -75,6 +83,8 @@ Workspace.prototype.setup = function() {
   //editor.selection.pixels = this.data.selection.pixels;
   editor.brightnessTool.mode = this.data.brightnessTool.mode;
   editor.brightnessTool.intensity = this.data.brightnessTool.intensity;
+  editor.background.type = this.data.background.type;
+  editor.background.value = this.data.background.value;
 };
 
 Workspace.prototype.load = function() {

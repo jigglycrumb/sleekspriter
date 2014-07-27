@@ -60,6 +60,7 @@ var Editor = function() {
   this.grid.init();
   this.cursor.init();
   this.color.init();
+  this.background.init();
 
   channel.subscribe('app.tool.select', function(data, envelope) {
     self.tool = data.tool;

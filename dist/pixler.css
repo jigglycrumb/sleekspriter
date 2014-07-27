@@ -25,6 +25,18 @@
   background: linear-gradient(to bottom, #747474 0%, #646464 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#747474', endColorstr='#646464', GradientType=0);
 }
+.checkerboard {
+  background-color: #ffffff;
+  background-image: -webkit-linear-gradient(bottom left, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc), -webkit-linear-gradient(bottom left, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);
+  background-image: -o-linear-gradient(bottom left, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc), -o-linear-gradient(bottom left, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);
+  background-image: linear-gradient(to top right, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc), linear-gradient(to top right, #cccccc 25%, transparent 25%, transparent 75%, #cccccc 75%, #cccccc);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+.stripes {
+  background-color: #ffffff;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, #cccccc 35px, #cccccc 70px);
+}
 .icon-eye {
   content: "\e006";
 }
@@ -445,15 +457,8 @@ ul {
 }
 #StageBox {
   position: absolute;
-  background: #fff;
   top: 0;
   left: 0;
-  /*
-  #Layer-Tools {
-    //background: transparent;
-    z-index: 10000001;
-  }
-  */
 }
 #StageBox .Layer {
   position: absolute;
@@ -470,6 +475,16 @@ ul {
 }
 #StageBox #StageBoxGridCanvas {
   z-index: 10000000;
+  opacity: .5;
+}
+#StageBox #StageBoxBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
 }
 .area.right {
   top: 40px;

@@ -35,6 +35,30 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#747474', endColorstr='#646464',GradientType=0 );
 }
 
+.checkerboard {
+  @size: 16px;
+  @color1: #fff;
+  @color2: #ccc;
+  background-color: @color1;
+  background-image: -webkit-linear-gradient(bottom left, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2),
+                    -webkit-linear-gradient(bottom left, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2);
+  background-image: -o-linear-gradient(bottom left, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2),
+                    -o-linear-gradient(bottom left, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2);
+  background-image: linear-gradient(to top right, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2),
+                    linear-gradient(to top right, @color2 25%, transparent 25%, transparent 75%, @color2 75%, @color2);
+  background-size: @size @size;
+  background-position: 0 0, @size/2 @size/2;
+}
+
+.stripes {
+  @size: 70px;
+  @color1: #fff;
+  @color2: #ccc;
+  background-color: @color1;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent @size/2, @color2 @size/2, @color2 @size);
+}
+
+
 .icon-eye {
   content: "\e006"; // flaticon-eye46
 }

@@ -19,7 +19,7 @@ var StageBoxGridCanvas = React.createClass({
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');
-    ctx.strokeStyle = "#cccccc";
+    ctx.strokeStyle = "#828282";
 
     ctx.beginPath();
 

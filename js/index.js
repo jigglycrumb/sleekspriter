@@ -1,8 +1,8 @@
 // Debug helpers
 
 function resetWorkspace() {
-  console.log('resetting workspace');
   localStorage.removeItem('workspace');
+  workspace.setup();
   editor.file.name = 'coin.pixels';
   workspace.save();
   document.location.reload();
