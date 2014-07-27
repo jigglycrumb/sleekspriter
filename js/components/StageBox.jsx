@@ -61,7 +61,7 @@ var StageBox = React.createClass({
 
     var point = this.getWorldCoordinates(event);
 
-    switch(this.props.editor.tool) {
+    switch(this.props.editor.tool.selected) {
 
       case 'BrushTool':
         this.useBrushTool();
@@ -98,7 +98,7 @@ var StageBox = React.createClass({
 
     if(this.state.mousedown === true) {
 
-      switch(this.props.editor.tool) {
+      switch(this.props.editor.tool.selected) {
 
         case 'BrushTool':
           this.useBrushTool();

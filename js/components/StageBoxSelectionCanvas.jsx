@@ -29,7 +29,7 @@ var StageBoxSelectionCanvas = React.createClass({
       this.drawSelection(newStart, newEnd);
     }
 
-    switch(this.props.editor.tool) {
+    switch(this.props.editor.tool.selected) {
       case 'RectangularSelectionTool':
         if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
         else if(this.props.editor.selection.isResizing) {

@@ -94,6 +94,7 @@ module.exports = function(grunt) {
           'js/classes/Editor.Cursor.js',
           'js/classes/Editor.Color.js',
           'js/classes/Editor.Background.js',
+          'js/classes/Editor.Tool.js',
 
           'js/classes/Hotkeys.js',
           'js/classes/Workspace.js',

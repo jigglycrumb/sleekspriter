@@ -56,7 +56,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(0, -1);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 1);
@@ -89,7 +89,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(1, 0);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(1);
@@ -121,7 +121,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(0, 1);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -1);
@@ -154,7 +154,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(-1, 0);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-1);
@@ -193,7 +193,7 @@ var Hotkeys = function(editor) {
       key: ['shift+up'],
       action: function() {
         var distance = new Point(0, -10);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 10);
@@ -216,7 +216,7 @@ var Hotkeys = function(editor) {
       key: ['shift+right'],
       action: function() {
         var distance = new Point(10, 0);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(10);
@@ -239,7 +239,7 @@ var Hotkeys = function(editor) {
       key: ['shift+down'],
       action: function() {
         var distance = new Point(0, 10);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -10);
@@ -262,7 +262,7 @@ var Hotkeys = function(editor) {
       key: ['shift+left'],
       action: function() {
         var distance = new Point(-10, 0);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-10);

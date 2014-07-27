@@ -25316,7 +25316,6 @@ var Editor = function() {
 
   var self = this;
 
-  this.tool = 'BrushTool';
   this.offset = {
     top: 40,
     right: 205,
@@ -25375,10 +25374,7 @@ var Editor = function() {
   this.cursor.init();
   this.color.init();
   this.background.init();
-
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    self.tool = data.tool;
-  });
+  this.tool.init();
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
     var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
@@ -25917,8 +25913,18 @@ Editor.prototype.background.value = 'checkerboard';
 Editor.prototype.background.init = function() {
   var self = this;
 
-  console.log('background init');
+  //console.log('background init');
 
+};
+Editor.prototype.tool = {};
+Editor.prototype.tool.selected = 'BrushTool';
+
+Editor.prototype.tool.init = function() {
+  var self = this;
+
+  channel.subscribe('app.tool.select', function(data, envelope) {
+    self.selected = data.tool;
+  });
 };
 var Hotkeys = function(editor) {
 
@@ -25978,7 +25984,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(0, -1);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 1);
@@ -26011,7 +26017,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(1, 0);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(1);
@@ -26043,7 +26049,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(0, 1);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -1);
@@ -26076,7 +26082,7 @@ var Hotkeys = function(editor) {
 
         var distance = new Point(-1, 0);
 
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-1);
@@ -26115,7 +26121,7 @@ var Hotkeys = function(editor) {
       key: ['shift+up'],
       action: function() {
         var distance = new Point(0, -10);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 10);
@@ -26138,7 +26144,7 @@ var Hotkeys = function(editor) {
       key: ['shift+right'],
       action: function() {
         var distance = new Point(10, 0);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(10);
@@ -26161,7 +26167,7 @@ var Hotkeys = function(editor) {
       key: ['shift+down'],
       action: function() {
         var distance = new Point(0, 10);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -10);
@@ -26184,7 +26190,7 @@ var Hotkeys = function(editor) {
       key: ['shift+left'],
       action: function() {
         var distance = new Point(-10, 0);
-        switch(editor.tool) {
+        switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-10);
@@ -26249,7 +26255,7 @@ Workspace.prototype.data = {
 // update workspace with current editor data
 Workspace.prototype.update = function() {
   this.data.file = editor.file.name;
-  this.data.tool = editor.tool;
+  this.data.tool = editor.tool.selected;
   this.data.frame = editor.frame.selected;
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
@@ -26286,7 +26292,7 @@ Workspace.prototype.setup = function() {
   };
 
   editor.file.name = this.data.file;
-  editor.tool = this.data.tool;
+  editor.tool.selected = this.data.tool;
   editor.frame.selected = this.data.frame;
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
@@ -26727,28 +26733,6 @@ var BrushTool = React.createClass({displayName: 'BrushTool',
     channel.publish('app.color.select', {color: color});
   }
 });
-  /*
-  drawPattern: function() {
-
-    var frame = this.state.frame,
-        canvas = this.getDOMNode(),
-        ctx = canvas.getContext('2d'),
-        colors = [
-          ['#000', '#fff', '#000'],
-          ['#fff', '#000', '#fff'],
-          ['#000', '#fff', '#000'],
-        ];
-
-    canvas.width = canvas.width;
-
-    for(var x = 2; x >= 0; x--) {
-      for(var y = 2; y >= 0; y--) {
-        ctx.fillStyle = colors[x][y];
-        ctx.fillRect(x*5+frame, y*5+frame, -5, -5);
-      }
-    }
-  },
-  */
 /** @jsx React.DOM */
 var EraserTool = React.createClass({displayName: 'EraserTool',
   render: function() {
@@ -27392,7 +27376,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
     var point = this.getWorldCoordinates(event);
 
-    switch(this.props.editor.tool) {
+    switch(this.props.editor.tool.selected) {
 
       case 'BrushTool':
         this.useBrushTool();
@@ -27429,7 +27413,7 @@ var StageBox = React.createClass({displayName: 'StageBox',
 
     if(this.state.mousedown === true) {
 
-      switch(this.props.editor.tool) {
+      switch(this.props.editor.tool.selected) {
 
         case 'BrushTool':
           this.useBrushTool();
@@ -27824,7 +27808,7 @@ var StageBoxSelectionCanvas = React.createClass({displayName: 'StageBoxSelection
       this.drawSelection(newStart, newEnd);
     }
 
-    switch(this.props.editor.tool) {
+    switch(this.props.editor.tool.selected) {
       case 'RectangularSelectionTool':
         if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
         else if(this.props.editor.selection.isResizing) {
@@ -27963,7 +27947,7 @@ var ToolBox = React.createClass({displayName: 'ToolBox',
 /** @jsx React.DOM */
 var ToolBoxTool = React.createClass({displayName: 'ToolBoxTool',
   render: function() {
-    var selected = this.props.id == this.props.editor.tool ? true : false;
+    var selected = this.props.id == this.props.editor.tool.selected ? true : false;
     var cssClasses = 'ToolBoxTool transparent';
     if(selected) cssClasses+= ' active';
 
@@ -27985,7 +27969,7 @@ var ToolBoxTool = React.createClass({displayName: 'ToolBoxTool',
 /** @jsx React.DOM */
 var ToolContainer = React.createClass({displayName: 'ToolContainer',
   render: function() {
-    return window[this.props.editor.tool](this.props);
+    return window[this.props.editor.tool.selected](this.props);
   }
 });
 /** @jsx React.DOM */

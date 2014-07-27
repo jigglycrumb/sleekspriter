@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 var ToolBoxTool = React.createClass({
   render: function() {
-    var selected = this.props.id == this.props.editor.tool ? true : false;
+    var selected = this.props.id == this.props.editor.tool.selected ? true : false;
     var cssClasses = 'ToolBoxTool transparent';
     if(selected) cssClasses+= ' active';
 

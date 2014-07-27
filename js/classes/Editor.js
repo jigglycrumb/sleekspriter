@@ -2,7 +2,6 @@ var Editor = function() {
 
   var self = this;
 
-  this.tool = 'BrushTool';
   this.offset = {
     top: 40,
     right: 205,
@@ -61,10 +60,7 @@ var Editor = function() {
   this.cursor.init();
   this.color.init();
   this.background.init();
-
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    self.tool = data.tool;
-  });
+  this.tool.init();
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
     var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
