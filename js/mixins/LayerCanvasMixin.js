@@ -10,11 +10,11 @@ var LayerCanvasMixin = {
       data: null,
       topic: null,
       subscriptions: {
-        'stage.pixel.fill': this.checkRefresh,
-        'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
+        'pixel.add': this.checkRefresh,
+        'pixel.delete': this.checkRefresh,
       },
     };
   },
@@ -37,12 +37,12 @@ var LayerCanvasMixin = {
           canvas = this.getDOMNode();
 
       switch(this.state.topic) {
-        case 'stage.pixel.fill':
+        case 'pixel.add':
           var color = this.state.data.color;
           Pixel.paint(canvas, x, y, color);
           break;
 
-        case 'stage.pixel.clear':
+        case 'pixel.delete':
           Pixel.clear(canvas, x, y);
           break;
 

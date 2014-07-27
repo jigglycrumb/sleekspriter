@@ -25044,27 +25044,6 @@ Pixel.paint = function(canvas, x, y, color) {
   ctx.fillRect(cX, cY, scale, scale);
 };
 
-
-/**
- * Publishes a stage.pixel.fill message
- * @param  {Number} frame The frame ID
- * @param  {Number} layer The layer ID
- * @param  {Number} x     Pixel x
- * @param  {Number} y     Pixel y
- * @param  {Number} z     Layer z
- * @param  {String} color Pixel color hex string
- */
-Pixel.add = function(frame, layer, x, y, z, color) {
-  channel.publish('stage.pixel.fill', {
-    frame: frame, // frame ID
-    layer: layer, // layer ID
-    x: x, // pixel x
-    y: y, // pixel y
-    z: z, // layer z
-    color: color, // fill color hexstring
-  });
-};
-
 /**
  * Clear a pixel from a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
@@ -25080,6 +25059,43 @@ Pixel.clear = function(canvas, x, y) {
   ctx.clearRect(cX, cY, scale, scale);
 };
 
+/**
+ * Publishes a pixel.add message
+ * @param  {Number} frame The frame ID
+ * @param  {Number} layer The layer ID
+ * @param  {Number} x     Pixel x
+ * @param  {Number} y     Pixel y
+ * @param  {Number} z     Layer z
+ * @param  {String} color Pixel color hex string
+ */
+Pixel.add = function(frame, layer, x, y, z, color) {
+  channel.publish('pixel.add', {
+    frame: frame,
+    layer: layer,
+    x: x,
+    y: y,
+    z: z,
+    color: color,
+  });
+};
+
+/**
+ * Publishes a pixel.delete message
+ * @param  {Number} frame The frame ID
+ * @param  {Number} layer The layer ID
+ * @param  {Number} x     Pixel x
+ * @param  {Number} y     Pixel y
+ * @param  {Number} z     Pixel z
+ */
+Pixel.delete = function(frame, layer, x, y, z) {
+  channel.publish('pixel.delete', {
+    frame: editor.frame.selected,
+    layer: editor.layers.selected,
+    x: editor.cursor.position.x,
+    y: editor.cursor.position.y,
+    z: file.getLayerById(editor.layers.selected).z,
+  });
+};
 var File = function() {
 
   this.size = null;
@@ -25366,7 +25382,7 @@ var Editor = function() {
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
     var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
         initialColor,
-        fillColor = self.color;
+        fillColor = self.color.brush;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
       initialPixel = {frame: self.frame.selected, layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};
@@ -25544,7 +25560,7 @@ Editor.prototype.pixels.init = function() {
 
   // channel.subscribe('selection.clear', saveAndClearSelection);
 
-  channel.subscribe('stage.pixel.fill', function(data, envelope) {
+  channel.subscribe('pixel.add', function(data, envelope) {
     // add/replace pixel
     var c = new Color(data.color),
         a = 1;
@@ -25571,7 +25587,7 @@ Editor.prototype.pixels.init = function() {
     }
   });
 
-  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+  channel.subscribe('pixel.delete', function(data, envelope) {
     //deletePixel('selection', data.layer, data.x, data.y);
     deletePixel('layer', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);
@@ -25621,12 +25637,12 @@ Editor.prototype.palettes.init = function() {
     self.selected = data.palette;
   });
 
-  channel.subscribe('stage.pixel.fill', function(data, envelope) {
+  channel.subscribe('pixel.add', function(data, envelope) {
     self.available.sprite.colors.push(data.color);
     self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
   });
 
-  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+  channel.subscribe('pixel.delete', function(data, envelope) {
     self.buildAuto();
   });
 
@@ -26332,11 +26348,11 @@ var FrameCanvasMixin = {
       data: null,
       topic: null,
       subscriptions: {
-        'stage.pixel.fill': this.checkRefresh,
-        'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
+        'pixel.add': this.checkRefresh,
+        'pixel.delete': this.checkRefresh,
       },
     };
   },
@@ -26356,12 +26372,12 @@ var FrameCanvasMixin = {
           canvas = this.getDOMNode();
 
       switch(this.state.topic) {
-        case 'stage.pixel.fill':
+        case 'pixel.add':
           var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
           if(pixelsAbove === false) Pixel.paint(canvas, x, y, this.state.data.color);
           break;
 
-        case 'stage.pixel.clear':
+        case 'pixel.delete':
           var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
           if(pixelsAbove === false) {
             var pixelBelow = this.getPixelBelow(editor.pixels.frame, x, y, z);
@@ -26443,11 +26459,11 @@ var LayerCanvasMixin = {
       data: null,
       topic: null,
       subscriptions: {
-        'stage.pixel.fill': this.checkRefresh,
-        'stage.pixel.clear': this.checkRefresh,
         'stage.zoom.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
+        'pixel.add': this.checkRefresh,
+        'pixel.delete': this.checkRefresh,
       },
     };
   },
@@ -26470,12 +26486,12 @@ var LayerCanvasMixin = {
           canvas = this.getDOMNode();
 
       switch(this.state.topic) {
-        case 'stage.pixel.fill':
+        case 'pixel.add':
           var color = this.state.data.color;
           Pixel.paint(canvas, x, y, color);
           break;
 
-        case 'stage.pixel.clear':
+        case 'pixel.delete':
           Pixel.clear(canvas, x, y);
           break;
 
@@ -27342,7 +27358,9 @@ var StageBox = React.createClass({displayName: 'StageBox',
               id:layer.id,
               layer:layer} )
           );
-        }, this)
+        }, this),
+
+        StageBoxBackground(null )
       )
     );
   },
@@ -27495,23 +27513,15 @@ var StageBox = React.createClass({displayName: 'StageBox',
   useEraserTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        channel.publish('stage.pixel.clear', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.cursor.position.x,
-          y: editor.cursor.position.y,
-          z: file.getLayerById(editor.layers.selected).z,
-        });
+        Pixel.delete(editor.frame.selected, editor.layers.selected,
+                     editor.cursor.position.x, editor.cursor.position.y,
+                     file.getLayerById(editor.layers.selected).z);
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.cursor.position)) {
-          channel.publish('stage.pixel.clear', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: editor.cursor.position.x,
-            y: editor.cursor.position.y,
-            z: file.getLayerById(editor.layers.selected).z,
-          });
+          Pixel.delete(editor.frame.selected, editor.layers.selected,
+                       editor.cursor.position.x, editor.cursor.position.y,
+                       file.getLayerById(editor.layers.selected).z);
         }
       }
     }
@@ -27617,6 +27627,14 @@ var StageBox = React.createClass({displayName: 'StageBox',
     }
   },
 
+});
+/** @jsx React.DOM */
+var StageBoxBackground = React.createClass({displayName: 'StageBoxBackground',
+  render: function() {
+    return (
+      React.DOM.div( {id:"StageBoxBackground"})
+    )
+  }
 });
 /** @jsx React.DOM */
 var StageBoxCursorCanvas = React.createClass({displayName: 'StageBoxCursorCanvas',

@@ -155,27 +155,6 @@ Pixel.paint = function(canvas, x, y, color) {
   ctx.fillRect(cX, cY, scale, scale);
 };
 
-
-/**
- * Publishes a stage.pixel.fill message
- * @param  {Number} frame The frame ID
- * @param  {Number} layer The layer ID
- * @param  {Number} x     Pixel x
- * @param  {Number} y     Pixel y
- * @param  {Number} z     Layer z
- * @param  {String} color Pixel color hex string
- */
-Pixel.add = function(frame, layer, x, y, z, color) {
-  channel.publish('stage.pixel.fill', {
-    frame: frame, // frame ID
-    layer: layer, // layer ID
-    x: x, // pixel x
-    y: y, // pixel y
-    z: z, // layer z
-    color: color, // fill color hexstring
-  });
-};
-
 /**
  * Clear a pixel from a canvas element
  * @param {Object} canvas - the canvas DOM element to paint on
@@ -189,4 +168,42 @@ Pixel.clear = function(canvas, x, y) {
       ctx = canvas.getContext('2d');
 
   ctx.clearRect(cX, cY, scale, scale);
+};
+
+/**
+ * Publishes a pixel.add message
+ * @param  {Number} frame The frame ID
+ * @param  {Number} layer The layer ID
+ * @param  {Number} x     Pixel x
+ * @param  {Number} y     Pixel y
+ * @param  {Number} z     Layer z
+ * @param  {String} color Pixel color hex string
+ */
+Pixel.add = function(frame, layer, x, y, z, color) {
+  channel.publish('pixel.add', {
+    frame: frame,
+    layer: layer,
+    x: x,
+    y: y,
+    z: z,
+    color: color,
+  });
+};
+
+/**
+ * Publishes a pixel.delete message
+ * @param  {Number} frame The frame ID
+ * @param  {Number} layer The layer ID
+ * @param  {Number} x     Pixel x
+ * @param  {Number} y     Pixel y
+ * @param  {Number} z     Pixel z
+ */
+Pixel.delete = function(frame, layer, x, y, z) {
+  channel.publish('pixel.delete', {
+    frame: editor.frame.selected,
+    layer: editor.layers.selected,
+    x: editor.cursor.position.x,
+    y: editor.cursor.position.y,
+    z: file.getLayerById(editor.layers.selected).z,
+  });
 };

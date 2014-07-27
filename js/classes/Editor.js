@@ -68,7 +68,7 @@ var Editor = function() {
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
     var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
         initialColor,
-        fillColor = self.color;
+        fillColor = self.color.brush;
 
     if(_.isUndefined(initialPixel)) { // check if initial pixel is transparent
       initialPixel = {frame: self.frame.selected, layer: self.layer, x: data.point.x, y: data.point.y, r: 0, g: 0, b: 0, a: 0};

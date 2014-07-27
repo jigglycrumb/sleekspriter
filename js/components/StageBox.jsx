@@ -49,6 +49,8 @@ var StageBox = React.createClass({
               layer={layer} />
           );
         }, this)}
+
+        <StageBoxBackground />
       </div>
     );
   },
@@ -201,23 +203,15 @@ var StageBox = React.createClass({
   useEraserTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        channel.publish('stage.pixel.clear', {
-          frame: editor.frame.selected,
-          layer: editor.layers.selected,
-          x: editor.cursor.position.x,
-          y: editor.cursor.position.y,
-          z: file.getLayerById(editor.layers.selected).z,
-        });
+        Pixel.delete(editor.frame.selected, editor.layers.selected,
+                     editor.cursor.position.x, editor.cursor.position.y,
+                     file.getLayerById(editor.layers.selected).z);
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.cursor.position)) {
-          channel.publish('stage.pixel.clear', {
-            frame: editor.frame.selected,
-            layer: editor.layers.selected,
-            x: editor.cursor.position.x,
-            y: editor.cursor.position.y,
-            z: file.getLayerById(editor.layers.selected).z,
-          });
+          Pixel.delete(editor.frame.selected, editor.layers.selected,
+                       editor.cursor.position.x, editor.cursor.position.y,
+                       file.getLayerById(editor.layers.selected).z);
         }
       }
     }

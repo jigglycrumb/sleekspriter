@@ -75,7 +75,7 @@ Editor.prototype.pixels.init = function() {
 
   // channel.subscribe('selection.clear', saveAndClearSelection);
 
-  channel.subscribe('stage.pixel.fill', function(data, envelope) {
+  channel.subscribe('pixel.add', function(data, envelope) {
     // add/replace pixel
     var c = new Color(data.color),
         a = 1;
@@ -102,7 +102,7 @@ Editor.prototype.pixels.init = function() {
     }
   });
 
-  channel.subscribe('stage.pixel.clear', function(data, envelope) {
+  channel.subscribe('pixel.delete', function(data, envelope) {
     //deletePixel('selection', data.layer, data.x, data.y);
     deletePixel('layer', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);

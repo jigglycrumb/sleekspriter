@@ -12,11 +12,11 @@ var FrameCanvasMixin = {
       data: null,
       topic: null,
       subscriptions: {
-        'stage.pixel.fill': this.checkRefresh,
-        'stage.pixel.clear': this.checkRefresh,
         'app.frame.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
+        'pixel.add': this.checkRefresh,
+        'pixel.delete': this.checkRefresh,
       },
     };
   },
@@ -36,12 +36,12 @@ var FrameCanvasMixin = {
           canvas = this.getDOMNode();
 
       switch(this.state.topic) {
-        case 'stage.pixel.fill':
+        case 'pixel.add':
           var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
           if(pixelsAbove === false) Pixel.paint(canvas, x, y, this.state.data.color);
           break;
 
-        case 'stage.pixel.clear':
+        case 'pixel.delete':
           var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
           if(pixelsAbove === false) {
             var pixelBelow = this.getPixelBelow(editor.pixels.frame, x, y, z);
