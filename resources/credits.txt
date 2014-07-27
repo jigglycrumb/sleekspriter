@@ -28,6 +28,7 @@ Left Arrow: http://www.flaticon.com/free-icon/arrow-triangle-left_9918
 Up Arrow: http://www.flaticon.com/free-icon/little-up-arrow-triangle_7645
 Move Tool: http://www.flaticon.com/free-icon/move-object_14296
 Fill Tool: http://www.flaticon.com/free-icon/paint-bucket_1729
+Settings: http://www.flaticon.com/free-icon/settings-wheel_23408
 
 // Hand Tool: http://www.flaticon.com/free-icon/right-hand_1427
 // Stamp Tool: http://www.flaticon.com/free-icon/stamp-tool-black-shape_16682

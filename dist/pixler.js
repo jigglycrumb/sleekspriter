@@ -27890,7 +27890,12 @@ var StageBoxSelectionCanvas = React.createClass({displayName: 'StageBoxSelection
 var StatusBar = React.createClass({displayName: 'StatusBar',
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
-        cssClasses = React.addons.classSet({
+        settingsButtonClasses = React.addons.classSet({
+          tiny: true,
+          transparent: true,
+          // active: this.props.editor.grid.enabled,
+        }),
+        gridButtonClasses = React.addons.classSet({
           tiny: true,
           transparent: true,
           active: this.props.editor.grid.enabled,
@@ -27906,8 +27911,11 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
         " ",
         React.DOM.span(null, "Zoom ×",this.props.editor.zoom.current),
         React.DOM.div( {id:"StatusBarButtons"}, 
-          React.DOM.button( {id:"toggleGrid", className:cssClasses, onClick:this.dispatchGridToggled, title:toggleGridTitle}, 
+          React.DOM.button( {id:"toggleGrid", className:gridButtonClasses, onClick:this.dispatchGridToggled, title:toggleGridTitle}, 
             React.DOM.i( {className:"flaticon-3x3"})
+          ),
+          React.DOM.button( {id:"fileSettings", className:settingsButtonClasses, onClick:this.dummy, title:"Document Settings"}, 
+            React.DOM.i( {className:"flaticon-settings21"})
           )
         )
       )
@@ -27915,6 +27923,9 @@ var StatusBar = React.createClass({displayName: 'StatusBar',
   },
   dispatchGridToggled: function(event) {
     channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid.enabled});
+  },
+  dummy: function() {
+    console.log('blubb');
   }
 });
 /** @jsx React.DOM */

@@ -713,6 +713,9 @@ ul {
 #StatusBarButtons {
   float: right;
 }
+#StatusBarButtons i {
+  font-weight: lighter;
+}
 .area.offscreen {
   top: 50px;
   left: 50px;

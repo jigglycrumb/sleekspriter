@@ -2,7 +2,12 @@
 var StatusBar = React.createClass({
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
-        cssClasses = React.addons.classSet({
+        settingsButtonClasses = React.addons.classSet({
+          tiny: true,
+          transparent: true,
+          // active: this.props.editor.grid.enabled,
+        }),
+        gridButtonClasses = React.addons.classSet({
           tiny: true,
           transparent: true,
           active: this.props.editor.grid.enabled,
@@ -18,8 +23,11 @@ var StatusBar = React.createClass({
         &nbsp;
         <span>Zoom &times;{this.props.editor.zoom.current}</span>
         <div id="StatusBarButtons">
-          <button id="toggleGrid" className={cssClasses} onClick={this.dispatchGridToggled} title={toggleGridTitle}>
+          <button id="toggleGrid" className={gridButtonClasses} onClick={this.dispatchGridToggled} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
+          </button>
+          <button id="fileSettings" className={settingsButtonClasses} onClick={this.dummy} title="Document Settings">
+            <i className="flaticon-settings21"></i>
           </button>
         </div>
       </div>
@@ -27,5 +35,8 @@ var StatusBar = React.createClass({
   },
   dispatchGridToggled: function(event) {
     channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid.enabled});
+  },
+  dummy: function() {
+    console.log('blubb');
   }
 });
