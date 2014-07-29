@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       },
 
       mocks: {
-        cwd: 'mock',
+        cwd: 'src/mock',
         src: [ '**' ],
         dest: 'build/mock',
         expand: true
