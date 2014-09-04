@@ -5,7 +5,7 @@ var StatusBar = React.createClass({
         settingsButtonClasses = React.addons.classSet({
           tiny: true,
           transparent: true,
-          // active: this.props.editor.grid.enabled,
+          active: this.props.editor.settingsVisible,
         }),
         gridButtonClasses = React.addons.classSet({
           tiny: true,
@@ -26,7 +26,7 @@ var StatusBar = React.createClass({
           <button id="toggleGrid" className={gridButtonClasses} onClick={this.dispatchGridToggled} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
           </button>
-          <button id="fileSettings" className={settingsButtonClasses} onClick={this.dummy} title="Document Settings">
+          <button id="fileSettings" className={settingsButtonClasses} onClick={this.dispatchSettingsToggled} title="Stage Settings">
             <i className="flaticon-settings21"></i>
           </button>
         </div>
@@ -36,7 +36,7 @@ var StatusBar = React.createClass({
   dispatchGridToggled: function(event) {
     channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid.enabled});
   },
-  dummy: function() {
-    console.log('blubb');
-  }
+  dispatchSettingsToggled: function(event) {
+    channel.publish('stage.settings.toggle', {visible: !this.props.editor.settingsVisible});
+  },
 });

@@ -21,5 +21,5 @@ var StageBoxBackground = React.createClass({
     return (
       <div id="StageBoxBackground" className={React.addons.classSet(classes)} style={style}></div>
     )
-  }
+  },
 });

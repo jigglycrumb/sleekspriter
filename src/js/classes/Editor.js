@@ -9,6 +9,12 @@ var Editor = function() {
     left: 45,
   };
 
+  this.settingsVisible = false;
+
+  channel.subscribe('stage.settings.toggle', function(data, envelope) {
+    self.settingsVisible = data.visible;
+  });
+
   var getAdjacentPixels = function(point) {
 
     var p,
@@ -103,7 +109,6 @@ var Editor = function() {
 
     rFill(initialPixel);
   });
-
 };
 
 Editor.prototype = {};

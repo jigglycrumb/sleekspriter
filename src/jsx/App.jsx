@@ -12,7 +12,9 @@ var App = React.createClass({
         'app.palette.select': this.updateProps,
         'app.brightnesstool.mode.select': this.updateProps,
         'app.brightnesstool.intensity.select': this.updateProps,
+        'app.background.select': this.updateProps,
 
+        'stage.settings.toggle': this.updateProps,
         'stage.grid.toggle': this.updateProps,
         'stage.zoom.select': this.updateProps,
         //'stage.tool.move': this.updateProps,
@@ -27,9 +29,14 @@ var App = React.createClass({
   render: function() {
 
     var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        frames = [];
+        frames = [],
+        settingsBoxStyle = {
+          display: this.props.editor.settingsVisible === true ? 'block' : 'none',
+        };
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+
+
 
     return (
       <div id="App">
@@ -51,6 +58,9 @@ var App = React.createClass({
         </div>
         <div className="area bottom">
           <StatusBar editor={this.props.editor} />
+        </div>
+        <div className="area settings" style={settingsBoxStyle}>
+          <SettingsBox editor={this.props.editor} />
         </div>
         <div className="area offscreen">
           {frames.map(function(frame) {
