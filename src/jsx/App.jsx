@@ -39,44 +39,49 @@ var App = React.createClass({
 
 
     return (
-      <div id="App">
-        <div className="area top">
-          <ToolContainer editor={this.props.editor} />
-        </div>
-        <div className="area left">
-          <ToolBox editor={this.props.editor} />
-        </div>
-        <div className="area center">
-          <StageBox editor={this.props.editor} />
-        </div>
-        <div className="area right">
-          <div id="layerboxhelper">
-            <PreviewBox editor={this.props.editor} workspace={this.props.workspace} fold="preview" />
-            <FrameBox editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
+      <div className="app">
+        <section className="window paint">
+          <div className="area top">
+            <ToolContainer editor={this.props.editor} />
           </div>
-          <LayerBox editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
-        </div>
-        <div className="area bottom">
-          <StatusBar editor={this.props.editor} />
-        </div>
-        <div className="area settings" style={settingsBoxStyle}>
-          <SettingsBox editor={this.props.editor} />
-        </div>
-        <div className="area offscreen">
-          {frames.map(function(frame) {
-            var id = 'OffscreenFrameCanvas-'+frame;
-            return (
-              <OffscreenFrameCanvas
-                key={id}
-                id={frame}
-                width={this.props.editor.file.size.width}
-                height={this.props.editor.file.size.height}
-                selectedframe={this.props.editor.frame.selected} />
-            );
-          }, this)}
+          <div className="area left">
+            <ToolBox editor={this.props.editor} />
+          </div>
+          <div className="area center">
+            <StageBox editor={this.props.editor} />
+          </div>
+          <div className="area right">
+            <div id="layerboxhelper">
+              <PreviewBox editor={this.props.editor} workspace={this.props.workspace} fold="preview" />
+              <FrameBox editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
+            </div>
+            <LayerBox editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
+          </div>
+          <div className="area bottom">
+            <StatusBar editor={this.props.editor} />
+          </div>
+          <div className="area settings" style={settingsBoxStyle}>
+            <SettingsBox editor={this.props.editor} />
+          </div>
+          <div className="area offscreen">
+            {frames.map(function(frame) {
+              var id = 'OffscreenFrameCanvas-'+frame;
+              return (
+                <OffscreenFrameCanvas
+                  key={id}
+                  id={frame}
+                  width={this.props.editor.file.size.width}
+                  height={this.props.editor.file.size.height}
+                  selectedframe={this.props.editor.frame.selected} />
+              );
+            }, this)}
 
-          <SelectionPattern editor={this.props.editor} />
-        </div>
+            <SelectionPattern editor={this.props.editor} />
+          </div>
+        </section>
+        <section className="window animation">
+          <h1>ANIMATION</h1>
+        </section>
       </div>
     );
   },

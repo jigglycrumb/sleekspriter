@@ -29,6 +29,16 @@ function hideOffScreen() {
   document.querySelector('.area.offscreen').style.display = 'none';
 };
 
+
+function showAnimationWindow() {
+  document.querySelector('.app').classList.add('window-animation');
+};
+
+
+function hideAnimationWindow() {
+  document.querySelector('.app').classList.remove('window-animation');
+};
+
 function redrawFromFile() {
   console.log('redrawing from file');
 
