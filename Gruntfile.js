@@ -3,12 +3,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    /** Copy various files to build directory */
+    /** Copy various files to build/tmp directory */
     copy: {
       fonts: {
         cwd: 'src/fonts',
         src: [ '**' ],
-        dest: 'build/fonts',
+        dest: 'build/tmp/fonts',
         expand: true
       },
       bower: {
@@ -22,29 +22,29 @@ module.exports = function(grunt) {
           'zepto/zepto.js',
           //'underscore/underscore.js',
         ],
-        dest: 'build/js/bower_components/',
+        dest: 'build/tmp/js/bower_components/',
         expand: true,
         flatten: true,
       },
       debug: {
         src: 'bower_components/postal.diagnostics/src/postal.diagnostics.js',
-        dest: 'build/js/bower_components/postaldiagnostics.js',
+        dest: 'build/tmp/js/bower_components/postaldiagnostics.js',
       },
       scripts: {
         cwd: 'src/js',
         src: [ '**' ],
-        dest: 'build/js',
+        dest: 'build/tmp/js',
         expand: true
       },
       html: {
-        src: 'src/html/index.html',
-        dest: 'build/index.html'
+        src: 'src/html/browser.html',
+        dest: 'build/tmp/index.html'
       },
 
       mocks: {
         cwd: 'src/mock',
         src: [ '**' ],
-        dest: 'build/mock',
+        dest: 'build/tmp/mock',
         expand: true
       },
     },
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'src/jsx',
           src: ['*.jsx'],
-          dest: 'build/js/react_components',
+          dest: 'build/tmp/js/react_components',
           ext: '.js'
         }]
       },
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
       development: {
         files: {
           // target.css file: source.less file
-          "build/<%= pkg.name %>.css": "src/less/app.less"
+          "build/tmp/<%= pkg.name %>.css": "src/less/app.less"
         }
       },
     },
@@ -83,9 +83,9 @@ module.exports = function(grunt) {
     autoprefixer: {
       build: {
         expand: true,
-        cwd: 'build',
+        cwd: 'build/tmp',
         src: [ '**/*.css' ],
-        dest: 'build'
+        dest: 'build/tmp'
       }
     },
 
@@ -116,38 +116,38 @@ module.exports = function(grunt) {
       },
       javascript: {
         src: [
-          'build/js/bower_components/*.js',
-          'build/js/lib/**/*.js',
+          'build/tmp/js/bower_components/*.js',
+          'build/tmp/js/lib/**/*.js',
 
-          'build/js/strict.js',
-          'build/js/react_mixins/**/*.js',
-          'build/js/react_components/**/*.js',
+          'build/tmp/js/strict.js',
+          'build/tmp/js/react_mixins/**/*.js',
+          'build/tmp/js/react_components/**/*.js',
 
-          'build/js/classes/Point.js',
-          'build/js/classes/Pixel.js',
-          'build/js/classes/File.js',
+          'build/tmp/js/classes/Point.js',
+          'build/tmp/js/classes/Pixel.js',
+          'build/tmp/js/classes/File.js',
 
-          'build/js/classes/Editor.js',
-          'build/js/classes/Editor.File.js',
-          'build/js/classes/Editor.Frame.js',
-          'build/js/classes/Editor.Layers.js',
-          'build/js/classes/Editor.Pixels.js',
-          'build/js/classes/Editor.Palettes.js',
-          'build/js/classes/Editor.Selection.js',
-          'build/js/classes/Editor.BrightnessTool.js',
-          'build/js/classes/Editor.Zoom.js',
-          'build/js/classes/Editor.Grid.js',
-          'build/js/classes/Editor.Cursor.js',
-          'build/js/classes/Editor.Color.js',
-          'build/js/classes/Editor.Background.js',
-          'build/js/classes/Editor.Tool.js',
+          'build/tmp/js/classes/Editor.js',
+          'build/tmp/js/classes/Editor.File.js',
+          'build/tmp/js/classes/Editor.Frame.js',
+          'build/tmp/js/classes/Editor.Layers.js',
+          'build/tmp/js/classes/Editor.Pixels.js',
+          'build/tmp/js/classes/Editor.Palettes.js',
+          'build/tmp/js/classes/Editor.Selection.js',
+          'build/tmp/js/classes/Editor.BrightnessTool.js',
+          'build/tmp/js/classes/Editor.Zoom.js',
+          'build/tmp/js/classes/Editor.Grid.js',
+          'build/tmp/js/classes/Editor.Cursor.js',
+          'build/tmp/js/classes/Editor.Color.js',
+          'build/tmp/js/classes/Editor.Background.js',
+          'build/tmp/js/classes/Editor.Tool.js',
 
-          'build/js/classes/Hotkeys.js',
-          'build/js/classes/Workspace.js',
-          'build/js/index.js',
+          'build/tmp/js/classes/Hotkeys.js',
+          'build/tmp/js/classes/Workspace.js',
+          'build/tmp/js/index.js',
         ],
         // the location of the resulting JS file
-        dest: 'build/<%= pkg.name %>.js'
+        dest: 'build/tmp/<%= pkg.name %>.js'
       }
     },
 
@@ -182,9 +182,9 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          cwd: 'build',
+          cwd: 'build/tmp',
           src: [ '**/*' ],
-          dest: 'build'
+          dest: 'build/tmp'
         }]
       }
     },
@@ -231,8 +231,11 @@ module.exports = function(grunt) {
     */
 
     clean: {
+      tmp: {
+        src: 'build/tmp'
+      },
       js: {
-        src: 'build/js'
+        src: 'build/tmp/js'
       },
       build: {
         src: 'build/**/*'
@@ -265,6 +268,8 @@ module.exports = function(grunt) {
   var baseTasks = ['copy', 'react', 'replace', 'concat', 'less', 'autoprefixer', 'clean:js' ];
 
   grunt.registerTask('default', baseTasks);
+
+  grunt.registerTask('tmp', ['copy', 'react', 'replace', 'concat', 'less', 'autoprefixer']);
 
   //grunt.registerTask('build', ['copy', 'react', 'less', 'autoprefixer', 'replace']);
    //  'concat', 'uglify', 'plato', 'jsdoc']);

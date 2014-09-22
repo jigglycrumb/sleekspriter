@@ -39,7 +39,7 @@ var App = React.createClass({
 
 
     return (
-      <div className="app">
+      <div className="app paint">
         <section className="window paint">
           <div className="area top">
             <ToolContainer editor={this.props.editor} />

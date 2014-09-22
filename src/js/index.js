@@ -31,12 +31,12 @@ function hideOffScreen() {
 
 
 function showAnimationWindow() {
-  document.querySelector('.app').classList.add('window-animation');
+  document.querySelector('.app').classList.add('animate');
 };
 
 
 function hideAnimationWindow() {
-  document.querySelector('.app').classList.remove('window-animation');
+  document.querySelector('.app').classList.remove('animate');
 };
 
 function redrawFromFile() {
@@ -149,7 +149,8 @@ function fileLoaded(json) {
   channel.publish('app.frame.select', {frame: editor.frame.selected});
 
   // render UI
-  React.renderComponent( App({ editor: editor, workspace: workspace }), document.body);
+  var container = document.body;
+  React.renderComponent( App({ editor: editor, workspace: workspace }), container);
 }
 
 // window.onbeforeunload = workspace.save;
