@@ -1,0 +1,8 @@
+default:
+  - 'newer:copy'
+  - 'newer:react'
+  - 'newer:replace'
+  - 'newer:concat'
+  - 'newer:less'
+  - 'newer:autoprefixer'
+  - 'newer:clean:js'
