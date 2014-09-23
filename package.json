@@ -22,7 +22,12 @@
     "grunt-replace": "^0.7.8",
     "grunt-contrib-cssmin": "^0.10.0",
     "grunt-autoprefixer": "^0.8.2",
-    "grunt-contrib-copy": "^0.5.0"
+    "grunt-contrib-copy": "^0.5.0",
+    "load-grunt-config": "^0.13.1",
+    "grunt-contrib-compress": "^0.11.0",
+    "time-grunt": "^1.0.0",
+    "grunt-newer": "^0.7.0",
+    "grunt-notify": "^0.3.1"
   },
   "window": {
     "title": "pixler",
