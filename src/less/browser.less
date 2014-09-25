@@ -1,0 +1,79 @@
+//@import "../fonts/flaticon.css";
+
+// import common styles
+@import "imports/variables.less";
+@import "imports/mixins.less";
+@import "imports/common.less";
+@import "imports/area-top.less";
+@import "imports/area-left.less";
+@import "imports/area-center.less";
+@import "imports/area-right.less";
+@import "imports/area-bottom.less";
+@import "imports/area-settings.less";
+@import "imports/area-offscreen.less";
+
+// browser-specific styles
+.menu {
+  height: 20px;
+  width: 100%;
+  background-color: #3c3c3c;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1;
+  border-left: 1px solid @dark;
+
+  .tab {
+    position: relative;
+    display: inline-block;
+    line-height: 18px;
+    border-top: 1px solid @dark;
+    border-right: 1px solid @dark;
+    padding-left: 1em;
+    height: 20px;
+    background-color: #3c3c3c;
+    color: #a6a6a6;
+    text-align: left;
+    width: 15em;
+    cursor: pointer;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      height: 0;
+      left: 1px;
+      right: 1px;
+      border-bottom: 1px solid #4a4a4a;
+      content: "";
+    }
+  }
+
+  .tab.active {
+    background-color: @light;
+    color: @font-color;
+    cursor: default;
+
+    &:before {
+      border-bottom: 1px solid #6a6a6a;
+    }
+
+    &:after {
+      position: absolute;
+      bottom: 0;
+      height: 0;
+      left: 1em;
+      right: 1em;
+      border-top: 1px solid #6a6a6a;
+      content: "";
+    }
+  }
+}
+
+.window {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 20px;
+  width: auto;
+  height: auto;
+}

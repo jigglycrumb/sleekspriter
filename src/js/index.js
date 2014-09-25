@@ -31,12 +31,12 @@ function hideOffScreen() {
 
 
 function showAnimationWindow() {
-  document.querySelector('.app').classList.add('animate');
+  document.querySelector('.window').classList.add('animate');
 };
 
 
 function hideAnimationWindow() {
-  document.querySelector('.app').classList.remove('animate');
+  document.querySelector('.window').classList.remove('animate');
 };
 
 function redrawFromFile() {
