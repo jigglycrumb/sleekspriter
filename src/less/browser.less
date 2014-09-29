@@ -4,13 +4,13 @@
 @import "imports/variables.less";
 @import "imports/mixins.less";
 @import "imports/common.less";
-@import "imports/area-top.less";
-@import "imports/area-left.less";
-@import "imports/area-center.less";
-@import "imports/area-right.less";
-@import "imports/area-bottom.less";
-@import "imports/area-settings.less";
-@import "imports/area-offscreen.less";
+@import "imports/screen-paint-top.less";
+@import "imports/screen-paint-left.less";
+@import "imports/screen-paint-center.less";
+@import "imports/screen-paint-right.less";
+@import "imports/screen-paint-bottom.less";
+@import "imports/screen-paint-settings.less";
+@import "imports/screen-paint-offscreen.less";
 
 // browser-specific styles
 .menu {
@@ -22,20 +22,22 @@
   position: fixed;
   z-index: 1;
   border-left: 1px solid @dark;
+  border-bottom: 1px solid @dark;
 
   .tab {
     position: relative;
     display: inline-block;
+    height: 19px;
     line-height: 18px;
     border-top: 1px solid @dark;
     border-right: 1px solid @dark;
     padding-left: 1em;
-    height: 20px;
     background-color: #3c3c3c;
     color: #a6a6a6;
     text-align: left;
     width: 15em;
     cursor: pointer;
+    border-bottom: 1px solid @dark;
 
     &:before {
       position: absolute;
@@ -52,6 +54,7 @@
     background-color: @light;
     color: @font-color;
     cursor: default;
+    border-bottom: 1px solid transparent;
 
     &:before {
       border-bottom: 1px solid #6a6a6a;
