@@ -1,59 +1,62 @@
 // bottom area
 
-.area.bottom {
-  left: 43px;
-  right: 203px;
-  bottom: 0;
-  height: 25px;
-  border: 1px solid @dark;
-  background: @dark;
-}
+.screen.paint {
 
-.area.bottom:after {
-  background: none;
-  height: 0;
-  border-top: 1px solid #2d2d2d;
-  border-bottom: 1px solid #3a3a3a;
-  content: "";
-  display: block;
-  position: absolute;
-  left: -1px;
-  top: 0;
-  right: -1px;
-  pointer-events: none;
-}
-
-#StatusBar {
-  float: left;
-  margin-top: 2px;
-  line-height: 22px;
-  height: 22px;
-  width: 100%;
-  .gradient;
-
-  &>* {
-    margin-left: 5px;
-    float: left;
-    min-width: 2rem;
+  .area.bottom {
+    left: 43px;
+    right: 203px;
+    bottom: 0;
+    height: 25px;
+    border: 1px solid @dark;
+    background: @dark;
   }
-} // #StatusBar
 
-#StatusBarColor {
-  height: 16px;
-  width: 16px;
-  min-width: 16px;
-  border: 1px solid @light;
-  margin-top: 2px;
-}
+  .area.bottom:after {
+    background: none;
+    height: 0;
+    border-top: 1px solid #2d2d2d;
+    border-bottom: 1px solid #3a3a3a;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 0;
+    right: -1px;
+    pointer-events: none;
+  }
 
-#StatusBarColorString {
-  min-width: 5rem;
-}
+  #StatusBar {
+    float: left;
+    margin-top: 2px;
+    line-height: 22px;
+    height: 22px;
+    width: 100%;
+    .gradient;
 
-#StatusBarButtons {
-  float: right;
+    &>* {
+      margin-left: 5px;
+      float: left;
+      min-width: 2rem;
+    }
+  } // #StatusBar
 
-  i {
-    font-weight: lighter;
+  #StatusBarColor {
+    height: 16px;
+    width: 16px;
+    min-width: 16px;
+    border: 1px solid @light;
+    margin-top: 2px;
+  }
+
+  #StatusBarColorString {
+    min-width: 5rem;
+  }
+
+  #StatusBarButtons {
+    float: right;
+
+    i {
+      font-weight: lighter;
+    }
   }
 }

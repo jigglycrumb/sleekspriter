@@ -1,45 +1,47 @@
 // center area
+.screen.paint {
 
-.area.center {
-  top: 40px;
-  left: 45px;
-  right: 205px;
-  bottom: 27px;
-  background: @dark;
-  z-index: 0;
-  overflow: auto;
-}
+  .area.center {
+    top: 40px;
+    left: 45px;
+    right: 205px;
+    bottom: 27px;
+    background: @dark;
+    z-index: 0;
+    overflow: auto;
+  }
 
-#StageBox {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  .Layer {
+  #StageBox {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
-  }
 
-  #StageBoxCursorCanvas {
-    cursor: none;
-    z-index: 10000002;
-  }
+    .Layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
 
-  #StageBoxSelectionCanvas {
-    z-index: 10000001;
-  }
+    #StageBoxCursorCanvas {
+      cursor: none;
+      z-index: 10000002;
+    }
 
-  #StageBoxGridCanvas {
-    z-index: 10000000;
-    opacity: .5;
-  }
+    #StageBoxSelectionCanvas {
+      z-index: 10000001;
+    }
 
-  #StageBoxBackground {
-    .Layer;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
+    #StageBoxGridCanvas {
+      z-index: 10000000;
+      opacity: .5;
+    }
+
+    #StageBoxBackground {
+      .Layer;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
   }
 }

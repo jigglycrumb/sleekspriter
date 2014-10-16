@@ -1,161 +1,163 @@
 // top area
+.screen.paint {
 
-.area.top {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 39px;
-  background: @light;
-  border-top: 1px solid @dark;
-  border-left: 1px solid @dark;
-  border-right: 1px solid @dark;
-}
+  .area.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 39px;
+    background: @light;
+    border-top: 1px solid @dark;
+    border-left: 1px solid @dark;
+    border-right: 1px solid @dark;
+  }
 
- .ToolComponent {
+   .ToolComponent {
 
-  height: 40px;
-  line-height: 40px;
-
-  i.icon {
-    display: block;
-    float: left;
-    width: 40px;
     height: 40px;
     line-height: 40px;
-    font-size: @large;
-    text-align: center;
-    margin-right: 5px;
-  }
 
-  &>span {
-    float: left;
-    height: 20px;
-    margin: 9px 10px 0 0;
-    line-height: 20px;
-  }
-
-  button {
-    float: left;
-    margin: 8px 2px 0 0;
-  }
-
-  input[type=color] {
-    float: left;
-  }
-
-  input[type=range] {
-    margin: 15px 10px 0 10px;
-    float: left;
-  }
-
-  input[type=number] {
-    height: 20px;
-    width: 3.1em;
-    margin: 8px 5px 0 0;
-    float: left;
-  }
-
-  ul {
-    float: left;
-    margin: 3px 0 0 5px;
-  }
-
-  li {
-    line-height: 16px;
-  }
-
-  .palette {
-    //.debug(green);
-    position: relative;
-
-    .switch {
-      //.debug(yellow);
+    i.icon {
+      display: block;
       float: left;
-      position: relative;
-      cursor: pointer;
-      width: 103px;
-
-      .list {
-        width: 250px;
-        float: left;
-        display: none;
-        background: @light;
-        margin-top: -1px;
-
-        li {
-          padding: 5px;
-        }
-
-        li:hover {
-          background: @medium;
-        }
-      }
-    }
-
-    .switch-arrow {
-      position: absolute;
-      top: 8px;
-      left: 3px;
-    }
-
-    .name {
-      float: left;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: @large;
+      text-align: center;
       margin-right: 5px;
-      width: 52px;
     }
 
-    .outer {
-      //.debug(yellow);
-      position: absolute;
-      left: 220px;
-      right: 17px;
-      height: 38px;
-      overflow: hidden; //-x: auto;
+    &>span {
+      float: left;
+      height: 20px;
+      margin: 9px 10px 0 0;
+      line-height: 20px;
     }
 
-    .inner {
+    button {
+      float: left;
+      margin: 8px 2px 0 0;
+    }
+
+    input[type=color] {
+      float: left;
+    }
+
+    input[type=range] {
+      margin: 15px 10px 0 10px;
+      float: left;
+    }
+
+    input[type=number] {
+      height: 20px;
+      width: 3.1em;
+      margin: 8px 5px 0 0;
+      float: left;
+    }
+
+    ul {
+      float: left;
+      margin: 3px 0 0 5px;
+    }
+
+    li {
+      line-height: 16px;
+    }
+
+    .palette {
       //.debug(green);
-      height: 36px;
-      width: 0; // this is set via JS in Palette.setInnerWidth
-    }
+      position: relative;
 
-    .scroll {
-
-      //position: absolute;
-      height: 26px;
-      width: 10px;
-      margin-top: 6px;
-
-      i {
+      .switch {
+        //.debug(yellow);
+        float: left;
         position: relative;
-        left: -.5em;
+        cursor: pointer;
+        width: 103px;
+
+        .list {
+          width: 250px;
+          float: left;
+          display: none;
+          background: @light;
+          margin-top: -1px;
+
+          li {
+            padding: 5px;
+          }
+
+          li:hover {
+            background: @medium;
+          }
+        }
       }
 
-      &.left {
-        //left: 50px;
+      .switch-arrow {
+        position: absolute;
+        top: 8px;
+        left: 3px;
       }
 
-      &.right {
-        float: right;
+      .name {
+        float: left;
+        margin-right: 5px;
+        width: 52px;
       }
+
+      .outer {
+        //.debug(yellow);
+        position: absolute;
+        left: 220px;
+        right: 17px;
+        height: 38px;
+        overflow: hidden; //-x: auto;
+      }
+
+      .inner {
+        //.debug(green);
+        height: 36px;
+        width: 0; // this is set via JS in Palette.setInnerWidth
+      }
+
+      .scroll {
+
+        //position: absolute;
+        height: 26px;
+        width: 10px;
+        margin-top: 6px;
+
+        i {
+          position: relative;
+          left: -.5em;
+        }
+
+        &.left {
+          //left: 50px;
+        }
+
+        &.right {
+          float: right;
+        }
+      }
+    }
+
+    .colorswatch {
+      float: left;
+      margin-top: 6px;
+      margin-right: 2px;
+      cursor: pointer;
+      //display: inline-block;
+    }
+
+    .spacer {
+      float: left;
+      width: 1.5em;
     }
   }
 
-  .colorswatch {
-    float: left;
+  #EyedropperSwatch {
     margin-top: 6px;
-    margin-right: 2px;
-    cursor: pointer;
-    //display: inline-block;
+    margin-left: 4px;
   }
-
-  .spacer {
-    float: left;
-    width: 1.5em;
-  }
-}
-
-#EyedropperSwatch {
-  margin-top: 6px;
-  margin-left: 4px;
 }

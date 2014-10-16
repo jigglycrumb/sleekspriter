@@ -1,80 +1,82 @@
 // settings area
+.screen.paint {
 
-.area.settings {
-  z-index: 2;
-  right: 207px;
-  bottom: 26px;
-  width: 200px;
-  height: 200px;
-  background: @dark;
-}
-
-.area.settings:after {
-  background: none;
-  width: 0;
-  border-left: 1px solid #2d2d2d;
-  border-right: 1px solid #3a3a3a;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-#SettingsBox {
-  height: 100%;
-
-  label {
-    display: inline-block;
-    margin: 0 1em;
-    width: 6em;
-    height: 26px;
-    float: left;
-    line-height: 26px;
+  .area.settings {
+    z-index: 2;
+    right: 207px;
+    bottom: 26px;
+    width: 200px;
+    height: 200px;
+    background: @dark;
   }
 
-  button.background {
-    width: 26px;
-    height: 26px;
-    margin-right: 4px;
+  .area.settings:after {
+    background: none;
+    width: 0;
+    border-left: 1px solid #2d2d2d;
+    border-right: 1px solid #3a3a3a;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    pointer-events: none;
   }
 
-  div.background {
-    width: 26px;
-    height: 26px;
-    margin: 0 4px 0 0;
-    border: 1px solid #303030;
-    border-radius: 2px;
-    display: inline-block;
-    position: relative;
-    top: -2px;
-    box-sizing: border-box;
+  #SettingsBox {
+    height: 100%;
 
-    input {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      opacity: 0;
+    label {
+      display: inline-block;
+      margin: 0 1em;
+      width: 6em;
+      height: 26px;
+      float: left;
+      line-height: 26px;
     }
 
-    &:after {
-      background: none;
-      border-top: 1px solid #909090;
-      border-bottom: 1px solid #6a6a6a;
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: -2px;
-      pointer-events: none;
+    button.background {
+      width: 26px;
+      height: 26px;
+      margin-right: 4px;
     }
-  }
 
-  .active {
-    box-shadow: 0 0 5px 3px lighten(@selected, 10%);
+    div.background {
+      width: 26px;
+      height: 26px;
+      margin: 0 4px 0 0;
+      border: 1px solid #303030;
+      border-radius: 2px;
+      display: inline-block;
+      position: relative;
+      top: -2px;
+      box-sizing: border-box;
+
+      input {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        opacity: 0;
+      }
+
+      &:after {
+        background: none;
+        border-top: 1px solid #909090;
+        border-bottom: 1px solid #6a6a6a;
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: -2px;
+        pointer-events: none;
+      }
+    }
+
+    .active {
+      box-shadow: 0 0 5px 3px lighten(@selected, 10%);
+    }
   }
 }
