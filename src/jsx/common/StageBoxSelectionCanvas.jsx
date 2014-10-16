@@ -7,56 +7,35 @@ var StageBoxSelectionCanvas = React.createClass({
     );
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
-
-    this.clear();
-
-    function drawLastSelection() {
-      this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.end);
-    }
-
-    function moveSelection(distance) {
-      var newStart = new Point(
-        this.props.editor.selection.bounds.start.x + distance.x,
-        this.props.editor.selection.bounds.start.y + distance.y
-      );
-
-      var newEnd = new Point(
-        this.props.editor.selection.bounds.end.x + distance.x,
-        this.props.editor.selection.bounds.end.y + distance.y
-      );
-
-      this.drawSelection(newStart, newEnd);
-    }
-
-    switch(this.props.editor.tool.selected) {
-      case 'RectangularSelectionTool':
-        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
-        else if(this.props.editor.selection.isResizing) {
-          this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.cursor);
-        }
-        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
-        break;
-      case 'MoveTool':
-        if(this.props.editor.selection.isMoving) moveSelection.call(this, this.props.editor.selection.bounds.distance);
-        else if(this.props.editor.selection.isActive) drawLastSelection.call(this);
-        break;
-      default:
-        if(this.props.editor.selection.isActive) drawLastSelection.call(this);
-        break;
-    }
-  },
-
   componentDidMount: function() {
     // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
-    var self = this;
-    this.interval = setInterval(function() {
-      if(editor.selection.isActive) self.forceUpdate();
-    }, 200);
+    this.interval = setInterval(this.tick, 200);
   },
 
   componentWillUnmount: function() {
     clearInterval(this.interval);
+  },
+
+  tick: function() {
+
+    this.clear();
+
+    switch(this.props.editor.tool.selected) {
+      case 'RectangularSelectionTool':
+        if(this.props.editor.selection.isMoving) this.moveSelection(this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isResizing) {
+          this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.cursor);
+        }
+        else if(this.props.editor.selection.isActive) this.drawLastSelection();
+        break;
+      case 'MoveTool':
+        if(this.props.editor.selection.isMoving) this.moveSelection(this.props.editor.selection.bounds.distance);
+        else if(this.props.editor.selection.isActive) this.drawLastSelection();
+        break;
+      default:
+        if(this.props.editor.selection.isActive) this.drawLastSelection();
+        break;
+    }
   },
 
   drawSelection: function(start, end) {
@@ -89,5 +68,23 @@ var StageBoxSelectionCanvas = React.createClass({
 
     ctx.strokeStyle = pattern;
     ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
+  },
+
+  drawLastSelection: function() {
+    this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.end);
+  },
+
+  moveSelection: function(distance) {
+    var newStart = new Point(
+      this.props.editor.selection.bounds.start.x + distance.x,
+      this.props.editor.selection.bounds.start.y + distance.y
+    );
+
+    var newEnd = new Point(
+      this.props.editor.selection.bounds.end.x + distance.x,
+      this.props.editor.selection.bounds.end.y + distance.y
+    );
+
+    this.drawSelection(newStart, newEnd);
   },
 });

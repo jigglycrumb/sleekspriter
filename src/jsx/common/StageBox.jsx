@@ -133,7 +133,7 @@ var StageBox = React.createClass({
 
     this.setState({mousedown: false});
 
-    switch(this.props.editor.tool) {
+    switch(this.props.editor.tool.selected) {
 
       case 'EyedropperTool':
         this.useEyedropperTool();
