@@ -5,3 +5,4 @@ doc/*
 node_modules/*
 report/*
 todo.txt
+.vagrant
