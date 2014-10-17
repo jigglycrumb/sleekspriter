@@ -1,10 +1,16 @@
 Editor.prototype.pixels = {};
-Editor.prototype.pixels.selected = null; // ?
+//Editor.prototype.pixels.selected = null; // ?
 Editor.prototype.pixels.preview = [];
 // Editor.prototype.pixels.selection = [];
 Editor.prototype.pixels.layer = [];
 Editor.prototype.pixels.frame = [];
 Editor.prototype.pixels.file = [];
+
+/**
+ * contains the pixels to work with
+ * @type {Array}
+ */
+Editor.prototype.pixels.scope = [];
 
 Editor.prototype.pixels.init = function() {
   var self = this;
@@ -41,6 +47,28 @@ Editor.prototype.pixels.init = function() {
   channel.subscribe('app.layer.select', function(data, envelope) {
     self.layer = _.where(self.frame, {layer: data.layer});
   });
+
+  channel.subscribe('scope.set', function(data, envelope) {
+    // update pixels in scope
+    console.log('scope set', data);
+
+    if(data.old !== null && self.scope.length > 0) {
+      // get old scope layer
+      // merge scope pixels back
+      // set new scope layer
+    }
+
+    switch(data.scope) {
+      case 'selection':
+        // move pixels in selection to scope
+        break;
+
+      case 'layer':
+        // move pixels of layer to scope
+        break;
+    }
+  });
+
 
   /*
   channel.subscribe('app.tool.select', function(data, envelope) {
@@ -140,5 +168,6 @@ Editor.prototype.pixels.log = function() {
   console.log('preview: '+this.preview.length+' '
               +'layer: '+this.layer.length+' '
               +'frame: '+this.frame.length+' '
-              +'file: '+this.file.length);
+              +'file: '+this.file.length+' '
+              +'scope: '+this.scope.length);
 };

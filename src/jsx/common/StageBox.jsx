@@ -11,8 +11,8 @@ var StageBox = React.createClass({
   },
   render: function() {
 
-    var w = this.props.editor.file.size.width*this.props.editor.zoom.current,
-        h = this.props.editor.file.size.height*this.props.editor.zoom.current,
+    var w = this.props.editor.file.size.width * this.props.editor.zoom.current,
+        h = this.props.editor.file.size.height * this.props.editor.zoom.current,
         centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
         centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
 

@@ -6,6 +6,15 @@ Editor.prototype.selection.init = function(editor) {
 
   channel.subscribe('selection.clear', function(data, envelope) {
     self.bounds = false;
+
+    // revert scope back to layer
+    var scopeData = {
+      old: editor.layers.selected,
+      scope: 'layer',
+      data: editor.layers.selected,
+    };
+
+    channel.publish('scope.set', scopeData);
   });
 
   channel.subscribe('selection.start', function(data, envelope) {
@@ -28,6 +37,15 @@ Editor.prototype.selection.init = function(editor) {
       self.bounds.start = self.bounds.end;
       self.bounds.end = temp;
     }
+
+    // restrict scope to selection
+    var scopeData = {
+      old: editor.layers.selected,
+      scope: 'selection',
+      data: self.bounds,
+    };
+
+    channel.publish('scope.set', scopeData);
   });
 
   channel.subscribe('selection.resize', function(data, envelope) {
@@ -49,6 +67,15 @@ Editor.prototype.selection.init = function(editor) {
         self.bounds.end.y + data.distance.y
       )
     };
+
+    // update scope
+    var scopeData = {
+      old: editor.layers.selected,
+      scope: 'selection',
+      data: self.bounds,
+    };
+
+    channel.publish('scope.set', scopeData);
   });
 
 };

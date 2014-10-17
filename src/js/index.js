@@ -117,11 +117,11 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
     filters: [
         // { channel: "pixler" },
         // { data: { foo: /bar/ } },
-        {topic: /selection/},
+        {topic: 'scope.set'},
         // {topic: 'canvas.refresh'},
-        //{topic: /selection/},
+        // {topic: /selection/},
     ],
-    active: false,
+    // active: false,
 });
 
 

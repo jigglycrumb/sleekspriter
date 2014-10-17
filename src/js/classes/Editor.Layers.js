@@ -14,7 +14,20 @@ Editor.prototype.layers.init = function() {
   });
 
   channel.subscribe('app.layer.select', function(data, envelope) {
+    // save old scope layer
+    var oldScope = self.selected;
+
+    // set new layer selected
     self.selected = data.layer;
+
+    // emit scope.set
+    var scopeData = {
+      old: oldScope,
+      scope: 'layer',
+      data: self.selected,
+    };
+
+    channel.publish('scope.set', scopeData);
   });
 };
 
