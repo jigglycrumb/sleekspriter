@@ -53,20 +53,27 @@ Editor.prototype.pixels.init = function() {
     console.log('scope set', data);
 
     if(data.old !== null && self.scope.length > 0) {
-      // get old scope layer
-      // merge scope pixels back
-      // set new scope layer
+      // merge scope pixels back to file
+      self.merge('scope', 'file');
+      self.scope = [];
     }
 
     switch(data.scope) {
       case 'selection':
         // move pixels in selection to scope
+        self.layer.forEach(function(px) {
+          if(editor.selection.contains(px))
+            self.scope.push(px);
+        });
         break;
 
       case 'layer':
         // move pixels of layer to scope
+        self.scope = self.layer;
         break;
     }
+
+    self.log();
   });
 
 
@@ -161,7 +168,7 @@ Editor.prototype.pixels.save = function() {
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
-  this.log();
+  //this.log();
 };
 
 Editor.prototype.pixels.log = function() {
