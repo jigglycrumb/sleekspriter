@@ -1,10 +1,9 @@
 Editor.prototype.pixels = {};
 
-Editor.prototype.pixels.preview = []; // should be superflous when scope is properly implemented
+Editor.prototype.pixels.file = [];
 
 Editor.prototype.pixels.frame = []; // make iterations faster by copying frame pixels to their own collection
                                     // also needed to show pixel count in status bar
-Editor.prototype.pixels.file = [];
 
 /**
  * contains the pixels to work with
@@ -154,8 +153,7 @@ Editor.prototype.pixels.save = function() {
 };
 
 Editor.prototype.pixels.log = function() {
-  console.log('preview: '+this.preview.length+' '
-              +'frame: '+this.frame.length+' '
-              +'file: '+this.file.length+' '
-              +'scope: '+this.scope.length);
+  console.log('frame: '+this.frame.length+' '+
+              'file: '+this.file.length+' '+
+              'scope: '+this.scope.length);
 };

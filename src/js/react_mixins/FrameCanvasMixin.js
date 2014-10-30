@@ -86,6 +86,7 @@ var FrameCanvasMixin = {
     var canvas = this.getDOMNode(),
         pixels = editor.frame.selected == this.props.id ? editor.pixels.frame : editor.pixels.file;
 
+    // clear canvas
     canvas.width = canvas.width;
 
     pixels.forEach(function(px) {
@@ -97,12 +98,13 @@ var FrameCanvasMixin = {
   },
   previewFrame: function() {
     var canvas = this.getDOMNode(),
-        pixels = editor.pixels.preview.slice(0); // clone preview pixels
+        pixels = editor.pixels.scope.slice(0); // clone scope pixels
 
     editor.pixels.frame.forEach(function(px) {
       if(px.layer !== this.state.data.layer) pixels.push(px);
     }, this);
 
+    // clear canvas
     canvas.width = canvas.width;
 
     pixels.forEach(function(px) {

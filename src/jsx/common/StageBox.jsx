@@ -268,24 +268,11 @@ var StageBox = React.createClass({
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
         canvasPixel;
 
-    editor.pixels.preview = [];
+    if(editor.selection.isActive) this.previewRectangularSelection(distance);
 
-    if(editor.selection.isActive) {
-
-      this.previewRectangularSelection(distance);
-
-      editor.pixels.scope.forEach(function(px) {
-        if(editor.selection.contains(px)) canvasPixel = px.wrap(distance, true);
-        else canvasPixel = px;
-        editor.pixels.preview.push(canvasPixel);
-      });
-    }
-    else {
-      editor.pixels.scope.forEach(function(px) {
-        canvasPixel = px.wrap(distance, true);
-        editor.pixels.preview.push(canvasPixel);
-      });
-    }
+    editor.pixels.scope.forEach(function(px) {
+      px.wrap(distance);
+    });
 
     channel.publish('canvas.preview', {
       frame: editor.frame.selected,

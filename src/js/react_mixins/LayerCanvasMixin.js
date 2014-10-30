@@ -75,10 +75,14 @@ var LayerCanvasMixin = {
   previewLayer: function() {
     if(this.isMounted()) {
       var canvas = this.getDOMNode(),
-          layer = this.props.id;
+          layer = this.props.id,
+          pixels = editor.pixels.scope.slice(0); // clone scope pixels
+
+      // clear canvas
       canvas.width = canvas.width;
 
-      editor.pixels.preview.forEach(function(px) {
+      // paint
+      pixels.forEach(function(px) {
         Pixel.paint(canvas, px.x, px.y, px.toHex());
       }, this);
     }
