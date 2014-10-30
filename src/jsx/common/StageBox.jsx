@@ -274,14 +274,14 @@ var StageBox = React.createClass({
 
       this.previewRectangularSelection(distance);
 
-      editor.pixels.layer.forEach(function(px) {
+      editor.pixels.scope.forEach(function(px) {
         if(editor.selection.contains(px)) canvasPixel = px.wrap(distance, true);
         else canvasPixel = px;
         editor.pixels.preview.push(canvasPixel);
       });
     }
     else {
-      editor.pixels.layer.forEach(function(px) {
+      editor.pixels.scope.forEach(function(px) {
         canvasPixel = px.wrap(distance, true);
         editor.pixels.preview.push(canvasPixel);
       });

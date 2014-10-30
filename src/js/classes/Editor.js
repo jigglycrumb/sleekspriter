@@ -69,7 +69,7 @@ var Editor = function() {
   this.tool.init();
 
   channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
-    var initialPixel = _.findWhere(self.pixels.layer, {x: data.point.x, y: data.point.y}),
+    var initialPixel = _.findWhere(self.pixels.scope, {x: data.point.x, y: data.point.y}),
         initialColor,
         fillColor = self.color.brush;
 
@@ -86,7 +86,7 @@ var Editor = function() {
 
       filled.push(point);
 
-      var pixel = _.findWhere(self.pixels.layer, {x: point.x, y: point.y}),
+      var pixel = _.findWhere(self.pixels.scope, {x: point.x, y: point.y}),
           pixelColor,
           neighbors;
 

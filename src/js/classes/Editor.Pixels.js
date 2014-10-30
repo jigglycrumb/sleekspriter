@@ -1,9 +1,9 @@
 Editor.prototype.pixels = {};
-//Editor.prototype.pixels.selected = null; // ?
-Editor.prototype.pixels.preview = [];
-// Editor.prototype.pixels.selection = [];
-Editor.prototype.pixels.layer = [];
-Editor.prototype.pixels.frame = [];
+
+Editor.prototype.pixels.preview = []; // should be superflous when scope is properly implemented
+
+Editor.prototype.pixels.frame = []; // make iterations faster by copying frame pixels to their own collection
+                                    // also needed to show pixel count in status bar
 Editor.prototype.pixels.file = [];
 
 /**
@@ -14,15 +14,6 @@ Editor.prototype.pixels.scope = [];
 
 Editor.prototype.pixels.init = function() {
   var self = this;
-
-  /*
-  // merges selection to layer and clears selection
-  function saveAndClearSelection() {
-    console.log('saveAndClearSelection');
-    self.merge('selection', 'layer');
-    self.selection = [];
-  };
-  */
 
   // check if a pixel is inside selection bounds
   function pixelHasBeenSelected(pixel) {
@@ -44,10 +35,6 @@ Editor.prototype.pixels.init = function() {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
-    self.layer = _.where(self.frame, {layer: data.layer});
-  });
-
   channel.subscribe('scope.set', function(data, envelope) {
     // update pixels in scope
     console.log('scope set', data);
@@ -58,10 +45,14 @@ Editor.prototype.pixels.init = function() {
       self.scope = [];
     }
 
+    // grab layer pixels
+    var layer = data.scope === 'layer' ? data.data : data.old,
+        layerPixels = _.where(self.frame, {layer: layer})
+
     switch(data.scope) {
       case 'selection':
         // move pixels in selection to scope
-        self.layer.forEach(function(px) {
+        layerPixels.forEach(function(px) {
           if(editor.selection.contains(px))
             self.scope.push(px);
         });
@@ -69,7 +60,7 @@ Editor.prototype.pixels.init = function() {
 
       case 'layer':
         // move pixels of layer to scope
-        self.scope = self.layer;
+        self.scope = layerPixels;
         break;
     }
 
@@ -96,19 +87,12 @@ Editor.prototype.pixels.init = function() {
 
   channel.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };
-    self.layer.forEach(wrapPixel);
+    self.scope.forEach(wrapPixel);
     channel.publish('canvas.refresh', {
       frame: editor.frame.selected,
       layer: editor.layers.selected,
     });
   });
-
-  // channel.subscribe('stage.selection.move.pixels', function(data, envelope) {
-  //   var translatePixel = function(px) { px.translate(data.distance) };
-  //   self.selection.forEach(translatePixel);
-  // });
-
-  // channel.subscribe('selection.clear', saveAndClearSelection);
 
   channel.subscribe('pixel.add', function(data, envelope) {
     // add/replace pixel
@@ -116,16 +100,16 @@ Editor.prototype.pixels.init = function() {
         a = 1;
 
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
-    var oldPixel = _.findWhere(self.layer, {x: data.x, y: data.y});
+    var oldPixel = _.findWhere(self.scope, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
-      self.layer.push(newPixel);
+      self.scope.push(newPixel);
     }
     else {
       console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
       // replace old pixel
-      for(var i = 0; i < self.layer.length; i++) {
-        var p = self.layer[i];
+      for(var i = 0; i < self.scope.length; i++) {
+        var p = self.scope[i];
         if(p.x == data.x && p.y == data.y) {
           p.r = c.red();
           p.g = c.green();
@@ -138,8 +122,7 @@ Editor.prototype.pixels.init = function() {
   });
 
   channel.subscribe('pixel.delete', function(data, envelope) {
-    //deletePixel('selection', data.layer, data.x, data.y);
-    deletePixel('layer', data.layer, data.x, data.y);
+    deletePixel('scope', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
   });
@@ -164,7 +147,6 @@ Editor.prototype.pixels.merge = function(from, to) {
 Editor.prototype.pixels.save = function() {
   console.log('saving pixels...');
   this.log();
-  this.merge('layer', 'frame');
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
@@ -173,7 +155,6 @@ Editor.prototype.pixels.save = function() {
 
 Editor.prototype.pixels.log = function() {
   console.log('preview: '+this.preview.length+' '
-              +'layer: '+this.layer.length+' '
               +'frame: '+this.frame.length+' '
               +'file: '+this.file.length+' '
               +'scope: '+this.scope.length);
