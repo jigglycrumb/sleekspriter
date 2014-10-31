@@ -266,17 +266,18 @@ var StageBox = React.createClass({
   useMoveTool: function() {
     var distance = this.getMouseDownDistance(),
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
-        canvasPixel;
+        pixels = [];
 
     if(editor.selection.isActive) this.previewRectangularSelection(distance);
 
     editor.pixels.scope.forEach(function(px) {
-      px.wrap(distance);
+      pixels.push(px.wrap(distance, true));
     });
 
     channel.publish('canvas.preview', {
       frame: editor.frame.selected,
       layer: editor.layers.selected,
+      pixels: pixels,
     });
   },
 

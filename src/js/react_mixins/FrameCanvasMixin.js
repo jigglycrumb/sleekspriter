@@ -98,7 +98,7 @@ var FrameCanvasMixin = {
   },
   previewFrame: function() {
     var canvas = this.getDOMNode(),
-        pixels = editor.pixels.scope.slice(0); // clone scope pixels
+        pixels = this.state.data.pixels;
 
     editor.pixels.frame.forEach(function(px) {
       if(px.layer !== this.state.data.layer) pixels.push(px);

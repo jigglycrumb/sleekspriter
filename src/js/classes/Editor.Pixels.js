@@ -36,7 +36,6 @@ Editor.prototype.pixels.init = function() {
 
   channel.subscribe('scope.set', function(data, envelope) {
     // update pixels in scope
-    console.log('scope set', data);
 
     if(data.old !== null && self.scope.length > 0) {
       // merge scope pixels back to file
@@ -65,24 +64,6 @@ Editor.prototype.pixels.init = function() {
 
     self.log();
   });
-
-
-  /*
-  channel.subscribe('app.tool.select', function(data, envelope) {
-    if(editor.selection.isActive) {
-      switch(data.tool) {
-        case 'RectangularSelectionTool':
-          saveAndClearSelection();
-          break;
-        default:
-          // move selected pixels from layer to selection
-          self.selection = _.filter(self.layer, pixelHasBeenSelected);
-          self.layer = _.reject(self.layer, pixelHasBeenSelected);
-          break;
-      }
-    }
-  });
-  */
 
   channel.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };
@@ -146,10 +127,10 @@ Editor.prototype.pixels.merge = function(from, to) {
 Editor.prototype.pixels.save = function() {
   console.log('saving pixels...');
   this.log();
+  this.merge('scope', 'frame');
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
-  //this.log();
 };
 
 Editor.prototype.pixels.log = function() {

@@ -20,13 +20,14 @@ Editor.prototype.layers.init = function() {
     // set new layer selected
     self.selected = data.layer;
 
-    // emit scope.set
+    // restrict scope to layer
     var scopeData = {
       old: oldScope,
       scope: 'layer',
       data: self.selected,
     };
 
+    // set new scope
     channel.publish('scope.set', scopeData);
   });
 };

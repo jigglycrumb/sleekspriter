@@ -61,12 +61,14 @@ var LayerCanvasMixin = {
   },
   paintLayer: function() {
     if(this.isMounted()) {
-      var canvas = this.getDOMNode(),
-          layer = this.props.id;
+      var canvas = this.getDOMNode();
+
+      // clear canvas
       canvas.width = canvas.width;
 
+      // paint
       editor.pixels.frame.forEach(function(px) {
-        if(px.layer === layer) {
+        if(px.layer === this.props.id) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }
       }, this);
@@ -74,16 +76,16 @@ var LayerCanvasMixin = {
   },
   previewLayer: function() {
     if(this.isMounted()) {
-      var canvas = this.getDOMNode(),
-          layer = this.props.id,
-          pixels = editor.pixels.scope.slice(0); // clone scope pixels
+      var canvas = this.getDOMNode();
 
       // clear canvas
       canvas.width = canvas.width;
 
       // paint
-      pixels.forEach(function(px) {
-        Pixel.paint(canvas, px.x, px.y, px.toHex());
+      this.state.data.pixels.forEach(function(px) {
+        if(px.layer === this.props.id) {
+          Pixel.paint(canvas, px.x, px.y, px.toHex());
+        }
       }, this);
     }
   },

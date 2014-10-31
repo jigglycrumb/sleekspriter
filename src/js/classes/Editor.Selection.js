@@ -4,25 +4,21 @@ Editor.prototype.selection.init = function(editor) {
 
   var self = this;
 
-  channel.subscribe('selection.clear', function(data, envelope) {
-    self.bounds = false;
+  // message handlers
 
-    // revert scope back to layer
-    var scopeData = {
-      old: editor.layers.selected,
-      scope: 'layer',
-      data: editor.layers.selected,
-    };
-
-    channel.publish('scope.set', scopeData);
-  });
-
+  // selection has been started
   channel.subscribe('selection.start', function(data, envelope) {
     self.bounds = {
       start: data.point
     };
   });
 
+  // selection box is being drawn
+  channel.subscribe('selection.resize', function(data, envelope) {
+    self.bounds.cursor = data.point;
+  });
+
+  // selection is complete
   channel.subscribe('selection.end', function(data, envelope) {
     self.bounds = { // reset self selection to remove cursor property as it's no longer needed
       start: self.bounds.start,
@@ -30,7 +26,7 @@ Editor.prototype.selection.init = function(editor) {
     };
 
     // switch start & end if start is more "lower right" than end
-    // makes iterating over the selection easier later
+    // makes calculations with the selection easier later
     if(self.bounds.start.x > self.bounds.end.x
     || self.bounds.start.y > self.bounds.end.y) {
       var temp = self.bounds.start;
@@ -45,17 +41,32 @@ Editor.prototype.selection.init = function(editor) {
       data: self.bounds,
     };
 
+    // set new scope
     channel.publish('scope.set', scopeData);
   });
 
-  channel.subscribe('selection.resize', function(data, envelope) {
-    self.bounds.cursor = data.point;
+  // selection has been cleared
+  channel.subscribe('selection.clear', function(data, envelope) {
+    self.bounds = false;
+
+    // revert scope back to layer
+    var scopeData = {
+      old: editor.layers.selected,
+      scope: 'layer',
+      data: editor.layers.selected,
+    };
+
+    // set new scope
+    channel.publish('scope.set', scopeData);
   });
 
+
+  //
   channel.subscribe('selection.preview', function(data, envelope) {
     self.bounds.distance = data.distance;
   });
 
+  // selection is being moved
   channel.subscribe('selection.move', function(data, envelope) {
     self.bounds = {
       start: new Point(
