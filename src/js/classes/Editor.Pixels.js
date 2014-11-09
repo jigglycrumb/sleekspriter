@@ -35,12 +35,13 @@ Editor.prototype.pixels.init = function() {
   });
 
   channel.subscribe('scope.set', function(data, envelope) {
+
     // update pixels in scope
 
     if(data.old !== null && self.scope.length > 0) {
       // merge scope pixels back to frame
       self.scope.forEach(function(px) {
-        var oldPixel = _.findWhere(self.frame, {x: data.x, y: data.y});
+        var oldPixel = _.findWhere(self.frame, {x: px.x, y: px.y});
         if(!_.isUndefined(oldPixel)) {
           deletePixel('frame', px.layer, px.x, px.y);
         }
@@ -118,7 +119,6 @@ Editor.prototype.pixels.init = function() {
  * @param  {Pixel[]} to   The destination pixels
  */
 Editor.prototype.pixels.merge = function(from, to) {
-  // console.log('merging pixels from '+from+' to '+to);
   this[from].forEach(function(px) {
     this[to].push(px);
   }, this);
@@ -130,13 +130,11 @@ Editor.prototype.pixels.merge = function(from, to) {
  */
 Editor.prototype.pixels.save = function() {
   console.log('saving pixels...');
-  this.log();
-
-  return; // TODO: fix save function
-  this.merge('scope', 'frame');
+  this.merge('scope', 'file');
   this.merge('frame', 'file');
   file.pixels = this.file;
   channel.publish('file.save');
+  this.log();
 };
 
 Editor.prototype.pixels.log = function() {
