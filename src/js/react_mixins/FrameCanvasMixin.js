@@ -84,17 +84,24 @@ var FrameCanvasMixin = {
   },
   paintFrame: function() {
     var canvas = this.getDOMNode(),
-        pixels = editor.frame.selected == this.props.id ? editor.pixels.frame : editor.pixels.file;
+        paint = function(px) {
+          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, px.x, px.y, px.z);
+          if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
+        };
 
     // clear canvas
     canvas.width = canvas.width;
 
-    pixels.forEach(function(px) {
-      if(px.frame === this.props.id) {
-        var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, px.x, px.y, px.z);
-        if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
-      }
-    }, this);
+    // paint
+    if(editor.frame.selected === this.props.id) {
+      editor.pixels.frame.forEach(paint, this);
+      editor.pixels.scope.forEach(paint, this);
+    }
+    else {
+      editor.pixels.file.forEach(function(px) {
+        if(px.frame === this.props.id) paint.call(this, px);
+      }, this);
+    }
   },
   previewFrame: function() {
     var canvas = this.getDOMNode(),

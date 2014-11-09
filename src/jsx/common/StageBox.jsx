@@ -148,11 +148,10 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
+        channel.publish('pixels.move', {distance: distance});
         if(editor.selection.isActive) {
-          //channel.publish('stage.selection.move.pixels', {distance: distance});
           channel.publish('selection.move', {distance: distance});
         }
-        else channel.publish('pixels.move', {distance: distance});
         break;
     }
 
@@ -269,6 +268,10 @@ var StageBox = React.createClass({
         pixels = [];
 
     if(editor.selection.isActive) this.previewRectangularSelection(distance);
+
+    editor.pixels.frame.forEach(function(px) {
+      if(px.layer === editor.layers.selected) pixels.push(px);
+    });
 
     editor.pixels.scope.forEach(function(px) {
       pixels.push(px.wrap(distance, true));

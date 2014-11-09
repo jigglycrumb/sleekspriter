@@ -61,17 +61,19 @@ var LayerCanvasMixin = {
   },
   paintLayer: function() {
     if(this.isMounted()) {
-      var canvas = this.getDOMNode();
+      var canvas = this.getDOMNode(),
+          paint = function(px) {
+            if(px.layer === this.props.id) {
+              Pixel.paint(canvas, px.x, px.y, px.toHex());
+            }
+          };
 
       // clear canvas
       canvas.width = canvas.width;
 
       // paint
-      editor.pixels.frame.forEach(function(px) {
-        if(px.layer === this.props.id) {
-          Pixel.paint(canvas, px.x, px.y, px.toHex());
-        }
-      }, this);
+      editor.pixels.scope.forEach(paint, this);
+      editor.pixels.frame.forEach(paint, this);
     }
   },
   previewLayer: function() {
