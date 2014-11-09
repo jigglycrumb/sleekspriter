@@ -1,5 +1,16 @@
 var Hotkeys = function(editor) {
 
+  function moveTool(distance) {
+    channel.publish('pixels.move', {distance: distance});
+    if(editor.selection.isActive) {
+      channel.publish('selection.move', {distance: distance});
+    }
+  }
+
+  function rectangularSelectionTool(distance) {
+    if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+  }
+
   this.actions = {
     selectBrushTool: {
       key: 'b',
@@ -53,9 +64,7 @@ var Hotkeys = function(editor) {
     arrowUp: {
       key: ['up'],
       action: function() {
-
         var distance = new Point(0, -1);
-
         switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
@@ -63,18 +72,14 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity+1;
             if(intensity <= 100) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -86,9 +91,7 @@ var Hotkeys = function(editor) {
     arrowRight: {
       key: ['right'],
       action: function() {
-
         var distance = new Point(1, 0);
-
         switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
@@ -96,17 +99,13 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
@@ -118,9 +117,7 @@ var Hotkeys = function(editor) {
     arrowDown: {
       key: ['down'],
       action: function() {
-
         var distance = new Point(0, 1);
-
         switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
@@ -128,18 +125,14 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity-1;
             if(intensity >= 1) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -151,9 +144,7 @@ var Hotkeys = function(editor) {
     arrowLeft: {
       key: ['left'],
       action: function() {
-
         var distance = new Point(-1, 0);
-
         switch(editor.tool.selected) {
           case 'BrushTool':
           case 'PaintBucketTool':
@@ -161,17 +152,13 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
@@ -200,14 +187,10 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
         }
       }
@@ -223,14 +206,10 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
         }
       }
@@ -246,14 +225,10 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
         }
       }
@@ -269,14 +244,10 @@ var Hotkeys = function(editor) {
             channel.publish('app.color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
-            if(editor.selection.isActive) channel.publish('selection.move', {distance: distance});
+            rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
-            if(editor.selection.isActive) {
-              // channel.publish('stage.selection.move.pixels', {distance: distance});
-              channel.publish('selection.move', {distance: distance});
-            }
-            else channel.publish('pixels.move', {distance: distance});
+            moveTool(distance);
             break;
         }
       }
