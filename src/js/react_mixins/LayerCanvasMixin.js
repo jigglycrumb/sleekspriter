@@ -44,35 +44,31 @@ var LayerCanvasMixin = {
     this.paintLayer();
   },
   paintLayer: function() {
-    //if(this.isMounted()) {
-      var canvas = this.getDOMNode(),
-          paint = function(px) {
-            if(px.layer === this.props.id) {
-              Pixel.paint(canvas, px.x, px.y, px.toHex());
-            }
-          };
+    var canvas = this.getDOMNode(),
+        paint = function(px) {
+          if(px.layer === this.props.id) {
+            Pixel.paint(canvas, px.x, px.y, px.toHex());
+          }
+        };
 
-      // clear canvas
-      canvas.width = canvas.width;
+    // clear canvas
+    canvas.width = canvas.width;
 
-      // paint
-      editor.pixels.scope.forEach(paint, this);
-      editor.pixels.frame.forEach(paint, this);
-    //}
+    // paint
+    editor.pixels.scope.forEach(paint, this);
+    editor.pixels.frame.forEach(paint, this);
   },
   previewLayer: function(pixels) {
-    //if(this.isMounted()) {
-      var canvas = this.getDOMNode();
+    var canvas = this.getDOMNode();
 
-      // clear canvas
-      canvas.width = canvas.width;
+    // clear canvas
+    canvas.width = canvas.width;
 
-      // paint
-      pixels.forEach(function(px) {
-        if(px.layer === this.props.id) {
-          Pixel.paint(canvas, px.x, px.y, px.toHex());
-        }
-      }, this);
-    //}
+    // paint
+    pixels.forEach(function(px) {
+      if(px.layer === this.props.id) {
+        Pixel.paint(canvas, px.x, px.y, px.toHex());
+      }
+    }, this);
   },
 };

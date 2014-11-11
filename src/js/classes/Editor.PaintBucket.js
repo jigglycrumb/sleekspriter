@@ -10,8 +10,6 @@ Editor.prototype.paintBucket.init = function() {
 
 Editor.prototype.paintBucket.fill = function(point) {
 
-  //console.log(point);
-
   // get the pixel the paint bucket was used on
   var initialPixel = _.findWhere(editor.pixels.scope, {x: point.x, y: point.y});
   // color object for the first pixels color
@@ -61,10 +59,10 @@ Editor.prototype.paintBucket.fill = function(point) {
     // restrict bounds to selection if active
     if(editor.selection.isActive) {
       bounds = {
-        top: editor.selection.start.y,
-        right: editor.selection.end.x,
-        bottom: editor.selection.end.y,
-        left: editor.selection.start.x,
+        top: editor.selection.bounds.start.y,
+        right: editor.selection.bounds.end.x,
+        bottom: editor.selection.bounds.end.y,
+        left: editor.selection.bounds.start.x,
       };
     }
 
@@ -81,8 +79,6 @@ Editor.prototype.paintBucket.fill = function(point) {
     p = new Point(point.x-1, point.y);
     if(p.x >= bounds.left) arr.push(p);
 
-    //console.log('found '+arr.length+' neighbors', arr);
-    //
     return arr;
   };
 
@@ -95,7 +91,6 @@ Editor.prototype.paintBucket.fill = function(point) {
     var pixel = _.findWhere(editor.pixels.scope, {x: point.x, y: point.y}),
         pixelColor,
         neighbors;
-
 
     if(_.isUndefined(pixel)) {
       pixelColor = new Color().rgb(0, 0, 0);
