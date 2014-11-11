@@ -31,10 +31,12 @@ var App = React.createClass({
         <nav className="menu" ref="menu">
           <div className="tab active" data-target="paint">Paint</div>
           <div className="tab" data-target="animate">Animate</div>
+          <div className="tab" data-target="debug">Debug</div>
         </nav>
         <div className="window paint">
           <ScreenPaint editor={this.props.editor} workspace={this.props.workspace} />
           <ScreenAnimate />
+          <ScreenDebug editor={this.props.editor} />
         </div>
       </div>
     );
@@ -52,7 +54,7 @@ var App = React.createClass({
       el.onclick = function() {
         // move window to target screen
         var _win = document.querySelector('.window');
-        _win.classList.remove('paint', 'animate');
+        _win.classList.remove('paint', 'animate', 'debug');
         _win.classList.add(target);
 
         // remove active state from all tabs

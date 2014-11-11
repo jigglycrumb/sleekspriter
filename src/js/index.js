@@ -21,24 +21,6 @@ function resetWorkspace() {
   document.location.reload();
 };
 
-function showOffScreen() {
-  document.querySelector('.area.offscreen').style.display = 'block';
-};
-
-function hideOffScreen() {
-  document.querySelector('.area.offscreen').style.display = 'none';
-};
-
-
-function showAnimationWindow() {
-  document.querySelector('.window').classList.add('animate');
-};
-
-
-function hideAnimationWindow() {
-  document.querySelector('.window').classList.remove('animate');
-};
-
 function redrawFromFile() {
   console.log('redrawing from file');
 

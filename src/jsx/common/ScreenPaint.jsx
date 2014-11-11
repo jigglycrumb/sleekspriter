@@ -33,9 +33,6 @@ var ScreenPaint = React.createClass({
         <div className="area settings" style={settingsBoxStyle}>
           <SettingsBox editor={this.props.editor} />
         </div>
-        <div className="area offscreen">
-          <SelectionPattern editor={this.props.editor} />
-        </div>
       </section>
     )
   }
