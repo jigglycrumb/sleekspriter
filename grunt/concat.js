@@ -25,6 +25,7 @@ module.exports = {
       'build/browser/js/classes/Editor.Palettes.js',
       'build/browser/js/classes/Editor.Selection.js',
       'build/browser/js/classes/Editor.BrightnessTool.js',
+      'build/browser/js/classes/Editor.PaintBucket.js',
       'build/browser/js/classes/Editor.Zoom.js',
       'build/browser/js/classes/Editor.Grid.js',
       'build/browser/js/classes/Editor.Cursor.js',

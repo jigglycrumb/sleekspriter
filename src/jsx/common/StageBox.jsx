@@ -46,7 +46,8 @@ var StageBox = React.createClass({
               width={w}
               height={h}
               id={layer.id}
-              layer={layer} />
+              layer={layer}
+              stage={true} />
           );
         }, this)}
 
@@ -118,7 +119,7 @@ var StageBox = React.createClass({
           break;
 
         case 'MoveTool':
-          this.useMoveTool();
+          this.previewMoveTool();
           break;
       }
     }
@@ -148,10 +149,7 @@ var StageBox = React.createClass({
         break;
 
       case 'MoveTool':
-        channel.publish('pixels.move', {distance: distance});
-        if(editor.selection.isActive) {
-          channel.publish('selection.move', {distance: distance});
-        }
+        this.useMoveTool(point);
         break;
     }
 
@@ -262,7 +260,11 @@ var StageBox = React.createClass({
       }
     }
   },
-  useMoveTool: function() {
+
+
+
+
+  previewMoveTool: function() {
     var distance = this.getMouseDownDistance(),
         canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
         pixels = [];
@@ -283,6 +285,15 @@ var StageBox = React.createClass({
       pixels: pixels,
     });
   },
+  useMoveTool: function(distance) {
+    channel.publish('pixels.move', {distance: distance});
+    if(editor.selection.isActive) {
+      channel.publish('selection.move', {distance: distance});
+    }
+  },
+
+
+
 
   startRectangularSelection: function(point) {
     if(!editor.selection || !editor.selection.contains(point)) {

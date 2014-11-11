@@ -172,12 +172,12 @@ Pixel.clear = function(canvas, x, y) {
 
 /**
  * Publishes a pixel.add message
- * @param  {Number} frame The frame ID
- * @param  {Number} layer The layer ID
- * @param  {Number} x     Pixel x
- * @param  {Number} y     Pixel y
- * @param  {Number} z     Layer z
- * @param  {String} color Pixel color hex string
+ * @param  {Number} frame     The frame ID
+ * @param  {Number} layer     The layer ID
+ * @param  {Number} x         Pixel x
+ * @param  {Number} y         Pixel y
+ * @param  {Number} z         Layer z
+ * @param  {String} color     Pixel color hex string
  */
 Pixel.add = function(frame, layer, x, y, z, color) {
   channel.publish('pixel.add', {

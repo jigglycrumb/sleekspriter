@@ -87,11 +87,12 @@ Editor.prototype.pixels.init = function() {
     var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.findWhere(self.scope, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
       self.scope.push(newPixel);
     }
     else {
-      console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+
       // replace old pixel
       for(var i = 0; i < self.scope.length; i++) {
         var p = self.scope[i];

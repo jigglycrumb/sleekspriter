@@ -121,6 +121,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // {topic: 'canvas.preview'},
         // {topic: 'canvas.refresh'},
         // {topic: /selection/},
+        // {topic: 'pixel.add'},
     ],
     active: false,
 });

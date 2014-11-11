@@ -3,14 +3,11 @@ var FrameCanvasMixin = {
      id: React.PropTypes.number.isRequired,  // frame id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
-     alwaysRefresh: React.PropTypes.bool,
+     alwaysRefresh: React.PropTypes.bool, // required for preview box to always render the current frame
   },
 
   getInitialState: function() {
     return {
-      needsRefresh: false,
-      data: null,
-      topic: null,
       subscriptions: {
         'app.frame.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
@@ -22,31 +19,18 @@ var FrameCanvasMixin = {
   },
   checkRefresh: function(data, envelope) {
     if(this.props.id === data.frame || this.props.alwaysRefresh === true) {
-      this.setState({needsRefresh: true, data: data, topic: envelope.topic});
-    }
-  },
-  componentDidMount: function() {
-    this.paintFrame();
-  },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var x = this.state.data.x,
-          y = this.state.data.y,
-          z = this.state.data.z,
-          canvas = this.getDOMNode();
-
-      switch(this.state.topic) {
+      switch(envelope.topic) {
         case 'pixel.add':
-          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
-          if(pixelsAbove === false) Pixel.paint(canvas, x, y, this.state.data.color);
+          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
+          if(pixelsAbove === false) Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
           break;
 
         case 'pixel.delete':
-          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, x, y, z);
+          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
           if(pixelsAbove === false) {
-            var pixelBelow = this.getPixelBelow(editor.pixels.frame, x, y, z);
-            if(pixelBelow === false) Pixel.clear(canvas, x, y);
-            else Pixel.paint(canvas, x, y, pixelBelow.toHex());
+            var pixelBelow = this.getPixelBelow(editor.pixels.frame, data.x, data.y, data.z);
+            if(pixelBelow === false) Pixel.clear(this.getDOMNode(), data.x, data.y);
+            else Pixel.paint(this.getDOMNode(), data.x, data.y, pixelBelow.toHex());
           }
           break;
 
@@ -56,12 +40,13 @@ var FrameCanvasMixin = {
           break;
 
         case 'canvas.preview':
-          this.previewFrame();
+          this.previewFrame(data.pixels);
           break;
       }
-
-      this.resetState();
     }
+  },
+  componentDidMount: function() {
+    this.paintFrame();
   },
   getPixelsAbove: function(pixels, x, y, z) {
     var above = pixels.filter(function(px) {
@@ -103,9 +88,8 @@ var FrameCanvasMixin = {
       }, this);
     }
   },
-  previewFrame: function() {
-    var canvas = this.getDOMNode(),
-        pixels = this.state.data.pixels;
+  previewFrame: function(pixels) {
+    var canvas = this.getDOMNode();
 
     editor.pixels.frame.forEach(function(px) {
       if(px.layer !== this.state.data.layer) pixels.push(px);

@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var PreviewBoxPreview = React.createClass({
-  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
 
     var scale = 1,

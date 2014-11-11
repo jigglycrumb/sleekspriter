@@ -3,12 +3,10 @@ var LayerCanvasMixin = {
      id: React.PropTypes.number.isRequired,  // layer id
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
+     stage: React.PropTypes.bool.isRequired, // flag if layer is on stage (necessary for reacting to zoom events)
   },
   getInitialState: function() {
     return {
-      needsRefresh: false,
-      data: null,
-      topic: null,
       subscriptions: {
         'stage.zoom.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
@@ -20,47 +18,33 @@ var LayerCanvasMixin = {
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
-      var isStageLayer = this.getDOMNode().classList.contains('Layer');
-      if(this.props.id == data.layer || (envelope.topic == 'stage.zoom.select' && isStageLayer === true)) {
-        this.setState({needsRefresh: true, data: data, topic: envelope.topic});
+      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'stage.zoom.select')) {
+        switch(envelope.topic) {
+          case 'pixel.add':
+            Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
+            break;
+
+          case 'pixel.delete':
+            Pixel.clear(this.getDOMNode(), data.x, data.y);
+            break;
+
+          case 'stage.zoom.select':
+          case 'canvas.refresh':
+            this.paintLayer();
+            break;
+
+          case 'canvas.preview':
+            this.previewLayer(data.pixels);
+            break;
+        }
       }
     }
   },
   componentDidMount: function() {
     this.paintLayer();
   },
-  componentDidUpdate: function() {
-    if(this.state.needsRefresh) {
-      var layer = this.state.data.id,
-          x = this.state.data.x,
-          y = this.state.data.y,
-          canvas = this.getDOMNode();
-
-      switch(this.state.topic) {
-        case 'pixel.add':
-          var color = this.state.data.color;
-          Pixel.paint(canvas, x, y, color);
-          break;
-
-        case 'pixel.delete':
-          Pixel.clear(canvas, x, y);
-          break;
-
-        case 'stage.zoom.select':
-        case 'canvas.refresh':
-          this.paintLayer();
-          break;
-
-        case 'canvas.preview':
-          this.previewLayer();
-          break;
-      }
-
-      this.resetState();
-    }
-  },
   paintLayer: function() {
-    if(this.isMounted()) {
+    //if(this.isMounted()) {
       var canvas = this.getDOMNode(),
           paint = function(px) {
             if(px.layer === this.props.id) {
@@ -74,21 +58,21 @@ var LayerCanvasMixin = {
       // paint
       editor.pixels.scope.forEach(paint, this);
       editor.pixels.frame.forEach(paint, this);
-    }
+    //}
   },
-  previewLayer: function() {
-    if(this.isMounted()) {
+  previewLayer: function(pixels) {
+    //if(this.isMounted()) {
       var canvas = this.getDOMNode();
 
       // clear canvas
       canvas.width = canvas.width;
 
       // paint
-      this.state.data.pixels.forEach(function(px) {
+      pixels.forEach(function(px) {
         if(px.layer === this.props.id) {
           Pixel.paint(canvas, px.x, px.y, px.toHex());
         }
       }, this);
-    }
+    //}
   },
 };

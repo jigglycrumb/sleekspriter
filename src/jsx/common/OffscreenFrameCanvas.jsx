@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var OffscreenFrameCanvas = React.createClass({
-  mixins: [ResetStateMixin, PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
     return (
       <canvas

@@ -1,6 +1,6 @@
 Editor.prototype.selection = {};
 Editor.prototype.selection.bounds = false;
-Editor.prototype.selection.init = function(editor) {
+Editor.prototype.selection.init = function() {
 
   var self = this;
 
