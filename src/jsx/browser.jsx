@@ -17,7 +17,6 @@ var App = React.createClass({
         'stage.settings.toggle': this.updateProps,
         'stage.grid.toggle': this.updateProps,
         'stage.zoom.select': this.updateProps,
-        //'stage.tool.move': this.updateProps,
 
         'file.layer.opacity.select': this.updateProps,
         'file.layer.visibility.toggle': this.updateProps,

@@ -34,18 +34,6 @@ var ScreenPaint = React.createClass({
           <SettingsBox editor={this.props.editor} />
         </div>
         <div className="area offscreen">
-          {frames.map(function(frame) {
-            var id = 'OffscreenFrameCanvas-'+frame;
-            return (
-              <OffscreenFrameCanvas
-                key={id}
-                id={frame}
-                width={this.props.editor.file.size.width}
-                height={this.props.editor.file.size.height}
-                selectedframe={this.props.editor.frame.selected} />
-            );
-          }, this)}
-
           <SelectionPattern editor={this.props.editor} />
         </div>
       </section>
