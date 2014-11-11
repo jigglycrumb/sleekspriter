@@ -8,7 +8,7 @@ Editor.prototype.layers.frame = [];
 Editor.prototype.layers.init = function() {
   var self = this;
 
-  channel.subscribe('app.frame.select', function(data, envelope) {
+  channel.subscribe('frame.select', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
     setTimeout(self.selectTop.bind(self), 0); // select top layer
   });

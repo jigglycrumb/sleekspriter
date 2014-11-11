@@ -104,6 +104,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // {topic: 'canvas.refresh'},
         // {topic: /selection/},
         // {topic: 'pixel.add'},
+        // {topic: 'frame.select'},
     ],
     active: false,
 });
@@ -130,7 +131,7 @@ function fileLoaded(json) {
   file.fromJSON(json);
 
   // select last selected frame
-  channel.publish('app.frame.select', {frame: editor.frame.selected});
+  channel.publish('frame.select', {frame: editor.frame.selected});
 
   // render UI
   var container = document.body;

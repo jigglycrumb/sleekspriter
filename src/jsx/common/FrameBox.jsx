@@ -33,7 +33,7 @@ var FrameBox = React.createClass({
                 });
 
             var clickHandler = function() {
-              channel.publish('app.frame.select', {frame: frame});
+              channel.publish('frame.select', {frame: frame});
             };
 
             return (
@@ -58,6 +58,6 @@ var FrameBox = React.createClass({
     );
   },
   dispatchFrameSelected: function(event) {
-    channel.publish('app.frame.select', {frame: parseInt(event.target.value)});
+    channel.publish('frame.select', {frame: parseInt(event.target.value)});
   }
 });

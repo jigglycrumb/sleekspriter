@@ -30,7 +30,7 @@ Editor.prototype.pixels.init = function() {
     self.file = file.pixels;
   });
 
-  channel.subscribe('app.frame.select', function(data, envelope) {
+  channel.subscribe('frame.select', function(data, envelope) {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 

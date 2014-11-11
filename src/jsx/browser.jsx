@@ -4,7 +4,7 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       subscriptions: {
-        'app.frame.select': this.updateProps,
+        'frame.select': this.updateProps,
         'app.layer.select': this.updateProps,
         'app.tool.select': this.updateProps,
         'app.color.select': this.updateProps,

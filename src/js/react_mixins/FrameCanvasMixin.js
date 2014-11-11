@@ -9,7 +9,7 @@ var FrameCanvasMixin = {
   getInitialState: function() {
     return {
       subscriptions: {
-        'app.frame.select': this.checkRefresh,
+        'scope.set': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
         'pixel.add': this.checkRefresh,
@@ -34,7 +34,7 @@ var FrameCanvasMixin = {
           }
           break;
 
-        case 'app.frame.select':
+        case 'scope.set':
         case 'canvas.refresh':
           this.paintFrame();
           break;
@@ -78,14 +78,12 @@ var FrameCanvasMixin = {
     canvas.width = canvas.width;
 
     // paint
+    editor.pixels.file.forEach(function(px) {
+      if(px.frame === this.props.id) paint.call(this, px);
+    }, this);
+
     if(editor.frame.selected === this.props.id) {
-      editor.pixels.frame.forEach(paint, this);
       editor.pixels.scope.forEach(paint, this);
-    }
-    else {
-      editor.pixels.file.forEach(function(px) {
-        if(px.frame === this.props.id) paint.call(this, px);
-      }, this);
     }
   },
   previewFrame: function(pixels) {
@@ -98,6 +96,7 @@ var FrameCanvasMixin = {
     // clear canvas
     canvas.width = canvas.width;
 
+    // paint
     pixels.forEach(function(px) {
       var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
       if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
