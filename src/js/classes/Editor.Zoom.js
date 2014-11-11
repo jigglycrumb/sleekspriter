@@ -6,7 +6,7 @@ Editor.prototype.zoom.current = 10;
 Editor.prototype.zoom.init = function() {
   var self = this;
 
-  channel.subscribe('stage.zoom.select', function(data, envelope) {
+  channel.subscribe('zoom.select', function(data, envelope) {
     self.current = parseInt(data.zoom) || self.current;
     self.current = self.current > self.max ? self.max : self.current;
     self.current = self.current < self.min ? self.min : self.current;

@@ -8,7 +8,7 @@ var LayerCanvasMixin = {
   getInitialState: function() {
     return {
       subscriptions: {
-        'stage.zoom.select': this.checkRefresh,
+        'zoom.select': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
         'pixel.add': this.checkRefresh,
@@ -18,7 +18,7 @@ var LayerCanvasMixin = {
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
-      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'stage.zoom.select')) {
+      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'zoom.select')) {
         switch(envelope.topic) {
           case 'pixel.add':
             Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
@@ -28,7 +28,7 @@ var LayerCanvasMixin = {
             Pixel.clear(this.getDOMNode(), data.x, data.y);
             break;
 
-          case 'stage.zoom.select':
+          case 'zoom.select':
           case 'canvas.refresh':
             this.paintLayer();
             break;

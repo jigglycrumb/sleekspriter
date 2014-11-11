@@ -14,39 +14,39 @@ var Hotkeys = function(editor) {
   this.actions = {
     selectBrushTool: {
       key: 'b',
-      action: function() { channel.publish('app.tool.select', {tool: 'BrushTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'BrushTool'}); }
     },
     selectEraserTool: {
       key: 'e',
-      action: function() { channel.publish('app.tool.select', {tool: 'EraserTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'EraserTool'}); }
     },
     selectEyedropperTool: {
       key: 'i',
-      action: function() { channel.publish('app.tool.select', {tool: 'EyedropperTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'EyedropperTool'}); }
     },
     selectRectangularSelectionTool: {
       key: 'm',
-      action: function() { channel.publish('app.tool.select', {tool: 'RectangularSelectionTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'RectangularSelectionTool'}); }
     },
     selectPaintBucketTool: {
       key: 'p',
-      action: function() { channel.publish('app.tool.select', {tool: 'PaintBucketTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'PaintBucketTool'}); }
     },
     selectBrightnessTool: {
       key: 'o',
-      action: function() { channel.publish('app.tool.select', {tool: 'BrightnessTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'BrightnessTool'}); }
     },
     selectMoveTool: {
       key: 'v',
-      action: function() { channel.publish('app.tool.select', {tool: 'MoveTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'MoveTool'}); }
     },
     selectZoomTool: {
       key: 'z',
-      action: function() { channel.publish('app.tool.select', {tool: 'ZoomTool'}); }
+      action: function() { channel.publish('tool.select', {tool: 'ZoomTool'}); }
     },
     toggleGrid: {
       key: 'g',
-      action: function() { channel.publish('stage.grid.toggle', {grid: !editor.grid.enabled}); }
+      action: function() { channel.publish('grid.toggle', {grid: !editor.grid.enabled}); }
     },
     dropSelection: {
       key: ['ctrl+d', 'command+d'],
@@ -69,21 +69,21 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 1);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity+1;
-            if(intensity <= 100) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
+            if(intensity <= 100) channel.publish('brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
-            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
+            if(zoom <= 50) channel.publish('zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -96,20 +96,20 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(1);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            channel.publish('app.brightnesstool.mode.select', {mode: 'darken'});
+            channel.publish('brightnesstool.mode.select', {mode: 'darken'});
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current+1;
-            if(zoom <= 50) channel.publish('stage.zoom.select', {zoom: zoom});
+            if(zoom <= 50) channel.publish('zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -122,21 +122,21 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -1);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
             var intensity = editor.brightnessTool.intensity-1;
-            if(intensity >= 1) channel.publish('app.brightnesstool.intensity.select', {intensity: intensity});
+            if(intensity >= 1) channel.publish('brightnesstool.intensity.select', {intensity: intensity});
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
-            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
+            if(zoom >= 1) channel.publish('zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -149,20 +149,20 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-1);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            channel.publish('app.brightnesstool.mode.select', {mode: 'lighten'});
+            channel.publish('brightnesstool.mode.select', {mode: 'lighten'});
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
             var zoom = editor.zoom.current-1;
-            if(zoom >= 1) channel.publish('stage.zoom.select', {zoom: zoom});
+            if(zoom >= 1) channel.publish('zoom.select', {zoom: zoom});
             break;
         }
       }
@@ -184,7 +184,7 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 10);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
@@ -203,7 +203,7 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(10);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
@@ -222,7 +222,7 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -10);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
@@ -241,7 +241,7 @@ var Hotkeys = function(editor) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-10);
-            channel.publish('app.color.select', {color: color.hexString()});
+            channel.publish('color.select', {color: color.hexString()});
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);

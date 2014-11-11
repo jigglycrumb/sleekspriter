@@ -34,7 +34,7 @@ var LayerBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
-      channel.publish('app.layer.select', {layer: this.state.shouldSelectLayer});
+      channel.publish('layer.select', {layer: this.state.shouldSelectLayer});
       this.setState({ shouldSelectLayer: false });
     }
 

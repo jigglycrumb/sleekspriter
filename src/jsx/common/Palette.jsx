@@ -48,7 +48,7 @@ var Palette = React.createClass({
     this.resetScroll();
 
     this.subscriptions = [
-      //channel.subscribe('app.palette.select', this.prepareResetScroll)
+      //channel.subscribe('palette.select', this.prepareResetScroll)
     ];
   },
   componentDidUpdate: function() {
@@ -157,7 +157,7 @@ var Palette = React.createClass({
   selectPalette: function(event) {
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
-    channel.publish('app.palette.select', {palette: palette});
+    channel.publish('palette.select', {palette: palette});
     return false;
   },
 });

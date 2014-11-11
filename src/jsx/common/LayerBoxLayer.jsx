@@ -30,7 +30,7 @@ var LayerBoxLayer = React.createClass({
     this.refs.nameText.getDOMNode().removeEventListener('blur', this.dispatchLayerNameChanged);
   },
   dispatchLayerSelected: function() {
-    channel.publish('app.layer.select', {layer: this.props.layer.id});
+    channel.publish('layer.select', {layer: this.props.layer.id});
   },
   dispatchLayerVisibilityChanged: function(event) {
     channel.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});

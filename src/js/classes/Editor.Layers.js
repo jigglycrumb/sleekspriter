@@ -13,7 +13,7 @@ Editor.prototype.layers.init = function() {
     setTimeout(self.selectTop.bind(self), 0); // select top layer
   });
 
-  channel.subscribe('app.layer.select', function(data, envelope) {
+  channel.subscribe('layer.select', function(data, envelope) {
     // save old scope layer
     var oldScope = self.selected;
 
@@ -41,9 +41,9 @@ Editor.prototype.layers.getIds = function() {
 };
 
 /**
- * Select the top layer of the current frame and emit "app.layer.select"
+ * Select the top layer of the current frame and emit "layer.select"
  */
 Editor.prototype.layers.selectTop = function() {
   var topLayer = _.max(this.frame, function(layer) { return layer.z; });
-  channel.publish('app.layer.select', {layer: topLayer.id});
+  channel.publish('layer.select', {layer: topLayer.id});
 };

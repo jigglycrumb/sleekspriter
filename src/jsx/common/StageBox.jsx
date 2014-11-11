@@ -94,7 +94,7 @@ var StageBox = React.createClass({
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10 && point.x > 0 && point.y > 0) {
-      channel.publish('app.cursor.set', {position: point});
+      channel.publish('cursor.set', {position: point});
     }
 
     if(this.state.mousedown === true) {
@@ -215,8 +215,8 @@ var StageBox = React.createClass({
   },
   useEyedropperTool: function() {
     if(editor.color.frame.alpha() == 0) return; // skip transparent pixels
-    channel.publish('app.tool.select', {tool: 'BrushTool'});
-    channel.publish('app.color.select', {color: editor.color.frame.hexString()});
+    channel.publish('tool.select', {tool: 'BrushTool'});
+    channel.publish('color.select', {color: editor.color.frame.hexString()});
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {

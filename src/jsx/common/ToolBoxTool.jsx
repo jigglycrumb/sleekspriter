@@ -17,6 +17,6 @@ var ToolBoxTool = React.createClass({
     );
   },
   dispatchToolSelected: function(tool) {
-    channel.publish('app.tool.select', {tool: tool});
+    channel.publish('tool.select', {tool: tool});
   }
 });

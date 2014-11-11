@@ -34,9 +34,9 @@ var StatusBar = React.createClass({
     );
   },
   dispatchGridToggled: function(event) {
-    channel.publish('stage.grid.toggle', {grid: !this.props.editor.grid.enabled});
+    channel.publish('grid.toggle', {grid: !this.props.editor.grid.enabled});
   },
   dispatchSettingsToggled: function(event) {
-    channel.publish('stage.settings.toggle', {visible: !this.props.editor.settingsVisible});
+    channel.publish('settings.toggle', {visible: !this.props.editor.settingsVisible});
   },
 });

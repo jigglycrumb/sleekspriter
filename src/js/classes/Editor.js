@@ -11,7 +11,7 @@ var Editor = function() {
 
   this.settingsVisible = false;
 
-  channel.subscribe('stage.settings.toggle', function(data, envelope) {
+  channel.subscribe('settings.toggle', function(data, envelope) {
     self.settingsVisible = data.visible;
   });
 

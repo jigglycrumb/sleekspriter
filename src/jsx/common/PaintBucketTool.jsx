@@ -13,6 +13,6 @@ var PaintBucketTool = React.createClass({
   },
   dispatchColorSelected: function(event) {
     var color = event.target.value;
-    channel.publish('app.color.select', {color: color});
+    channel.publish('color.select', {color: color});
   }
 });
