@@ -3,9 +3,23 @@ var ScreenDebug = React.createClass({
   render: function() {
     return (
       <section className="screen debug">
-        <h1>DEBUG</h1>
+        <div className="area top">
+          <h1>DEBUG</h1>
+        </div>
 
-        <SelectionPattern zoom={this.props.editor.zoom.current} />
+        <div className="area center">
+
+        </div>
+
+        <div className="area bottom">
+          <div className="bar">
+            <label>Selection Pattern</label>
+            <SelectionPattern zoom={this.props.editor.zoom.current} />
+          </div>
+        </div>
+
+        <div className="area left"></div>
+        <div className="area right"></div>
       </section>
     )
   }
