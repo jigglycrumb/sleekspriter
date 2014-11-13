@@ -4,21 +4,23 @@ var ScreenAnimate = React.createClass({
     return (
       <section className="screen animate">
         <div className="area top">
-          TIMELINE, PREVIEW
+          <AnimationTimelineBox />
+          <AnimationPreviewBox />
         </div>
 
         <div className="area center">
-          FRAMES, ANIMATIONS
+          <AnimationFrameBox editor={this.props.editor} />
+        </div>
+
+        <div className="area right">
+          <AnimationListBox />
         </div>
 
         <div className="area bottom">
           <div className="bar">
-            <label>STATUS</label>
+            <label>Drag &amp; drop frames to the timeline to create an animation.</label>
           </div>
         </div>
-
-        <div className="area left"></div>
-        <div className="area right"></div>
       </section>
     )
   }

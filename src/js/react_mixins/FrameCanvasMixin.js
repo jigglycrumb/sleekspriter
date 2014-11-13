@@ -68,23 +68,26 @@ var FrameCanvasMixin = {
     });
   },
   paintFrame: function() {
+
     var canvas = this.getDOMNode(),
-        paint = function(px) {
-          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, px.x, px.y, px.z);
-          if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
-        };
+        pixels = [];
+
+    // collect frame pixels
+    function grab(px) {
+      if(px.frame === this.props.id) pixels.push(px);
+    }
+
+    editor.pixels.file.forEach(grab, this);
+    editor.pixels.scope.forEach(grab, this);
 
     // clear canvas
     canvas.width = canvas.width;
 
     // paint
-    editor.pixels.file.forEach(function(px) {
-      if(px.frame === this.props.id) paint.call(this, px);
+    pixels.forEach(function(px) {
+      var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
+      if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
     }, this);
-
-    if(editor.frame.selected === this.props.id) {
-      editor.pixels.scope.forEach(paint, this);
-    }
   },
   previewFrame: function(pixels) {
     var canvas = this.getDOMNode();

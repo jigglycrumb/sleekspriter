@@ -35,7 +35,7 @@ var App = React.createClass({
         </nav>
         <div className="window paint">
           <ScreenPaint editor={this.props.editor} workspace={this.props.workspace} />
-          <ScreenAnimate />
+          <ScreenAnimate editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />
         </div>
       </div>
@@ -64,6 +64,9 @@ var App = React.createClass({
 
         // make clicked tab active
         el.classList.add('active');
+
+        // emit screen.select message
+        channel.publish('screen.select', {target: target});
       }
     });
   },

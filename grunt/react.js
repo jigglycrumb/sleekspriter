@@ -4,8 +4,8 @@ module.exports = {
     files: [
       {
         expand: true,
-        cwd: 'src/jsx/common',
-        src: ['*.jsx'],
+        src: 'src/jsx/common/**/*.jsx',
+        flatten: true,
         dest: 'build/browser/js/react_components',
         ext: '.js'
       },
