@@ -2,8 +2,8 @@
 .screen.animate {
 
   .area.bottom {
-    left: 2px;
-    right: 203px;
+    left: 0;
+    right: 0;
     bottom: 0;
     height: 25px;
     border: 1px solid @dark;
@@ -22,5 +22,15 @@
     top: 0;
     right: -1px;
     pointer-events: none;
+  }
+
+  #AnimationControlBox {
+    &>div {
+        display: inline-block;
+    }
+  }
+
+  #AnimationFpsInput {
+    width: 3.2em;
   }
 }

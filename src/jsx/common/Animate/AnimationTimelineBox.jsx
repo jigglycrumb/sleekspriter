@@ -2,7 +2,9 @@
 var AnimationTimelineBox = React.createClass({
   render: function() {
     return (
-      <div id="AnimationTimelineBox">Animation Timeline</div>
+      <div id="AnimationTimelineBox">
+        <h4>Timeline</h4>
+      </div>
     );
   }
 });

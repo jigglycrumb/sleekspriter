@@ -2,25 +2,32 @@
 .screen.animate {
 
   .area.left {
-    top: 200px;
+    top: 0;
     left: 0;
-    bottom: 0;
-    width: 0;
-    border: 1px solid @dark;
-    background: @dark;
+    bottom: 200px;
+    width: 61.8%;
+    background: @light;
+    border-top: 1px solid @dark;
+    border-left: 1px solid @dark;
   }
 
-  .area.left:after {
-    background: none;
-    width: 0;
-    border-left: 1px solid #3a3a3a;
-    border-right: 1px solid #2d2d2d;
-    content: "";
-    display: block;
+  #AnimationFrameBox {
     position: absolute;
     top: 0;
+    left: 0;
     right: 0;
-    bottom: 0;
-    pointer-events: none;
+
+    .inner {
+
+    }
+
+    .frame {
+      width: 100px;
+      height: 100px;
+      float: left;
+      cursor: move;
+      border: 1px solid @medium;
+      margin: 5px;
+    }
   }
 }

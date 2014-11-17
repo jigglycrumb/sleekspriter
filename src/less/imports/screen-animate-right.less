@@ -2,32 +2,38 @@
 .screen.animate {
 
   .area.right {
-    top: 201px;
+    top: 0;
     right: 0;
-    bottom: 0;
-    width: 203px;
-    border: 1px solid @dark;
-    background: @dark;
+    bottom: 200px;
+    width: 38.2%;
+    background: @light;
+    border-top: 1px solid @dark;
+    border-right: 1px solid @dark;
   }
 
   .area.right:after {
-    background: none;
-    width: 0;
-    border-left: 1px solid #2d2d2d;
-    border-right: 1px solid #3a3a3a;
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
     content: "";
-    display: block;
+    border-left: 1px solid @medium;
+  }
+
+  #AnimationPreviewBox {
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 0;
-    pointer-events: none;
-  }
+    width: 100%;
+    height: 100%;
 
-  #AnimationListBox {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 203px;
+    .inner {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+    }
   }
 }
