@@ -9,42 +9,39 @@ var AnimationFrameBox = React.createClass({
 
     for(var i=0; i < totalFrames; i++) frames[i] = i+1;
 
-    containerStyle.width = ((frameSize+1)*this.props.editor.file.frames.x);
-
-    var gridStyle = {
-      WebkitColumnCount: this.props.editor.file.frames.x,
-    };
-
+    containerStyle.width = ((frameSize+1)*this.props.editor.file.frames.x)-1;
 
     return (
       <div id="AnimationFrameBox">
         <h5>Frames</h5>
-        <div className="inner" style={gridStyle}>
-        {frames.map(function(frame) {
+        <div className="scroller">
+          <div className="inner" style={containerStyle}>
+          {frames.map(function(frame) {
 
-          var id = 'AnimationFrameBoxFrame-'+frame,
-              classes = React.addons.classSet({
-                'frame': true,
-                //'top': frame <= this.props.editor.file.frames.x,
-                //'right': frame % this.props.editor.file.frames.x == 0,
-                //'bottom': frame > totalFrames - this.props.editor.file.frames.x,
-                //'left': (frame-1) % this.props.editor.file.frames.x == 0,
-              });
+            var id = 'AnimationFrameBoxFrame-'+frame,
+                classes = React.addons.classSet({
+                  'frame': true,
+                  'top': frame <= this.props.editor.file.frames.x,
+                  'right': frame % this.props.editor.file.frames.x == 0,
+                  'bottom': frame > totalFrames - this.props.editor.file.frames.x,
+                  'left': (frame-1) % this.props.editor.file.frames.x == 0,
+                });
 
-          var clickHandler = function() {
-            console.log('clicked frame '+frame);
-          };
+            var clickHandler = function() {
+              console.log('clicked frame '+frame);
+            };
 
-          return (
-            <div key={id} className={classes} onClick={clickHandler}>
-              <AnimationFrameBoxFrame
-                id={frame}
-                width={this.props.editor.file.size.width}
-                height={this.props.editor.file.size.height}
-                size={frameSize} />
-            </div>
-          );
-        }, this)}
+            return (
+              <div key={id} className={classes} onClick={clickHandler}>
+                <AnimationFrameBoxFrame
+                  id={frame}
+                  width={this.props.editor.file.size.width}
+                  height={this.props.editor.file.size.height}
+                  size={frameSize} />
+              </div>
+            );
+          }, this)}
+          </div>
         </div>
       </div>
     );
