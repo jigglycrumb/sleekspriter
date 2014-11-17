@@ -11,19 +11,24 @@ var AnimationFrameBox = React.createClass({
 
     containerStyle.width = ((frameSize+1)*this.props.editor.file.frames.x);
 
+    var gridStyle = {
+      WebkitColumnCount: this.props.editor.file.frames.x,
+    };
+
+
     return (
       <div id="AnimationFrameBox">
         <h5>Frames</h5>
-        <div className="inner" style={containerStyle}>
+        <div className="inner" style={gridStyle}>
         {frames.map(function(frame) {
 
           var id = 'AnimationFrameBoxFrame-'+frame,
               classes = React.addons.classSet({
                 'frame': true,
-                'top': frame <= this.props.editor.file.frames.x,
-                'right': frame % this.props.editor.file.frames.x == 0,
-                'bottom': frame > totalFrames - this.props.editor.file.frames.x,
-                'left': (frame-1) % this.props.editor.file.frames.x == 0,
+                //'top': frame <= this.props.editor.file.frames.x,
+                //'right': frame % this.props.editor.file.frames.x == 0,
+                //'bottom': frame > totalFrames - this.props.editor.file.frames.x,
+                //'left': (frame-1) % this.props.editor.file.frames.x == 0,
               });
 
           var clickHandler = function() {

@@ -136,7 +136,7 @@ function fileLoaded(json) {
 
   // render UI
   var container = document.body;
-  React.renderComponent( App({ editor: editor, workspace: workspace }), container);
+  React.render(React.createElement(App, {editor: editor, workspace: workspace}), container);
 }
 
 // window.onbeforeunload = workspace.save;
