@@ -4,6 +4,11 @@ var AnimationTimelineBox = React.createClass({
     return (
       <div id="AnimationTimelineBox">
         <h4>Timeline</h4>
+        <div className="scroller">
+          <div className="inner">
+
+          </div>
+        </div>
       </div>
     );
   }
