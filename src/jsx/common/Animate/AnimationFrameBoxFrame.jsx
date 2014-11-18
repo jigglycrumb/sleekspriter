@@ -31,7 +31,6 @@ var AnimationFrameBoxFrame = React.createClass({
   },
 
   dragStart: function(event) {
-    console.log('dragStart frame '+this.props.frame);
     event.dataTransfer.setData('frame', this.props.frame);
   },
 

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var AnimationPreviewBoxPreview = React.createClass({
   mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {

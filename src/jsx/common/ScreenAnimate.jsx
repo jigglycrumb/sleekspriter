@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var ScreenAnimate = React.createClass({
   render: function() {
     return (

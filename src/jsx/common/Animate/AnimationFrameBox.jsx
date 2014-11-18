@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var AnimationFrameBox = React.createClass({
   render: function() {
     var containerStyle = {},

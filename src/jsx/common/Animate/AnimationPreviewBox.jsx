@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var AnimationPreviewBox = React.createClass({
   render: function() {
     return (

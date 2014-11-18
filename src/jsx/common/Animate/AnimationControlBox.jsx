@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var AnimationControlBox = React.createClass({
   render: function() {
     return (

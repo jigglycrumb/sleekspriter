@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var AnimationFrameBoxFrameCanvas = React.createClass({
   mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
