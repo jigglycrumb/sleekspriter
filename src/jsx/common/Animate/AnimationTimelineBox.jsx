@@ -5,7 +5,7 @@ var AnimationTimelineBox = React.createClass({
         <h4>Timeline</h4>
         <div className="scroller">
           <div className="inner">
-            <Dropzone />
+            <AnimationFrameDropzone />
           </div>
         </div>
       </div>

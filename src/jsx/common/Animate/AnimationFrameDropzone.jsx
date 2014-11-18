@@ -1,4 +1,4 @@
-var Dropzone = React.createClass({
+var AnimationFrameDropzone = React.createClass({
   render: function() {
     return (
       <div className="dropzone" onDragOver={this.preventDefault} onDrop={this.drop}>
