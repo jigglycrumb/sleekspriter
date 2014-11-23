@@ -3,10 +3,9 @@ var AnimationControlBox = React.createClass({
     return (
       <div id="AnimationControlBox" className="bar">
         <div>
-          <select>
-            <option>Select an animation...</option>
-          </select>
-          <button>Edit animations</button>
+          <button id="AnimationSelector">
+            <span>Select an animation</span>
+          </button>
         </div>
         <div>
           <label>FPS</label>

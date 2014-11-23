@@ -1,5 +1,4 @@
-/** @jsx React.DOM */
-var SelectionPattern = React.createClass({
+var DebugSelectionPattern = React.createClass({
   getInitialState: function() {
     return {
       frame: 1,
