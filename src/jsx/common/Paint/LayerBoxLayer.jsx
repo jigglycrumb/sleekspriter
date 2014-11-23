@@ -1,13 +1,13 @@
-/** @jsx React.DOM */
 var LayerBoxLayer = React.createClass({
   propTypes: {
      layer: React.PropTypes.object.isRequired // layer object
   },
   render: function() {
-    var cssClass = 'LayerBoxLayer';
+    var htmlId = 'LayerBoxLayer-'+this.props.layer.id;
+        cssClass = 'LayerBoxLayer';
     if(this.props.layer.id == this.props.editor.layers.selected) cssClass+= ' selected';
     return (
-      <div id={this.props.key} className={cssClass}>
+      <div id={htmlId} className={cssClass}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>

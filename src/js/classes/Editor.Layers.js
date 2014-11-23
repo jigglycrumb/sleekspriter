@@ -30,6 +30,14 @@ Editor.prototype.layers.init = function() {
     // set new scope
     channel.publish('scope.set', scopeData);
   });
+
+  channel.subscribe('app.layer.add', function(data, envelope) {
+    self.frame = _.where(file.layers, {frame: data.frame});
+  });
+
+  channel.subscribe('app.layer.delete', function(data, envelope) {
+    self.frame = _.where(file.layers, {frame: data.frame});
+  });
 };
 
 /**

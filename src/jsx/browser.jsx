@@ -21,6 +21,9 @@ var App = React.createClass({
         'file.layer.visibility.toggle': this.updateProps,
 
         'file.save': this.updateProps,
+
+        'app.layer.add': this.updateProps,
+        'app.layer.delete': this.updateProps,
       }
     }
   },

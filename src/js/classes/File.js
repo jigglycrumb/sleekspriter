@@ -159,7 +159,7 @@ var File = function() {
     self.layers.splice(index, 0, newLayer);
     fixLayerZ(editor.frame.selected);
 
-    channel.publish('app.layer.add', {layer: newId});
+    channel.publish('app.layer.add', {frame: editor.frame.selected, layer: newId});
   });
 
   channel.subscribe('file.layer.delete', function(data, envelope) {
@@ -196,7 +196,7 @@ var File = function() {
     self.layers.splice(index, 1);
     fixLayerZ(editor.frame.selected);
 
-    channel.publish('app.layer.delete', {layer: shouldSelectLayer});
+    channel.publish('app.layer.delete', {frame: editor.frame.selected, layer: shouldSelectLayer});
   });
 };
 
