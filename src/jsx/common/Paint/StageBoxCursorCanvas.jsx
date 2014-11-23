@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var StageBoxCursorCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
   render: function() {

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var LayerBox = React.createClass({
   mixins: [FoldableMixin],
   getInitialState: function() {
@@ -29,8 +28,8 @@ var LayerBox = React.createClass({
     );
   },
   componentDidMount: function() {
-    //channel.subscribe('app.layer.add', this.shouldSelectLayer);
-    //channel.subscribe('app.layer.delete', this.shouldSelectLayer);
+    // channel.subscribe('app.layer.add', this.shouldSelectLayer);
+    // channel.subscribe('app.layer.delete', this.shouldSelectLayer);
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
@@ -39,7 +38,7 @@ var LayerBox = React.createClass({
     }
 
     var h = this.calculateHeight();
-    this.getDOMNode().querySelector('.layers').style.maxHeight = h+'px';
+    this.getDOMNode().querySelector('.layers').style.height = h+'px';
   },
   dispatchLayerAdded: function() {
     channel.publish('file.layer.add', {layer: this.props.editor.layers.selected});
@@ -54,6 +53,6 @@ var LayerBox = React.createClass({
     var areaRightHeight = document.querySelector('.area.right').clientHeight,
         otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight;
 
-    return areaRightHeight - otherBoxesHeight - 47;
+    return areaRightHeight - otherBoxesHeight - 48;
   },
 });

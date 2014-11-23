@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var StageBox = React.createClass({
   getInitialState: function() {
     return {
@@ -39,10 +38,9 @@ var StageBox = React.createClass({
         <StageBoxGridCanvas width={w} height={h} editor={this.props.editor} />
 
         {this.props.editor.layers.frame.map(function(layer) {
-          var id = 'StageBoxLayer-'+layer.id;
           return (
             <StageBoxLayer
-              key={id}
+              key={layer.id}
               width={w}
               height={h}
               id={layer.id}

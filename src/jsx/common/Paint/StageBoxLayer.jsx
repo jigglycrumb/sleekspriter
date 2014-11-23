@@ -1,11 +1,11 @@
-/** @jsx React.DOM */
 var StageBoxLayer = React.createClass({
   mixins:[PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {
-    var display = (this.props.layer.visible === true) ? 'block' : 'none';
+    var htmlId = 'StageBoxLayer-'+this.props.id,
+        display = (this.props.layer.visible === true) ? 'block' : 'none';
     return (
       <canvas
-        id={this.props.key}
+        id={htmlId}
         className="Layer"
         width={this.props.width}
         height={this.props.height}
