@@ -30,6 +30,7 @@ var Editor = function() {
   this.color.init();
   this.background.init();
   this.tool.init();
+  this.animations.init();
 };
 
 Editor.prototype = {};

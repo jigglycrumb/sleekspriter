@@ -32,6 +32,7 @@ module.exports = {
       'build/browser/js/classes/Editor.Color.js',
       'build/browser/js/classes/Editor.Background.js',
       'build/browser/js/classes/Editor.Tool.js',
+      'build/browser/js/classes/Editor.Animations.js',
 
       'build/browser/js/classes/Hotkeys.js',
       'build/browser/js/classes/Workspace.js',

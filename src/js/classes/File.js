@@ -3,6 +3,7 @@ var File = function() {
   this.size = null;
   this.frames = null;
   this.layers = null;
+  this.animations = null;
   this.pixels = null;
 
   var self = this;
@@ -51,6 +52,22 @@ var File = function() {
     ];
   };
 
+  function animationFromFile(animation) {
+    return {
+      name: animation[0],
+      fps: animation[1],
+      frames: animation[2],
+    }
+  };
+
+  function animationToFile(animation) {
+    return [
+      animation.name,
+      animation.fps,
+      animation.frames,
+    ];
+  };
+
   this.getLayerById = function(id) {
     return _.findWhere(this.layers, {id: id}) || false;
   };
@@ -66,7 +83,9 @@ var File = function() {
       size: sizeToFile(this.size),
       frames: framesToFile(this.frames),
       layers: this.layers.map(layerToFile),
-      pixels: this.pixels.map(Pixel.toArray)
+      animations: this.animations.map(animationToFile),
+      pixels: this.pixels.map(Pixel.toArray),
+
     };
     return JSON.stringify(strObj);
   };
@@ -75,6 +94,7 @@ var File = function() {
     this.size = sizeFromFile(json.size);
     this.frames = framesFromFile(json.frames);
     this.layers = json.layers.map(layerFromFile);
+    this.animations = json.animations.map(animationFromFile);
 
     // add z and frame values to saved pixels
     var layerDict = {};
