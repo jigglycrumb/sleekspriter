@@ -24,6 +24,9 @@ var App = React.createClass({
 
         'app.layer.add': this.updateProps,
         'app.layer.delete': this.updateProps,
+
+        'animation.add': this.updateProps,
+        'animation.delete': this.updateProps,
       }
     }
   },
@@ -31,11 +34,11 @@ var App = React.createClass({
     return (
       <div className="app">
         <nav className="menu" ref="menu">
-          <div className="tab active" data-target="paint">Paint</div>
-          <div className="tab" data-target="animate">Animate</div>
+          <div className="tab" data-target="paint">Paint</div>
+          <div className="tab active" data-target="animate">Animate</div>
           <div className="tab" data-target="debug">Debug</div>
         </nav>
-        <div className="window paint">
+        <div className="window animate">
           <ScreenPaint editor={this.props.editor} workspace={this.props.workspace} />
           <ScreenAnimate editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />

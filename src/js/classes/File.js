@@ -142,25 +142,30 @@ var File = function() {
     self.layers.reverse();
   }
 
+  // handle file saving
   channel.subscribe('file.save', function(data, envelope) {
     self.save();
   });
 
+  // handle layer opacity change
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.opacity = data.opacity;
   });
 
+  // handle layer visibility toggle
   channel.subscribe('file.layer.visibility.toggle', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.visible = data.visible;
   });
 
+  // handle layer name change
   channel.subscribe('file.layer.name.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.name = data.name;
   });
 
+  // handle addition of new layer
   channel.subscribe('file.layer.add', function(data, envelope) {
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
@@ -182,6 +187,7 @@ var File = function() {
     channel.publish('app.layer.add', {frame: editor.frame.selected, layer: newId});
   });
 
+  // handle layer removal
   channel.subscribe('file.layer.delete', function(data, envelope) {
     // delete layer pixels
     self.deletePixelsOfLayer(data.layer);
@@ -218,6 +224,28 @@ var File = function() {
 
     channel.publish('app.layer.delete', {frame: editor.frame.selected, layer: shouldSelectLayer});
   });
+
+  // handle addition of new animation
+  channel.subscribe('file.animation.add', function(data, envelope) {
+    var animation = {
+      name: data.name,
+      fps: data.fps,
+      frames: [],
+    };
+
+    self.animations.push(animation);
+    channel.publish('animation.add');
+  });
+
+  // handle deletion of an animation
+  channel.subscribe('file.animation.delete', function(data, envelope) {
+    self.animations = _.filter(self.animations, function(animation) {
+      return animation.name !== data.name;
+    });
+
+    channel.publish('animation.delete');
+  });
+
 };
 
 
