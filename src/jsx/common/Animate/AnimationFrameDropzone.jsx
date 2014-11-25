@@ -1,8 +1,11 @@
 var AnimationFrameDropzone = React.createClass({
+  propTypes: {
+    text: React.PropTypes.object.isRequired,
+  },
   render: function() {
     return (
       <div className="dropzone" onDragOver={this.preventDefault} onDrop={this.drop}>
-        Drop frames here
+        {this.props.text}
       </div>
     )
   },

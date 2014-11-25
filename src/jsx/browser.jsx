@@ -27,6 +27,7 @@ var App = React.createClass({
 
         'animation.add': this.updateProps,
         'animation.delete': this.updateProps,
+        'animation.select': this.updateProps,
       }
     }
   },

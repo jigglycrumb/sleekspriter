@@ -21,6 +21,7 @@ var AnimationList = React.createClass({
         {this.props.animations.map(function(animation) {
           return (
             <li key={animation.name} className="animation">
+              <input type="radio" name="animation" value={animation.name} onClick={this.selectAnimation} />
               <span className="name">{animation.name}</span>
               <button onClick={this.deleteAnimation.bind(this, animation.name)}>&times;</button>
             </li>
@@ -63,5 +64,9 @@ var AnimationList = React.createClass({
   },
   toggleDisplay: function() {
     this.setState({visible: !this.state.visible});
+  },
+  selectAnimation: function(event) {
+    channel.publish('animation.select', {name: event.target.value});
+    this.setState({visible: false});
   },
 });
