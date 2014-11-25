@@ -3,7 +3,7 @@ var AnimationControlBox = React.createClass({
     return (
       <div id="AnimationControlBox" className="bar">
         <div>
-          <button id="AnimationSelector">
+          <button id="AnimationSelector" onClick={this.toggleAnimations}>
             <span>Select an animation</span>
           </button>
         </div>
@@ -19,5 +19,8 @@ var AnimationControlBox = React.createClass({
         </div>
       </div>
     )
-  }
+  },
+  toggleAnimations: function() {
+    channel.publish('animationlist.toggle');
+  },
 });

@@ -1,12 +1,21 @@
 var AnimationList = React.createClass({
+  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
+      visible: false,
       addButtonDisabled: true,
+      subscriptions: {
+        'animationlist.toggle': this.toggleDisplay,
+      },
     }
   },
   render: function() {
+    var style = {
+      display: this.state.visible === true ? 'block' : 'none'
+    };
+
     return (
-      <div id="AnimationList">
+      <div id="AnimationList" style={style}>
         <h4>Available animations</h4>
         <ul className="animations">
         {this.props.animations.map(function(animation) {
@@ -51,5 +60,8 @@ var AnimationList = React.createClass({
   },
   deleteAnimation: function(name) {
     channel.publish('file.animation.delete', {name: name});
-  }
+  },
+  toggleDisplay: function() {
+    this.setState({visible: !this.state.visible});
+  },
 });
