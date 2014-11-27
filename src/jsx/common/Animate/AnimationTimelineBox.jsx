@@ -1,39 +1,64 @@
 var AnimationTimelineBox = React.createClass({
   render: function() {
 
-    var dropzoneHtml;
+    var frameSize = 120,
+        dropzoneHtml = null,
+        dropzoneClass = null,
+        frames = [];
 
     if(this.props.editor.animations.list.length === 0) {
       dropzoneHtml =  <div>
                         You have not defined any animations yet.<br />
                         Open the animation list in the bottom left corner of the screen to get started.
                       </div>
+
+      dropzoneClass = 'full';
     }
     else if(this.props.editor.animations.selected === null) {
       dropzoneHtml =  <div>
                         You have not selected an animation yet.<br />
                         Open the animation list in the bottom left corner of the screen to get started.
                       </div>
+
+      dropzoneClass = 'full';
     }
     else if(this.props.editor.animations.getFrames(this.props.editor.animations.selected).length === 0) {
       dropzoneHtml =  <div>
                         The animation "{this.props.editor.animations.selected}" does not contain any frames yet.<br />
                         Drag frames from the top left and drop them here to create your animation.
                       </div>
+
+      dropzoneClass = 'full';
     }
     else {
-      dropzoneHtml =  <div>
-                        HURZ!
-                      </div>
+      frames = this.props.editor.animations.getFrames(this.props.editor.animations.selected);
     }
 
+    var finalElements = [],
+        dropzoneKey = 1;
+    frames.forEach(function(frame) {
+      finalElements.push(frame);
+      finalElements.push('dropzone');
+    });
 
     return (
       <div id="AnimationTimelineBox">
         <h4>Timeline</h4>
         <div className="scroller">
           <div className="inner">
-            <AnimationFrameDropzone text={dropzoneHtml} />
+            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} />
+            {finalElements.map(function(element) {
+              if(element === 'dropzone') {
+                var key = 'dropzone-'+dropzoneKey;
+                dropzoneKey++;
+                return (
+                  <AnimationFrameDropzone key={key} />
+                )
+              }
+              else return (
+                <AnimationTimelineFrame key={element} frame={element} size={frameSize} editor={this.props.editor} />
+              )
+            }, this)}
           </div>
         </div>
       </div>

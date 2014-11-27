@@ -1,4 +1,4 @@
-var AnimationFrameBoxFrameCanvas = React.createClass({
+var AnimationFrameCanvas = React.createClass({
   mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
     var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);

@@ -20,7 +20,7 @@ var AnimationFrameBoxFrame = React.createClass({
         onMouseEnter={this.select}
         onMouseLeave={this.unselect}
       >
-        <AnimationFrameBoxFrameCanvas
+        <AnimationFrameCanvas
           id={this.props.frame}
           width={this.props.editor.file.size.width}
           height={this.props.editor.file.size.height}
