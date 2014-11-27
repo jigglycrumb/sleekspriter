@@ -15,7 +15,7 @@ var ScreenAnimate = React.createClass({
         </div>
 
         <div className="area bottom">
-          <AnimationControlBox />
+          <AnimationControlBox editor={this.props.editor} />
         </div>
 
         <AnimationList animations={this.props.editor.animations.list} />
