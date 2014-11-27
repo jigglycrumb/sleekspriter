@@ -4,7 +4,12 @@ var AnimationTimelineBox = React.createClass({
     var frameSize = 120,
         dropzoneHtml = null,
         dropzoneClass = null,
-        frames = [];
+        frames = [],
+        animation;
+
+    if(this.props.editor.animations.selected !== null) {
+      animation = this.props.editor.animations.getSelected();
+    }
 
     if(this.props.editor.animations.list.length === 0) {
       dropzoneHtml =  <div>
@@ -22,7 +27,7 @@ var AnimationTimelineBox = React.createClass({
 
       dropzoneClass = 'full';
     }
-    else if(this.props.editor.animations.getFrames(this.props.editor.animations.selected).length === 0) {
+    else if(animation.frames.length === 0) {
       dropzoneHtml =  <div>
                         The animation "{this.props.editor.animations.selected}" does not contain any frames yet.<br />
                         Drag frames from the top left and drop them here to create your animation.
@@ -31,7 +36,7 @@ var AnimationTimelineBox = React.createClass({
       dropzoneClass = 'full';
     }
     else {
-      frames = this.props.editor.animations.getFrames(this.props.editor.animations.selected);
+      frames = animation.frames;
     }
 
     var finalElements = [],

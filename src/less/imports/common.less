@@ -142,6 +142,17 @@ input[type=number] {
   outline: none;
 }
 
+input[type=text][disabled],
+input[type=number][disabled] {
+  color: @light;
+  -webkit-user-select: none;
+}
+
+input[type=number] {
+  text-align: right;
+  width: 3.2em;
+}
+
 input[type=range] {
   -webkit-appearance: none;
   outline: none;

@@ -246,6 +246,18 @@ var File = function() {
     channel.publish('animation.delete');
   });
 
+  // handle setting of animation FPS
+  channel.subscribe('file.animation.fps', function(data, envelope) {
+    self.animations.some(function(animation) {
+      if(animation.name === data.name) {
+        animation.fps = +data.fps;
+      }
+      return animation.name === data.name;
+    });
+
+    channel.publish('animation.fps', data);
+  });
+
 };
 
 

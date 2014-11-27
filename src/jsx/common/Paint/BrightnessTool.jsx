@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var BrightnessTool = React.createClass({
   render: function() {
 
@@ -25,9 +24,9 @@ var BrightnessTool = React.createClass({
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 
 
-        <input type="range" min="1" max="100" className="brightness-slider" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
+        <input type="range" min="1" max="100" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>{capitaliseFirstLetter(this.props.editor.brightnessTool.mode)} by</span>
-        <input type="number" min="1" max="100" className="brightness-number" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
+        <input type="number" min="1" max="100" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>%</span>
 
 
