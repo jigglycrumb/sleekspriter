@@ -8,7 +8,7 @@ var AnimationControlBox = React.createClass({
         listButtonClasses = React.addons.classSet({
           tiny: true,
           transparent: true,
-          //active: this.props.editor.settingsVisible,
+          active: this.props.listVisible,
         }),
         controlButtonClasses = React.addons.classSet({
           tiny: true,
@@ -24,7 +24,7 @@ var AnimationControlBox = React.createClass({
     return (
       <div id="AnimationControlBox" className="bar">
         <div>
-          <button id="AnimationSelector" className={listButtonClasses} onClick={this.toggleAnimationList} title="Animation list">
+          <button className={listButtonClasses} onClick={this.toggleAnimationList} title="Animation list">
             <i className="flaticon-list67"/>
           </button>
           <label>Animation: {animation.name}</label>

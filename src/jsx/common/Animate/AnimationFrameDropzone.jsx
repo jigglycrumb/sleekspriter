@@ -11,14 +11,20 @@ var AnimationFrameDropzone = React.createClass({
     cssClasses = React.addons.classSet(cssClasses);
 
     return (
-      <div className={cssClasses} onDragOver={this.preventDefault} onDrop={this.drop}>
+      <div className={cssClasses} onDragOver={this.dragOver} onDragLeave={this.dragLeave} onDrop={this.drop}>
         {this.props.text}
       </div>
     )
   },
 
-  preventDefault: function(event) {
+  dragOver: function(event) {
     event.preventDefault();
+    this.getDOMNode().classList.add('over');
+  },
+
+  dragLeave: function(event) {
+    event.preventDefault();
+    this.getDOMNode().classList.remove('over');
   },
 
   drop: function (event) {
@@ -37,5 +43,6 @@ var AnimationFrameDropzone = React.createClass({
     // Do something with the data
     console.log(data);
 
+    this.getDOMNode().classList.remove('over');
   },
 });

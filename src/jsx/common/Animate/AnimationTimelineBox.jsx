@@ -37,6 +37,12 @@ var AnimationTimelineBox = React.createClass({
     }
     else {
       frames = animation.frames;
+      dropzoneHtml =  <div>
+                        <div className="dropzone-inner top" />
+                        <div className="dropzone-inner center" />
+                        <div className="dropzone-inner bottom" />
+                      </div>
+      dropzoneClass = 'default';
     }
 
     var finalElements = [],
@@ -57,7 +63,7 @@ var AnimationTimelineBox = React.createClass({
                 var key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone key={key} />
+                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} />
                 )
               }
               else return (

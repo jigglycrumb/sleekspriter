@@ -21,23 +21,29 @@
 
     .scroller {
       position: absolute;
-      top: 32px;
+      top: 22px;
       left: 10px;
       right: 10px;
-      bottom: 10px;
+      bottom: 0;
       overflow-x: auto;
 
       .inner {
         position: relative;
         width: 100%;
+        margin-top: 10px;
+
+        &>div { // common styles for .dropzone and .frame
+          position: relative;
+          height: 120px;
+          margin-top: 5px;
+          float: left;
+        }
       }
     }
 
     .dropzone {
-      height: 120px;
       text-align: center;
       width: 15px;
-      display: inline-block;
 
       &.full {
         width: 100%;
@@ -47,23 +53,63 @@
           display: table-cell;
           vertical-align: middle;
         }
+      } // .dropzone.full
+
+      &.default {
+        font-size: 120px;
+
+        &>div {
+          height: 100%;
+          pointer-events: none;
+        }
+
+        .dropzone-inner {
+          background: lighten(@selected, 10%);
+          box-shadow: 0 0 5px 0 lighten(@selected, 10%);
+          position: absolute;
+          visibility: hidden;
+
+          &.top {
+            top: -5px;
+            left: 3px;
+            height: 1px;
+            width: 9px;
+          }
+
+          &.center {
+            top: -4px;
+            right: 7px;
+            bottom: -6px;
+            left: 7px;
+            width: 1px;
+          }
+
+          &.bottom {
+            bottom: -7px;
+            left: 3px;
+            height: 1px;
+            width: 9px;
+          }
+        }
+      } // .dropzone.default
+
+      &.default.over {
+        .dropzone-inner {
+          visibility: visible;
+        }
       }
 
       &:last-of-type {
         //.debug(red);
         min-width: 120px;
       }
-    }
+    } // .dropzone
 
     .frame {
       width: 120px;
-      height: 120px;
       border: 1px solid @medium;
       cursor: grab;
-      position: relative;
       z-index: 1;
-      margin-top: 5px;
-      display: inline-block;
 
       &.selected {
         z-index: 2;
@@ -80,6 +126,6 @@
         right: 0;
         padding: 0 5px;
       }
-    }
-  }
+    } // .frame
+  } // #AnimationTimelineBox
 }

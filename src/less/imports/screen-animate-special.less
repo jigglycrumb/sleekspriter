@@ -1,12 +1,22 @@
 .screen.animate {
 
+  transition-property: all;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0;
+
+  &.list-visible {
+    transform: translate3d(200px, 0, 0);
+    overflow: visible;
+  }
+
   #AnimationList {
     position: absolute;
     z-index: 2;
-    left: 2px;
-    bottom: 26px;
+    top: 0;
+    left: -200px;
+    bottom: 0;
     width: 200px;
-    height: 200px;
     background: @dark;
 
     .animations {
