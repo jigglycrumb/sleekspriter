@@ -8,6 +8,7 @@ var AnimationControlBox = React.createClass({
         listButtonClasses = React.addons.classSet({
           tiny: true,
           transparent: true,
+          list: true,
           active: this.props.listVisible,
         }),
         controlButtonClasses = React.addons.classSet({

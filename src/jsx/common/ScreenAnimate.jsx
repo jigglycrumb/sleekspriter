@@ -5,7 +5,7 @@ var ScreenAnimate = React.createClass({
       listVisible: false,
       subscriptions: {
         'animationlist.toggle': this.toggleAnimationList,
-        'animation.select': this.toggleAnimationList,
+        'animation.select': this.animationSelected,
       },
     }
   },
@@ -41,5 +41,8 @@ var ScreenAnimate = React.createClass({
   },
   toggleAnimationList: function() {
     this.setState({listVisible: !this.state.listVisible});
+  },
+  animationSelected: function() {
+    setTimeout(this.toggleAnimationList, 350);
   },
 });

@@ -1,12 +1,14 @@
 .screen.animate {
 
+  @list-width: 300px;
+
   transition-property: all;
   transition-duration: 250ms;
   transition-timing-function: ease-in-out;
   transition-delay: 0;
 
   &.list-visible {
-    transform: translate3d(200px, 0, 0);
+    transform: translate3d(@list-width, 0, 0);
     overflow: visible;
   }
 
@@ -14,49 +16,106 @@
     position: absolute;
     z-index: 2;
     top: 0;
-    left: -200px;
+    left: -@list-width;
     bottom: 0;
-    width: 200px;
-    background: @dark;
+    width: @list-width;
+    background: @light;
+
+    .animations-header {
+      height: 30px;
+      line-height: 26px;
+      .gradient;
+
+      label {
+        display: inline-block;
+      }
+
+      .flaticon-film50 {
+        position: relative;
+        top: 2px;
+        left: 10px;
+        font-size: 14px;
+      }
+    }
 
     .animations {
-        float: left;
-        width: 100%;
+      background: @dark;
+      margin: 0;
+
+      li>* {
+        display: inline-block;
+      }
     }
 
     button {
-        float: right;
-        margin-right: 3px;
+      float: right;
+      margin-right: 3px;
     }
 
     .animation {
-        width: 100%;
+
+      border-top: 1px solid #6a6a6a;
+      background: @medium;
+      border-bottom: 1px solid @dark;
+      height: 40px;
+
+      input[type=radio] {
+        -webkit-appearance: none;
+        outline: none;
+        cursor: pointer;
         float: left;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0;
+        text-align: center;
+        color: @font-color;
+        font-family: 'Flaticon';
+        font-size: .8rem;
+        .letterpress;
+      }
 
-        input[type=radio] {
-            float: left;
+      // input[type=radio]:before {
+      //   .icon-eye-slashed;
+      //   color: darken(@font-color, 20%);
+      // }
 
-        }
+      input[type=radio]:checked:before {
+        .icon-checkmark;
+        color: @font-color;
+      }
 
-        .name {
-            padding: 0 3px;
-            float: left;
-        }
-
-        &:hover {
-            background: @medium;
-        }
-    }
+      .name {
+        padding: 0 3px;
+      }
+    } // .animation
 
     .new {
-        width: 100%;
-
-        input[type=text] {
-            margin: 0 3px;
-            width: 160px;
-        }
+      input[type=text] {
+        margin: 0 3px;
+      }
     }
-  }
+
+    .select {
+      width: 40px;
+    }
+
+    .name {
+      width: 160px;
+    }
+
+    .fps {
+      width: 30px;
+    }
+
+    .frames {
+      width: 40px;
+    }
+
+    .delete {
+      width: 30px;
+    }
+  } // #AnimationList
 
   #AnimationList:after {
     background: none;

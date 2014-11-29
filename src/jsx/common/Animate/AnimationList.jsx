@@ -7,19 +7,31 @@ var AnimationList = React.createClass({
   render: function() {
     return (
       <div id="AnimationList">
-        <h4>Available animations</h4>
+        <h5>Available animations</h5>
+
+        <div className="animations-header">
+          <label className="select"><i className="flaticon-film50" /></label>
+          <label className="name">Name</label>
+          <label className="fps">FPS</label>
+          <label className="frames">Frames</label>
+        </div>
+
         <ul className="animations">
         {this.props.animations.map(function(animation) {
           return (
             <li key={animation.name} className="animation">
-              <input type="radio" name="animation" value={animation.name} onClick={this.selectAnimation} />
+              <input className="select" type="radio" name="animation" value={animation.name} onClick={this.selectAnimation} />
               <NameEditable name={animation.name} callback={this.dispatchAnimationNameChanged.bind(this, animation.name)} />
-              <button onClick={this.deleteAnimation.bind(this, animation.name)}>&times;</button>
+              <span className="fps">{animation.fps}</span>
+              <span className="frames">{animation.frames.length}</span>
+              <button className="delete transparent" onClick={this.deleteAnimation.bind(this, animation.name)}>&times;</button>
             </li>
           )
         }, this)}
         </ul>
-        <div className="new">
+
+        <div className="animations-footer">
+          <label className="select">&nbsp;</label>
           <input ref="name" type="text" placeholder="Enter new animation name" onKeyUp={this.checkReturn} onInput={this.checkName} onPaste={this.checkName} />
           <button ref="addButton" onClick={this.createAnimation} disabled={this.state.addButtonDisabled}>+</button>
         </div>
@@ -27,7 +39,7 @@ var AnimationList = React.createClass({
     )
   },
   checkReturn: function(event) {
-    if(event.nativeEvent.keyCode === 13) this.createAnimation();
+    if(event.keyCode === 13) this.createAnimation();
   },
   checkName: function(event) {
     var name = this.refs.name.getDOMNode().value,
