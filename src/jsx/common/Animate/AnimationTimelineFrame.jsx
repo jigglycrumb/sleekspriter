@@ -2,7 +2,7 @@ var AnimationTimelineFrame = React.createClass({
   render: function() {
     return (
       <div className="frame">
-        <AnimationFrameCanvas
+        <FrameCanvas
           id={this.props.frame}
           width={this.props.editor.file.size.width}
           height={this.props.editor.file.size.height}

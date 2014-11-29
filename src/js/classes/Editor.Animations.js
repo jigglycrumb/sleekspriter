@@ -16,13 +16,6 @@ Editor.prototype.animations.init = function() {
   channel.subscribe('animation.select', function(data, envelope) {
     self.selected = data.name;
   });
-
-  channel.subscribe('animation.fps', function(data, envelope) {
-    self.list.some(function(animation) {
-      if(animation.name === data.name) animation.fps = +data.fps;
-      return animation.name === data.name;
-    });
-  });
 };
 
 Editor.prototype.animations.getByName = function(name) {

@@ -13,7 +13,7 @@ var AnimationList = React.createClass({
           return (
             <li key={animation.name} className="animation">
               <input type="radio" name="animation" value={animation.name} onClick={this.selectAnimation} />
-              <span className="name">{animation.name}</span>
+              <NameEditable name={animation.name} callback={this.dispatchAnimationNameChanged.bind(this, animation.name)} />
               <button onClick={this.deleteAnimation.bind(this, animation.name)}>&times;</button>
             </li>
           )
@@ -55,5 +55,8 @@ var AnimationList = React.createClass({
   },
   selectAnimation: function(event) {
     channel.publish('animation.select', {name: event.target.value});
+  },
+  dispatchAnimationNameChanged: function(oldName, newName) {
+    channel.publish('file.animation.rename', {oldName: oldName, newName: newName});
   },
 });

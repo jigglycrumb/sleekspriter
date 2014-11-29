@@ -254,8 +254,16 @@ var File = function() {
       }
       return animation.name === data.name;
     });
+  });
 
-    channel.publish('animation.fps', data);
+  // handle animation renaming
+  channel.subscribe('file.animation.rename', function(data, envelope) {
+    self.animations.some(function(animation) {
+      if(animation.name === data.oldName) {
+        animation.name = data.newName;
+      }
+      return animation.name === data.oldName;
+    });
   });
 
 };
