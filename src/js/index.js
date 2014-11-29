@@ -104,7 +104,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // {topic: 'canvas.refresh'},
         // {topic: /selection/},
         // {topic: 'pixel.add'},
-        // {topic: 'frame.select'},
+        // {topic: 'file.layer.name.select'},
         {topic: 'screen.select'},
     ],
     // active: false,

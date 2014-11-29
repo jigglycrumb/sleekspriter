@@ -19,6 +19,7 @@ var App = React.createClass({
 
         'file.layer.opacity.select': this.updateProps,
         'file.layer.visibility.toggle': this.updateProps,
+        'file.layer.name.select': this.updateProps,
 
         'file.save': this.updateProps,
 
