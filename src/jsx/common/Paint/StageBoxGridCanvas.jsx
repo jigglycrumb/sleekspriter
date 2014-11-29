@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var StageBoxGridCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
   render: function() {

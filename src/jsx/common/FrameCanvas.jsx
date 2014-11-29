@@ -1,5 +1,4 @@
-/** @jsx React.DOM */
-var FrameBoxFrame = React.createClass({
+var FrameCanvas = React.createClass({
   mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
     var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);

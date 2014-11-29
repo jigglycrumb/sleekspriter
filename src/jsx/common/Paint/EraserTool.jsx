@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var EraserTool = React.createClass({
   render: function() {
     return (

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var EyedropperTool = React.createClass({
   render: function() {
     var color = this.props.editor.color.frame;

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var LayerBoxLayerPreview = React.createClass({
   mixins:[PostalSubscriptionMixin, LayerCanvasMixin],
   render: function() {

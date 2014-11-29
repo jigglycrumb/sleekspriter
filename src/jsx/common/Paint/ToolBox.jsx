@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var ToolBox = React.createClass({
   render: function() {
 

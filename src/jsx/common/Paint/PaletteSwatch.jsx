@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var PaletteSwatch = React.createClass({
   propTypes: {
     color: React.PropTypes.string.isRequired,

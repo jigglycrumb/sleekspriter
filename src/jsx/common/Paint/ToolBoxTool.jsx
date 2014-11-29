@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var ToolBoxTool = React.createClass({
   render: function() {
     var selected = this.props.id == this.props.editor.tool.selected ? true : false;

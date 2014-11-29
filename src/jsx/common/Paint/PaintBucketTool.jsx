@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var PaintBucketTool = React.createClass({
   render: function() {
     var hex = editor.color.brush.hexString();

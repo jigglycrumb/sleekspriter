@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var FrameBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {
@@ -38,7 +37,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={classes} style={frameStyle} onClick={clickHandler}>
-                <FrameBoxFrame
+                <FrameCanvas
                   id={frame}
                   width={this.props.editor.file.size.width}
                   height={this.props.editor.file.size.height}

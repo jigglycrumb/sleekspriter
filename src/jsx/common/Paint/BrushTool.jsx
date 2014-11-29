@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var BrushTool = React.createClass({
   render: function() {
     var hex = editor.color.brush.hexString();

@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var SettingsBox = React.createClass({
   render: function() {
     var checkerboardButtonClasses = React.addons.classSet({

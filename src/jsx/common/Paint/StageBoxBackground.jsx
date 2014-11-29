@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var StageBoxBackground = React.createClass({
   propTypes: {
     type: React.PropTypes.oneOf(['color','pattern','image']).isRequired,

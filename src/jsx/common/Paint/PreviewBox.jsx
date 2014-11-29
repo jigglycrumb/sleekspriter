@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var PreviewBox = React.createClass({
   mixins: [FoldableMixin],
   render: function() {

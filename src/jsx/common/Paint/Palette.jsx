@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var Palette = React.createClass({
   getInitialState: function() {
     return {

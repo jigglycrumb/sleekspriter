@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var StatusBar = React.createClass({
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
