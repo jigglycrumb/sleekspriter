@@ -8,8 +8,6 @@
     height: 39px;
     background: @light;
     border-top: 1px solid @dark;
-    border-left: 1px solid @dark;
-    border-right: 1px solid @dark;
   }
 
    .ToolComponent {
@@ -66,11 +64,9 @@
     }
 
     .palette {
-      //.debug(green);
       position: relative;
 
       .switch {
-        //.debug(yellow);
         float: left;
         position: relative;
         cursor: pointer;
@@ -106,23 +102,19 @@
       }
 
       .outer {
-        //.debug(yellow);
         position: absolute;
         left: 220px;
         right: 17px;
         height: 38px;
-        overflow: hidden; //-x: auto;
+        overflow: hidden;
       }
 
       .inner {
-        //.debug(green);
         height: 36px;
         width: 0; // this is set via JS in Palette.setInnerWidth
       }
 
       .scroll {
-
-        //position: absolute;
         height: 26px;
         width: 10px;
         margin-top: 6px;
@@ -130,10 +122,6 @@
         i {
           position: relative;
           left: -.5em;
-        }
-
-        &.left {
-          //left: 50px;
         }
 
         &.right {
@@ -147,7 +135,6 @@
       margin-top: 6px;
       margin-right: 2px;
       cursor: pointer;
-      //display: inline-block;
     }
 
     .spacer {

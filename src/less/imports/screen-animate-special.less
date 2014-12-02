@@ -19,12 +19,11 @@
     left: -@list-width;
     bottom: 0;
     width: @list-width;
-    background: @light;
+    background: @dark;
 
     .animations-header {
-      height: 30px;
-      line-height: 26px;
-      .gradient;
+      border-top: 1px solid @dark;
+      padding: 3px;
 
       label {
         display: inline-block;
@@ -32,24 +31,24 @@
 
       .flaticon-film50 {
         position: relative;
-        top: 2px;
+        top: 1px;
         left: 10px;
         font-size: 14px;
       }
     }
 
     .animations {
-      background: @dark;
+      position: absolute;
+      top: 64px;
+      bottom: 20px;
+      left: 0;
+      width: @list-width;
       margin: 0;
+      overflow-y: auto;
 
       li>* {
         display: inline-block;
       }
-    }
-
-    button {
-      float: right;
-      margin-right: 3px;
     }
 
     .animation {
@@ -57,7 +56,9 @@
       border-top: 1px solid #6a6a6a;
       background: @medium;
       border-bottom: 1px solid @dark;
-      height: 40px;
+      height: 30px;
+      line-height: 30px;
+      margin-left: 3px;
 
       input[type=radio] {
         -webkit-appearance: none;
@@ -65,8 +66,7 @@
         cursor: pointer;
         float: left;
         width: 40px;
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
         margin: 0;
         text-align: center;
         color: @font-color;
@@ -75,20 +75,25 @@
         .letterpress;
       }
 
-      // input[type=radio]:before {
-      //   .icon-eye-slashed;
-      //   color: darken(@font-color, 20%);
-      // }
-
       input[type=radio]:checked:before {
         .icon-checkmark;
         color: @font-color;
-      }
-
-      .name {
-        padding: 0 3px;
+        position: relative;
+        top: 8px;
+        left: -2px;
       }
     } // .animation
+
+    .animations-footer {
+      position: absolute;
+      left: 2px;
+      bottom: 1px;
+      width: @list-width - 3;
+      height: 23px;
+      line-height: 23px;
+      border: 1px solid @dark;
+      background: @light;
+    }
 
     .new {
       input[type=text] {

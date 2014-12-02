@@ -5,16 +5,19 @@ var AnimationList = React.createClass({
     }
   },
   render: function() {
+
+    var disabled = this.props.animations.length <= 1 ? true : false;
+
     return (
       <div id="AnimationList">
         <h5>Available animations</h5>
 
-        <div className="animations-header">
+        <h4 className="animations-header">
           <label className="select"><i className="flaticon-film50" /></label>
           <label className="name">Name</label>
           <label className="fps">FPS</label>
           <label className="frames">Frames</label>
-        </div>
+        </h4>
 
         <ul className="animations">
         {this.props.animations.map(function(animation) {
@@ -24,16 +27,19 @@ var AnimationList = React.createClass({
               <NameEditable name={animation.name} callback={this.dispatchAnimationNameChanged.bind(this, animation.name)} />
               <span className="fps">{animation.fps}</span>
               <span className="frames">{animation.frames.length}</span>
-              <button className="delete transparent" onClick={this.deleteAnimation.bind(this, animation.name)}>&times;</button>
             </li>
           )
         }, this)}
         </ul>
 
         <div className="animations-footer">
+          {/*
           <label className="select">&nbsp;</label>
           <input ref="name" type="text" placeholder="Enter new animation name" onKeyUp={this.checkReturn} onInput={this.checkName} onPaste={this.checkName} />
           <button ref="addButton" onClick={this.createAnimation} disabled={this.state.addButtonDisabled}>+</button>
+          */}
+          <button title="New animation" className="tiny transparent"><i className="flaticon-plus25"></i></button>
+          <button title="Delete selected animation" className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
         </div>
       </div>
     )
