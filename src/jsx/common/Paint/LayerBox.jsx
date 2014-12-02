@@ -13,8 +13,9 @@ var LayerBox = React.createClass({
         <div className="foldable-fold">
           <div className="layers">
             {this.props.editor.layers.frame.map(function(layer) {
+              var selected = layer.id === this.props.editor.selected ? true : false;
               return (
-                <LayerBoxLayer key={layer.id} layer={layer} editor={this.props.editor} />
+                <LayerBoxLayer key={layer.id} layer={layer} selected={selected} dimensions={this.props.editor.file.size} />
               );
             }, this)}
           </div>

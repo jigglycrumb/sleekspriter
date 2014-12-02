@@ -3,16 +3,19 @@ var LayerBoxLayer = React.createClass({
      layer: React.PropTypes.object.isRequired // layer object
   },
   render: function() {
-    var htmlId = 'LayerBoxLayer-'+this.props.layer.id;
-        cssClass = 'LayerBoxLayer';
-    if(this.props.layer.id == this.props.editor.layers.selected) cssClass+= ' selected';
+    var htmlId = 'LayerBoxLayer-'+this.props.layer.id,
+        cssClass = React.addons.classSet({
+          LayerBoxLayer: true,
+          selected: this.props.selected,
+        });
+
     return (
       <div id={htmlId} className={cssClass}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
         <div className="preview" onClick={this.dispatchLayerSelected}>
-          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.editor.file.size.width} height={this.props.editor.file.size.height} stage={false} />
+          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.dimensions.width} height={this.props.dimensions.height} stage={false} />
         </div>
         <NameEditable name={this.props.layer.name} callback={this.dispatchLayerNameChanged} />
         <input type="range" className="opacity-slider" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />

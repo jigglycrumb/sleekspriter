@@ -179,7 +179,7 @@ var File = function() {
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, editor.frame.selected, 'layer '+newId, newZIndex, 100, true]);
+    var newLayer = layerFromFile([newId, editor.frame.selected, 'Layer ' + newId, newZIndex, 100, true]);
 
     self.layers.splice(index, 0, newLayer);
     fixLayerZ(editor.frame.selected);
@@ -228,8 +228,8 @@ var File = function() {
   // handle addition of new animation
   channel.subscribe('file.animation.add', function(data, envelope) {
     var animation = {
-      name: data.name,
-      fps: data.fps,
+      name: 'Animation '+ (self.animations.length+1),
+      fps: 10,
       frames: [],
     };
 
@@ -242,7 +242,6 @@ var File = function() {
     self.animations = _.filter(self.animations, function(animation) {
       return animation.name !== data.name;
     });
-
     channel.publish('animation.delete');
   });
 
@@ -264,6 +263,7 @@ var File = function() {
       }
       return animation.name === data.oldName;
     });
+    channel.publish('animation.rename', data);
   });
 
 };

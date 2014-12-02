@@ -9,8 +9,13 @@ Editor.prototype.animations.init = function() {
     self.list = file.animations;
   });
 
+  channel.subscribe('file.animation.rename', function(data, envelope) {
+    if(self.selected === data.oldName) self.selected = data.newName;
+  });
+
   channel.subscribe('animation.delete', function() {
     self.list = file.animations;
+    self.selected = null;
   });
 
   channel.subscribe('animation.select', function(data, envelope) {
