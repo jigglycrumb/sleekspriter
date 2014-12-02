@@ -46,7 +46,7 @@ var AnimationTimelineBox = React.createClass({
     }
 
     var finalElements = [],
-        dropzoneKey = 1;
+        dropzoneKey = 2;
     frames.forEach(function(frame) {
       finalElements.push(frame);
       finalElements.push('dropzone');
@@ -57,13 +57,13 @@ var AnimationTimelineBox = React.createClass({
         <h4>Timeline</h4>
         <div className="scroller">
           <div className="inner">
-            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} />
+            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} position={1} />
             {finalElements.map(function(element) {
               if(element === 'dropzone') {
                 var key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} />
+                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} position={dropzoneKey-1} />
                 )
               }
               else return (

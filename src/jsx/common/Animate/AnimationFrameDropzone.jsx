@@ -16,33 +16,37 @@ var AnimationFrameDropzone = React.createClass({
       </div>
     )
   },
+  setOver: function(event, over) {
+    var method = over === true ? 'add' : 'remove';
+    event.preventDefault();
+    this.getDOMNode().classList[method]('over');
+  },
 
   dragOver: function(event) {
-    event.preventDefault();
-    this.getDOMNode().classList.add('over');
+    // event.preventDefault();
+    // this.getDOMNode().classList.add('over');
+    this.setOver(event, true);
   },
 
   dragLeave: function(event) {
-    event.preventDefault();
-    this.getDOMNode().classList.remove('over');
+    // event.preventDefault();
+    // this.getDOMNode().classList.remove('over');
+    this.setOver(event, false);
   },
 
   drop: function (event) {
+    // event.preventDefault();
+    // this.getDOMNode().classList.remove('over');
+    this.setOver(event, false);
 
-    event.preventDefault();
+    var frame;
 
-    var data;
-
-    try {
-      data = JSON.parse(event.dataTransfer.getData('frame'));
-    } catch (e) {
-      // If the text data isn't parsable we'll just ignore it.
-      return;
-    }
+    try { frame = JSON.parse(event.dataTransfer.getData('frame')) }
+    catch (e) { return }
 
     // Do something with the data
-    console.log(data);
+    console.log('dropped frame '+frame+' on dropzone #'+this.props.position);
 
-    this.getDOMNode().classList.remove('over');
+
   },
 });

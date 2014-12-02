@@ -32,7 +32,6 @@ var App = React.createClass({
         'animation.rename': this.updateProps,
 
         'file.animation.fps': this.updateProps,
-        // 'file.animation.rename': this.updateProps,
       }
     }
   },
