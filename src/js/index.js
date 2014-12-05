@@ -106,7 +106,7 @@ var wireTap = new postal.diagnostics.DiagnosticsWireTap({
         // {topic: 'pixel.add'},
         // {topic: 'file.layer.name.select'},
         // {topic: 'screen.select'},
-        // {topic: 'file.animation.frame.delete'},
+        // {topic: 'animation.frame.select'},
     ],
     active: false,
 });

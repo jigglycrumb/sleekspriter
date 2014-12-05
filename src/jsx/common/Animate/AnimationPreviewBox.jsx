@@ -1,17 +1,21 @@
 var AnimationPreviewBox = React.createClass({
+  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
-      frame: 1,
+      frame: null,
+      subscriptions: {
+        'animation.frame.select': this.selectFrame,
+      },
     }
   },
   render: function() {
 
     var preview = null;
-    if(this.state.frame > 0) {
+    if(this.state.frame !== null) {
       preview =
         <AnimationPreviewBoxPreview
           ref="preview"
-          id={1}
+          id={this.state.frame}
           width={this.props.editor.file.size.width}
           height={this.props.editor.file.size.height} />
     }
@@ -26,6 +30,15 @@ var AnimationPreviewBox = React.createClass({
     )
   },
   componentDidMount: function() {
+    this.scalePreview();
+  },
+  componentDidUpdate: function() {
+    this.scalePreview();
+  },
+  selectFrame: function(data) {
+    this.setState({frame: data.frame});
+  },
+  scalePreview: function() {
     if(this.refs.preview) {
       var inner = this.refs.inner.getDOMNode();
       // this is a little ugly but works for now

@@ -1,7 +1,12 @@
 var AnimationTimelineFrame = React.createClass({
   render: function() {
+    var cssClass = React.addons.classSet({
+      frame: true,
+      selected: this.props.selected,
+    });
+
     return (
-      <div className="frame" onClick={this.dispatchFrameSelect}>
+      <div className={cssClass} onClick={this.dispatchFrameSelect}>
         <FrameCanvas
           id={this.props.frame}
           width={this.props.editor.file.size.width}
@@ -13,7 +18,12 @@ var AnimationTimelineFrame = React.createClass({
     )
   },
   dispatchFrameSelect: function() {
-    console.log('select frame '+this.props.frame);
+    var data = {
+      frame: this.props.frame,
+      position: this.props.position,
+    };
+
+    channel.publish('animation.frame.select', data);
   },
   dispatchFrameDelete: function(event) {
     event.stopPropagation();

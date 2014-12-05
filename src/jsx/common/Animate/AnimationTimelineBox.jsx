@@ -1,4 +1,13 @@
 var AnimationTimelineBox = React.createClass({
+  mixins: [PostalSubscriptionMixin],
+  getInitialState: function() {
+    return {
+      selectedFrame: 0,
+      subscriptions: {
+        'animation.frame.select': this.selectFrame,
+      }
+    }
+  },
   render: function() {
 
     var frameSize = 120,
@@ -74,10 +83,11 @@ var AnimationTimelineBox = React.createClass({
                 )
               }
               else {
-                var key = 'frame-'+frameKey;
+                var key = 'frame-'+frameKey,
+                    selected = this.state.selectedFrame === frameKey ? true : false;
                 frameKey++;
                 return (
-                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} position={frameKey-1} editor={this.props.editor} />
+                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} position={frameKey-1} editor={this.props.editor} selected={selected} />
                 )
               }
             }, this)}
@@ -85,5 +95,8 @@ var AnimationTimelineBox = React.createClass({
         </div>
       </div>
     );
-  }
+  },
+  selectFrame: function(data) {
+    this.setState({selectedFrame: data.position});
+  },
 });
