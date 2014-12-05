@@ -72,6 +72,10 @@ var File = function() {
     return _.findWhere(this.layers, {id: id}) || false;
   };
 
+  this.getAnimationByName = function(name) {
+    return _.findWhere(this.animations, {name: name}) || false;
+  }
+
   this.deletePixelsOfLayer = function(layer) {
     this.pixels = this.pixels.filter(function(pixel) {
       return pixel.layer !== layer;
@@ -247,25 +251,24 @@ var File = function() {
 
   // handle setting of animation FPS
   channel.subscribe('file.animation.fps', function(data, envelope) {
-    self.animations.some(function(animation) {
-      if(animation.name === data.name) {
-        animation.fps = +data.fps;
-      }
-      return animation.name === data.name;
-    });
+    var animation = self.getAnimationByName(data.name);
+    animation.fps = +data.fps;
+    channel.publish('animation.fps');
   });
 
   // handle animation renaming
   channel.subscribe('file.animation.rename', function(data, envelope) {
-    self.animations.some(function(animation) {
-      if(animation.name === data.oldName) {
-        animation.name = data.newName;
-      }
-      return animation.name === data.oldName;
-    });
+    var animation = self.getAnimationByName(data.oldName);
+    animation.name = data.newName;
     channel.publish('animation.rename', data);
   });
 
+  // handle animation frame adding
+  channel.subscribe('file.animation.frame.add', function(data, envelope){
+    var animation = self.getAnimationByName(data.animation);
+    animation.frames.splice(data.position, 0, data.frame);
+    channel.publish('animation.frame.add');
+  });
 };
 
 

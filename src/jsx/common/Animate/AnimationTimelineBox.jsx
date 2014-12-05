@@ -46,29 +46,40 @@ var AnimationTimelineBox = React.createClass({
     }
 
     var finalElements = [],
-        dropzoneKey = 2;
+        dropzoneKey = 1,
+        frameKey = 1;
     frames.forEach(function(frame) {
       finalElements.push(frame);
       finalElements.push('dropzone');
     });
 
+    var innerStyle = {
+      width: (frames.length*(frameSize+2+15))+15,
+    };
+
+    if(frames.length === 0) innerStyle.width = '100%';
+
     return (
       <div id="AnimationTimelineBox">
         <h4>Timeline</h4>
         <div className="scroller">
-          <div className="inner">
-            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} position={1} />
+          <div className="inner" style={innerStyle}>
+            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} position={0} animation={this.props.editor.animations.selected} />
             {finalElements.map(function(element) {
               if(element === 'dropzone') {
                 var key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} position={dropzoneKey-1} />
+                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} position={dropzoneKey-1} animation={this.props.editor.animations.selected} />
                 )
               }
-              else return (
-                <AnimationTimelineFrame key={element} frame={element} size={frameSize} editor={this.props.editor} />
-              )
+              else {
+                var key = 'frame-'+frameKey;
+                frameKey++;
+                return (
+                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} editor={this.props.editor} />
+                )
+              }
             }, this)}
           </div>
         </div>

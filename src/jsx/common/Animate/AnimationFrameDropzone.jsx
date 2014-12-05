@@ -21,32 +21,28 @@ var AnimationFrameDropzone = React.createClass({
     event.preventDefault();
     this.getDOMNode().classList[method]('over');
   },
-
   dragOver: function(event) {
-    // event.preventDefault();
-    // this.getDOMNode().classList.add('over');
     this.setOver(event, true);
   },
-
   dragLeave: function(event) {
-    // event.preventDefault();
-    // this.getDOMNode().classList.remove('over');
     this.setOver(event, false);
   },
-
   drop: function (event) {
-    // event.preventDefault();
-    // this.getDOMNode().classList.remove('over');
     this.setOver(event, false);
 
-    var frame;
+    if(this.props.animation !== null) {
+      // try to get the dropped frame or bail out
+      var frame;
+      try { frame = JSON.parse(event.dataTransfer.getData('frame')) }
+      catch (e) { return }
 
-    try { frame = JSON.parse(event.dataTransfer.getData('frame')) }
-    catch (e) { return }
+      var data = {
+        animation: this.props.animation,
+        frame: frame,
+        position: this.props.position,
+      };
 
-    // Do something with the data
-    console.log('dropped frame '+frame+' on dropzone #'+this.props.position);
-
-
+      channel.publish('file.animation.frame.add', data);
+    }
   },
 });

@@ -48,6 +48,9 @@ var FrameCanvasMixin = {
   componentDidMount: function() {
     this.paintFrame();
   },
+  componentDidUpdate: function() {
+    this.paintFrame();
+  },
   getPixelsAbove: function(pixels, x, y, z) {
     var above = pixels.filter(function(px) {
       return px.frame == this.props.id && px.x == x && px.y == y && px.z > z;
