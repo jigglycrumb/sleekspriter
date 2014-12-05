@@ -26,10 +26,10 @@ var AnimationList = React.createClass({
         </ul>
 
         <div className="animations-footer">
-          <button title="New animation" className="tiny transparent" onClick={this.dispatchAnimationAdded}>
+          <button title="New animation" className="transparent" onClick={this.dispatchAnimationAdded}>
             <i className="flaticon-plus25" />
           </button>
-          <button title="Delete selected animation" className="tiny transparent" onClick={this.dispatchAnimationRemoved} disabled={deleteButtonDisabled}>
+          <button title="Delete selected animation" className="transparent" onClick={this.dispatchAnimationRemoved} disabled={deleteButtonDisabled}>
             <i className="flaticon-minus18" />
           </button>
         </div>

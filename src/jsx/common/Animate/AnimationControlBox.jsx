@@ -6,13 +6,11 @@ var AnimationControlBox = React.createClass({
           fps: 0,
         },
         listButtonClasses = React.addons.classSet({
-          tiny: true,
           transparent: true,
           list: true,
           active: this.props.listVisible,
         }),
         controlButtonClasses = React.addons.classSet({
-          tiny: true,
           transparent: true,
         }),
         fpsDisabled = true;

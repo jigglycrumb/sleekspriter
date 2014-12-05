@@ -47,7 +47,7 @@ var AnimationTimelineBox = React.createClass({
 
     var finalElements = [],
         dropzoneKey = 1,
-        frameKey = 1;
+        frameKey = 0;
     frames.forEach(function(frame) {
       finalElements.push(frame);
       finalElements.push('dropzone');
@@ -77,7 +77,7 @@ var AnimationTimelineBox = React.createClass({
                 var key = 'frame-'+frameKey;
                 frameKey++;
                 return (
-                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} editor={this.props.editor} />
+                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} position={frameKey-1} editor={this.props.editor} />
                 )
               }
             }, this)}

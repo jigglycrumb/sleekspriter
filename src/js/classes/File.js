@@ -264,10 +264,19 @@ var File = function() {
   });
 
   // handle animation frame adding
-  channel.subscribe('file.animation.frame.add', function(data, envelope){
+  channel.subscribe('file.animation.frame.add', function(data, envelope) {
     var animation = self.getAnimationByName(data.animation);
     animation.frames.splice(data.position, 0, data.frame);
     channel.publish('animation.frame.add');
+  });
+
+  // handle animation frame removal
+  channel.subscribe('file.animation.frame.delete', function(data, envelope) {
+    var animation = self.getAnimationByName(data.animation);
+    if(animation.frames[data.position] === data.frame) {
+      animation.frames.splice(data.position, 1);
+    }
+    channel.publish('animation.frame.delete');
   });
 };
 

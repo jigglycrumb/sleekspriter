@@ -32,6 +32,7 @@ var App = React.createClass({
         'animation.rename': this.updateProps,
         'animation.fps': this.updateProps,
         'animation.frame.add': this.updateProps,
+        'animation.frame.delete': this.updateProps,
       }
     }
   },
