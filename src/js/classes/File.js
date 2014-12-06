@@ -276,7 +276,7 @@ var File = function() {
     if(animation.frames[data.position] === data.frame) {
       animation.frames.splice(data.position, 1);
     }
-    channel.publish('animation.frame.delete');
+    channel.publish('animation.frame.delete', data);
   });
 };
 

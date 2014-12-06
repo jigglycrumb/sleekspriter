@@ -5,6 +5,7 @@ var AnimationPreviewBox = React.createClass({
       frame: null,
       subscriptions: {
         'animation.frame.select': this.selectFrame,
+        'animation.frame.delete': this.selectNewFrameAfterDelete,
       },
     }
   },
@@ -45,5 +46,15 @@ var AnimationPreviewBox = React.createClass({
       // e.g. window resizes don't work yet
       this.refs.preview.scale(inner.clientWidth, inner.clientHeight);
     }
+  },
+  selectNewFrameAfterDelete: function(data) {
+    var animation = this.props.editor.animations.getSelected(),
+        framePosition = data.position - 1,
+        frame = null;
+
+    if(framePosition < 0) framePosition = 0;
+    frame = animation.frames[framePosition];
+
+    this.setState({frame: frame});
   },
 });
