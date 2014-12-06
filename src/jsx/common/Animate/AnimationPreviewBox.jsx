@@ -9,7 +9,6 @@ var AnimationPreviewBox = React.createClass({
     }
   },
   render: function() {
-
     var preview = null;
     if(this.state.frame !== null) {
       preview =

@@ -1,13 +1,5 @@
 var AnimationTimelineBox = React.createClass({
-  mixins: [PostalSubscriptionMixin],
-  getInitialState: function() {
-    return {
-      selectedFrame: 0,
-      subscriptions: {
-        'animation.frame.select': this.selectFrame,
-      }
-    }
-  },
+  mixins: [PostalSubscriptionMixin, SelectedAnimationFrameMixin],
   render: function() {
 
     var frameSize = 120,
@@ -95,8 +87,5 @@ var AnimationTimelineBox = React.createClass({
         </div>
       </div>
     );
-  },
-  selectFrame: function(data) {
-    this.setState({selectedFrame: data.position});
   },
 });
