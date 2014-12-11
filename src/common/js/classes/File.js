@@ -285,12 +285,3 @@ File.prototype = {};
 File.prototype.save = function() {
   console.log('saving file to disk');
 };
-
-
-File.load = function(file, callback) {
-
-  console.info('File: '+file);
-
-  var url = 'mock/loadfile.php?file=' + file;
-  $.getJSON(url, callback);
-};

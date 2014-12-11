@@ -3,7 +3,7 @@ module.exports = {
   browser: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/browser'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'pixels/**'], dest: 'build/browser'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -27,14 +27,15 @@ module.exports = {
         dest: 'build/browser/js/bower_components/postaldiagnostics.js',
       },
 
-      // mocks
-      {expand: true, cwd: 'src/browser/mock', src: ['**'], dest: 'build/browser/mock'},
+      // file handlers
+      {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
+      {src: 'src/browser/File.load.js', dest: 'build/browser/js/classes/File.load.js'},
     ]
   },
   desktopMac: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/desktop/mac'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'pixels/**'], dest: 'build/desktop/mac'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -64,8 +65,8 @@ module.exports = {
         dest: 'build/desktop/mac/package.json',
       },
 
-      // mocks
-      // {expand: true, cwd: 'src/mock', src: ['**'], dest: 'build/desktop/mac/mock'},
+      // file handlers
+      {src: 'src/desktop/mac/File.load.js', dest: 'build/desktop/mac/js/classes/File.load.js'},
     ]
   },
 }
