@@ -1,8 +1,9 @@
 default:
+  - 'clean:build'
   - 'copy'
   - 'react'
   - 'replace'
   - 'concat'
   - 'less'
   - 'autoprefixer'
-  - 'clean:js'
+  - 'clean:postbuild'

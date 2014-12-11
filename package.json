@@ -9,7 +9,6 @@
   "devDependencies": {
     "grunt": "latest",
     "grunt-contrib-less": "latest",
-    "grunt-contrib-watch": "latest",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-plato": "latest",
@@ -28,14 +27,5 @@
     "time-grunt": "latest",
     "grunt-newer": "latest",
     "grunt-notify": "latest"
-  },
-  "window": {
-    "title": "pixler",
-    "toolbar": false,
-    "frame": true,
-    "width": 800,
-    "height": 600,
-    "position": "center",
-    "resizable": "true"
   }
 }

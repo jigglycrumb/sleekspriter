@@ -1,14 +1,11 @@
 module.exports = {
-  js: {
-    src: 'build/browser/js'
-  },
   build: {
-    src: 'build/**/*'
+    src: 'build/**'
   },
-  dist: {
-    src: 'dist/**/*'
+  postbuild: {
+    src: [
+      'build/browser/js',
+      'build/desktop/mac/js',
+    ]
   },
-  all: {
-    src: ['build/**/*', 'dist/**/*']
-  }
 }

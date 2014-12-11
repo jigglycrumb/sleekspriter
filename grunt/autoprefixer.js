@@ -5,5 +5,16 @@ module.exports = {
     cwd: 'build/browser',
     src: [ '**/*.css' ],
     dest: 'build/browser'
-  }
+  },
+  desktopMac: {
+    options: {
+      browsers: ['last 2 Chrome versions']
+    },
+    files: [{
+      expand: true,
+      cwd: 'build/desktop/mac',
+      src: [ '**/*.css' ],
+      dest: 'build/desktop/mac'
+    }],
+  },
 }

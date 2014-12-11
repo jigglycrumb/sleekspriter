@@ -40,5 +40,42 @@ module.exports = {
     ],
     // the location of the resulting JS file
     dest: 'build/browser/<%= package.name %>.js'
+  },
+  desktopMac: {
+    src: [
+      'build/desktop/mac/js/bower_components/*.js',
+      'build/desktop/mac/js/lib/**/*.js',
+
+      'build/desktop/mac/js/strict.js',
+      'build/desktop/mac/js/react_mixins/**/*.js',
+      'build/desktop/mac/js/react_components/**/*.js',
+
+      'build/desktop/mac/js/classes/Point.js',
+      'build/desktop/mac/js/classes/Pixel.js',
+      'build/desktop/mac/js/classes/File.js',
+
+      'build/desktop/mac/js/classes/Editor.js',
+      'build/desktop/mac/js/classes/Editor.File.js',
+      'build/desktop/mac/js/classes/Editor.Frame.js',
+      'build/desktop/mac/js/classes/Editor.Layers.js',
+      'build/desktop/mac/js/classes/Editor.Pixels.js',
+      'build/desktop/mac/js/classes/Editor.Palettes.js',
+      'build/desktop/mac/js/classes/Editor.Selection.js',
+      'build/desktop/mac/js/classes/Editor.BrightnessTool.js',
+      'build/desktop/mac/js/classes/Editor.PaintBucket.js',
+      'build/desktop/mac/js/classes/Editor.Zoom.js',
+      'build/desktop/mac/js/classes/Editor.Grid.js',
+      'build/desktop/mac/js/classes/Editor.Cursor.js',
+      'build/desktop/mac/js/classes/Editor.Color.js',
+      'build/desktop/mac/js/classes/Editor.Background.js',
+      'build/desktop/mac/js/classes/Editor.Tool.js',
+      'build/desktop/mac/js/classes/Editor.Animations.js',
+
+      'build/desktop/mac/js/classes/Hotkeys.js',
+      'build/desktop/mac/js/classes/Workspace.js',
+      'build/desktop/mac/js/index.js',
+    ],
+    // the location of the resulting JS file
+    dest: 'build/desktop/mac/<%= package.name %>.js'
   }
 }
