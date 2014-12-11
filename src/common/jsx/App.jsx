@@ -40,11 +40,11 @@ var App = React.createClass({
     return (
       <div className="app">
         <nav className="menu" ref="menu">
-          <div className="tab" data-target="paint">Paint</div>
-          <div className="tab active" data-target="animate">Animate</div>
+          <div className="tab active" data-target="paint">Paint</div>
+          <div className="tab" data-target="animate">Animate</div>
           <div className="tab" data-target="debug">Debug</div>
         </nav>
-        <div className="window animate">
+        <div className="window paint">
           <ScreenPaint editor={this.props.editor} workspace={this.props.workspace} />
           <ScreenAnimate editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />

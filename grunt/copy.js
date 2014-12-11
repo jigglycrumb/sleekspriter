@@ -6,12 +6,12 @@ module.exports = {
       {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/browser'},
 
       // bower components
-      {expand: true, flatten: true, cwd: 'bower_components',
+      {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'conduitjs/lib/conduit.js',
           'lodash/dist/lodash.js',
-          'postal.js/lib/postal.js',
           'mousetrap/mousetrap.js',
+          'postal.js/lib/postal.js',
           'react/react-with-addons.js',
           'zepto/zepto.js',
         ],
@@ -37,7 +37,7 @@ module.exports = {
       {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/desktop/mac'},
 
       // bower components
-      {expand: true, flatten: true, cwd: 'bower_components',
+      {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'conduitjs/lib/conduit.js',
           'lodash/dist/lodash.js',

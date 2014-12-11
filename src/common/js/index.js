@@ -94,22 +94,14 @@ function changeColorLightness(color, delta) {
 // move this into window.onload later
 
 var channel = postal.channel('pixler');
-var wireTap = new postal.diagnostics.DiagnosticsWireTap({
-    name: "console",
-    filters: [
-        // { channel: "pixler" },
-        // { data: { foo: /bar/ } },
-        // {topic: 'scope.set'},
-        // {topic: 'canvas.preview'},
-        // {topic: 'canvas.refresh'},
-        // {topic: /selection/},
-        // {topic: 'pixel.add'},
-        // {topic: 'file.layer.name.select'},
-        // {topic: 'screen.select'},
-        // {topic: 'animation.frame.select'},
-    ],
-    active: false,
-});
+// var wireTap = new postal.diagnostics.DiagnosticsWireTap({
+//     name: "console",
+//     filters: [
+//         // { channel: "pixler" },
+//         // {topic: 'animation.frame.select'},
+//     ],
+//     active: false,
+// });
 
 
 var file = new File();

@@ -1,8 +1,7 @@
-bower_components/*
-build/*
-dist/*
-doc/*
-node_modules/*
-report/*
+bower_components
+build
+dist
+doc
+node_modules
+report
 todo.txt
-.vagrant
