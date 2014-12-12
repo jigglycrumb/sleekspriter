@@ -31,14 +31,22 @@ var AnimationFrameBoxFrame = React.createClass({
   },
 
   dragStart: function(event) {
+    if(this.props.editor.animations.selected === null) return;
     event.dataTransfer.setData('frame', this.props.frame);
   },
 
   select: function() {
+    if(this.props.editor.animations.selected === null) return;
     this.getDOMNode().classList.add('selected');
+    var row = Math.floor((this.props.frame-1)/this.props.editor.file.frames.x),
+        column = (this.props.frame % this.props.editor.file.frames.x === 0
+               ? this.props.editor.file.frames.x : this.props.frame%this.props.editor.file.frames.x)-1;
+
+    channel.publish('animation.framebox.frame.select', {row: row, column: column});
   },
 
   unselect: function() {
+    if(this.props.editor.animations.selected === null) return;
     this.getDOMNode().classList.remove('selected');
   },
 });

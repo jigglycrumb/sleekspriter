@@ -18,6 +18,9 @@
     bottom: 0;
     left: 0;
 
+    @offset: 20px;
+    @frameSize: 100px;
+
     .scroller {
       position: absolute;
       top: 30px;
@@ -27,13 +30,31 @@
       overflow: auto;
 
       .inner {
-        padding: 10px;
+        padding: @offset;
+      }
+    }
+
+    .mass-add {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      &.row {
+        top: @offset;
+        width: @offset;
+        height: @frameSize + 2;
+      }
+
+      &.column {
+        left: @offset;
+        width: @frameSize + 2;
+        height: @offset;
       }
     }
 
     .frame {
-      width: 100px;
-      height: 100px;
+      width: @frameSize;
+      height: @frameSize;
       float: left;
       border-top: 1px solid @medium;
       border-right: 1px solid @medium;
