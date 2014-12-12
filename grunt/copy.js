@@ -29,7 +29,7 @@ module.exports = {
 
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
-      {src: 'src/browser/File.load.js', dest: 'build/browser/js/classes/File.load.js'},
+      {expand: true, cwd: 'src/browser', src:['File.**.js'], dest: 'build/browser/js/classes'},
     ]
   },
   desktopMac: {
@@ -66,7 +66,7 @@ module.exports = {
       },
 
       // file handlers
-      {src: 'src/desktop/mac/File.load.js', dest: 'build/desktop/mac/js/classes/File.load.js'},
+      {expand: true, cwd: 'src/desktop/mac', src:['File.**.js'], dest: 'build/desktop/mac/js/classes'},
     ]
   },
 }

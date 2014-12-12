@@ -4,7 +4,7 @@ Workspace.prototype = Object.create(null);
 Workspace.prototype.constructor = Workspace;
 
 Workspace.prototype.data = {
-  file: false,
+  file: null,
   tool: 'BrushTool',
   frame: 1,
   layer: null,

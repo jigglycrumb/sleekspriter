@@ -80,5 +80,8 @@ var App = React.createClass({
         channel.publish('screen.select', {target: target});
       }
     });
+
+    // hide the "loading..." text because it sometimes flashes through during screen transitions
+    document.getElementById('app-loading').style.display = 'none';
   },
 });

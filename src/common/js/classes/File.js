@@ -282,6 +282,3 @@ var File = function() {
 
 
 File.prototype = {};
-File.prototype.save = function() {
-  console.log('saving file to disk');
-};

@@ -16,9 +16,9 @@
 function resetWorkspace() {
   localStorage.removeItem('workspace');
   workspace.setup();
-  editor.file.name = 'coin.pixels';
+  // editor.file.name = 'coin.pixels';
   workspace.save();
-  document.location.reload();
+  // document.location.reload();
 };
 
 function redrawFromFile() {
@@ -109,29 +109,29 @@ var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
 
-workspace.load();
+// workspace.load();
 
-if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
-  // nothing to see here yet
-  console.warn('no file in workspace found');
-  resetWorkspace();
-}
-else { // re-open last file
-  File.load(workspace.data.file, fileLoaded);
-}
+// if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
+//   // nothing to see here yet
+//   console.warn('no file in workspace found');
+//   resetWorkspace();
+// }
+// else { // re-open last file
+//   File.load(workspace.data.file, fileLoaded);
+// }
+
+resetWorkspace(); // temporary
 
 function fileLoaded(json) {
-
   // init file
   file.fromJSON(json);
-
   // select last selected frame
   channel.publish('frame.select', {frame: editor.frame.selected});
-
-  // render UI
-  var container = document.body;
-  React.render(React.createElement(App, {editor: editor, workspace: workspace}), container);
 }
+
+// render UI
+var container = document.getElementById('app-container');
+React.render(React.createElement(App, {editor: editor, workspace: workspace}), container);
 
 // window.onbeforeunload = workspace.save;
 // window.onload = function() {};

@@ -8,7 +8,7 @@
   "main": "index.html",
   "window": {
     "title": "pixler",
-    "toolbar": false,
+    "toolbar": true, // enable/disable the address bar and webkit devtools
     "frame": true,
     "width": 800,
     "height": 600,

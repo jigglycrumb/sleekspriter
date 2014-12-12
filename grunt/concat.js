@@ -16,7 +16,7 @@ module.exports = {
       'build/browser/js/classes/Point.js',
       'build/browser/js/classes/Pixel.js',
       'build/browser/js/classes/File.js',
-      'build/browser/js/classes/File.load.js',
+      'build/browser/js/classes/File.**.js',
 
       'build/browser/js/classes/Editor.js',
       'build/browser/js/classes/Editor.File.js',
@@ -54,7 +54,7 @@ module.exports = {
       'build/desktop/mac/js/classes/Point.js',
       'build/desktop/mac/js/classes/Pixel.js',
       'build/desktop/mac/js/classes/File.js',
-      'build/desktop/mac/js/classes/File.load.js',
+      'build/desktop/mac/js/classes/File.**.js',
 
       'build/desktop/mac/js/classes/Editor.js',
       'build/desktop/mac/js/classes/Editor.File.js',
