@@ -55,3 +55,19 @@ Editor.prototype.layers.selectTop = function() {
   var topLayer = _.max(this.frame, function(layer) { return layer.z; });
   channel.publish('layer.select', {layer: topLayer.id});
 };
+
+/**
+ * Get layer by ID
+ * @returns {Object} layer
+ */
+Editor.prototype.layers.getById = function(id) {
+  return _.findWhere(this.frame, {id: id});
+};
+
+/**
+ * Get selected layer
+ * @returns {Object} layer
+ */
+Editor.prototype.layers.getSelected = function() {
+  return this.getById(this.selected);
+};

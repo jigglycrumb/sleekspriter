@@ -49,7 +49,7 @@ var App = React.createClass({
           <ScreenAnimate editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />
         </div>
-        <Modal />
+        <Modal editor={this.props.editor} />
       </div>
     );
   },

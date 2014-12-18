@@ -13,7 +13,7 @@ var LayerBox = React.createClass({
         <div className="foldable-fold">
           <div className="layers">
             {this.props.editor.layers.frame.map(function(layer) {
-              var selected = layer.id === this.props.editor.selected ? true : false;
+              var selected = layer.id === this.props.editor.layers.selected ? true : false;
               return (
                 <LayerBoxLayer key={layer.id} layer={layer} selected={selected} dimensions={this.props.editor.file.size} />
               );
@@ -21,7 +21,7 @@ var LayerBox = React.createClass({
           </div>
           <div className="actions">
             <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
-            <button title="Delete selected layer" onClick={this.dispatchLayerRemoved} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
+            <button title="Delete selected layer" onClick={this.confirmLayerDelete} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>
@@ -43,8 +43,8 @@ var LayerBox = React.createClass({
   dispatchLayerAdded: function() {
     channel.publish('file.layer.add', {layer: this.props.editor.layers.selected});
   },
-  dispatchLayerRemoved: function() {
-    channel.publish('file.layer.delete', {layer: this.props.editor.layers.selected});
+  confirmLayerDelete: function() {
+    channel.publish('modal.show', {component: ModalConfirmDeleteLayer});
   },
   shouldSelectLayer: function(data) {
     this.setState({ shouldSelectLayer: data.layer });

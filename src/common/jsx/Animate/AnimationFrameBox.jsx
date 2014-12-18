@@ -44,42 +44,24 @@ var AnimationFrameBox = React.createClass({
     var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
         framesPerRow = this.props.editor.file.frames.x,
         frames = [];
+
     for(var i = 0; i < totalFrames; i++) {
       var row = Math.floor(i/this.props.editor.file.frames.x);
       if(row === this.state.row) frames.push(i+1);
     }
 
-    var animation = this.props.editor.animations.getSelected();
-
-    frames.forEach(function(frame) {
-      var data = {
-        animation: this.props.editor.animations.selected,
-        frame: frame,
-        position: animation.frames.length,
-      };
-
-      channel.publish('file.animation.frame.add', data);
-    }, this);
+    channel.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
   },
   addColumn: function() {
     var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
         framesPerColumn = this.props.editor.file.frames.y,
         frames = [];
+
     for(var i = 0; i < totalFrames; i++) {
       var column = i % this.props.editor.file.frames.x;
       if(column === this.state.column) frames.push(i+1);
     }
 
-    var animation = this.props.editor.animations.getSelected();
-
-    frames.forEach(function(frame) {
-      var data = {
-        animation: this.props.editor.animations.selected,
-        frame: frame,
-        position: animation.frames.length,
-      };
-
-      channel.publish('file.animation.frame.add', data);
-    }, this);
+    channel.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
   },
 });

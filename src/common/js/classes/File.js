@@ -278,6 +278,10 @@ var File = function() {
     }
     channel.publish('animation.frame.delete', data);
   });
+
+  channel.subscribe('file.animation.frames.empty', function(data, envelope) {
+    self.getAnimationByName(data.animation).frames = [];
+  });
 };
 
 

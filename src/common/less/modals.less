@@ -16,18 +16,56 @@
   }
 
   .dialog {
-    background: @dark;
+    position: relative;
+    background: @medium;
     width: 400px;
     margin: auto;
-    padding: 1em;
     box-sizing: border-box;
+    border: 1px solid @dark;
+  }
+
+  .dialog:before {
+    position: absolute;
+    content: "";
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    border-top: 1px solid #3a3a3a;
+    border-left: 1px solid #3a3a3a;
+    pointer-events: none;
+  }
+
+  .dialog:after {
+    position: absolute;
+    content: "";
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    border-right: 1px solid #3a3a3a;
+    border-bottom: 1px solid #3a3a3a;
+    pointer-events: none;
+  }
+
+  .title {
+    height: 20px;
+    line-height: 20px;
+    padding-left: 10px;
+    border-bottom: 1px solid @dark;
+    .gradient;
   }
 
   .text {
-    margin-bottom: 1em;
+    margin: 10px;
   }
 
   .actions {
     text-align: right;
+    padding: 0 10px 10px 10px;
+
+    button {
+      margin-left: 2px;
+    }
   }
 }
