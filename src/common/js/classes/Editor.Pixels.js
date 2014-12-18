@@ -34,6 +34,12 @@ Editor.prototype.pixels.init = function() {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
+  channel.subscribe('app.layer.delete', function(data, envelope) {
+    self.scope = [];
+    self.file = file.pixels;
+    self.frame = _.where(self.file, {frame: data.frame});
+  });
+
   channel.subscribe('scope.set', function(data, envelope) {
 
     // update pixels in scope
