@@ -1,7 +1,7 @@
-File.load = function(file, callback) {
+File.prototype.load = function(path, callback) {
 
-  console.info('File: '+file);
+  console.info('File: '+path);
 
-  var url = 'loadfile.php?file=pixels/' + file;
+  var url = 'loadfile.php?file=pixels/' + path;
   $.getJSON(url, callback);
 };

@@ -1,5 +1,6 @@
 var File = function() {
 
+  this.path = null;
   this.size = null;
   this.frames = null;
   this.layers = null;
@@ -147,9 +148,9 @@ var File = function() {
   }
 
   // handle file saving
-  channel.subscribe('file.save', function(data, envelope) {
-    self.save();
-  });
+  // channel.subscribe('file.save', function(data, envelope) {
+  //   self.save(); // save method is implemented per platform in an extra file
+  // });
 
   // handle layer opacity change
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {

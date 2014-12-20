@@ -141,3 +141,66 @@ React.render(React.createElement(App, {editor: editor, workspace: workspace}), c
 
 // window.onbeforeunload = workspace.save;
 // window.onload = function() {};
+
+
+
+
+//
+// ------------------------------------------------------------------------------------------------
+//
+
+function clickInput(id) {
+  var event = document.createEvent('MouseEvents');
+  event.initMouseEvent('click');
+  document.getElementById(id).dispatchEvent(event);
+}
+
+
+var gui = require('nw.gui');
+var win = gui.Window.get();
+var windowMenu = new gui.Menu({ type: "menubar" });
+
+windowMenu.createMacBuiltin("@@app", {
+  hideEdit: true,
+  hideWindow: true
+});
+win.menu = windowMenu;
+
+var fileMenu = new gui.Menu();
+win.menu.insert(new gui.MenuItem({label: 'File', submenu: fileMenu}), 1);
+
+fileMenu.insert(new gui.MenuItem({
+  label: 'Save as',
+  click: function() {
+    clickInput('fileSave');
+  },
+  key: 's',
+  modifiers: 'shift-cmd'
+}));
+
+fileMenu.insert(new gui.MenuItem({
+  label: 'Save',
+  click: function() {
+    file.save();
+  },
+  key: 's',
+  modifiers: 'cmd'
+}));
+
+fileMenu.insert(new gui.MenuItem({
+  label: 'Open',
+  click: function() {
+    clickInput('fileOpen');
+  },
+  key: 'o',
+  modifiers: 'cmd'
+}));
+
+
+document.getElementById('fileOpen').addEventListener('change', function (e) {
+  file.load(this.value, fileLoaded);
+});
+
+document.getElementById('fileSave').addEventListener('change', function (e) {
+  file.save(this.value);
+});

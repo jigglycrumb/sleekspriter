@@ -123,7 +123,7 @@ if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
   resetWorkspace();
 }
 else { // re-open last file
-  File.load(workspace.data.file, fileLoaded);
+  file.load(workspace.data.file, fileLoaded);
 }
 
 // resetWorkspace(); // temporary

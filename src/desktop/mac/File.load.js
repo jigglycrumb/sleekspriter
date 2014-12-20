@@ -1,9 +1,11 @@
-File.load = function(file, callback) {
+File.prototype.load = function(path, callback) {
 
-  console.info('File: '+file);
+  console.info('File: '+path);
+
+  this.path = path;
 
   var fs = require('fs');
-  fs.readFile(file, function(error, contents) {
+  fs.readFile(path, function(error, contents) {
     if (error) throw error;
     callback(JSON.parse(contents));
   });
