@@ -1,13 +1,18 @@
 var Palette = React.createClass({
+  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
-      resetScroll: false,
+      swatchWidth: 28,
+      resetScroll: true, // true to fire resetScroll on first component update
+      subscriptions: {
+        'palette.select': this.resetScroll,
+      },
     };
   },
   render: function() {
 
     var palettes = this.props.editor.palettes.available,
-        palette = palettes[this.props.editor.palettes.selected];
+        palette = this.props.editor.palettes.getSelected();
 
     return (
       <div className="palette">
@@ -28,7 +33,7 @@ var Palette = React.createClass({
           <i className="flaticon-arrow85"/>
         </button>
         <div className="outer">
-          <div className="inner">
+          <div ref="inner" className="inner">
             {palette.colors.map(function(color) {
               return (
                 <PaletteSwatch key={color} color={color} />
@@ -45,10 +50,6 @@ var Palette = React.createClass({
   componentDidMount: function() {
     this.setInnerWidth();
     this.resetScroll();
-
-    this.subscriptions = [
-      //channel.subscribe('palette.select', this.prepareResetScroll)
-    ];
   },
   componentDidUpdate: function() {
     this.setInnerWidth();
@@ -58,28 +59,24 @@ var Palette = React.createClass({
       this.setState({resetScroll:false});
     }
   },
-  componentDidUnmount: function() {
-    this.subscriptions.forEach(function(subscription) {
-      subscription.unsubscribe();
-    });
+  getSwatchCount: function() {
+    return this.props.editor.palettes.getSelected().colors.length;
   },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
   },
   getInnerWidth: function() {
-    var swatchWidth = 28,
-        swatches = NodeList2Array(this.getDOMNode().querySelectorAll('.inner .colorswatch')).length;
-    return swatchWidth*swatches;
+    return this.state.swatchWidth*this.getSwatchCount();
   },
   setInnerWidth: function() {
-    var swatchWidth = 28,
-        ow = this.getOuterWidth(),
-        swatches = NodeList2Array(this.getDOMNode().querySelectorAll('.inner .colorswatch')).length,
-        swatchesVisible = Math.floor(ow/swatchWidth),
+    var ow = this.getOuterWidth(),
+        swatches = this.getSwatchCount(),
+        swatchesVisible = Math.floor(ow/this.state.swatchWidth),
         pages = Math.ceil(swatches/swatchesVisible),
-        diff = ow - (swatchesVisible*swatchWidth);
+        diff = ow - (swatchesVisible*this.state.swatchWidth),
+        newWidth = (swatchesVisible*this.state.swatchWidth*pages)+diff;
 
-    this.getDOMNode().querySelector('.inner').style.width = ((swatchesVisible*swatchWidth*pages)+diff)+'px';
+    this.getDOMNode().querySelector('.inner').style.width = newWidth+'px';
   },
   getScrollPosition: function() {
     return this.getDOMNode().querySelector('.outer').scrollLeft;
@@ -87,9 +84,29 @@ var Palette = React.createClass({
   setScrollPosition: function(x) {
     this.getDOMNode().querySelector('.outer').scrollLeft = x;
   },
+  setScrollButtons: function(pos) {
+    var iw = this.getInnerWidth(),
+        ow = this.getOuterWidth(),
+        w = iw - ow,
+        swatches = this.getSwatchCount(),
+        swatchesVisible = Math.floor(ow/this.state.swatchWidth),
+        pages = Math.ceil(swatches/swatchesVisible),
+
+        scrollButtonStyle = {
+          left: 'hidden',
+          right: 'hidden',
+        };
+
+    if(pages > 1) {
+      if(pos > 0) scrollButtonStyle.left = 'visible';
+      if(pos < w) scrollButtonStyle.right = 'visible';
+    }
+
+    this.refs.buttonScrollLeft.getDOMNode().style.visibility = scrollButtonStyle.left;
+    this.refs.buttonScrollRight.getDOMNode().style.visibility = scrollButtonStyle.right;
+  },
   scrollTo: function(x) {
-    var interval,
-        self = this,
+    var self = this,
         start = this.getScrollPosition(),
         distance = x - start,
         duration = 200,
@@ -97,22 +114,7 @@ var Palette = React.createClass({
         loop = false,
         tween = new Tween(start, distance, duration, animationType, loop);
 
-    if(x == 0) this.refs.buttonScrollLeft.getDOMNode().style.visibility = 'hidden';
-    else this.refs.buttonScrollLeft.getDOMNode().style.visibility = 'visible';
-
-    var iw = this.getInnerWidth(),
-        ow = this.getOuterWidth(),
-        w = iw - ow,
-        swatchWidth = 28,
-        swatches = NodeList2Array(this.getDOMNode().querySelectorAll('.inner .colorswatch')).length,
-        swatchesVisible = Math.floor(ow/swatchWidth),
-        pages = Math.ceil(swatches/swatchesVisible);
-
-    if(pages == 1) this.refs.buttonScrollRight.getDOMNode().style.visibility = 'hidden';
-    else {
-      if(x >= w) this.refs.buttonScrollRight.getDOMNode().style.visibility = 'hidden';
-      else this.refs.buttonScrollRight.getDOMNode().style.visibility = 'visible';
-    }
+    this.setScrollButtons(x);
 
     (function animate() {
       if(!tween.expired()) {
@@ -122,27 +124,22 @@ var Palette = React.createClass({
     })();
   },
   scrollLeft: function() {
-    var swatchWidth = 28,
-        ow = this.getOuterWidth(),
+    var ow = this.getOuterWidth(),
         scroll = this.getScrollPosition(),
-        swatchesVisible = Math.floor(ow/swatchWidth),
-        target = scroll - (swatchWidth*swatchesVisible);
+        swatchesVisible = Math.floor(ow/this.state.swatchWidth),
+        target = scroll - (this.state.swatchWidth*swatchesVisible);
 
     if(target < 0) target = 0;
     this.scrollTo(target);
   },
   scrollRight: function() {
-    var swatchWidth = 28,
-        ow = this.getOuterWidth(),
+    var ow = this.getOuterWidth(),
         scroll = this.getScrollPosition(),
-        swatches = NodeList2Array(this.getDOMNode().querySelectorAll('.inner .colorswatch')).length,
-        swatchesVisible = Math.floor(ow/swatchWidth),
-        target = scroll + (swatchWidth*swatchesVisible);
+        swatches = this.getSwatchCount(),
+        swatchesVisible = Math.floor(ow/this.state.swatchWidth),
+        target = scroll + (this.state.swatchWidth*swatchesVisible);
 
     this.scrollTo(target);
-  },
-  prepareResetScroll: function(palette) {
-    if(this.isMounted()) this.setState({resetScroll: true});
   },
   resetScroll: function() {
     this.scrollTo(0);
@@ -157,6 +154,6 @@ var Palette = React.createClass({
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
     channel.publish('palette.select', {palette: palette});
-    return false;
+    event.stopPropagation();
   },
 });

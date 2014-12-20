@@ -128,3 +128,7 @@ Editor.prototype.palettes.available = {
              '#442800', '#644818', '#846830', '#a08444', '#b89c58', '#d0b46c', '#e8cc7c', '#fce08c'],
   },
 };
+
+Editor.prototype.palettes.getSelected = function() {
+  return this.available[this.selected];
+}

@@ -91,6 +91,12 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
+function resize() {
+  channel.publish('window.resize');
+}
+
+window.onresize = resize;
+
 // move this into window.onload later
 
 var channel = postal.channel('pixler');
@@ -98,9 +104,9 @@ var channel = postal.channel('pixler');
 //     name: "console",
 //     filters: [
 //         // { channel: "pixler" },
-//         // {topic: 'animation.frame.select'},
+//         {topic: 'window.resize'},
 //     ],
-//     active: false,
+//     // active: false,
 // });
 
 
