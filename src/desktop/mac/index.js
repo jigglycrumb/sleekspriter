@@ -195,7 +195,8 @@ fileMenu.insert(new gui.MenuItem({
     file.save();
   },
   key: 's',
-  modifiers: 'cmd'
+  modifiers: 'cmd',
+  enabled: false,
 }), 1);
 
 fileMenu.insert(new gui.MenuItem({
@@ -204,7 +205,8 @@ fileMenu.insert(new gui.MenuItem({
     clickInput('fileSave');
   },
   key: 's',
-  modifiers: 'shift-cmd'
+  modifiers: 'shift-cmd',
+  enabled: false,
 }), 2);
 
 // create selection menu
@@ -222,7 +224,8 @@ selectionMenu.insert(new gui.MenuItem({
     channel.publish('selection.end', {point: end});
   },
   key: 'a',
-  modifiers: 'cmd'
+  modifiers: 'cmd',
+  enabled: false,
 }), 0);
 
 selectionMenu.insert(new gui.MenuItem({
@@ -231,7 +234,8 @@ selectionMenu.insert(new gui.MenuItem({
     channel.publish('selection.clear');
   },
   key: 'd',
-  modifiers: 'cmd'
+  modifiers: 'cmd',
+  enabled: false,
 }), 1);
 
 // create layer menu
@@ -239,10 +243,37 @@ var layerMenu = new gui.Menu();
 win.menu.insert(new gui.MenuItem({label: 'Layer', submenu: layerMenu}), 3);
 
 layerMenu.insert(new gui.MenuItem({
+  label: 'Merge with layer above',
+  click: function() {
+    console.log('merge with above');
+  },
+  key: 'e',
+  modifiers: 'shift-cmd',
+  enabled: false,
+}), 0);
+
+layerMenu.insert(new gui.MenuItem({
   label: 'Merge with layer below',
   click: function() {
     console.log('merge with below');
   },
   key: 'e',
-  modifiers: 'cmd'
-}), 0);
+  modifiers: 'cmd',
+  enabled: false,
+}), 1);
+
+
+
+channel.subscribe('file.load', function() {
+  function enable(item) { item.enabled = true; }
+  fileMenu.items.map(enable);
+  selectionMenu.items.map(enable);
+  layerMenu.items.map(enable);
+});
+
+
+// Create a separator
+// item = new gui.MenuItem({ type: 'separator' });
+
+
+
