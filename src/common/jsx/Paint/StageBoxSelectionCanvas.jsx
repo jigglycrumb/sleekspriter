@@ -66,7 +66,7 @@ var StageBoxSelectionCanvas = React.createClass({
     }
 
     ctx.strokeStyle = pattern;
-    ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, width*zoom, height*zoom);
+    ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, (width*zoom)-1, (height*zoom)-1);
   },
 
   drawLastSelection: function() {

@@ -16,9 +16,7 @@
 function resetWorkspace() {
   localStorage.removeItem('workspace');
   workspace.setup();
-  // editor.file.name = 'coin.pixels';
   workspace.save();
-  // document.location.reload();
 };
 
 function redrawFromFile() {
@@ -145,47 +143,42 @@ React.render(React.createElement(App, {editor: editor, workspace: workspace}), c
 
 
 
-//
-// ------------------------------------------------------------------------------------------------
-//
 
+// ------------------------------------------------------------------------------------------------
+// Desktop menu
+// ------------------------------------------------------------------------------------------------
+
+// helper to click hidden file inputs for load and save dialogs
 function clickInput(id) {
   var event = document.createEvent('MouseEvents');
   event.initMouseEvent('click');
   document.getElementById(id).dispatchEvent(event);
 }
 
+// bind file input change handlers
+document.getElementById('fileOpen').addEventListener('change', function (e) {
+  file.load(this.value, fileLoaded);
+});
 
+document.getElementById('fileSave').addEventListener('change', function (e) {
+  file.save(this.value);
+});
+
+// import node requirements
 var gui = require('nw.gui');
 var win = gui.Window.get();
 var windowMenu = new gui.Menu({ type: "menubar" });
 
+// create default mac menu
 windowMenu.createMacBuiltin("@@app", {
   hideEdit: true,
   hideWindow: true
 });
 win.menu = windowMenu;
 
+// create file submenu
 var fileMenu = new gui.Menu();
 win.menu.insert(new gui.MenuItem({label: 'File', submenu: fileMenu}), 1);
-
-fileMenu.insert(new gui.MenuItem({
-  label: 'Save as',
-  click: function() {
-    clickInput('fileSave');
-  },
-  key: 's',
-  modifiers: 'shift-cmd'
-}));
-
-fileMenu.insert(new gui.MenuItem({
-  label: 'Save',
-  click: function() {
-    file.save();
-  },
-  key: 's',
-  modifiers: 'cmd'
-}));
 
 fileMenu.insert(new gui.MenuItem({
   label: 'Open',
@@ -194,13 +187,62 @@ fileMenu.insert(new gui.MenuItem({
   },
   key: 'o',
   modifiers: 'cmd'
-}));
+}), 0);
 
+fileMenu.insert(new gui.MenuItem({
+  label: 'Save',
+  click: function() {
+    file.save();
+  },
+  key: 's',
+  modifiers: 'cmd'
+}), 1);
 
-document.getElementById('fileOpen').addEventListener('change', function (e) {
-  file.load(this.value, fileLoaded);
-});
+fileMenu.insert(new gui.MenuItem({
+  label: 'Save as',
+  click: function() {
+    clickInput('fileSave');
+  },
+  key: 's',
+  modifiers: 'shift-cmd'
+}), 2);
 
-document.getElementById('fileSave').addEventListener('change', function (e) {
-  file.save(this.value);
-});
+// create selection menu
+var selectionMenu = new gui.Menu();
+win.menu.insert(new gui.MenuItem({label: 'Select', submenu: selectionMenu}), 2);
+
+selectionMenu.insert(new gui.MenuItem({
+  label: 'All',
+  click: function() {
+    var start = new Point(1, 1),
+        end = new Point(file.size.width, file.size.height);
+
+    channel.publish('selection.clear');
+    channel.publish('selection.start', {point: start});
+    channel.publish('selection.end', {point: end});
+  },
+  key: 'a',
+  modifiers: 'cmd'
+}), 0);
+
+selectionMenu.insert(new gui.MenuItem({
+  label: 'Deselect',
+  click: function() {
+    channel.publish('selection.clear');
+  },
+  key: 'd',
+  modifiers: 'cmd'
+}), 1);
+
+// create layer menu
+var layerMenu = new gui.Menu();
+win.menu.insert(new gui.MenuItem({label: 'Layer', submenu: layerMenu}), 3);
+
+layerMenu.insert(new gui.MenuItem({
+  label: 'Merge with layer below',
+  click: function() {
+    console.log('merge with below');
+  },
+  key: 'e',
+  modifiers: 'cmd'
+}), 0);

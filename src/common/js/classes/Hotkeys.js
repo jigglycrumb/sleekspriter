@@ -48,11 +48,6 @@ var Hotkeys = function(editor) {
       key: 'g',
       action: function() { channel.publish('grid.toggle', {grid: !editor.grid.enabled}); }
     },
-    dropSelection: {
-      key: ['ctrl+d', 'command+d'],
-      action: function() { channel.publish('selection.clear'); }
-    },
-
 
 
 
