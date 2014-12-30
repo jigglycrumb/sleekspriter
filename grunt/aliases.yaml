@@ -7,3 +7,14 @@ default:
   - 'less'
   - 'autoprefixer'
   - 'clean:postbuild'
+
+desktop:
+  - 'clean:build'
+  - 'copy'
+  - 'react'
+  - 'replace'
+  - 'concat'
+  - 'less'
+  - 'autoprefixer'
+  - 'clean:postbuild'
+  - 'nodewebkit'

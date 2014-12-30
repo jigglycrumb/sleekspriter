@@ -1,17 +1,17 @@
 {
-  "name": "pixler",
-  "version": "0.0.0",
-  "description": "A pixel art editor",
+  "name": "@@app",
+  "version": "@@version",
+  "description": "@@description",
   "private": true,
-  "main": "./index.html",
-  "author": "Volker Wieban",
+  "author": "@@author",
   "main": "index.html",
   "window": {
-    "title": "pixler",
-    "toolbar": true, // enable/disable the address bar and webkit devtools
-    "frame": true,
+    "title": "@@app",
+    "toolbar": true,
     "width": 800,
     "height": 600,
+    "min_width": 640,
+    "min_height": 480,
     "position": "center",
     "resizable": "true"
   }
