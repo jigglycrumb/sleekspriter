@@ -17,7 +17,7 @@ var Editor = function() {
 
   // init subclasses
   this.file.init();
-  this.frame.init();
+  this.frames.init();
   this.layers.init();
   this.pixels.init();
   this.selection.init();

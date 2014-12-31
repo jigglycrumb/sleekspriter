@@ -80,7 +80,7 @@ Editor.prototype.pixels.init = function() {
     var wrapPixel = function(px) { px.wrap(data.distance) };
     self.scope.forEach(wrapPixel);
     channel.publish('canvas.refresh', {
-      frame: editor.frame.selected,
+      frame: editor.frames.selected,
       layer: editor.layers.selected,
     });
   });

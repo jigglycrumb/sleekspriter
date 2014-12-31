@@ -9,7 +9,7 @@ var ScreenExport = React.createClass({
           <h6>Export</h6>
           <ul>
             <li>
-              <input type="radio" name="export-part" value="" />
+              <input type="radio" name="export-part" value="" selected />
               <label>Spritesheet as single image</label>
             </li>
             <li>
@@ -31,7 +31,7 @@ var ScreenExport = React.createClass({
           <h6>Size</h6>
           <ul>
             <li>
-              <input type="radio" name="export-size" value="" />
+              <input type="radio" name="export-size" value="" selected />
               <label>x1</label>
             </li>
             <li>

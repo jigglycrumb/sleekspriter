@@ -21,7 +21,7 @@ Editor.prototype.paintBucket.fill = function(point) {
   if(_.isUndefined(initialPixel)) {
     // pixel doesn't exist yet, create new transparent one
     initialPixel = {
-      frame: editor.frame.selected,
+      frame: editor.frames.selected,
       layer: editor.layers.selected,
       x: point.x,
       y: point.y,
@@ -99,7 +99,7 @@ Editor.prototype.paintBucket.fill = function(point) {
     else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
     if(pixelColor.rgbString() === initialColor.rgbString()) {
-      Pixel.add(editor.frame.selected, editor.layers.selected, point.x, point.y, file.getLayerById(editor.layers.selected).z, fillColor.hexString());
+      Pixel.add(editor.frames.selected, editor.layers.selected, point.x, point.y, file.getLayerById(editor.layers.selected).z, fillColor.hexString());
 
       neighbors = getAdjacentPixels(point);
       neighbors.forEach(function(n) {

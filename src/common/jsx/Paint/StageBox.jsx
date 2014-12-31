@@ -184,12 +184,12 @@ var StageBox = React.createClass({
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
                       file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.cursor.position)) {
-          Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+          Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
                         file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
       }
@@ -198,13 +198,13 @@ var StageBox = React.createClass({
   useEraserTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.delete(editor.frame.selected, editor.layers.selected,
+        Pixel.delete(editor.frames.selected, editor.layers.selected,
                      editor.cursor.position.x, editor.cursor.position.y,
                      file.getLayerById(editor.layers.selected).z);
       }
       else { // restrict to selection
         if(editor.selection.contains(editor.cursor.position)) {
-          Pixel.delete(editor.frame.selected, editor.layers.selected,
+          Pixel.delete(editor.frames.selected, editor.layers.selected,
                        editor.cursor.position.x, editor.cursor.position.y,
                        file.getLayerById(editor.layers.selected).z);
         }
@@ -230,14 +230,14 @@ var StageBox = React.createClass({
       function lighten() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.color.layer, editor.brightnessTool.intensity);
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.color.layer, -editor.brightnessTool.intensity);
-        Pixel.add(editor.frame.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
@@ -278,7 +278,7 @@ var StageBox = React.createClass({
     });
 
     channel.publish('canvas.preview', {
-      frame: editor.frame.selected,
+      frame: editor.frames.selected,
       layer: editor.layers.selected,
       pixels: pixels,
     });

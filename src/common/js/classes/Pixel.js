@@ -200,7 +200,7 @@ Pixel.add = function(frame, layer, x, y, z, color) {
  */
 Pixel.delete = function(frame, layer, x, y, z) {
   channel.publish('pixel.delete', {
-    frame: editor.frame.selected,
+    frame: editor.frames.selected,
     layer: editor.layers.selected,
     x: editor.cursor.position.x,
     y: editor.cursor.position.y,

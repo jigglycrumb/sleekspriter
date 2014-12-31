@@ -4,12 +4,11 @@ var FrameBox = React.createClass({
     var containerStyle = {},
         frameStyle = {},
         frames = [], // array for mapping the frame components
-        totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        frameSize = Math.floor(180/this.props.editor.file.frames.x)-1;
+        frameSize = Math.floor(180/this.props.editor.frames.x)-1;
 
-    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+    for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
 
-    containerStyle.width = (frameSize+1)*this.props.editor.file.frames.x;
+    containerStyle.width = (frameSize+1)*this.props.editor.frames.x;
     containerStyle.marginLeft = (200-containerStyle.width)/2;
 
     frameStyle.width = frameSize;
@@ -24,11 +23,11 @@ var FrameBox = React.createClass({
             var id = 'FrameBoxFrame-'+frame,
                 classes = React.addons.classSet({
                   'frame': true,
-                  'selected': frame == this.props.editor.frame.selected,
-                  'top': frame <= this.props.editor.file.frames.x,
-                  'right': frame % this.props.editor.file.frames.x == 0,
-                  'bottom': frame > totalFrames - this.props.editor.file.frames.x,
-                  'left': (frame-1) % this.props.editor.file.frames.x == 0,
+                  'selected': frame == this.props.editor.frames.selected,
+                  'top': frame <= this.props.editor.frames.x,
+                  'right': frame % this.props.editor.frames.x == 0,
+                  'bottom': frame > this.props.editor.frames.total - this.props.editor.frames.x,
+                  'left': (frame-1) % this.props.editor.frames.x == 0,
                 });
 
             var clickHandler = function() {
@@ -48,9 +47,9 @@ var FrameBox = React.createClass({
           </div>
           <div className="actions">
             Frame&nbsp;
-            <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.editor.frame.selected} onChange={this.dispatchFrameSelected} />
+            <input type="number" className="frame-number" min="1" max={this.props.editor.frames.total} value={this.props.editor.frames.selected} onChange={this.dispatchFrameSelected} />
             &nbsp;of&nbsp;
-            {totalFrames}
+            {this.props.editor.frames.total}
           </div>
         </div>
       </div>

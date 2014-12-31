@@ -1,13 +1,12 @@
 /** @jsx React.DOM */
 var ScreenPaint = React.createClass({
   render: function() {
-    var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        frames = [],
+    var frames = [],
         settingsBoxStyle = {
           display: this.props.editor.settingsVisible === true ? 'block' : 'none',
         };
 
-    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+    for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
 
     return (
       <section className="screen paint">

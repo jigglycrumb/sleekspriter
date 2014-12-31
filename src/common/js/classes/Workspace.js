@@ -36,7 +36,7 @@ Workspace.prototype.data = {
 Workspace.prototype.update = function() {
   this.data.file = editor.file.name;
   this.data.tool = editor.tool.selected;
-  this.data.frame = editor.frame.selected;
+  this.data.frame = editor.frames.selected;
   this.data.layer = editor.layers.selected;
   this.data.palette = editor.palettes.selected;
   this.data.color = editor.color.brush.hexString();
@@ -73,7 +73,7 @@ Workspace.prototype.setup = function() {
 
   editor.file.name = this.data.file;
   editor.tool.selected = this.data.tool;
-  editor.frame.selected = this.data.frame;
+  editor.frames.selected = this.data.frame;
   editor.layers.selected = this.data.layer;
   editor.palettes.selected = this.data.palette;
   editor.color.brush = new Color(this.data.color);

@@ -12,13 +12,12 @@ var AnimationFrameBox = React.createClass({
   render: function() {
     var frames = [], // array for mapping the frame components
         frameSize = 100,
-        totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        containerStyle = {width: (frameSize+1)*this.props.editor.file.frames.x},
+        containerStyle = {width: (frameSize+1)*this.props.editor.frames.x},
         buttonDisplay = this.props.editor.animations.selected === null ? 'none' : 'inline-block';
         rowButtonStyle = {top: (this.state.row*(frameSize+1))+20, display: buttonDisplay},
         columnButtonStyle = {left: (this.state.column*(frameSize+1))+20, display: buttonDisplay};
 
-    for(var i=0; i < totalFrames; i++) frames[i] = i+1;
+    for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
 
     return (
       <div id="AnimationFrameBox">
@@ -41,24 +40,20 @@ var AnimationFrameBox = React.createClass({
     this.setState(data);
   },
   addRow: function() {
-    var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        framesPerRow = this.props.editor.file.frames.x,
-        frames = [];
+    var frames = [];
 
-    for(var i = 0; i < totalFrames; i++) {
-      var row = Math.floor(i/this.props.editor.file.frames.x);
+    for(var i = 0; i < this.props.editor.frames.total; i++) {
+      var row = Math.floor(i/this.props.editor.frames.x);
       if(row === this.state.row) frames.push(i+1);
     }
 
     channel.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
   },
   addColumn: function() {
-    var totalFrames = this.props.editor.file.frames.x * this.props.editor.file.frames.y,
-        framesPerColumn = this.props.editor.file.frames.y,
-        frames = [];
+    var frames = [];
 
-    for(var i = 0; i < totalFrames; i++) {
-      var column = i % this.props.editor.file.frames.x;
+    for(var i = 0; i < this.props.editor.frames.total; i++) {
+      var column = i % this.props.editor.frames.x;
       if(column === this.state.column) frames.push(i+1);
     }
 

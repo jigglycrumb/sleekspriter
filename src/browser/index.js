@@ -26,7 +26,7 @@ function redrawFromFile() {
 
   // clear all layer canvases
   file.layers.forEach(function(layer) {
-    if(editor.frame.selected === layer.frame) {
+    if(editor.frames.selected === layer.frame) {
       var canvas = document.getElementById('StageBoxLayer-'+layer.id);
       canvas.width = canvas.width;
     }
@@ -132,7 +132,7 @@ function fileLoaded(json) {
   // init file
   file.fromJSON(json);
   // select last selected frame
-  channel.publish('frame.select', {frame: editor.frame.selected});
+  channel.publish('frame.select', {frame: editor.frames.selected});
 }
 
 // render UI
