@@ -48,7 +48,7 @@ var FrameBox = React.createClass({
           <div className="actions">
             Frame&nbsp;
             <input type="number" className="frame-number" min="1" max={this.props.editor.frames.total} value={this.props.editor.frames.selected} onChange={this.dispatchFrameSelected} />
-            &nbsp;of&nbsp;
+            &nbsp;/&nbsp;
             {this.props.editor.frames.total}
           </div>
         </div>
