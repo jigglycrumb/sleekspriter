@@ -13,7 +13,7 @@ var StatusBar = React.createClass({
         });
 
     return (
-      <div id="StatusBar">
+      <div className="bar">
         <span>X: {this.props.editor.cursor.position.x}</span>
         <span>Y: {this.props.editor.cursor.position.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.color.frame.rgbaString()}}></div>

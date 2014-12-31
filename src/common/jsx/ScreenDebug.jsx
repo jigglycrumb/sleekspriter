@@ -11,7 +11,7 @@ var ScreenDebug = React.createClass({
 
         </div>
 
-        <div className="area bottom">
+        <div className="area statusbar">
           <div className="bar">
             <label>Selection Pattern</label>
             <DebugSelectionPattern zoom={this.props.editor.zoom.current} />

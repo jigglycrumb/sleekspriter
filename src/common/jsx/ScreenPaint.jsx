@@ -27,7 +27,7 @@ var ScreenPaint = React.createClass({
           </div>
           <LayerBox editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
         </div>
-        <div className="area bottom">
+        <div className="area statusbar">
           <StatusBar editor={this.props.editor} />
         </div>
         <div className="area settings" style={settingsBoxStyle}>

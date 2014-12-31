@@ -59,11 +59,12 @@ h4 {
   .gradient;
 }
 
-h5 {
+h5, h6 {
   margin: 0;
   padding: 12px 10px;
   font-size: 1em;
   background: @light;
+  box-sizing: border-box;
 }
 
 button {
@@ -265,7 +266,7 @@ ul {
   position: absolute;
   z-index: 1;
 
-  &.bottom .bar {
+  &.statusbar .bar {
     margin-top: 2px;
     line-height: 22px;
     height: 22px;
@@ -381,4 +382,46 @@ ul {
   top: 20px;
   width: auto;
   height: auto;
+}
+
+
+.statusbar {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 25px;
+  border: 1px solid @dark;
+
+  &:after {
+    background: none;
+    height: 0;
+    border-bottom: 1px solid #3a3a3a;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 0;
+    right: -1px;
+    pointer-events: none;
+  }
+}
+
+.icon-eye {
+  content: "\e007"; // flaticon-eye46
+}
+
+.icon-eye-slashed {
+  content: "\e008"; // flaticon-eye48
+}
+
+.icon-arrow-down {
+  content: "\e00d"; // flaticon-little9
+}
+
+.icon-arrow-right {
+  content: "\e00f"; // flaticon-mini7
+}
+
+.icon-checkmark {
+  content: "\e005"; // flaticon-done
 }
