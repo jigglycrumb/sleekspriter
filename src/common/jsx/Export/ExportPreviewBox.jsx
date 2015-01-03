@@ -1,15 +1,27 @@
 var ExportPreviewBox = React.createClass({
   render: function() {
     var preview = null;
-    // if(this.state.frame !== null) {
-      preview =
-        <div
-          ref="preview"
-          // id={this.state.frame}
-          // width={this.props.editor.file.size.width}
-          // height={this.props.editor.file.size.height}
-          >[preview]</div>
-    // }
+
+    switch(this.props.part) {
+      case 'spritesheet':
+
+        break;
+
+      case 'allframes':
+
+        break;
+
+      case 'oneframe':
+        preview = <FrameCanvas
+                    id={this.props.frame}
+                    width={this.props.editor.file.size.width}
+                    height={this.props.editor.file.size.height} />
+        break;
+
+      case 'animation':
+
+        break;
+    }
 
     return (
       <div id="ExportPreviewBox">
@@ -20,6 +32,7 @@ var ExportPreviewBox = React.createClass({
       </div>
     )
   },
+  /*
   componentDidMount: function() {
     this.scalePreview();
   },
@@ -36,4 +49,5 @@ var ExportPreviewBox = React.createClass({
       console.log('scale', inner);
     }
   },
+  */
 });
