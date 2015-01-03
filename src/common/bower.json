@@ -17,6 +17,7 @@
     "react": "latest",
     "mousetrap": "~1.4.6",
     "postal.js": "~0.9.0",
-    "zepto": "~1.1.4"
+    "zepto": "~1.1.4",
+    "postal.diagnostics": "~0.7.4"
   }
 }

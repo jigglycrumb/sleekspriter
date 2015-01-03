@@ -1,5 +1,10 @@
 var ExportOutputSelection = React.createClass({
   render: function() {
+    var formats = ['png', 'jpg'];
+    if(this.props.part === 'animation') {
+      formats = ['gif', 'mov'];
+    }
+
     return (
       <div>
         <h6>Output</h6>
@@ -10,15 +15,17 @@ var ExportOutputSelection = React.createClass({
           </li>
           <li>
             as
-            <select>
-              <option value="png">.png</option>
-              <option value="jpg">.jpg</option>
-              <option value="gif">.gif</option>
-              <option value="mov">.mov</option>
+            <select onChange={this.setFormat} value={this.props.format}>
+              {formats.map(function(format) {
+                return( <option key={format} value={format}>{format}</option> )
+              }, this)}
             </select>
           </li>
         </ul>
       </div>
     )
-  }
+  },
+  setFormat: function(event) {
+    channel.publish('export.format.set', {format: event.target.value});
+  },
 });

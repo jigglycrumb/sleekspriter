@@ -23,7 +23,7 @@ module.exports = {
 
       // debugging helpers
       {
-        src: 'bower_components/postal.diagnostics/src/postal.diagnostics.js',
+        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
         dest: 'build/browser/js/bower_components/postaldiagnostics.js',
       },
 
@@ -58,7 +58,7 @@ module.exports = {
 
       // debugging helpers
       {
-        src: 'bower_components/postal.diagnostics/src/postal.diagnostics.js',
+        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
         dest: 'build/desktop/mac/js/bower_components/postaldiagnostics.js',
       },
 

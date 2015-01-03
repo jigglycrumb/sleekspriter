@@ -3,11 +3,36 @@
 
   .area.center {
     top: 40px;
-    left: 45px;
-    right: 205px;
-    bottom: 62px;
-    background: @dark;
+    left: 0;
+    right: 0;
+    bottom: 25px;
+    background: @light;
     z-index: 0;
-    overflow: auto;
+
+    #DebugLog {
+
+      height: 100%;
+
+      label {
+        width: 50%;
+        float: left;
+        margin-left: 10px;
+      }
+
+      button {
+        float: right;
+        margin-right: 10px;
+        margin-bottom: 5px;
+      }
+
+      textarea {
+        width: 100%;
+        height: ~"calc(100% - 31px)";
+        background: @dark;
+        color: @font-color;
+        resize: none;
+        border: none;
+      }
+    }
   }
 }

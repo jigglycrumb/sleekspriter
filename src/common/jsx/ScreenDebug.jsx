@@ -8,7 +8,7 @@ var ScreenDebug = React.createClass({
         </div>
 
         <div className="area center">
-
+          <DebugLog />
         </div>
 
         <div className="area statusbar">

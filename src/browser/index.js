@@ -99,17 +99,7 @@ window.onresize = resize;
 
 // move this into window.onload later
 
-var channel = postal.channel('pixler');
-// var wireTap = new postal.diagnostics.DiagnosticsWireTap({
-//     name: "console",
-//     filters: [
-//         // { channel: "pixler" },
-//         {topic: 'window.resize'},
-//     ],
-//     // active: false,
-// });
-
-
+var channel = postal.channel('@@app');
 var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);

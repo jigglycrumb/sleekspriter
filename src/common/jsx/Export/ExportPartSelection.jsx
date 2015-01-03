@@ -1,27 +1,19 @@
 var ExportPartSelection = React.createClass({
-  getInitialState: function() {
-    return {
-      part: 'spritesheet',
-      frame: 1,
-      animation: null,
-    }
-  },
   render: function() {
-
     var parts = [
       {name: 'spritesheet', el: 'Spritesheet as single image'},
-      {name: 'allframes', el: 'Every frame as single image'},
       {name: 'oneframe', el:  <span>
                                 Frame&nbsp;
-                                <input type="number" value={this.state.frame} min={1} max={this.props.editor.frames.total} onChange={this.setFrame} />
+                                <input type="number" value={this.props.frame} min={1} max={this.props.editor.frames.total} onChange={this.setFrame} />
                                 &nbsp;/&nbsp;
                                 {this.props.editor.frames.total} as image
                               </span>},
+      {name: 'allframes', el: 'Every frame as single image'},
       {name: 'animation', el: <span>
                                 Animation&nbsp;
                                 <select onChange={this.setAnimation}>
                                   {this.props.editor.animations.list.map(function(animation) {
-                                    <option value={animation.name}>{animation.name}</option>
+                                    return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
                                   }, this)}
                                 </select>
                               </span>},
@@ -29,10 +21,10 @@ var ExportPartSelection = React.createClass({
 
     return (
       <div>
-        <h6>What to export</h6>
+        <h6>Export</h6>
         <ul>
           {parts.map(function(part) {
-            var checked = part.name === this.state.part ? true : false;
+            var checked = part.name === this.props.part ? true : false;
             return (
               <li key={part.name}>
                 <label>
@@ -47,15 +39,12 @@ var ExportPartSelection = React.createClass({
     )
   },
   setPart: function(event) {
-    this.setState({part: event.target.value});
     channel.publish('export.part.set', {part: event.target.value});
   },
-  setAnimation: function(event) {
-    this.setState({animation: event.target.value});
-    channel.publish('export.animation.set', {animation: event.target.value});
-  },
   setFrame: function(event) {
-    this.setState({frame: +event.target.value});
     channel.publish('export.frame.set', {frame: +event.target.value});
+  },
+  setAnimation: function(event) {
+    channel.publish('export.animation.set', {animation: event.target.value});
   },
 });
