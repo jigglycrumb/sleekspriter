@@ -30,7 +30,13 @@ var ExportPreviewBox = React.createClass({
         break;
 
       case 'animation':
-        preview = <ExportPreviewAnimation />
+        preview = <ExportPreviewAnimation
+                    id={this.props.frame}
+                    width={this.props.dimensions.width}
+                    height={this.props.dimensions.height}
+                    frameSize={frameSize}
+                    format={this.props.format}
+                    animation={editor.animations.getByName(this.props.animation)} />
         break;
     }
 

@@ -47,6 +47,11 @@ var ScreenExport = React.createClass({
       </section>
     )
   },
+  componentDidUpdate: function() {
+    if(this.state.animation === null && this.props.editor.animations.list.length > 0) {
+      this.setState({animation: this.props.editor.animations.list[0].name});
+    }
+  },
   updateSettings: function(data) {
     this.setState(data);
   },

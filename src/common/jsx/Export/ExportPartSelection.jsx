@@ -9,15 +9,22 @@ var ExportPartSelection = React.createClass({
                                 {this.props.editor.frames.total} as image
                               </span>},
       {name: 'allframes', el: 'Every frame as single image'},
-      {name: 'animation', el: <span>
-                                Animation&nbsp;
-                                <select onChange={this.setAnimation}>
-                                  {this.props.editor.animations.list.map(function(animation) {
-                                    return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
-                                  }, this)}
-                                </select>
-                              </span>},
+
     ];
+
+    if(this.props.editor.animations.list.length > 0) {
+      parts.push({
+        name: 'animation',
+        el: <span>
+              Animation&nbsp;
+              <select onChange={this.setAnimation}>
+                {this.props.editor.animations.list.map(function(animation) {
+                  return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
+                }, this)}
+              </select>
+            </span>
+      });
+    }
 
     return (
       <div>
