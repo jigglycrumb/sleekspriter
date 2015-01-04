@@ -6,7 +6,7 @@ var FrameBox = React.createClass({
         frames = [], // array for mapping the frame components
         frameSize = Math.floor(180/this.props.editor.frames.x)-1;
 
-    for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
+    for(var i=0; i < this.props.editor.frames.total; i++) frames.push(i+1);
 
     containerStyle.width = (frameSize+1)*this.props.editor.frames.x;
     containerStyle.marginLeft = (200-containerStyle.width)/2;

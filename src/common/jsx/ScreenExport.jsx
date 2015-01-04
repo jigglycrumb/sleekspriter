@@ -5,13 +5,13 @@ var ScreenExport = React.createClass({
       part: 'spritesheet',
       frame: 1,
       animation: null,
-      size: 1,
+      zoom: 1,
       format: 'png',
       subscriptions: {
         'export.part.set': this.updateSettings,
         'export.frame.set': this.updateSettings,
         'export.animation.set': this.updateSettings,
-        'export.size.set': this.updateSettings,
+        'export.zoom.set': this.updateSettings,
         'export.format.set': this.updateSettings,
       },
     }
@@ -23,7 +23,7 @@ var ScreenExport = React.createClass({
           <h5>Settings</h5>
 
           <ExportPartSelection editor={this.props.editor} part={this.state.part} frame={this.state.frame} />
-          <ExportSizeSelection size={this.state.size} part={this.state.part} dimensions={this.props.editor.file.size} frames={this.props.editor.frames} />
+          <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} dimensions={this.props.editor.file.size} frames={this.props.editor.frames} />
           <ExportOutputSelection format={this.state.format} part={this.state.part} />
 
           <button>Export</button>
@@ -31,7 +31,14 @@ var ScreenExport = React.createClass({
         </div>
 
         <div className="area right">
-          <ExportPreviewBox part={this.state.part} frame={this.state.frame} editor={this.props.editor} />
+          <ExportPreviewBox 
+            part={this.state.part}
+            frame={this.state.frame}
+            animation={this.state.animation}
+            zoom={this.state.zoom} 
+            format={this.state.format}
+            dimensions={this.props.editor.file.size}
+            frames={this.props.editor.frames} />
         </div>
 
         <div className="area statusbar">

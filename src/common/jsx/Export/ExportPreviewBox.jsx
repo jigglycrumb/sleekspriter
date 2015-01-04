@@ -1,25 +1,36 @@
 var ExportPreviewBox = React.createClass({
   render: function() {
-    var preview = null;
+    var preview = null,
+        frameSize = {
+          width: this.props.dimensions.width * this.props.zoom,
+          height: this.props.dimensions.height * this.props.zoom,
+        };
 
     switch(this.props.part) {
       case 'spritesheet':
-
+        preview = <ExportPreviewSpritesheet />
         break;
 
       case 'allframes':
-
+        preview = <ExportPreviewAllFrames
+                    width={this.props.dimensions.width}
+                    height={this.props.dimensions.height}
+                    frameSize={frameSize}
+                    format={this.props.format}
+                    frames={this.props.frames} />
         break;
 
       case 'oneframe':
-        preview = <FrameCanvas
+        preview = <ExportPreviewSingleFrame
                     id={this.props.frame}
-                    width={this.props.editor.file.size.width}
-                    height={this.props.editor.file.size.height} />
+                    width={this.props.dimensions.width}
+                    height={this.props.dimensions.height}
+                    frameSize={frameSize}
+                    format={this.props.format} />
         break;
 
       case 'animation':
-
+        preview = <ExportPreviewAnimation />
         break;
     }
 
@@ -32,22 +43,4 @@ var ExportPreviewBox = React.createClass({
       </div>
     )
   },
-  /*
-  componentDidMount: function() {
-    this.scalePreview();
-  },
-  componentDidUpdate: function() {
-    this.scalePreview();
-  },
-  scalePreview: function() {
-    if(this.refs.preview) {
-      var inner = this.refs.inner.getDOMNode();
-      // this is a little ugly but works for now
-      // ideally, the canvas should be aware of size changes itself
-      // e.g. window resizes don't work yet
-      //this.refs.preview.scale(inner.clientWidth, inner.clientHeight);
-      console.log('scale', inner);
-    }
-  },
-  */
 });
