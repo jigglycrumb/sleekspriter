@@ -8,7 +8,14 @@ var ExportPreviewBox = React.createClass({
 
     switch(this.props.part) {
       case 'spritesheet':
-        preview = <ExportPreviewSpritesheet />
+        preview = <ExportPreviewSpritesheet
+                    id={this.props.frame}
+                    width={this.props.dimensions.width}
+                    height={this.props.dimensions.height}
+                    frameSize={frameSize}
+                    format={this.props.format}
+                    frames={this.props.frames}
+                    zoom={this.props.zoom} />
         break;
 
       case 'allframes':

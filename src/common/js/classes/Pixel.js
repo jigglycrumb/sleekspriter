@@ -145,8 +145,8 @@ Pixel.toArray = function(pixel) {
  * @param {Number} y - pixel y-coordinate
  * @param {String} color - hex-string of color to paint
  */
-Pixel.paint = function(canvas, x, y, color) {
-  var scale = canvas.width/file.size.width,
+Pixel.paint = function(canvas, x, y, color, scale) {
+  var scale = scale || canvas.width/file.size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
