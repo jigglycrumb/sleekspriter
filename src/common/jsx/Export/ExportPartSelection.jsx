@@ -8,8 +8,7 @@ var ExportPartSelection = React.createClass({
                                 &nbsp;/&nbsp;
                                 {this.props.editor.frames.total} as image
                               </span>},
-      {name: 'allframes', el: 'Every frame as single image'},
-
+      // {name: 'allframes', el: 'Every frame as single image'},
     ];
 
     if(this.props.editor.animations.list.length > 0) {

@@ -26,6 +26,26 @@
   font-size: 1.3em;
 }
 
+.icon-eye {
+  content: "\e007"; // flaticon-eye46
+}
+
+.icon-eye-slashed {
+  content: "\e008"; // flaticon-eye48
+}
+
+.icon-arrow-down {
+  content: "\e00d"; // flaticon-little9
+}
+
+.icon-arrow-right {
+  content: "\e00f"; // flaticon-mini7
+}
+
+.icon-checkmark {
+  content: "\e005"; // flaticon-done
+}
+
 // general styles
 
 * {
@@ -67,21 +87,28 @@ h5, h6 {
   box-sizing: border-box;
 }
 
-button {
+button,
+.button {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
   position: relative;
   cursor: pointer;
   outline: none;
   border: 1px solid #303030;
   border-radius: 2px;
   color: @font-color;
+  box-sizing: border-box;
   .gradient-light;
 }
 
-button[disabled] {
+button[disabled],
+.button[disabled] {
   cursor: auto;
 }
 
-button:after {
+button:after,
+.button:after {
   background: none;
   border-top: 1px solid #909090;
   border-bottom: 1px solid #6a6a6a;
@@ -404,24 +431,4 @@ ul {
     right: -1px;
     pointer-events: none;
   }
-}
-
-.icon-eye {
-  content: "\e007"; // flaticon-eye46
-}
-
-.icon-eye-slashed {
-  content: "\e008"; // flaticon-eye48
-}
-
-.icon-arrow-down {
-  content: "\e00d"; // flaticon-little9
-}
-
-.icon-arrow-right {
-  content: "\e00f"; // flaticon-mini7
-}
-
-.icon-checkmark {
-  content: "\e005"; // flaticon-done
 }

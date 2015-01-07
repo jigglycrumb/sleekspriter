@@ -20,5 +20,18 @@
       float: left;
       width: ~"calc(100% - 7em)";
     }
+
+    .button {
+      width: ~"calc(100% - 20px)";
+      margin-left: 10px;
+      font-size: 1.4em;
+      padding: .5em;
+      .linear-gradient(green, darkgreen);
+      border: 1px solid darken(darkgreen, 10%);
+
+      &:after {
+        border-top: 1px solid lighten(green, 10%);
+      }
+    }
   }
 }

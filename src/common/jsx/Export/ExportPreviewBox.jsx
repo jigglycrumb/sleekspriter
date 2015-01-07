@@ -1,6 +1,7 @@
 var ExportPreviewBox = React.createClass({
   render: function() {
     var preview = null,
+        backgroundColor = this.props.format === 'jpeg' ? '#ffffff' : 'transparent';
         frameSize = {
           width: this.props.dimensions.width * this.props.zoom,
           height: this.props.dimensions.height * this.props.zoom,
@@ -15,7 +16,8 @@ var ExportPreviewBox = React.createClass({
                     frameSize={frameSize}
                     format={this.props.format}
                     frames={this.props.frames}
-                    zoom={this.props.zoom} />
+                    zoom={this.props.zoom}
+                    backgroundColor={backgroundColor} />
         break;
 
       case 'allframes':
@@ -33,7 +35,8 @@ var ExportPreviewBox = React.createClass({
                     width={this.props.dimensions.width}
                     height={this.props.dimensions.height}
                     frameSize={frameSize}
-                    format={this.props.format} />
+                    format={this.props.format}
+                    backgroundColor={backgroundColor} />
         break;
 
       case 'animation':
@@ -50,7 +53,7 @@ var ExportPreviewBox = React.createClass({
     return (
       <div id="ExportPreviewBox">
         <h5>Preview</h5>
-        <div ref="inner" className="inner">
+        <div id="ExportPreview" ref="inner" className="inner">
           {preview}
         </div>
       </div>

@@ -4,6 +4,7 @@ var FrameCanvasMixin = {
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
      alwaysRefresh: React.PropTypes.bool, // required for preview box to always render the current frame
+     backgroundColor: React.PropTypes.string, //
   },
 
   getInitialState: function() {
@@ -12,8 +13,8 @@ var FrameCanvasMixin = {
         'scope.set': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
-        'pixel.add': this.checkRefresh,
-        'pixel.delete': this.checkRefresh,
+        // 'pixel.add': this.checkRefresh,
+        // 'pixel.delete': this.checkRefresh,
         'app.layer.delete': this.checkRefresh,
       },
     };
@@ -21,19 +22,19 @@ var FrameCanvasMixin = {
   checkRefresh: function(data, envelope) {
     if(this.props.id === data.frame || this.props.alwaysRefresh === true) {
       switch(envelope.topic) {
-        case 'pixel.add':
-          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
-          if(pixelsAbove === false) Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
-          break;
+        // case 'pixel.add':
+        //   var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
+        //   if(pixelsAbove === false) Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
+        //   break;
 
-        case 'pixel.delete':
-          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
-          if(pixelsAbove === false) {
-            var pixelBelow = this.getPixelBelow(editor.pixels.frame, data.x, data.y, data.z);
-            if(pixelBelow === false) Pixel.clear(this.getDOMNode(), data.x, data.y);
-            else Pixel.paint(this.getDOMNode(), data.x, data.y, pixelBelow.toHex());
-          }
-          break;
+        // case 'pixel.delete':
+        //   var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
+        //   if(pixelsAbove === false) {
+        //     var pixelBelow = this.getPixelBelow(editor.pixels.frame, data.x, data.y, data.z);
+        //     if(pixelBelow === false) Pixel.clear(this.getDOMNode(), data.x, data.y);
+        //     else Pixel.paint(this.getDOMNode(), data.x, data.y, pixelBelow.toHex());
+        //   }
+        //   break;
 
         case 'scope.set':
         case 'canvas.refresh':
@@ -88,6 +89,12 @@ var FrameCanvasMixin = {
     // clear canvas
     canvas.width = canvas.width;
 
+    if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = this.props.backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     // paint
     pixels.forEach(function(px) {
       var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
@@ -103,6 +110,12 @@ var FrameCanvasMixin = {
 
     // clear canvas
     canvas.width = canvas.width;
+
+    if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = this.props.backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     // paint
     pixels.forEach(function(px) {

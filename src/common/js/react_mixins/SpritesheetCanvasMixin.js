@@ -63,6 +63,12 @@ var SpritesheetCanvasMixin = {
     // clear canvas
     canvas.width = canvas.width;
 
+    if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = this.props.backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     // paint
     pixels.forEach(function(px) {
       var targetPos = this.getPixelSpritesheetPosition(px),
@@ -80,9 +86,6 @@ var SpritesheetCanvasMixin = {
       x: ((framePos.x-1) * this.props.width) + pixel.x,
       y: ((framePos.y-1) * this.props.height) + pixel.y,
     };
-
-    // if(pixel.frame == 6) console.log({x: pixel.x, y: pixel.y}, framePos, targetPos);
-
     return targetPos;
   },
   // previewSpritesheet: function(pixels) {

@@ -4,6 +4,17 @@
   border: 1px solid @color;
 }
 
+.linear-gradient(@startColor, @endColor) {
+  background: @startColor;
+  background: -moz-linear-gradient(top,  @startColor 0%, @endColor 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @startColor), color-stop(100%, @endColor));
+  background: -webkit-linear-gradient(top,  @startColor 0%, @endColor 100%);
+  background: -o-linear-gradient(top,  @startColor 0%, @endColor 100%);
+  background: -ms-linear-gradient(top,  @startColor 0%, @endColor 100%);
+  background: linear-gradient(to bottom,  @startColor 0%, @endColor 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@startColor', endColorstr='@endColor',GradientType=0);
+}
+
 .letterpress {
   text-shadow: 0 -1px 1px @dark, 0 1px 1px #6a6a6a;
 }
@@ -14,25 +25,11 @@
 }
 
 .gradient {
-  background: #3f3f3f;
-  background: -moz-linear-gradient(top,  #3f3f3f 0%, #373737 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3f3f3f), color-stop(100%,#373737));
-  background: -webkit-linear-gradient(top,  #3f3f3f 0%,#373737 100%);
-  background: -o-linear-gradient(top,  #3f3f3f 0%,#373737 100%);
-  background: -ms-linear-gradient(top,  #3f3f3f 0%,#373737 100%);
-  background: linear-gradient(to bottom,  #3f3f3f 0%,#373737 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f3f3f', endColorstr='#373737',GradientType=0 );
+  .linear-gradient(#3f3f3f, #373737);
 }
 
 .gradient-light {
-  background: #747474;
-  background: -moz-linear-gradient(top,  #747474 0%, #646464 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#747474), color-stop(100%,#646464));
-  background: -webkit-linear-gradient(top,  #747474 0%,#646464 100%);
-  background: -o-linear-gradient(top,  #747474 0%,#646464 100%);
-  background: -ms-linear-gradient(top,  #747474 0%,#646464 100%);
-  background: linear-gradient(to bottom,  #747474 0%,#646464 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#747474', endColorstr='#646464',GradientType=0 );
+  .linear-gradient(#747474, #646464);
 }
 
 .checkerboard {
