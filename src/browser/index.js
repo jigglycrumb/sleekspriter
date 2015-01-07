@@ -16,7 +16,7 @@
 function resetWorkspace() {
   localStorage.removeItem('workspace');
   workspace.setup();
-  editor.file.name = 'coin.pixels';
+  // editor.file.name = 'coin.pixels';
   workspace.save();
   document.location.reload();
 };
@@ -105,18 +105,8 @@ var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
 
-workspace.load();
-
-if(!workspace.data.file) { // no file, show open dialog/title screen/whatever
-  // nothing to see here yet
-  console.warn('no file in workspace found');
-  resetWorkspace();
-}
-else { // re-open last file
-  file.load(workspace.data.file, fileLoaded);
-}
-
-// resetWorkspace(); // temporary
+// workspace.load();
+file.load('coin.pixels', fileLoaded);
 
 function fileLoaded(json) {
   // init file

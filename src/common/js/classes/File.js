@@ -1,6 +1,9 @@
 var File = function() {
 
-  this.path = null;
+  this.path = null; // full path, file name and suffix
+  this.name = null; // filename without path and suffix
+  this.folder = null; // folder path
+
   this.size = null;
   this.frames = null;
   this.layers = null;
@@ -146,11 +149,6 @@ var File = function() {
     }
     self.layers.reverse();
   }
-
-  // handle file saving
-  // channel.subscribe('file.save', function(data, envelope) {
-  //   self.save(); // save method is implemented per platform in an extra file
-  // });
 
   // handle layer opacity change
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {

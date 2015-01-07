@@ -13,8 +13,8 @@ var FrameCanvasMixin = {
         'scope.set': this.checkRefresh,
         'canvas.refresh': this.checkRefresh,
         'canvas.preview': this.checkRefresh,
-        // 'pixel.add': this.checkRefresh,
-        // 'pixel.delete': this.checkRefresh,
+        'pixel.add': this.checkRefresh,
+        'pixel.delete': this.checkRefresh,
         'app.layer.delete': this.checkRefresh,
       },
     };
@@ -22,19 +22,19 @@ var FrameCanvasMixin = {
   checkRefresh: function(data, envelope) {
     if(this.props.id === data.frame || this.props.alwaysRefresh === true) {
       switch(envelope.topic) {
-        // case 'pixel.add':
-        //   var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
-        //   if(pixelsAbove === false) Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
-        //   break;
+        case 'pixel.add':
+          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
+          if(pixelsAbove === false) Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
+          break;
 
-        // case 'pixel.delete':
-        //   var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
-        //   if(pixelsAbove === false) {
-        //     var pixelBelow = this.getPixelBelow(editor.pixels.frame, data.x, data.y, data.z);
-        //     if(pixelBelow === false) Pixel.clear(this.getDOMNode(), data.x, data.y);
-        //     else Pixel.paint(this.getDOMNode(), data.x, data.y, pixelBelow.toHex());
-        //   }
-        //   break;
+        case 'pixel.delete':
+          var pixelsAbove = this.getPixelsAbove(editor.pixels.frame, data.x, data.y, data.z);
+          if(pixelsAbove === false) {
+            var pixelBelow = this.getPixelBelow(editor.pixels.frame, data.x, data.y, data.z);
+            if(pixelBelow === false) Pixel.clear(this.getDOMNode(), data.x, data.y);
+            else Pixel.paint(this.getDOMNode(), data.x, data.y, pixelBelow.toHex());
+          }
+          break;
 
         case 'scope.set':
         case 'canvas.refresh':

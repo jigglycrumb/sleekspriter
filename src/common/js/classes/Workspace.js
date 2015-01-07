@@ -34,7 +34,7 @@ Workspace.prototype.data = {
 
 // update workspace with current editor data
 Workspace.prototype.update = function() {
-  this.data.file = editor.file.name;
+  // this.data.file = editor.file.name;
   this.data.tool = editor.tool.selected;
   this.data.frame = editor.frames.selected;
   this.data.layer = editor.layers.selected;
@@ -71,7 +71,7 @@ Workspace.prototype.setup = function() {
     return bounds;
   };
 
-  editor.file.name = this.data.file;
+  // editor.file.name = this.data.file;
   editor.tool.selected = this.data.tool;
   editor.frames.selected = this.data.frame;
   editor.layers.selected = this.data.layer;
