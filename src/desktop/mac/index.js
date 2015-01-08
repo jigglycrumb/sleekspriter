@@ -171,13 +171,22 @@ var fileMenu = new gui.Menu();
 win.menu.insert(new gui.MenuItem({label: 'File', submenu: fileMenu}), 1);
 
 fileMenu.insert(new gui.MenuItem({
+  label: 'New',
+  click: function() {
+    channel.publish('modal.show', {component: ModalNewFile});
+  },
+  key: 'n',
+  modifiers: 'cmd'
+}), 0);
+
+fileMenu.insert(new gui.MenuItem({
   label: 'Open',
   click: function() {
     clickInput('fileOpen');
   },
   key: 'o',
   modifiers: 'cmd'
-}), 0);
+}), 1);
 
 fileMenu.insert(new gui.MenuItem({
   label: 'Save',
@@ -187,7 +196,7 @@ fileMenu.insert(new gui.MenuItem({
   key: 's',
   modifiers: 'cmd',
   enabled: false,
-}), 1);
+}), 2);
 
 fileMenu.insert(new gui.MenuItem({
   label: 'Save as',
@@ -197,7 +206,7 @@ fileMenu.insert(new gui.MenuItem({
   key: 's',
   modifiers: 'shift-cmd',
   enabled: false,
-}), 2);
+}), 3);
 
 // create selection menu
 var selectionMenu = new gui.Menu();

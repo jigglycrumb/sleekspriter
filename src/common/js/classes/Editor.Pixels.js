@@ -28,6 +28,8 @@ Editor.prototype.pixels.init = function() {
   // message handlers
   channel.subscribe('file.load', function() {
     self.file = file.pixels;
+    self.frame = [];
+    self.scope = [];
   });
 
   channel.subscribe('frame.select', function(data, envelope) {

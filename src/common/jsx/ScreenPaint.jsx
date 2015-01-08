@@ -8,6 +8,9 @@ var ScreenPaint = React.createClass({
 
     for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
 
+    var frameBox = null;
+    if(this.props.editor.frames.total > 1) frameBox = <FrameBox editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
+
     return (
       <section className="screen paint">
         <div className="area top">
@@ -22,7 +25,7 @@ var ScreenPaint = React.createClass({
         <div className="area right">
           <div id="layerboxhelper">
             <PreviewBox editor={this.props.editor} workspace={this.props.workspace} fold="preview" />
-            <FrameBox editor={this.props.editor} workspace={this.props.workspace} fold="frames" />
+            {frameBox}
           </div>
           <LayerBox editor={this.props.editor} workspace={this.props.workspace} fold="layers" />
         </div>

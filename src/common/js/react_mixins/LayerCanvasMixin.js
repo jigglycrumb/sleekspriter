@@ -13,12 +13,14 @@ var LayerCanvasMixin = {
         'canvas.preview': this.checkRefresh,
         'pixel.add': this.checkRefresh,
         'pixel.delete': this.checkRefresh,
+        'scope.set': this.checkRefresh,
       },
     };
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
-      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'zoom.select')) {
+      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'zoom.select')
+      || envelope.topic === 'scope.set') {
         switch(envelope.topic) {
           case 'pixel.add':
             Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
@@ -30,6 +32,7 @@ var LayerCanvasMixin = {
 
           case 'zoom.select':
           case 'canvas.refresh':
+          case 'scope.set':
             this.paintLayer();
             break;
 

@@ -285,3 +285,25 @@ var File = function() {
 
 
 File.prototype = {};
+
+File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
+  var json = {},
+      totalFrames = framesX * framesY;
+
+  json.frames = [+framesX, +framesY];
+  json.size = [+pixelsX, +pixelsY];
+  json.layers = [];
+  json.animations = [];
+  json.pixels = [];
+
+  for(var i = 0; i < totalFrames; i++) {
+    json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
+  }
+
+  this.path = null;
+  this.name = 'Untitled';
+  this.folder = null;
+  this.fromJSON(json);
+
+  channel.publish('frame.select', {frame: 1});
+};
