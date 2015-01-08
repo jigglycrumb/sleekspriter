@@ -1,11 +1,15 @@
-File.prototype.save = function(path) {
-  console.log('saving file', path);
+File.prototype.save = function(fullPath) {
+  console.info('saving file', fullPath);
 
-  path = path || this.path;
+  var fullPath = fullPath || this.path,
+      fs = require('fs'),
+      p = require('path'),
+      self = this;
 
-  var fs = require('fs');
-  fs.writeFile(path, this.toJSONString(), function(error) {
+  fs.writeFile(fullPath, this.toJSONString(), function(error) {
     if (error) throw error;
-    console.log('done');
+    self.path = fullPath;
+    self.name = p.basename(fullPath, '.pixels');
+    self.folder = p.dirname(fullPath);
   });
 };

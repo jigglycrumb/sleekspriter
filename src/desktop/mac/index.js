@@ -191,7 +191,8 @@ fileMenu.insert(new gui.MenuItem({
 fileMenu.insert(new gui.MenuItem({
   label: 'Save',
   click: function() {
-    file.save();
+    if(file.path === null) clickInput('fileSave');
+    else file.save();
   },
   key: 's',
   modifiers: 'cmd',
