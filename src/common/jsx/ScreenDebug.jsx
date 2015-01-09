@@ -16,9 +16,6 @@ var ScreenDebug = React.createClass({
             <DebugSelectionPattern zoom={this.props.editor.zoom.current} />
           </div>
         </div>
-
-        <div className="area left"></div>
-        <div className="area right"></div>
       </section>
     )
   }

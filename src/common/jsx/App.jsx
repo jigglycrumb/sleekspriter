@@ -2,7 +2,7 @@ var App = React.createClass({
   mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
-      tab: 'paint',
+      tab: 'start',
       subscriptions: {
         'frame.select': this.updateProps,
         'layer.select': this.updateProps,
@@ -36,12 +36,14 @@ var App = React.createClass({
         'animation.frame.delete': this.updateProps,
 
         'window.resize': this.updateProps,
+
+        'screen.select': this.changeScreen,
       }
     }
   },
   render: function() {
 
-    var tabs = ['paint', 'animate', 'export', 'debug'],
+    var tabs = this.state.tab === 'start' ? [] : ['paint', 'animate', 'export', 'debug'],
         windowClasses = {};
         windowClasses['window'] = true;
         windowClasses[this.state.tab] = true;
@@ -50,16 +52,17 @@ var App = React.createClass({
     return (
       <div className="app">
         <nav className="menu" ref="menu">
-          {tabs.map(function(tab) {
-            var label = tab[0].toUpperCase() + tab.substr(1, tab.length),
-                classes = React.addons.classSet({
-                  tab: true,
-                  active: this.state.tab === tab ? true : false,
-                });
-            return (
-              <div className={classes} key={tab} data-target={tab} onClick={this.selectTab}>{label}</div>
-            )
-          }, this)}
+          {tabs.length === 0 ? <label className="version">version @@version</label> :
+            tabs.map(function(tab) {
+              var label = tab[0].toUpperCase() + tab.substr(1, tab.length),
+                  classes = React.addons.classSet({
+                    tab: true,
+                    active: this.state.tab === tab ? true : false,
+                  });
+              return (
+                <div className={classes} key={tab} data-target={tab} onClick={this.selectTab}>{label}</div>
+              )
+            }, this)}
         </nav>
         <div className={windowClasses}>
           <ScreenStart />
@@ -79,5 +82,8 @@ var App = React.createClass({
     var target = event.target.getAttribute('data-target');
     channel.publish('screen.select', {target: target});
     this.setState({tab: target});
+  },
+  changeScreen: function(data) {
+    this.setState({tab: data.target});
   },
 });
