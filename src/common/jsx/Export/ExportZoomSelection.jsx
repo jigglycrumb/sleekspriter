@@ -22,7 +22,7 @@ var ExportZoomSelection = React.createClass({
         <ul>
           <li>
             <input type="range" min={1} max={50} value={this.props.zoom} onChange={this.setSize} />
-            &nbsp;<label>x{this.props.zoom}</label>
+            <input type="number" min={1} max={50} value={this.props.zoom} onChange={this.setSize} />
           </li>
           <li>
             <i>File dimensions: {width}x{height} Pixels</i>

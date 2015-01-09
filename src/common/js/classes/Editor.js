@@ -9,6 +9,7 @@ var Editor = function() {
     left: 45,
   };
 
+  this.version = '@@version';
   this.settingsVisible = false;
 
   channel.subscribe('settings.toggle', function(data, envelope) {
