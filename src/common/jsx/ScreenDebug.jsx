@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 var ScreenDebug = React.createClass({
   render: function() {
     return (
