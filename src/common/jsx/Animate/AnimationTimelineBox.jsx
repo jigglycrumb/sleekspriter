@@ -64,7 +64,7 @@ var AnimationTimelineBox = React.createClass({
       <div id="AnimationTimelineBox">
         <h4>Timeline</h4>
         <div className="scroller">
-          <div className="inner" style={innerStyle}>
+          <div ref="inner" className="inner" style={innerStyle}>
             <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} position={0} animation={this.props.editor.animations.selected} />
             {finalElements.map(function(element) {
               if(element === 'dropzone') {
@@ -87,5 +87,14 @@ var AnimationTimelineBox = React.createClass({
         </div>
       </div>
     );
+  },
+  selectFrame: function(data) {
+    this.setState({selectedFrame: data.position, scroll: data.scroll});
+  },
+  componentDidUpdate: function() {
+    if(this.state.scroll === true) {
+      this.refs.inner.getDOMNode().querySelector('.frame.selected').scrollIntoView();
+      this.setState({scroll: false});
+    }
   },
 });

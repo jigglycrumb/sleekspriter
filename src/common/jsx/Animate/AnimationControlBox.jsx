@@ -77,6 +77,9 @@ var AnimationControlBox = React.createClass({
     channel.publish('file.animation.fps', {name: this.props.animations.selected, fps: fps});
     if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
   },
+  selectFrame: function(data) {
+    this.setState({selectedFrame: data.position});
+  },
   selectNextFrame: function() {
     var animation = this.props.animations.getSelected(),
         frame = this.state.selectedFrame;
@@ -86,6 +89,7 @@ var AnimationControlBox = React.createClass({
     var data = {
       frame: animation.frames[frame],
       position: frame,
+      scroll: true,
     };
 
     channel.publish('animation.frame.select', data);
@@ -99,6 +103,7 @@ var AnimationControlBox = React.createClass({
     var data = {
       frame: animation.frames[frame],
       position: frame,
+      scroll: true,
     };
 
     channel.publish('animation.frame.select', data);
