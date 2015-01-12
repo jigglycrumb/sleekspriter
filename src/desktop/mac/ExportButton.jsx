@@ -5,26 +5,37 @@ var ExportButton = React.createClass({
     )
   },
   export: function() {
-    var canvas = NodeList2Array(document.getElementById('ExportPreview').querySelectorAll('.preview'));
+    var canvas = NodeList2Array(document.getElementById('ExportPreview').querySelectorAll('.preview')),
+        self = this,
+        fs = require('fs'),
+        sys = require('sys'),
+        frame = 1;
 
-    if(canvas.length === 1) {
-      var self = this,
-          fs = require('fs'),
-          sys = require('sys'),
-          img = canvas[0].toDataURL('image/'+this.props.format),
+    function saveCanvas(canvas, fileName) {
+      var img = canvas.toDataURL('image/'+self.props.format),
           data = img.replace(/^data:image\/\w+;base64,/, ""),
           buf = new Buffer(data, 'base64'),
-          fileName = file.name,
-          target;
+          target = file.folder+'/'+fileName+'.'+(self.props.format === 'jpeg' ? 'jpg' : self.props.format);
 
-      if(this.props.part === 'oneframe') fileName+= '-frame-'+this.props.frame;
-
-      target = file.folder+'/'+fileName+'.'+(this.props.format === 'jpeg' ? 'jpg' : this.props.format);
-
-      fs.writeFile(target, buf, function(error) {
-        if(error) throw error;
-        channel.publish('export.finished', {folder: file.folder, name: fileName, format: self.props.format});
-      });
+      fs.writeFile(target, buf);
     }
+
+    canvas.forEach(function(canvas) {
+      var fileName = file.name;
+      if(self.props.part === 'oneframe') fileName+= '-frame-'+self.props.frame;
+      else if(self.props.part === 'allframes') {
+        fileName+= '-frame-'+frame;
+        frame++;
+      }
+      saveCanvas(canvas, fileName);
+    });
+
+    channel.publish('export.finished', {
+      folder: file.folder,
+      name: file.name,
+      format: this.props.format,
+      part: this.props.part,
+      frames: this.props.editor.frames.total,
+    });
   },
 });

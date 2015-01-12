@@ -13,15 +13,24 @@ var ScreenExport = React.createClass({
         'export.animation.set': this.updateSettings,
         'export.zoom.set': this.updateSettings,
         'export.format.set': this.updateSettings,
+        'file.load': this.updateSettings,
       },
     }
   },
+  componentWillReceiveProps: function(nextProps) {
+    if(nextProps.editor.frames.total === 1) this.setState({part: 'spritesheet'});
+  },
   render: function() {
+
+    var partSelection = editor.frames.total === 1
+                      ? null
+                      : <ExportPartSelection editor={this.props.editor} part={this.state.part} frame={this.state.frame} />;
+
     return (
       <section className="screen export">
         <div className="area left">
           <h5>Settings</h5>
-          <ExportPartSelection editor={this.props.editor} part={this.state.part} frame={this.state.frame} />
+          {partSelection}
           <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} dimensions={this.props.editor.file.size} frames={this.props.editor.frames} />
           <ExportOutputSelection format={this.state.format} part={this.state.part} />
           <ExportButton editor={this.props.editor} format={this.state.format} part={this.state.part} frame={this.state.frame} />

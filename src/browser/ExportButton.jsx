@@ -15,7 +15,7 @@ var ExportButton = React.createClass({
 
       node.download = fileName+'.'+(this.props.format === 'jpeg' ? 'jpg' : this.props.format);
       node.href = canvas[0].toDataURL('image/'+this.props.format);
-      channel.publish('export.finished', {folder: file.folder, name: fileName, format: this.props.format});
+      channel.publish('export.finished', {folder: file.folder, name: fileName, format: this.props.format, part: this.props.part});
     }
   },
 });

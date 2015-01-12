@@ -18,7 +18,10 @@ var ExportStatus = React.createClass({
     if(data.folder === null) statusText = 'Exported to '+data.name+'.'+(data.format === 'jpeg' ? 'jpg' : data.format);
     else {
       var path = require('path');
-      statusText = 'Exported to '+data.folder+path.sep+data.name+'.'+(data.format === 'jpeg' ? 'jpg' : data.format);
+      if(data.part === 'allframes') {
+        statusText = 'Exported '+data.frames+' frames as '+(data.format === 'jpeg' ? 'jpg' : data.format)+' to '+data.folder;
+      }
+      else statusText = 'Exported to '+data.folder+path.sep+data.name+'.'+(data.format === 'jpeg' ? 'jpg' : data.format);
     }
     this.refs.bar.getDOMNode().innerHTML = statusText;
 

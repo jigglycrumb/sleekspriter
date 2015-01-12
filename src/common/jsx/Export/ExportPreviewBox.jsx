@@ -26,7 +26,8 @@ var ExportPreviewBox = React.createClass({
                     height={this.props.dimensions.height}
                     frameSize={frameSize}
                     format={this.props.format}
-                    frames={this.props.frames} />
+                    frames={this.props.frames}
+                    backgroundColor={backgroundColor} />
         break;
 
       case 'oneframe':

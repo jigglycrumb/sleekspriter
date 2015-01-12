@@ -121,6 +121,7 @@ function fileLoaded(json) {
   file.fromJSON(json);
   // select last selected frame
   channel.publish('frame.select', {frame: editor.frames.selected});
+  channel.publish('screen.select', {target: 'paint'});
 }
 
 // render UI
