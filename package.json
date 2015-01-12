@@ -10,7 +10,7 @@
     "grunt": "latest",
     "grunt-autoprefixer": "latest",
     "grunt-contrib-clean": "latest",
-    "grunt-contrib-compress": "latest",
+    "grunt-contrib-compress": "^0.13.0",
     "grunt-contrib-concat": "latest",
     "grunt-contrib-copy": "latest",
     "grunt-contrib-csslint": "latest",

@@ -18,3 +18,4 @@ desktop:
   - 'autoprefixer'
   - 'clean:postbuild'
   - 'nodewebkit'
+  - 'compress'

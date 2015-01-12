@@ -3,5 +3,6 @@ build
 dist
 doc
 node_modules
+release
 report
 todo.txt
