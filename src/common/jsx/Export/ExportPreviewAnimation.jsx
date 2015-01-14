@@ -7,15 +7,34 @@ var ExportPreviewAnimation = React.createClass({
   },
   render: function() {
     if(this.props.animation.frames.length > 0) {
-      var frame = this.props.animation.frames[this.state.frameIndex];
+      var self = this,
+          i = 1,
+          frame = this.props.animation.frames[this.state.frameIndex];
+
       return (
-        <ExportPreviewSingleFrame
-          key={frame}
-          id={frame}
-          width={this.props.width}
-          height={this.props.height}
-          frameSize={this.props.frameSize}
-          format={this.props.format} />
+        <div>
+          <ExportPreviewSingleFrame
+            id={frame}
+            width={this.props.width}
+            height={this.props.height}
+            frameSize={this.props.frameSize}
+            format={this.props.format} />
+          <div className="animation-frames hidden">
+            {this.props.animation.frames.map(function(frame) {
+              var key = 'preview-frame-'+i;
+              i++;
+              return (
+                <ExportPreviewSingleFrame
+                  key={key}
+                  id={frame}
+                  width={self.props.width}
+                  height={self.props.height}
+                  frameSize={self.props.frameSize}
+                  format={self.props.format} />
+              )
+            },this)}
+          </div>
+        </div>
       )
     }
     else return (

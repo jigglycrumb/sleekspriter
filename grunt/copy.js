@@ -73,6 +73,8 @@ module.exports = {
 
 
       {src: 'src/desktop/mac/index.js', dest: 'build/desktop/mac/js/index.js'},
+
+      {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
     ]
   },
 }
