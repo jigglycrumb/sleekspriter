@@ -17,4 +17,15 @@ module.exports = {
       dest: 'build/desktop/mac'
     }],
   },
+  desktopWindows: {
+    options: {
+      browsers: ['last 2 Chrome versions']
+    },
+    files: [{
+      expand: true,
+      cwd: 'build/desktop/windows',
+      src: [ '**/*.css' ],
+      dest: 'build/desktop/windows'
+    }],
+  },
 }

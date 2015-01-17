@@ -33,4 +33,21 @@ module.exports = {
       ext: '.js'
     }]
   },
+
+  desktopWindows: {
+    files: [{
+      expand: true,
+      src: 'src/common/jsx/**/*.jsx',
+      flatten: true,
+      dest: 'build/desktop/windows/js/react_components',
+      ext: '.js'
+    },
+    {
+      expand: true,
+      src: 'src/desktop/windows/**/*.jsx',
+      flatten: true,
+      dest: 'build/desktop/windows/js/react_components',
+      ext: '.js'
+    }]
+  },
 };

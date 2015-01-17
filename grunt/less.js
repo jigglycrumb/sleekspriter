@@ -12,4 +12,10 @@ module.exports = {
       "build/desktop/mac/<%= package.name %>.css": "src/common/less/index.less"
     }
   },
+  desktopWindows: {
+    files: {
+      // target.css file: source.less file
+      "build/desktop/windows/<%= package.name %>.css": "src/common/less/index.less"
+    }
+  },
 }

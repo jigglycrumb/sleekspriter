@@ -27,4 +27,12 @@ module.exports = {
     }]
   },
 
+  desktopWindows: {
+    files: [{
+      expand: true,
+      cwd: 'build/desktop/windows',
+      src: [ '*' ],
+      dest: 'build/desktop/windows'
+    }]
+  },
 }

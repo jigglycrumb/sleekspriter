@@ -1,10 +1,20 @@
 // build nodewebkit
 module.exports = {
-    options: {
-        platforms: ['osx', 'win', 'linux'],
-        cacheDir: 'dist/cache',
-        buildDir: 'dist/desktop',
-        macCredits: 'src/common/credits.html',
+    desktopMac: {
+      options: {
+          platforms: ['osx'],
+          cacheDir: 'dist/cache',
+          buildDir: 'dist/desktop/mac',
+          macCredits: 'src/common/credits.html',
+      },
+      src: ['build/desktop/mac/**/*']
     },
-    src: ['build/desktop/**/*']
+    desktopWindows: {
+      options: {
+          platforms: ['win'],
+          cacheDir: 'dist/cache',
+          buildDir: 'dist/desktop/windows',
+      },
+      src: ['build/desktop/windows/**/*']
+    },
 }
