@@ -6,6 +6,8 @@ UnderscoreJS: http://underscorejs.org
 postal.js: https://github.com/postaljs/postal.js
 color: https://github.com/harthur/color
 simple-tween-js: https://github.com/ashblue/simple-tween-js
+gif.js: https://github.com/jnordberg/gif.js
+mousetrap: https://github.com/ccampbell/mousetrap
 
 
 Icons (via flaticon.com)

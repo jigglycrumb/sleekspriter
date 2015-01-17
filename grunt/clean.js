@@ -8,4 +8,7 @@ module.exports = {
       'build/desktop/mac/js',
     ]
   },
+  dist: {
+    src: 'dist/**'
+  },
 }

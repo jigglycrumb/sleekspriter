@@ -3,7 +3,7 @@ module.exports = {
   browser: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'pixels/**'], dest: 'build/browser'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/browser'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -38,7 +38,7 @@ module.exports = {
   desktopMac: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'pixels/**'], dest: 'build/desktop/mac'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/desktop/mac'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',

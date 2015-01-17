@@ -1,10 +1,11 @@
 module.exports = {
   options: {
     patterns: [
-      { match: 'app', replacement: '<%= package.name %>' },
+      { match: 'app', replacement: '<%= package.prettyname %>' },
       { match: 'version', replacement: '<%= package.version %>' },
       { match: 'author', replacement: '<%= package.author %>' },
       { match: 'description', replacement: '<%= package.description %>' },
+      { match: 'name', replacement: '<%= package.name %>' },
     ]
   },
 
@@ -12,7 +13,7 @@ module.exports = {
     files: [{
       expand: true,
       cwd: 'build/browser',
-      src: [ '**/*' ],
+      src: [ '*' ],
       dest: 'build/browser'
     }]
   },
@@ -21,7 +22,7 @@ module.exports = {
     files: [{
       expand: true,
       cwd: 'build/desktop/mac',
-      src: [ '**/*' ],
+      src: [ '*' ],
       dest: 'build/desktop/mac'
     }]
   },
