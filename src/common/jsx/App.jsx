@@ -43,8 +43,18 @@ var App = React.createClass({
   },
   render: function() {
 
-    var tabs = this.state.tab === 'start' ? [] : ['paint', 'animate', 'export', 'debug'],
+    console.log();
+
+    var tabs = [],
         windowClasses = {};
+
+        if(this.state.tab !== 'start') {
+          tabs.push('paint');
+          if(this.props.editor.frames.total > 1) tabs.push('animate');
+          tabs.push('export');
+          tabs.push('debug');
+        }
+
         windowClasses['window'] = true;
         windowClasses[this.state.tab] = true;
         windowClasses = React.addons.classSet(windowClasses);
@@ -52,7 +62,7 @@ var App = React.createClass({
     return (
       <div className="app">
         <nav className="menu" ref="menu">
-          {tabs.length === 0 ? <label className="version">version @@version</label> :
+          {this.state.tab === 'start' ? <label className="version">version @@version</label> :
             tabs.map(function(tab) {
               var label = tab[0].toUpperCase() + tab.substr(1, tab.length),
                   classes = React.addons.classSet({
