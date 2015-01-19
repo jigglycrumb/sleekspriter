@@ -1,3 +1,4 @@
+// browser file handlers
 File.prototype.load = function(path, callback) {
 
   console.info('File: '+path);
@@ -7,4 +8,8 @@ File.prototype.load = function(path, callback) {
 
   var url = 'loadfile.php?file=pixels/' + path;
   $.getJSON(url, callback);
+};
+
+File.prototype.save = function() {
+  console.log('saving file');
 };

@@ -29,9 +29,9 @@ module.exports = {
 
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
-      {expand: true, cwd: 'src/browser', src:['File.**.js'], dest: 'build/browser/js/classes'},
+      {src: 'src/browser/File.extensions.js', dest: 'build/browser/js/classes/File.extensions.js'},
 
-
+      // index script
       {src: 'src/browser/index.js', dest: 'build/browser/js/index.js'},
     ]
   },
@@ -69,9 +69,9 @@ module.exports = {
       },
 
       // file handlers
-      {expand: true, cwd: 'src/desktop/mac', src:['File.**.js'], dest: 'build/desktop/mac/js/classes'},
+      {src: 'src/desktop/mac/File.extensions.js', dest: 'build/desktop/mac/js/classes/File.extensions.js'},
 
-
+      // index script
       {src: 'src/desktop/mac/index.js', dest: 'build/desktop/mac/js/index.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
@@ -111,9 +111,9 @@ module.exports = {
       },
 
       // file handlers
-      {expand: true, cwd: 'src/desktop/windows', src:['File.**.js'], dest: 'build/desktop/windows/js/classes'},
+      {src: 'src/desktop/windows/File.extensions.js', dest: 'build/desktop/windows/js/classes/File.extensions.js'},
 
-
+      // index script
       {src: 'src/desktop/windows/index.js', dest: 'build/desktop/windows/js/index.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
