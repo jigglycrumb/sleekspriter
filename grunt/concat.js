@@ -76,6 +76,7 @@ module.exports = {
       'build/desktop/mac/js/classes/Hotkeys.js',
       'build/desktop/mac/js/classes/Workspace.js',
       'build/desktop/mac/js/index.js',
+      'build/desktop/mac/js/menu.js',
     ],
     // the location of the resulting JS file
     dest: 'build/desktop/mac/<%= package.name %>.js'
@@ -114,6 +115,7 @@ module.exports = {
       'build/desktop/windows/js/classes/Hotkeys.js',
       'build/desktop/windows/js/classes/Workspace.js',
       'build/desktop/windows/js/index.js',
+      'build/desktop/windows/js/menu.js',
     ],
     // the location of the resulting JS file
     dest: 'build/desktop/windows/<%= package.name %>.js'

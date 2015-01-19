@@ -54,7 +54,7 @@ module.exports = {
       },
 
       // html files
-      {src: 'src/desktop/mac/index.html', dest: 'build/desktop/mac/index.html'},
+      {src: 'src/desktop/index.html', dest: 'build/desktop/mac/index.html'},
 
       // debugging helpers
       {
@@ -69,10 +69,13 @@ module.exports = {
       },
 
       // file handlers
-      {src: 'src/desktop/mac/File.extensions.js', dest: 'build/desktop/mac/js/classes/File.extensions.js'},
+      {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/mac/js/classes/File.extensions.js'},
+
+      // menu script
+      {src: 'src/desktop/Menu.mac.js', dest: 'build/desktop/mac/js/menu.js'},
 
       // index script
-      {src: 'src/desktop/mac/index.js', dest: 'build/desktop/mac/js/index.js'},
+      {src: 'src/desktop/index.js', dest: 'build/desktop/mac/js/index.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
     ]
@@ -96,7 +99,7 @@ module.exports = {
       },
 
       // html files
-      {src: 'src/desktop/windows/index.html', dest: 'build/desktop/windows/index.html'},
+      {src: 'src/desktop/index.html', dest: 'build/desktop/windows/index.html'},
 
       // debugging helpers
       {
@@ -106,15 +109,18 @@ module.exports = {
 
       // package.json
       {
-        src: 'src/desktop/package.json',
+        src: 'src/package.json',
         dest: 'build/desktop/windows/package.json',
       },
 
       // file handlers
-      {src: 'src/desktop/windows/File.extensions.js', dest: 'build/desktop/windows/js/classes/File.extensions.js'},
+      {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/windows/js/classes/File.extensions.js'},
+
+      // menu script
+      {src: 'src/desktop/Menu.windows.js', dest: 'build/desktop/windows/js/menu.js'},
 
       // index script
-      {src: 'src/desktop/windows/index.js', dest: 'build/desktop/windows/js/index.js'},
+      {src: 'src/desktop/index.js', dest: 'build/desktop/windows/js/index.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
     ]
