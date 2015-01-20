@@ -12,15 +12,24 @@ var ExportPartSelection = React.createClass({
     ];
 
     if(this.props.editor.animations.list.length > 0) {
+
+      var name = this.props.animation === null ? this.props.editor.animations.list[0].name : this.props.animation,
+          animation = this.props.editor.animations.getByName(name),
+          runtime = Math.round(1000/animation.fps * animation.frames.length);
+
       parts.push({
         name: 'animation',
         el: <span>
               Animation&nbsp;
-              <select onChange={this.setAnimation}>
+              <select onChange={this.setAnimation} defaultValue={name}>
                 {this.props.editor.animations.list.map(function(animation) {
                   return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
                 }, this)}
               </select>
+              <i className="animation-info">
+                {animation.frames.length} frames, {animation.fps} fps<br />
+                Runtime: {runtime} ms
+              </i>
             </span>
       });
     }
