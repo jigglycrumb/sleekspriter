@@ -9,7 +9,7 @@ var ExportPreviewAnimation = React.createClass({
     if(this.props.animation.frames.length > 0) {
       var self = this,
           i = 1,
-          frame = this.props.animation.frames[this.state.frameIndex];
+          frame = this.props.animation.frames[this.state.frameIndex] || 1;
 
       return (
         <div>
@@ -37,41 +37,56 @@ var ExportPreviewAnimation = React.createClass({
         </div>
       )
     }
-    else return (
-      <span>This animation does not contain any frames and cannot be exported.</span>
-    )
+    else {
+      clearTimeout(this.state.timer);
+      return (
+        <span>This animation does not contain any frames and cannot be exported.</span>
+      )
+    }
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if(this.animationIsDifferent(this.props.animation, nextProps.animation)) this.stop();
   },
   componentDidUpdate: function(prevProps) {
-    if(this.props.animation.name !== prevProps.animation.name) {
-      this.stop();
-      this.start();
-    }
+    if(this.animationIsDifferent(this.props.animation, prevProps.animation)) this.start();
   },
   componentDidMount: function() {
     this.start();
   },
   componentWillUnmount: function() {
-    clearInterval(this.state.timer);
+    clearTimeout(this.state.timer);
   },
-
-
+  animationIsDifferent: function(animation1, animation2) {
+    var diff = false;
+    for(x in animation1) {
+      if(animation1[x] !== animation2[x]) {
+        diff = true;
+        break;
+      }
+    }
+    if(diff === false) diff = !_.isEqual(animation1.frames, animation2.frames);
+    return diff;
+  },
   start: function() {
     if(this.state.timer === null && this.props.animation.frames.length > 0) {
-      var ms = 1000 / this.props.animation.fps,
-          interval = setInterval(this.nextFrame, ms);
-      this.setState({timer: interval});
+      this.nextFrame();
     }
   },
   stop: function() {
     if(this.state.timer !== null) {
-      clearInterval(this.state.timer);
+      clearTimeout(this.state.timer);
       this.setState(this.getInitialState());
     }
   },
   nextFrame: function() {
-    var index = this.state.frameIndex;
-    index++;
-    if(index === this.props.animation.frames.length) index = 0;
-    if(this.isMounted()) this.setState({frameIndex: index});
+    if(this.isMounted()) {
+      clearTimeout(this.state.timer);
+      var index = this.state.frameIndex;
+      index++;
+      if(index >= this.props.animation.frames.length) index = 0;
+      var ms = 1000 / this.props.animation.fps,
+          timeout = setTimeout(this.nextFrame, ms);
+      this.setState({frameIndex: index, timer: timeout});
+    }
   },
 });
