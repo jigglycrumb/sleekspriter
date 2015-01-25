@@ -6,6 +6,10 @@ var FrameBox = React.createClass({
         frames = [], // array for mapping the frame components
         frameSize = Math.floor(180/this.props.editor.frames.x)-1;
 
+    if(frameSize * this.props.editor.frames.y > 200) {
+      frameSize = Math.floor(180/this.props.editor.frames.y)-1;
+    }
+
     for(var i=0; i < this.props.editor.frames.total; i++) frames.push(i+1);
 
     containerStyle.width = (frameSize+1)*this.props.editor.frames.x;
