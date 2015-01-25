@@ -7,7 +7,7 @@
   "main": "index.html",
   "window": {
     "title": "@@app",
-    "toolbar": true,
+    "toolbar": false,
     "width": 800,
     "height": 600,
     "min_width": 640,
