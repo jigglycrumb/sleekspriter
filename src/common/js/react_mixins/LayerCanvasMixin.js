@@ -19,8 +19,8 @@ var LayerCanvasMixin = {
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
-      if(this.props.id === data.layer || (this.props.stage === true && envelope.topic === 'zoom.select')
-      || envelope.topic === 'scope.set') {
+      if(this.props.id === data.layer || envelope.topic === 'scope.set'
+      || (this.props.stage === true && envelope.topic === 'zoom.select')) {
         switch(envelope.topic) {
           case 'pixel.add':
             Pixel.paint(this.getDOMNode(), data.x, data.y, data.color);
@@ -30,10 +30,17 @@ var LayerCanvasMixin = {
             Pixel.clear(this.getDOMNode(), data.x, data.y);
             break;
 
-          case 'zoom.select':
           case 'canvas.refresh':
           case 'scope.set':
             this.paintLayer();
+            break;
+
+          case 'zoom.select':
+            setTimeout(this.paintLayer, 100); // TODO: implement a proper fix for this
+                                              // the timeout is evil
+                                              // problem: the stage canvas resizes after
+                                              // the pixels are painted, so it's blank
+                                              // when the user zooms
             break;
 
           case 'canvas.preview':

@@ -72,7 +72,7 @@ module.exports = {
       {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/mac/js/classes/File.extensions.js'},
 
       // menu script
-      {src: 'src/desktop/Menu.mac.js', dest: 'build/desktop/mac/js/menu.js'},
+      {src: 'src/desktop/menu.js', dest: 'build/desktop/mac/js/menu.js'},
 
       // index script
       {src: 'src/desktop/index.js', dest: 'build/desktop/mac/js/index.js'},
@@ -109,7 +109,7 @@ module.exports = {
 
       // package.json
       {
-        src: 'src/package.json',
+        src: 'src/desktop/package.json',
         dest: 'build/desktop/windows/package.json',
       },
 
@@ -117,7 +117,7 @@ module.exports = {
       {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/windows/js/classes/File.extensions.js'},
 
       // menu script
-      {src: 'src/desktop/Menu.windows.js', dest: 'build/desktop/windows/js/menu.js'},
+      {src: 'src/desktop/menu.js', dest: 'build/desktop/windows/js/menu.js'},
 
       // index script
       {src: 'src/desktop/index.js', dest: 'build/desktop/windows/js/index.js'},

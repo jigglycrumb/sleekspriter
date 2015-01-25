@@ -1,57 +1,80 @@
+// define keyboard mod key
+var modKey = process.platform === 'darwin' ? 'cmd' : 'ctrl';
 
 // import node requirements
 var gui = require('nw.gui');
-var win = gui.Window.get();
-var windowMenu = new gui.Menu({ type: "menubar" });
+var menuBar = new gui.Menu({ type: "menubar" });
+
+if(process.platform === 'darwin') {
+  // create default mac menu
+  menuBar.createMacBuiltin("@@app", {
+    hideEdit: true,
+    hideWindow: true
+  });
+}
 
 // create file submenu
 var fileMenu = new gui.Menu();
-win.menu.insert(new gui.MenuItem({label: 'File', submenu: fileMenu}), 1);
+menuBar.append(new gui.MenuItem({label: 'File', submenu: fileMenu}));
 
-fileMenu.insert(new gui.MenuItem({
+fileMenu.append(new gui.MenuItem({
   label: 'New',
   click: function() {
     channel.publish('modal.show', {component: ModalNewFile});
   },
   key: 'n',
-  modifiers: 'cmd'
-}), 0);
+  modifiers: modKey,
+}));
 
-fileMenu.insert(new gui.MenuItem({
+fileMenu.append(new gui.MenuItem({
   label: 'Open',
   click: function() {
     clickInput('fileOpen');
   },
   key: 'o',
-  modifiers: 'cmd'
-}), 1);
+  modifiers: modKey,
+}));
 
-fileMenu.insert(new gui.MenuItem({
+fileMenu.append(new gui.MenuItem({
   label: 'Save',
   click: function() {
     if(file.path === null) clickInput('fileSave');
     else file.save();
   },
   key: 's',
-  modifiers: 'cmd',
+  modifiers: modKey,
   enabled: false,
-}), 2);
+}));
 
-fileMenu.insert(new gui.MenuItem({
+fileMenu.append(new gui.MenuItem({
   label: 'Save as',
   click: function() {
     clickInput('fileSave');
   },
   key: 's',
-  modifiers: 'shift-cmd',
+  modifiers: 'shift-'+modKey,
   enabled: false,
-}), 3);
+}));
+
+// append "quit" menu option to windows menu
+if(process.platform === 'win32') {
+  // Create a separator
+  fileMenu.append(new gui.MenuItem({ type: 'separator' }));
+  fileMenu.append(new gui.MenuItem({
+    label: 'Quit',
+    click: function() {
+      gui.App.quit();
+    },
+    key: 'q',
+    modifiers: modKey,
+  }));
+}
 
 // create selection menu
 var selectionMenu = new gui.Menu();
-win.menu.insert(new gui.MenuItem({label: 'Select', submenu: selectionMenu}), 2);
+menuBar.append(new gui.MenuItem({label: 'Select', submenu: selectionMenu}));
 
-selectionMenu.insert(new gui.MenuItem({
+selectionMenu.append(new gui.MenuItem({
   label: 'All',
   click: function() {
     var start = new Point(1, 1),
@@ -62,43 +85,43 @@ selectionMenu.insert(new gui.MenuItem({
     channel.publish('selection.end', {point: end});
   },
   key: 'a',
-  modifiers: 'cmd',
+  modifiers: modKey,
   enabled: false,
-}), 0);
+}));
 
-selectionMenu.insert(new gui.MenuItem({
+selectionMenu.append(new gui.MenuItem({
   label: 'Deselect',
   click: function() {
     channel.publish('selection.clear');
   },
   key: 'd',
-  modifiers: 'cmd',
+  modifiers: modKey,
   enabled: false,
-}), 1);
+}));
 
 // create layer menu
 var layerMenu = new gui.Menu();
-win.menu.insert(new gui.MenuItem({label: 'Layer', submenu: layerMenu}), 3);
+menuBar.append(new gui.MenuItem({label: 'Layer', submenu: layerMenu}));
 
-layerMenu.insert(new gui.MenuItem({
+layerMenu.append(new gui.MenuItem({
   label: 'Merge with layer above',
   click: function() {
     console.log('merge with above');
   },
   key: 'e',
-  modifiers: 'shift-cmd',
+  modifiers: 'shift-'+modKey,
   enabled: false,
-}), 0);
+}));
 
-layerMenu.insert(new gui.MenuItem({
+layerMenu.append(new gui.MenuItem({
   label: 'Merge with layer below',
   click: function() {
     console.log('merge with below');
   },
   key: 'e',
-  modifiers: 'cmd',
+  modifiers: modKey,
   enabled: false,
-}), 1);
+}));
 
 channel.subscribe('file.load', function() {
   function enable(item) { item.enabled = true; }
@@ -107,5 +130,4 @@ channel.subscribe('file.load', function() {
   layerMenu.items.map(enable);
 });
 
-// Create a separator
-// item = new gui.MenuItem({ type: 'separator' });
+gui.Window.get().menu = menuBar;
