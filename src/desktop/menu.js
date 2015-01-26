@@ -13,7 +13,8 @@ if(process.platform === 'darwin') {
   });
 }
 
-// create file submenu
+//------------------------------------------------------------------------------
+// create "File" menu
 var fileMenu = new gui.Menu();
 menuBar.append(new gui.MenuItem({label: 'File', submenu: fileMenu}));
 
@@ -56,7 +57,7 @@ fileMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
-// append "quit" menu option to windows menu
+// append "Quit" menu option to windows menu
 if(process.platform === 'win32') {
   // Create a separator
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
@@ -70,11 +71,56 @@ if(process.platform === 'win32') {
   }));
 }
 
-// create selection menu
-var selectionMenu = new gui.Menu();
-menuBar.append(new gui.MenuItem({label: 'Select', submenu: selectionMenu}));
+//------------------------------------------------------------------------------
+// create "Edit" menu
+var editMenu = new gui.Menu();
+menuBar.append(new gui.MenuItem({label: 'Edit', submenu: editMenu}));
 
-selectionMenu.append(new gui.MenuItem({
+editMenu.append(new gui.MenuItem({
+  label: 'Cut',
+  click: function() {
+    // channel.publish('selection.clear');
+  },
+  key: 'x',
+  modifiers: modKey,
+  enabled: false,
+}));
+
+editMenu.append(new gui.MenuItem({
+  label: 'Copy',
+  click: function() {
+    // channel.publish('selection.clear');
+  },
+  key: 'c',
+  modifiers: modKey,
+  enabled: false,
+}));
+
+editMenu.append(new gui.MenuItem({
+  label: 'Paste',
+  click: function() {
+    // channel.publish('selection.clear');
+  },
+  key: 'v',
+  modifiers: modKey,
+  enabled: false,
+}));
+
+editMenu.append(new gui.MenuItem({
+  label: 'Delete',
+  click: function() {
+    // channel.publish('selection.clear');
+  },
+  key: 'del',
+  enabled: false,
+}));
+
+//------------------------------------------------------------------------------
+// create "Select" menu
+var selectMenu = new gui.Menu();
+menuBar.append(new gui.MenuItem({label: 'Select', submenu: selectMenu}));
+
+selectMenu.append(new gui.MenuItem({
   label: 'All',
   click: function() {
     var start = new Point(1, 1),
@@ -89,7 +135,7 @@ selectionMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
-selectionMenu.append(new gui.MenuItem({
+selectMenu.append(new gui.MenuItem({
   label: 'Deselect',
   click: function() {
     channel.publish('selection.clear');
@@ -99,7 +145,9 @@ selectionMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
-// create layer menu
+
+//------------------------------------------------------------------------------
+// create "Layer" menu
 var layerMenu = new gui.Menu();
 menuBar.append(new gui.MenuItem({label: 'Layer', submenu: layerMenu}));
 
@@ -123,11 +171,16 @@ layerMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
+
+//------------------------------------------------------------------------------
+// enable menus after file was loaded
 channel.subscribe('file.load', function() {
   function enable(item) { item.enabled = true; }
   fileMenu.items.map(enable);
-  selectionMenu.items.map(enable);
+  editMenu.items.map(enable);
+  selectMenu.items.map(enable);
   layerMenu.items.map(enable);
 });
 
+// assign menu to window
 gui.Window.get().menu = menuBar;
