@@ -6,32 +6,35 @@ var ExportZoomSelection = React.createClass({
 
     switch(this.props.part) {
       case 'spritesheet':
-        width = this.props.dimensions.width * this.props.frames.x * this.props.zoom;
-        height = this.props.dimensions.height * this.props.frames.y * this.props.zoom;
+        width = this.props.editor.file.size.width * this.props.editor.frames.x * this.props.zoom;
+        height = this.props.editor.file.size.height * this.props.editor.frames.y * this.props.zoom;
         break;
 
       default:
-        width = this.props.dimensions.width * this.props.zoom;
-        height = this.props.dimensions.height * this.props.zoom;
+        width = this.props.editor.file.size.width * this.props.zoom;
+        height = this.props.editor.file.size.height * this.props.zoom;
         break;
     }
 
     return (
       <div>
-        <h6>Zoom</h6>
+        <h6>Size</h6>
         <ul>
           <li>
-            <input type="range" min={1} max={50} value={this.props.zoom} onChange={this.setSize} />
-            <input type="number" min={1} max={50} value={this.props.zoom} onChange={this.setSize} />
+            <input type="range" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.zoom} onChange={this.setSize} />
+            <input type="number" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.zoom} onChange={this.setSize} />
           </li>
           <li>
-            <i>File dimensions: {width}x{height} Pixels</i>
+            <i>Exported image size: {width}x{height} pixels</i>
           </li>
         </ul>
       </div>
     )
   },
   setSize: function(event) {
-    channel.publish('export.zoom.set', {zoom: +event.target.value});
+    var size = +event.target.value;
+    if(size > 50) size = 50;
+    if(size < 1) size = 1;
+    channel.publish('export.zoom.set', {zoom: size});
   },
 });

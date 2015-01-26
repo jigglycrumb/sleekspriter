@@ -7,9 +7,9 @@ var ZoomTool = React.createClass({
         <i className="icon flaticon-magnifier5"></i>
         <button onClick={this.zoomIn} className="small" title="Zoom in"><i className="flaticon-plus25"></i></button>
         <button onClick={this.zoomOut} className="small" title="Zoom out"><i className="flaticon-minus18"></i></button>
-        <input type="range" min="1" max="50" value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
+        <input type="range" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
-        <input type="number" min="1" max="50" value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
+        <input type="number" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.editor.zoom.current} onChange={this.dispatchZoomChanged} />
         <button onClick={this.fitToScreen} className="small">Fit to screen</button>
         <span className="spacer"></span>
         <span className="hint">A pixel in your sprite is now {this.props.editor.zoom.current} pixels on your screen.</span>
