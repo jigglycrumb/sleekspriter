@@ -148,6 +148,7 @@ Editor.prototype.pixels.init = function() {
       channel.publish('pixel.delete', px);
     });
 
+    self.save();
     self.log();
   });
 
@@ -177,6 +178,7 @@ Editor.prototype.pixels.init = function() {
       channel.publish('pixel.delete', px);
     });
 
+    self.save();
     self.log();
   });
 
