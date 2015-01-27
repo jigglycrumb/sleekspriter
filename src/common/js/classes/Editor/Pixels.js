@@ -98,7 +98,7 @@ Editor.prototype.pixels.init = function() {
     var c = new Color(data.color),
         a = 1;
 
-    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, data.z, c.red(), c.green(), c.blue(), a);
+    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a, data.z);
     var oldPixel = _.findWhere(self.scope, {x: data.x, y: data.y});
     if(_.isUndefined(oldPixel)) {
       // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
