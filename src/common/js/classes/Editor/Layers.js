@@ -71,3 +71,23 @@ Editor.prototype.layers.getById = function(id) {
 Editor.prototype.layers.getSelected = function() {
   return this.getById(this.selected);
 };
+
+/**
+ * Get layer above selected layer
+ * @returns {Object} layer
+ */
+Editor.prototype.layers.getAboveSelected = function() {
+  var z = this.getSelected().z,
+      above = _.filter(this.frame, function(layer) { return layer.z > z });
+  return above.length === 0 ? false : _.min(above, 'z');
+};
+
+/**
+ * Get layer below selected layer
+ * @returns {Object} layer
+ */
+Editor.prototype.layers.getBelowSelected = function() {
+  var z = this.getSelected().z,
+      below = _.filter(this.frame, function(layer) { return layer.z < z });
+  return below.length === 0 ? false : _.max(below, 'z');
+};

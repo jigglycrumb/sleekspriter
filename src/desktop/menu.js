@@ -154,7 +154,11 @@ menuBar.append(new gui.MenuItem({label: 'Layer', submenu: layerMenu}));
 layerMenu.append(new gui.MenuItem({
   label: 'Merge with layer above',
   click: function() {
-    console.log('merge with above');
+    var data = {
+      top: editor.layers.getAboveSelected(),
+      bottom: editor.layers.getSelected(),
+    };
+    if(data.top) channel.publish('layer.merge', data);
   },
   key: 'e',
   modifiers: 'shift-'+modKey,
@@ -164,7 +168,11 @@ layerMenu.append(new gui.MenuItem({
 layerMenu.append(new gui.MenuItem({
   label: 'Merge with layer below',
   click: function() {
-    console.log('merge with below');
+    var data = {
+      top: editor.layers.getSelected(),
+      bottom: editor.layers.getBelowSelected(),
+    };
+    if(data.bottom) channel.publish('layer.merge', data);
   },
   key: 'e',
   modifiers: modKey,

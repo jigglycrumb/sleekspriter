@@ -5,7 +5,10 @@ var ScreenDebug = React.createClass({
         <div className="area top">
           <h1>DEBUG</h1>
 
-          <button onClick={this.showDevtools}>Open DevTools</button>
+          <div className="actions">
+            <button onClick={this.showDevtools}>Open DevTools</button>
+            <button onClick={this.reloadApp}>Reload App</button>
+          </div>
         </div>
 
         <div className="area center">
@@ -24,5 +27,8 @@ var ScreenDebug = React.createClass({
   showDevtools: function() {
     // open devtools
     require('nw.gui').Window.get().showDevTools();
+  },
+  reloadApp: function() {
+    require('nw.gui').Window.get().reloadDev();
   },
 });

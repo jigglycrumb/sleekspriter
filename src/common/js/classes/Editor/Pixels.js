@@ -1,9 +1,18 @@
 Editor.prototype.pixels = {};
 
+/**
+ * contains a copy of all pixels of the loaded file
+ * @type {Array}
+ */
 Editor.prototype.pixels.file = [];
 
-Editor.prototype.pixels.frame = []; // make iterations faster by copying frame pixels to their own collection
-                                    // also needed to show pixel count in status bar
+/**
+ * contains all pixels of the current frame
+ * was introduced to make iterations faster
+ * also needed to show pixel count in menu bar
+ * @type {Array}
+ */
+Editor.prototype.pixels.frame = [];
 
 /**
  * contains the pixels to work with
@@ -171,6 +180,42 @@ Editor.prototype.pixels.init = function() {
     self.log();
   });
 
+  channel.subscribe('layer.merge', function(data, envelope) {
+
+    // define where to look for top layer pixels
+    var search = self.frame;
+    if(data.top.id === editor.layers.selected) {
+      search = self.scope;
+    }
+
+    // get pixels of top layer
+    var topLayerPixels = _.filter(search, {layer: data.top.id});
+
+    // prepare target pixels
+    var target = {
+      frame: data.bottom.frame,
+      layer: data.bottom.id,
+      z: data.bottom.z,
+    };
+
+    // select bottom layer
+    channel.publish('layer.select', {layer: data.bottom.id});
+
+    // add pixels to bottom layer
+    topLayerPixels.forEach(function(px) {
+      var data = target;
+      data.x = px.x;
+      data.y = px.y;
+      data.color = px.toHex();
+      channel.publish('pixel.add', data);
+    });
+
+    self.save();
+
+    // delete top layer
+    channel.publish('file.layer.delete', {layer: data.top.id});
+  });
+
 
 }; // Editor.prototype.pixels.init
 
@@ -190,7 +235,7 @@ Editor.prototype.pixels.merge = function(from, to) {
  * Save updated pixels
  */
 Editor.prototype.pixels.save = function() {
-  console.log('saving pixels...');
+  console.log('merging pixels back to file');
   this.merge('scope', 'file');
   this.merge('frame', 'file');
   file.pixels = this.file;
