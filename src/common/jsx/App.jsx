@@ -8,7 +8,6 @@ var App = React.createClass({
         'layer.select': this.updateProps,
         'tool.select': this.updateProps,
         'color.select': this.updateProps,
-        'cursor.set': this.updateProps,
         'palette.select': this.updateProps,
         'brightnesstool.mode.select': this.updateProps,
         'brightnesstool.intensity.select': this.updateProps,

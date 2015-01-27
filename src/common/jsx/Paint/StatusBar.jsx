@@ -1,4 +1,16 @@
 var StatusBar = React.createClass({
+  mixins: [PostalSubscriptionMixin],
+  getInitialState: function() {
+    return {
+      cursor: {
+        x: 1,
+        y: 1,
+      },
+      subscriptions: {
+        'cursor.set': this.updateCursorPosition,
+      }
+    }
+  },
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
         settingsButtonClasses = React.addons.classSet({
@@ -14,8 +26,8 @@ var StatusBar = React.createClass({
 
     return (
       <div className="bar">
-        <span>X: {this.props.editor.cursor.position.x}</span>
-        <span>Y: {this.props.editor.cursor.position.y}</span>
+        <span ref="cursorX">X: {this.state.cursor.x}</span>
+        <span ref="cursorY">Y: {this.state.cursor.y}</span>
         <div id="StatusBarColor" style={{background: this.props.editor.color.frame.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.editor.color.frame.alpha() == 0 ? 'transparent': this.props.editor.color.frame.hexString()}</span>
         <span>Frame {this.props.editor.frames.selected}, {this.props.editor.pixels.frame.length + this.props.editor.pixels.scope.length} pixels</span>
@@ -37,5 +49,8 @@ var StatusBar = React.createClass({
   },
   dispatchSettingsToggled: function(event) {
     channel.publish('settings.toggle', {visible: !this.props.editor.settingsVisible});
+  },
+  updateCursorPosition: function(data, envelope) {
+    this.setState({cursor: data.position});
   },
 });

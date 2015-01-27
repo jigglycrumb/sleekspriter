@@ -1,15 +1,21 @@
 var StageBoxCursorCanvas = React.createClass({
-  mixins: [StageBoxCanvasMixin],
+  mixins: [StageBoxCanvasMixin, PostalSubscriptionMixin],
   render: function() {
     return (
       <canvas id="StageBoxCursorCanvas" className="Layer" width={this.props.width} height={this.props.height} />
     );
   },
-  componentDidUpdate: function() {
-    this.clear();
-    this.drawPixelCursor();
+  getInitialState: function() {
+    return {
+      subscriptions: {
+        'cursor.set': this.drawPixelCursor,
+      }
+    }
   },
   drawPixelCursor: function() {
+
+    this.clear();
+
     var zoom = this.props.editor.zoom.current,
         x = this.props.editor.cursor.position.x,
         y = this.props.editor.cursor.position.y;
