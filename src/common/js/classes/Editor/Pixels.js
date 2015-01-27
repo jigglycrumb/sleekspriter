@@ -11,6 +11,12 @@ Editor.prototype.pixels.frame = []; // make iterations faster by copying frame p
  */
 Editor.prototype.pixels.scope = [];
 
+/**
+ * contains the clipboard pixels
+ * @type {Array}
+ */
+Editor.prototype.pixels.clipboard = [];
+
 Editor.prototype.pixels.init = function() {
   var self = this;
 
@@ -120,6 +126,52 @@ Editor.prototype.pixels.init = function() {
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
   });
+
+  channel.subscribe('scope.copy', function(data, envelope) {
+    self.clipboard = self.scope;
+
+    self.log();
+  });
+
+  channel.subscribe('scope.cut', function(data, envelope) {
+    self.clipboard = self.scope;
+    self.scope.forEach(function(px) {
+      channel.publish('pixel.delete', px);
+    });
+
+    self.log();
+  });
+
+  channel.subscribe('scope.paste', function(data, envelope) {
+    // get current frame & layer
+    var target = {
+      frame: editor.frames.selected,
+      layer: editor.layers.selected,
+      z: file.getLayerById(editor.layers.selected).z,
+    };
+
+    // transform pixels from clipboard to new layer and add them
+    self.clipboard.forEach(function(px) {
+      var data = target;
+      data.x = px.x;
+      data.y = px.y;
+      data.color = px.toHex();
+      channel.publish('pixel.add', data);
+    });
+
+    self.save();
+    self.log();
+  });
+
+  channel.subscribe('scope.delete', function(data, envelope) {
+    self.scope.forEach(function(px) {
+      channel.publish('pixel.delete', px);
+    });
+
+    self.log();
+  });
+
+
 }; // Editor.prototype.pixels.init
 
 /**
@@ -142,12 +194,13 @@ Editor.prototype.pixels.save = function() {
   this.merge('scope', 'file');
   this.merge('frame', 'file');
   file.pixels = this.file;
-  channel.publish('file.save');
+  // channel.publish('file.save');
   this.log();
 };
 
 Editor.prototype.pixels.log = function() {
-  console.log('scope: '+this.scope.length+' '+
+  console.log('clipboard: '+this.clipboard.length+' '+
+              'scope: '+this.scope.length+' '+
               'frame: '+this.frame.length+' '+
               'file: '+this.file.length);
 };

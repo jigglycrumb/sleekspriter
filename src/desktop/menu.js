@@ -79,7 +79,7 @@ menuBar.append(new gui.MenuItem({label: 'Edit', submenu: editMenu}));
 editMenu.append(new gui.MenuItem({
   label: 'Cut',
   click: function() {
-    // channel.publish('selection.clear');
+    channel.publish('scope.cut');
   },
   key: 'x',
   modifiers: modKey,
@@ -89,7 +89,7 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Copy',
   click: function() {
-    // channel.publish('selection.clear');
+    channel.publish('scope.copy');
   },
   key: 'c',
   modifiers: modKey,
@@ -99,7 +99,7 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Paste',
   click: function() {
-    // channel.publish('selection.clear');
+    channel.publish('scope.paste');
   },
   key: 'v',
   modifiers: modKey,
@@ -109,9 +109,9 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Delete',
   click: function() {
-    // channel.publish('selection.clear');
+    channel.publish('scope.delete');
   },
-  key: 'del',
+  key: String.fromCharCode(8),
   enabled: false,
 }));
 
