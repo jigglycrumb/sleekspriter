@@ -66,8 +66,10 @@ function fileLoaded(json) {
 
 // render UI
 var container = document.getElementById('app-container');
-React.render(React.createElement(App, {editor: editor, workspace: workspace}), container);
-
+React.render(React.createElement(App, {editor: editor, workspace: workspace}), container, function() {
+  // show app window after GUI is rendered
+  require('nw.gui').Window.get().show();
+});
 
 
 // helper to click hidden file inputs for load and save dialogs

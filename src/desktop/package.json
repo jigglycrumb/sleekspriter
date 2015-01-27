@@ -13,6 +13,7 @@
     "min_width": 640,
     "min_height": 480,
     "position": "center",
-    "resizable": "true"
+    "resizable": true,
+    "show": false
   }
 }
