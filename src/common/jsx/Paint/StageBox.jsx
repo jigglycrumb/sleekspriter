@@ -58,20 +58,21 @@ var StageBox = React.createClass({
 
     event = event.nativeEvent;
 
-    var point = this.getWorldCoordinates(event);
+    var point = this.getWorldCoordinates(event),
+        ok = true;
 
     switch(this.props.editor.tool.selected) {
 
       case 'BrushTool':
-        this.useBrushTool();
+        ok = this.useBrushTool();
         break;
 
       case 'EraserTool':
-        this.useEraserTool();
+        ok = this.useEraserTool();
         break;
 
       case 'BrightnessTool':
-        this.useBrightnessTool();
+        ok = this.useBrightnessTool();
         break;
 
       case 'RectangularSelectionTool':
@@ -79,7 +80,7 @@ var StageBox = React.createClass({
         break;
     }
 
-    this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
+    if(ok) this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
   },
 
   mousemove: function(event) {
@@ -128,7 +129,8 @@ var StageBox = React.createClass({
     event = event.nativeEvent;
 
     var point = this.getWorldCoordinates(event),
-        distance = this.getMouseDownDistance();
+        distance = this.getMouseDownDistance(),
+        ok = true;;
 
     this.setState({mousedown: false});
 
@@ -143,7 +145,7 @@ var StageBox = React.createClass({
         break;
 
       case 'PaintBucketTool':
-        this.usePaintBucketTool(point);
+        ok = this.usePaintBucketTool(point);
         break;
 
       case 'MoveTool':
@@ -151,7 +153,7 @@ var StageBox = React.createClass({
         break;
     }
 
-    this.props.editor.pixels.save();
+    if(ok) this.props.editor.pixels.save();
   },
 
 
@@ -193,7 +195,9 @@ var StageBox = React.createClass({
                         file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
       }
+      return true;
     }
+    else return this.showInvisibleLayerError();
   },
   useEraserTool: function() {
     if(isLayerVisible()) {
@@ -209,7 +213,9 @@ var StageBox = React.createClass({
                        file.getLayerById(editor.layers.selected).z);
         }
       }
+      return true;
     }
+    else return this.showInvisibleLayerError();
   },
   useEyedropperTool: function() {
     if(editor.color.frame.alpha() == 0) return; // skip transparent pixels
@@ -222,7 +228,9 @@ var StageBox = React.createClass({
         if(editor.selection.contains(point)) channel.publish('stage.tool.paintbucket', {point: point});
       }
       else channel.publish('stage.tool.paintbucket', {point: point});
+      return true;
     }
+    else return this.showInvisibleLayerError();
   },
   useBrightnessTool: function() {
     if(isLayerVisible()) {
@@ -256,7 +264,9 @@ var StageBox = React.createClass({
           }
         }
       }
+      return true;
     }
+    else return this.showInvisibleLayerError();
   },
 
 
@@ -315,6 +325,10 @@ var StageBox = React.createClass({
       else
         channel.publish('selection.end', {point: point});
     }
+  },
+  showInvisibleLayerError: function() {
+    channel.publish('modal.show', {component: ModalErrorInvisibleLayer});
+    return false;
   },
 
 });
