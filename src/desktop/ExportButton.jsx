@@ -9,6 +9,11 @@ var ExportButton = React.createClass({
         fs = require('fs'),
         sys = require('sys');
 
+    if(file.folder === null) {
+      channel.publish('modal.show', {component: ModalErrorSaveBeforeExport});
+      return;
+    }
+
     if(this.props.part === 'animation') {
       var gif = new GIF({
                       workers: 2,
