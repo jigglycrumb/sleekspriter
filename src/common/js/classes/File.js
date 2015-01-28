@@ -154,18 +154,21 @@ var File = function() {
   channel.subscribe('file.layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.opacity = data.opacity;
+    channel.publish('layer.opacity.select', data);
   });
 
   // handle layer visibility toggle
   channel.subscribe('file.layer.visibility.toggle', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.visible = data.visible;
+    channel.publish('layer.visibility.toggle', data);
   });
 
   // handle layer name change
   channel.subscribe('file.layer.name.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.name = data.name;
+    channel.publish('layer.name.select', data);
   });
 
   // handle addition of new layer
@@ -187,7 +190,7 @@ var File = function() {
     self.layers.splice(index, 0, newLayer);
     fixLayerZ(editor.frames.selected);
 
-    channel.publish('app.layer.add', {frame: editor.frames.selected, layer: newId});
+    channel.publish('layer.add', {frame: editor.frames.selected, layer: newId});
   });
 
   // handle layer removal
@@ -225,7 +228,7 @@ var File = function() {
     self.layers.splice(index, 1);
     fixLayerZ(editor.frames.selected);
 
-    channel.publish('app.layer.delete', {frame: editor.frames.selected, layer: shouldSelectLayer});
+    channel.publish('layer.delete', {frame: editor.frames.selected, layer: shouldSelectLayer});
   });
 
   // handle addition of new animation

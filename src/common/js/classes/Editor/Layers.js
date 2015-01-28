@@ -31,11 +31,11 @@ Editor.prototype.layers.init = function() {
     channel.publish('scope.set', scopeData);
   });
 
-  channel.subscribe('app.layer.add', function(data, envelope) {
+  channel.subscribe('layer.add', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
   });
 
-  channel.subscribe('app.layer.delete', function(data, envelope) {
+  channel.subscribe('layer.delete', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
   });
 };

@@ -4,8 +4,8 @@ var LayerBox = React.createClass({
     return {
       shouldSelectLayer: false,
       subscriptions: {
-        'app.layer.add': this.shouldSelectLayer,
-        'app.layer.delete': this.shouldSelectLayer,
+        'layer.add': this.shouldSelectLayer,
+        'layer.delete': this.shouldSelectLayer,
         'box.fold': this.fitHeight,
       }
     }

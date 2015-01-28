@@ -241,7 +241,6 @@ Editor.prototype.pixels.save = function() {
   this.merge('scope', 'file');
   this.merge('frame', 'file');
   file.pixels = this.file;
-  // channel.publish('file.save');
   this.log();
 };
 

@@ -17,14 +17,11 @@ var App = React.createClass({
         'grid.toggle': this.updateProps,
         'zoom.select': this.updateProps,
 
-        'file.layer.opacity.select': this.updateProps,
-        'file.layer.visibility.toggle': this.updateProps,
-        'file.layer.name.select': this.updateProps,
-
-        'file.save': this.updateProps,
-
-        'app.layer.add': this.updateProps,
-        'app.layer.delete': this.updateProps,
+        'layer.opacity.select': this.updateProps,
+        'layer.visibility.toggle': this.updateProps,
+        'layer.name.select': this.updateProps,
+        'layer.add': this.updateProps,
+        'layer.delete': this.updateProps,
 
         'animation.add': this.updateProps,
         'animation.delete': this.updateProps,
@@ -41,9 +38,6 @@ var App = React.createClass({
     }
   },
   render: function() {
-
-    console.log();
-
     var tabs = [],
         windowClasses = {};
 
