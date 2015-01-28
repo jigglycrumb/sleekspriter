@@ -47,14 +47,18 @@ function changeColorLightness(color, delta) {
 };
 
 function resize() {
-  channel.publish('window.resize');
+  channel.gui.publish('window.resize');
 }
 
 window.onresize = resize;
 
 // move this into window.onload later
 
-var channel = postal.channel('@@app');
+var channel = {
+    file: postal.channel('file'),
+    gui: postal.channel('gui'),
+};
+
 var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
@@ -66,7 +70,7 @@ function fileLoaded(json) {
   // init file
   file.fromJSON(json);
   // select last selected frame
-  channel.publish('frame.select', {frame: editor.frames.selected});
+  channel.gui.publish('frame.select', {frame: editor.frames.selected});
 }
 
 // render UI

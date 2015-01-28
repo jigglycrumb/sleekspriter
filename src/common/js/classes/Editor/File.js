@@ -5,7 +5,7 @@ Editor.prototype.file.size = {width: 0, height: 0};
 Editor.prototype.file.init = function() {
   var self = this;
 
-  channel.subscribe('file.load', function(data, envelope) {
+  channel.file.subscribe('file.load', function(data, envelope) {
     self.size = data.size;
   });
 };

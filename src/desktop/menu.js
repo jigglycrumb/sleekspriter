@@ -21,7 +21,7 @@ menuBar.append(new gui.MenuItem({label: 'File', submenu: fileMenu}));
 fileMenu.append(new gui.MenuItem({
   label: 'New',
   click: function() {
-    channel.publish('modal.show', {component: ModalNewFile});
+    channel.gui.publish('modal.show', {component: ModalNewFile});
   },
   key: 'n',
   modifiers: modKey,
@@ -79,7 +79,7 @@ menuBar.append(new gui.MenuItem({label: 'Edit', submenu: editMenu}));
 editMenu.append(new gui.MenuItem({
   label: 'Cut',
   click: function() {
-    channel.publish('scope.cut');
+    channel.gui.publish('scope.cut');
   },
   key: 'x',
   modifiers: modKey,
@@ -89,7 +89,7 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Copy',
   click: function() {
-    channel.publish('scope.copy');
+    channel.gui.publish('scope.copy');
   },
   key: 'c',
   modifiers: modKey,
@@ -99,7 +99,7 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Paste',
   click: function() {
-    channel.publish('scope.paste');
+    channel.gui.publish('scope.paste');
   },
   key: 'v',
   modifiers: modKey,
@@ -109,7 +109,7 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({
   label: 'Delete',
   click: function() {
-    channel.publish('scope.delete');
+    channel.gui.publish('scope.delete');
   },
   key: String.fromCharCode(8),
   enabled: false,
@@ -126,9 +126,9 @@ selectMenu.append(new gui.MenuItem({
     var start = new Point(1, 1),
         end = new Point(file.size.width, file.size.height);
 
-    channel.publish('selection.clear');
-    channel.publish('selection.start', {point: start});
-    channel.publish('selection.end', {point: end});
+    channel.gui.publish('selection.clear');
+    channel.gui.publish('selection.start', {point: start});
+    channel.gui.publish('selection.end', {point: end});
   },
   key: 'a',
   modifiers: modKey,
@@ -138,7 +138,7 @@ selectMenu.append(new gui.MenuItem({
 selectMenu.append(new gui.MenuItem({
   label: 'Deselect',
   click: function() {
-    channel.publish('selection.clear');
+    channel.gui.publish('selection.clear');
   },
   key: 'd',
   modifiers: modKey,
@@ -158,7 +158,7 @@ layerMenu.append(new gui.MenuItem({
       top: editor.layers.getAboveSelected(),
       bottom: editor.layers.getSelected(),
     };
-    if(data.top) channel.publish('layer.merge', data);
+    if(data.top) channel.gui.publish('layer.merge', data);
   },
   key: 'e',
   modifiers: 'shift-'+modKey,
@@ -172,7 +172,7 @@ layerMenu.append(new gui.MenuItem({
       top: editor.layers.getSelected(),
       bottom: editor.layers.getBelowSelected(),
     };
-    if(data.bottom) channel.publish('layer.merge', data);
+    if(data.bottom) channel.gui.publish('layer.merge', data);
   },
   key: 'e',
   modifiers: modKey,
@@ -182,7 +182,7 @@ layerMenu.append(new gui.MenuItem({
 
 //------------------------------------------------------------------------------
 // enable menus after file was loaded
-channel.subscribe('file.load', function() {
+channel.file.subscribe('file.load', function() {
   function enable(item) { item.enabled = true; }
   fileMenu.items.map(enable);
   editMenu.items.map(enable);

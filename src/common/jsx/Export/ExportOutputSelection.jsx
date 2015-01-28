@@ -24,6 +24,6 @@ var ExportOutputSelection = React.createClass({
     this.setFormat(event.target.value);
   },
   setFormat: function(format) {
-    channel.publish('export.format.set', {format: format});
+    channel.gui.publish('export.format.set', {format: format});
   },
 });

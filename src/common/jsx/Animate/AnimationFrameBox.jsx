@@ -47,7 +47,7 @@ var AnimationFrameBox = React.createClass({
       if(row === this.state.row) frames.push(i+1);
     }
 
-    channel.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
+    channel.gui.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
   },
   addColumn: function() {
     var frames = [];
@@ -57,6 +57,6 @@ var AnimationFrameBox = React.createClass({
       if(column === this.state.column) frames.push(i+1);
     }
 
-    channel.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
+    channel.gui.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
   },
 });

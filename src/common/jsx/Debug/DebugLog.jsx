@@ -30,7 +30,7 @@ var DebugLog = React.createClass({
           name: 'debuglog',
           active: active,
           filters: [
-            { channel: "@@app" },
+            { channel: 'gui' },
           ],
           writer: function(data) {
             var logText = log.innerHTML;

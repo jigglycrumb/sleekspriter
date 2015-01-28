@@ -5,7 +5,7 @@ Editor.prototype.background.value = 'checkerboard';
 Editor.prototype.background.init = function() {
   var self = this;
 
-  channel.subscribe('background.select', function(data, envelope) {
+  channel.gui.subscribe('background.select', function(data, envelope) {
     self.type = data.type;
     self.value = data.value;
   });

@@ -24,15 +24,15 @@ var LayerBoxLayer = React.createClass({
     );
   },
   dispatchLayerSelected: function() {
-    channel.publish('layer.select', {layer: this.props.layer.id});
+    channel.gui.publish('layer.select', {layer: this.props.layer.id});
   },
   dispatchLayerVisibilityChanged: function(event) {
-    channel.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
+    channel.file.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
   },
   dispatchLayerOpacityChanged: function(event) {
-    channel.publish('file.layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
+    channel.file.publish('file.layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
   },
   dispatchLayerNameChanged: function(name) {
-    channel.publish('file.layer.name.select', {layer: this.props.layer.id, name: name});
+    channel.file.publish('file.layer.name.select', {layer: this.props.layer.id, name: name});
   },
 });

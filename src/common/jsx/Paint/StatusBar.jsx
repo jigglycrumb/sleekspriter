@@ -45,10 +45,10 @@ var StatusBar = React.createClass({
     );
   },
   dispatchGridToggled: function(event) {
-    channel.publish('grid.toggle', {grid: !this.props.editor.grid.enabled});
+    channel.gui.publish('grid.toggle', {grid: !this.props.editor.grid.enabled});
   },
   dispatchSettingsToggled: function(event) {
-    channel.publish('settings.toggle', {visible: !this.props.editor.settingsVisible});
+    channel.gui.publish('settings.toggle', {visible: !this.props.editor.settingsVisible});
   },
   updateCursorPosition: function(data, envelope) {
     this.setState({cursor: data.position});

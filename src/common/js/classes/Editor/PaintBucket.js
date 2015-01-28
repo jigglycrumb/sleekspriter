@@ -3,7 +3,7 @@ Editor.prototype.paintBucket = {};
 Editor.prototype.paintBucket.init = function() {
   var self = this;
 
-  channel.subscribe('stage.tool.paintbucket', function(data, envelope) {
+  channel.gui.subscribe('stage.tool.paintbucket', function(data, envelope) {
     self.fill(data.point);
   });
 };

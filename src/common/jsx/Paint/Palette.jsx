@@ -153,7 +153,7 @@ var Palette = React.createClass({
   selectPalette: function(event) {
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
-    channel.publish('palette.select', {palette: palette});
+    channel.gui.publish('palette.select', {palette: palette});
     event.stopPropagation();
   },
 });

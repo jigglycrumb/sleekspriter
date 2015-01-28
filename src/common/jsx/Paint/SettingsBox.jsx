@@ -41,14 +41,14 @@ var SettingsBox = React.createClass({
       type: 'color',
       value: event.target.value
     };
-    channel.publish('background.select', data);
+    channel.gui.publish('background.select', data);
   },
   dispatchBackgroundSelected: function(event) {
     var data = {
       type: event.target.getAttribute('data-type'),
       value: event.target.getAttribute('data-value'),
     };
-    channel.publish('background.select', data);
+    channel.gui.publish('background.select', data);
   },
 
 });

@@ -8,12 +8,12 @@ Editor.prototype.layers.frame = [];
 Editor.prototype.layers.init = function() {
   var self = this;
 
-  channel.subscribe('frame.select', function(data, envelope) {
+  channel.gui.subscribe('frame.select', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
     setTimeout(self.selectTop.bind(self), 0); // select top layer
   });
 
-  channel.subscribe('layer.select', function(data, envelope) {
+  channel.gui.subscribe('layer.select', function(data, envelope) {
     // save old scope layer
     var oldScope = self.selected;
 
@@ -28,14 +28,14 @@ Editor.prototype.layers.init = function() {
     };
 
     // set new scope
-    channel.publish('scope.set', scopeData);
+    channel.gui.publish('scope.set', scopeData);
   });
 
-  channel.subscribe('layer.add', function(data, envelope) {
+  channel.gui.subscribe('layer.add', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
   });
 
-  channel.subscribe('layer.delete', function(data, envelope) {
+  channel.gui.subscribe('layer.delete', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
   });
 };
@@ -53,7 +53,7 @@ Editor.prototype.layers.getIds = function() {
  */
 Editor.prototype.layers.selectTop = function() {
   var topLayer = _.max(this.frame, function(layer) { return layer.z; });
-  channel.publish('layer.select', {layer: topLayer.id});
+  channel.gui.publish('layer.select', {layer: topLayer.id});
 };
 
 /**

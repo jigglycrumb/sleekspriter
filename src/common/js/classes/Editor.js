@@ -12,7 +12,7 @@ var Editor = function() {
   this.version = '@@version';
   this.settingsVisible = false;
 
-  channel.subscribe('settings.toggle', function(data, envelope) {
+  channel.gui.subscribe('settings.toggle', function(data, envelope) {
     self.settingsVisible = data.visible;
   });
 

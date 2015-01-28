@@ -18,7 +18,7 @@ var ZoomTool = React.createClass({
   },
   dispatchZoomChanged: function(event, zoom) {
     zoom = _.isNull(event) ? zoom : event.target.value;
-    channel.publish('zoom.select', {zoom: zoom});
+    channel.gui.publish('zoom.select', {zoom: zoom});
   },
   zoomIn: function() {
     if(this.props.editor.zoom.current+1 <= this.props.editor.zoom.max) this.dispatchZoomChanged(null, this.props.editor.zoom.current+1);

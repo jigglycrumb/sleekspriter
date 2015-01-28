@@ -23,7 +23,7 @@ var AnimationTimelineFrame = React.createClass({
       position: this.props.position,
     };
 
-    channel.publish('animation.frame.select', data);
+    channel.gui.publish('animation.frame.select', data);
   },
   dispatchFrameDelete: function(event) {
     event.stopPropagation();
@@ -34,6 +34,6 @@ var AnimationTimelineFrame = React.createClass({
       position: this.props.position,
     };
 
-    channel.publish('file.animation.frame.delete', data);
+    channel.file.publish('file.animation.frame.delete', data);
   },
 });

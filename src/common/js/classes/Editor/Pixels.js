@@ -41,23 +41,23 @@ Editor.prototype.pixels.init = function() {
   };
 
   // message handlers
-  channel.subscribe('file.load', function() {
+  channel.file.subscribe('file.load', function() {
     self.file = file.pixels;
     self.frame = [];
     self.scope = [];
   });
 
-  channel.subscribe('frame.select', function(data, envelope) {
+  channel.gui.subscribe('frame.select', function(data, envelope) {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
-  channel.subscribe('app.layer.delete', function(data, envelope) {
+  channel.gui.subscribe('layer.delete', function(data, envelope) {
     self.scope = [];
     self.file = file.pixels;
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
-  channel.subscribe('scope.set', function(data, envelope) {
+  channel.gui.subscribe('scope.set', function(data, envelope) {
 
     // update pixels in scope
 
@@ -93,16 +93,16 @@ Editor.prototype.pixels.init = function() {
     self.log();
   });
 
-  channel.subscribe('pixels.move', function(data, envelope) {
+  channel.gui.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };
     self.scope.forEach(wrapPixel);
-    channel.publish('canvas.refresh', {
+    channel.gui.publish('canvas.refresh', {
       frame: editor.frames.selected,
       layer: editor.layers.selected,
     });
   });
 
-  channel.subscribe('pixel.add', function(data, envelope) {
+  channel.gui.subscribe('pixel.add', function(data, envelope) {
     // add/replace pixel
     var c = new Color(data.color),
         a = 1;
@@ -130,29 +130,29 @@ Editor.prototype.pixels.init = function() {
     }
   });
 
-  channel.subscribe('pixel.delete', function(data, envelope) {
+  channel.gui.subscribe('pixel.delete', function(data, envelope) {
     deletePixel('scope', data.layer, data.x, data.y);
     deletePixel('frame', data.layer, data.x, data.y);
     deletePixel('file', data.layer, data.x, data.y);
   });
 
-  channel.subscribe('scope.copy', function(data, envelope) {
+  channel.gui.subscribe('scope.copy', function(data, envelope) {
     self.clipboard = self.scope;
 
     self.log();
   });
 
-  channel.subscribe('scope.cut', function(data, envelope) {
+  channel.gui.subscribe('scope.cut', function(data, envelope) {
     self.clipboard = self.scope;
     self.scope.forEach(function(px) {
-      channel.publish('pixel.delete', px);
+      channel.gui.publish('pixel.delete', px);
     });
 
     self.save();
     self.log();
   });
 
-  channel.subscribe('scope.paste', function(data, envelope) {
+  channel.gui.subscribe('scope.paste', function(data, envelope) {
     // get current frame & layer
     var target = {
       frame: editor.frames.selected,
@@ -166,23 +166,23 @@ Editor.prototype.pixels.init = function() {
       data.x = px.x;
       data.y = px.y;
       data.color = px.toHex();
-      channel.publish('pixel.add', data);
+      channel.gui.publish('pixel.add', data);
     });
 
     self.save();
     self.log();
   });
 
-  channel.subscribe('scope.delete', function(data, envelope) {
+  channel.gui.subscribe('scope.delete', function(data, envelope) {
     self.scope.forEach(function(px) {
-      channel.publish('pixel.delete', px);
+      channel.gui.publish('pixel.delete', px);
     });
 
     self.save();
     self.log();
   });
 
-  channel.subscribe('layer.merge', function(data, envelope) {
+  channel.gui.subscribe('layer.merge', function(data, envelope) {
 
     // define where to look for top layer pixels
     var search = self.frame;
@@ -201,7 +201,7 @@ Editor.prototype.pixels.init = function() {
     };
 
     // select bottom layer
-    channel.publish('layer.select', {layer: data.bottom.id});
+    channel.gui.publish('layer.select', {layer: data.bottom.id});
 
     // add pixels to bottom layer
     topLayerPixels.forEach(function(px) {
@@ -209,13 +209,13 @@ Editor.prototype.pixels.init = function() {
       data.x = px.x;
       data.y = px.y;
       data.color = px.toHex();
-      channel.publish('pixel.add', data);
+      channel.gui.publish('pixel.add', data);
     });
 
     self.save();
 
     // delete top layer
-    channel.publish('file.layer.delete', {layer: data.top.id});
+    channel.file.publish('file.layer.delete', {layer: data.top.id});
   });
 
 

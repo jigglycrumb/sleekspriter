@@ -70,11 +70,11 @@ var AnimationControlBox = React.createClass({
     )
   },
   toggleAnimationList: function() {
-    channel.publish('animationlist.toggle');
+    channel.gui.publish('animationlist.toggle');
   },
   setAnimationFps: function(event) {
     var fps = +event.target.value;
-    channel.publish('file.animation.fps', {name: this.props.animations.selected, fps: fps});
+    channel.file.publish('file.animation.fps', {name: this.props.animations.selected, fps: fps});
     if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
   },
   selectFrame: function(data) {
@@ -92,7 +92,7 @@ var AnimationControlBox = React.createClass({
       scroll: true,
     };
 
-    channel.publish('animation.frame.select', data);
+    channel.gui.publish('animation.frame.select', data);
   },
   selectPreviousFrame: function() {
     var animation = this.props.animations.getSelected(),
@@ -106,7 +106,7 @@ var AnimationControlBox = React.createClass({
       scroll: true,
     };
 
-    channel.publish('animation.frame.select', data);
+    channel.gui.publish('animation.frame.select', data);
   },
   playAnimation: function() {
     if(this.state.animationInterval === null) {

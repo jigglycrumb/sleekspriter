@@ -20,8 +20,8 @@ var ScreenStart = React.createClass({
     )
   },
   newFile: function() {
-    channel.publish('screen.select', {target: 'paint'});
-    channel.publish('modal.show', {component: ModalNewFile});
+    channel.gui.publish('screen.select', {target: 'paint'});
+    channel.gui.publish('modal.show', {component: ModalNewFile});
   },
   openFile: function() {
     clickInput('fileOpen');

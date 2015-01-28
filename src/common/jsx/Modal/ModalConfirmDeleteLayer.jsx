@@ -14,7 +14,7 @@ var ModalConfirmDeleteLayer = React.createClass({
     )
   },
   deleteLayer: function() {
-    channel.publish('file.layer.delete', {layer: this.props.editor.layers.selected});
+    channel.file.publish('file.layer.delete', {layer: this.props.editor.layers.selected});
     this.hide();
   },
 });

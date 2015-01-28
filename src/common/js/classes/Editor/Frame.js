@@ -6,12 +6,12 @@ Editor.prototype.frames.y = 1;
 Editor.prototype.frames.init = function() {
   var self = this;
 
-  channel.subscribe('file.load', function(data, envelope) {
+  channel.file.subscribe('file.load', function(data, envelope) {
     self.x = data.frames.x;
     self.y = data.frames.y;
   });
 
-  channel.subscribe('frame.select', function(data, envelope) {
+  channel.gui.subscribe('frame.select', function(data, envelope) {
     self.selected = parseInt(data.frame);
   });
 };

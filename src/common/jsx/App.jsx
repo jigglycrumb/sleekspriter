@@ -83,7 +83,7 @@ var App = React.createClass({
   },
   selectTab: function(event) {
     var target = event.target.getAttribute('data-target');
-    channel.publish('screen.select', {target: target});
+    channel.gui.publish('screen.select', {target: target});
     this.setState({tab: target});
   },
   changeScreen: function(data) {

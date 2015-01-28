@@ -7,19 +7,19 @@ Editor.prototype.selection.init = function() {
   // message handlers
 
   // selection has been started
-  channel.subscribe('selection.start', function(data, envelope) {
+  channel.gui.subscribe('selection.start', function(data, envelope) {
     self.bounds = {
       start: data.point
     };
   });
 
   // selection box is being drawn
-  channel.subscribe('selection.resize', function(data, envelope) {
+  channel.gui.subscribe('selection.resize', function(data, envelope) {
     self.bounds.cursor = data.point;
   });
 
   // selection is complete
-  channel.subscribe('selection.end', function(data, envelope) {
+  channel.gui.subscribe('selection.end', function(data, envelope) {
     self.bounds = { // reset self selection to remove cursor property as it's no longer needed
       start: self.bounds.start,
       end: data.point
@@ -42,11 +42,11 @@ Editor.prototype.selection.init = function() {
     };
 
     // set new scope
-    channel.publish('scope.set', scopeData);
+    channel.gui.publish('scope.set', scopeData);
   });
 
   // selection has been cleared
-  channel.subscribe('selection.clear', function(data, envelope) {
+  channel.gui.subscribe('selection.clear', function(data, envelope) {
     self.bounds = false;
 
     // revert scope back to layer
@@ -57,17 +57,17 @@ Editor.prototype.selection.init = function() {
     };
 
     // set new scope
-    channel.publish('scope.set', scopeData);
+    channel.gui.publish('scope.set', scopeData);
   });
 
 
   //
-  channel.subscribe('selection.preview', function(data, envelope) {
+  channel.gui.subscribe('selection.preview', function(data, envelope) {
     self.bounds.distance = data.distance;
   });
 
   // selection is being moved
-  channel.subscribe('selection.move', function(data, envelope) {
+  channel.gui.subscribe('selection.move', function(data, envelope) {
     self.bounds = {
       start: new Point(
         self.bounds.start.x + data.distance.x,
@@ -86,7 +86,7 @@ Editor.prototype.selection.init = function() {
       data: self.bounds,
     };
 
-    channel.publish('scope.set', scopeData);
+    channel.gui.publish('scope.set', scopeData);
   });
 
 };

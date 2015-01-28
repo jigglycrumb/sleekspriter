@@ -34,17 +34,17 @@ var LayerBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.shouldSelectLayer !== false) {
-      channel.publish('layer.select', {layer: this.state.shouldSelectLayer});
+      channel.gui.publish('layer.select', {layer: this.state.shouldSelectLayer});
       this.setState({ shouldSelectLayer: false });
     }
 
     this.fitHeight();
   },
   dispatchLayerAdded: function() {
-    channel.publish('file.layer.add', {layer: this.props.editor.layers.selected});
+    channel.file.publish('file.layer.add', {layer: this.props.editor.layers.selected});
   },
   confirmLayerDelete: function() {
-    channel.publish('modal.show', {component: ModalConfirmDeleteLayer});
+    channel.gui.publish('modal.show', {component: ModalConfirmDeleteLayer});
   },
   shouldSelectLayer: function(data) {
     this.setState({ shouldSelectLayer: data.layer });

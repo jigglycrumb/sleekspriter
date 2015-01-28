@@ -41,7 +41,7 @@ var AnimationFrameBoxFrame = React.createClass({
         column = (this.props.frame % this.props.editor.frames.x === 0
                ? this.props.editor.frames.x : this.props.frame%this.props.editor.frames.x)-1;
 
-    channel.publish('animation.framebox.frame.select', {row: row, column: column});
+    channel.gui.publish('animation.framebox.frame.select', {row: row, column: column});
   },
 
   unselect: function() {

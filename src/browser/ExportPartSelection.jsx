@@ -8,22 +8,7 @@ var ExportPartSelection = React.createClass({
                                 &nbsp;/&nbsp;
                                 {this.props.editor.frames.total} as image
                               </span>},
-      // {name: 'allframes', el: 'Every frame as single image'},
     ];
-
-    // if(this.props.editor.animations.list.length > 0) {
-    //   parts.push({
-    //     name: 'animation',
-    //     el: <span>
-    //           Animation&nbsp;
-    //           <select onChange={this.setAnimation}>
-    //             {this.props.editor.animations.list.map(function(animation) {
-    //               return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
-    //             }, this)}
-    //           </select>
-    //         </span>
-    //   });
-    // }
 
     return (
       <div>
@@ -45,12 +30,12 @@ var ExportPartSelection = React.createClass({
     )
   },
   setPart: function(event) {
-    channel.publish('export.part.set', {part: event.target.value});
+    channel.gui.publish('export.part.set', {part: event.target.value});
   },
   setFrame: function(event) {
-    channel.publish('export.frame.set', {frame: +event.target.value});
+    channel.gui.publish('export.frame.set', {frame: +event.target.value});
   },
   setAnimation: function(event) {
-    channel.publish('export.animation.set', {animation: event.target.value});
+    channel.gui.publish('export.animation.set', {animation: event.target.value});
   },
 });

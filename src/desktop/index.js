@@ -46,11 +46,15 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-window.onresize = function(e) { channel.publish('window.resize'); };
+window.onresize = function(e) { channel.gui.publish('window.resize'); };
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };
 
-var channel = postal.channel('@@app');
+var channel = {
+  file: postal.channel('file'),
+  gui: postal.channel('gui'),
+};
+
 var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
@@ -60,8 +64,8 @@ function fileLoaded(json) {
   // init file
   file.fromJSON(json);
   // select last selected frame
-  channel.publish('frame.select', {frame: editor.frames.selected});
-  channel.publish('screen.select', {target: 'paint'});
+  channel.gui.publish('frame.select', {frame: editor.frames.selected});
+  channel.gui.publish('screen.select', {target: 'paint'});
 }
 
 // render UI

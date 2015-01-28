@@ -42,7 +42,7 @@ var AnimationFrameDropzone = React.createClass({
         position: this.props.position,
       };
 
-      channel.publish('file.animation.frame.add', data);
+      channel.file.publish('file.animation.frame.add', data);
     }
   },
 });

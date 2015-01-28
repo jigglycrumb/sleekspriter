@@ -15,16 +15,16 @@ var AnimationListAnimation = React.createClass({
     )
   },
   dispatchAnimationSelected: function() {
-    channel.publish('animation.select', {name: this.props.animation.name});
+    channel.gui.publish('animation.select', {name: this.props.animation.name});
 
     if(this.props.animation.frames.length > 0) {
-      channel.publish('animation.frame.select', {
+      channel.gui.publish('animation.frame.select', {
         frame: this.props.animation.frames[0],
         position: 0,
       });
     }
   },
   dispatchAnimationNameChanged: function(oldName, newName) {
-    channel.publish('file.animation.rename', {oldName: oldName, newName: newName});
+    channel.file.publish('file.animation.rename', {oldName: oldName, newName: newName});
   },
 });

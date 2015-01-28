@@ -54,12 +54,12 @@ var ExportPartSelection = React.createClass({
     )
   },
   setPart: function(event) {
-    channel.publish('export.part.set', {part: event.target.value});
+    channel.gui.publish('export.part.set', {part: event.target.value});
   },
   setFrame: function(event) {
-    channel.publish('export.frame.set', {frame: +event.target.value});
+    channel.gui.publish('export.frame.set', {frame: +event.target.value});
   },
   setAnimation: function(event) {
-    channel.publish('export.animation.set', {animation: event.target.value});
+    channel.gui.publish('export.animation.set', {animation: event.target.value});
   },
 });

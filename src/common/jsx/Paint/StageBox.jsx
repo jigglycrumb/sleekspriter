@@ -93,7 +93,7 @@ var StageBox = React.createClass({
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10 && point.x > 0 && point.y > 0) {
-      channel.publish('cursor.set', {position: point});
+      channel.gui.publish('cursor.set', {position: point});
     }
 
     if(this.state.mousedown === true) {
@@ -219,15 +219,15 @@ var StageBox = React.createClass({
   },
   useEyedropperTool: function() {
     if(editor.color.frame.alpha() == 0) return; // skip transparent pixels
-    channel.publish('tool.select', {tool: 'BrushTool'});
-    channel.publish('color.select', {color: editor.color.frame.hexString()});
+    channel.gui.publish('tool.select', {tool: 'BrushTool'});
+    channel.gui.publish('color.select', {color: editor.color.frame.hexString()});
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
       if(editor.selection.isActive) {
-        if(editor.selection.contains(point)) channel.publish('stage.tool.paintbucket', {point: point});
+        if(editor.selection.contains(point)) channel.gui.publish('stage.tool.paintbucket', {point: point});
       }
-      else channel.publish('stage.tool.paintbucket', {point: point});
+      else channel.gui.publish('stage.tool.paintbucket', {point: point});
       return true;
     }
     else return this.showInvisibleLayerError();
@@ -287,16 +287,16 @@ var StageBox = React.createClass({
       pixels.push(px.wrap(distance, true));
     });
 
-    channel.publish('canvas.preview', {
+    channel.gui.publish('canvas.preview', {
       frame: editor.frames.selected,
       layer: editor.layers.selected,
       pixels: pixels,
     });
   },
   useMoveTool: function(distance) {
-    channel.publish('pixels.move', {distance: distance});
+    channel.gui.publish('pixels.move', {distance: distance});
     if(editor.selection.isActive) {
-      channel.publish('selection.move', {distance: distance});
+      channel.gui.publish('selection.move', {distance: distance});
     }
   },
 
@@ -305,29 +305,29 @@ var StageBox = React.createClass({
 
   startRectangularSelection: function(point) {
     if(!editor.selection || !editor.selection.contains(point)) {
-      channel.publish('selection.clear');
-      channel.publish('selection.start', {point: point});
+      channel.gui.publish('selection.clear');
+      channel.gui.publish('selection.start', {point: point});
     }
   },
   resizeRectangularSelection: function(point) {
-    channel.publish('selection.resize', {point: point});
+    channel.gui.publish('selection.resize', {point: point});
   },
   previewRectangularSelection: function(distance) {
-    channel.publish('selection.preview', {distance: distance});
+    channel.gui.publish('selection.preview', {distance: distance});
   },
   endRectangularSelection: function(point, distance) {
     if(editor.selection.isActive) {
-      channel.publish('selection.move', {distance: distance});
+      channel.gui.publish('selection.move', {distance: distance});
     }
     else {
       if(_.isEqual(point, this.state.mousedownPoint))
-        channel.publish('selection.clear');
+        channel.gui.publish('selection.clear');
       else
-        channel.publish('selection.end', {point: point});
+        channel.gui.publish('selection.end', {point: point});
     }
   },
   showInvisibleLayerError: function() {
-    channel.publish('modal.show', {component: ModalErrorInvisibleLayer});
+    channel.gui.publish('modal.show', {component: ModalErrorInvisibleLayer});
     return false;
   },
 

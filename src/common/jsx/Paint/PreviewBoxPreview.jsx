@@ -10,7 +10,7 @@ var PreviewBoxPreview = React.createClass({
     );
   },
   componentDidMount: function() {
-    this.subscriptions.push(channel.subscribe('cursor.set', this.getPixelColor));
+    this.subscriptions.push(channel.gui.subscribe('cursor.set', this.getPixelColor));
   },
   getPixelColor: function(data) {
     var scale = this.getScale(),

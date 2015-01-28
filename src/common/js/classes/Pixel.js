@@ -180,7 +180,7 @@ Pixel.clear = function(canvas, x, y) {
  * @param  {String} color     Pixel color hex string
  */
 Pixel.add = function(frame, layer, x, y, z, color) {
-  channel.publish('pixel.add', {
+  channel.gui.publish('pixel.add', {
     frame: frame,
     layer: layer,
     x: x,
@@ -199,7 +199,7 @@ Pixel.add = function(frame, layer, x, y, z, color) {
  * @param  {Number} z     Pixel z
  */
 Pixel.delete = function(frame, layer, x, y, z) {
-  channel.publish('pixel.delete', {
+  channel.gui.publish('pixel.delete', {
     frame: editor.frames.selected,
     layer: editor.layers.selected,
     x: editor.cursor.position.x,

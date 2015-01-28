@@ -35,6 +35,6 @@ var ExportZoomSelection = React.createClass({
     var size = +event.target.value;
     if(size > 50) size = 50;
     if(size < 1) size = 1;
-    channel.publish('export.zoom.set', {zoom: size});
+    channel.gui.publish('export.zoom.set', {zoom: size});
   },
 });

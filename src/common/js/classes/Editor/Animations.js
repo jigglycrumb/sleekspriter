@@ -5,20 +5,20 @@ Editor.prototype.animations.selected = null;
 Editor.prototype.animations.init = function() {
   var self = this;
 
-  channel.subscribe('file.load', function() {
+  channel.file.subscribe('file.load', function() {
     self.list = file.animations;
   });
 
-  channel.subscribe('file.animation.rename', function(data, envelope) {
+  channel.file.subscribe('file.animation.rename', function(data, envelope) {
     if(self.selected === data.oldName) self.selected = data.newName;
   });
 
-  channel.subscribe('animation.delete', function() {
+  channel.gui.subscribe('animation.delete', function() {
     self.list = file.animations;
     self.selected = null;
   });
 
-  channel.subscribe('animation.select', function(data, envelope) {
+  channel.gui.subscribe('animation.select', function(data, envelope) {
     self.selected = data.name;
   });
 };

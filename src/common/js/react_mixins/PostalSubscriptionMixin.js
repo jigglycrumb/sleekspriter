@@ -6,7 +6,7 @@ var PostalSubscriptionMixin = {
         var topic = x,
             callback = this.state.subscriptions[x];
 
-        this.subscriptions.push(channel.subscribe(topic, callback));
+        this.subscriptions.push(channel.gui.subscribe(topic, callback));
       }
     }
   },

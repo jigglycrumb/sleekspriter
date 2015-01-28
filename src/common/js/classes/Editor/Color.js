@@ -6,7 +6,7 @@ Editor.prototype.color.frame = new Color('#000000');
 Editor.prototype.color.init = function() {
   var self = this;
 
-  channel.subscribe('color.select', function(data, envelope) {
+  channel.gui.subscribe('color.select', function(data, envelope) {
     self.brush = new Color(data.color);
   });
 };

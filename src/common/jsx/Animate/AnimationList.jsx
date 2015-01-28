@@ -37,9 +37,9 @@ var AnimationList = React.createClass({
     )
   },
   dispatchAnimationAdded: function() {
-    channel.publish('file.animation.add');
+    channel.file.publish('file.animation.add');
   },
   dispatchAnimationRemoved: function() {
-    channel.publish('file.animation.delete', {name: this.props.animations.selected});
+    channel.file.publish('file.animation.delete', {name: this.props.animations.selected});
   },
 });

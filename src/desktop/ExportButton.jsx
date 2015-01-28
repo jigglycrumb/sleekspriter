@@ -10,7 +10,7 @@ var ExportButton = React.createClass({
         sys = require('sys');
 
     if(file.folder === null) {
-      channel.publish('modal.show', {component: ModalErrorSaveBeforeExport});
+      channel.gui.publish('modal.show', {component: ModalErrorSaveBeforeExport});
       return;
     }
 
@@ -37,7 +37,7 @@ var ExportButton = React.createClass({
 
         fs.writeFile(target, buf);
 
-        channel.publish('export.finished', {
+        channel.gui.publish('export.finished', {
           folder: file.folder,
           name: file.name,
           format: self.props.format,
@@ -77,7 +77,7 @@ var ExportButton = React.createClass({
         saveCanvas(canvas, fileName);
       });
 
-      channel.publish('export.finished', {
+      channel.gui.publish('export.finished', {
         folder: file.folder,
         name: file.name,
         format: this.props.format,

@@ -36,14 +36,14 @@ var BrightnessTool = React.createClass({
     );
   },
   selectLightenTool: function() {
-    channel.publish('brightnesstool.mode.select', {mode: 'lighten'});
+    channel.gui.publish('brightnesstool.mode.select', {mode: 'lighten'});
   },
   selectDarkenTool: function() {
-    channel.publish('brightnesstool.mode.select', {mode: 'darken'});
+    channel.gui.publish('brightnesstool.mode.select', {mode: 'darken'});
   },
   setIntensity: function(event) {
     var newIntensity = parseInt(event.target.value);
-    channel.publish('brightnesstool.intensity.select', {intensity: newIntensity});
+    channel.gui.publish('brightnesstool.intensity.select', {intensity: newIntensity});
   }
 
 });
