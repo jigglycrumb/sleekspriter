@@ -1,27 +1,48 @@
 var ModalNewFile = React.createClass({
   mixins: [ModalBasicMixin],
+  getInitialState: function() {
+    return {
+      frames: {
+        x: 1,
+        y: 1,
+      },
+      pixels: {
+        x: 20,
+        y: 20,
+      },
+    }
+  },
   render: function() {
+
+    var fileType = this.state.frames.x * this.state.frames.y === 1 ? 'Image' : 'Spritesheet';
+
     return (
       <div className="dialog">
         <div className="title">New file</div>
-        <ul className="text">
-          <li>
-            <label>Frames:</label>
-            <input type="number" ref="framesX" defaultValue="1" min="1" onChange={this.updateSize} />
-            x
-            <input type="number" ref="framesY" defaultValue="1" min="1" onChange={this.updateSize} />
-          </li>
-          <li>
-            <label>Frame size:</label>
-            <input type="number" ref="pixelsX" defaultValue="20" min="1" onChange={this.updateSize} />
-            x
-            <input type="number" ref="pixelsY" defaultValue="20" min="1" onChange={this.updateSize} />
-            px
-          </li>
-          <li>
-            <i ref="size">Image size: 20x20px</i>
-          </li>
-        </ul>
+        <div className="text">
+          <ul className="frame-size">
+            <li>
+              <label>Frames:</label>
+              <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateSize} />
+              x
+              <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateSize} />
+            </li>
+            <li>
+              <label>Frame size:</label>
+              <input type="number" ref="pixelsX" value={this.state.pixels.x} min="1" onChange={this.updateSize} />
+              x
+              <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={this.updateSize} />
+              px
+            </li>
+            <li>
+              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y}</i>
+            </li>
+          </ul>
+          <div>
+            <span>Layout</span>
+            <FrameGrid frames={this.state.frames} />
+          </div>
+        </div>
         <div className="actions">
           <button onClick={this.createFile}>Ok</button>
           <button onClick={this.hide}>Cancel</button>
@@ -30,28 +51,25 @@ var ModalNewFile = React.createClass({
     )
   },
   createFile: function() {
-    var framesX = this.refs.framesX.getDOMNode().value,
-        framesY = this.refs.framesY.getDOMNode().value,
-        pixelsX = this.refs.pixelsX.getDOMNode().value,
-        pixelsY = this.refs.pixelsY.getDOMNode().value;
+    var framesX = +this.refs.framesX.getDOMNode().value,
+        framesY = +this.refs.framesY.getDOMNode().value,
+        pixelsX = +this.refs.pixelsX.getDOMNode().value,
+        pixelsY = +this.refs.pixelsY.getDOMNode().value;
 
     file.create(framesX, framesY, pixelsX, pixelsY);
     this.hide();
   },
   updateSize: function() {
-    var framesX = this.refs.framesX.getDOMNode().value,
-        framesY = this.refs.framesY.getDOMNode().value,
-        pixelsX = this.refs.pixelsX.getDOMNode().value,
-        pixelsY = this.refs.pixelsY.getDOMNode().value,
-        txt;
-
-    if(framesX*framesY === 1) {
-      txt = 'Image size: '+pixelsX+'x'+pixelsY+'px';
-    }
-    else {
-      txt = 'Spritesheet size: '+(pixelsX*framesX)+'x'+(pixelsY*framesY)+'px';
-    }
-
-    this.refs.size.getDOMNode().innerHTML = txt;
+    var size = {
+      frames: {
+        x: this.refs.framesX.getDOMNode().value,
+        y: this.refs.framesY.getDOMNode().value,
+      },
+      pixels: {
+        x: this.refs.pixelsX.getDOMNode().value,
+        y: this.refs.pixelsY.getDOMNode().value,
+      },
+    };
+    this.setState(size);
   },
 });
