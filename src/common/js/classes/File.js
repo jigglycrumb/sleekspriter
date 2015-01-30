@@ -289,6 +289,13 @@ var File = function() {
 
 File.prototype = {};
 
+/**
+ * Create a new file
+ * @param  {Number} framesX Number of frames per row
+ * @param  {Number} framesY Number of frames per column
+ * @param  {Number} pixelsX Width of a single frame
+ * @param  {Number} pixelsY Height of a single frame
+ */
 File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
   var json = {},
       totalFrames = framesX * framesY;
@@ -309,4 +316,33 @@ File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
   this.fromJSON(json);
 
   channel.gui.publish('frame.select', {frame: 1});
+};
+
+
+/**
+ * Update frame count and frame size
+ * @param  {Number} framesX New number of frames per row
+ * @param  {Number} framesY New number of frames per column
+ * @param  {Number} pixelsX New width of a single frame
+ * @param  {Number} pixelsY New height of a single frame
+ */
+File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
+  console.log(framesX, framesY, pixelsX, pixelsY);
+
+  // new width > old width?
+  if(this.size.width < pixelsX) {
+    this.size.width = pixelsX;
+  }
+
+  // new height > old height?
+  if(this.size.height < pixelsY) {
+    this.size.height = pixelsY;
+  }
+
+  var data = {
+    frames: this.frames,
+    size: this.size,
+  };
+
+  channel.gui.publish('size.set', data);
 };

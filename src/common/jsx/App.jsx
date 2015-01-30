@@ -23,6 +23,8 @@ var App = React.createClass({
         'layer.add': this.updateProps,
         'layer.delete': this.updateProps,
 
+        'size.set': this.updateProps,
+
         'animation.add': this.updateProps,
         'animation.delete': this.updateProps,
         'animation.select': this.updateProps,

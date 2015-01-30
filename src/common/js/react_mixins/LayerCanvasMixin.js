@@ -14,12 +14,15 @@ var LayerCanvasMixin = {
         'pixel.add': this.checkRefresh,
         'pixel.delete': this.checkRefresh,
         'scope.set': this.checkRefresh,
+        'size.set': this.checkRefresh,
       },
     };
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
-      if(this.props.id === data.layer || envelope.topic === 'scope.set'
+      if(this.props.id === data.layer
+      || envelope.topic === 'scope.set'
+      || envelope.topic === 'size.set'
       || (this.props.stage === true && envelope.topic === 'zoom.select')) {
         switch(envelope.topic) {
           case 'pixel.add':
@@ -35,6 +38,7 @@ var LayerCanvasMixin = {
             this.paintLayer();
             break;
 
+          case 'size.set':
           case 'zoom.select':
             setTimeout(this.paintLayer, 100); // TODO: implement a proper fix for this
                                               // the timeout is evil

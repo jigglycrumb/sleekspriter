@@ -115,6 +115,18 @@ editMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
+editMenu.append(new gui.MenuItem({ type: 'separator' }));
+
+editMenu.append(new gui.MenuItem({
+  label: 'Image size...',
+  click: function() {
+    channel.gui.publish('modal.show', {component: ModalEditImageSize});
+  },
+  key: 'i',
+  modifiers: modKey,
+  enabled: false,
+}));
+
 //------------------------------------------------------------------------------
 // create "Select" menu
 var selectMenu = new gui.Menu();

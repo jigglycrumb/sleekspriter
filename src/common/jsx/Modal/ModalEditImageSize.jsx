@@ -1,14 +1,14 @@
-var ModalNewFile = React.createClass({
+var ModalEditImageSize = React.createClass({
   mixins: [ModalBasicMixin],
   getInitialState: function() {
     return {
       frames: {
-        x: 1,
-        y: 1,
+        x: file.frames.x,
+        y: file.frames.y,
       },
       pixels: {
-        x: 20,
-        y: 20,
+        x: file.size.width,
+        y: file.size.height,
       },
     }
   },
@@ -44,19 +44,19 @@ var ModalNewFile = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.createFile}>Ok</button>
+          <button onClick={this.updateFile}>Ok</button>
           <button onClick={this.hide}>Cancel</button>
         </div>
       </div>
     )
   },
-  createFile: function() {
+  updateFile: function() {
     var framesX = +this.refs.framesX.getDOMNode().value,
         framesY = +this.refs.framesY.getDOMNode().value,
         pixelsX = +this.refs.pixelsX.getDOMNode().value,
         pixelsY = +this.refs.pixelsY.getDOMNode().value;
 
-    file.create(framesX, framesY, pixelsX, pixelsY);
+    file.updateDimensions(framesX, framesY, pixelsX, pixelsY);
     this.hide();
   },
   updateForm: function() {
