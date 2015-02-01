@@ -374,10 +374,29 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
     this.size.width = pixelsX;
   }
 
+  // new width < old width?
+  if(this.size.width > pixelsX) {
+    // delete pixels
+    this.pixels = this.pixels.filter(function(px) {
+      return px.x <= pixelsX;
+    });
+    this.size.width = pixelsX;
+  }
+
   // new height > old height?
   if(this.size.height < pixelsY) {
     this.size.height = pixelsY;
   }
+
+  // new height < old height?
+  if(this.size.height > pixelsY) {
+    // delete pixels
+    this.pixels = this.pixels.filter(function(px) {
+      return px.y <= pixelsY;
+    });
+    this.size.height = pixelsY;
+  }
+
 
   var data = {
     frames: this.frames,

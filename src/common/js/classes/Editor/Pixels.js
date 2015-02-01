@@ -219,6 +219,14 @@ Editor.prototype.pixels.init = function() {
   });
 
 
+  channel.gui.subscribe('size.set', function(data, envelope) {
+    self.file = file.pixels;
+    self.frame = [];
+    self.scope = [];
+
+    channel.gui.publish('frame.select', {frame: editor.frames.selected});
+  });
+
 }; // Editor.prototype.pixels.init
 
 /**
