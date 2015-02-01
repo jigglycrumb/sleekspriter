@@ -4,14 +4,15 @@ Editor.prototype.frames.x = 1;
 Editor.prototype.frames.y = 1;
 
 Editor.prototype.frames.init = function() {
-  var self = this,
-      updateSize = function(data) {
-        self.x = data.frames.x;
-        self.y = data.frames.y;
-      };
+  var self = this;
+
+  function updateSize(data) {
+    self.x = data.frames.x;
+    self.y = data.frames.y;
+  }
 
   channel.file.subscribe('file.load', updateSize);
-  channel.file.subscribe('size.set', updateSize);
+  channel.gui.subscribe('size.set', updateSize);
 
   channel.gui.subscribe('frame.select', function(data, envelope) {
     self.selected = parseInt(data.frame);

@@ -327,7 +327,42 @@ File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
  * @param  {Number} pixelsY New height of a single frame
  */
 File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
-  console.log(framesX, framesY, pixelsX, pixelsY);
+
+  // have frame columns been added?
+  if(this.frames.x < framesX) {
+
+    var newColumns = framesX - this.frames.x;
+
+    function moveToNewFrame(obj) {
+      var y = Math.ceil(obj.frame/this.frames.x),
+          newFrame = obj.frame+((y-1)*newColumns);
+      obj.frame = newFrame;
+    }
+
+    // move layers to new frame
+    this.layers.forEach(moveToNewFrame, this);
+
+    // move pixels to new frame
+    this.pixels.forEach(moveToNewFrame, this);
+
+    // add new layers
+    for(var y = 1; y <= this.frames.y; y++) {
+      for(var i = 1; i <= newColumns; i++) {
+        var id = _.max(this.layers, 'id').id+1,
+            layer = {
+              frame: (this.frames.x*y)+((y-1)*newColumns)+i,
+              id: id,
+              name: 'Layer '+id,
+              opacity: 100,
+              visible: true,
+              z: 0,
+            };
+
+        this.layers.push(layer);
+      }
+    }
+    this.frames.x = framesX;
+  }
 
   // new width > old width?
   if(this.size.width < pixelsX) {

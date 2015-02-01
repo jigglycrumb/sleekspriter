@@ -8,6 +8,10 @@ Editor.prototype.layers.frame = [];
 Editor.prototype.layers.init = function() {
   var self = this;
 
+  function updateFrameLayers(data) {
+    self.frame = _.where(file.layers, {frame: data.frame});
+  }
+
   channel.gui.subscribe('frame.select', function(data, envelope) {
     self.frame = _.where(file.layers, {frame: data.frame});
     setTimeout(self.selectTop.bind(self), 0); // select top layer
@@ -31,13 +35,9 @@ Editor.prototype.layers.init = function() {
     channel.gui.publish('scope.set', scopeData);
   });
 
-  channel.gui.subscribe('layer.add', function(data, envelope) {
-    self.frame = _.where(file.layers, {frame: data.frame});
-  });
-
-  channel.gui.subscribe('layer.delete', function(data, envelope) {
-    self.frame = _.where(file.layers, {frame: data.frame});
-  });
+  channel.gui.subscribe('layer.add', updateFrameLayers);
+  channel.gui.subscribe('layer.delete', updateFrameLayers);
+  // channel.gui.subscribe('size.set', updateFrameLayers);
 };
 
 /**
