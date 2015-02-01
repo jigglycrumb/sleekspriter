@@ -20,6 +20,7 @@ var LayerCanvasMixin = {
   },
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
+
       if(this.props.id === data.layer
       || envelope.topic === 'scope.set'
       || envelope.topic === 'size.set'
@@ -58,19 +59,23 @@ var LayerCanvasMixin = {
     this.paintLayer();
   },
   paintLayer: function() {
-    var canvas = this.getDOMNode(),
-        paint = function(px) {
-          if(px.layer === this.props.id) {
-            Pixel.paint(canvas, px.x, px.y, px.toHex());
-          }
-        };
+    if(this.isMounted()) { // needed because of the setTimeout
+                           // or removed layers after size.set will throw
+                           // an Invariant Violation
+      var canvas = this.getDOMNode(),
+          paint = function(px) {
+            if(px.layer === this.props.id) {
+              Pixel.paint(canvas, px.x, px.y, px.toHex());
+            }
+          };
 
-    // clear canvas
-    canvas.width = canvas.width;
+      // clear canvas
+      canvas.width = canvas.width;
 
-    // paint
-    editor.pixels.scope.forEach(paint, this);
-    editor.pixels.frame.forEach(paint, this);
+      // paint
+      editor.pixels.scope.forEach(paint, this);
+      editor.pixels.frame.forEach(paint, this);
+    }
   },
   previewLayer: function(pixels) {
     var canvas = this.getDOMNode();

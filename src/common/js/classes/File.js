@@ -369,6 +369,24 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
     this.frames.y = framesY;
   }
 
+  // have frame rows been removed?
+  if(this.frames.y > framesY) {
+    var lastFrame = this.frames.x * framesY;
+
+    console.log('lastFrame: '+lastFrame)
+
+    function deleteLastFrames(obj) {
+      return obj.frame <= lastFrame;
+    }
+
+    // delete pixels & layers
+    console.log(this.layers.length, this.pixels.length);
+    this.pixels = this.pixels.filter(deleteLastFrames);
+    this.layers = this.layers.filter(deleteLastFrames);
+    console.log(this.layers.length, this.pixels.length);
+    this.frames.y = framesY;
+  }
+
   // new width > old width?
   if(this.size.width < pixelsX) {
     this.size.width = pixelsX;
