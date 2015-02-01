@@ -364,6 +364,11 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
     this.frames.x = framesX;
   }
 
+  // have frame rows been added?
+  if(this.frames.y < framesY) {
+    this.frames.y = framesY;
+  }
+
   // new width > old width?
   if(this.size.width < pixelsX) {
     this.size.width = pixelsX;
