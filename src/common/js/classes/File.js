@@ -364,6 +364,41 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
     this.frames.x = framesX;
   }
 
+
+  // have frame columns been removed?
+  if(this.frames.x > framesX) {
+
+    var columnsToRemove = this.frames.x - framesX,
+        framesToDelete = [];
+
+    // calc frames to be removed
+    for(var row = 1; row <= this.frames.y; row++) {
+      for(var col = 1; col <= this.frames.x; col++) {
+        var frame = (this.frames.x*(row-1))+col;
+        if(col > framesX) framesToDelete.push(frame);
+      }
+    }
+
+    function deleteFrames(obj) {
+      return !_.includes(framesToDelete, obj.frame);
+    }
+
+    // delete pixels & layers
+    this.pixels = this.pixels.filter(deleteFrames);
+    this.layers = this.layers.filter(deleteFrames);
+
+    function fixFrame(obj) {
+      var y = Math.ceil(obj.frame/this.frames.x),
+          newFrame = obj.frame-((y-1)*columnsToRemove);
+      obj.frame = newFrame;
+    }
+
+    // move remaining pixels & layers
+    this.pixels.forEach(fixFrame, this);
+    this.layers.forEach(fixFrame, this);
+    this.frames.x = framesX;
+  }
+
   // have frame rows been added?
   if(this.frames.y < framesY) {
     this.frames.y = framesY;
@@ -373,17 +408,13 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
   if(this.frames.y > framesY) {
     var lastFrame = this.frames.x * framesY;
 
-    console.log('lastFrame: '+lastFrame)
-
     function deleteLastFrames(obj) {
       return obj.frame <= lastFrame;
     }
 
     // delete pixels & layers
-    console.log(this.layers.length, this.pixels.length);
     this.pixels = this.pixels.filter(deleteLastFrames);
     this.layers = this.layers.filter(deleteLastFrames);
-    console.log(this.layers.length, this.pixels.length);
     this.frames.y = framesY;
   }
 
