@@ -1,18 +1,20 @@
 var ExportZoomSelection = React.createClass({
   render: function() {
 
-    var width = 0,
-        height = 0;
+    var text;
 
     switch(this.props.part) {
       case 'spritesheet':
-        width = this.props.editor.file.size.width * this.props.editor.frames.x * this.props.zoom;
-        height = this.props.editor.file.size.height * this.props.editor.frames.y * this.props.zoom;
+        text = <i>
+                Frame size: {this.props.editor.file.size.width * this.props.zoom}x{this.props.editor.file.size.height * this.props.zoom} pixels<br/>
+                Spritesheet size: {this.props.editor.file.size.width * this.props.editor.frames.x * this.props.zoom}x{this.props.editor.file.size.height * this.props.editor.frames.y * this.props.zoom} pixels
+               </i>
         break;
 
       default:
-        width = this.props.editor.file.size.width * this.props.zoom;
-        height = this.props.editor.file.size.height * this.props.zoom;
+        text = <i>
+                Image size: {this.props.editor.file.size.width * this.props.zoom}x{this.props.editor.file.size.height * this.props.zoom} pixels
+               </i>
         break;
     }
 
@@ -25,7 +27,7 @@ var ExportZoomSelection = React.createClass({
             <input type="number" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.zoom} onChange={this.setSize} />
           </li>
           <li>
-            <i>Exported image size: {width}x{height} pixels</i>
+            {text}
           </li>
         </ul>
       </div>
