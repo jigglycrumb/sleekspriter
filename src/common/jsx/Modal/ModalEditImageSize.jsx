@@ -18,7 +18,7 @@ var ModalEditImageSize = React.createClass({
 
     return (
       <div className="dialog">
-        <div className="title">New file</div>
+        <div className="title">Image size</div>
         <div className="text">
           <ul className="frame-size">
             <li>
@@ -35,7 +35,7 @@ var ModalEditImageSize = React.createClass({
               px
             </li>
             <li>
-              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y}</i>
+              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y} pixels</i>
             </li>
           </ul>
           <div>

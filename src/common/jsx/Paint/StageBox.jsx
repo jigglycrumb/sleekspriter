@@ -233,6 +233,7 @@ var StageBox = React.createClass({
     else return this.showInvisibleLayerError();
   },
   useBrightnessTool: function() {
+
     if(isLayerVisible()) {
 
       function lighten() {
@@ -249,7 +250,7 @@ var StageBox = React.createClass({
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
-      var px = _.findWhere(editor.pixels.layer, {x: editor.cursor.position.x, y: editor.cursor.position.y }),
+      var px = _.findWhere(editor.pixels.scope, {x: editor.cursor.position.x, y: editor.cursor.position.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {

@@ -35,7 +35,7 @@ var ModalNewFile = React.createClass({
               px
             </li>
             <li>
-              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y}</i>
+              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y} pixels</i>
             </li>
           </ul>
           <div>
