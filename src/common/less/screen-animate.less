@@ -1,0 +1,438 @@
+.screen.animate {
+
+  .area.left {
+    top: 0;
+    left: 0;
+    bottom: 200px;
+    width: 61.8%;
+    background: @light;
+    border-top: 1px solid @dark;
+    border-left: 1px solid @dark;
+  }
+
+  #AnimationFrameBox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    @offset: 20px;
+    @frameSize: 100px;
+
+    .scroller {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      overflow: auto;
+
+      .inner {
+        padding: @offset;
+      }
+    }
+
+    .mass-add {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      &.row {
+        top: @offset;
+        width: @offset;
+        height: @frameSize + 2;
+      }
+
+      &.column {
+        left: @offset;
+        width: @frameSize + 2;
+        height: @offset;
+      }
+    }
+
+    .frame {
+      width: @frameSize;
+      height: @frameSize;
+      float: left;
+      border-top: 1px solid @medium;
+      border-right: 1px solid @medium;
+      border-bottom: none;
+      border-left: none;
+      cursor: grab;
+      position: relative;
+      z-index: 1;
+
+      &.top {
+        border-top: none;
+
+        &.selected {
+          margin-bottom: -2px;
+          top: -1px;
+        }
+      }
+
+      &.right {
+        border-right: none;
+      }
+
+      &.bottom {
+        border-bottom: none;
+      }
+
+      &.left {
+        border-left: none;
+      }
+
+      &.selected {
+        z-index: 2;
+        left: -1px;
+        margin-bottom: -1px;
+        margin-right: -1px;
+        border: 1px solid lighten(@selected, 10%) !important;
+        box-shadow: 0 0 1px 0 lighten(@selected, 10%);
+      }
+
+      label {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 5px;
+      }
+    }
+  }
+
+  .area.right {
+    top: 0;
+    right: 0;
+    bottom: 200px;
+    width: 38.2%;
+    background: @light;
+    border-top: 1px solid @dark;
+    border-right: 1px solid @dark;
+  }
+
+  .area.right:after {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    content: "";
+    border-left: 1px solid @medium;
+  }
+
+  #AnimationPreviewBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .inner {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+    }
+  }
+
+  .area.center {
+    left: 0;
+    right: 0;
+    bottom: 27px;
+    height: 172px;
+    background: @dark;
+    z-index: 0;
+    overflow: auto;
+  }
+
+  #AnimationTimelineBox {
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 1px;
+
+    .scroller {
+      position: absolute;
+      top: 22px;
+      left: 10px;
+      right: 10px;
+      bottom: 0;
+      overflow-x: auto;
+
+      .inner {
+        position: relative;
+        width: 100%;
+        margin-top: 10px;
+
+        &>div { // common styles for .dropzone and .frame
+          position: relative;
+          height: 120px;
+          margin-top: 5px;
+          float: left;
+        }
+      }
+    }
+
+    .dropzone {
+      text-align: center;
+      width: 15px;
+
+      &.full {
+        width: 100%;
+        display: table;
+
+        &>div {
+          display: table-cell;
+          vertical-align: middle;
+        }
+      } // .dropzone.full
+
+      &.default {
+
+        &>div {
+          height: 100%;
+          pointer-events: none;
+        }
+
+        .dropzone-inner {
+          background: lighten(@selected, 10%);
+          box-shadow: 0 0 5px 0 lighten(@selected, 10%);
+          position: absolute;
+          visibility: hidden;
+
+          &.top {
+            top: -5px;
+            left: 3px;
+            height: 1px;
+            width: 9px;
+          }
+
+          &.center {
+            top: -4px;
+            right: 7px;
+            bottom: -6px;
+            left: 7px;
+            width: 1px;
+          }
+
+          &.bottom {
+            bottom: -7px;
+            left: 3px;
+            height: 1px;
+            width: 9px;
+          }
+        }
+      } // .dropzone.default
+
+      &.default.over {
+        .dropzone-inner {
+          visibility: visible;
+        }
+      }
+    } // .dropzone
+
+    .frame {
+      width: 120px;
+      border: 1px solid @medium;
+      cursor: grab;
+
+      &.selected {
+        border: 1px solid lighten(@selected, 10%) !important;
+        box-shadow: 0 0 1px 0 lighten(@selected, 10%);
+      }
+
+      label {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 5px;
+      }
+
+      .delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: none;
+        width: 20px;
+        height: 20px;
+
+        span {
+          position: relative;
+          top: -1px;
+        }
+      }
+    } // .frame
+
+    .frame:hover {
+      .delete {
+        display: block;
+      }
+    }
+
+  } // #AnimationTimelineBox
+
+  #AnimationControlBox {
+    &>div {
+        display: inline-block;
+        padding: 0 3px;
+    }
+
+    button.list {
+      width: 34px;
+      top: -1px;
+
+      i {
+        position: relative;
+        left: -3px;
+      }
+    }
+  }
+
+
+  // Animation list
+  @list-width: 300px;
+
+  transition-property: all;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0;
+
+  &.list-visible {
+    transform: translate3d(@list-width, 0, 0);
+    overflow: visible;
+  }
+
+  #AnimationList {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -@list-width;
+    bottom: 0;
+    width: @list-width;
+    background: @dark;
+
+    .animations-header {
+      border-top: 1px solid @dark;
+      padding: 3px;
+
+      label {
+        display: inline-block;
+      }
+
+      .flaticon-film50 {
+        position: relative;
+        top: 1px;
+        left: 10px;
+        font-size: 14px;
+      }
+    }
+
+    .animations {
+      position: absolute;
+      top: 64px;
+      bottom: 20px;
+      left: 0;
+      width: @list-width;
+      margin: 0;
+      overflow-y: auto;
+
+      li>* {
+        display: inline-block;
+      }
+    }
+
+    .animation {
+
+      border-top: 1px solid #6a6a6a;
+      background: @medium;
+      border-bottom: 1px solid @dark;
+      height: 30px;
+      line-height: 30px;
+      margin-left: 3px;
+
+      &.selected {
+        background: @selected;
+      }
+
+      input[type=radio] {
+        -webkit-appearance: none;
+        outline: none;
+        cursor: pointer;
+        float: left;
+        width: 40px;
+        height: 30px;
+        margin: 0;
+        text-align: center;
+        color: @font-color;
+        font-family: 'Flaticon';
+        font-size: .8rem;
+        .letterpress;
+      }
+
+      input[type=radio]:checked:before {
+        .icon-checkmark;
+        color: @font-color;
+        position: relative;
+        top: 8px;
+        left: -2px;
+      }
+    } // .animation
+
+    .animations-footer {
+      position: absolute;
+      left: 2px;
+      bottom: 1px;
+      width: @list-width - 3;
+      height: 23px;
+      line-height: 23px;
+      border: 1px solid @dark;
+      background: @light;
+    }
+
+    .new {
+      input[type=text] {
+        margin: 0 3px;
+      }
+    }
+
+    .select {
+      width: 40px;
+    }
+
+    .name {
+      width: 160px;
+    }
+
+    .fps {
+      width: 40px;
+    }
+
+    .frames {
+      width: 40px;
+    }
+
+    .delete {
+      width: 30px;
+    }
+  } // #AnimationList
+
+  #AnimationList:after {
+    background: none;
+    width: 0;
+    border-left: 1px solid #2d2d2d;
+    border-right: 1px solid #3a3a3a;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+} // .screen.animate
