@@ -238,23 +238,6 @@
       }
     } // .dropzone
 
-    .helping-hand {
-      position: absolute;
-      left: 2px;
-      bottom: 0;
-      font-size: 4em;
-
-      animation-name: helping-hand-timelinebox;
-      animation-duration: 1s;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
-    }
-
-    @keyframes helping-hand-timelinebox {
-      from { transform: translate(0, 0); }
-      to { transform: translate(0, -30px); }
-    }
-
     .frame {
       width: 120px;
       border: 1px solid @medium;
@@ -291,6 +274,11 @@
       .delete {
         display: block;
       }
+    }
+
+    .helping-hand {
+      left: 2px;
+      bottom: 0;
     }
 
   } // #AnimationTimelineBox
@@ -438,6 +426,12 @@
     .delete {
       width: 30px;
     }
+
+    .helping-hand {
+      left: -3px;
+      bottom: 45px;
+    }
+
   } // #AnimationList
 
   #AnimationList:after {
@@ -452,6 +446,20 @@
     left: 0;
     bottom: 0;
     pointer-events: none;
+  }
+
+  .helping-hand {
+    position: absolute;
+    font-size: 4em;
+    animation-name: helping-hand-timelinebox;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+  @keyframes helping-hand-timelinebox {
+    from { transform: translate(0, 0); }
+    to { transform: translate(0, -30px); }
   }
 
 } // .screen.animate

@@ -13,7 +13,12 @@ var AnimationList = React.createClass({
 
     var deleteButtonDisabled = this.props.animations.list.length === 0 || this.props.animations.selected === null
                              ? true : false,
-        animations = _.sortBy(this.props.animations.list, 'name');
+        animations = _.sortBy(this.props.animations.list, 'name'),
+        helpingHand = null;
+
+    if(this.props.animations.list.length === 0 && this.props.listVisible === true) {
+      helpingHand = <div className="helping-hand"><i className="flaticon-hand118"></i></div>
+    }
 
     return (
       <div id="AnimationList">
@@ -34,6 +39,8 @@ var AnimationList = React.createClass({
           )
         }, this)}
         </ul>
+
+        {helpingHand}
 
         <div className="animations-footer">
           <button title="New animation" className="transparent" onClick={this.dispatchAnimationAdded}>

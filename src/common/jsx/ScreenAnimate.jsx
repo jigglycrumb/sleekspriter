@@ -27,14 +27,14 @@ var ScreenAnimate = React.createClass({
         </div>
 
         <div className="area center">
-          <AnimationTimelineBox editor={this.props.editor} />
+          <AnimationTimelineBox editor={this.props.editor} listVisible={this.state.listVisible} />
         </div>
 
         <div className="area statusbar">
           <AnimationControlBox animations={this.props.editor.animations} listVisible={this.state.listVisible} />
         </div>
 
-        <AnimationList animations={this.props.editor.animations} />
+        <AnimationList animations={this.props.editor.animations} listVisible={this.state.listVisible} />
       </section>
     )
   },
