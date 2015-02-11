@@ -55,16 +55,18 @@ var AnimationTimelineBox = React.createClass({
     var finalElements = [],
         dropzoneKey = 1,
         frameKey = 0;
-    frames.forEach(function(frame) {
+    frames.forEach(function(frame, i) {
       finalElements.push(frame);
-      finalElements.push('dropzone');
+      if(i === frames.length-1) finalElements.push('dropzone-last');
+      else finalElements.push('dropzone');
     });
 
     var innerStyle = {
       width: (frames.length*(frameSize+2+15))+15,
     };
 
-    if(frames.length === 0) innerStyle.width = '100%';
+    if(innerStyle.width < window.innerWidth || frames.length === 0) innerStyle.width = window.innerWidth;
+    // if(frames.length === 0) innerStyle.width = '100%';
 
     return (
       <div id="AnimationTimelineBox">
@@ -78,6 +80,13 @@ var AnimationTimelineBox = React.createClass({
                 dropzoneKey++;
                 return (
                   <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} position={dropzoneKey-1} animation={this.props.editor.animations.selected} />
+                )
+              }
+              else if(element === 'dropzone-last') {
+                var key = 'dropzone-'+dropzoneKey;
+                dropzoneKey++;
+                return (
+                  <AnimationFrameDropzone key={key} cssClass="last" text={dropzoneHtml} position={dropzoneKey-1} animation={this.props.editor.animations.selected} />
                 )
               }
               else {

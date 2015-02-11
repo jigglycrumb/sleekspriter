@@ -10,8 +10,20 @@ var AnimationFrameDropzone = React.createClass({
     if(this.props.cssClass) cssClasses[this.props.cssClass] = true;
     cssClasses = React.addons.classSet(cssClasses);
 
+    var width;
+    switch(this.props.cssClass) {
+      case 'default': width = 15; break;
+      case 'full': width = '100%'; break;
+      case 'last':
+        width = window.innerWidth - (this.props.position*(120+2+15));
+        if(width < 15) width = 15;
+        break;
+    }
+
+    var style = { width: width };
+
     return (
-      <div className={cssClasses} onDragOver={this.dragOver} onDragLeave={this.dragLeave} onDrop={this.drop}>
+      <div className={cssClasses} onDragOver={this.dragOver} onDragLeave={this.dragLeave} onDrop={this.drop} style={style}>
         {this.props.text}
       </div>
     )

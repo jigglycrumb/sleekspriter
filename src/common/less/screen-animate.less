@@ -181,12 +181,10 @@
     }
 
     .dropzone {
-      text-align: center;
-      width: 15px;
 
       &.full {
-        width: 100%;
         display: table;
+        text-align: center;
 
         &>div {
           display: table-cell;
@@ -194,7 +192,9 @@
         }
       } // .dropzone.full
 
-      &.default {
+      &.default,
+      &.last {
+        text-align: left;
 
         &>div {
           height: 100%;
@@ -231,7 +231,8 @@
         }
       } // .dropzone.default
 
-      &.default.over {
+      &.default.over,
+      &.last.over {
         .dropzone-inner {
           visibility: visible;
         }
