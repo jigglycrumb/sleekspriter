@@ -14,6 +14,7 @@ var AnimationTimelineBox = React.createClass({
 
     if(this.props.editor.animations.list.length === 0) {
       dropzoneHtml =  <div>
+                        <div className="helping-hand"><i className="flaticon-hand118"></i></div>
                         You have not defined any animations yet.<br />
                         Open the animation list in the bottom left corner of the screen to get started.
                       </div>
@@ -22,6 +23,7 @@ var AnimationTimelineBox = React.createClass({
     }
     else if(this.props.editor.animations.selected === null) {
       dropzoneHtml =  <div>
+                        <div className="helping-hand"><i className="flaticon-hand118"></i></div>
                         You have not selected an animation yet.<br />
                         Open the animation list in the bottom left corner of the screen to get started.
                       </div>
