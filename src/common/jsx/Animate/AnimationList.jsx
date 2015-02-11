@@ -1,4 +1,14 @@
 var AnimationList = React.createClass({
+  mixins: [PostalSubscriptionMixin],
+  getInitialState: function() {
+    return {
+      shouldSelectAnimation: false,
+      subscriptions: {
+        'animation.add': this.shouldSelectAnimation,
+        'animation.delete': this.shouldSelectAnimation,
+      }
+    }
+  },
   render: function() {
 
     var deleteButtonDisabled = this.props.animations.list.length === 0 || this.props.animations.selected === null
@@ -36,10 +46,19 @@ var AnimationList = React.createClass({
       </div>
     )
   },
+  componentDidUpdate: function() {
+    if(this.state.shouldSelectAnimation !== false) {
+      channel.gui.publish('animation.select', {name: this.state.shouldSelectAnimation});
+      this.setState({ shouldSelectAnimation: false });
+    }
+  },
   dispatchAnimationAdded: function() {
     channel.file.publish('file.animation.add');
   },
   dispatchAnimationRemoved: function() {
     channel.file.publish('file.animation.delete', {name: this.props.animations.selected});
+  },
+  shouldSelectAnimation: function(data) {
+    if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });
   },
 });
