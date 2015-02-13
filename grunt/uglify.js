@@ -2,8 +2,13 @@ module.exports = {
   options: {
     banner: ""
   },
-  build: {
-    src: 'dist/<%= package.name %>.js',
-    dest: 'dist/<%= package.name %>-min.js'
+
+  desktopMac: {
+    src: 'build/desktop/mac/<%= package.name %>.js',
+    dest: 'build/desktop/mac/<%= package.name %>.js'
+  },
+  desktopWindows: {
+    src: 'build/desktop/windows/<%= package.name %>.js',
+    dest: 'build/desktop/windows/<%= package.name %>.js'
   }
 }

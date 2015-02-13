@@ -14,7 +14,7 @@ module.exports = {
   },
   all: {
     src: [
-      'build', 'dist', 'release'
+      'build', 'dist'
     ],
   },
 }

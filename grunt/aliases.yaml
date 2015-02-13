@@ -15,6 +15,7 @@ desktop:
   - 'concat'
   - 'replace'
   - 'less'
+  - 'uglify'
   - 'autoprefixer'
   - 'clean:postbuild'
   - 'nodewebkit'
