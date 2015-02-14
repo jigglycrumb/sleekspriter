@@ -20,6 +20,7 @@ module.exports = {
 
       // html files
       {src: 'src/browser/index.html', dest: 'build/browser/index.html'},
+      {src: 'src/common/about.html', dest: 'build/browser/about.html'},
 
       // debugging helpers
       {
@@ -55,6 +56,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/mac/index.html'},
+      {src: 'src/common/about.html', dest: 'build/desktop/mac/about.html'},
 
       // debugging helpers
       {
@@ -100,6 +102,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/windows/index.html'},
+      {src: 'src/common/about.html', dest: 'build/desktop/windows/about.html'},
 
       // debugging helpers
       {
