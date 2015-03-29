@@ -1,9 +1,28 @@
 // define keyboard mod key
 var modKey = process.platform === 'darwin' ? 'cmd' : 'ctrl';
 
-// import node requirements
 var gui = require('nw.gui');
 var menuBar = new gui.Menu({ type: "menubar" });
+var aboutWindow;
+
+function openAboutWindow() {
+  console.log('openAboutWindow');
+
+  aboutWindow = gui.Window.open('about.html', {
+    "title": "@@app - About",
+    // "icon": "link.png",
+    "toolbar": false,
+    // "frame": false,
+    "width": 500,
+    "height": 375,
+    "position": "center",
+    "resizable": false,
+  });
+}
+
+function closeAboutWindow() {
+  aboutWindow.close();
+}
 
 if(process.platform === 'darwin') {
   // create default mac menu
@@ -11,6 +30,8 @@ if(process.platform === 'darwin') {
     hideEdit: true,
     hideWindow: true
   });
+
+  menuBar.items[0].submenu.items[0].click = function() { openAboutWindow(); }
 }
 
 //------------------------------------------------------------------------------
