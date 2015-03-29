@@ -42,7 +42,7 @@ var DebugSelectionPattern = React.createClass({
         ctx = canvas.getContext('2d'),
         size = this.props.zoom;
 
-    ctx.webkitImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, size, size);
     ctx.fillStyle = '#000';

@@ -4,7 +4,7 @@ var LayerBoxLayer = React.createClass({
   },
   render: function() {
     var htmlId = 'LayerBoxLayer-'+this.props.layer.id,
-        cssClass = React.addons.classSet({
+        cssClass = classNames({
           LayerBoxLayer: true,
           selected: this.props.selected,
         });

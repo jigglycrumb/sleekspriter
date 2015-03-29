@@ -1,7 +1,7 @@
 var ExportPreviewSingleFrame = React.createClass({
   mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
-    var classes = React.addons.classSet({
+    var classes = classNames({
       preview: true,
       checkerboard: (this.props.format === 'png' || this.props.format === 'gif') ? true : false,
     });

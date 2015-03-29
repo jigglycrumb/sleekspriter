@@ -1,6 +1,6 @@
 var AnimationTimelineFrame = React.createClass({
   render: function() {
-    var cssClass = React.addons.classSet({
+    var cssClass = classNames({
       frame: true,
       selected: this.props.selected,
     });

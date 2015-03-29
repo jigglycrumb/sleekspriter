@@ -52,7 +52,7 @@ var App = React.createClass({
 
         windowClasses['window'] = true;
         windowClasses[this.state.tab] = true;
-        windowClasses = React.addons.classSet(windowClasses);
+        windowClasses = classNames(windowClasses);
 
     return (
       <div className="app">
@@ -60,7 +60,7 @@ var App = React.createClass({
           {this.state.tab === 'start' ? <label className="version">version @@version</label> :
             tabs.map(function(tab) {
               var label = tab[0].toUpperCase() + tab.substr(1, tab.length),
-                  classes = React.addons.classSet({
+                  classes = classNames({
                     tab: true,
                     active: this.state.tab === tab ? true : false,
                   });

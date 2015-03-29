@@ -2,7 +2,7 @@ var AnimationFrameBoxFrame = React.createClass({
   render: function() {
 
     var id = 'AnimationFrameBoxFrame-'+this.props.frame,
-        classes = React.addons.classSet({
+        classes = classNames({
           'frame': true,
           'top': this.props.frame <= this.props.editor.frames.x,
           'right': this.props.frame % this.props.editor.frames.x == 0,

@@ -13,12 +13,12 @@ var StatusBar = React.createClass({
   },
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
-        settingsButtonClasses = React.addons.classSet({
+        settingsButtonClasses = classNames({
           tiny: true,
           transparent: true,
           active: this.props.editor.settingsVisible,
         }),
-        gridButtonClasses = React.addons.classSet({
+        gridButtonClasses = classNames({
           tiny: true,
           transparent: true,
           active: this.props.editor.grid.enabled,

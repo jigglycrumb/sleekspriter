@@ -8,7 +8,7 @@ var AnimationFrameDropzone = React.createClass({
     };
 
     if(this.props.cssClass) cssClasses[this.props.cssClass] = true;
-    cssClasses = React.addons.classSet(cssClasses);
+    cssClasses = classNames(cssClasses);
 
     var width;
     switch(this.props.cssClass) {

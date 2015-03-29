@@ -10,7 +10,7 @@ var ScreenAnimate = React.createClass({
   },
   render: function() {
 
-    var cssClasses = React.addons.classSet({
+    var cssClasses = classNames({
       'screen': true,
       'animate': true,
       'list-visible': this.state.listVisible,

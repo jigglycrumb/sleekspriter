@@ -8,6 +8,7 @@ module.exports = {
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
+          'classnames/index.js',
           'conduitjs/lib/conduit.js',
           'lodash/dist/lodash.js',
           'mousetrap/mousetrap.js',
@@ -44,6 +45,7 @@ module.exports = {
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
+          'classnames/index.js',
           'conduitjs/lib/conduit.js',
           'lodash/dist/lodash.js',
           'postal.js/lib/postal.js',
@@ -90,6 +92,7 @@ module.exports = {
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
+          'classnames/index.js',
           'conduitjs/lib/conduit.js',
           'lodash/dist/lodash.js',
           'postal.js/lib/postal.js',

@@ -1,6 +1,6 @@
 var AnimationListAnimation = React.createClass({
   render: function() {
-    var cssClasses = React.addons.classSet({
+    var cssClasses = classNames({
       animation: true,
       selected: this.props.selected,
     });

@@ -3,7 +3,7 @@ var ExportPreviewSpritesheet = React.createClass({
   render: function() {
     var width = this.props.frameSize.width * this.props.frames.x,
         height = this.props.frameSize.height * this.props.frames.y,
-        classes = React.addons.classSet({
+        classes = classNames({
           preview: true,
           checkerboard: (this.props.format === 'png' || this.props.format === 'gif') ? true : false,
         });

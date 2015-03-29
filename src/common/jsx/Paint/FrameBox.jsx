@@ -25,7 +25,7 @@ var FrameBox = React.createClass({
           <div id="FrameBoxFrames" style={containerStyle}>
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame,
-                classes = React.addons.classSet({
+                classes = classNames({
                   'frame': true,
                   'selected': frame == this.props.editor.frames.selected,
                   'top': frame <= this.props.editor.frames.x,

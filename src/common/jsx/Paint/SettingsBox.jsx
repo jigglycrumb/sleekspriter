@@ -1,16 +1,16 @@
 var SettingsBox = React.createClass({
   render: function() {
-    var checkerboardButtonClasses = React.addons.classSet({
+    var checkerboardButtonClasses = classNames({
           'background': true,
           'checkerboard': true,
           'active': (this.props.editor.background.type === 'pattern' && this.props.editor.background.value === 'checkerboard') ? true : false,
         }),
-        stripesButtonClasses = React.addons.classSet({
+        stripesButtonClasses = classNames({
           'background': true,
           'stripes-preview': true,
           'active': (this.props.editor.background.type === 'pattern' && this.props.editor.background.value === 'stripes' ) ? true : false,
         }),
-        backgroundColorButtonClasses = React.addons.classSet({
+        backgroundColorButtonClasses = classNames({
           'background': true,
           'active': (this.props.editor.background.type === 'color') ? true : false,
         }),

@@ -1,8 +1,8 @@
 {
-  "name": "pixler",
+  "name": "pixelartstudio",
   "version": "0.0.0",
   "authors": [
-    "Volker Wieban <me@hpcodecraft.me>"
+    "Volker Wieban <mail@hpcodecraft.me>"
   ],
   "license": "MIT",
   "private": true,
@@ -19,6 +19,7 @@
     "postal.js": "~0.9.0",
     "zepto": "~1.1.4",
     "postal.diagnostics": "~0.7.4",
-    "gif.js": "~0.1.6"
+    "gif.js": "latest",
+    "classnames": "~1.1.4"
   }
 }
