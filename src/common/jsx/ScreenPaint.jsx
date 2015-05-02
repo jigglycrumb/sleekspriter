@@ -1,5 +1,10 @@
 /** @jsx React.DOM */
 var ScreenPaint = React.createClass({
+  getInitialState: function() {
+    return {
+      referenceImage: null,
+    }
+  },
   render: function() {
     var frames = [],
         settingsBoxStyle = {
@@ -19,8 +24,9 @@ var ScreenPaint = React.createClass({
         <div className="area left">
           <ToolBox editor={this.props.editor} />
         </div>
-        <div className="area center">
+        <div className="area center" onDrop={this.handleDrop}>
           <StageBox editor={this.props.editor} />
+          <ReferenceImage image={this.state.referenceImage} zoom={this.props.editor.zoom.current} />
         </div>
         <div className="area right">
           <div id="layerboxhelper">
@@ -37,5 +43,20 @@ var ScreenPaint = React.createClass({
         </div>
       </section>
     )
-  }
+  },
+
+  handleDrop: function(e) {
+    e.preventDefault();
+    if(e.dataTransfer.files.length >= 1) {
+      var file = e.dataTransfer.files[0],
+          allowed = {
+            'image/jpeg': true,
+            'image/gif': true,
+            'image/png': true,
+          };
+
+      console.log(file);
+      if(file.type in allowed) this.setState({ referenceImage: file });
+    }
+  },
 });

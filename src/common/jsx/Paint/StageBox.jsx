@@ -156,7 +156,6 @@ var StageBox = React.createClass({
     if(ok) this.props.editor.pixels.save();
   },
 
-
   getLayerPixelColor: function(event) {
     var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,

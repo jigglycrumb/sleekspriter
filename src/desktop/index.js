@@ -91,3 +91,15 @@ document.getElementById('fileOpen').addEventListener('change', function (e) {
 document.getElementById('fileSave').addEventListener('change', function (e) {
   file.save(this.value);
 });
+
+/* only for debugging */
+
+function tools() {
+  require('nw.gui').Window.get().showDevTools();
+}
+
+function reload() {
+  require('nw.gui').Window.get().reloadDev();
+}
+
+tools()
