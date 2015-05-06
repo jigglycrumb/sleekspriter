@@ -7,6 +7,8 @@ var LayerBox = React.createClass({
         'layer.add': this.shouldSelectLayer,
         'layer.delete': this.shouldSelectLayer,
         'box.fold': this.fitHeight,
+        'layer.dragstart': this.layerDragStart,
+        'layer.dragend': this.layerDragEnd,
       }
     }
   },
@@ -16,11 +18,15 @@ var LayerBox = React.createClass({
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
-          <div className="layers">
+          <div className="layers" onDragOver={this.dragOver}>
             {this.props.editor.layers.frame.map(function(layer) {
               var selected = layer.id === this.props.editor.layers.selected ? true : false;
               return (
-                <LayerBoxLayer key={layer.id} layer={layer} selected={selected} dimensions={this.props.editor.file.size} />
+                <LayerBoxLayer
+                  key={layer.id}
+                  layer={layer}
+                  selected={selected}
+                  dimensions={this.props.editor.file.size} />
               );
             }, this)}
           </div>
@@ -55,4 +61,65 @@ var LayerBox = React.createClass({
         height = areaRightHeight - otherBoxesHeight - 48;
     this.getDOMNode().querySelector('.layers').style.height = height+'px';
   },
+
+
+  dragOver: function(e) {
+
+    e.preventDefault();
+
+    //console.log('dragOver', e.target.className);
+
+    if(e.target.className === 'LayerBoxLayer') {
+      e.target.parentNode.insertBefore(placeholder.layerdrop, e.target);
+
+      console.log(e.target.getAttribute('id'));
+    }
+
+
+
+    /*
+    //this.dragged.style.display = "none";
+    if(e.target.className == "placeholder") return;
+    this.over = e.target;
+    e.target.parentNode.insertBefore(placeholder, e.target);
+    */
+  },
+
+  layerDragStart: function(data) {
+
+    console.log('layerDragStart', data);
+
+
+
+    /*
+    this.dragged = e.currentTarget;
+    e.dataTransfer.effectAllowed = 'move';
+
+    // Firefox requires calling dataTransfer.setData
+    // for the drag to properly work
+    e.dataTransfer.setData("text/html", e.currentTarget);
+    */
+  },
+
+  layerDragEnd: function(data) {
+
+    console.log('layerDragEnd', data);
+
+    /*
+
+    //this.dragged.style.display = "block";
+    this.dragged.parentNode.removeChild(placeholder);
+
+    // Update state
+    var data = this.state.data;
+    var from = Number(this.dragged.dataset.id);
+    var to = Number(this.over.dataset.id);
+    if(from < to) to--;
+    data.splice(to, 0, data.splice(from, 1)[0]);
+    this.setState({data: data});
+
+    */
+  },
+
+
 });
