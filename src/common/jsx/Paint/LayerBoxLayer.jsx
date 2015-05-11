@@ -2,15 +2,23 @@ var LayerBoxLayer = React.createClass({
   propTypes: {
      layer: React.PropTypes.object.isRequired // layer object
   },
+  getInitialState: function() {
+    return {
+      dragging: false,
+    }
+  },
   render: function() {
-    var htmlId = 'LayerBoxLayer-'+this.props.layer.id,
-        cssClass = classNames({
+    var htmlId    = 'LayerBoxLayer-'+this.props.layer.id,
+        style     = {
+          opacity : this.state.dragging == true ? 0.5 : 1,
+        },
+        cssClass  = classNames({
           LayerBoxLayer: true,
           selected: this.props.selected,
         });
 
     return (
-      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.dragStart} onDragEnd={this.dragEnd}>
+      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.dragStart} onDragEnd={this.dragEnd} style={style}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
@@ -38,10 +46,9 @@ var LayerBoxLayer = React.createClass({
 
   dragStart: function(e) {
 
-    console.log('dragStart');
+    //console.log('dragStart');
     channel.gui.publish('layer.dragstart', {layer: this.props.layer.id});
-
-    //this.getDOMNode().style.opacity = 'none';
+    this.setState({ dragging: true });
 
     //this.dragged = e.currentTarget;
     //e.dataTransfer.effectAllowed = 'move';
@@ -54,11 +61,11 @@ var LayerBoxLayer = React.createClass({
 
   dragEnd: function(e) {
 
-    console.log('dragEnd');
+    //console.log('dragEnd');
     channel.gui.publish('layer.dragend', {layer: this.props.layer.id});
+    this.setState({ dragging: false });
 
     /*
-    //this.dragged.style.display = "block";
     this.dragged.parentNode.removeChild(placeholder);
 
     // Update state

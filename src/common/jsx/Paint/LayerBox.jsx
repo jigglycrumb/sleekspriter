@@ -1,5 +1,6 @@
 var LayerBox = React.createClass({
   mixins: [FoldableMixin, PostalSubscriptionMixin],
+  dragPosition: 0,
   getInitialState: function() {
     return {
       shouldSelectLayer: false,
@@ -18,7 +19,7 @@ var LayerBox = React.createClass({
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
-          <div className="layers" onDragOver={this.dragOver}>
+          <div ref="layers" className="layers" onDragOver={this.dragOver}>
             {this.props.editor.layers.frame.map(function(layer) {
               var selected = layer.id === this.props.editor.layers.selected ? true : false;
               return (
@@ -67,13 +68,38 @@ var LayerBox = React.createClass({
 
     e.preventDefault();
 
-    //console.log('dragOver', e.target.className);
+    var x = e.pageX - e.currentTarget.offsetLeft;
+    var y = e.pageY - e.currentTarget.offsetTop - 63;
+
+    this.dragPosition = Math.floor(y/41);
+    if(this.dragPosition < 0) this.dragPosition = 0;
+    if(this.dragPosition > this.props.editor.layers.frame.length) this.dragPosition = this.props.editor.layers.frame.length;
+
+    //console.log(Y, this.dragPosition);
 
     if(e.target.className === 'LayerBoxLayer') {
       e.target.parentNode.insertBefore(placeholder.layerdrop, e.target);
-
-      console.log(e.target.getAttribute('id'));
     }
+    else if(e.target.className === 'layers') {
+      e.target.appendChild(placeholder.layerdrop);
+    }
+
+    // var relY = e.clientY - e.target.offsetTop;
+    // var height = e.target.offsetHeight / 2;
+    // var parent = e.target.parentNode;
+
+    /*
+    if(relY > height) {
+      this.nodePlacement = "after";
+      parent.insertBefore(placeholder, e.target.nextElementSibling);
+    }
+    else if(relY < height) {
+      this.nodePlacement = "before"
+      parent.insertBefore(placeholder, e.target);
+    }
+    */
+
+    //console.log('dragOver'); //, layer);
 
 
 
@@ -87,7 +113,7 @@ var LayerBox = React.createClass({
 
   layerDragStart: function(data) {
 
-    console.log('layerDragStart', data);
+    // console.log('layerDragStart', data, this.props.editor.layers.frame);
 
 
 
@@ -103,7 +129,10 @@ var LayerBox = React.createClass({
 
   layerDragEnd: function(data) {
 
-    console.log('layerDragEnd', data);
+    // console.log('layerDragEnd', data);
+
+    //channel.gui.publish('layer.drop', {layer: data.layer, position: this.dragPosition });
+    channel.file.publish('layer.drop', {layer: data.layer, position: this.dragPosition });
 
     /*
 

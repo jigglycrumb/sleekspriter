@@ -171,6 +171,37 @@ var File = function() {
     channel.gui.publish('layer.name.select', data);
   });
 
+  // handle layer drag & drop
+  channel.file.subscribe('layer.drop', function(data, envelope) {
+    var dropLayer = self.getLayerById(data.layer),
+        dropFrame = dropLayer.frame;
+
+    var tempLayers = _.partition(self.layers, function(layer) {
+      return layer.frame == dropFrame;
+    });
+
+    var frameLayers = tempLayers[0],
+        otherLayers = tempLayers[1];
+
+    // remove dragged layer from frame layers
+    frameLayers = frameLayers.filter(function(item) {
+      return item.id !== data.layer;
+    });
+
+    // re-insert layer at new position
+    frameLayers.splice(data.position, 0, dropLayer).join();
+
+    // merge layers back together
+    self.layers = frameLayers.concat(otherLayers);
+
+    // fix layer z-indices
+    fixLayerZ(dropFrame);
+
+    // update UI
+    data.frame = dropFrame;
+    channel.gui.publish('layer.drop', data);
+  });
+
   // handle addition of new layer
   channel.file.subscribe('file.layer.add', function(data, envelope) {
     var index = 0;
