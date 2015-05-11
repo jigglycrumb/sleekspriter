@@ -1,6 +1,7 @@
 var LayerBox = React.createClass({
   mixins: [FoldableMixin, PostalSubscriptionMixin],
   dragPosition: 0,
+  dragLayer: 0,
   getInitialState: function() {
     return {
       shouldSelectLayer: false,
@@ -8,8 +9,7 @@ var LayerBox = React.createClass({
         'layer.add': this.shouldSelectLayer,
         'layer.delete': this.shouldSelectLayer,
         'box.fold': this.fitHeight,
-        'layer.dragstart': this.layerDragStart,
-        'layer.dragend': this.layerDragEnd,
+        'layer.dragstart': this.dragStart,
       }
     }
   },
@@ -19,7 +19,7 @@ var LayerBox = React.createClass({
       <div id="LayerBox" className="box">
         <h4 className="foldable-handle">Layers</h4>
         <div className="foldable-fold">
-          <div ref="layers" className="layers" onDragOver={this.dragOver}>
+          <div ref="layers" className="layers" onDragOver={this.dragOver} onDrop={this.drop}>
             {this.props.editor.layers.frame.map(function(layer) {
               var selected = layer.id === this.props.editor.layers.selected ? true : false;
               return (
@@ -63,9 +63,11 @@ var LayerBox = React.createClass({
     this.getDOMNode().querySelector('.layers').style.height = height+'px';
   },
 
+  dragStart: function(data) {
+    this.dragLayer = data.layer;
+  },
 
   dragOver: function(e) {
-
     e.preventDefault();
 
     var x = e.pageX - e.currentTarget.offsetLeft;
@@ -75,80 +77,19 @@ var LayerBox = React.createClass({
     if(this.dragPosition < 0) this.dragPosition = 0;
     if(this.dragPosition > this.props.editor.layers.frame.length) this.dragPosition = this.props.editor.layers.frame.length;
 
-    //console.log(Y, this.dragPosition);
-
     if(e.target.className === 'LayerBoxLayer') {
       e.target.parentNode.insertBefore(placeholder.layerdrop, e.target);
     }
     else if(e.target.className === 'layers') {
       e.target.appendChild(placeholder.layerdrop);
     }
-
-    // var relY = e.clientY - e.target.offsetTop;
-    // var height = e.target.offsetHeight / 2;
-    // var parent = e.target.parentNode;
-
-    /*
-    if(relY > height) {
-      this.nodePlacement = "after";
-      parent.insertBefore(placeholder, e.target.nextElementSibling);
-    }
-    else if(relY < height) {
-      this.nodePlacement = "before"
-      parent.insertBefore(placeholder, e.target);
-    }
-    */
-
-    //console.log('dragOver'); //, layer);
-
-
-
-    /*
-    //this.dragged.style.display = "none";
-    if(e.target.className == "placeholder") return;
-    this.over = e.target;
-    e.target.parentNode.insertBefore(placeholder, e.target);
-    */
   },
 
-  layerDragStart: function(data) {
-
-    // console.log('layerDragStart', data, this.props.editor.layers.frame);
-
-
-
-    /*
-    this.dragged = e.currentTarget;
-    e.dataTransfer.effectAllowed = 'move';
-
-    // Firefox requires calling dataTransfer.setData
-    // for the drag to properly work
-    e.dataTransfer.setData("text/html", e.currentTarget);
-    */
+  drop: function(e) {
+    e.currentTarget.removeChild(placeholder.layerdrop);
+    channel.file.publish('layer.drop', {layer: this.dragLayer, position: this.dragPosition});
+    this.dragLayer = 0;
+    this.dragPosition = 0;
   },
-
-  layerDragEnd: function(data) {
-
-    // console.log('layerDragEnd', data);
-
-    //channel.gui.publish('layer.drop', {layer: data.layer, position: this.dragPosition });
-    channel.file.publish('layer.drop', {layer: data.layer, position: this.dragPosition });
-
-    /*
-
-    //this.dragged.style.display = "block";
-    this.dragged.parentNode.removeChild(placeholder);
-
-    // Update state
-    var data = this.state.data;
-    var from = Number(this.dragged.dataset.id);
-    var to = Number(this.over.dataset.id);
-    if(from < to) to--;
-    data.splice(to, 0, data.splice(from, 1)[0]);
-    this.setState({data: data});
-
-    */
-  },
-
 
 });

@@ -2,23 +2,15 @@ var LayerBoxLayer = React.createClass({
   propTypes: {
      layer: React.PropTypes.object.isRequired // layer object
   },
-  getInitialState: function() {
-    return {
-      dragging: false,
-    }
-  },
   render: function() {
     var htmlId    = 'LayerBoxLayer-'+this.props.layer.id,
-        style     = {
-          opacity : this.state.dragging == true ? 0.5 : 1,
-        },
         cssClass  = classNames({
           LayerBoxLayer: true,
           selected: this.props.selected,
         });
 
     return (
-      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.dragStart} onDragEnd={this.dragEnd} style={style}>
+      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.dragStart}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
@@ -43,40 +35,7 @@ var LayerBoxLayer = React.createClass({
   dispatchLayerNameChanged: function(name) {
     channel.file.publish('file.layer.name.select', {layer: this.props.layer.id, name: name});
   },
-
   dragStart: function(e) {
-
-    //console.log('dragStart');
     channel.gui.publish('layer.dragstart', {layer: this.props.layer.id});
-    this.setState({ dragging: true });
-
-    //this.dragged = e.currentTarget;
-    //e.dataTransfer.effectAllowed = 'move';
-
-    // Firefox requires calling dataTransfer.setData
-    // for the drag to properly work
-    //e.dataTransfer.setData("text/html", e.currentTarget);
   },
-
-
-  dragEnd: function(e) {
-
-    //console.log('dragEnd');
-    channel.gui.publish('layer.dragend', {layer: this.props.layer.id});
-    this.setState({ dragging: false });
-
-    /*
-    this.dragged.parentNode.removeChild(placeholder);
-
-    // Update state
-    var data = this.state.data;
-    var from = Number(this.dragged.dataset.id);
-    var to = Number(this.over.dataset.id);
-    if(from < to) to--;
-    data.splice(to, 0, data.splice(from, 1)[0]);
-    this.setState({data: data});
-    */
-  },
-
-
 });

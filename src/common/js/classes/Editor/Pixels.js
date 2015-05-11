@@ -57,6 +57,11 @@ Editor.prototype.pixels.init = function() {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
+  channel.gui.subscribe('layer.drop', function(data, envelope) {
+    self.file = file.pixels;
+    self.frame = _.where(self.file, {frame: data.frame});
+  });
+
   channel.gui.subscribe('scope.set', function(data, envelope) {
 
     // update pixels in scope

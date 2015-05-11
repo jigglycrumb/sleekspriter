@@ -12,7 +12,7 @@
     ["rotate", 12, [1,2,3,4]], // name, fps, array of frames
   ],
   pixels: [ // array of pixels
-    [1, 1, 1, 1, 160, 0, 0, 1] // frame, layer, x, y, r, g, b, a
+    [1, 1, 1, 160, 0, 0, 1] // layer, x, y, r, g, b, a
   ]
 }
 

@@ -40,33 +40,6 @@ Editor.prototype.layers.init = function() {
   // channel.gui.subscribe('size.set', updateFrameLayers);
 
   channel.gui.subscribe('layer.drop', updateFrameLayers);
-
-
-
-  /*
-  channel.gui.subscribe('layer.drop', function(data) {
-    console.log('layer.drop', data);
-
-    // grab layer to be moved
-    var dropLayer = _.find(self.frame, {id: data.layer});
-
-    console.log(self.frame);
-
-    // remove layer
-    self.frame = self.frame.filter(function(item) {
-      return item.id !== data.layer;
-    });
-
-    console.log(self.frame);
-
-    // re-insert layer at new position
-    self.frame.splice(data.position, 0, dropLayer).join();
-
-    console.log(self.frame);
-
-    //channel.file.publish('')
-  });
-  */
 };
 
 /**

@@ -16,6 +16,7 @@ var FrameCanvasMixin = {
         'pixel.add': this.checkRefresh,
         'pixel.delete': this.checkRefresh,
         'app.layer.delete': this.checkRefresh,
+        'layer.drop': this.checkRefresh,
       },
     };
   },
@@ -36,15 +37,14 @@ var FrameCanvasMixin = {
           }
           break;
 
-        case 'scope.set':
-        case 'canvas.refresh':
-        case 'app.layer.delete':
-          this.paintFrame();
-          break;
-
         case 'canvas.preview':
           this.previewFrame(data.pixels);
           break;
+
+        default:
+          this.paintFrame();
+          break;
+
       }
     }
   },

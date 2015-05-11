@@ -150,6 +150,21 @@ var File = function() {
     self.layers.reverse();
   }
 
+  function fixPixelZ() {
+    // refresh z values of all pixels
+    var layerZ = {};
+    self.layers.forEach(function(layer) {
+      layerZ[layer.id] = layer.z;
+    });
+
+    self.pixels.forEach(function(pixel) {
+      var layer = pixel[0],
+          z = layerZ[layer];
+      pixel.z = z;
+    });
+  }
+
+
   // handle layer opacity change
   channel.file.subscribe('file.layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
@@ -196,6 +211,9 @@ var File = function() {
 
     // fix layer z-indices
     fixLayerZ(dropFrame);
+
+    // fix pixel z-indices
+    fixPixelZ();
 
     // update UI
     data.frame = dropFrame;
