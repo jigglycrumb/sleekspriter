@@ -92,27 +92,6 @@ document.getElementById('fileSave').addEventListener('change', function (e) {
   file.save(this.value);
 });
 
-
-// placeholder for drop targets
-var placeholder = {}
-
-placeholder.layerdrop = document.createElement('div');
-placeholder.layerdrop.className = "dropzone";
-
-var placeholderInnerLeft = document.createElement('div');
-placeholderInnerLeft.className = "dropzone-inner left";
-
-var placeholderInnerCenter = document.createElement('div');
-placeholderInnerCenter.className = "dropzone-inner center";
-
-var placeholderInnerRight = document.createElement('div');
-placeholderInnerRight.className = "dropzone-inner right";
-
-placeholder.layerdrop.appendChild(placeholderInnerLeft);
-placeholder.layerdrop.appendChild(placeholderInnerCenter);
-placeholder.layerdrop.appendChild(placeholderInnerRight);
-
-
 /* only for debugging */
 
 function tools() {

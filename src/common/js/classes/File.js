@@ -215,7 +215,6 @@ var File = function() {
     // fix pixel z-indices
     fixPixelZ();
 
-    // update UI
     data.frame = dropFrame;
     channel.gui.publish('layer.drop', data);
   });
