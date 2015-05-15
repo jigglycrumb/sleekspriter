@@ -102,4 +102,4 @@ function reload() {
   require('nw.gui').Window.get().reloadDev();
 }
 
-tools()
+tools();

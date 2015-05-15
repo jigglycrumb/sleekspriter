@@ -211,6 +211,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
 
     .Layer {
       position: absolute;
@@ -238,6 +239,40 @@
       z-index: -1;
       width: 100%;
       height: 100%;
+    }
+  }
+
+  #ReferenceImage {
+    position: relative;
+    z-index: 0;
+    cursor: move;
+
+    img {
+      border: 1px solid @medium;
+    }
+
+    .remove {
+      @size: 20px;
+
+      position: absolute;
+      top: -@size/2;
+      right: -@size/2;
+      width: @size;
+      height: @size;
+      border-radius: 100%;
+      padding-left: @size/4;
+      opacity: 0;
+      transition: opacity 150ms ease;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  #ReferenceImage:hover {
+    .remove {
+      opacity: 1;
     }
   }
 

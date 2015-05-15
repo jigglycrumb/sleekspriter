@@ -20,6 +20,7 @@
     "zepto": "~1.1.4",
     "postal.diagnostics": "~0.7.4",
     "gif.js": "latest",
-    "classnames": "~1.1.4"
+    "classnames": "~1.1.4",
+    "react-dnd": "~0.9.8"
   }
 }

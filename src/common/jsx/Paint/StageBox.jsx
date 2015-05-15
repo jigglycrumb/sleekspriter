@@ -49,7 +49,10 @@ var StageBox = React.createClass({
           );
         }, this)}
 
-        <StageBoxBackground type={this.props.editor.background.type} value={this.props.editor.background.value} />
+        <StageBoxBackground
+          type={this.props.editor.background.type}
+          value={this.props.editor.background.value}
+          image={this.props.image} />
       </div>
     );
   },
@@ -155,7 +158,6 @@ var StageBox = React.createClass({
 
     if(ok) this.props.editor.pixels.save();
   },
-
 
   getLayerPixelColor: function(event) {
     var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
