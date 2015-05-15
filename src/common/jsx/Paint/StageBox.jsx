@@ -49,7 +49,10 @@ var StageBox = React.createClass({
           );
         }, this)}
 
-        <StageBoxBackground type={this.props.editor.background.type} value={this.props.editor.background.value} />
+        <StageBoxBackground
+          type={this.props.editor.background.type}
+          value={this.props.editor.background.value}
+          image={this.props.image} />
       </div>
     );
   },

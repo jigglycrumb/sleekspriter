@@ -1,10 +1,16 @@
-/** @jsx React.DOM */
 var ScreenPaint = React.createClass({
+  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
-      referenceImage: null,
+      referenceImage: {
+        file: null,
+      },
+      subscriptions: {
+        'referenceimage.remove': this.resetImage,
+      }
     }
   },
+
   render: function() {
     var frames = [],
         settingsBoxStyle = {
@@ -25,8 +31,8 @@ var ScreenPaint = React.createClass({
           <ToolBox editor={this.props.editor} />
         </div>
         <div className="area center" onDrop={this.handleDrop}>
-          <StageBox editor={this.props.editor} />
-          <ReferenceImage image={this.state.referenceImage} zoom={this.props.editor.zoom.current} />
+          <StageBox editor={this.props.editor} image={this.state.referenceImage} />
+          <ReferenceImage image={this.state.referenceImage} />
         </div>
         <div className="area right">
           <div id="layerboxhelper">
@@ -55,8 +61,17 @@ var ScreenPaint = React.createClass({
             'image/png': true,
           };
 
-      console.log(file);
-      if(file.type in allowed) this.setState({ referenceImage: file });
+      if(file.type in allowed) {
+        var ref = {
+          file: file,
+        };
+
+        this.setState({ referenceImage: ref });
+      }
     }
+  },
+
+  resetImage: function() {
+    this.setState({ referenceImage: { file: null }});
   },
 });
