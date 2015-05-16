@@ -10,6 +10,7 @@
   "devDependencies": {
     "grunt": "latest",
     "grunt-autoprefixer": "latest",
+    "grunt-browserify": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-compress": "latest",
     "grunt-contrib-concat": "latest",
@@ -20,6 +21,7 @@
     "grunt-react": "latest",
     "grunt-replace": "latest",
     "load-grunt-config": "latest",
-    "time-grunt": "latest"
+    "react": "latest",
+    "time-grunt": "latest",
   }
 }
