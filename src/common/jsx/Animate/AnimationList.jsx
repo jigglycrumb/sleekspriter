@@ -60,10 +60,10 @@ var AnimationList = React.createClass({
     }
   },
   dispatchAnimationAdded: function() {
-    channel.file.publish('file.animation.add');
+    channel.file.publish('animation.add');
   },
   dispatchAnimationRemoved: function() {
-    channel.file.publish('file.animation.delete', {name: this.props.animations.selected});
+    channel.file.publish('animation.delete', {name: this.props.animations.selected});
   },
   shouldSelectAnimation: function(data) {
     if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });

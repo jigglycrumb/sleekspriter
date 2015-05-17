@@ -34,6 +34,6 @@ var AnimationTimelineFrame = React.createClass({
       position: this.props.position,
     };
 
-    channel.file.publish('file.animation.frame.delete', data);
+    channel.file.publish('animation.frame.delete', data);
   },
 });

@@ -27,13 +27,13 @@ var LayerBoxLayer = React.createClass({
     channel.gui.publish('layer.select', {layer: this.props.layer.id});
   },
   dispatchLayerVisibilityChanged: function(event) {
-    channel.file.publish('file.layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
+    channel.file.publish('layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
   },
   dispatchLayerOpacityChanged: function(event) {
-    channel.file.publish('file.layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
+    channel.file.publish('layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
   },
   dispatchLayerNameChanged: function(name) {
-    channel.file.publish('file.layer.name.select', {layer: this.props.layer.id, name: name});
+    channel.file.publish('layer.name.select', {layer: this.props.layer.id, name: name});
   },
   dragStart: function(e) {
     channel.gui.publish('layer.dragstart', {layer: this.props.layer.id});

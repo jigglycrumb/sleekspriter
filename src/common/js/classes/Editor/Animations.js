@@ -9,7 +9,7 @@ Editor.prototype.animations.init = function() {
     self.list = file.animations;
   });
 
-  channel.file.subscribe('file.animation.rename', function(data, envelope) {
+  channel.file.subscribe('animation.rename', function(data, envelope) {
     if(self.selected === data.oldName) self.selected = data.newName;
   });
 

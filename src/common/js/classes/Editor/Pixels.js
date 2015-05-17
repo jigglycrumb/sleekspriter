@@ -247,7 +247,7 @@ Editor.prototype.pixels.init = function() {
     self.save();
 
     // delete top layer
-    channel.file.publish('file.layer.delete', {layer: data.top.id});
+    channel.file.publish('layer.delete', {layer: data.top.id});
   });
 
 

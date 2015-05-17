@@ -21,13 +21,13 @@ var ModalAppendReplaceFrames = React.createClass({
         frame: frame,
         position: animation.frames.length,
       };
-      channel.file.publish('file.animation.frame.add', data);
+      channel.file.publish('animation.frame.add', data);
     }, this);
 
     this.hide();
   },
   replaceFrames: function() {
-    channel.file.publish('file.animation.frames.empty', {animation: this.props.editor.animations.selected});
+    channel.file.publish('animation.frames.empty', {animation: this.props.editor.animations.selected});
     this.appendFrames();
   }
 });

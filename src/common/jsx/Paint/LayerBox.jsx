@@ -57,7 +57,7 @@ var LayerBox = React.createClass({
     this.fitHeight();
   },
   dispatchLayerAdded: function() {
-    channel.file.publish('file.layer.add', {layer: this.props.editor.layers.selected});
+    channel.file.publish('layer.add', {layer: this.props.editor.layers.selected});
   },
   confirmLayerDelete: function() {
     channel.gui.publish('modal.show', {component: ModalConfirmDeleteLayer});

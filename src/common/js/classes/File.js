@@ -166,21 +166,21 @@ var File = function() {
 
 
   // handle layer opacity change
-  channel.file.subscribe('file.layer.opacity.select', function(data, envelope) {
+  channel.file.subscribe('layer.opacity.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.opacity = data.opacity;
     channel.gui.publish('layer.opacity.select', data);
   });
 
   // handle layer visibility toggle
-  channel.file.subscribe('file.layer.visibility.toggle', function(data, envelope) {
+  channel.file.subscribe('layer.visibility.toggle', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.visible = data.visible;
     channel.gui.publish('layer.visibility.toggle', data);
   });
 
   // handle layer name change
-  channel.file.subscribe('file.layer.name.select', function(data, envelope) {
+  channel.file.subscribe('layer.name.select', function(data, envelope) {
     var layer = self.getLayerById(data.layer);
     layer.name = data.name;
     channel.gui.publish('layer.name.select', data);
@@ -221,7 +221,7 @@ var File = function() {
   });
 
   // handle addition of new layer
-  channel.file.subscribe('file.layer.add', function(data, envelope) {
+  channel.file.subscribe('layer.add', function(data, envelope) {
     var index = 0;
     for(var i=0; i < self.layers.length; i++) {
       if(self.layers[i].id === data.layer) {
@@ -243,7 +243,7 @@ var File = function() {
   });
 
   // handle layer removal
-  channel.file.subscribe('file.layer.delete', function(data, envelope) {
+  channel.file.subscribe('layer.delete', function(data, envelope) {
     // delete layer pixels
     self.deletePixelsOfLayer(data.layer);
 
@@ -281,7 +281,7 @@ var File = function() {
   });
 
   // handle addition of new animation
-  channel.file.subscribe('file.animation.add', function(data, envelope) {
+  channel.file.subscribe('animation.add', function(data, envelope) {
     var animation = {
       name: 'Animation '+ (self.animations.length+1),
       fps: 10,
@@ -293,7 +293,7 @@ var File = function() {
   });
 
   // handle deletion of an animation
-  channel.file.subscribe('file.animation.delete', function(data, envelope) {
+  channel.file.subscribe('animation.delete', function(data, envelope) {
 
     var shouldSelectAnimation;
 
@@ -315,28 +315,28 @@ var File = function() {
   });
 
   // handle setting of animation FPS
-  channel.file.subscribe('file.animation.fps', function(data, envelope) {
+  channel.file.subscribe('animation.fps', function(data, envelope) {
     var animation = self.getAnimationByName(data.name);
     animation.fps = +data.fps;
     channel.gui.publish('animation.fps');
   });
 
   // handle animation renaming
-  channel.file.subscribe('file.animation.rename', function(data, envelope) {
+  channel.file.subscribe('animation.rename', function(data, envelope) {
     var animation = self.getAnimationByName(data.oldName);
     animation.name = data.newName;
     channel.gui.publish('animation.rename', data);
   });
 
   // handle animation frame adding
-  channel.file.subscribe('file.animation.frame.add', function(data, envelope) {
+  channel.file.subscribe('animation.frame.add', function(data, envelope) {
     var animation = self.getAnimationByName(data.animation);
     animation.frames.splice(data.position, 0, data.frame);
     channel.gui.publish('animation.frame.add');
   });
 
   // handle animation frame removal
-  channel.file.subscribe('file.animation.frame.delete', function(data, envelope) {
+  channel.file.subscribe('animation.frame.delete', function(data, envelope) {
     var animation = self.getAnimationByName(data.animation);
     if(animation.frames[data.position] === data.frame) {
       animation.frames.splice(data.position, 1);
@@ -344,7 +344,7 @@ var File = function() {
     channel.gui.publish('animation.frame.delete', data);
   });
 
-  channel.file.subscribe('file.animation.frames.empty', function(data, envelope) {
+  channel.file.subscribe('animation.frames.empty', function(data, envelope) {
     self.getAnimationByName(data.animation).frames = [];
   });
 };
