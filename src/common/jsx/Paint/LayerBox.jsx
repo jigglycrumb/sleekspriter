@@ -27,7 +27,7 @@ var LayerBox = React.createClass({
         <div className="foldable-fold">
           <div ref="layers" className="layers" onDragOver={this.dragOver} onDrop={this.drop}>
             {layers.map(function(layer) {
-              if(layer === 'dropzone') return <LayerBoxDrophelper />
+              if(layer === 'dropzone') return <LayerBoxDrophelper key="layerdropzone" />
               else {
                 var selected = layer.id === this.props.editor.layers.selected ? true : false;
                 return (

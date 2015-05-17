@@ -46,13 +46,14 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-function resize() {
-  channel.gui.publish('window.resize');
-}
+function refreshPreviews() {
+  channel.gui.publish('canvas.refresh', {
+    frame: editor.frames.selected,
+    layer: editor.layers.selected,
+  });
+};
 
-window.onresize = resize;
-
-// move this into window.onload later
+window.onresize = function(e) { channel.gui.publish('window.resize'); };
 
 var channel = {
     file: postal.channel('file'),
@@ -63,28 +64,6 @@ var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
-
-// placeholder for drop targets
-var placeholder = {}
-
-placeholder.layerdrop = document.createElement('div');
-placeholder.layerdrop.className = "dropzone";
-
-var placeholderInnerLeft = document.createElement('div');
-placeholderInnerLeft.className = "dropzone-inner left";
-
-var placeholderInnerCenter = document.createElement('div');
-placeholderInnerCenter.className = "dropzone-inner center";
-
-var placeholderInnerRight = document.createElement('div');
-placeholderInnerRight.className = "dropzone-inner right";
-
-placeholder.layerdrop.appendChild(placeholderInnerLeft);
-placeholder.layerdrop.appendChild(placeholderInnerCenter);
-placeholder.layerdrop.appendChild(placeholderInnerRight);
-
-
-
 
 // file.load('coin.pixels', fileLoaded);
 

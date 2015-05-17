@@ -216,6 +216,7 @@ var File = function() {
     fixPixelZ();
 
     data.frame = dropFrame;
+
     channel.gui.publish('layer.drop', data);
   });
 

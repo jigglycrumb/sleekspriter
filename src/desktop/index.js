@@ -46,6 +46,16 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
+function refreshPreviews() {
+
+  console.log('refreshPreviews');
+
+  channel.gui.publish('canvas.refresh', {
+    frame: editor.frames.selected,
+    layer: editor.layers.selected,
+  });
+};
+
 window.onresize = function(e) { channel.gui.publish('window.resize'); };
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };

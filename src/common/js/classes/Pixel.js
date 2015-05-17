@@ -120,6 +120,28 @@ Pixel.prototype.wrap = function(distance, simulate) {
   return this;
 };
 
+
+/**
+ * Flips a pixel horizontally
+ * @return {Object} The pixel object
+ */
+Pixel.prototype.flipHorizontal = function() {
+  var targetX = editor.file.size.width - this.x + 1;
+  this.x = targetX;
+  return this;
+};
+
+/**
+ * Flips a pixel vertically
+ * @return {Object} The pixel object
+ */
+Pixel.prototype.flipVertical = function() {
+  var targetY = editor.file.size.height - this.y + 1;
+  this.y = targetY;
+  return this;
+};
+
+
 /**
  * Creates a new pixel from flat array
  * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]

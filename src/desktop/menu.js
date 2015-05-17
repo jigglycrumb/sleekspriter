@@ -30,8 +30,6 @@ if(process.platform === 'darwin') {
     hideEdit: true,
     hideWindow: true
   });
-
-  //menuBar.items[0].submenu.items[0].click = function() { showCredits(); }
 }
 
 //------------------------------------------------------------------------------
@@ -139,6 +137,24 @@ editMenu.append(new gui.MenuItem({
 editMenu.append(new gui.MenuItem({ type: 'separator' }));
 
 editMenu.append(new gui.MenuItem({
+  label: 'Flip Horizontal',
+  click: function() {
+    channel.gui.publish('scope.flip.horizontal');
+  },
+  enabled: false,
+}));
+
+editMenu.append(new gui.MenuItem({
+  label: 'Flip Vertical',
+  click: function() {
+    channel.gui.publish('scope.flip.vertical');
+  },
+  enabled: false,
+}));
+
+editMenu.append(new gui.MenuItem({ type: 'separator' }));
+
+editMenu.append(new gui.MenuItem({
   label: 'Image size...',
   click: function() {
     channel.gui.publish('modal.show', {component: ModalEditImageSize});
@@ -214,6 +230,28 @@ layerMenu.append(new gui.MenuItem({
 
 
 //------------------------------------------------------------------------------
+// create "Frame" menu
+var frameMenu = new gui.Menu();
+menuBar.append(new gui.MenuItem({label: 'Frame', submenu: frameMenu}));
+
+frameMenu.append(new gui.MenuItem({
+  label: 'Flip Horizontal',
+  click: function() {
+    channel.gui.publish('frame.flip.horizontal');
+  },
+  enabled: false,
+}));
+
+frameMenu.append(new gui.MenuItem({
+  label: 'Flip Vertical',
+  click: function() {
+    channel.gui.publish('frame.flip.vertical');
+  },
+  enabled: false,
+}));
+
+
+//------------------------------------------------------------------------------
 // enable menus after file was loaded
 channel.file.subscribe('file.load', function() {
   function enable(item) { item.enabled = true; }
@@ -221,6 +259,7 @@ channel.file.subscribe('file.load', function() {
   editMenu.items.map(enable);
   selectMenu.items.map(enable);
   layerMenu.items.map(enable);
+  frameMenu.items.map(enable);
 });
 
 // assign menu to window
