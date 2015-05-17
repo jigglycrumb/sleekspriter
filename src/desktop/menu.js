@@ -3,13 +3,13 @@ var modKey = process.platform === 'darwin' ? 'cmd' : 'ctrl';
 
 var gui = require('nw.gui');
 var menuBar = new gui.Menu({ type: "menubar" });
-var aboutWindow;
+var creditsWindow;
 
-function openAboutWindow() {
-  console.log('openAboutWindow');
+function showCredits() {
+  console.log('showCredits');
 
-  aboutWindow = gui.Window.open('about.html', {
-    "title": "@@app - About",
+  creditsWindow = gui.Window.open('credits.html', {
+    "title": "@@app - Credits",
     // "icon": "link.png",
     "toolbar": false,
     // "frame": false,
@@ -20,8 +20,8 @@ function openAboutWindow() {
   });
 }
 
-function closeAboutWindow() {
-  aboutWindow.close();
+function closeCredits() {
+  creditsWindow.close();
 }
 
 if(process.platform === 'darwin') {
@@ -31,7 +31,7 @@ if(process.platform === 'darwin') {
     hideWindow: true
   });
 
-  menuBar.items[0].submenu.items[0].click = function() { openAboutWindow(); }
+  //menuBar.items[0].submenu.items[0].click = function() { showCredits(); }
 }
 
 //------------------------------------------------------------------------------
