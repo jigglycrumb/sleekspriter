@@ -3,6 +3,7 @@ build
 dist
 doc
 node_modules
+npm-debug.log
 release
 report
 todo.txt
