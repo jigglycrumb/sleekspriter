@@ -1,14 +1,6 @@
 var File = function() {
 
-  this.path = null; // full path, file name and suffix
-  this.name = null; // filename without path and suffix
-  this.folder = null; // folder path
-
-  this.size = null;
-  this.frames = null;
-  this.layers = null;
-  this.animations = null;
-  this.pixels = null;
+  this.initProps();
 
   var self = this;
 
@@ -167,6 +159,13 @@ var File = function() {
   // handle file opening
   channel.file.subscribe('open', function(data, envelope) {
     self.showOpenFileDialog();
+  });
+
+  // handle file closing
+  channel.file.subscribe('close', function(data, envelope) {
+    // todo: ask for save/don't save/cancel, then properly close the file
+    channel.file.publish('save');
+    channel.gui.publish('screen.select', {target: 'start'});
   });
 
   channel.file.subscribe('path.set', function(data, envelope) {
@@ -540,4 +539,16 @@ File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
   };
 
   channel.gui.publish('size.set', data);
+};
+
+File.prototype.initProps = function() {
+  this.path = null;
+  this.name = null;
+  this.folder = null;
+
+  this.size = null;
+  this.frames = null;
+  this.layers = null;
+  this.animations = null;
+  this.pixels = null;
 };

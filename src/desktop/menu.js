@@ -75,8 +75,24 @@ fileMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
+fileMenu.append(new gui.MenuItem({ type: 'separator' }));
+
+fileMenu.append(new gui.MenuItem({
+  label: 'Close',
+  click: function() {
+    channel.file.publish('close');
+  },
+  key: 'w',
+  modifiers: modKey,
+  enabled: false,
+}));
+
+
+
+
+
 // append "Quit" menu option to windows menu
-if(process.platform === 'win32') {
+if(process.platform === 'win32' || process.platform === 'win64') {
   // Create a separator
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
   fileMenu.append(new gui.MenuItem({
