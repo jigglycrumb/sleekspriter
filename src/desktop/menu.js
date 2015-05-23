@@ -49,7 +49,7 @@ fileMenu.append(new gui.MenuItem({
 fileMenu.append(new gui.MenuItem({
   label: 'Open',
   click: function() {
-    clickInput('fileOpen');
+    channel.file.publish('open');
   },
   key: 'o',
   modifiers: modKey,
@@ -58,8 +58,7 @@ fileMenu.append(new gui.MenuItem({
 fileMenu.append(new gui.MenuItem({
   label: 'Save',
   click: function() {
-    if(file.path === null) clickInput('fileSave');
-    else file.save();
+    channel.file.publish('save');
   },
   key: 's',
   modifiers: modKey,
@@ -69,7 +68,7 @@ fileMenu.append(new gui.MenuItem({
 fileMenu.append(new gui.MenuItem({
   label: 'Save as',
   click: function() {
-    clickInput('fileSave');
+    channel.file.publish('path.set');
   },
   key: 's',
   modifiers: 'shift-'+modKey,
@@ -82,9 +81,7 @@ if(process.platform === 'win32') {
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
   fileMenu.append(new gui.MenuItem({
     label: 'Quit',
-    click: function() {
-      gui.App.quit();
-    },
+    click: gui.App.quit,
     key: 'q',
     modifiers: modKey,
   }));

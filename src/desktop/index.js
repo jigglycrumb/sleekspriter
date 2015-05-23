@@ -70,14 +70,6 @@ var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
 
-function fileLoaded(json) {
-  // init file
-  file.fromJSON(json);
-  // select last selected frame
-  channel.gui.publish('frame.select', {frame: editor.frames.selected});
-  channel.gui.publish('screen.select', {target: 'paint'});
-}
-
 // render UI
 var container = document.getElementById('app-container');
 React.render(React.createElement(App, {editor: editor, workspace: workspace}), container, function() {
@@ -86,21 +78,17 @@ React.render(React.createElement(App, {editor: editor, workspace: workspace}), c
 });
 
 
-// helper to click hidden file inputs for load and save dialogs
-function clickInput(id) {
-  var event = document.createEvent('MouseEvents');
-  event.initMouseEvent('click');
-  document.getElementById(id).dispatchEvent(event);
-}
+// setup nwjs file load/save hidden inputs
+file._updateWorkingDir();
 
 // bind file input change handlers
 document.getElementById('fileOpen').addEventListener('change', function (e) {
-  file.load(this.value, fileLoaded);
-});
+  channel.file.publish('load', {path: this.value});
+}, false);
 
 document.getElementById('fileSave').addEventListener('change', function (e) {
-  file.save(this.value);
-});
+  channel.file.publish('save.as', {path: this.value});
+}, false);
 
 /* only for debugging */
 

@@ -164,6 +164,30 @@ var File = function() {
     });
   }
 
+  // handle file opening
+  channel.file.subscribe('open', function(data, envelope) {
+    self.showOpenFileDialog();
+  });
+
+  channel.file.subscribe('path.set', function(data, envelope) {
+    self.showSaveFileDialog();
+  });
+
+  // handle file loading
+  channel.file.subscribe('load', function(data, envelope) {
+    self.load(data.path);
+  });
+
+  // handle file save
+  channel.file.subscribe('save', function(data, envelope) {
+    self.save();
+  });
+
+  // handle file save
+  channel.file.subscribe('save.as', function(data, envelope) {
+    self.saveAs(data.path);
+  });
+
 
   // handle layer opacity change
   channel.file.subscribe('layer.opacity.select', function(data, envelope) {
@@ -374,7 +398,7 @@ File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
   }
 
   this.path = null;
-  this.name = 'Untitled';
+  this.name = '';
   this.folder = null;
   this.fromJSON(json);
 

@@ -24,14 +24,14 @@ var ScreenStart = React.createClass({
     channel.gui.publish('modal.show', {component: ModalNewFile});
   },
   openFile: function() {
-    clickInput('fileOpen');
+    channel.file.publish('open');
   },
   handleDrop: function(e) {
     e.preventDefault();
     if(e.dataTransfer.files.length >= 1) {
       var name = e.dataTransfer.files[0].name,
           suffix = name.substr(name.lastIndexOf('.')+1);
-      if(suffix === 'pixels') file.load(e.dataTransfer.files[0].path, fileLoaded);
+      if(suffix === 'pixels') channel.file.publish('load', {path: e.dataTransfer.files[0].path});
       else alert('Error: Could not read file format');
     }
   },
