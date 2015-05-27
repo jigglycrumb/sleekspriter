@@ -9,7 +9,7 @@ function showCredits() {
   console.log('showCredits');
 
   creditsWindow = gui.Window.open('credits.html', {
-    "title": "@@app - Credits",
+    "title": "About @@app",
     // "icon": "link.png",
     "toolbar": false,
     // "frame": false,
@@ -91,12 +91,18 @@ fileMenu.append(new gui.MenuItem({
 
 
 
-// append "Quit" menu option to windows menu
+// append "About" and "Quit" menu items to windows menu
 if(process.platform === 'win32' || process.platform === 'win64') {
-  // Create a separator
+
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
   fileMenu.append(new gui.MenuItem({
-    label: 'Quit',
+    label: 'About @@app',
+    click: showCredits,
+  }));
+
+  fileMenu.append(new gui.MenuItem({ type: 'separator' }));
+  fileMenu.append(new gui.MenuItem({
+    label: 'Quit @@app',
     click: gui.App.quit,
     key: 'q',
     modifiers: modKey,
@@ -246,6 +252,35 @@ layerMenu.append(new gui.MenuItem({
 // create "Frame" menu
 var frameMenu = new gui.Menu();
 menuBar.append(new gui.MenuItem({label: 'Frame', submenu: frameMenu}));
+
+frameMenu.append(new gui.MenuItem({
+  label: 'Rotate 180°',
+  click: function() {
+    // channel.gui.publish('frame.flip.horizontal');
+    alert('not yet, sorry');
+  },
+  enabled: false,
+}));
+
+frameMenu.append(new gui.MenuItem({
+  label: 'Rotate 90° CW',
+  click: function() {
+    // channel.gui.publish('frame.flip.horizontal');
+    alert('not yet, sorry');
+  },
+  enabled: false,
+}));
+
+frameMenu.append(new gui.MenuItem({
+  label: 'Rotate 90° CCW',
+  click: function() {
+    // channel.gui.publish('frame.flip.horizontal');
+    alert('not yet, sorry');
+  },
+  enabled: false,
+}));
+
+frameMenu.append(new gui.MenuItem({ type: 'separator' }));
 
 frameMenu.append(new gui.MenuItem({
   label: 'Flip Horizontal',

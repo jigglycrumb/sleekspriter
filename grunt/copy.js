@@ -34,7 +34,7 @@ module.exports = {
       {src: 'src/browser/File.extensions.js', dest: 'build/browser/js/classes/File.extensions.js'},
 
       // index script
-      {src: 'src/browser/index.js', dest: 'build/browser/js/index.js'},
+      {src: 'src/browser/index.extensions.js', dest: 'build/browser/js/index.extensions.js'},
     ]
   },
   desktopMac: {
@@ -79,7 +79,7 @@ module.exports = {
       {src: 'src/desktop/menu.js', dest: 'build/desktop/mac/js/menu.js'},
 
       // index script
-      {src: 'src/desktop/index.js', dest: 'build/desktop/mac/js/index.js'},
+      {src: 'src/desktop/index.extensions.js', dest: 'build/desktop/mac/js/index.extensions.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
     ]
@@ -126,7 +126,7 @@ module.exports = {
       {src: 'src/desktop/menu.js', dest: 'build/desktop/windows/js/menu.js'},
 
       // index script
-      {src: 'src/desktop/index.js', dest: 'build/desktop/windows/js/index.js'},
+      {src: 'src/desktop/index.extensions.js', dest: 'build/desktop/windows/js/index.extensions.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
     ]

@@ -142,6 +142,20 @@ Pixel.prototype.flipVertical = function() {
 };
 
 
+
+
+
+Pixel.prototype.insideBounds = function() {
+
+};
+
+Pixel.prototype.rotate = function() {
+
+};
+
+
+
+
 /**
  * Creates a new pixel from flat array
  * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]

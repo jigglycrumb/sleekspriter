@@ -53,27 +53,15 @@ function refreshPreviews() {
   });
 };
 
-window.onresize = function(e) { channel.gui.publish('window.resize'); };
-
 var channel = {
-    file: postal.channel('file'),
-    gui: postal.channel('gui'),
+  file: postal.channel('file'),
+  gui: postal.channel('gui'),
 };
 
 var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
 var workspace = new Workspace();
-
-// file.load('coin.pixels', fileLoaded);
-
-function fileLoaded(json) {
-  // init file
-  file.fromJSON(json);
-  // select last selected frame
-  channel.gui.publish('frame.select', {frame: editor.frames.selected});
-}
-
-// render UI
 var container = document.getElementById('app-container');
-React.render(React.createElement(App, {editor: editor, workspace: workspace}), container);
+
+window.onresize = function(e) { channel.gui.publish('window.resize'); };

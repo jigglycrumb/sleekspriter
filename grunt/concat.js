@@ -24,6 +24,7 @@ module.exports = {
       'build/browser/js/classes/Hotkeys.js',
       'build/browser/js/classes/Workspace.js',
       'build/browser/js/index.js',
+      'build/browser/js/index.extensions.js',
     ],
     // the location of the resulting JS file
     dest: 'build/browser/<%= package.name %>.js'
@@ -47,7 +48,10 @@ module.exports = {
 
       'build/desktop/mac/js/classes/Hotkeys.js',
       'build/desktop/mac/js/classes/Workspace.js',
+
       'build/desktop/mac/js/index.js',
+      'build/desktop/mac/js/index.extensions.js',
+
       'build/desktop/mac/js/menu.js',
     ],
     // the location of the resulting JS file
@@ -72,7 +76,10 @@ module.exports = {
 
       'build/desktop/windows/js/classes/Hotkeys.js',
       'build/desktop/windows/js/classes/Workspace.js',
+
       'build/desktop/windows/js/index.js',
+      'build/desktop/windows/js/index.extensions.js',
+
       'build/desktop/windows/js/menu.js',
     ],
     // the location of the resulting JS file
