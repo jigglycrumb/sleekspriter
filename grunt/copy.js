@@ -58,7 +58,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/mac/index.html'},
-      {src: 'src/desktop/credits.mac.html', dest: 'build/desktop/mac/credits.html'},
+      {src: 'src/desktop/mac/credits.html', dest: 'build/desktop/mac/credits.html'},
 
       // debugging helpers
       {
@@ -105,7 +105,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/windows/index.html'},
-      {src: 'src/desktop/credits.win.html', dest: 'build/desktop/windows/credits.html'},
+      {src: 'src/desktop/windows/credits.html', dest: 'build/desktop/windows/credits.html'},
 
       // debugging helpers
       {
