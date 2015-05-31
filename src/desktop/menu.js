@@ -9,7 +9,7 @@ function showCredits() {
   console.log('showCredits');
 
   creditsWindow = gui.Window.open('credits.html', {
-    "title": "About @@app",
+    "title": "About @@name",
     // "icon": "link.png",
     "toolbar": false,
     // "frame": false,
@@ -26,7 +26,7 @@ function closeCredits() {
 
 if(process.platform === 'darwin') {
   // create default mac menu
-  menuBar.createMacBuiltin("@@app", {
+  menuBar.createMacBuiltin("@@name", {
     hideEdit: true,
     hideWindow: true
   });
@@ -96,13 +96,13 @@ if(process.platform === 'win32' || process.platform === 'win64') {
 
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
   fileMenu.append(new gui.MenuItem({
-    label: 'About @@app',
+    label: 'About @@name',
     click: showCredits,
   }));
 
   fileMenu.append(new gui.MenuItem({ type: 'separator' }));
   fileMenu.append(new gui.MenuItem({
-    label: 'Quit @@app',
+    label: 'Quit @@name',
     click: gui.App.quit,
     key: 'q',
     modifiers: modKey,

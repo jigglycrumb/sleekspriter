@@ -6,7 +6,7 @@
   "author": "@@author",
   "main": "index.html",
   "window": {
-    "title": "@@app",
+    "title": "@@name",
     "toolbar": false,
     "width": 800,
     "height": 600,

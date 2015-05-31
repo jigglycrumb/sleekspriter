@@ -160,17 +160,8 @@ module.exports = {
         dest: 'build/tablet/js/bower_components/postaldiagnostics.js',
       },
 
-      // package.json
-      {
-        src: 'src/tablet/package.json',
-        dest: 'build/tablet/package.json',
-      },
-
       // file handlers
       {src: 'src/tablet/File.extensions.js', dest: 'build/tablet/js/classes/File.extensions.js'},
-
-      // menu script
-      // {src: 'src/tablet/menu.js', dest: 'build/tablet/js/menu.js'},
 
       // index script
       {src: 'src/tablet/index.extensions.js', dest: 'build/tablet/js/index.extensions.js'},

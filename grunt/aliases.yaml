@@ -1,35 +1,38 @@
 default:
+  - 'dev'
+
+basic:
   - 'clean:build'
   - 'copy'
   - 'react'
   - 'concat'
-  - 'replace'
   - 'less'
   - 'autoprefixer'
+  - 'replace'
+
+dev:
+  - 'basic'
   - 'clean:postbuild'
 
 desktop:
-  - 'clean:build'
-  - 'copy'
-  - 'react'
-  - 'concat'
-  - 'replace'
-  - 'less'
-  - 'uglify'
-  - 'autoprefixer'
+  - 'basic'
+  - 'uglify:desktopMac'
+  - 'uglify:desktopWindows'
   - 'clean:postbuild'
   - 'nodewebkit'
   - 'compress'
 
 tablet:
-  - 'clean:build'
-  - 'copy'
-  - 'react'
-  - 'concat'
-  - 'replace'
-  - 'less'
+  - 'basic'
   - 'uglify:tablet'
-  - 'autoprefixer'
   - 'clean:postbuild'
   - 'compress:tablet'
+  - 'phonegap-build'
+
+all:
+  - 'basic'
+  - 'uglify'
+  - 'clean:postbuild'
+  - 'nodewebkit'
+  - 'compress'
   - 'phonegap-build'

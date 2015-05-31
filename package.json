@@ -1,6 +1,6 @@
 {
-  "name": "pixelartstudio",
-  "prettyname": "Pixelart Studio",
+  "name": "Pixelart Studio",
+  "shortname": "pixelartstudio",
   "version": "0.0.13",
   "description": "A pixel art editor",
   "private": true,
@@ -17,7 +17,7 @@
     "grunt-contrib-less": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-node-webkit-builder": "latest",
-    "grunt-phonegap-build": "0.0.8",
+    "grunt-phonegap-build": "latest",
     "grunt-react": "latest",
     "grunt-replace": "latest",
     "load-grunt-config": "latest",

@@ -4,7 +4,7 @@ var ScreenStart = React.createClass({
       <section className="screen start">
         <div className="splash">
           <div className="inner">
-            <div className="logo">@@app</div>
+            <div className="logo">@@name</div>
             <ul>
               <li><a onClick={this.newFile}>New file</a></li>
             </ul>

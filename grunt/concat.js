@@ -27,7 +27,7 @@ module.exports = {
       'build/browser/js/index.extensions.js',
     ],
     // the location of the resulting JS file
-    dest: 'build/browser/<%= package.name %>.js'
+    dest: 'build/browser/<%= package.shortname %>.js'
   },
   desktopMac: {
     src: [
@@ -55,7 +55,7 @@ module.exports = {
       'build/desktop/mac/js/menu.js',
     ],
     // the location of the resulting JS file
-    dest: 'build/desktop/mac/<%= package.name %>.js'
+    dest: 'build/desktop/mac/<%= package.shortname %>.js'
   },
   desktopWindows: {
     src: [
@@ -83,7 +83,7 @@ module.exports = {
       'build/desktop/windows/js/menu.js',
     ],
     // the location of the resulting JS file
-    dest: 'build/desktop/windows/<%= package.name %>.js'
+    dest: 'build/desktop/windows/<%= package.shortname %>.js'
   },
   tablet: {
     src: [
@@ -111,6 +111,6 @@ module.exports = {
       'build/tablet/js/menu.js',
     ],
     // the location of the resulting JS file
-    dest: 'build/tablet/<%= package.name %>.js'
+    dest: 'build/tablet/<%= package.shortname %>.js'
   }
 }
