@@ -17,6 +17,7 @@
     "grunt-contrib-less": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-node-webkit-builder": "latest",
+    "grunt-phonegap-build": "0.0.8",
     "grunt-react": "latest",
     "grunt-replace": "latest",
     "load-grunt-config": "latest",

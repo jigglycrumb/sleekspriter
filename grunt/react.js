@@ -50,4 +50,21 @@ module.exports = {
       ext: '.js'
     }]
   },
+
+  tablet: {
+    files: [{
+      expand: true,
+      src: 'src/common/jsx/**/*.jsx',
+      flatten: true,
+      dest: 'build/tablet/js/react_components',
+      ext: '.js'
+    },
+    {
+      expand: true,
+      src: 'src/tablet/*.jsx',
+      flatten: true,
+      dest: 'build/tablet/js/react_components',
+      ext: '.js'
+    }]
+  },
 };

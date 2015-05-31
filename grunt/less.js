@@ -18,4 +18,10 @@ module.exports = {
       "build/desktop/windows/<%= package.name %>.css": "src/common/less/index.less"
     }
   },
+  tablet: {
+    files: {
+      // target.css file: source.less file
+      "build/tablet/<%= package.name %>.css": "src/common/less/index.less"
+    }
+  },
 }

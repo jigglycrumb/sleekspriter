@@ -84,5 +84,33 @@ module.exports = {
     ],
     // the location of the resulting JS file
     dest: 'build/desktop/windows/<%= package.name %>.js'
+  },
+  tablet: {
+    src: [
+      'build/tablet/js/bower_components/*.js',
+      'build/tablet/js/lib/**/*.js',
+
+      'build/tablet/js/strict.js',
+      'build/tablet/js/react_mixins/**/*.js',
+      'build/tablet/js/react_components/**/*.js',
+
+      'build/tablet/js/classes/Point.js',
+      'build/tablet/js/classes/Pixel.js',
+      'build/tablet/js/classes/File.js',
+      'build/tablet/js/classes/File.extensions.js',
+
+      'build/tablet/js/classes/Editor.js',
+      'build/tablet/js/classes/Editor/*.js',
+
+      'build/tablet/js/classes/Hotkeys.js',
+      'build/tablet/js/classes/Workspace.js',
+
+      'build/tablet/js/index.js',
+      'build/tablet/js/index.extensions.js',
+
+      'build/tablet/js/menu.js',
+    ],
+    // the location of the resulting JS file
+    dest: 'build/tablet/<%= package.name %>.js'
   }
 }

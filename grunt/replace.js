@@ -35,4 +35,13 @@ module.exports = {
       dest: 'build/desktop/windows'
     }]
   },
+
+  tablet: {
+    files: [{
+      expand: true,
+      cwd: 'build/tablet',
+      src: [ '*' ],
+      dest: 'build/tablet'
+    }]
+  },
 }

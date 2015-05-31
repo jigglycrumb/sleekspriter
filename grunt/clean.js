@@ -7,6 +7,7 @@ module.exports = {
       'build/browser/js',
       'build/desktop/mac/js',
       'build/desktop/windows/js',
+      'build/tablet/js',
     ]
   },
   dist: {

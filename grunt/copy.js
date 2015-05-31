@@ -21,7 +21,7 @@ module.exports = {
 
       // html files
       {src: 'src/browser/index.html', dest: 'build/browser/index.html'},
-      {src: 'src/common/credits.html', dest: 'build/browser/credits.html'},
+      // {src: 'src/common/credits.html', dest: 'build/browser/credits.html'},
 
       // debugging helpers
       {
@@ -58,7 +58,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/mac/index.html'},
-      {src: 'src/common/credits.html', dest: 'build/desktop/mac/credits.html'},
+      {src: 'src/desktop/credits.mac.html', dest: 'build/desktop/mac/credits.html'},
 
       // debugging helpers
       {
@@ -105,7 +105,7 @@ module.exports = {
 
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/windows/index.html'},
-      {src: 'src/common/credits.html', dest: 'build/desktop/windows/credits.html'},
+      {src: 'src/desktop/credits.win.html', dest: 'build/desktop/windows/credits.html'},
 
       // debugging helpers
       {
@@ -129,6 +129,56 @@ module.exports = {
       {src: 'src/desktop/index.extensions.js', dest: 'build/desktop/windows/js/index.extensions.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
+    ]
+  },
+  tablet: {
+    files: [
+      // common files
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/tablet'},
+
+      // bower components
+      {expand: true, flatten: true, cwd: 'src/common/bower_components',
+        src: [
+          'classnames/index.js',
+          'conduitjs/lib/conduit.js',
+          'lodash/dist/lodash.js',
+          'postal.js/lib/postal.js',
+          'mousetrap/mousetrap.js',
+          'react/react-with-addons.js',
+          'zepto/zepto.js',
+        ],
+        dest: 'build/tablet/js/bower_components/',
+      },
+
+      // html files
+      {src: 'src/tablet/index.html', dest: 'build/tablet/index.html'},
+      //{src: 'src/tablet/credits.html', dest: 'build/tablet/credits.html'},
+
+      // debugging helpers
+      {
+        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
+        dest: 'build/tablet/js/bower_components/postaldiagnostics.js',
+      },
+
+      // package.json
+      {
+        src: 'src/tablet/package.json',
+        dest: 'build/tablet/package.json',
+      },
+
+      // file handlers
+      {src: 'src/tablet/File.extensions.js', dest: 'build/tablet/js/classes/File.extensions.js'},
+
+      // menu script
+      // {src: 'src/tablet/menu.js', dest: 'build/tablet/js/menu.js'},
+
+      // index script
+      {src: 'src/tablet/index.extensions.js', dest: 'build/tablet/js/index.extensions.js'},
+
+      {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/tablet/gif.worker.js'},
+
+      // phonegap config
+      {src: 'src/tablet/config.xml', dest: 'build/tablet/config.xml'},
     ]
   },
 }
