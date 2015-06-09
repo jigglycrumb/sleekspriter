@@ -298,6 +298,33 @@ frameMenu.append(new gui.MenuItem({
   enabled: false,
 }));
 
+//------------------------------------------------------------------------------
+// create "Developer" menu
+var developerMenu = new gui.Menu();
+menuBar.append(new gui.MenuItem({label: 'Developer', submenu: developerMenu}));
+
+developerMenu.append(new gui.MenuItem({
+  label: 'Open Developer Tools',
+  click: function() {
+    require('nw.gui').Window.get().showDevTools();
+  }
+}));
+
+developerMenu.append(new gui.MenuItem({
+  label: 'Reload Application',
+  click: function() {
+    require('nw.gui').Window.get().reloadDev();
+  }
+}));
+
+developerMenu.append(new gui.MenuItem({
+  label: 'Show Debug Screen',
+  click: function() {
+    console.log('logscreen');
+    channel.gui.publish('screen.select', {target: 'debug'});
+  }
+}));
+
 
 //------------------------------------------------------------------------------
 // enable menus after file was loaded

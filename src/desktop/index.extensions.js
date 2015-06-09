@@ -17,13 +17,3 @@ document.getElementById('fileOpen').addEventListener('change', function (e) {
 document.getElementById('fileSave').addEventListener('change', function (e) {
   channel.file.publish('save.as', {path: this.value});
 }, false);
-
-/* only for debugging */
-
-function tools() {
-  require('nw.gui').Window.get().showDevTools();
-}
-
-function reload() {
-  require('nw.gui').Window.get().reloadDev();
-}

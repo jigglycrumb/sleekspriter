@@ -48,7 +48,6 @@ var App = React.createClass({
           tabs.push('paint');
           if(this.props.editor.frames.total > 1) tabs.push('animate');
           tabs.push('export');
-          tabs.push('debug');
         }
 
         windowClasses['window'] = true;
