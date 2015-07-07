@@ -1,5 +1,18 @@
 var App = React.createClass({
-  mixins: [PostalSubscriptionMixin],
+  mixins: [PostalSubscriptionMixin, Fluxxor.FluxMixin(React), Fluxxor.StoreWatchMixin("FileStore")],
+  getStateFromFlux: function() {
+
+    var flux = this.getFlux();
+    // Our entire state is made up of the TodoStore data. In a larger
+    // application, you will likely return data from multiple stores, e.g.:
+    //
+    //   return {
+    //     todoData: flux.store("TodoStore").getState(),
+    //     userData: flux.store("UserStore").getData(),
+    //     fooBarData: flux.store("FooBarStore").someMoreData()
+    //   };
+    return {}; //flux.store("TodoStore").getState();
+  },
   getInitialState: function() {
     return {
       tab: 'start',

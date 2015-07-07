@@ -1,7 +1,7 @@
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };
 
-React.render(React.createElement(App, {editor: editor, workspace: workspace}), container, function() {
+React.render(React.createElement(App, {editor: editor, workspace: workspace, flux: flux}), container, function() {
   // show app window after GUI is rendered
   require('nw.gui').Window.get().show();
 });

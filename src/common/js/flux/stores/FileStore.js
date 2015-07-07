@@ -11,15 +11,13 @@ var FileStore = Fluxxor.createStore({
   },
 
   onLoad: function(payload) {
-
-
     console.log('FileStore.onLoad');
+    this.emit('change');
   },
 
   onSave: function(payload) {
-
-
     console.log('FileStore.onSave');
+    this.emit('change');
   },
 
   _initProps: function() {
