@@ -10,6 +10,7 @@ module.exports = {
         src: [
           'classnames/index.js',
           'conduitjs/lib/conduit.js',
+          'fluxxor/build/fluxxor.js',
           'lodash/dist/lodash.js',
           'mousetrap/mousetrap.js',
           'postal.js/lib/postal.js',
@@ -47,6 +48,7 @@ module.exports = {
         src: [
           'classnames/index.js',
           'conduitjs/lib/conduit.js',
+          'fluxxor/build/fluxxor.js',
           'lodash/dist/lodash.js',
           'postal.js/lib/postal.js',
           'mousetrap/mousetrap.js',
@@ -94,6 +96,7 @@ module.exports = {
         src: [
           'classnames/index.js',
           'conduitjs/lib/conduit.js',
+          'fluxxor/build/fluxxor.js',
           'lodash/dist/lodash.js',
           'postal.js/lib/postal.js',
           'mousetrap/mousetrap.js',
@@ -141,6 +144,7 @@ module.exports = {
         src: [
           'classnames/index.js',
           'conduitjs/lib/conduit.js',
+          'fluxxor/build/fluxxor.js',
           'lodash/dist/lodash.js',
           'postal.js/lib/postal.js',
           'mousetrap/mousetrap.js',
