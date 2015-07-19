@@ -1,4 +1,5 @@
 var ScreenStart = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     return (
       <section className="screen start" onDrop={this.handleDrop}>
@@ -20,19 +21,19 @@ var ScreenStart = React.createClass({
     )
   },
   newFile: function() {
-    channel.gui.publish('screen.select', {target: 'paint'});
-    channel.gui.publish('modal.show', {component: ModalNewFile});
+    this.getFlux().actions.selectTab('paint');
+    this.getFlux().actions.modalShow(ModalNewFile);
   },
   openFile: function() {
-    channel.file.publish('open');
+    // channel.file.publish('open');
   },
   handleDrop: function(e) {
     e.preventDefault();
     if(e.dataTransfer.files.length >= 1) {
       var name = e.dataTransfer.files[0].name,
           suffix = name.substr(name.lastIndexOf('.')+1);
-      if(suffix === 'pixels') channel.file.publish('load', {path: e.dataTransfer.files[0].path});
-      else alert('Error: Could not read file format');
+      // if(suffix === 'pixels') channel.file.publish('load', {path: e.dataTransfer.files[0].path});
+      // else alert('Error: Could not read file format');
     }
   },
 });

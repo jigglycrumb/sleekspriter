@@ -1,5 +1,6 @@
+// requires [FluxMixin] on the Modal component to work
 var ModalBasicMixin = {
   hide: function() {
-    channel.gui.publish('modal.hide');
+    this.getFlux().actions.modalHide();
   },
 };

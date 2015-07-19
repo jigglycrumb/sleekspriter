@@ -2,12 +2,33 @@ var FileStore = Fluxxor.createStore({
   initialize: function() {
     console.log('FileStore.initialize');
 
-    this._initProps();
+    this.resetData();
 
     this.bindActions(
       constants.FILE_LOAD, this.onLoad,
       constants.FILE_SAVE, this.onSave
     );
+  },
+
+  getData: function() {
+    return this.data;
+  },
+
+  resetData: function(key) {
+    var data = {
+      path: null,
+      name: null,
+      folder: null,
+
+      size: null,
+      frames: null,
+      layers: null,
+      animations: null,
+      pixels: null,
+    };
+
+    if(key && data[key]) this.data[key] = data[key];
+    else this.data = data;
   },
 
   onLoad: function(payload) {
@@ -19,18 +40,5 @@ var FileStore = Fluxxor.createStore({
     console.log('FileStore.onSave');
     this.emit('change');
   },
-
-  _initProps: function() {
-    this.path = null;
-    this.name = null;
-    this.folder = null;
-
-    this.size = null;
-    this.frames = null;
-    this.layers = null;
-    this.animations = null;
-    this.pixels = null;
-  },
-
 
 });

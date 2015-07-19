@@ -1,5 +1,5 @@
 var ModalConfirmDeleteLayer = React.createClass({
-  mixins: [ModalBasicMixin],
+  mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
     var layer = this.props.editor.layers.getSelected();
     return (

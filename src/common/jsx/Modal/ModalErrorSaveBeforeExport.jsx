@@ -1,5 +1,5 @@
 var ModalErrorSaveBeforeExport = React.createClass({
-  mixins: [ModalBasicMixin],
+  mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
     return (
       <div className="dialog">

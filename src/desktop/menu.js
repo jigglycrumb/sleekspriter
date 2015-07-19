@@ -40,7 +40,10 @@ menuBar.append(new gui.MenuItem({label: 'File', submenu: fileMenu}));
 fileMenu.append(new gui.MenuItem({
   label: 'New',
   click: function() {
-    channel.gui.publish('modal.show', {component: ModalNewFile});
+    if(flux.stores.UiStore.getData().tab === 'start') {
+      flux.actions.selectTab('paint');
+    }
+    flux.actions.modalShow(ModalNewFile);
   },
   key: 'n',
   modifiers: modKey,

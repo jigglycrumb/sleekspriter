@@ -1,18 +1,18 @@
 var App = React.createClass({
-  mixins: [PostalSubscriptionMixin, Fluxxor.FluxMixin(React), Fluxxor.StoreWatchMixin("FileStore")],
+  mixins: [
+    PostalSubscriptionMixin,
+    FluxMixin,
+    StoreWatchMixin('FileStore', 'UiStore'),
+  ],
   getStateFromFlux: function() {
-
     var flux = this.getFlux();
-    // Our entire state is made up of the TodoStore data. In a larger
-    // application, you will likely return data from multiple stores, e.g.:
-    //
-    //   return {
-    //     todoData: flux.store("TodoStore").getState(),
-    //     userData: flux.store("UserStore").getData(),
-    //     fooBarData: flux.store("FooBarStore").someMoreData()
-    //   };
-    return {}; //flux.store("TodoStore").getState();
+
+    return {
+      ui: flux.store('UiStore').getData(),
+      file: flux.store('FileStore').getData(),
+    };
   },
+  /*
   getInitialState: function() {
     return {
       tab: 'start',
@@ -53,29 +53,30 @@ var App = React.createClass({
       }
     }
   },
+  */
   render: function() {
     var tabs = [],
         windowClasses = {};
 
-        if(this.state.tab !== 'start') {
+        if(this.state.ui.tab !== 'start') {
           tabs.push('paint');
           if(this.props.editor.frames.total > 1) tabs.push('animate');
           tabs.push('export');
         }
 
         windowClasses['window'] = true;
-        windowClasses[this.state.tab] = true;
+        windowClasses[this.state.ui.tab] = true;
         windowClasses = classNames(windowClasses);
 
     return (
       <div className="app">
         <nav className="menu" ref="menu">
-          {this.state.tab === 'start' ? <label className="version">version @@version</label> :
+          {this.state.ui.tab === 'start' ? <label className="version">version @@version</label> :
             tabs.map(function(tab) {
               var label = tab[0].toUpperCase() + tab.substr(1, tab.length),
                   classes = classNames({
                     tab: true,
-                    active: this.state.tab === tab ? true : false,
+                    active: this.state.ui.tab === tab ? true : false,
                   });
               return (
                 <div className={classes} key={tab} data-target={tab} onClick={this.selectTab}>{label}</div>
@@ -89,7 +90,7 @@ var App = React.createClass({
           <ScreenExport editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />
         </div>
-        <Modal editor={this.props.editor} />
+        <Modal editor={this.props.editor} visible={this.state.ui.modal.visible} component={this.state.ui.modal.component} data={this.state.ui.modal.data} />
       </div>
     );
   },
@@ -98,10 +99,13 @@ var App = React.createClass({
   },
   selectTab: function(event) {
     var target = event.target.getAttribute('data-target');
-    channel.gui.publish('screen.select', {target: target});
-    this.setState({tab: target});
+    this.getFlux().actions.selectTab(target);
+    //channel.gui.publish('screen.select', {target: target});
+    //this.setState({tab: target});
   },
+  /*
   changeScreen: function(data) {
     this.setState({tab: data.target});
   },
+  */
 });

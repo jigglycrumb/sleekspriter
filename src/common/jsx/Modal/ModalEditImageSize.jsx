@@ -1,5 +1,5 @@
 var ModalEditImageSize = React.createClass({
-  mixins: [ModalBasicMixin],
+  mixins: [FluxMixin, ModalBasicMixin],
   getInitialState: function() {
     return {
       frames: {

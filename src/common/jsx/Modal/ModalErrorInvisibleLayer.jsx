@@ -1,5 +1,5 @@
 var ModalErrorInvisibleLayer = React.createClass({
-  mixins: [ModalBasicMixin],
+  mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
     return (
       <div className="dialog">

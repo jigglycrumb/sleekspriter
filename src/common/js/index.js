@@ -57,6 +57,7 @@ function refreshPreviews() {
 
 var stores = {
   FileStore: new FileStore(),
+  UiStore: new UiStore(),
 };
 
 var flux = new Fluxxor.Flux(stores, actions);
