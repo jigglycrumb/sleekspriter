@@ -56,7 +56,8 @@ var ModalNewFile = React.createClass({
         pixelsX = +this.refs.pixelsX.getDOMNode().value,
         pixelsY = +this.refs.pixelsY.getDOMNode().value;
 
-    file.create(framesX, framesY, pixelsX, pixelsY);
+    //file.create(framesX, framesY, pixelsX, pixelsY);
+    this.getFlux().actions.fileCreate(framesX, framesY, pixelsX, pixelsY);
     this.hide();
   },
   updateForm: function() {

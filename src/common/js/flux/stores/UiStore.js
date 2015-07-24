@@ -5,8 +5,8 @@ var UiStore = Fluxxor.createStore({
     this.resetData();
 
     this.bindActions(
-      constants.MODAL_SHOW, this.onShowModal,
-      constants.MODAL_HIDE, this.onHideModal,
+      constants.MODAL_SHOW, this.onModalShow,
+      constants.MODAL_HIDE, this.onModalHide,
       constants.TAB_SELECT, this.onTabSelect
     );
   },
@@ -34,12 +34,12 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onShowModal: function(payload) {
+  onModalShow: function(payload) {
     this.data.modal = payload;
     this.emit('change');
   },
 
-  onHideModal: function() {
+  onModalHide: function() {
     this.resetData('modal');
     this.emit('change');
   },

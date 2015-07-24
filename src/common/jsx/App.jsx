@@ -100,12 +100,5 @@ var App = React.createClass({
   selectTab: function(event) {
     var target = event.target.getAttribute('data-target');
     this.getFlux().actions.selectTab(target);
-    //channel.gui.publish('screen.select', {target: target});
-    //this.setState({tab: target});
   },
-  /*
-  changeScreen: function(data) {
-    this.setState({tab: data.target});
-  },
-  */
 });

@@ -32,8 +32,9 @@ var ScreenStart = React.createClass({
     if(e.dataTransfer.files.length >= 1) {
       var name = e.dataTransfer.files[0].name,
           suffix = name.substr(name.lastIndexOf('.')+1);
-      // if(suffix === 'pixels') channel.file.publish('load', {path: e.dataTransfer.files[0].path});
-      // else alert('Error: Could not read file format');
+
+      if(suffix === 'pixels') this.getFlux().actions.fileLoad(e.dataTransfer.files[0].path);
+      else alert('Error: Could not read file format');
     }
   },
 });

@@ -1,3 +1,31 @@
+function fileLoad(fullPath) {
+  console.info('loading file', fullPath);
+
+  var fs = require('fs'),
+      p = require('path'),
+      self = this;
+
+  fs.readFile(fullPath, function(error, contents) {
+    if (error) throw error;
+
+    var json = JSON.parse(contents);
+
+    /*
+    self.fromJSON(json);
+    self.path = fullPath;
+    self.name = p.basename(fullPath, '.pixels');
+    self.folder = p.dirname(fullPath);
+    self._updateWorkingDir();
+
+    channel.gui.publish('frame.select', {frame: 1});
+    channel.gui.publish('screen.select', {target: 'paint'});
+    */
+  });
+}
+
+
+
+
 window.ondragover = function(e) { e.preventDefault(); return false };
 window.ondrop = function(e) { e.preventDefault(); return false };
 

@@ -1,0 +1,3 @@
+var PlatformUtils = function() {
+
+};
