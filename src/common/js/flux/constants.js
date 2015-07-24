@@ -3,8 +3,8 @@ var constants = {
   FILE_LOAD:        'FILE_LOAD',
   FILE_SAVE:        'FILE_SAVE',
 
+  TAB_SELECT:       'TAB_SELECT',
+
   MODAL_SHOW:       'MODAL_SHOW',
   MODAL_HIDE:       'MODAL_HIDE',
-
-  TAB_SELECT:       'TAB_SELECT',
 };

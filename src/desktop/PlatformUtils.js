@@ -29,20 +29,11 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
       folder: p.dirname(fullPath),
     };
 
-    //console.log
-
-    // var json = JSON.parse(contents);
-    // self.fromJSON(json);
-    // self.path = fullPath;
-    // self.name = p.basename(fullPath, '.pixels');
-    // self.folder = p.dirname(fullPath);
-
     self.updateDefaultFolder();
     flux.actions.fileLoad(data);
-    flux.actions.selectTab('paint');
+    flux.actions.tabSelect('paint');
 
     // channel.gui.publish('frame.select', {frame: 1});
-    // channel.gui.publish('screen.select', {target: 'paint'});
   });
 };
 
@@ -50,6 +41,7 @@ PlatformUtils.prototype.showSaveFileDialog = function() {
   document.querySelector('#fileSave').click();
 };
 
+/*
 PlatformUtils.prototype.saveFile = function() {
 
   if(this.path === null) return this.showSaveFileDialog();
@@ -81,7 +73,7 @@ PlatformUtils.prototype.saveFileAs = function(fullPath) {
     self._updateWorkingDir();
   });
 };
-
+*/
 
 PlatformUtils.prototype.updateDefaultFolder = function(folder) {
   if(!folder) {

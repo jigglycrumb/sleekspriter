@@ -21,7 +21,7 @@ var ScreenStart = React.createClass({
     )
   },
   newFile: function() {
-    this.getFlux().actions.selectTab('paint');
+    this.getFlux().actions.tabSelect('paint');
     this.getFlux().actions.modalShow(ModalNewFile);
   },
   openFile: function() {

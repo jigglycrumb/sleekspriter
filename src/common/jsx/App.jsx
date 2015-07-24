@@ -79,7 +79,7 @@ var App = React.createClass({
                     active: this.state.ui.tab === tab ? true : false,
                   });
               return (
-                <div className={classes} key={tab} data-target={tab} onClick={this.selectTab}>{label}</div>
+                <div className={classes} key={tab} data-target={tab} onClick={this.tabSelect}>{label}</div>
               )
             }, this)}
         </nav>
@@ -99,8 +99,8 @@ var App = React.createClass({
     this.setProps({editor: editor, workspace: workspace});
   },
   */
-  selectTab: function(event) {
+  tabSelect: function(event) {
     var target = event.target.getAttribute('data-target');
-    this.getFlux().actions.selectTab(target);
+    this.getFlux().actions.tabSelect(target);
   },
 });

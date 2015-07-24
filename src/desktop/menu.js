@@ -41,7 +41,7 @@ fileMenu.append(new gui.MenuItem({
   label: 'New',
   click: function() {
     if(flux.stores.UiStore.getData().tab === 'start') {
-      flux.actions.selectTab('paint');
+      flux.actions.tabSelect('paint');
     }
     flux.actions.modalShow(ModalNewFile);
   },

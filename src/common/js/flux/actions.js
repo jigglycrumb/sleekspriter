@@ -14,8 +14,8 @@ var actions = {
     this.dispatch(constants.FILE_SAVE, {});
   },
 
-  selectTab: function(tab) {
-    console.log('actions.selectTab');
+  tabSelect: function(tab) {
+    console.log('actions.tabSelect');
     this.dispatch(constants.TAB_SELECT, {tab: tab});
   },
 

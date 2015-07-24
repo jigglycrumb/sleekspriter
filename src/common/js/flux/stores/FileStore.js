@@ -2,7 +2,7 @@ var FileStore = Fluxxor.createStore({
   initialize: function() {
     console.log('FileStore.initialize');
 
-    this.resetData();
+    // this.resetData();
 
     this.bindActions(
       constants.FILE_CREATE,      this.onFileCreate,
@@ -35,13 +35,26 @@ var FileStore = Fluxxor.createStore({
   onFileCreate: function(payload) {
     console.log('FileStore.onFileCreate');
 
-    this._create(payload.framesX, payload.framesY, payload.pixelsX, payload.pixelsY);
+    var json = {},
+        totalFrames = payload.framesX * payload.framesY;
 
+    json.frames = [+payload.framesX, +payload.framesY];
+    json.size = [+payload.pixelsX, +payload.pixelsY];
+    json.layers = [];
+    json.animations = [];
+    json.pixels = [];
+
+    for(var i = 0; i < totalFrames; i++) {
+      json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
+    }
+
+    this.resetData();
+    this._fromJSON(json);
+
+    this.emit('change');
 
     // channel.file.publish('file.load', {size: this.size, frames: this.frames});
     // channel.gui.publish('frame.select', {frame: 1});
-
-    this.emit('change');
   },
 
   onFileLoad: function(payload) {
@@ -49,6 +62,7 @@ var FileStore = Fluxxor.createStore({
 
     this.resetData();
     this._fromJSON(payload.json);
+
     this.data.path    = payload.path;
     this.data.name    = payload.name;
     this.data.folder  = payload.folder;
@@ -59,39 +73,6 @@ var FileStore = Fluxxor.createStore({
   onFileSave: function(payload) {
     console.log('FileStore.onFileSave');
     this.emit('change');
-  },
-
-
-
-
-  /**
-   * Create a new file
-   * @param  {Number} framesX Number of frames per row
-   * @param  {Number} framesY Number of frames per column
-   * @param  {Number} pixelsX Width of a single frame
-   * @param  {Number} pixelsY Height of a single frame
-   */
-  _create: function(framesX, framesY, pixelsX, pixelsY) {
-    var json = {},
-        totalFrames = framesX * framesY;
-
-    json.frames = [+framesX, +framesY];
-    json.size = [+pixelsX, +pixelsY];
-    json.layers = [];
-    json.animations = [];
-    json.pixels = [];
-
-    for(var i = 0; i < totalFrames; i++) {
-      json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
-    }
-
-    // this.path = null;
-    // this.name = '';
-    // this.folder = null;
-    this.resetData();
-    this._fromJSON(json);
-
-    // channel.gui.publish('frame.select', {frame: 1});
   },
 
   _fromJSON: function(json) {
