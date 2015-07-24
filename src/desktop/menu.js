@@ -52,7 +52,7 @@ fileMenu.append(new gui.MenuItem({
 fileMenu.append(new gui.MenuItem({
   label: 'Open',
   click: function() {
-    channel.file.publish('open');
+    platformUtils.showOpenFileDialog();
   },
   key: 'o',
   modifiers: modKey,

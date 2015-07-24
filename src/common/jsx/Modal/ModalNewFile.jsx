@@ -2,14 +2,8 @@ var ModalNewFile = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   getInitialState: function() {
     return {
-      frames: {
-        x: 1,
-        y: 1,
-      },
-      pixels: {
-        x: 20,
-        y: 20,
-      },
+      frames: {x:  1, y:  1},
+      pixels: {x: 20, y: 20},
     }
   },
   render: function() {
@@ -23,15 +17,15 @@ var ModalNewFile = React.createClass({
           <ul className="frame-size">
             <li>
               <label>Frames:</label>
-              <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateForm} />
+              <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateState} />
               x
-              <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateForm} />
+              <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateState} />
             </li>
             <li>
               <label>Frame size:</label>
-              <input type="number" ref="pixelsX" value={this.state.pixels.x} min="1" onChange={this.updateForm} />
+              <input type="number" ref="pixelsX" value={this.state.pixels.x} min="1" onChange={this.updateState} />
               x
-              <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={this.updateForm} />
+              <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={this.updateState} />
               px
             </li>
             <li>
@@ -51,16 +45,10 @@ var ModalNewFile = React.createClass({
     )
   },
   createFile: function() {
-    var framesX = +this.refs.framesX.getDOMNode().value,
-        framesY = +this.refs.framesY.getDOMNode().value,
-        pixelsX = +this.refs.pixelsX.getDOMNode().value,
-        pixelsY = +this.refs.pixelsY.getDOMNode().value;
-
-    //file.create(framesX, framesY, pixelsX, pixelsY);
-    this.getFlux().actions.fileCreate(framesX, framesY, pixelsX, pixelsY);
+    this.getFlux().actions.fileCreate(this.state.frames.x, this.state.frames.y, this.state.pixels.x, this.state.pixels.y);
     this.hide();
   },
-  updateForm: function() {
+  updateState: function() {
     var size = {
       frames: {
         x: this.refs.framesX.getDOMNode().value,

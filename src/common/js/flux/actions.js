@@ -1,12 +1,12 @@
 var actions = {
-
   fileCreate: function(framesX, framesY, pixelsX, pixelsY) {
+    console.log('actions.fileCreate');
     this.dispatch(constants.FILE_CREATE, {framesX: framesX, framesY: framesY, pixelsX: pixelsX, pixelsY: pixelsY});
   },
 
-  fileLoad: function(path) {
+  fileLoad: function(data) {
     console.log('actions.fileLoad');
-    this.dispatch(constants.FILE_LOAD, {path: path});
+    this.dispatch(constants.FILE_LOAD, data);
   },
 
   fileSave: function() {

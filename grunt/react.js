@@ -10,7 +10,7 @@ module.exports = {
     },
     {
       expand: true,
-      src: 'src/browser/**/*.jsx',
+      src: 'src/browser/jsx/**/*.jsx',
       flatten: true,
       dest: 'build/browser/js/react_components',
       ext: '.js'
@@ -27,7 +27,7 @@ module.exports = {
     },
     {
       expand: true,
-      src: 'src/desktop/*.jsx',
+      src: 'src/desktop/jsx/*.jsx',
       flatten: true,
       dest: 'build/desktop/mac/js/react_components',
       ext: '.js'
@@ -44,7 +44,7 @@ module.exports = {
     },
     {
       expand: true,
-      src: 'src/desktop/*.jsx',
+      src: 'src/desktop/jsx/*.jsx',
       flatten: true,
       dest: 'build/desktop/windows/js/react_components',
       ext: '.js'
@@ -61,7 +61,7 @@ module.exports = {
     },
     {
       expand: true,
-      src: 'src/tablet/*.jsx',
+      src: 'src/tablet/jsx/*.jsx',
       flatten: true,
       dest: 'build/tablet/js/react_components',
       ext: '.js'

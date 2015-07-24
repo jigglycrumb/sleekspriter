@@ -62,7 +62,7 @@ var stores = {
 
 var flux = new Fluxxor.Flux(stores, actions);
 
-flux.on("dispatch", function(type, payload) {
+flux.on('dispatch', function(type, payload) {
   if(console && console.log) {
     console.log("[Dispatch]", type, payload);
   }
@@ -74,10 +74,11 @@ var channel = {
   gui: postal.channel('gui'),
 };
 
+var platformUtils = new PlatformUtils();
+
 var file = new File();
 var editor = new Editor();
 var hotkeys = new Hotkeys(editor);
-var workspace = new Workspace();
 var container = document.getElementById('app-container');
 
 window.onresize = function(e) { channel.gui.publish('window.resize'); };

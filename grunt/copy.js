@@ -30,6 +30,10 @@ module.exports = {
         dest: 'build/browser/js/bower_components/postaldiagnostics.js',
       },
 
+      // platform utils
+      {src: 'src/browser/PlatformUtils.js', dest: 'build/browser/js/classes/PlatformUtils.js'},
+
+
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
       {src: 'src/browser/File.extensions.js', dest: 'build/browser/js/classes/File.extensions.js'},
@@ -67,6 +71,9 @@ module.exports = {
         src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
         dest: 'build/desktop/mac/js/bower_components/postaldiagnostics.js',
       },
+
+      // platform utils
+      {src: 'src/desktop/PlatformUtils.js', dest: 'build/desktop/mac/js/classes/PlatformUtils.js'},
 
       // package.json
       {
@@ -116,6 +123,9 @@ module.exports = {
         dest: 'build/desktop/windows/js/bower_components/postaldiagnostics.js',
       },
 
+      // platform utils
+      {src: 'src/desktop/PlatformUtils.js', dest: 'build/desktop/windows/js/classes/PlatformUtils.js'},
+
       // package.json
       {
         src: 'src/desktop/package.json',
@@ -163,6 +173,9 @@ module.exports = {
         src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
         dest: 'build/tablet/js/bower_components/postaldiagnostics.js',
       },
+
+      // platform utils
+      {src: 'src/tablet/PlatformUtils.js', dest: 'build/tablet/js/classes/PlatformUtils.js'},
 
       // file handlers
       {src: 'src/tablet/File.extensions.js', dest: 'build/tablet/js/classes/File.extensions.js'},

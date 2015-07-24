@@ -85,7 +85,7 @@ var App = React.createClass({
         </nav>
         <div className={windowClasses}>
           <ScreenStart />
-          <ScreenPaint editor={this.props.editor} workspace={this.props.workspace} />
+          <ScreenPaint editor={this.props.editor} />
           <ScreenAnimate editor={this.props.editor} />
           <ScreenExport editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />
@@ -94,9 +94,11 @@ var App = React.createClass({
       </div>
     );
   },
+  /*
   updateProps: function() {
     this.setProps({editor: editor, workspace: workspace});
   },
+  */
   selectTab: function(event) {
     var target = event.target.getAttribute('data-target');
     this.getFlux().actions.selectTab(target);

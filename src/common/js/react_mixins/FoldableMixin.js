@@ -21,13 +21,13 @@ var FoldableMixin = {
     };
 
     handle.onclick = function() {
-      workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
-      doFold(workspace.data.folds[self.props.fold]);
-      workspace.save();
-      channel.gui.publish('box.fold');
+      // workspace.data.folds[self.props.fold] = !self.props.workspace.data.folds[self.props.fold];
+      // doFold(workspace.data.folds[self.props.fold]);
+      // workspace.save();
+      // channel.gui.publish('box.fold');
     };
 
-    doFold(self.props.workspace.data.folds[self.props.fold]);
+    // doFold(self.props.workspace.data.folds[self.props.fold]);
   },
   componentWillUnmount: function() {
     var handle = this.getDOMNode().querySelector('.foldable-handle');

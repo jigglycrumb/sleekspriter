@@ -7,4 +7,4 @@ function fileLoaded(json) {
   channel.gui.publish('frame.select', {frame: editor.frames.selected});
 }
 
-React.render(React.createElement(App, {editor: editor, workspace: workspace, flux: flux}), container);
+React.render(React.createElement(App, {editor: editor, flux: flux}), container);

@@ -25,7 +25,7 @@ var ScreenStart = React.createClass({
     this.getFlux().actions.modalShow(ModalNewFile);
   },
   openFile: function() {
-    // channel.file.publish('open');
+    platformUtils.showOpenFileDialog();
   },
   handleDrop: function(e) {
     e.preventDefault();
@@ -33,7 +33,7 @@ var ScreenStart = React.createClass({
       var name = e.dataTransfer.files[0].name,
           suffix = name.substr(name.lastIndexOf('.')+1);
 
-      if(suffix === 'pixels') this.getFlux().actions.fileLoad(e.dataTransfer.files[0].path);
+      if(suffix === 'pixels') platformUtils.loadFile(e.dataTransfer.files[0].path);
       else alert('Error: Could not read file format');
     }
   },
