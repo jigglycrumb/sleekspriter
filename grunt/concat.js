@@ -22,7 +22,6 @@ module.exports = {
       'build/browser/js/classes/Editor/*.js',
 
       'build/browser/js/classes/Hotkeys.js',
-      // 'build/browser/js/classes/Workspace.js',
 
       'build/browser/js/classes/PlatformUtils.js',
 
@@ -52,7 +51,6 @@ module.exports = {
       'build/desktop/mac/js/classes/Editor/*.js',
 
       'build/desktop/mac/js/classes/Hotkeys.js',
-      // 'build/desktop/mac/js/classes/Workspace.js',
 
       'build/desktop/mac/js/classes/PlatformUtils.js',
 
@@ -84,7 +82,6 @@ module.exports = {
       'build/desktop/windows/js/classes/Editor/*.js',
 
       'build/desktop/windows/js/classes/Hotkeys.js',
-      // 'build/desktop/windows/js/classes/Workspace.js',
 
       'build/desktop/windows/js/classes/PlatformUtils.js',
 
@@ -116,7 +113,6 @@ module.exports = {
       'build/tablet/js/classes/Editor/*.js',
 
       'build/tablet/js/classes/Hotkeys.js',
-      // 'build/tablet/js/classes/Workspace.js',
 
       'build/tablet/js/classes/PlatformUtils.js',
 

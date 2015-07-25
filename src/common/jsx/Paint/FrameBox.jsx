@@ -1,9 +1,7 @@
+// Flux: done
 var FrameBox = React.createClass({
   mixins: [FluxMixin, FoldableMixin],
   render: function() {
-
-    console.log('FrameBox.render', this.props);
-
     var self = this,
         containerStyle = {},
         frameStyle = {},

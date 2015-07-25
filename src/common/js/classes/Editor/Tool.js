@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.tool = {};
 Editor.prototype.tool.selected = 'BrushTool';
 

@@ -10,11 +10,6 @@ var Editor = function() {
   };
 
   this.version = '@@version';
-  this.settingsVisible = false;
-
-  channel.gui.subscribe('settings.toggle', function(data, envelope) {
-    self.settingsVisible = data.visible;
-  });
 
   // init subclasses
   this.file.init();

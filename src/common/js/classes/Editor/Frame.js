@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.frames = {};
 Editor.prototype.frames.selected = 1;
 Editor.prototype.frames.x = 1;

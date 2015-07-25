@@ -1,5 +1,5 @@
 var StatusBar = React.createClass({
-  mixins: [PostalSubscriptionMixin],
+  mixins: [FluxMixin, PostalSubscriptionMixin],
   getInitialState: function() {
     return {
       cursor: {
@@ -16,12 +16,12 @@ var StatusBar = React.createClass({
         settingsButtonClasses = classNames({
           tiny: true,
           transparent: true,
-          active: this.props.editor.settingsVisible,
+          active: this.props.ui.settings.paint,
         }),
         gridButtonClasses = classNames({
           tiny: true,
           transparent: true,
-          active: this.props.editor.grid.enabled,
+          active: this.props.ui.settings.grid,
         });
 
     return (
@@ -45,10 +45,10 @@ var StatusBar = React.createClass({
     );
   },
   dispatchGridToggled: function(event) {
-    channel.gui.publish('grid.toggle', {grid: !this.props.editor.grid.enabled});
+    this.getFlux().actions.settingsGrid(!this.props.ui.settings.grid);
   },
   dispatchSettingsToggled: function(event) {
-    channel.gui.publish('settings.toggle', {visible: !this.props.editor.settingsVisible});
+    this.getFlux().actions.settingsPaint(!this.props.ui.settings.paint);
   },
   updateCursorPosition: function(data, envelope) {
     this.setState({cursor: data.position});

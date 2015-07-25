@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.grid = {};
 Editor.prototype.grid.enabled = true;
 

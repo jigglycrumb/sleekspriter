@@ -13,7 +13,7 @@ var ScreenPaint = React.createClass({
 
   render: function() {
     var settingsBoxStyle = {
-          display: this.props.editor.settingsVisible === true ? 'block' : 'none',
+          display: this.props.ui.settings.paint === true ? 'block' : 'none',
         };
 
     var frameBox = null;
@@ -39,7 +39,7 @@ var ScreenPaint = React.createClass({
           <LayerBox editor={this.props.editor} fold="layers" />
         </div>
         <div className="area statusbar">
-          <StatusBar editor={this.props.editor} />
+          <StatusBar editor={this.props.editor} ui={this.props.ui} />
         </div>
         <div className="area settings" style={settingsBoxStyle}>
           <SettingsBox editor={this.props.editor} />

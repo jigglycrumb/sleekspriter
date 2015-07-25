@@ -16,7 +16,6 @@ var App = React.createClass({
   /*
   getInitialState: function() {
     return {
-      tab: 'start',
       subscriptions: {
         'frame.select': this.updateProps,
         'layer.select': this.updateProps,
@@ -27,7 +26,6 @@ var App = React.createClass({
         'brightnesstool.intensity.select': this.updateProps,
         'background.select': this.updateProps,
 
-        'settings.toggle': this.updateProps,
         'grid.toggle': this.updateProps,
         'zoom.select': this.updateProps,
 
@@ -49,8 +47,6 @@ var App = React.createClass({
         'animation.frame.delete': this.updateProps,
 
         'window.resize': this.updateProps,
-
-        'screen.select': this.changeScreen,
       }
     }
   },

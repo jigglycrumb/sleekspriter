@@ -4,38 +4,38 @@ var File = function() {
 
   var self = this;
 
-  function sizeFromFile(size) {
-    return {
-      width: size[0],
-      height: size[1]
-    };
-  };
+  // function sizeFromFile(size) {
+  //   return {
+  //     width: size[0],
+  //     height: size[1]
+  //   };
+  // };
 
   function sizeToFile(size) {
     return [size.width, size.height];
   };
 
-  function framesFromFile(frames) {
-    return {
-      x: frames[0],
-      y: frames[1]
-    };
-  };
+  // function framesFromFile(frames) {
+  //   return {
+  //     x: frames[0],
+  //     y: frames[1]
+  //   };
+  // };
 
   function framesToFile(frames) {
     return [frames.x, frames.y];
   };
 
-  function layerFromFile(layer) {
-    return {
-      id: layer[0],
-      frame: layer[1],
-      name: layer[2],
-      z: layer[3],
-      opacity: layer[4],
-      visible: !!layer[5]
-    };
-  };
+  // function layerFromFile(layer) {
+  //   return {
+  //     id: layer[0],
+  //     frame: layer[1],
+  //     name: layer[2],
+  //     z: layer[3],
+  //     opacity: layer[4],
+  //     visible: !!layer[5]
+  //   };
+  // };
 
   function layerToFile(layer) {
     return [
@@ -48,13 +48,13 @@ var File = function() {
     ];
   };
 
-  function animationFromFile(animation) {
-    return {
-      name: animation[0],
-      fps: animation[1],
-      frames: animation[2],
-    }
-  };
+  // function animationFromFile(animation) {
+  //   return {
+  //     name: animation[0],
+  //     fps: animation[1],
+  //     frames: animation[2],
+  //   }
+  // };
 
   function animationToFile(animation) {
     return [
@@ -157,9 +157,9 @@ var File = function() {
   }
 
   // handle file opening
-  channel.file.subscribe('open', function(data, envelope) {
-    self.showOpenFileDialog();
-  });
+  // channel.file.subscribe('open', function(data, envelope) {
+  //   self.showOpenFileDialog();
+  // });
 
   // handle file closing
   channel.file.subscribe('close', function(data, envelope) {
@@ -173,9 +173,9 @@ var File = function() {
   });
 
   // handle file loading
-  channel.file.subscribe('load', function(data, envelope) {
-    self.load(data.path);
-  });
+  // channel.file.subscribe('load', function(data, envelope) {
+  //   self.load(data.path);
+  // });
 
   // handle file save
   channel.file.subscribe('save', function(data, envelope) {
@@ -382,27 +382,27 @@ File.prototype = {};
  * @param  {Number} pixelsX Width of a single frame
  * @param  {Number} pixelsY Height of a single frame
  */
-File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
-  var json = {},
-      totalFrames = framesX * framesY;
+// File.prototype.create = function(framesX, framesY, pixelsX, pixelsY) {
+//   var json = {},
+//       totalFrames = framesX * framesY;
 
-  json.frames = [+framesX, +framesY];
-  json.size = [+pixelsX, +pixelsY];
-  json.layers = [];
-  json.animations = [];
-  json.pixels = [];
+//   json.frames = [+framesX, +framesY];
+//   json.size = [+pixelsX, +pixelsY];
+//   json.layers = [];
+//   json.animations = [];
+//   json.pixels = [];
 
-  for(var i = 0; i < totalFrames; i++) {
-    json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
-  }
+//   for(var i = 0; i < totalFrames; i++) {
+//     json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
+//   }
 
-  this.path = null;
-  this.name = '';
-  this.folder = null;
-  this.fromJSON(json);
+//   this.path = null;
+//   this.name = '';
+//   this.folder = null;
+//   this.fromJSON(json);
 
-  channel.gui.publish('frame.select', {frame: 1});
-};
+//   channel.gui.publish('frame.select', {frame: 1});
+// };
 
 
 /**

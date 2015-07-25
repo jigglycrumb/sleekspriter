@@ -24,6 +24,16 @@ var actions = {
     this.dispatch(constants.TOOL_SELECT, {tool: tool});
   },
 
+  settingsPaint: function(visible) {
+    console.log('actions.settingsPaint');
+    this.dispatch(constants.SETTINGS_PAINT, {visible: visible});
+  },
+
+  settingsGrid: function(visible) {
+    console.log('actions.settingsGrid');
+    this.dispatch(constants.SETTINGS_GRID, {visible: visible});
+  },
+
   frameSelect: function(frame) {
     console.log('actions.frameSelect');
     this.dispatch(constants.FRAME_SELECT, {frame: frame});
