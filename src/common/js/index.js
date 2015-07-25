@@ -57,7 +57,6 @@ function refreshPreviews() {
 
 var stores = {
   FileStore: new FileStore(),
-  FrameStore: new FrameStore(),
   LayerStore: new LayerStore(),
   UiStore: new UiStore(),
 };

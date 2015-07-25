@@ -17,15 +17,15 @@ var ScreenPaint = React.createClass({
         };
 
     var frameBox = null;
-    if(this.props.frame.total > 1) frameBox = <FrameBox file={this.props.file} frame={this.props.frame} fold="frames" />
+    if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} fold="frames" />
 
     return (
       <section className="screen paint">
         <div className="area top">
-          <ToolContainer editor={this.props.editor} />
+          <ToolContainer ui={this.props.ui} editor={this.props.editor} />
         </div>
         <div className="area left">
-          <ToolBox editor={this.props.editor} />
+          <ToolBox ui={this.props.ui} editor={this.props.editor} />
         </div>
         <div className="area center" onDrop={this.handleDrop}>
           <StageBox editor={this.props.editor} image={this.state.referenceImage} />

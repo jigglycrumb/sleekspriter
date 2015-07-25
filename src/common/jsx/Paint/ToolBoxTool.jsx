@@ -1,6 +1,8 @@
+// Flux: done
 var ToolBoxTool = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
-    var selected = this.props.id == this.props.editor.tool.selected ? true : false;
+    var selected = this.props.id == this.props.ui.tool ? true : false;
     var cssClasses = 'ToolBoxTool transparent';
     if(selected) cssClasses+= ' active';
 
@@ -16,6 +18,6 @@ var ToolBoxTool = React.createClass({
     );
   },
   dispatchToolSelected: function(tool) {
-    channel.gui.publish('tool.select', {tool: tool});
+    this.getFlux().actions.toolSelect(tool);
   }
 });

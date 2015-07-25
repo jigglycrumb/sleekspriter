@@ -2,21 +2,21 @@ var FrameBox = React.createClass({
   mixins: [FluxMixin, FoldableMixin],
   render: function() {
 
-    console.log('FrameBox.render', this.props.frame);
+    console.log('FrameBox.render', this.props);
 
     var self = this,
         containerStyle = {},
         frameStyle = {},
         frames = [], // array for mapping the frame components
-        frameSize = Math.floor(180/this.props.frame.x)-1;
+        frameSize = Math.floor(180/this.props.file.frames.x)-1;
 
-    if(frameSize * this.props.frame.y > 200) {
-      frameSize = Math.floor(180/this.props.frame.y)-1;
+    if(frameSize * this.props.file.frames.y > 200) {
+      frameSize = Math.floor(180/this.props.file.frames.y)-1;
     }
 
-    for(var i=0; i < this.props.frame.total; i++) frames.push(i+1);
+    for(var i=0; i < this.props.ui.frames.total; i++) frames.push(i+1);
 
-    containerStyle.width = (frameSize+1)*this.props.frame.x;
+    containerStyle.width = (frameSize+1)*this.props.file.frames.x;
     containerStyle.marginLeft = (200-containerStyle.width)/2;
 
     frameStyle.width = frameSize;
@@ -31,11 +31,11 @@ var FrameBox = React.createClass({
             var id = 'FrameBoxFrame-'+frame,
                 classes = classNames({
                   'frame': true,
-                  'selected': frame == this.props.frame.selected,
-                  'top': frame <= this.props.frame.x,
-                  'right': frame % this.props.frame.x == 0,
-                  'bottom': frame > this.props.frame.total - this.props.frame.x,
-                  'left': (frame-1) % this.props.frame.x == 0,
+                  'selected': frame == this.props.ui.frames.selected,
+                  'top': frame <= this.props.file.frames.x,
+                  'right': frame % this.props.file.frames.x == 0,
+                  'bottom': frame > this.props.ui.frames.total - this.props.file.frames.x,
+                  'left': (frame-1) % this.props.file.frames.x == 0,
                 });
 
             var clickHandler = function() {
@@ -55,9 +55,9 @@ var FrameBox = React.createClass({
           </div>
           <div className="actions">
             Frame&nbsp;
-            <input type="number" className="frame-number" min="1" max={this.props.frame.total} value={this.props.frame.selected} onChange={this.dispatchFrameSelected} />
+            <input type="number" className="frame-number" min="1" max={this.props.ui.frames.total} value={this.props.ui.frames.selected} onChange={this.dispatchFrameSelected} />
             &nbsp;/&nbsp;
-            {this.props.frame.total}
+            {this.props.ui.frames.total}
           </div>
         </div>
       </div>

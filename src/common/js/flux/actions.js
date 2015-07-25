@@ -19,6 +19,11 @@ var actions = {
     this.dispatch(constants.TAB_SELECT, {tab: tab});
   },
 
+  toolSelect: function(tool) {
+    console.log('actions.toolSelect');
+    this.dispatch(constants.TOOL_SELECT, {tool: tool});
+  },
+
   frameSelect: function(frame) {
     console.log('actions.frameSelect');
     this.dispatch(constants.FRAME_SELECT, {frame: frame});

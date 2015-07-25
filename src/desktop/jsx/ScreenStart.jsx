@@ -1,3 +1,4 @@
+// Flux: done
 var ScreenStart = React.createClass({
   mixins: [FluxMixin],
   render: function() {

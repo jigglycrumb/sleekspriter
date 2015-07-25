@@ -4,6 +4,7 @@ var constants = {
   FILE_SAVE:        'FILE_SAVE',
 
   TAB_SELECT:       'TAB_SELECT',
+  TOOL_SELECT:      'TOOL_SELECT',
 
   FRAME_SELECT:     'FRAME_SELECT',
 

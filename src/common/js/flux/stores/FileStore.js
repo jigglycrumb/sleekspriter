@@ -2,7 +2,7 @@ var FileStore = Fluxxor.createStore({
   initialize: function() {
     console.log('FileStore.initialize');
 
-    // this.resetData();
+    this.resetData();
 
     this.bindActions(
       constants.FILE_CREATE,      this.onFileCreate,
@@ -56,7 +56,7 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFileLoad: function(payload) {
-    console.log('FileStore.onFileLoad', payload);
+    console.log('FileStore.onFileLoad');
 
     this.resetData();
     this._fromJSON(payload.json);

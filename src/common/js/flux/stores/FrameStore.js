@@ -39,6 +39,7 @@ var FrameStore = Fluxxor.createStore({
   },
 
   onFrameSelect: function(payload) {
+    console.log('FrameStore.onFrameSelect');
     this.data.selected = payload.frame;
     this.emit('change');
   },

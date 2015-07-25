@@ -10,7 +10,6 @@ var App = React.createClass({
     return {
       ui: flux.store('UiStore').getData(),
       file: flux.store('FileStore').getData(),
-      frame: flux.store('FrameStore').getData(),
       layer: flux.store('LayerStore').getData(),
     };
   },
@@ -57,12 +56,15 @@ var App = React.createClass({
   },
   */
   render: function() {
+
+    console.log('App.render', this.state);
+
     var tabs = [],
         windowClasses = {};
 
         if(this.state.ui.tab !== 'start') {
           tabs.push('paint');
-          if(this.state.frame.total > 1) tabs.push('animate');
+          if(this.state.ui.frames.total > 1) tabs.push('animate');
           tabs.push('export');
         }
 
@@ -92,7 +94,6 @@ var App = React.createClass({
             editor={this.props.editor}
             ui={this.state.ui}
             file={this.state.file}
-            frame={this.state.frame}
             layer={this.state.layer} />
 
           <ScreenAnimate editor={this.props.editor} />
