@@ -11,8 +11,9 @@ var FileStore = Fluxxor.createStore({
     );
   },
 
-  getData: function() {
-    return this.data;
+  getData: function(key) {
+    if(key && this.data[key]) return this.data[key];
+    else return this.data;
   },
 
   resetData: function(key) {
@@ -33,7 +34,7 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFileCreate: function(payload) {
-    console.log('FileStore.onFileCreate');
+    console.log('FileStore.onFileCreate', payload);
 
     var json = {},
         totalFrames = payload.framesX * payload.framesY;
@@ -52,9 +53,6 @@ var FileStore = Fluxxor.createStore({
     this._fromJSON(json);
 
     this.emit('change');
-
-    // channel.file.publish('file.load', {size: this.size, frames: this.frames});
-    // channel.gui.publish('frame.select', {frame: 1});
   },
 
   onFileLoad: function(payload) {
@@ -74,6 +72,8 @@ var FileStore = Fluxxor.createStore({
     console.log('FileStore.onFileSave');
     this.emit('change');
   },
+
+
 
   _fromJSON: function(json) {
     this.data.size = this._sizeFromFile(json.size);
@@ -102,8 +102,6 @@ var FileStore = Fluxxor.createStore({
 
     // sort layers by z (top to bottom)
     this.data.layers = _.sortBy(this.data.layers, 'z').reverse();
-
-    // channel.file.publish('file.load', {size: this.size, frames: this.frames});
   },
 
   _sizeFromFile: function(size) {

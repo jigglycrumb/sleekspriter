@@ -19,6 +19,11 @@ var actions = {
     this.dispatch(constants.TAB_SELECT, {tab: tab});
   },
 
+  frameSelect: function(frame) {
+    console.log('actions.frameSelect');
+    this.dispatch(constants.FRAME_SELECT, {frame: frame});
+  },
+
   modalShow: function(component, data) {
     console.log('actions.modalShow');
     data = data || {};

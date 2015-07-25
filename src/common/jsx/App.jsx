@@ -1,6 +1,6 @@
 var App = React.createClass({
   mixins: [
-    PostalSubscriptionMixin,
+    // PostalSubscriptionMixin,
     FluxMixin,
     StoreWatchMixin('FileStore', 'UiStore'),
   ],
@@ -10,6 +10,8 @@ var App = React.createClass({
     return {
       ui: flux.store('UiStore').getData(),
       file: flux.store('FileStore').getData(),
+      frame: flux.store('FrameStore').getData(),
+      layer: flux.store('LayerStore').getData(),
     };
   },
   /*
@@ -60,7 +62,7 @@ var App = React.createClass({
 
         if(this.state.ui.tab !== 'start') {
           tabs.push('paint');
-          if(this.props.editor.frames.total > 1) tabs.push('animate');
+          if(this.state.frame.total > 1) tabs.push('animate');
           tabs.push('export');
         }
 
@@ -85,12 +87,23 @@ var App = React.createClass({
         </nav>
         <div className={windowClasses}>
           <ScreenStart />
-          <ScreenPaint editor={this.props.editor} />
+
+          <ScreenPaint
+            editor={this.props.editor}
+            ui={this.state.ui}
+            file={this.state.file}
+            frame={this.state.frame}
+            layer={this.state.layer} />
+
           <ScreenAnimate editor={this.props.editor} />
           <ScreenExport editor={this.props.editor} />
           <ScreenDebug editor={this.props.editor} />
         </div>
-        <Modal editor={this.props.editor} visible={this.state.ui.modal.visible} component={this.state.ui.modal.component} data={this.state.ui.modal.data} />
+        <Modal
+          editor={this.props.editor} 
+          visible={this.state.ui.modal.visible}
+          component={this.state.ui.modal.component}
+          data={this.state.ui.modal.data} />
       </div>
     );
   },

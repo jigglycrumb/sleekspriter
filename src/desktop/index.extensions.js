@@ -11,11 +11,7 @@ platformUtils.updateDefaultFolder();
 
 // bind file input change handlers
 document.getElementById('fileOpen').addEventListener('change', function (e) {
-  // channel.file.publish('load', {path: this.value});
-  // flux.actions.fileLoad(this.value);
-
   platformUtils.loadFile(this.value);
-
 }, false);
 
 document.getElementById('fileSave').addEventListener('change', function (e) {

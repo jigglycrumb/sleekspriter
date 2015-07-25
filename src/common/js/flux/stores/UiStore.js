@@ -11,8 +11,9 @@ var UiStore = Fluxxor.createStore({
     );
   },
 
-  getData: function() {
-    return this.data;
+  getData: function(key) {
+    if(key && this.data[key]) return this.data[key];
+    else return this.data;
   },
 
   resetData: function(key) {

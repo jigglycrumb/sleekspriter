@@ -5,6 +5,8 @@ var constants = {
 
   TAB_SELECT:       'TAB_SELECT',
 
+  FRAME_SELECT:     'FRAME_SELECT',
+
   MODAL_SHOW:       'MODAL_SHOW',
   MODAL_HIDE:       'MODAL_HIDE',
 };

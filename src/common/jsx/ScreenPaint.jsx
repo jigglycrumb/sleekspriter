@@ -12,15 +12,12 @@ var ScreenPaint = React.createClass({
   },
 
   render: function() {
-    var frames = [],
-        settingsBoxStyle = {
+    var settingsBoxStyle = {
           display: this.props.editor.settingsVisible === true ? 'block' : 'none',
         };
 
-    for(var i=0; i < this.props.editor.frames.total; i++) frames[i] = i+1;
-
     var frameBox = null;
-    if(this.props.editor.frames.total > 1) frameBox = <FrameBox editor={this.props.editor} fold="frames" />
+    if(this.props.frame.total > 1) frameBox = <FrameBox file={this.props.file} frame={this.props.frame} fold="frames" />
 
     return (
       <section className="screen paint">
@@ -66,12 +63,12 @@ var ScreenPaint = React.createClass({
           file: file,
         };
 
-        this.setState({ referenceImage: ref });
+        this.setState({referenceImage: ref});
       }
     }
   },
 
   resetImage: function() {
-    this.setState({ referenceImage: { file: null }});
+    this.setState({referenceImage: {file: null}});
   },
 });

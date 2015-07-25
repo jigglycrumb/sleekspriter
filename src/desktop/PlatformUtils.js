@@ -32,8 +32,7 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
     self.updateDefaultFolder();
     flux.actions.fileLoad(data);
     flux.actions.tabSelect('paint');
-
-    // channel.gui.publish('frame.select', {frame: 1});
+    flux.actions.frameSelect(1);
   });
 };
 
