@@ -6,14 +6,14 @@ var ExportZoomSelection = React.createClass({
     switch(this.props.part) {
       case 'spritesheet':
         text = <i>
-                Frame size: {this.props.editor.file.size.width * this.props.zoom}x{this.props.editor.file.size.height * this.props.zoom} pixels<br/>
-                Spritesheet size: {this.props.editor.file.size.width * this.props.editor.frames.x * this.props.zoom}x{this.props.editor.file.size.height * this.props.editor.frames.y * this.props.zoom} pixels
+                Frame size: {this.props.file.size.width * this.props.zoom}x{this.props.file.size.height * this.props.zoom} pixels<br/>
+                Spritesheet size: {this.props.file.size.width * this.props.file.frames.x * this.props.zoom}x{this.props.file.size.height * this.props.file.frames.y * this.props.zoom} pixels
                </i>
         break;
 
       default:
         text = <i>
-                Image size: {this.props.editor.file.size.width * this.props.zoom}x{this.props.editor.file.size.height * this.props.zoom} pixels
+                Image size: {this.props.file.size.width * this.props.zoom}x{this.props.file.size.height * this.props.zoom} pixels
                </i>
         break;
     }
@@ -23,8 +23,8 @@ var ExportZoomSelection = React.createClass({
         <h6>Size</h6>
         <ul>
           <li>
-            <input type="range" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.zoom} onChange={this.setSize} />
-            <input type="number" min={this.props.editor.zoom.min} max={this.props.editor.zoom.max} value={this.props.zoom} onChange={this.setSize} />
+            <input type="range" min={this.props.ui.zoom.min} max={this.props.ui.zoom.max} value={this.props.zoom} onChange={this.setSize} />
+            <input type="number" min={this.props.ui.zoom.min} max={this.props.ui.zoom.max} value={this.props.zoom} onChange={this.setSize} />
           </li>
           <li>
             {text}
@@ -35,8 +35,8 @@ var ExportZoomSelection = React.createClass({
   },
   setSize: function(event) {
     var size = +event.target.value;
-    if(size > 50) size = 50;
-    if(size < 1) size = 1;
+    if(size > this.props.ui.zoom.max) size = this.props.ui.zoom.max;
+    if(size < this.props.ui.zoom.min) size = this.props.ui.zoom.min;
     channel.gui.publish('export.zoom.set', {zoom: size});
   },
 });

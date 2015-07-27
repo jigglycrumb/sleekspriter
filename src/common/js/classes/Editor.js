@@ -10,15 +10,9 @@ var Editor = function() {
   this.layers.init();
   this.pixels.init();
   this.selection.init();
-  this.brightnessTool.init();
   this.paintBucket.init();
   // this.palettes.init();
-  this.zoom.init();
-  this.grid.init();
-  this.cursor.init();
   this.color.init();
-  this.background.init();
-  this.tool.init();
   this.animations.init();
 };
 

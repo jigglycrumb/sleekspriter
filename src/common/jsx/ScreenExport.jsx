@@ -31,7 +31,7 @@ var ScreenExport = React.createClass({
         <div className="area left">
           <h5>Settings</h5>
           {partSelection}
-          <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} editor={this.props.editor} />
+          <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} ui={this.props.ui} file={this.props.file} />
           <ExportOutputSelection format={this.state.format} part={this.state.part} />
           <ExportButton editor={this.props.editor} format={this.state.format} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />
         </div>

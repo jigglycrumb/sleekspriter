@@ -35,7 +35,7 @@ var StageBox = React.createClass({
         onMouseUp={this.mouseup}>
 
         <StageBoxCursorCanvas width={w} height={h} ui={this.props.ui} />
-        <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} />
+        <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} ui={this.props.ui} />
         <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
 
         {this.props.editor.layers.frame.map(function(layer) {

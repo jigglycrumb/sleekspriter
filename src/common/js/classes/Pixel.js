@@ -238,8 +238,8 @@ Pixel.delete = function(frame, layer, x, y, z) {
   channel.gui.publish('pixel.delete', {
     frame: editor.frames.selected,
     layer: editor.layers.selected,
-    x: editor.cursor.position.x,
-    y: editor.cursor.position.y,
+    x: flux.stores.UiStore.getData().cursor.x,
+    y: flux.stores.UiStore.getData().cursor.y,
     z: file.getLayerById(editor.layers.selected).z,
   });
 };

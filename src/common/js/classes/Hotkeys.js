@@ -63,22 +63,22 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color.brush, 1);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = changeColorLightness(flux.stores.UiStore.getData().color.brush, 1);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            var intensity = editor.brightnessTool.intensity+1;
-            if(intensity <= 100) channel.gui.publish('brightnesstool.intensity.select', {intensity: intensity});
+            var intensity = flux.stores.UiStore.getData().brightnessTool.intensity+1;
+            if(intensity <= 100) flux.actions.brightnessToolIntensity(intensity);
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom.current+1;
-            if(zoom <= 50) channel.gui.publish('zoom.select', {zoom: zoom});
+            var zoom = flux.stores.UiStore.getData().zoom.selected+1;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -90,21 +90,21 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.brush.rotate(1);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = flux.stores.UiStore.getData().color.brush.rotate(1);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            channel.gui.publish('brightnesstool.mode.select', {mode: 'darken'});
+            flux.actions.brightnessToolMode('darken');
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom.current+1;
-            if(zoom <= 50) channel.gui.publish('zoom.select', {zoom: zoom});
+            var zoom = flux.stores.UiStore.getData().zoom.selected+1;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -116,22 +116,22 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color.brush, -1);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = changeColorLightness(flux.stores.UiStore.getData().color.brush, -1);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            var intensity = editor.brightnessTool.intensity-1;
-            if(intensity >= 1) channel.gui.publish('brightnesstool.intensity.select', {intensity: intensity});
+            var intensity = flux.stores.UiStore.getData().brightnessTool.intensity-1;
+            if(intensity >= 1) flux.actions.brightnessToolIntensity(intensity);
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom.current-1;
-            if(zoom >= 1) channel.gui.publish('zoom.select', {zoom: zoom});
+            var zoom = flux.stores.UiStore.getData().zoom.selected-1;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -143,21 +143,21 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.brush.rotate(-1);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = flux.stores.UiStore.getData().color.brush.rotate(-1);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'BrightnessTool':
-            channel.gui.publish('brightnesstool.mode.select', {mode: 'lighten'});
+            flux.actions.brightnessToolMode('lighten');
             break;
           case 'MoveTool':
             moveTool(distance);
             break;
           case 'ZoomTool':
-            var zoom = editor.zoom.current-1;
-            if(zoom >= 1) channel.gui.publish('zoom.select', {zoom: zoom});
+            var zoom = flux.stores.UiStore.getData().zoom.selected-1;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -178,14 +178,18 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color.brush, 10);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = changeColorLightness(flux.stores.UiStore.getData().color.brush, 10);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
             moveTool(distance);
+            break;
+          case 'ZoomTool':
+            var zoom = flux.stores.UiStore.getData().zoom.selected+10;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -197,14 +201,18 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.brush.rotate(10);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = flux.stores.UiStore.getData().color.brush.rotate(10);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
             moveTool(distance);
+            break;
+          case 'ZoomTool':
+            var zoom = flux.stores.UiStore.getData().zoom.selected+10;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -216,14 +224,18 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = changeColorLightness(editor.color.brush, -10);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = changeColorLightness(flux.stores.UiStore.getData().color.brush, -10);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
             moveTool(distance);
+            break;
+          case 'ZoomTool':
+            var zoom = flux.stores.UiStore.getData().zoom.selected-10;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
@@ -235,14 +247,18 @@ var Hotkeys = function(editor) {
         switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
-            var color = editor.color.brush.rotate(-10);
-            channel.gui.publish('color.select', {color: color.hexString()});
+            var color = flux.stores.UiStore.getData().color.brush.rotate(-10);
+            flux.actions.colorBrush(color.hexString());
             break;
           case 'RectangularSelectionTool':
             rectangularSelectionTool(distance);
             break;
           case 'MoveTool':
             moveTool(distance);
+            break;
+          case 'ZoomTool':
+            var zoom = flux.stores.UiStore.getData().zoom.selected-10;
+            flux.actions.zoomSelect(zoom);
             break;
         }
       }
