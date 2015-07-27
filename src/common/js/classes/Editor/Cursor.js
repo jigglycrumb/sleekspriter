@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.cursor = {};
 Editor.prototype.cursor.position = new Point(1,1);
 

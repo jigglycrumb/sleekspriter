@@ -3,7 +3,7 @@ module.exports = {
   browser: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/browser'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'json/**'], dest: 'build/browser'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -45,7 +45,7 @@ module.exports = {
   desktopMac: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/desktop/mac'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'json/**'], dest: 'build/desktop/mac'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -96,7 +96,7 @@ module.exports = {
   desktopWindows: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/desktop/windows'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'json/**'], dest: 'build/desktop/windows'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
@@ -147,7 +147,7 @@ module.exports = {
   tablet: {
     files: [
       // common files
-      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**'], dest: 'build/tablet'},
+      {expand: true, cwd: 'src/common', src: ['fonts/**', 'js/**', 'json/**'], dest: 'build/tablet'},
 
       // bower components
       {expand: true, flatten: true, cwd: 'src/common/bower_components',

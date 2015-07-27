@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.zoom = {};
 Editor.prototype.zoom.min = 1;
 Editor.prototype.zoom.max = 50;

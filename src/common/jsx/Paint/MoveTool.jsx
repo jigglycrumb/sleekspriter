@@ -1,3 +1,4 @@
+// Flux: done
 var MoveTool = React.createClass({
   render: function() {
     return (

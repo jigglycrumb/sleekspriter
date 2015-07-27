@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.background = {};
 Editor.prototype.background.type = 'pattern';
 Editor.prototype.background.value = 'checkerboard';

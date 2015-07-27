@@ -20,7 +20,7 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
       self = this;
 
   fs.readFile(fullPath, function(error, contents) {
-    if (error) throw error;
+    if(error) throw error;
 
     var data = {
       json: JSON.parse(contents),

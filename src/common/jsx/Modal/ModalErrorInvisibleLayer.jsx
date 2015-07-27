@@ -1,3 +1,4 @@
+// Flux: done
 var ModalErrorInvisibleLayer = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {

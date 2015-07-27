@@ -1,3 +1,5 @@
+// Flux: done
+
 var StageBoxGridCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
   render: function() {
@@ -6,15 +8,15 @@ var StageBoxGridCanvas = React.createClass({
     );
   },
   componentDidMount: function() {
-    if(this.props.editor.grid.enabled === true) this.drawGrid();
+    if(this.props.ui.settings.grid === true) this.drawGrid();
   },
   componentDidUpdate: function() {
-    if(this.props.editor.grid.enabled === true) this.drawGrid();
+    if(this.props.ui.settings.grid === true) this.drawGrid();
     else this.clear();
   },
   drawGrid: function() {
     var canvas = this.getDOMNode(),
-        zoom = this.props.editor.zoom.current;
+        zoom = this.props.ui.zoom.selected;
 
     if(zoom < 3) return;
     var ctx = canvas.getContext('2d');

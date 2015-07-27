@@ -53,33 +53,47 @@ function refreshPreviews() {
   });
 };
 
-// init Flux
+var stores, flux, channel, platformUtils, file, editor, hotkeys, container;
 
-var stores = {
-  FileStore: new FileStore(),
-  LayerStore: new LayerStore(),
-  UiStore: new UiStore(),
-};
+function base_init() {
+  stores = {
+    FileStore: new FileStore(),
+    LayerStore: new LayerStore(),
+    UiStore: new UiStore(),
+  };
 
-var flux = new Fluxxor.Flux(stores, actions);
+  flux = new Fluxxor.Flux(stores, actions);
 
-flux.on('dispatch', function(type, payload) {
-  if(console && console.log) {
-    console.log("[Dispatch]", type, payload);
-  }
+  flux.on('dispatch', function(type, payload) {
+    if(console && console.log) {
+      console.log("[Dispatch]", type, payload);
+    }
+  });
+
+  channel = {
+    file: postal.channel('file'),
+    gui: postal.channel('gui'),
+  };
+
+  platformUtils = new PlatformUtils();
+  file = new File();
+  editor = new Editor();
+  hotkeys = new Hotkeys(editor);
+  container = document.getElementById('app-container');
+
+  window.onresize = function(e) { channel.gui.publish('window.resize'); };
+}
+
+var fs = require('fs');
+fs.readFile('json/palettes.json', function(error, contents) {
+  if(error) throw error;
+  var json = JSON.parse(contents);
+  base_init();
+  editor.palettes.available = json;
+  platform_init();
+  menu_init();
 });
 
+// base_init();
+// platform_init();
 
-var channel = {
-  file: postal.channel('file'),
-  gui: postal.channel('gui'),
-};
-
-var platformUtils = new PlatformUtils();
-
-var file = new File();
-var editor = new Editor();
-var hotkeys = new Hotkeys(editor);
-var container = document.getElementById('app-container');
-
-window.onresize = function(e) { channel.gui.publish('window.resize'); };

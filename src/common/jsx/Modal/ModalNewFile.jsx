@@ -1,3 +1,4 @@
+// Flux: done
 var ModalNewFile = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   getInitialState: function() {

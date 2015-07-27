@@ -22,13 +22,13 @@ var ScreenPaint = React.createClass({
     return (
       <section className="screen paint">
         <div className="area top">
-          <ToolContainer ui={this.props.ui} editor={this.props.editor} />
+          <ToolContainer ui={this.props.ui} file={this.props.file} editor={this.props.editor} />
         </div>
         <div className="area left">
-          <ToolBox ui={this.props.ui} editor={this.props.editor} />
+          <ToolBox ui={this.props.ui} />
         </div>
         <div className="area center" onDrop={this.handleDrop}>
-          <StageBox editor={this.props.editor} image={this.state.referenceImage} />
+          <StageBox editor={this.props.editor} image={this.state.referenceImage} file={this.props.file} ui={this.props.ui} />
           <ReferenceImage image={this.state.referenceImage} />
         </div>
         <div className="area right">
@@ -42,7 +42,7 @@ var ScreenPaint = React.createClass({
           <StatusBar editor={this.props.editor} ui={this.props.ui} />
         </div>
         <div className="area settings" style={settingsBoxStyle}>
-          <SettingsBox editor={this.props.editor} />
+          <SettingsBox editor={this.props.editor} ui={this.props.ui} />
         </div>
       </section>
     )

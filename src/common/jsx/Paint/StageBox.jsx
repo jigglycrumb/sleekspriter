@@ -1,4 +1,5 @@
 var StageBox = React.createClass({
+  mixins: [FluxMixin],
   getInitialState: function() {
     return {
       mousedown: false,
@@ -10,10 +11,10 @@ var StageBox = React.createClass({
   },
   render: function() {
 
-    var w = this.props.editor.file.size.width * this.props.editor.zoom.current,
-        h = this.props.editor.file.size.height * this.props.editor.zoom.current,
-        centerAreaWidth = window.innerWidth - editor.offset.left - editor.offset.right,
-        centerAreaHeight = window.innerHeight - editor.offset.top - editor.offset.bottom;
+    var w = this.props.file.size.width * this.props.ui.zoom.selected,
+        h = this.props.file.size.height * this.props.ui.zoom.selected,
+        centerAreaWidth = window.innerWidth - this.props.ui.offset.left - this.props.ui.offset.right,
+        centerAreaHeight = window.innerHeight - this.props.ui.offset.top - this.props.ui.offset.bottom;
 
     var css = {
       width: w,
@@ -33,9 +34,9 @@ var StageBox = React.createClass({
         onMouseMove={this.mousemove}
         onMouseUp={this.mouseup}>
 
-        <StageBoxCursorCanvas width={w} height={h} editor={this.props.editor} />
+        <StageBoxCursorCanvas width={w} height={h} ui={this.props.ui} />
         <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} />
-        <StageBoxGridCanvas width={w} height={h} editor={this.props.editor} />
+        <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
 
         {this.props.editor.layers.frame.map(function(layer) {
           return (
@@ -50,8 +51,8 @@ var StageBox = React.createClass({
         }, this)}
 
         <StageBoxBackground
-          type={this.props.editor.background.type}
-          value={this.props.editor.background.value}
+          type={this.props.ui.background.type}
+          value={this.props.ui.background.value}
           image={this.props.image} />
       </div>
     );
@@ -64,7 +65,7 @@ var StageBox = React.createClass({
     var point = this.getWorldCoordinates(event),
         ok = true;
 
-    switch(this.props.editor.tool.selected) {
+    switch(this.props.ui.tool) {
 
       case 'BrushTool':
         ok = this.useBrushTool();
@@ -90,18 +91,18 @@ var StageBox = React.createClass({
 
     event = event.nativeEvent;
 
-    this.getLayerPixelColor(event);
+    //this.getLayerPixelColor(event);
 
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.state.last + 10 && point.x > 0 && point.y > 0) {
-      channel.gui.publish('cursor.set', {position: point});
+      this.getFlux().actions.cursorSet(point);
     }
 
     if(this.state.mousedown === true) {
 
-      switch(this.props.editor.tool.selected) {
+      switch(this.props.ui.tool) {
 
         case 'BrushTool':
           this.useBrushTool();
@@ -137,7 +138,7 @@ var StageBox = React.createClass({
 
     this.setState({mousedown: false});
 
-    switch(this.props.editor.tool.selected) {
+    switch(this.props.ui.tool) {
 
       case 'EyedropperTool':
         this.useEyedropperTool();
@@ -168,14 +169,14 @@ var StageBox = React.createClass({
   },
   getWorldCoordinates: function(event) {
     return new Point(
-      Math.ceil(event.layerX/this.props.editor.zoom.current),
-      Math.ceil(event.layerY/this.props.editor.zoom.current)
+      Math.ceil(event.layerX/this.props.ui.zoom.selected),
+      Math.ceil(event.layerY/this.props.ui.zoom.selected)
     );
   },
   getMouseDownDistance: function() {
     return new Point(
-      editor.cursor.position.x - this.state.mousedownPoint.x,
-      editor.cursor.position.y - this.state.mousedownPoint.y
+      this.props.ui.cursor.x - this.state.mousedownPoint.x,
+      this.props.ui.cursor.y - this.state.mousedownPoint.y
     );
   },
 
@@ -188,12 +189,12 @@ var StageBox = React.createClass({
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
                       file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.cursor.position)) {
-          Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        if(editor.selection.contains(this.props.ui.cursor)) {
+          Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
                         file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
         }
       }
@@ -204,14 +205,14 @@ var StageBox = React.createClass({
   useEraserTool: function() {
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
-        Pixel.delete(editor.frames.selected, editor.layers.selected,
-                     editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.delete(this.props.ui.frames.selected, editor.layers.selected,
+                     this.props.ui.cursor.x, this.props.ui.cursor.y,
                      file.getLayerById(editor.layers.selected).z);
       }
       else { // restrict to selection
-        if(editor.selection.contains(editor.cursor.position)) {
-          Pixel.delete(editor.frames.selected, editor.layers.selected,
-                       editor.cursor.position.x, editor.cursor.position.y,
+        if(editor.selection.contains(this.props.ui.cursor)) {
+          Pixel.delete(this.props.ui.frames.selected, editor.layers.selected,
+                       this.props.ui.cursor.x, this.props.ui.cursor.y,
                        file.getLayerById(editor.layers.selected).z);
         }
       }
@@ -220,9 +221,9 @@ var StageBox = React.createClass({
     else return this.showInvisibleLayerError();
   },
   useEyedropperTool: function() {
-    if(editor.color.frame.alpha() == 0) return; // skip transparent pixels
-    channel.gui.publish('tool.select', {tool: 'BrushTool'});
-    channel.gui.publish('color.select', {color: editor.color.frame.hexString()});
+    if(this.props.ui.color.frame.alpha() == 0) return; // skip transparent pixels
+    this.getFlux().actions.toolSelect('BrushTool');
+    this.getFlux().actions.colorBrush(this.props.ui.color.frame.hexString());
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
@@ -241,18 +242,18 @@ var StageBox = React.createClass({
       function lighten() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.color.layer, editor.brightnessTool.intensity);
-        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(editor.color.layer, -editor.brightnessTool.intensity);
-        Pixel.add(editor.frames.selected, editor.layers.selected, editor.cursor.position.x, editor.cursor.position.y,
+        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
-      var px = _.findWhere(editor.pixels.scope, {x: editor.cursor.position.x, y: editor.cursor.position.y }),
+      var px = _.findWhere(editor.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -261,7 +262,7 @@ var StageBox = React.createClass({
           else if(editor.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
-          if(editor.selection.contains(editor.cursor.position)) {
+          if(editor.selection.contains(this.props.ui.cursor)) {
             if(editor.brightnessTool.mode == 'lighten') lighten();
             else if(editor.brightnessTool.mode == 'darken') darken();
           }
@@ -291,7 +292,7 @@ var StageBox = React.createClass({
     });
 
     channel.gui.publish('canvas.preview', {
-      frame: editor.frames.selected,
+      frame: this.props.ui.frames.selected,
       layer: editor.layers.selected,
       pixels: pixels,
     });
@@ -330,7 +331,7 @@ var StageBox = React.createClass({
     }
   },
   showInvisibleLayerError: function() {
-    channel.gui.publish('modal.show', {component: ModalErrorInvisibleLayer});
+    this.getFlux().actions.modalShow(ModalErrorInvisibleLayer);
     return false;
   },
 

@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.color = {};
 Editor.prototype.color.brush = new Color('#000000');
 Editor.prototype.color.layer = new Color('#000000');

@@ -1,6 +1,7 @@
+// Flux: done
 var EyedropperTool = React.createClass({
   render: function() {
-    var color = this.props.editor.color.frame;
+    var color = this.props.ui.color.frame;
     return (
       <div id="Eyedropper-Tool" className="ToolComponent">
         <i className="icon flaticon-eyedropper2"></i>
@@ -11,7 +12,6 @@ var EyedropperTool = React.createClass({
         </ul>
         <span className="spacer"></span>
         <span className="hint">Click any non-transparent pixel to pick its color.</span>
-
       </div>
     );
   }

@@ -1,4 +1,6 @@
+// Flux: done
 var BrightnessTool = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
 
     function capitaliseFirstLetter(string) { // used in the brightness tool
@@ -10,7 +12,7 @@ var BrightnessTool = React.createClass({
         dClass = 'small',
         dDisabled = false;
 
-    if(this.props.editor.brightnessTool.mode == 'darken') {
+    if(this.props.ui.brightnessTool.mode == 'darken') {
         lClass = 'small',
         lDisabled = false,
         dClass = 'small transparent active',
@@ -24,9 +26,9 @@ var BrightnessTool = React.createClass({
         <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 
 
-        <input type="range" min="1" max="100" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
-        <span>{capitaliseFirstLetter(this.props.editor.brightnessTool.mode)} by</span>
-        <input type="number" min="1" max="100" value={this.props.editor.brightnessTool.intensity} onChange={this.setIntensity} />
+        <input type="range" min="1" max="100" value={this.props.ui.brightnessTool.intensity} onChange={this.setIntensity} />
+        <span>{capitaliseFirstLetter(this.props.ui.brightnessTool.mode)} by</span>
+        <input type="number" min="1" max="100" value={this.props.ui.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>%</span>
 
 
@@ -36,14 +38,12 @@ var BrightnessTool = React.createClass({
     );
   },
   selectLightenTool: function() {
-    channel.gui.publish('brightnesstool.mode.select', {mode: 'lighten'});
+    this.getFlux().actions.brightnessToolMode('lighten');
   },
   selectDarkenTool: function() {
-    channel.gui.publish('brightnesstool.mode.select', {mode: 'darken'});
+    this.getFlux().actions.brightnessToolMode('darken');
   },
   setIntensity: function(event) {
-    var newIntensity = parseInt(event.target.value);
-    channel.gui.publish('brightnesstool.intensity.select', {intensity: newIntensity});
-  }
-
+    this.getFlux().actions.brightnessToolIntensity(event.target.value);
+  },
 });

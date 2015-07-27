@@ -1,3 +1,5 @@
+// obsolete, now in UiStore
+
 Editor.prototype.brightnessTool = {};
 
 Editor.prototype.brightnessTool.mode = 'lighten';

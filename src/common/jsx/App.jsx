@@ -1,6 +1,5 @@
 var App = React.createClass({
   mixins: [
-    // PostalSubscriptionMixin,
     FluxMixin,
     StoreWatchMixin('FileStore', 'UiStore'),
   ],
@@ -17,17 +16,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       subscriptions: {
-        'frame.select': this.updateProps,
         'layer.select': this.updateProps,
-        'tool.select': this.updateProps,
-        'color.select': this.updateProps,
         'palette.select': this.updateProps,
-        'brightnesstool.mode.select': this.updateProps,
-        'brightnesstool.intensity.select': this.updateProps,
-        'background.select': this.updateProps,
-
-        'grid.toggle': this.updateProps,
-        'zoom.select': this.updateProps,
 
         'layer.opacity.select': this.updateProps,
         'layer.visibility.toggle': this.updateProps,
@@ -52,9 +42,6 @@ var App = React.createClass({
   },
   */
   render: function() {
-
-    console.log('App.render', this.state);
-
     var tabs = [],
         windowClasses = {};
 
@@ -104,11 +91,6 @@ var App = React.createClass({
       </div>
     );
   },
-  /*
-  updateProps: function() {
-    this.setProps({editor: editor, workspace: workspace});
-  },
-  */
   tabSelect: function(event) {
     var target = event.target.getAttribute('data-target');
     this.getFlux().actions.tabSelect(target);

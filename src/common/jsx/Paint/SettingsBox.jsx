@@ -1,21 +1,23 @@
+// Flux: done
 var SettingsBox = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     var checkerboardButtonClasses = classNames({
           'background': true,
           'checkerboard': true,
-          'active': (this.props.editor.background.type === 'pattern' && this.props.editor.background.value === 'checkerboard') ? true : false,
+          'active': (this.props.ui.background.type === 'pattern' && this.props.ui.background.value === 'checkerboard') ? true : false,
         }),
         stripesButtonClasses = classNames({
           'background': true,
           'stripes-preview': true,
-          'active': (this.props.editor.background.type === 'pattern' && this.props.editor.background.value === 'stripes' ) ? true : false,
+          'active': (this.props.ui.background.type === 'pattern' && this.props.ui.background.value === 'stripes' ) ? true : false,
         }),
         backgroundColorButtonClasses = classNames({
           'background': true,
-          'active': (this.props.editor.background.type === 'color') ? true : false,
+          'active': (this.props.ui.background.type === 'color') ? true : false,
         }),
         backgroundColorButtonStyle = {
-          'backgroundColor': (this.props.editor.background.type === 'color') ? this.props.editor.background.value : '#fff',
+          'backgroundColor': (this.props.ui.background.type === 'color') ? this.props.ui.background.value : '#fff',
         };
 
     return (
@@ -37,18 +39,10 @@ var SettingsBox = React.createClass({
     )
   },
   selectBackgroundColor: function(event) {
-    var data = {
-      type: 'color',
-      value: event.target.value
-    };
-    channel.gui.publish('background.select', data);
+    this.getFlux().actions.backgroundSelect('color', event.target.value);
   },
   dispatchBackgroundSelected: function(event) {
-    var data = {
-      type: event.target.getAttribute('data-type'),
-      value: event.target.getAttribute('data-value'),
-    };
-    channel.gui.publish('background.select', data);
+    this.getFlux().actions.backgroundSelect(event.target.getAttribute('data-type'), event.target.getAttribute('data-value'));
   },
 
 });

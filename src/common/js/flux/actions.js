@@ -1,53 +1,51 @@
 var actions = {
   fileCreate: function(framesX, framesY, pixelsX, pixelsY) {
-    console.log('actions.fileCreate');
     this.dispatch(constants.FILE_CREATE, {framesX: framesX, framesY: framesY, pixelsX: pixelsX, pixelsY: pixelsY});
   },
-
   fileLoad: function(data) {
-    console.log('actions.fileLoad');
     this.dispatch(constants.FILE_LOAD, data);
   },
-
   fileSave: function() {
-    console.log('actions.fileSave');
     this.dispatch(constants.FILE_SAVE, {});
   },
-
   tabSelect: function(tab) {
-    console.log('actions.tabSelect');
     this.dispatch(constants.TAB_SELECT, {tab: tab});
   },
-
   toolSelect: function(tool) {
-    console.log('actions.toolSelect');
     this.dispatch(constants.TOOL_SELECT, {tool: tool});
   },
-
   settingsPaint: function(visible) {
-    console.log('actions.settingsPaint');
     this.dispatch(constants.SETTINGS_PAINT, {visible: visible});
   },
-
   settingsGrid: function(visible) {
-    console.log('actions.settingsGrid');
     this.dispatch(constants.SETTINGS_GRID, {visible: visible});
   },
-
+  zoomSelect: function(zoom) {
+    this.dispatch(constants.ZOOM_SELECT, {zoom: zoom});
+  },
+  backgroundSelect: function(type, value) {
+    this.dispatch(constants.BACKGROUND_SELECT, {type: type, value: value});
+  },
   frameSelect: function(frame) {
-    console.log('actions.frameSelect');
     this.dispatch(constants.FRAME_SELECT, {frame: frame});
   },
-
   modalShow: function(component, data) {
-    console.log('actions.modalShow');
     data = data || {};
     this.dispatch(constants.MODAL_SHOW, {component: component, data: data, visible: true});
   },
-
   modalHide: function() {
-    console.log('actions.modalHide');
     this.dispatch(constants.MODAL_HIDE);
   },
-
+  brightnessToolMode: function(mode) {
+    this.dispatch(constants.BRIGHTNESSTOOL_MODE, {mode: mode});
+  },
+  brightnessToolIntensity: function(intensity) {
+    this.dispatch(constants.BRIGHTNESSTOOL_INTENSITY, {intensity: intensity});
+  },
+  cursorSet: function(position) {
+    this.dispatch(constants.CURSOR_SET, {position: position});
+  },
+  colorBrush: function(hexcode) {
+    this.dispatch(constants.COLOR_BRUSH, {hexcode: hexcode});
+  },
 };

@@ -1,3 +1,4 @@
+// Flux: done
 var EraserTool = React.createClass({
   render: function() {
     return (

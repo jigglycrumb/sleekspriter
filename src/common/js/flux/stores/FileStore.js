@@ -18,12 +18,12 @@ var FileStore = Fluxxor.createStore({
 
   resetData: function(key) {
     var data = {
-      path: null,
+      path: '',
       name: '',
-      folder: null,
+      folder: '',
 
-      size: null,
-      frames: null,
+      size: {width: 0, height: 0},
+      frames: {x: 0, y: 0},
       layers: null,
       animations: null,
       pixels: null,

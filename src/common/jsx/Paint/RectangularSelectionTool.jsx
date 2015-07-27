@@ -1,3 +1,4 @@
+// Flux: done
 var RectangularSelectionTool = React.createClass({
   render: function() {
     return (

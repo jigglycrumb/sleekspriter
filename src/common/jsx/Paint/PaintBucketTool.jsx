@@ -1,6 +1,7 @@
 var PaintBucketTool = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
-    var hex = editor.color.brush.hexString();
+    var hex = this.props.ui.color.brush.hexString();
     return (
       <div id="PaintBucket-Tool" className="ToolComponent">
         <i className="icon flaticon-paint2"/>
@@ -11,7 +12,6 @@ var PaintBucketTool = React.createClass({
     );
   },
   dispatchColorSelected: function(event) {
-    var color = event.target.value;
-    channel.gui.publish('color.select', {color: color});
+    this.getFlux().actions.colorBrush(event.target.value);
   }
 });
