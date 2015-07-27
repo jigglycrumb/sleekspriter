@@ -9,6 +9,8 @@ var Modal = React.createClass({
     if(this.props.component !== null) {
       component = React.createElement(this.props.component, {
         editor: this.props.editor,
+        ui: this.props.ui,
+        file: this.props.file,
         data: this.props.data,
       });
     }

@@ -86,6 +86,8 @@ var App = React.createClass({
           editor={this.props.editor} 
           visible={this.state.ui.modal.visible}
           component={this.state.ui.modal.component}
+          ui={this.state.ui}
+          file={this.state.file}
           data={this.state.ui.modal.data} />
       </div>
     );

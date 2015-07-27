@@ -33,16 +33,16 @@ var ScreenPaint = React.createClass({
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox editor={this.props.editor} fold="preview" />
+            <PreviewBox editor={this.props.editor} file={this.props.file} fold="preview" />
             {frameBox}
           </div>
-          <LayerBox editor={this.props.editor} fold="layers" />
+          <LayerBox editor={this.props.editor} file={this.props.file} fold="layers" />
         </div>
         <div className="area statusbar">
           <StatusBar editor={this.props.editor} ui={this.props.ui} />
         </div>
         <div className="area settings" style={settingsBoxStyle}>
-          <SettingsBox editor={this.props.editor} ui={this.props.ui} />
+          <SettingsBox ui={this.props.ui} />
         </div>
       </section>
     )

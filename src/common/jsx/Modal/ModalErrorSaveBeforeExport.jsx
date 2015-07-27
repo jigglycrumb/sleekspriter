@@ -1,3 +1,4 @@
+// Flux: done
 var ModalErrorSaveBeforeExport = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
