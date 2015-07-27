@@ -48,4 +48,10 @@ var actions = {
   colorBrush: function(hexcode) {
     this.dispatch(constants.COLOR_BRUSH, {hexcode: hexcode});
   },
+  paletteLoad: function(json) {
+    this.dispatch(constants.PALETTE_LOAD, {json: json});
+  },
+  paletteSelect: function(palette) {
+    this.dispatch(constants.PALETTE_SELECT, palette);
+  },
 };

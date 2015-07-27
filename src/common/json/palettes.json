@@ -1,10 +1,6 @@
-{
-  "sprite": {
-    "title": "Sprite colours",
-    "short": "Sprite",
-    "colors": []
-  },
-  "gameboy": {
+[
+  {
+    "id": "gameboy",
     "title": "Nintendo Gameboy",
     "short": "GB",
     "colors": [
@@ -14,7 +10,8 @@
       "#0f380f"
     ]
   },
-  "teletext": {
+  {
+    "id": "teletext",
     "title": "Teletext",
     "short": "TTX",
     "colors": [
@@ -28,7 +25,8 @@
       "#ffffff"
     ]
   },
-  "apple2": {
+  {
+    "id": "apple2",
     "title": "Apple II",
     "short": "][",
     "colors": [
@@ -49,7 +47,8 @@
       "#ffffff"
     ]
   },
-  "spectrum": {
+  {
+    "id": "spectrum",
     "title": "Sinclair ZX Spectrum",
     "short": "Spectrum",
     "colors": [
@@ -70,7 +69,8 @@
       "#ffffff"
     ]
   },
-  "cga": {
+  {
+    "id": "cga",
     "title": "Color Graphics Adapter",
     "short": "CGA",
     "colors": [
@@ -92,7 +92,8 @@
       "#ffff55"
     ]
   },
-  "vic20": {
+  {
+    "id": "vic20",
     "title": "Commodore VIC-20",
     "short": "VIC-20",
     "colors": [
@@ -114,7 +115,8 @@
       "#ffffb2"
     ]
   },
-  "c64": {
+  {
+    "id": "c64",
     "title": "Commodore C=64",
     "short": "C=64",
     "colors": [
@@ -136,7 +138,8 @@
       "#bfce72"
     ]
   },
-  "amstrad": {
+  {
+    "id": "amstrad",
     "title": "Amstrad CPC",
     "short": "CPC",
     "colors": [
@@ -169,7 +172,8 @@
       "#ffffff"
     ]
   },
-  "nes": {
+  {
+    "id": "nes",
     "title": "Nintendo Entertainment System",
     "short": "NES",
     "colors": [
@@ -229,7 +233,8 @@
       "#00fcfc"
     ]
   },
-  "mastersystem": {
+  {
+    "id": "mastersystem",
     "title": "Sega Master System",
     "short": "Sega MS",
     "colors": [
@@ -299,7 +304,8 @@
       "#ff0000"
     ]
   },
-  "atari2600": {
+  {
+    "id": "atari2600",
     "title": "Atari 2600",
     "short": "2600",
     "colors": [
@@ -433,4 +439,4 @@
       "#fce08c"
     ]
   }
-}
+]

@@ -58,7 +58,6 @@ var stores, flux, channel, platformUtils, file, editor, hotkeys, container;
 function base_init() {
   stores = {
     FileStore: new FileStore(),
-    LayerStore: new LayerStore(),
     UiStore: new UiStore(),
   };
 
@@ -84,16 +83,13 @@ function base_init() {
   window.onresize = function(e) { channel.gui.publish('window.resize'); };
 }
 
+// read palettes from json file and start App
 var fs = require('fs');
 fs.readFile('json/palettes.json', function(error, contents) {
   if(error) throw error;
   var json = JSON.parse(contents);
   base_init();
-  editor.palettes.available = json;
+  flux.actions.paletteLoad(json);
   platform_init();
   menu_init();
 });
-
-// base_init();
-// platform_init();
-

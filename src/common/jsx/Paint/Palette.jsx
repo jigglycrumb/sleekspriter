@@ -1,18 +1,16 @@
+// Flux: done
 var Palette = React.createClass({
-  mixins: [PostalSubscriptionMixin],
+  mixins: [FluxMixin],
   getInitialState: function() {
     return {
       swatchWidth: 28,
       resetScroll: true, // true to fire resetScroll on first component update
-      subscriptions: {
-        'palette.select': this.resetScroll,
-      },
     };
   },
   render: function() {
 
-    var palettes = this.props.editor.palettes.available,
-        palette = this.props.editor.palettes.getSelected();
+    var palettes  = this.props.ui.palettes.available,
+        palette   = this.getSelectedPaletteData();
 
     return (
       <div className="palette">
@@ -21,10 +19,9 @@ var Palette = React.createClass({
           <i className="switch-arrow flaticon-little9"/>
           <div className="name">{palette.short}</div>
           <ul ref="paletteList" className="list">
-            {Object.keys(palettes).map(function(paletteKey) {
-              var p = palettes[paletteKey];
+            {palettes.map(function(palette, i) {
               return (
-                <li key={paletteKey} data-palette={paletteKey} onClick={this.selectPalette}>{p.title} ({p.colors.length} colours)</li>
+                <li key={i} data-palette={i} onClick={this.selectPalette}>{palette.title} ({palette.colors.length} colours)</li>
               );
             }, this)}
           </ul>
@@ -47,20 +44,18 @@ var Palette = React.createClass({
       </div>
     );
   },
-  componentDidMount: function() {
-    this.setInnerWidth();
-    this.resetScroll();
-  },
   componentDidUpdate: function() {
     this.setInnerWidth();
-
     if(this.state.resetScroll) {
       this.resetScroll();
       this.setState({resetScroll:false});
     }
   },
+  getSelectedPaletteData: function() {
+    return this.props.ui.palettes.available[this.props.ui.palettes.selected];
+  },
   getSwatchCount: function() {
-    return this.props.editor.palettes.getSelected().colors.length;
+    return this.getSelectedPaletteData().colors.length;
   },
   getOuterWidth: function() {
     return this.getDOMNode().querySelector('.outer').clientWidth;
@@ -151,9 +146,10 @@ var Palette = React.createClass({
     this.refs.paletteList.getDOMNode().style.display = 'none';
   },
   selectPalette: function(event) {
+    event.stopPropagation();
     var palette = event.currentTarget.getAttribute('data-palette');
     this.hidePalettes();
-    channel.gui.publish('palette.select', {palette: palette});
-    event.stopPropagation();
+    this.getFlux().actions.paletteSelect(palette);
+    this.setState({resetScroll:true});
   },
 });

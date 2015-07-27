@@ -15,4 +15,6 @@ var constants = {
   BRIGHTNESSTOOL_INTENSITY:   'BRIGHTNESSTOOL_INTENSITY',
   CURSOR_SET:                 'CURSOR_SET',
   COLOR_BRUSH:                'COLOR_BRUSH',
+  PALETTE_LOAD:               'PALETTE_LOAD',
+  PALETTE_SELECT:             'PALETTE_SELECT',
 };

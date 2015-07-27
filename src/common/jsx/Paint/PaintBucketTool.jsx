@@ -1,3 +1,4 @@
+// Flux: done
 var PaintBucketTool = React.createClass({
   mixins: [FluxMixin],
   render: function() {
@@ -7,7 +8,7 @@ var PaintBucketTool = React.createClass({
         <i className="icon flaticon-paint2"/>
         <input type="color" id="PaintBucket-Colorpicker" className="ColorSwatch" value={hex} onChange={this.dispatchColorSelected} title={hex} />
         <span className="spacer"/>
-        <Palette editor={this.props.editor} />
+        <Palette ui={this.props.ui} />
       </div>
     );
   },

@@ -9,7 +9,6 @@ var App = React.createClass({
     return {
       ui: flux.store('UiStore').getData(),
       file: flux.store('FileStore').getData(),
-      layer: flux.store('LayerStore').getData(),
     };
   },
   /*

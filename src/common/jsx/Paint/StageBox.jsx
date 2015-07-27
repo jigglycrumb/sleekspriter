@@ -241,14 +241,14 @@ var StageBox = React.createClass({
 
       function lighten() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.color.layer, editor.brightnessTool.intensity);
+        var newColor = changeColorLightness(editor.color.layer, this.props.ui.brightnessTool.intensity);
         Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
         if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.color.layer, -editor.brightnessTool.intensity);
+        var newColor = changeColorLightness(editor.color.layer, -this.props.ui.brightnessTool.intensity);
         Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
@@ -258,13 +258,13 @@ var StageBox = React.createClass({
 
       if(pixelExists) {
         if(!editor.selection.isActive) {
-          if(editor.brightnessTool.mode == 'lighten') lighten();
-          else if(editor.brightnessTool.mode == 'darken') darken();
+          if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
+          else if(this.props.ui.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
           if(editor.selection.contains(this.props.ui.cursor)) {
-            if(editor.brightnessTool.mode == 'lighten') lighten();
-            else if(editor.brightnessTool.mode == 'darken') darken();
+            if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
+            else if(this.props.ui.brightnessTool.mode == 'darken') darken();
           }
         }
       }

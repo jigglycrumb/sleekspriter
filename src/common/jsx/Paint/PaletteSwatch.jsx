@@ -1,4 +1,6 @@
+// Flux: done
 var PaletteSwatch = React.createClass({
+  mixins: [FluxMixin],
   propTypes: {
     color: React.PropTypes.string.isRequired,
   },
@@ -12,6 +14,6 @@ var PaletteSwatch = React.createClass({
     );
   },
   select: function() {
-    channel.gui.publish('color.select', {color: this.props.color});
+    this.getFlux().actions.colorBrush(this.props.color);
   }
 });

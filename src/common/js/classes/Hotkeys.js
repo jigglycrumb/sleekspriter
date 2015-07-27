@@ -14,39 +14,39 @@ var Hotkeys = function(editor) {
   this.actions = {
     selectBrushTool: {
       key: 'b',
-      action: function() { channel.gui.publish('tool.select', {tool: 'BrushTool'}); }
+      action: function() { flux.actions.toolSelect('BrushTool'); }
     },
     selectEraserTool: {
       key: 'e',
-      action: function() { channel.gui.publish('tool.select', {tool: 'EraserTool'}); }
+      action: function() { flux.actions.toolSelect('EraserTool'); }
     },
     selectEyedropperTool: {
       key: 'i',
-      action: function() { channel.gui.publish('tool.select', {tool: 'EyedropperTool'}); }
+      action: function() { flux.actions.toolSelect('EyedropperTool'); }
     },
     selectRectangularSelectionTool: {
       key: 'm',
-      action: function() { channel.gui.publish('tool.select', {tool: 'RectangularSelectionTool'}); }
+      action: function() { flux.actions.toolSelect('RectangularSelectionTool'); }
     },
     selectPaintBucketTool: {
       key: 'p',
-      action: function() { channel.gui.publish('tool.select', {tool: 'PaintBucketTool'}); }
+      action: function() { flux.actions.toolSelect('PaintBucketTool'); }
     },
     selectBrightnessTool: {
       key: 'o',
-      action: function() { channel.gui.publish('tool.select', {tool: 'BrightnessTool'}); }
+      action: function() { flux.actions.toolSelect('BrightnessTool'); }
     },
     selectMoveTool: {
       key: 'v',
-      action: function() { channel.gui.publish('tool.select', {tool: 'MoveTool'}); }
+      action: function() { flux.actions.toolSelect('MoveTool'); }
     },
     selectZoomTool: {
       key: 'z',
-      action: function() { channel.gui.publish('tool.select', {tool: 'ZoomTool'}); }
+      action: function() { flux.actions.toolSelect('ZoomTool'); }
     },
     toggleGrid: {
       key: 'g',
-      action: function() { channel.gui.publish('grid.toggle', {grid: !editor.grid.enabled}); }
+      action: function() { flux.actions.settingsGrid(!flux.stores.UiStore.getData().settings.grid); }
     },
 
 
@@ -60,7 +60,7 @@ var Hotkeys = function(editor) {
       key: ['up'],
       action: function() {
         var distance = new Point(0, -1);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 1);
@@ -87,7 +87,7 @@ var Hotkeys = function(editor) {
       key: ['right'],
       action: function() {
         var distance = new Point(1, 0);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(1);
@@ -113,7 +113,7 @@ var Hotkeys = function(editor) {
       key: ['down'],
       action: function() {
         var distance = new Point(0, 1);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -1);
@@ -140,7 +140,7 @@ var Hotkeys = function(editor) {
       key: ['left'],
       action: function() {
         var distance = new Point(-1, 0);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-1);
@@ -175,7 +175,7 @@ var Hotkeys = function(editor) {
       key: ['shift+up'],
       action: function() {
         var distance = new Point(0, -10);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, 10);
@@ -194,7 +194,7 @@ var Hotkeys = function(editor) {
       key: ['shift+right'],
       action: function() {
         var distance = new Point(10, 0);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(10);
@@ -213,7 +213,7 @@ var Hotkeys = function(editor) {
       key: ['shift+down'],
       action: function() {
         var distance = new Point(0, 10);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = changeColorLightness(editor.color.brush, -10);
@@ -232,7 +232,7 @@ var Hotkeys = function(editor) {
       key: ['shift+left'],
       action: function() {
         var distance = new Point(-10, 0);
-        switch(editor.tool.selected) {
+        switch(flux.stores.UiStore.getData().tool) {
           case 'BrushTool':
           case 'PaintBucketTool':
             var color = editor.color.brush.rotate(-10);

@@ -15,7 +15,9 @@ var UiStore = Fluxxor.createStore({
       constants.BRIGHTNESSTOOL_MODE,        this.onBrightnessToolMode,
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
       constants.CURSOR_SET,                 this.onCursorSet,
-      constants.COLOR_BRUSH,                this.onColorBrush
+      constants.COLOR_BRUSH,                this.onColorBrush,
+      constants.PALETTE_LOAD,               this.onPaletteLoad,
+      constants.PALETTE_SELECT,             this.onPaletteSelect
     );
   },
 
@@ -66,6 +68,10 @@ var UiStore = Fluxxor.createStore({
         layer: new Color('#000000'),
         frame: new Color('#000000'),
       },
+      palettes: {
+        selected: 0,
+        available: [{"id": "sprite", "title": "Sprite colours", "short": "Sprite", "colors": []}],
+      },
     };
 
     if(key && data[key]) this.data[key] = data[key];
@@ -76,6 +82,7 @@ var UiStore = Fluxxor.createStore({
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.frames.selected = 1;
       this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
+      this._buildSpritePalette(FileStore);
       this.emit('change');
     });
   },
@@ -147,5 +154,30 @@ var UiStore = Fluxxor.createStore({
   onColorBrush: function(payload) {
     this.data.color.brush = new Color(payload.hexcode);
     this.emit('change');
+  },
+
+  onPaletteLoad: function(payload) {
+    var self = this;
+    payload.json.forEach(function(palette){
+      self.data.palettes.available.push(palette);
+    });
+    this.emit('change');
+  },
+
+  onPaletteSelect: function(palette) {
+    this.data.palettes.selected = parseInt(palette)
+    this.emit('change');
+  },
+
+
+  _buildSpritePalette: function(FileStore) {
+      var palette = [],
+          pixels  = FileStore.getData('pixels');
+
+      pixels.forEach(function(px) {
+        palette.push(px.toHex());
+      });
+
+      this.data.palettes.available[0].colors = _.unique(palette, false);
   },
 });

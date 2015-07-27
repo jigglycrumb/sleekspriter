@@ -1,9 +1,6 @@
 var FileStore = Fluxxor.createStore({
   initialize: function() {
-    console.log('FileStore.initialize');
-
     this.resetData();
-
     this.bindActions(
       constants.FILE_CREATE,      this.onFileCreate,
       constants.FILE_LOAD,        this.onFileLoad,
