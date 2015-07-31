@@ -20,7 +20,11 @@ var UiStore = Fluxxor.createStore({
       constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect,
-      constants.LAYER_SELECT,               this.onLayerSelect
+      constants.LAYER_SELECT,               this.onLayerSelect,
+      constants.LAYER_VISIBILITY,           this.onLayerAttributeChange,
+      constants.LAYER_OPACITY,              this.onLayerAttributeChange,
+      constants.LAYER_NAME,                 this.onLayerAttributeChange,
+      constants.LAYER_TOP_SELECT,           this.onLayerTopSelect
     );
   },
 
@@ -90,7 +94,7 @@ var UiStore = Fluxxor.createStore({
       this.data.frames.selected = 1;
       this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
 
-      this.data.layers.frame = this._updateFrameLayers(FileStore, 1); // get layers for frame 1
+      this.data.layers.frame = storeUtils.layers.getByFrame(1);
 
       this._buildSpritePalette(FileStore);
       this.emit('change');
@@ -194,6 +198,20 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  onLayerAttributeChange: function() {
+    this.waitFor(['FileStore'], function(FileStore) {
+      this.data.layers.frame = storeUtils.layers.getByFrame(this.data.frames.selected);
+      this.emit('change');
+    });
+  },
+
+  onLayerTopSelect: function() {
+    var layer = storeUtils.layers.getTop();
+    if(layer) {
+      this.data.layers.selected = layer.id;
+      this.emit('change');
+    }
+  },
 
   _buildSpritePalette: function(FileStore) {
       var palette = [],
@@ -204,9 +222,5 @@ var UiStore = Fluxxor.createStore({
       });
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
-  },
-
-  _updateFrameLayers: function(FileStore, frame) {
-    return _.where(FileStore.getData('layers'), {frame: frame});
   }
 });

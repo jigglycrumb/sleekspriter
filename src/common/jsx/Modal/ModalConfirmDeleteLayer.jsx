@@ -1,7 +1,7 @@
 var ModalConfirmDeleteLayer = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
-    var layer = this.props.editor.layers.getSelected();
+    var layer = storeUtils.layers.getSelected();
     return (
       <div className="dialog">
         <div className="title">Confirmation needed</div>
@@ -14,7 +14,7 @@ var ModalConfirmDeleteLayer = React.createClass({
     )
   },
   deleteLayer: function() {
-    channel.file.publish('layer.delete', {layer: this.props.editor.layers.selected});
+    channel.file.publish('layer.delete', {layer: this.props.ui.layers.selected});
     this.hide();
   },
 });

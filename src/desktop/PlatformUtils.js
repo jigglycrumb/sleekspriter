@@ -31,6 +31,7 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
     flux.actions.fileLoad(data);
     flux.actions.tabSelect('paint');
     flux.actions.frameSelect(1);
+    flux.actions.layerTopSelect();
   });
 };
 

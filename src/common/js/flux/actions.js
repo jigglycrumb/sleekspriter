@@ -63,4 +63,16 @@ var actions = {
   layerSelect: function(layer) {
     this.dispatch(constants.LAYER_SELECT, layer);
   },
+  layerVisibility: function(layer, visible) {
+    this.dispatch(constants.LAYER_VISIBILITY, {layer: layer, visible: visible});
+  },
+  layerOpacity: function(layer, opacity) {
+    this.dispatch(constants.LAYER_OPACITY, {layer: layer, opacity: opacity});
+  },
+  layerName: function(layer, name) {
+    this.dispatch(constants.LAYER_NAME, {layer: layer, name: name});
+  },
+  layerTopSelect: function() {
+    this.dispatch(constants.LAYER_TOP_SELECT);
+  },
 };

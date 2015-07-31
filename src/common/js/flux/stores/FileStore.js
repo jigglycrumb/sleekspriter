@@ -4,7 +4,12 @@ var FileStore = Fluxxor.createStore({
     this.bindActions(
       constants.FILE_CREATE,      this.onFileCreate,
       constants.FILE_LOAD,        this.onFileLoad,
-      constants.FILE_SAVE,        this.onFileSave
+      constants.FILE_SAVE,        this.onFileSave,
+
+
+      constants.LAYER_VISIBILITY, this.onLayerVisibility,
+      constants.LAYER_OPACITY,    this.onLayerOpacity,
+      constants.LAYER_NAME,       this.onLayerName
     );
   },
 
@@ -51,8 +56,6 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFileLoad: function(payload) {
-    console.log('FileStore.onFileLoad');
-
     this.resetData();
     this._fromJSON(payload.json);
 
@@ -68,7 +71,32 @@ var FileStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  onLayerVisibility: function(payload) {
+    var layer = storeUtils.layers.getById(parseInt(payload.layer));
+    layer.visible = !!payload.visible;
+    this.data.layers.forEach(function(l) {
+      if(l.id === layer.id) l = layer;
+    });
+    this.emit('change');
+  },
 
+  onLayerOpacity: function(payload) {
+    var layer = storeUtils.layers.getById(parseInt(payload.layer));
+    layer.opacity = parseInt(payload.opacity);
+    this.data.layers.forEach(function(l) {
+      if(l.id === layer.id) l = layer;
+    });
+    this.emit('change');
+  },
+
+  onLayerName: function(payload) {
+    var layer = storeUtils.layers.getById(parseInt(payload.layer));
+    layer.name = payload.name;
+    this.data.layers.forEach(function(l) {
+      if(l.id === layer.id) l = layer;
+    });
+    this.emit('change');
+  },
 
   _fromJSON: function(json) {
     this.data.size = this._sizeFromFile(json.size);

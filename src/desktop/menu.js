@@ -227,8 +227,8 @@ function menu_init() {
     label: 'Merge with layer above',
     click: function() {
       var data = {
-        top: editor.layers.getAboveSelected(),
-        bottom: editor.layers.getSelected(),
+        top: storeUtils.layers.getAboveSelected(),
+        bottom: storeUtils.layers.getSelected(),
       };
       if(data.top) channel.gui.publish('layer.merge', data);
     },
@@ -241,8 +241,8 @@ function menu_init() {
     label: 'Merge with layer below',
     click: function() {
       var data = {
-        top: editor.layers.getSelected(),
-        bottom: editor.layers.getBelowSelected(),
+        top: storeUtils.layers.getSelected(),
+        bottom: storeUtils.layers.getBelowSelected(),
       };
       if(data.bottom) channel.gui.publish('layer.merge', data);
     },

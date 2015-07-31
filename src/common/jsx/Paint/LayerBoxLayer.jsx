@@ -28,13 +28,13 @@ var LayerBoxLayer = React.createClass({
     this.getFlux().actions.layerSelect(this.props.layer.id);
   },
   dispatchLayerVisibilityChanged: function(event) {
-    channel.file.publish('layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});
+    this.getFlux().actions.layerVisibility(this.props.layer.id, event.target.checked);
   },
   dispatchLayerOpacityChanged: function(event) {
-    channel.file.publish('layer.opacity.select', {layer: this.props.layer.id, opacity: parseInt(event.target.value)});
+    this.getFlux().actions.layerOpacity(this.props.layer.id, event.target.value);
   },
   dispatchLayerNameChanged: function(name) {
-    channel.file.publish('layer.name.select', {layer: this.props.layer.id, name: name});
+    this.getFlux().actions.layerName(this.props.layer.id, name);
   },
   dragStart: function(e) {
     channel.gui.publish('layer.dragstart', {layer: this.props.layer.id});

@@ -1,5 +1,5 @@
 var LayerBox = React.createClass({
-  mixins: [FoldableMixin, PostalSubscriptionMixin],
+  mixins: [FluxMixin, FoldableMixin, PostalSubscriptionMixin],
   getInitialState: function() {
     return {
       dragPosition: 0,
@@ -60,7 +60,7 @@ var LayerBox = React.createClass({
     channel.file.publish('layer.add', {layer: this.props.ui.layers.selected});
   },
   confirmLayerDelete: function() {
-    channel.gui.publish('modal.show', {component: ModalConfirmDeleteLayer});
+    this.getFlux().actions.modalShow(ModalConfirmDeleteLayer);
   },
   shouldSelectLayer: function(data) {
     this.setState({ shouldSelectLayer: data.layer });
