@@ -1,6 +1,4 @@
-var PlatformUtils = function() {
-  console.log('Initializing PlatformUtils');
-};
+var PlatformUtils = function() {};
 
 PlatformUtils.prototype = {};
 PlatformUtils.prototype.constructor = PlatformUtils;

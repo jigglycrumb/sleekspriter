@@ -165,7 +165,7 @@ var StageBox = React.createClass({
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-    editor.color.layer = color;
+    this.getFlux().actions.colorLayer(color.hexString());
   },
   getWorldCoordinates: function(event) {
     return new Point(
@@ -190,12 +190,12 @@ var StageBox = React.createClass({
     if(isLayerVisible()) {
       if(!editor.selection.isActive) {
         Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                      file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
+                      file.getLayerById(editor.layers.selected).z, this.props.ui.color.brush.hexString());
       }
       else { // restrict to selection
         if(editor.selection.contains(this.props.ui.cursor)) {
           Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                        file.getLayerById(editor.layers.selected).z, editor.color.brush.hexString());
+                        file.getLayerById(editor.layers.selected).z, this.props.ui.color.brush.hexString());
         }
       }
       return true;
@@ -240,15 +240,15 @@ var StageBox = React.createClass({
     if(isLayerVisible()) {
 
       function lighten() {
-        if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.color.layer, this.props.ui.brightnessTool.intensity);
+        if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
         Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };
 
       function darken() {
-        if(editor.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(editor.color.layer, -this.props.ui.brightnessTool.intensity);
+        if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
+        var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
         Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               file.getLayerById(editor.layers.selected).z, newColor.hexString());
       };

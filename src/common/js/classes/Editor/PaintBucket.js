@@ -15,7 +15,7 @@ Editor.prototype.paintBucket.fill = function(point) {
   // color object for the first pixels color
   var initialColor;
   // the new pixel color
-  fillColor = editor.color.brush;
+  fillColor = flux.stores.UiStore.getData().color.brush;
 
   // check if initial pixel already exists
   if(_.isUndefined(initialPixel)) {

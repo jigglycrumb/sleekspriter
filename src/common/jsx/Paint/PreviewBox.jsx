@@ -6,9 +6,9 @@ var PreviewBox = React.createClass({
         <h4 className="foldable-handle">Preview</h4>
         <div className="foldable-fold">
           <PreviewBoxPreview 
-            id={this.props.editor.frames.selected}
-            width={this.props.editor.file.size.width}
-            height={this.props.editor.file.size.height}
+            id={this.props.ui.frames.selected}
+            width={this.props.file.size.width}
+            height={this.props.file.size.height}
             alwaysRefresh={true} />
         </div>
       </div>

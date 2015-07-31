@@ -16,6 +16,8 @@ var UiStore = Fluxxor.createStore({
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
       constants.CURSOR_SET,                 this.onCursorSet,
       constants.COLOR_BRUSH,                this.onColorBrush,
+      constants.COLOR_LAYER,                this.onColorLayer,
+      constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect
     );
@@ -153,6 +155,16 @@ var UiStore = Fluxxor.createStore({
 
   onColorBrush: function(payload) {
     this.data.color.brush = new Color(payload.hexcode);
+    this.emit('change');
+  },
+
+  onColorLayer: function(payload) {
+    this.data.color.layer = new Color(payload.hexcode);
+    this.emit('change');
+  },
+
+  onColorFrame: function(payload) {
+    this.data.color.frame = new Color(payload.hexcode);
     this.emit('change');
   },
 

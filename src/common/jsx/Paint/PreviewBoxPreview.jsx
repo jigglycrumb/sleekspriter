@@ -1,5 +1,5 @@
 var PreviewBoxPreview = React.createClass({
-  mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [FluxMixin, PostalSubscriptionMixin, FrameCanvasMixin],
   render: function() {
     var scale = this.getScale(),
         width = this.props.width*scale,
@@ -9,9 +9,6 @@ var PreviewBoxPreview = React.createClass({
       <canvas id="PreviewBoxPreview" width={width} height={height}></canvas>
     );
   },
-  componentDidMount: function() {
-    this.subscriptions.push(channel.gui.subscribe('cursor.set', this.getPixelColor));
-  },
   getPixelColor: function(data) {
     var scale = this.getScale(),
         ctx   = this.getDOMNode().getContext('2d'),
@@ -20,7 +17,7 @@ var PreviewBoxPreview = React.createClass({
         px    = ctx.getImageData(x*scale, y*scale, 1, 1).data,
         color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-    editor.color.frame = color;
+    this.getFlux().actions.colorFrame(color.hexString());
   },
   getScale: function() {
     var scale = 1,

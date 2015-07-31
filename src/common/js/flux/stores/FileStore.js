@@ -21,9 +21,9 @@ var FileStore = Fluxxor.createStore({
 
       size: {width: 0, height: 0},
       frames: {x: 0, y: 0},
-      layers: null,
-      animations: null,
-      pixels: null,
+      layers: [],
+      animations: [],
+      pixels: [],
     };
 
     if(key && data[key]) this.data[key] = data[key];
@@ -31,8 +31,6 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFileCreate: function(payload) {
-    console.log('FileStore.onFileCreate', payload);
-
     var json = {},
         totalFrames = payload.framesX * payload.framesY;
 
