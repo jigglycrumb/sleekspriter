@@ -19,4 +19,5 @@ var constants = {
   COLOR_LAYER:                'COLOR_LAYER',
   PALETTE_LOAD:               'PALETTE_LOAD',
   PALETTE_SELECT:             'PALETTE_SELECT',
+  LAYER_SELECT:               'LAYER_SELECT',
 };

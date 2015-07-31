@@ -36,7 +36,7 @@ var ScreenPaint = React.createClass({
             <PreviewBox editor={this.props.editor} file={this.props.file} ui={this.props.ui} fold="preview" />
             {frameBox}
           </div>
-          <LayerBox editor={this.props.editor} file={this.props.file} fold="layers" />
+          <LayerBox editor={this.props.editor} file={this.props.file} ui={this.props.ui} fold="layers" />
         </div>
         <div className="area statusbar">
           <StatusBar editor={this.props.editor} ui={this.props.ui} />

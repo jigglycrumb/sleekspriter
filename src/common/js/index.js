@@ -53,7 +53,7 @@ function refreshPreviews() {
   });
 };
 
-var stores, flux, channel, platformUtils, file, editor, hotkeys, container;
+var stores, flux, channel, platformUtils, storeUtils, file, editor, hotkeys, container;
 
 function base_init() {
   stores = {
@@ -75,6 +75,7 @@ function base_init() {
   };
 
   platformUtils = new PlatformUtils();
+  storeUtils = new StoreUtils();
   file = new File();
   editor = new Editor();
   hotkeys = new Hotkeys(editor);

@@ -14,8 +14,8 @@ var LayerBox = React.createClass({
     }
   },
   render: function() {
-    var disabled = this.props.editor.layers.frame.length <= 1 ? true : false;
-    var layers = _.clone(this.props.editor.layers.frame, true);
+    var disabled = this.props.ui.layers.frame.length <= 1 ? true : false;
+    var layers = _.clone(this.props.ui.layers.frame, true);
 
     if(this.state.dragLayer != 0) {
       layers.splice(this.state.dragPosition, 0, 'dropzone').join();
@@ -29,13 +29,13 @@ var LayerBox = React.createClass({
             {layers.map(function(layer) {
               if(layer === 'dropzone') return <LayerBoxDrophelper key="layerdropzone" />
               else {
-                var selected = layer.id === this.props.editor.layers.selected ? true : false;
+                var selected = layer.id === this.props.ui.layers.selected ? true : false;
                 return (
                   <LayerBoxLayer
                     key={layer.id}
                     layer={layer}
                     selected={selected}
-                    dimensions={this.props.editor.file.size} />
+                    dimensions={this.props.file.size} />
                 )
               }
             }, this)}
@@ -57,7 +57,7 @@ var LayerBox = React.createClass({
     this.fitHeight();
   },
   dispatchLayerAdded: function() {
-    channel.file.publish('layer.add', {layer: this.props.editor.layers.selected});
+    channel.file.publish('layer.add', {layer: this.props.ui.layers.selected});
   },
   confirmLayerDelete: function() {
     channel.gui.publish('modal.show', {component: ModalConfirmDeleteLayer});
@@ -83,7 +83,7 @@ var LayerBox = React.createClass({
         dragPosition = Math.floor(y/41);
 
     if(dragPosition < 0) dragPosition = 0;
-    if(dragPosition > this.props.editor.layers.frame.length) dragPosition = this.props.editor.layers.frame.length;
+    if(dragPosition > this.props.ui.layers.frame.length) dragPosition = this.props.ui.layers.frame.length;
 
     this.setState({dragPosition: dragPosition});
   },

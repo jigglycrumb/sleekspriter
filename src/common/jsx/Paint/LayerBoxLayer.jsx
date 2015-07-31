@@ -1,4 +1,5 @@
 var LayerBoxLayer = React.createClass({
+  mixins: [FluxMixin],
   propTypes: {
      layer: React.PropTypes.object.isRequired // layer object
   },
@@ -24,7 +25,7 @@ var LayerBoxLayer = React.createClass({
     );
   },
   dispatchLayerSelected: function() {
-    channel.gui.publish('layer.select', {layer: this.props.layer.id});
+    this.getFlux().actions.layerSelect(this.props.layer.id);
   },
   dispatchLayerVisibilityChanged: function(event) {
     channel.file.publish('layer.visibility.toggle', {layer: this.props.layer.id, visible: event.target.checked});

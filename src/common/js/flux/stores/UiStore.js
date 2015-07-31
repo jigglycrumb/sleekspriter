@@ -19,7 +19,8 @@ var UiStore = Fluxxor.createStore({
       constants.COLOR_LAYER,                this.onColorLayer,
       constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
-      constants.PALETTE_SELECT,             this.onPaletteSelect
+      constants.PALETTE_SELECT,             this.onPaletteSelect,
+      constants.LAYER_SELECT,               this.onLayerSelect
     );
   },
 
@@ -40,6 +41,10 @@ var UiStore = Fluxxor.createStore({
       frames: {
         selected: 1,
         total: 1,
+      },
+      layers: {
+        selected: null,
+        frame: [],
       },
       settings: {
         paint: false,
@@ -84,33 +89,36 @@ var UiStore = Fluxxor.createStore({
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.frames.selected = 1;
       this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
+
+      this.data.layers.frame = this._updateFrameLayers(FileStore, 1); // get layers for frame 1
+
       this._buildSpritePalette(FileStore);
       this.emit('change');
     });
   },
 
-  onTabSelect: function(payload) {
-    this.data.tab = payload.tab;
+  onTabSelect: function(tab) {
+    this.data.tab = tab;
     this.emit('change');
   },
 
-  onToolSelect: function(payload) {
-    this.data.tool = payload.tool;
+  onToolSelect: function(tool) {
+    this.data.tool = tool;
     this.emit('change');
   },
 
-  onSettingsPaint: function(payload) {
-    this.data.settings.paint = payload.visible;
+  onSettingsPaint: function(visible) {
+    this.data.settings.paint = !!visible;
     this.emit('change');
   },
 
-  onSettingsGrid: function(payload) {
-    this.data.settings.grid = payload.visible;
+  onSettingsGrid: function(visible) {
+    this.data.settings.grid = !!visible;
     this.emit('change');
   },
 
-  onZoomSelect: function(payload) {
-    var z = parseInt(payload.zoom);
+  onZoomSelect: function(zoom) {
+    var z = parseInt(zoom);
     z = z > this.data.zoom.max ? this.data.zoom.max : z;
     z = z < this.data.zoom.min ? this.data.zoom.min : z;
     this.data.zoom.selected = z;
@@ -123,8 +131,8 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onFrameSelect: function(payload) {
-    this.data.frames.selected = parseInt(payload.frame);
+  onFrameSelect: function(frame) {
+    this.data.frames.selected = parseInt(frame);
     this.emit('change');
   },
 
@@ -138,39 +146,39 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onBrightnessToolMode: function(payload) {
-    this.data.brightnessTool.mode = payload.mode;
+  onBrightnessToolMode: function(mode) {
+    this.data.brightnessTool.mode = mode;
     this.emit('change');
   },
 
-  onBrightnessToolIntensity: function(payload) {
-    this.data.brightnessTool.intensity = parseInt(payload.intensity);
+  onBrightnessToolIntensity: function(intensity) {
+    this.data.brightnessTool.intensity = parseInt(intensity);
     this.emit('change');
   },
 
-  onCursorSet: function(payload) {
-    this.data.cursor = payload.position;
+  onCursorSet: function(position) {
+    this.data.cursor = position;
     this.emit('change');
   },
 
-  onColorBrush: function(payload) {
-    this.data.color.brush = new Color(payload.hexcode);
+  onColorBrush: function(hexcode) {
+    this.data.color.brush = new Color(hexcode);
     this.emit('change');
   },
 
-  onColorLayer: function(payload) {
-    this.data.color.layer = new Color(payload.hexcode);
+  onColorLayer: function(hexcode) {
+    this.data.color.layer = new Color(hexcode);
     this.emit('change');
   },
 
-  onColorFrame: function(payload) {
-    this.data.color.frame = new Color(payload.hexcode);
+  onColorFrame: function(hexcode) {
+    this.data.color.frame = new Color(hexcode);
     this.emit('change');
   },
 
-  onPaletteLoad: function(payload) {
+  onPaletteLoad: function(palettes) {
     var self = this;
-    payload.json.forEach(function(palette){
+    palettes.forEach(function(palette) {
       self.data.palettes.available.push(palette);
     });
     this.emit('change');
@@ -178,6 +186,11 @@ var UiStore = Fluxxor.createStore({
 
   onPaletteSelect: function(palette) {
     this.data.palettes.selected = parseInt(palette)
+    this.emit('change');
+  },
+
+  onLayerSelect: function(layer) {
+    this.data.layers.selected = parseInt(layer);
     this.emit('change');
   },
 
@@ -192,4 +205,8 @@ var UiStore = Fluxxor.createStore({
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
   },
+
+  _updateFrameLayers: function(FileStore, frame) {
+    return _.where(FileStore.getData('layers'), {frame: frame});
+  }
 });

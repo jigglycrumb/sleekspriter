@@ -23,6 +23,7 @@ module.exports = {
 
       'build/browser/js/classes/Hotkeys.js',
 
+      'build/browser/js/classes/StoreUtils.js',
       'build/browser/js/classes/PlatformUtils.js',
 
       'build/browser/js/flux/**/*.js',
@@ -52,6 +53,7 @@ module.exports = {
 
       'build/desktop/mac/js/classes/Hotkeys.js',
 
+      'build/desktop/mac/js/classes/StoreUtils.js',
       'build/desktop/mac/js/classes/PlatformUtils.js',
 
       'build/desktop/mac/js/flux/**/*.js',
@@ -83,6 +85,7 @@ module.exports = {
 
       'build/desktop/windows/js/classes/Hotkeys.js',
 
+      'build/desktop/windows/js/classes/StoreUtils.js',
       'build/desktop/windows/js/classes/PlatformUtils.js',
 
       'build/desktop/windows/js/flux/**/*.js',
@@ -114,6 +117,7 @@ module.exports = {
 
       'build/tablet/js/classes/Hotkeys.js',
 
+      'build/tablet/js/classes/StoreUtils.js',
       'build/tablet/js/classes/PlatformUtils.js',
 
       'build/tablet/js/flux/**/*.js',
