@@ -1,6 +1,4 @@
-var StoreUtils = function() {
-  console.log('Constructing StoreUtils');
-};
+var StoreUtils = function() {};
 
 StoreUtils.prototype = {};
 StoreUtils.prototype.constructor = StoreUtils;

@@ -30,7 +30,7 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
 };
 
 function isLayerVisible() {
-  var layer = file.getLayerById(editor.layers.selected);
+  var layer = storeUtils.layers.getSelected();
   return layer.visible && layer.opacity > 0;
 };
 
@@ -48,8 +48,8 @@ function changeColorLightness(color, delta) {
 
 function refreshPreviews() {
   channel.gui.publish('canvas.refresh', {
-    frame: editor.frames.selected,
-    layer: editor.layers.selected,
+    frame: flux.stores.UiStore.getData().frames.selected,
+    layer: flux.stores.UiStore.getData().layers.selected,
   });
 };
 

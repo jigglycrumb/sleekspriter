@@ -49,15 +49,15 @@ Editor.prototype.pixels.init = function() {
   }
 
   // message handlers
-  channel.file.subscribe('file.load', function() {
-    self.file = file.pixels;
-    self.frame = [];
-    self.scope = [];
-  });
+  // channel.file.subscribe('file.load', function() {
+  //   self.file = file.pixels;
+  //   self.frame = [];
+  //   self.scope = [];
+  // });
 
-  channel.gui.subscribe('frame.select', function(data, envelope) {
-    self.frame = _.where(self.file, {frame: data.frame});
-  });
+  // channel.gui.subscribe('frame.select', function(data, envelope) {
+  //   self.frame = _.where(self.file, {frame: data.frame});
+  // });
 
   channel.gui.subscribe('layer.delete', function(data, envelope) {
     self.scope = [];

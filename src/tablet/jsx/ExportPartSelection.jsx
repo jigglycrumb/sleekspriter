@@ -4,9 +4,9 @@ var ExportPartSelection = React.createClass({
       {name: 'spritesheet', el: 'Spritesheet as single image'},
       {name: 'oneframe', el:  <span>
                                 Frame&nbsp;
-                                <input type="number" value={this.props.frame} min={1} max={this.props.editor.frames.total} onChange={this.setFrame} />
+                                <input type="number" value={this.props.frame} min={1} max={this.props.ui.frames.total} onChange={this.setFrame} />
                                 &nbsp;/&nbsp;
-                                {this.props.editor.frames.total} as image
+                                {this.props.ui.frames.total} as image
                               </span>},
     ];
 

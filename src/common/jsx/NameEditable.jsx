@@ -1,3 +1,4 @@
+// Flux: done
 var NameEditable = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,

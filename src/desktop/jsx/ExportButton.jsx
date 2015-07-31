@@ -42,7 +42,7 @@ var ExportButton = React.createClass({
           name: file.name,
           format: self.props.format,
           part: self.props.part,
-          frames: self.props.editor.frames.total,
+          frames: self.props.ui.frames.total,
           animation: self.props.animation,
         });
       }
@@ -82,7 +82,7 @@ var ExportButton = React.createClass({
         name: file.name,
         format: this.props.format,
         part: this.props.part,
-        frames: this.props.editor.frames.total,
+        frames: this.props.ui.frames.total,
       });
     }
   },

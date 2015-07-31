@@ -50,6 +50,11 @@ var UiStore = Fluxxor.createStore({
         selected: null,
         frame: [],
       },
+      pixels: {
+        frame: [],
+        scope: [],
+        clipboard: [],
+      },
       settings: {
         paint: false,
         grid: true,
@@ -96,6 +101,9 @@ var UiStore = Fluxxor.createStore({
 
       this.data.layers.frame = storeUtils.layers.getByFrame(1);
 
+      this.data.pixels.frame = [];
+      this.data.pixels.scope = [];
+
       this._buildSpritePalette(FileStore);
       this.emit('change');
     });
@@ -136,8 +144,12 @@ var UiStore = Fluxxor.createStore({
   },
 
   onFrameSelect: function(frame) {
-    this.data.frames.selected = parseInt(frame);
-    this.emit('change');
+    frame = parseInt(frame);
+    this.waitFor(['FileStore'], function(FileStore) {
+      this.data.frames.selected = frame;
+      this.data.pixels.frame = _.where(FileStore.getData('pixels'), {frame: frame});
+      this.emit('change');
+    });
   },
 
   onModalShow: function(payload) {

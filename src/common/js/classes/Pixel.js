@@ -106,10 +106,10 @@ Pixel.prototype.wrap = function(distance, simulate) {
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
 
-  if(targetX > editor.file.size.width) targetX -= editor.file.size.width;
-  else if(targetX < 1) targetX += editor.file.size.width;
-  if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
-  else if(targetY < 1) targetY += editor.file.size.height;
+  if(targetX > flux.stores.FileStore.getData().size.width) targetX -= flux.stores.FileStore.getData().size.width;
+  else if(targetX < 1) targetX += flux.stores.FileStore.getData().size.width;
+  if(targetY > flux.stores.FileStore.getData().size.height) targetY -= flux.stores.FileStore.getData().size.height;
+  else if(targetY < 1) targetY += flux.stores.FileStore.getData().size.height;
 
   if(simulate === true) {
     return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
@@ -126,7 +126,7 @@ Pixel.prototype.wrap = function(distance, simulate) {
  * @return {Object} The pixel object
  */
 Pixel.prototype.flipHorizontal = function() {
-  var targetX = editor.file.size.width - this.x + 1;
+  var targetX = flux.stores.FileStore.getData().size.width - this.x + 1;
   this.x = targetX;
   return this;
 };
@@ -136,7 +136,7 @@ Pixel.prototype.flipHorizontal = function() {
  * @return {Object} The pixel object
  */
 Pixel.prototype.flipVertical = function() {
-  var targetY = editor.file.size.height - this.y + 1;
+  var targetY = flux.stores.FileStore.getData().size.height - this.y + 1;
   this.y = targetY;
   return this;
 };
@@ -182,7 +182,7 @@ Pixel.toArray = function(pixel) {
  * @param {String} color - hex-string of color to paint
  */
 Pixel.paint = function(canvas, x, y, color, scale) {
-  var scale = scale || canvas.width/file.size.width,
+  var scale = scale || canvas.width/flux.stores.FileStore.getData().size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
@@ -236,10 +236,10 @@ Pixel.add = function(frame, layer, x, y, z, color) {
  */
 Pixel.delete = function(frame, layer, x, y, z) {
   channel.gui.publish('pixel.delete', {
-    frame: editor.frames.selected,
-    layer: editor.layers.selected,
+    frame: flux.stores.UiStore.getData().frames.selected,
+    layer: flux.stores.UiStore.getData().layers.selected,
     x: flux.stores.UiStore.getData().cursor.x,
     y: flux.stores.UiStore.getData().cursor.y,
-    z: file.getLayerById(editor.layers.selected).z,
+    z: storeUtils.layers.getSelected().z,
   });
 };

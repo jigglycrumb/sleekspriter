@@ -1,8 +1,7 @@
+// Flux: done, editor: done
 var DebugLog = React.createClass({
   getInitialState: function() {
-    return {
-      wiretap: null,
-    }
+    return {enabled: false}
   },
   render: function() {
     return (
@@ -17,29 +16,25 @@ var DebugLog = React.createClass({
     )
   },
   toggle: function(event) {
-    var active = event.target.value === 'on' ? true : false;
-    this.state.wiretap.active = active;
+    var enabled = event.target.value === 'on' ? true : false;
+    this.setState({enabled: enabled});
   },
   clearLog: function() {
     this.refs.log.getDOMNode().innerHTML = '';
   },
   componentDidMount: function() {
-    var log = this.refs.log.getDOMNode(),
-        active = this.state.active,
-        wiretap = new postal.diagnostics.DiagnosticsWireTap({
-          name: 'debuglog',
-          active: active,
-          filters: [
-            { channel: 'gui' },
-          ],
-          writer: function(data) {
-            var logText = log.innerHTML;
-            if(logText.length === 0) logText = data;
-            else logText = logText + "\n" + data;
-            log.innerHTML = logText;
-          },
-        });
+    flux.on('dispatch', this.log);
+  },
+  componentWillUnmount: function() {
+    flux.removeListener('dispatch', this.log);
+  },
+  log: function(type, payload) {
+    if(this.state.enabled === true) {
+      var log = this.refs.log.getDOMNode(),
+          logLine = "[Dispatch] "+type+" "+JSON.stringify(payload, 2)+"\n",
+          logText = log.innerHTML || "";
 
-    this.setState({wiretap: wiretap});
+      log.innerHTML = logText + logLine;
+    }
   },
 });

@@ -16,7 +16,13 @@ var LayerBoxLayer = React.createClass({
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
         <div className="preview" onClick={this.dispatchLayerSelected}>
-          <LayerBoxLayerPreview ref="preview" id={this.props.layer.id} width={this.props.dimensions.width} height={this.props.dimensions.height} stage={false} />
+          <LayerBoxLayerPreview
+            ref="preview"
+            id={this.props.layer.id}
+            width={this.props.dimensions.width}
+            height={this.props.dimensions.height}
+            stage={false}
+            ui={this.props.ui} />
         </div>
         <NameEditable name={this.props.layer.name} callback={this.dispatchLayerNameChanged} />
         <input type="range" className="opacity-slider" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />

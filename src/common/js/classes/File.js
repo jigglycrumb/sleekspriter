@@ -189,25 +189,25 @@ var File = function() {
 
 
   // handle layer opacity change
-  channel.file.subscribe('layer.opacity.select', function(data, envelope) {
-    var layer = self.getLayerById(data.layer);
-    layer.opacity = data.opacity;
-    channel.gui.publish('layer.opacity.select', data);
-  });
+  // channel.file.subscribe('layer.opacity.select', function(data, envelope) {
+  //   var layer = self.getLayerById(data.layer);
+  //   layer.opacity = data.opacity;
+  //   channel.gui.publish('layer.opacity.select', data);
+  // });
 
   // handle layer visibility toggle
-  channel.file.subscribe('layer.visibility.toggle', function(data, envelope) {
-    var layer = self.getLayerById(data.layer);
-    layer.visible = data.visible;
-    channel.gui.publish('layer.visibility.toggle', data);
-  });
+  // channel.file.subscribe('layer.visibility.toggle', function(data, envelope) {
+  //   var layer = self.getLayerById(data.layer);
+  //   layer.visible = data.visible;
+  //   channel.gui.publish('layer.visibility.toggle', data);
+  // });
 
   // handle layer name change
-  channel.file.subscribe('layer.name.select', function(data, envelope) {
-    var layer = self.getLayerById(data.layer);
-    layer.name = data.name;
-    channel.gui.publish('layer.name.select', data);
-  });
+  // channel.file.subscribe('layer.name.select', function(data, envelope) {
+  //   var layer = self.getLayerById(data.layer);
+  //   layer.name = data.name;
+  //   channel.gui.publish('layer.name.select', data);
+  // });
 
   // handle layer drag & drop
   channel.file.subscribe('layer.drop', function(data, envelope) {

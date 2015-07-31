@@ -38,7 +38,7 @@ var StageBox = React.createClass({
         <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} ui={this.props.ui} />
         <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
 
-        {this.props.editor.layers.frame.map(function(layer) {
+        {this.props.ui.layers.frame.map(function(layer) {
           return (
             <StageBoxLayer
               key={layer.id}
@@ -46,7 +46,8 @@ var StageBox = React.createClass({
               height={h}
               id={layer.id}
               layer={layer}
-              stage={true} />
+              stage={true}
+              ui={this.props.ui} />
           );
         }, this)}
 

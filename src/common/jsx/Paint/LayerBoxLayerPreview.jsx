@@ -1,5 +1,6 @@
+// Flux: done, editor: done
 var LayerBoxLayerPreview = React.createClass({
-  mixins:[PostalSubscriptionMixin, LayerCanvasMixin],
+  mixins:[LayerCanvasMixin],
   render: function() {
     var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, 30);
     return (

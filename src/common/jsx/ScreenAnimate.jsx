@@ -19,7 +19,7 @@ var ScreenAnimate = React.createClass({
     return (
       <section className={cssClasses}>
         <div className="area left">
-          <AnimationFrameBox editor={this.props.editor} />
+          <AnimationFrameBox ui={this.props.ui} file={this.props.file} editor={this.props.editor} />
         </div>
 
         <div className="area right">

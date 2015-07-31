@@ -35,7 +35,8 @@ var LayerBox = React.createClass({
                     key={layer.id}
                     layer={layer}
                     selected={selected}
-                    dimensions={this.props.file.size} />
+                    dimensions={this.props.file.size}
+                    ui={this.props.ui} />
                 )
               }
             }, this)}

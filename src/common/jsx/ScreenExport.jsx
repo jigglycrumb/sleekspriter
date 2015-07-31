@@ -18,13 +18,13 @@ var ScreenExport = React.createClass({
     }
   },
   componentWillReceiveProps: function(nextProps) {
-    if(nextProps.editor.frames.total === 1) this.setState({part: 'spritesheet'});
+    if(nextProps.ui.frames.total === 1) this.setState({part: 'spritesheet'});
   },
   render: function() {
 
-    var partSelection = editor.frames.total === 1
+    var partSelection = this.props.ui.frames.total === 1
                       ? null
-                      : <ExportPartSelection editor={this.props.editor} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />;
+                      : <ExportPartSelection ui={this.props.ui} editor={this.props.editor} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />;
 
     return (
       <section className="screen export">
@@ -33,7 +33,7 @@ var ScreenExport = React.createClass({
           {partSelection}
           <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} ui={this.props.ui} file={this.props.file} />
           <ExportOutputSelection format={this.state.format} part={this.state.part} />
-          <ExportButton editor={this.props.editor} format={this.state.format} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />
+          <ExportButton ui={this.props.ui} editor={this.props.editor} format={this.state.format} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />
         </div>
 
         <div className="area right">
@@ -43,8 +43,8 @@ var ScreenExport = React.createClass({
             animation={this.state.animation}
             zoom={this.state.zoom} 
             format={this.state.format}
-            dimensions={this.props.editor.file.size}
-            frames={this.props.editor.frames} />
+            dimensions={this.props.file.size}
+            frames={this.props.file.frames} />
         </div>
 
         <div className="area statusbar">

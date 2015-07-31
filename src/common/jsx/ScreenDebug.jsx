@@ -1,4 +1,4 @@
-// Flux: done
+// Flux: done, editor: done
 var ScreenDebug = React.createClass({
   render: function() {
     return (

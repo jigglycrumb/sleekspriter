@@ -4,6 +4,7 @@ var LayerCanvasMixin = {
      width: React.PropTypes.number.isRequired, // file width
      height: React.PropTypes.number.isRequired, // file height
      stage: React.PropTypes.bool.isRequired, // flag if layer is on stage (necessary for reacting to zoom events)
+     ui: React.PropTypes.object.isRequired, // instance of UiStore
   },
   getInitialState: function() {
     return {
@@ -18,6 +19,7 @@ var LayerCanvasMixin = {
       },
     };
   },
+  /*
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
 
@@ -55,7 +57,11 @@ var LayerCanvasMixin = {
       }
     }
   },
+  */
   componentDidMount: function() {
+    this.paintLayer();
+  },
+  componentDidUpdate: function() {
     this.paintLayer();
   },
   paintLayer: function() {
@@ -73,8 +79,8 @@ var LayerCanvasMixin = {
       canvas.width = canvas.width;
 
       // paint
-      editor.pixels.scope.forEach(paint, this);
-      editor.pixels.frame.forEach(paint, this);
+      this.props.ui.pixels.scope.forEach(paint, this);
+      this.props.ui.pixels.frame.forEach(paint, this);
     }
   },
   previewLayer: function(pixels) {

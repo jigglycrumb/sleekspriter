@@ -180,7 +180,7 @@ function menu_init() {
   editMenu.append(new gui.MenuItem({
     label: 'Image size...',
     click: function() {
-      channel.gui.publish('modal.show', {component: ModalEditImageSize});
+      flux.actions.modalShow(ModalEditImageSize);
     },
     key: 'i',
     modifiers: modKey,
@@ -324,8 +324,7 @@ function menu_init() {
   developerMenu.append(new gui.MenuItem({
     label: 'Show Debug Screen',
     click: function() {
-      console.log('logscreen');
-      channel.gui.publish('screen.select', {target: 'debug'});
+      flux.actions.tabSelect('debug');
     }
   }));
 

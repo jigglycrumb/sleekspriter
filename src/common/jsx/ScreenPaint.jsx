@@ -39,7 +39,7 @@ var ScreenPaint = React.createClass({
           <LayerBox file={this.props.file} ui={this.props.ui} fold="layers" />
         </div>
         <div className="area statusbar">
-          <StatusBar editor={this.props.editor} ui={this.props.ui} />
+          <StatusBar ui={this.props.ui} />
         </div>
         <div className="area settings" style={settingsBoxStyle}>
           <SettingsBox ui={this.props.ui} />
