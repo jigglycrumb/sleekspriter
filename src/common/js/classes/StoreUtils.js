@@ -72,10 +72,18 @@ StoreUtils.prototype.layers.getTop = function() {
 // Animation-related helpers
 StoreUtils.prototype.animations = {};
 
+/**
+ * Get animation by name
+ * @returns {Object} animation
+ */
 StoreUtils.prototype.animations.getByName = function(name) {
   return _.find(flux.stores.FileStore.getData('animations'), {name: name});
 };
 
+/**
+ * Get selected animation
+ * @returns {Object} animation
+ */
 StoreUtils.prototype.animations.getSelected = function() {
   return this.getByName(flux.stores.UiStore.getData('animations').selected);
 };

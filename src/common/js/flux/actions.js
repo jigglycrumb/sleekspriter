@@ -78,4 +78,10 @@ var actions = {
   animationSelect: function(name) {
     this.dispatch(constants.ANIMATION_SELECT, name);
   },
+  animationName: function(animation, name) {
+    this.dispatch(constants.ANIMATION_NAME, {animation: animation, name: name});
+  },
+  animationFps: function(animation, fps) {
+    this.dispatch(constants.ANIMATION_FPS, {animation: animation, fps: fps});
+  },
 };

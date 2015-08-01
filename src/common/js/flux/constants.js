@@ -25,4 +25,6 @@ var constants = {
   LAYER_NAME:                 'LAYER_NAME',
   LAYER_TOP_SELECT:           'LAYER_TOP_SELECT',
   ANIMATION_SELECT:           'ANIMATION_SELECT',
+  ANIMATION_NAME:             'ANIMATION_NAME',
+  ANIMATION_FPS:              'ANIMATION_FPS',
 };

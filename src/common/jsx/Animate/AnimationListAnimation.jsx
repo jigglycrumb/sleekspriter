@@ -26,6 +26,6 @@ var AnimationListAnimation = React.createClass({
     }
   },
   dispatchAnimationNameChanged: function(oldName, newName) {
-    channel.file.publish('animation.rename', {oldName: oldName, newName: newName});
+    this.getFlux().actions.animationName(oldName, newName);
   },
 });

@@ -74,7 +74,7 @@ var AnimationControlBox = React.createClass({
   },
   setAnimationFps: function(event) {
     var fps = +event.target.value;
-    channel.file.publish('animation.fps', {name: this.props.selected, fps: fps});
+    this.getFlux().actions.animationFps(this.props.selected, fps);
     if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
   },
   selectFrame: function(data) {

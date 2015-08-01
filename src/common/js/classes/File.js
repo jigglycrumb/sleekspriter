@@ -338,18 +338,18 @@ var File = function() {
   });
 
   // handle setting of animation FPS
-  channel.file.subscribe('animation.fps', function(data, envelope) {
-    var animation = self.getAnimationByName(data.name);
-    animation.fps = +data.fps;
-    channel.gui.publish('animation.fps');
-  });
+  // channel.file.subscribe('animation.fps', function(data, envelope) {
+  //   var animation = self.getAnimationByName(data.name);
+  //   animation.fps = +data.fps;
+  //   channel.gui.publish('animation.fps');
+  // });
 
   // handle animation renaming
-  channel.file.subscribe('animation.rename', function(data, envelope) {
-    var animation = self.getAnimationByName(data.oldName);
-    animation.name = data.newName;
-    channel.gui.publish('animation.rename', data);
-  });
+  // channel.file.subscribe('animation.rename', function(data, envelope) {
+  //   var animation = self.getAnimationByName(data.oldName);
+  //   animation.name = data.newName;
+  //   channel.gui.publish('animation.rename', data);
+  // });
 
   // handle animation frame adding
   channel.file.subscribe('animation.frame.add', function(data, envelope) {

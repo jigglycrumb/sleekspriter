@@ -33,7 +33,7 @@ var ScreenExport = React.createClass({
           {partSelection}
           <ExportZoomSelection zoom={this.state.zoom} part={this.state.part} ui={this.props.ui} file={this.props.file} />
           <ExportOutputSelection format={this.state.format} part={this.state.part} />
-          <ExportButton ui={this.props.ui} editor={this.props.editor} format={this.state.format} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />
+          <ExportButton ui={this.props.ui} format={this.state.format} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />
         </div>
 
         <div className="area right">
@@ -56,8 +56,8 @@ var ScreenExport = React.createClass({
     )
   },
   componentDidUpdate: function() {
-    if(this.state.animation === null && this.props.editor.animations.list.length > 0) {
-      this.setState({animation: this.props.editor.animations.list[0].name});
+    if(this.state.animation === null && this.props.file.animations.length > 0) {
+      this.setState({animation: this.props.file.animations[0].name});
     }
   },
   updateSettings: function(data) {

@@ -9,7 +9,10 @@ var FileStore = Fluxxor.createStore({
 
       constants.LAYER_VISIBILITY, this.onLayerVisibility,
       constants.LAYER_OPACITY,    this.onLayerOpacity,
-      constants.LAYER_NAME,       this.onLayerName
+      constants.LAYER_NAME,       this.onLayerName,
+
+      constants.ANIMATION_NAME,   this.onAnimationName,
+      constants.ANIMATION_FPS,    this.onAnimationFps
     );
   },
 
@@ -94,6 +97,24 @@ var FileStore = Fluxxor.createStore({
     layer.name = payload.name;
     this.data.layers.forEach(function(l) {
       if(l.id === layer.id) l = layer;
+    });
+    this.emit('change');
+  },
+
+  onAnimationName: function(payload) {
+    var animation = storeUtils.animations.getByName(payload.animation);
+    animation.name = payload.name;
+    this.data.animations.forEach(function(a) {
+      if(a.name === payload.animation) a = animation;
+    });
+    this.emit('change');
+  },
+
+  onAnimationFps: function(payload) {
+    var animation = storeUtils.animations.getByName(payload.animation);
+    animation.fps = parseInt(payload.fps);
+    this.data.animations.forEach(function(a) {
+      if(a.name === payload.animation) a = animation;
     });
     this.emit('change');
   },
