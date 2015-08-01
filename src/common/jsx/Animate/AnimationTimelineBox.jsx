@@ -73,20 +73,35 @@ var AnimationTimelineBox = React.createClass({
         <h4>Timeline</h4>
         <div className="scroller">
           <div ref="inner" className="inner" style={innerStyle}>
-            <AnimationFrameDropzone cssClass={dropzoneClass} text={dropzoneHtml} position={0} animation={this.props.editor.animations.selected} />
+            <AnimationFrameDropzone
+              cssClass={dropzoneClass}
+              text={dropzoneHtml} 
+              position={0}
+              animation={this.props.editor.animations.selected} />
+
             {finalElements.map(function(element) {
               if(element === 'dropzone') {
                 var key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone key={key} cssClass={dropzoneClass} text={dropzoneHtml} position={dropzoneKey-1} animation={this.props.editor.animations.selected} />
+                  <AnimationFrameDropzone 
+                    key={key}
+                    cssClass={dropzoneClass}
+                    text={dropzoneHtml}
+                    position={dropzoneKey-1} 
+                    animation={this.props.editor.animations.selected} />
                 )
               }
               else if(element === 'dropzone-last') {
                 var key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone key={key} cssClass="last" text={dropzoneHtml} position={dropzoneKey-1} animation={this.props.editor.animations.selected} />
+                  <AnimationFrameDropzone 
+                    key={key}
+                    cssClass="last"
+                    text={dropzoneHtml}
+                    position={dropzoneKey-1} 
+                    animation={this.props.editor.animations.selected} />
                 )
               }
               else {
@@ -94,7 +109,15 @@ var AnimationTimelineBox = React.createClass({
                     selected = this.state.selectedFrame === frameKey ? true : false;
                 frameKey++;
                 return (
-                  <AnimationTimelineFrame key={key} frame={element} size={frameSize} position={frameKey-1} editor={this.props.editor} selected={selected} />
+                  <AnimationTimelineFrame
+                    key={key}
+                    frame={element}
+                    size={frameSize}
+                    position={frameKey-1}
+                    editor={this.props.editor}
+                    ui={this.props.ui}
+                    file={this.props.file}
+                    selected={selected} />
                 )
               }
             }, this)}

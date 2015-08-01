@@ -18,7 +18,10 @@ var ExportPreviewAnimation = React.createClass({
             width={this.props.width}
             height={this.props.height}
             frameSize={this.props.frameSize}
-            format={this.props.format} />
+            format={this.props.format}
+            ui={this.props.ui}
+            file={this.props.file} />
+
           <div className="animation-frames hidden">
             {this.props.animation.frames.map(function(frame) {
               var key = 'preview-frame-'+i;
@@ -30,7 +33,9 @@ var ExportPreviewAnimation = React.createClass({
                   width={self.props.width}
                   height={self.props.height}
                   frameSize={self.props.frameSize}
-                  format={self.props.format} />
+                  format={self.props.format}
+                  ui={this.props.ui}
+                  file={this.props.file} />
               )
             },this)}
           </div>

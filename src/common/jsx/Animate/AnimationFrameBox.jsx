@@ -28,7 +28,13 @@ var AnimationFrameBox = React.createClass({
           <button className="mass-add column" title="Add column to animation" style={columnButtonStyle} onClick={this.addColumn}>+</button>
           {frames.map(function(frame) {
             return (
-              <AnimationFrameBoxFrame key={frame} frame={frame} size={frameSize} ui={this.props.ui} file={this.props.file} editor={this.props.editor} />
+              <AnimationFrameBoxFrame
+                key={frame} 
+                frame={frame} 
+                size={frameSize}
+                ui={this.props.ui} 
+                file={this.props.file} 
+                editor={this.props.editor} />
             );
           }, this)}
           </div>

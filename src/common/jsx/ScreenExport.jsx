@@ -44,7 +44,9 @@ var ScreenExport = React.createClass({
             zoom={this.state.zoom} 
             format={this.state.format}
             dimensions={this.props.file.size}
-            frames={this.props.file.frames} />
+            frames={this.props.file.frames}
+            ui={this.props.ui}
+            file={this.props.file} />
         </div>
 
         <div className="area statusbar">

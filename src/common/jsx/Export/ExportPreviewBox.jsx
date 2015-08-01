@@ -27,7 +27,9 @@ var ExportPreviewBox = React.createClass({
                     frameSize={frameSize}
                     format={this.props.format}
                     frames={this.props.frames}
-                    backgroundColor={backgroundColor} />
+                    backgroundColor={backgroundColor}
+                    ui={this.props.ui}
+                    file={this.props.file}  />
         break;
 
       case 'oneframe':
@@ -37,7 +39,9 @@ var ExportPreviewBox = React.createClass({
                     height={this.props.dimensions.height}
                     frameSize={frameSize}
                     format={this.props.format}
-                    backgroundColor={backgroundColor} />
+                    backgroundColor={backgroundColor}
+                    ui={this.props.ui}
+                    file={this.props.file}  />
         break;
 
       case 'animation':
@@ -47,7 +51,9 @@ var ExportPreviewBox = React.createClass({
                     height={this.props.dimensions.height}
                     frameSize={frameSize}
                     format={this.props.format}
-                    animation={editor.animations.getByName(this.props.animation)} />
+                    animation={editor.animations.getByName(this.props.animation)}
+                    ui={this.props.ui}
+                    file={this.props.file}  />
         break;
     }
 

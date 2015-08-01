@@ -5,8 +5,9 @@ var FrameCanvasMixin = {
      height: React.PropTypes.number.isRequired, // file height
      alwaysRefresh: React.PropTypes.bool, // required for preview box to always render the current frame
      backgroundColor: React.PropTypes.string, //
+     ui: React.PropTypes.object.isRequired, // instance of UiStore
   },
-
+  /*
   getInitialState: function() {
     return {
       subscriptions: {
@@ -48,6 +49,7 @@ var FrameCanvasMixin = {
       }
     }
   },
+  */
   componentDidMount: function() {
     this.paintFrame();
   },
@@ -83,8 +85,8 @@ var FrameCanvasMixin = {
       if(px.frame === this.props.id) pixels.push(px);
     }
 
-    editor.pixels.file.forEach(grab, this);
-    editor.pixels.scope.forEach(grab, this);
+    this.props.file.pixels.forEach(grab, this);
+    this.props.ui.pixels.scope.forEach(grab, this);
 
     // clear canvas
     canvas.width = canvas.width;
@@ -104,7 +106,7 @@ var FrameCanvasMixin = {
   previewFrame: function(pixels) {
     var canvas = this.getDOMNode();
 
-    editor.pixels.frame.forEach(function(px) {
+    this.props.ui.pixels.frame.forEach(function(px) {
       if(px.layer !== this.state.data.layer) pixels.push(px);
     }, this);
 

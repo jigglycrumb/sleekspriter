@@ -47,7 +47,9 @@ var FrameBox = React.createClass({
                   id={frame}
                   width={this.props.file.size.width}
                   height={this.props.file.size.height}
-                  size={frameSize} />
+                  size={frameSize}
+                  ui={this.props.ui}
+                  file={this.props.file}  />
               </div>
             );
           }, this)}

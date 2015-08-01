@@ -23,7 +23,9 @@ var AnimationFrameBoxFrame = React.createClass({
           id={this.props.frame}
           width={this.props.file.size.width}
           height={this.props.file.size.height}
-          size={this.props.size} />
+          size={this.props.size}
+          ui={this.props.ui}
+          file={this.props.file} />
         <label>{this.props.frame}</label>
       </div>
     );

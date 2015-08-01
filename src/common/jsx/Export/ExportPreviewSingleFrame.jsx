@@ -1,5 +1,5 @@
 var ExportPreviewSingleFrame = React.createClass({
-  mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [FrameCanvasMixin],
   render: function() {
     var classes = classNames({
       preview: true,

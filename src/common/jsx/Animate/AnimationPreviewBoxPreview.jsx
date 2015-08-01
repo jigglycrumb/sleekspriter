@@ -1,5 +1,5 @@
 var AnimationPreviewBoxPreview = React.createClass({
-  mixins: [PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [FrameCanvasMixin],
   render: function() {
     var scale = 1,
         width = this.props.width*scale,

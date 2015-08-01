@@ -9,7 +9,9 @@ var PreviewBox = React.createClass({
             id={this.props.ui.frames.selected}
             width={this.props.file.size.width}
             height={this.props.file.size.height}
-            alwaysRefresh={true} />
+            alwaysRefresh={true}
+            ui={this.props.ui}
+            file={this.props.file} />
         </div>
       </div>
     );

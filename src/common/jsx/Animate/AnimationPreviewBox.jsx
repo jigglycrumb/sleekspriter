@@ -17,7 +17,9 @@ var AnimationPreviewBox = React.createClass({
           ref="preview"
           id={this.state.frame}
           width={this.props.editor.file.size.width}
-          height={this.props.editor.file.size.height} />
+          height={this.props.editor.file.size.height}
+          ui={this.props.ui}
+          file={this.props.file}  />
     }
 
     return (

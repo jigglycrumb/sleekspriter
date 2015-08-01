@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var LayerCanvasMixin = {
   propTypes: {
      id: React.PropTypes.number.isRequired,  // layer id
@@ -6,6 +7,7 @@ var LayerCanvasMixin = {
      stage: React.PropTypes.bool.isRequired, // flag if layer is on stage (necessary for reacting to zoom events)
      ui: React.PropTypes.object.isRequired, // instance of UiStore
   },
+  /*
   getInitialState: function() {
     return {
       subscriptions: {
@@ -19,7 +21,6 @@ var LayerCanvasMixin = {
       },
     };
   },
-  /*
   checkRefresh: function(data, envelope) {
     if(this.isMounted()) {
 
@@ -57,10 +58,10 @@ var LayerCanvasMixin = {
       }
     }
   },
-  */
   componentDidMount: function() {
     this.paintLayer();
   },
+  */
   componentDidUpdate: function() {
     this.paintLayer();
   },

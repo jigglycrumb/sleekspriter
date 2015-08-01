@@ -1,5 +1,5 @@
 var PreviewBoxPreview = React.createClass({
-  mixins: [FluxMixin, PostalSubscriptionMixin, FrameCanvasMixin],
+  mixins: [FluxMixin, FrameCanvasMixin],
   render: function() {
     var scale = this.getScale(),
         width = this.props.width*scale,

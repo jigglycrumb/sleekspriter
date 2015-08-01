@@ -13,7 +13,9 @@ var ExportPreviewAllFrames = React.createClass({
             height={this.props.height}
             frameSize={this.props.frameSize}
             format={this.props.format}
-            backgroundColor={this.props.backgroundColor} />
+            backgroundColor={this.props.backgroundColor}
+            ui={this.props.ui}
+            file={this.props.file} />
         )
       }, this)}
       </div>
