@@ -1,3 +1,4 @@
+// editor: done
 var AnimationTimelineFrame = React.createClass({
   render: function() {
     var cssClass = classNames({
@@ -9,8 +10,8 @@ var AnimationTimelineFrame = React.createClass({
       <div className={cssClass} onClick={this.dispatchFrameSelect}>
         <FrameCanvas
           id={this.props.frame}
-          width={this.props.editor.file.size.width}
-          height={this.props.editor.file.size.height}
+          width={this.props.file.size.width}
+          height={this.props.file.size.height}
           size={this.props.size}
           ui={this.props.ui}
           file={this.props.file}  />
@@ -32,7 +33,7 @@ var AnimationTimelineFrame = React.createClass({
     event.stopPropagation();
 
     var data = {
-      animation: this.props.editor.animations.selected,
+      animation: this.props.ui.animations.selected,
       frame: this.props.frame,
       position: this.props.position,
     };

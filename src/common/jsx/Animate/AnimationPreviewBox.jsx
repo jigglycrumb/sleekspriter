@@ -1,3 +1,4 @@
+// editor: done
 var AnimationPreviewBox = React.createClass({
   mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
@@ -16,8 +17,8 @@ var AnimationPreviewBox = React.createClass({
         <AnimationPreviewBoxPreview
           ref="preview"
           id={this.state.frame}
-          width={this.props.editor.file.size.width}
-          height={this.props.editor.file.size.height}
+          width={this.props.file.size.width}
+          height={this.props.file.size.height}
           ui={this.props.ui}
           file={this.props.file}  />
     }
@@ -50,7 +51,7 @@ var AnimationPreviewBox = React.createClass({
     }
   },
   selectNewFrameAfterDelete: function(data) {
-    var animation = this.props.editor.animations.getSelected(),
+    var animation = storeUtils.animations.getSelected(),
         framePosition = data.position - 1,
         frame = null;
 

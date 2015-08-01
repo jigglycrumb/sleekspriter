@@ -11,12 +11,12 @@ var AnimationList = React.createClass({
   },
   render: function() {
 
-    var deleteButtonDisabled = this.props.animations.list.length === 0 || this.props.animations.selected === null
+    var deleteButtonDisabled = this.props.animations.length === 0 || this.props.selected === null
                              ? true : false,
-        animations = _.sortBy(this.props.animations.list, 'name'),
+        animations = _.sortBy(this.props.animations, 'name'),
         helpingHand = null;
 
-    if(this.props.animations.list.length === 0 && this.props.listVisible === true) {
+    if(this.props.animations.length === 0 && this.props.listVisible === true) {
       helpingHand = <div className="helping-hand"><i className="flaticon-hand118"></i></div>
     }
 
@@ -33,7 +33,7 @@ var AnimationList = React.createClass({
 
         <ul className="animations">
         {animations.map(function(animation) {
-          var selected = animation.name === this.props.animations.selected ? true : false;
+          var selected = animation.name === this.props.selected ? true : false;
           return (
             <AnimationListAnimation key={animation.name} animation={animation} selected={selected} />
           )

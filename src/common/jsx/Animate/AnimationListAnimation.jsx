@@ -1,4 +1,5 @@
 var AnimationListAnimation = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     var cssClasses = classNames({
       animation: true,
@@ -15,7 +16,7 @@ var AnimationListAnimation = React.createClass({
     )
   },
   dispatchAnimationSelected: function() {
-    channel.gui.publish('animation.select', {name: this.props.animation.name});
+    this.getFlux().actions.animationSelect(this.props.animation.name);
 
     if(this.props.animation.frames.length > 0) {
       channel.gui.publish('animation.frame.select', {

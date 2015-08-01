@@ -5,9 +5,9 @@ Editor.prototype.animations.selected = null;
 Editor.prototype.animations.init = function() {
   var self = this;
 
-  channel.file.subscribe('file.load', function() {
-    self.list = file.animations;
-  });
+  // channel.file.subscribe('file.load', function() {
+  //   self.list = file.animations;
+  // });
 
   channel.file.subscribe('animation.rename', function(data, envelope) {
     if(self.selected === data.oldName) self.selected = data.newName;
@@ -23,6 +23,7 @@ Editor.prototype.animations.init = function() {
   });
 };
 
+/*
 Editor.prototype.animations.getByName = function(name) {
   return _.find(this.list, {name: name});
 };
@@ -30,3 +31,4 @@ Editor.prototype.animations.getByName = function(name) {
 Editor.prototype.animations.getSelected = function() {
   return this.getByName(this.selected);
 }
+*/

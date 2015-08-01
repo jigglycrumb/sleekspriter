@@ -69,6 +69,12 @@ function base_init() {
     }
   });
 
+  // flux.setDispatchInterceptor(function(action, dispatch) {
+  //   React.addons.batchedUpdates(function() {
+  //     dispatch(action);
+  //   });
+  // });
+
   channel = {
     file: postal.channel('file'),
     gui: postal.channel('gui'),

@@ -1,5 +1,5 @@
 var AnimationControlBox = React.createClass({
-  mixins: [PostalSubscriptionMixin, SelectedAnimationFrameMixin],
+  mixins: [FluxMixin, PostalSubscriptionMixin, SelectedAnimationFrameMixin],
   getInitialState: function() {
     return {
       animationInterval: null,
@@ -27,8 +27,8 @@ var AnimationControlBox = React.createClass({
           display: 'none'
         };
 
-    if(this.props.animations.selected !== null) {
-      animation = this.props.animations.getSelected();
+    if(this.props.selected !== null) {
+      animation = storeUtils.animations.getSelected();
       fpsDisabled = false;
       if(animation.frames.length > 1) {
         controlsDisabled = false;
@@ -74,14 +74,14 @@ var AnimationControlBox = React.createClass({
   },
   setAnimationFps: function(event) {
     var fps = +event.target.value;
-    channel.file.publish('animation.fps', {name: this.props.animations.selected, fps: fps});
+    channel.file.publish('animation.fps', {name: this.props.selected, fps: fps});
     if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
   },
   selectFrame: function(data) {
     this.setState({selectedFrame: data.position});
   },
   selectNextFrame: function() {
-    var animation = this.props.animations.getSelected(),
+    var animation = storeUtils.animations.getSelected(),
         frame = this.state.selectedFrame;
     frame++;
     if(frame > animation.frames.length - 1) frame = 0;
@@ -95,7 +95,7 @@ var AnimationControlBox = React.createClass({
     channel.gui.publish('animation.frame.select', data);
   },
   selectPreviousFrame: function() {
-    var animation = this.props.animations.getSelected(),
+    var animation = storeUtils.animations.getSelected(),
         frame = this.state.selectedFrame;
     frame--;
     if(frame < 0) frame = animation.frames.length - 1;
@@ -110,7 +110,7 @@ var AnimationControlBox = React.createClass({
   },
   playAnimation: function() {
     if(this.state.animationInterval === null) {
-      var animation = this.props.animations.getSelected(),
+      var animation = storeUtils.animations.getSelected(),
           ms = 1000/animation.fps,
           interval = setInterval(this.selectNextFrame, ms);
       this.setState({animationInterval: interval});

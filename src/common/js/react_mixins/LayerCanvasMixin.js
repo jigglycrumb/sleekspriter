@@ -58,10 +58,10 @@ var LayerCanvasMixin = {
       }
     }
   },
+  */
   componentDidMount: function() {
     this.paintLayer();
   },
-  */
   componentDidUpdate: function() {
     this.paintLayer();
   },

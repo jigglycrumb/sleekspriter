@@ -1,8 +1,5 @@
 var App = React.createClass({
-  mixins: [
-    FluxMixin,
-    StoreWatchMixin('FileStore', 'UiStore'),
-  ],
+  mixins: [FluxMixin, StoreWatchMixin('FileStore', 'UiStore')],
   getStateFromFlux: function() {
     var flux = this.getFlux();
 
@@ -15,12 +12,7 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       subscriptions: {
-        'layer.select': this.updateProps,
-        'palette.select': this.updateProps,
 
-        'layer.opacity.select': this.updateProps,
-        'layer.visibility.toggle': this.updateProps,
-        'layer.name.select': this.updateProps,
         'layer.add': this.updateProps,
         'layer.delete': this.updateProps,
         'layer.drop': this.updateProps,
@@ -78,7 +70,7 @@ var App = React.createClass({
             file={this.state.file}
             layer={this.state.layer} />
 
-          <ScreenAnimate ui={this.state.ui} file={this.state.file} editor={this.props.editor} />
+          <ScreenAnimate ui={this.state.ui} file={this.state.file} />
           <ScreenExport ui={this.state.ui} file={this.state.file} editor={this.props.editor} />
           <ScreenDebug ui={this.state.ui} />
         </div>

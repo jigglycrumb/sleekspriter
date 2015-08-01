@@ -75,4 +75,7 @@ var actions = {
   layerTopSelect: function() {
     this.dispatch(constants.LAYER_TOP_SELECT);
   },
+  animationSelect: function(name) {
+    this.dispatch(constants.ANIMATION_SELECT, name);
+  },
 };

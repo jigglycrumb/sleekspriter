@@ -24,7 +24,8 @@ var UiStore = Fluxxor.createStore({
       constants.LAYER_VISIBILITY,           this.onLayerAttributeChange,
       constants.LAYER_OPACITY,              this.onLayerAttributeChange,
       constants.LAYER_NAME,                 this.onLayerAttributeChange,
-      constants.LAYER_TOP_SELECT,           this.onLayerTopSelect
+      constants.LAYER_TOP_SELECT,           this.onLayerTopSelect,
+      constants.ANIMATION_SELECT,           this.onAnimationSelect
     );
   },
 
@@ -88,6 +89,18 @@ var UiStore = Fluxxor.createStore({
         selected: 0,
         available: [{"id": "sprite", "title": "Sprite colours", "short": "Sprite", "colors": []}],
       },
+      animations: {
+        selected: null,
+      },
+
+      // data for animation screen
+      animate: {
+
+      },
+      // data for export screen
+      export: {
+
+      },
     };
 
     if(key && data[key]) this.data[key] = data[key];
@@ -147,6 +160,7 @@ var UiStore = Fluxxor.createStore({
     frame = parseInt(frame);
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.frames.selected = frame;
+      this.data.layers.frame = storeUtils.layers.getByFrame(frame);
       this.data.pixels.frame = _.where(FileStore.getData('pixels'), {frame: frame});
       this.emit('change');
     });
@@ -223,6 +237,11 @@ var UiStore = Fluxxor.createStore({
       this.data.layers.selected = layer.id;
       this.emit('change');
     }
+  },
+
+  onAnimationSelect: function(name) {
+    this.data.animations.selected = name;
+    this.emit('change');
   },
 
   _buildSpritePalette: function(FileStore) {

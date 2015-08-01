@@ -19,22 +19,33 @@ var ScreenAnimate = React.createClass({
     return (
       <section className={cssClasses}>
         <div className="area left">
-          <AnimationFrameBox ui={this.props.ui} file={this.props.file} editor={this.props.editor} />
+          <AnimationFrameBox ui={this.props.ui} file={this.props.file} />
         </div>
 
         <div className="area right">
-          <AnimationPreviewBox ui={this.props.ui} file={this.props.file} editor={this.props.editor} />
+          <AnimationPreviewBox ui={this.props.ui} file={this.props.file} />
         </div>
 
         <div className="area center">
-          <AnimationTimelineBox ui={this.props.ui} file={this.props.file} editor={this.props.editor} listVisible={this.state.listVisible} />
+          <AnimationTimelineBox
+            animations={this.props.file.animations}
+            selected={this.props.ui.animations.selected}
+            ui={this.props.ui}
+            file={this.props.file}
+            listVisible={this.state.listVisible} />
         </div>
 
         <div className="area statusbar">
-          <AnimationControlBox animations={this.props.editor.animations} listVisible={this.state.listVisible} />
+          <AnimationControlBox
+            animations={this.props.file.animations}
+            selected={this.props.ui.animations.selected}
+            listVisible={this.state.listVisible} />
         </div>
 
-        <AnimationList animations={this.props.editor.animations} listVisible={this.state.listVisible} />
+        <AnimationList
+          animations={this.props.file.animations}
+          selected={this.props.ui.animations.selected}
+          listVisible={this.state.listVisible} />
       </section>
     )
   },

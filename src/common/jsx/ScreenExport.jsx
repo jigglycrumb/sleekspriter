@@ -24,7 +24,7 @@ var ScreenExport = React.createClass({
 
     var partSelection = this.props.ui.frames.total === 1
                       ? null
-                      : <ExportPartSelection ui={this.props.ui} editor={this.props.editor} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />;
+                      : <ExportPartSelection ui={this.props.ui} file={this.props.file} part={this.state.part} frame={this.state.frame} animation={this.state.animation} />;
 
     return (
       <section className="screen export">

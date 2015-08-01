@@ -6,7 +6,7 @@ var ExportPreviewAnimation = React.createClass({
     }
   },
   render: function() {
-    if(this.props.animation.frames.length > 0) {
+    if(this.props.animation !== null && this.props.animation.frames.length > 0) {
       var self = this,
           i = 1,
           frame = this.props.animation.frames[this.state.frameIndex] || 1;

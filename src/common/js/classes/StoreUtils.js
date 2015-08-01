@@ -1,7 +1,10 @@
+// A collection of various helper functions to access flux store data
 var StoreUtils = function() {};
 
 StoreUtils.prototype = {};
 StoreUtils.prototype.constructor = StoreUtils;
+
+// Layer-related helpers
 StoreUtils.prototype.layers = {};
 
 /**
@@ -63,4 +66,16 @@ StoreUtils.prototype.layers.getBelowSelected = function() {
  */
 StoreUtils.prototype.layers.getTop = function() {
   return _.max(flux.stores.UiStore.getData('layers').frame, function(layer) { return layer.z; });
+};
+
+
+// Animation-related helpers
+StoreUtils.prototype.animations = {};
+
+StoreUtils.prototype.animations.getByName = function(name) {
+  return _.find(flux.stores.FileStore.getData('animations'), {name: name});
+};
+
+StoreUtils.prototype.animations.getSelected = function() {
+  return this.getByName(flux.stores.UiStore.getData('animations').selected);
 };

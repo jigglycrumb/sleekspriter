@@ -51,7 +51,7 @@ var ExportPreviewBox = React.createClass({
                     height={this.props.dimensions.height}
                     frameSize={frameSize}
                     format={this.props.format}
-                    animation={editor.animations.getByName(this.props.animation)}
+                    animation={storeUtils.animations.getByName(this.props.animation)}
                     ui={this.props.ui}
                     file={this.props.file}  />
         break;

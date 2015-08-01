@@ -1,3 +1,4 @@
+// editor: done
 var ExportPartSelection = React.createClass({
   render: function() {
     var parts = [
@@ -11,10 +12,10 @@ var ExportPartSelection = React.createClass({
       {name: 'allframes', el: 'Every frame as single image'},
     ];
 
-    if(this.props.editor.animations.list.length > 0) {
+    if(this.props.file.animations.length > 0) {
 
-      var name = this.props.animation === null ? this.props.editor.animations.list[0].name : this.props.animation,
-          animation = this.props.editor.animations.getByName(name),
+      var name = this.props.animation === null ? this.props.file.animations[0].name : this.props.animation,
+          animation = storeUtils.animations.getByName(name),
           runtime = Math.round(1000/animation.fps * animation.frames.length);
 
       parts.push({
@@ -22,7 +23,7 @@ var ExportPartSelection = React.createClass({
         el: <span>
               Animation&nbsp;
               <select onChange={this.setAnimation} defaultValue={name}>
-                {this.props.editor.animations.list.map(function(animation) {
+                {this.props.file.animations.map(function(animation) {
                   return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
                 }, this)}
               </select>

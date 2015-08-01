@@ -1,5 +1,6 @@
+// editor: done
 var AnimationFrameBox = React.createClass({
-  mixins: [PostalSubscriptionMixin],
+  mixins: [FluxMixin, PostalSubscriptionMixin],
   getInitialState: function() {
     return {
       row: 0,
@@ -13,7 +14,7 @@ var AnimationFrameBox = React.createClass({
     var frames = [], // array for mapping the frame components
         frameSize = 100,
         containerStyle = {width: (frameSize+1)*this.props.file.frames.x},
-        buttonDisplay = this.props.editor.animations.selected === null ? 'none' : 'inline-block';
+        buttonDisplay = this.props.ui.animations.selected === null ? 'none' : 'inline-block';
         rowButtonStyle = {top: (this.state.row*(frameSize+1))+20, display: buttonDisplay},
         columnButtonStyle = {left: (this.state.column*(frameSize+1))+20, display: buttonDisplay};
 
@@ -33,8 +34,7 @@ var AnimationFrameBox = React.createClass({
                 frame={frame} 
                 size={frameSize}
                 ui={this.props.ui} 
-                file={this.props.file} 
-                editor={this.props.editor} />
+                file={this.props.file} />
             );
           }, this)}
           </div>
@@ -53,7 +53,7 @@ var AnimationFrameBox = React.createClass({
       if(row === this.state.row) frames.push(i+1);
     }
 
-    channel.gui.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
+    this.getFlux().actions.modalShow(ModalAppendReplaceFrames, {frames: frames});
   },
   addColumn: function() {
     var frames = [];
@@ -63,6 +63,6 @@ var AnimationFrameBox = React.createClass({
       if(column === this.state.column) frames.push(i+1);
     }
 
-    channel.gui.publish('modal.show', {component: ModalAppendReplaceFrames, frames: frames});
+    this.getFlux().actions.modalShow(ModalAppendReplaceFrames, {frames: frames});
   },
 });

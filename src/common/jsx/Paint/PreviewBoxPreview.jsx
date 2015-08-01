@@ -9,15 +9,18 @@ var PreviewBoxPreview = React.createClass({
       <canvas id="PreviewBoxPreview" width={width} height={height}></canvas>
     );
   },
-  getPixelColor: function(data) {
+  componentDidUpdate: function() {
+    this.getPixelColor(this.props.ui.cursor);
+  },
+  getPixelColor: function(position) {
     var scale = this.getScale(),
         ctx   = this.getDOMNode().getContext('2d'),
-        x     = data.position.x-1,
-        y     = data.position.y-1,
+        x     = position.x-1,
+        y     = position.y-1,
         px    = ctx.getImageData(x*scale, y*scale, 1, 1).data,
         color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
-    this.getFlux().actions.colorFrame(color.hexString());
+    //this.getFlux().actions.colorFrame(color.hexString());
   },
   getScale: function() {
     var scale = 1,

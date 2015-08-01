@@ -24,4 +24,5 @@ var constants = {
   LAYER_OPACITY:              'LAYER_OPACITY',
   LAYER_NAME:                 'LAYER_NAME',
   LAYER_TOP_SELECT:           'LAYER_TOP_SELECT',
+  ANIMATION_SELECT:           'ANIMATION_SELECT',
 };
