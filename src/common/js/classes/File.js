@@ -304,38 +304,38 @@ var File = function() {
   });
 
   // handle addition of new animation
-  channel.file.subscribe('animation.add', function(data, envelope) {
-    var animation = {
-      name: 'Animation '+ (self.animations.length+1),
-      fps: 10,
-      frames: [],
-    };
+  // channel.file.subscribe('animation.add', function(data, envelope) {
+  //   var animation = {
+  //     name: 'Animation '+ (self.animations.length+1),
+  //     fps: 10,
+  //     frames: [],
+  //   };
 
-    self.animations.push(animation);
-    channel.gui.publish('animation.add', {name: animation.name});
-  });
+  //   self.animations.push(animation);
+  //   channel.gui.publish('animation.add', {name: animation.name});
+  // });
 
   // handle deletion of an animation
-  channel.file.subscribe('animation.delete', function(data, envelope) {
+  // channel.file.subscribe('animation.delete', function(data, envelope) {
 
-    var shouldSelectAnimation;
+  //   var shouldSelectAnimation;
 
-    for(var i = 0; i < self.animations.length; i++) {
-      if(self.animations[i].name === data.name) {
-        if(i > 0) shouldSelectAnimation = self.animations[i-1].name;
-        else if(i < self.animations.length) {
-          if(i === 0 && self.animations.length === 1) shouldSelectAnimation = null;
-          else shouldSelectAnimation = self.animations[i+1].name;
-        }
-      }
-    }
+  //   for(var i = 0; i < self.animations.length; i++) {
+  //     if(self.animations[i].name === data.name) {
+  //       if(i > 0) shouldSelectAnimation = self.animations[i-1].name;
+  //       else if(i < self.animations.length) {
+  //         if(i === 0 && self.animations.length === 1) shouldSelectAnimation = null;
+  //         else shouldSelectAnimation = self.animations[i+1].name;
+  //       }
+  //     }
+  //   }
 
-    self.animations = _.filter(self.animations, function(animation) {
-      return animation.name !== data.name;
-    });
+  //   self.animations = _.filter(self.animations, function(animation) {
+  //     return animation.name !== data.name;
+  //   });
 
-    channel.gui.publish('animation.delete', {name: shouldSelectAnimation});
-  });
+  //   channel.gui.publish('animation.delete', {name: shouldSelectAnimation});
+  // });
 
   // handle setting of animation FPS
   // channel.file.subscribe('animation.fps', function(data, envelope) {

@@ -1,14 +1,14 @@
 var AnimationList = React.createClass({
-  mixins: [PostalSubscriptionMixin],
-  getInitialState: function() {
-    return {
-      shouldSelectAnimation: false,
-      subscriptions: {
-        'animation.add': this.shouldSelectAnimation,
-        'animation.delete': this.shouldSelectAnimation,
-      }
-    }
-  },
+  mixins: [FluxMixin],
+  // getInitialState: function() {
+  //   return {
+  //     shouldSelectAnimation: false,
+  //     subscriptions: {
+  //       'animation.add': this.shouldSelectAnimation,
+  //       'animation.delete': this.shouldSelectAnimation,
+  //     }
+  //   }
+  // },
   render: function() {
 
     var deleteButtonDisabled = this.props.animations.length === 0 || this.props.selected === null
@@ -53,19 +53,19 @@ var AnimationList = React.createClass({
       </div>
     )
   },
-  componentDidUpdate: function() {
-    if(this.state.shouldSelectAnimation !== false) {
-      channel.gui.publish('animation.select', {name: this.state.shouldSelectAnimation});
-      this.setState({ shouldSelectAnimation: false });
-    }
-  },
+  // componentDidUpdate: function() {
+  //   if(this.state.shouldSelectAnimation !== false) {
+  //     channel.gui.publish('animation.select', {name: this.state.shouldSelectAnimation});
+  //     this.setState({ shouldSelectAnimation: false });
+  //   }
+  // },
   dispatchAnimationAdded: function() {
-    channel.file.publish('animation.add');
+    this.getFlux().actions.animationAdd();
   },
   dispatchAnimationRemoved: function() {
-    channel.file.publish('animation.delete', {name: this.props.animations.selected});
+    this.getFlux().actions.animationDelete(this.props.selected);
   },
-  shouldSelectAnimation: function(data) {
-    if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });
-  },
+  // shouldSelectAnimation: function(data) {
+  //   if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });
+  // },
 });

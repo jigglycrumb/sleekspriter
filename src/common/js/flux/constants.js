@@ -27,4 +27,6 @@ var constants = {
   ANIMATION_SELECT:           'ANIMATION_SELECT',
   ANIMATION_NAME:             'ANIMATION_NAME',
   ANIMATION_FPS:              'ANIMATION_FPS',
+  ANIMATION_ADD:              'ANIMATION_ADD',
+  ANIMATION_DELETE:           'ANIMATION_DELETE',
 };

@@ -12,7 +12,6 @@ var Editor = function() {
   this.selection.init();
   this.paintBucket.init();
   // this.palettes.init();
-  this.animations.init();
 };
 
 Editor.prototype = {};

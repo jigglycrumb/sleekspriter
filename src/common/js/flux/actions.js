@@ -84,4 +84,10 @@ var actions = {
   animationFps: function(animation, fps) {
     this.dispatch(constants.ANIMATION_FPS, {animation: animation, fps: fps});
   },
+  animationAdd: function() {
+    this.dispatch(constants.ANIMATION_ADD);
+  },
+  animationDelete: function(animation) {
+    this.dispatch(constants.ANIMATION_DELETE, animation);
+  },
 };

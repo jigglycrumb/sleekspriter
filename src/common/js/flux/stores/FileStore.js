@@ -12,7 +12,9 @@ var FileStore = Fluxxor.createStore({
       constants.LAYER_NAME,       this.onLayerName,
 
       constants.ANIMATION_NAME,   this.onAnimationName,
-      constants.ANIMATION_FPS,    this.onAnimationFps
+      constants.ANIMATION_FPS,    this.onAnimationFps,
+      constants.ANIMATION_ADD,    this.onAnimationAdd,
+      constants.ANIMATION_DELETE, this.onAnimationDelete
     );
   },
 
@@ -115,6 +117,26 @@ var FileStore = Fluxxor.createStore({
     animation.fps = parseInt(payload.fps);
     this.data.animations.forEach(function(a) {
       if(a.id === payload.animation) a = animation;
+    });
+    this.emit('change');
+  },
+
+  onAnimationAdd: function() {
+    var newId = (_.max(this.data.animations, function(animation) { return animation.id; })).id + 1,
+        animation = {
+          id: newId,
+          name: 'Animation '+ newId,
+          fps: 10,
+          frames: [],
+        };
+
+    this.data.animations.push(animation);
+    this.emit('change');
+  },
+
+  onAnimationDelete: function(animation) {
+    this.data.animations = _.filter(this.data.animations, function(a) {
+      return a.id !== animation;
     });
     this.emit('change');
   },
