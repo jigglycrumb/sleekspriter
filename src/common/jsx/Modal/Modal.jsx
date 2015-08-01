@@ -1,17 +1,16 @@
+// Flux: done, editor: done
 var Modal = React.createClass({
-  mixins: [FluxMixin],
   render: function() {
     var component = null,
         style = {
-          display: this.props.visible === true ? 'table' : 'none',
+          display: this.props.ui.modal.visible === true ? 'table' : 'none',
         };
 
-    if(this.props.component !== null) {
-      component = React.createElement(this.props.component, {
-        editor: this.props.editor,
+    if(this.props.ui.modal.component !== null) {
+      component = React.createElement(this.props.ui.modal.component, {
         ui: this.props.ui,
         file: this.props.file,
-        data: this.props.data,
+        data: this.props.ui.modal.data,
       });
     }
 

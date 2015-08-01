@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var AnimationList = React.createClass({
   mixins: [FluxMixin],
   // getInitialState: function() {
@@ -11,12 +12,12 @@ var AnimationList = React.createClass({
   // },
   render: function() {
 
-    var deleteButtonDisabled = this.props.animations.length === 0 || this.props.selected === null
+    var deleteButtonDisabled = this.props.file.animations.length === 0 || this.props.ui.animations.selected === null
                              ? true : false,
-        animations = _.sortBy(this.props.animations, 'name'),
+        animations = _.sortBy(this.props.file.animations, 'name'),
         helpingHand = null;
 
-    if(this.props.animations.length === 0 && this.props.listVisible === true) {
+    if(this.props.file.animations.length === 0 && this.props.listVisible === true) {
       helpingHand = <div className="helping-hand"><i className="flaticon-hand118"></i></div>
     }
 
@@ -33,7 +34,7 @@ var AnimationList = React.createClass({
 
         <ul className="animations">
         {animations.map(function(animation) {
-          var selected = animation.id === this.props.selected ? true : false;
+          var selected = animation.id === this.props.ui.animations.selected ? true : false;
           return (
             <AnimationListAnimation key={animation.id} animation={animation} selected={selected} />
           )
@@ -63,7 +64,7 @@ var AnimationList = React.createClass({
     this.getFlux().actions.animationAdd();
   },
   dispatchAnimationRemoved: function() {
-    this.getFlux().actions.animationDelete(this.props.selected);
+    this.getFlux().actions.animationDelete(this.props.ui.animations.selected);
   },
   // shouldSelectAnimation: function(data) {
   //   if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });

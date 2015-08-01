@@ -352,24 +352,24 @@ var File = function() {
   // });
 
   // handle animation frame adding
-  channel.file.subscribe('animation.frame.add', function(data, envelope) {
-    var animation = self.getAnimationByName(data.animation);
-    animation.frames.splice(data.position, 0, data.frame);
-    channel.gui.publish('animation.frame.add');
-  });
+  // channel.file.subscribe('animation.frame.add', function(data, envelope) {
+  //   var animation = self.getAnimationByName(data.animation);
+  //   animation.frames.splice(data.position, 0, data.frame);
+  //   channel.gui.publish('animation.frame.add');
+  // });
 
   // handle animation frame removal
-  channel.file.subscribe('animation.frame.delete', function(data, envelope) {
-    var animation = self.getAnimationByName(data.animation);
-    if(animation.frames[data.position] === data.frame) {
-      animation.frames.splice(data.position, 1);
-    }
-    channel.gui.publish('animation.frame.delete', data);
-  });
+  // channel.file.subscribe('animation.frame.delete', function(data, envelope) {
+  //   var animation = self.getAnimationByName(data.animation);
+  //   if(animation.frames[data.position] === data.frame) {
+  //     animation.frames.splice(data.position, 1);
+  //   }
+  //   channel.gui.publish('animation.frame.delete', data);
+  // });
 
-  channel.file.subscribe('animation.frames.empty', function(data, envelope) {
-    self.getAnimationByName(data.animation).frames = [];
-  });
+  // channel.file.subscribe('animation.frames.empty', function(data, envelope) {
+  //   self.getAnimationByName(data.animation).frames = [];
+  // });
 };
 
 

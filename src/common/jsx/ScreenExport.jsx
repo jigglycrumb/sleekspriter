@@ -57,7 +57,7 @@ var ScreenExport = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.animation === null && this.props.file.animations.length > 0) {
-      this.setState({animation: this.props.file.animations[0].name});
+      this.setState({animation: this.props.file.animations[0].id});
     }
   },
   updateSettings: function(data) {

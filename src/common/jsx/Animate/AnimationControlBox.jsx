@@ -1,8 +1,10 @@
+// Flux: done, editor: done
 var AnimationControlBox = React.createClass({
-  mixins: [FluxMixin, PostalSubscriptionMixin, SelectedAnimationFrameMixin],
+  mixins: [FluxMixin],
   getInitialState: function() {
     return {
       animationInterval: null,
+      scroll: false,
     }
   },
   render: function() {
@@ -27,7 +29,7 @@ var AnimationControlBox = React.createClass({
           display: 'none'
         };
 
-    if(this.props.selected !== null) {
+    if(this.props.ui.animations.selected !== null) {
       animation = storeUtils.animations.getSelected();
       fpsDisabled = false;
       if(animation.frames.length > 1) {
@@ -43,7 +45,7 @@ var AnimationControlBox = React.createClass({
     return (
       <div id="AnimationControlBox" className="bar">
         <div>
-          <button className={listButtonClasses} onClick={this.toggleAnimationList} title="Animation list">
+          <button className={listButtonClasses} onClick={this.props.toggleAnimationList} title="Animation list">
             <i className="flaticon-list67"/>
           </button>
           <label>Animation: {animation.name}</label>
@@ -69,44 +71,26 @@ var AnimationControlBox = React.createClass({
       </div>
     )
   },
-  toggleAnimationList: function() {
-    channel.gui.publish('animationlist.toggle');
-  },
   setAnimationFps: function(event) {
     var fps = +event.target.value;
-    this.getFlux().actions.animationFps(this.props.selected, fps);
+    this.getFlux().actions.animationFps(this.props.ui.animations.selected, fps);
     if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
-  },
-  selectFrame: function(data) {
-    this.setState({selectedFrame: data.position});
   },
   selectNextFrame: function() {
     var animation = storeUtils.animations.getSelected(),
-        frame = this.state.selectedFrame;
+        frame = this.props.ui.animations.frame;
     frame++;
     if(frame > animation.frames.length - 1) frame = 0;
 
-    var data = {
-      frame: animation.frames[frame],
-      position: frame,
-      scroll: true,
-    };
-
-    channel.gui.publish('animation.frame.select', data);
+    this.getFlux().actions.animationFrameSelect(frame);
   },
   selectPreviousFrame: function() {
     var animation = storeUtils.animations.getSelected(),
-        frame = this.state.selectedFrame;
+        frame = this.props.ui.animations.frame;
     frame--;
     if(frame < 0) frame = animation.frames.length - 1;
 
-    var data = {
-      frame: animation.frames[frame],
-      position: frame,
-      scroll: true,
-    };
-
-    channel.gui.publish('animation.frame.select', data);
+    this.getFlux().actions.animationFrameSelect(frame);
   },
   playAnimation: function() {
     if(this.state.animationInterval === null) {

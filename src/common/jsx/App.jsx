@@ -12,17 +12,11 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       subscriptions: {
-
         'layer.add': this.updateProps,
         'layer.delete': this.updateProps,
         'layer.drop': this.updateProps,
 
         'size.set': this.updateProps,
-
-        'animation.add': this.updateProps,
-        'animation.delete': this.updateProps,
-        'animation.frame.add': this.updateProps,
-        'animation.frame.delete': this.updateProps,
 
         'window.resize': this.updateProps,
       }
@@ -71,13 +65,7 @@ var App = React.createClass({
           <ScreenExport ui={this.state.ui} file={this.state.file} editor={this.props.editor} />
           <ScreenDebug ui={this.state.ui} />
         </div>
-        <Modal
-          editor={this.props.editor} 
-          visible={this.state.ui.modal.visible}
-          component={this.state.ui.modal.component}
-          ui={this.state.ui}
-          file={this.state.file}
-          data={this.state.ui.modal.data} />
+        <Modal ui={this.state.ui} file={this.state.file} />
       </div>
     );
   },

@@ -1,11 +1,8 @@
+// Flux: done, editor: done
 var ScreenAnimate = React.createClass({
-  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
       listVisible: false,
-      subscriptions: {
-        'animationlist.toggle': this.toggleAnimationList,
-      },
     }
   },
   render: function() {
@@ -28,8 +25,6 @@ var ScreenAnimate = React.createClass({
 
         <div className="area center">
           <AnimationTimelineBox
-            animations={this.props.file.animations}
-            selected={this.props.ui.animations.selected}
             ui={this.props.ui}
             file={this.props.file}
             listVisible={this.state.listVisible} />
@@ -37,14 +32,14 @@ var ScreenAnimate = React.createClass({
 
         <div className="area statusbar">
           <AnimationControlBox
-            animations={this.props.file.animations}
-            selected={this.props.ui.animations.selected}
-            listVisible={this.state.listVisible} />
+            ui={this.props.ui}
+            listVisible={this.state.listVisible}
+            toggleAnimationList={this.toggleAnimationList} />
         </div>
 
         <AnimationList
-          animations={this.props.file.animations}
-          selected={this.props.ui.animations.selected}
+          ui={this.props.ui}
+          file={this.props.file}
           listVisible={this.state.listVisible} />
       </section>
     )

@@ -90,4 +90,16 @@ var actions = {
   animationDelete: function(animation) {
     this.dispatch(constants.ANIMATION_DELETE, animation);
   },
+  animationFrameAdd: function(animation, position, frame) {
+    this.dispatch(constants.ANIMATION_FRAME_ADD, {animation: animation, position: position, frame: frame});
+  },
+  animationFrameEmpty: function(animation) {
+    this.dispatch(constants.ANIMATION_FRAME_EMPTY, animation);
+  },
+  animationFrameDelete: function(animation, position, frame) {
+    this.dispatch(constants.ANIMATION_FRAME_DELETE, {animation: animation, position: position, frame: frame});
+  },
+  animationFrameSelect: function(position) {
+    this.dispatch(constants.ANIMATION_FRAME_SELECT, position);
+  },
 };

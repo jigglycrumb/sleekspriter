@@ -81,14 +81,6 @@ StoreUtils.prototype.animations.getById = function(id) {
 };
 
 /**
- * Get animation by name
- * @returns {Object} animation
- */
-StoreUtils.prototype.animations.getByName = function(name) {
-  return _.find(flux.stores.FileStore.getData('animations'), {name: name});
-};
-
-/**
  * Get selected animation
  * @returns {Object} animation
  */

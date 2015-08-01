@@ -14,8 +14,8 @@ var ExportPartSelection = React.createClass({
 
     if(this.props.file.animations.length > 0) {
 
-      var name = this.props.animation === null ? this.props.file.animations[0].name : this.props.animation,
-          animation = storeUtils.animations.getByName(name),
+      var id = this.props.animation === null ? this.props.file.animations[0].id : this.props.animation,
+          animation = storeUtils.animations.getById(id),
           runtime = Math.round(1000/animation.fps * animation.frames.length);
 
       parts.push({
@@ -24,7 +24,7 @@ var ExportPartSelection = React.createClass({
               Animation&nbsp;
               <select onChange={this.setAnimation} defaultValue={name}>
                 {this.props.file.animations.map(function(animation) {
-                  return( <option key={animation.name} value={animation.name}>{animation.name}</option> )
+                  return( <option key={animation.id} value={animation.id}>{animation.name}</option> )
                 }, this)}
               </select>
               <i className="animation-info">

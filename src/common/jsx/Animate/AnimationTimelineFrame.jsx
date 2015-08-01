@@ -1,5 +1,6 @@
-// editor: done
+// Flux: done, editor: done
 var AnimationTimelineFrame = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     var cssClass = classNames({
       frame: true,
@@ -22,22 +23,10 @@ var AnimationTimelineFrame = React.createClass({
     )
   },
   dispatchFrameSelect: function() {
-    var data = {
-      frame: this.props.frame,
-      position: this.props.position,
-    };
-
-    channel.gui.publish('animation.frame.select', data);
+    this.getFlux().actions.animationFrameSelect(this.props.position);
   },
   dispatchFrameDelete: function(event) {
     event.stopPropagation();
-
-    var data = {
-      animation: this.props.ui.animations.selected,
-      frame: this.props.frame,
-      position: this.props.position,
-    };
-
-    channel.file.publish('animation.frame.delete', data);
+    this.getFlux().actions.animationFrameDelete(this.props.ui.animations.selected, this.props.position, this.props.frame);
   },
 });

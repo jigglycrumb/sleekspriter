@@ -26,7 +26,8 @@ var UiStore = Fluxxor.createStore({
       constants.LAYER_NAME,                 this.onLayerAttributeChange,
       constants.LAYER_TOP_SELECT,           this.onLayerTopSelect,
       constants.ANIMATION_SELECT,           this.onAnimationSelect,
-      constants.ANIMATION_DELETE,           this.onAnimationDelete
+      constants.ANIMATION_DELETE,           this.onAnimationDelete,
+      constants.ANIMATION_FRAME_SELECT,     this.onAnimationFrameSelect
     );
   },
 
@@ -92,13 +93,8 @@ var UiStore = Fluxxor.createStore({
       },
       animations: {
         selected: null,
+        frame: null,
       },
-
-      // data for animation screen
-      animate: {
-
-      },
-      // data for export screen
       export: {
 
       },
@@ -247,6 +243,11 @@ var UiStore = Fluxxor.createStore({
 
   onAnimationDelete: function() {
     this.data.animations.selected = null;
+    this.emit('change');
+  },
+
+  onAnimationFrameSelect: function(position) {
+    this.data.animations.frame = position;
     this.emit('change');
   },
 

@@ -1,9 +1,4 @@
-// used in:
-// AnimationControlBox
-// AnimationTimelineBox
-//
-// depends on:
-// PostalSubscriptionMixin
+// obsolete
 
 var SelectedAnimationFrameMixin = {
   getInitialState: function() {

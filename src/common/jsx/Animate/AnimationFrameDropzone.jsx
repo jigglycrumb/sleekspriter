@@ -1,4 +1,6 @@
+// Flux: done, editor: done
 var AnimationFrameDropzone = React.createClass({
+  mixins: [FluxMixin],
   propTypes: {
     text: React.PropTypes.object,
   },
@@ -48,13 +50,7 @@ var AnimationFrameDropzone = React.createClass({
       try { frame = JSON.parse(event.dataTransfer.getData('frame')) }
       catch (e) { return }
 
-      var data = {
-        animation: this.props.animation,
-        frame: frame,
-        position: this.props.position,
-      };
-
-      channel.file.publish('animation.frame.add', data);
+      this.getFlux().actions.animationFrameAdd(this.props.animation, this.props.position, frame);
     }
   },
 });

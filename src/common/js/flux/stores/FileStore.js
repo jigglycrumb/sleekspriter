@@ -2,19 +2,21 @@ var FileStore = Fluxxor.createStore({
   initialize: function() {
     this.resetData();
     this.bindActions(
-      constants.FILE_CREATE,      this.onFileCreate,
-      constants.FILE_LOAD,        this.onFileLoad,
-      constants.FILE_SAVE,        this.onFileSave,
+      constants.FILE_CREATE,              this.onFileCreate,
+      constants.FILE_LOAD,                this.onFileLoad,
+      constants.FILE_SAVE,                this.onFileSave,
 
+      constants.LAYER_VISIBILITY,         this.onLayerVisibility,
+      constants.LAYER_OPACITY,            this.onLayerOpacity,
+      constants.LAYER_NAME,               this.onLayerName,
 
-      constants.LAYER_VISIBILITY, this.onLayerVisibility,
-      constants.LAYER_OPACITY,    this.onLayerOpacity,
-      constants.LAYER_NAME,       this.onLayerName,
-
-      constants.ANIMATION_NAME,   this.onAnimationName,
-      constants.ANIMATION_FPS,    this.onAnimationFps,
-      constants.ANIMATION_ADD,    this.onAnimationAdd,
-      constants.ANIMATION_DELETE, this.onAnimationDelete
+      constants.ANIMATION_NAME,           this.onAnimationName,
+      constants.ANIMATION_FPS,            this.onAnimationFps,
+      constants.ANIMATION_ADD,            this.onAnimationAdd,
+      constants.ANIMATION_DELETE,         this.onAnimationDelete,
+      constants.ANIMATION_FRAME_ADD,      this.onAnimationFrameAdd,
+      constants.ANIMATION_FRAME_EMPTY,    this.onAnimationFrameEmpty,
+      constants.ANIMATION_FRAME_DELETE,   this.onAnimationFrameDelete
     );
   },
 
@@ -134,12 +136,42 @@ var FileStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onAnimationDelete: function(animation) {
+  onAnimationDelete: function(id) {
     this.data.animations = _.filter(this.data.animations, function(a) {
-      return a.id !== animation;
+      return a.id !== id;
     });
     this.emit('change');
   },
+
+  onAnimationFrameAdd: function(payload) {
+    var animation = storeUtils.animations.getById(payload.animation);
+    animation.frames.splice(payload.position, 0, payload.frame);
+    this.data.animations.forEach(function(a) {
+      if(a.id === payload.animation) a = animation;
+    });
+    this.emit('change');
+  },
+
+  onAnimationFrameEmpty: function(id) {
+    var animation = storeUtils.animations.getById(id);
+    animation.frames = [];
+    this.data.animations.forEach(function(a) {
+      if(a.id === id) a = animation;
+    });
+    this.emit('change');
+  },
+
+  onAnimationFrameDelete: function(payload) {
+    var animation = storeUtils.animations.getById(payload.animation);
+    if(animation.frames[payload.position] === payload.frame) {
+      animation.frames.splice(payload.position, 1);
+    }
+    this.data.animations.forEach(function(a) {
+      if(a.id === payload.animation) a = animation;
+    });
+    this.emit('change');
+  },
+
 
   _fromJSON: function(json) {
     this.data.size = this._sizeFromFile(json.size);

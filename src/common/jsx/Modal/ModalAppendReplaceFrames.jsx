@@ -1,4 +1,4 @@
-// editor: done
+// Flux: done, editor: done
 var ModalAppendReplaceFrames = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
@@ -17,18 +17,12 @@ var ModalAppendReplaceFrames = React.createClass({
   appendFrames: function() {
     var animation = storeUtils.animations.getSelected();
     this.props.data.frames.forEach(function(frame) {
-      var data = {
-        animation: this.props.ui.animations.selected,
-        frame: frame,
-        position: animation.frames.length,
-      };
-      channel.file.publish('animation.frame.add', data);
+      this.getFlux().actions.animationFrameAdd(this.props.ui.animations.selected, animation.frames.length, frame);
     }, this);
-
     this.hide();
   },
   replaceFrames: function() {
-    channel.file.publish('animation.frames.empty', {animation: this.props.ui.animations.selected});
+    this.getFlux().actions.animationFrameEmpty(this.props.ui.animations.selected);
     this.appendFrames();
-  }
+  },
 });

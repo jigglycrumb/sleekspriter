@@ -1,6 +1,10 @@
-// editor: done
+// Flux: done, editor: done
 var AnimationTimelineBox = React.createClass({
-  mixins: [PostalSubscriptionMixin, SelectedAnimationFrameMixin],
+  getInitialState: function() {
+    return {
+      scroll: false,
+    }
+  },
   render: function() {
 
     var frameSize = 120,
@@ -9,11 +13,11 @@ var AnimationTimelineBox = React.createClass({
         frames = [],
         animation;
 
-    if(this.props.selected !== null) {
+    if(this.props.ui.animations.selected !== null) {
       animation = storeUtils.animations.getSelected();
     }
 
-    if(this.props.animations.length === 0) {
+    if(this.props.file.animations.length === 0) {
       var helpingHand = null;
       if(this.props.listVisible === false)
         helpingHand = <div className="helping-hand"><i className="flaticon-hand118"></i></div>
@@ -26,7 +30,7 @@ var AnimationTimelineBox = React.createClass({
 
       dropzoneClass = 'full';
     }
-    else if(this.props.selected === null) {
+    else if(this.props.ui.animations.selected === null) {
       dropzoneHtml =  <div>
                         <div className="helping-hand"><i className="flaticon-hand118"></i></div>
                         You have not selected an animation yet.<br />
@@ -36,8 +40,9 @@ var AnimationTimelineBox = React.createClass({
       dropzoneClass = 'full';
     }
     else if(animation.frames.length === 0) {
+      animation = storeUtils.animations.getSelected();
       dropzoneHtml =  <div>
-                        The animation "{this.props.selected}" does not contain any frames yet.<br />
+                        The animation "{animation.name}" does not contain any frames yet.<br />
                         Drag frames from the top left and drop them here to create your animation.
                       </div>
 
@@ -78,7 +83,7 @@ var AnimationTimelineBox = React.createClass({
               cssClass={dropzoneClass}
               text={dropzoneHtml} 
               position={0}
-              animation={this.props.selected} />
+              animation={this.props.ui.animations.selected} />
 
             {finalElements.map(function(element) {
               if(element === 'dropzone') {
@@ -90,7 +95,7 @@ var AnimationTimelineBox = React.createClass({
                     cssClass={dropzoneClass}
                     text={dropzoneHtml}
                     position={dropzoneKey-1} 
-                    animation={this.props.selected} />
+                    animation={this.props.ui.animations.selected} />
                 )
               }
               else if(element === 'dropzone-last') {
@@ -102,12 +107,12 @@ var AnimationTimelineBox = React.createClass({
                     cssClass="last"
                     text={dropzoneHtml}
                     position={dropzoneKey-1} 
-                    animation={this.props.selected} />
+                    animation={this.props.ui.animations.selected} />
                 )
               }
               else {
                 var key = 'frame-'+frameKey,
-                    selected = this.state.selectedFrame === frameKey ? true : false;
+                    selected = this.props.ui.animations.frame === frameKey ? true : false;
                 frameKey++;
                 return (
                   <AnimationTimelineFrame
@@ -125,9 +130,6 @@ var AnimationTimelineBox = React.createClass({
         </div>
       </div>
     );
-  },
-  selectFrame: function(data) {
-    this.setState({selectedFrame: data.position, scroll: data.scroll});
   },
   componentDidUpdate: function() {
     if(this.state.scroll === true) {

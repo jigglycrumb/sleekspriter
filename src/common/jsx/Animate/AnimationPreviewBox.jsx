@@ -1,22 +1,12 @@
-// editor: done
+// Flux: done, editor: done
 var AnimationPreviewBox = React.createClass({
-  mixins: [PostalSubscriptionMixin],
-  getInitialState: function() {
-    return {
-      frame: null,
-      subscriptions: {
-        'animation.frame.select': this.selectFrame,
-        'animation.frame.delete': this.selectNewFrameAfterDelete,
-      },
-    }
-  },
   render: function() {
     var preview = null;
-    if(this.state.frame !== null) {
+    if(this.props.ui.animations.frame !== null) {
       preview =
         <AnimationPreviewBoxPreview
           ref="preview"
-          id={this.state.frame}
+          id={this.props.ui.animations.frame}
           width={this.props.file.size.width}
           height={this.props.file.size.height}
           ui={this.props.ui}
@@ -38,9 +28,6 @@ var AnimationPreviewBox = React.createClass({
   componentDidUpdate: function() {
     this.scalePreview();
   },
-  selectFrame: function(data) {
-    this.setState({frame: data.frame});
-  },
   scalePreview: function() {
     if(this.refs.preview) {
       var inner = this.refs.inner.getDOMNode();
@@ -49,15 +36,5 @@ var AnimationPreviewBox = React.createClass({
       // e.g. window resizes don't work yet
       this.refs.preview.scale(inner.clientWidth, inner.clientHeight);
     }
-  },
-  selectNewFrameAfterDelete: function(data) {
-    var animation = storeUtils.animations.getSelected(),
-        framePosition = data.position - 1,
-        frame = null;
-
-    if(framePosition < 0) framePosition = 0;
-    frame = animation.frames[framePosition];
-
-    this.setState({frame: frame});
   },
 });

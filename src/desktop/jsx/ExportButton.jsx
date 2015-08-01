@@ -22,7 +22,7 @@ var ExportButton = React.createClass({
                       transparent: 0x000000,
                     }),
           canvas = NodeList2Array(document.getElementById('ExportPreview').querySelector('.animation-frames').querySelectorAll('.preview')),
-          delay = 1000/storeUtils.animations.getByName(this.props.animation).fps;
+          delay = 1000/storeUtils.animations.getById(this.props.animation).fps;
 
       function exportGif(blob) {
        var reader = new FileReader();

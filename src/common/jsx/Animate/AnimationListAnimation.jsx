@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var AnimationListAnimation = React.createClass({
   mixins: [FluxMixin],
   render: function() {
@@ -17,12 +18,8 @@ var AnimationListAnimation = React.createClass({
   },
   dispatchAnimationSelected: function() {
     this.getFlux().actions.animationSelect(this.props.animation.id);
-
     if(this.props.animation.frames.length > 0) {
-      channel.gui.publish('animation.frame.select', {
-        frame: this.props.animation.frames[0],
-        position: 0,
-      });
+      this.getFlux().actions.animationFrameSelect(0);
     }
   },
   dispatchAnimationNameChanged: function(animation, newName) {
