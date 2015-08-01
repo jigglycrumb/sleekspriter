@@ -33,9 +33,9 @@ var AnimationList = React.createClass({
 
         <ul className="animations">
         {animations.map(function(animation) {
-          var selected = animation.name === this.props.selected ? true : false;
+          var selected = animation.id === this.props.selected ? true : false;
           return (
-            <AnimationListAnimation key={animation.name} animation={animation} selected={selected} />
+            <AnimationListAnimation key={animation.id} animation={animation} selected={selected} />
           )
         }, this)}
         </ul>

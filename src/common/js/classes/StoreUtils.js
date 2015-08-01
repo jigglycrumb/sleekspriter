@@ -73,6 +73,14 @@ StoreUtils.prototype.layers.getTop = function() {
 StoreUtils.prototype.animations = {};
 
 /**
+ * Get animation by ID
+ * @returns {Object} animation
+ */
+StoreUtils.prototype.animations.getById = function(id) {
+  return _.find(flux.stores.FileStore.getData('animations'), {id: id});
+};
+
+/**
  * Get animation by name
  * @returns {Object} animation
  */
@@ -85,5 +93,5 @@ StoreUtils.prototype.animations.getByName = function(name) {
  * @returns {Object} animation
  */
 StoreUtils.prototype.animations.getSelected = function() {
-  return this.getByName(flux.stores.UiStore.getData('animations').selected);
+  return this.getById(flux.stores.UiStore.getData('animations').selected);
 };

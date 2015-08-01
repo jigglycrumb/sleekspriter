@@ -9,7 +9,7 @@
     [1, 3, 'layer 3', 0, 100, 1] // frame, id, name, z index, opacity (0-100), visible (0,1)
   ],
   animations: [ // array of animations
-    ["rotate", 12, [1,2,3,4]], // name, fps, array of frames
+    [1, "rotate", 12, [1,2,3,4]], // id, name, fps, array of frames
   ],
   pixels: [ // array of pixels
     [1, 1, 1, 160, 0, 0, 1] // layer, x, y, r, g, b, a
@@ -21,3 +21,4 @@
 // Layer IDs start at 1
 // Layer z-indices start at 0
 // Frame numbers start at 1
+// Animation IDs start at 1

@@ -25,8 +25,7 @@ var UiStore = Fluxxor.createStore({
       constants.LAYER_OPACITY,              this.onLayerAttributeChange,
       constants.LAYER_NAME,                 this.onLayerAttributeChange,
       constants.LAYER_TOP_SELECT,           this.onLayerTopSelect,
-      constants.ANIMATION_SELECT,           this.onAnimationSelect,
-      constants.ANIMATION_NAME,             this.onAnimationName
+      constants.ANIMATION_SELECT,           this.onAnimationSelect
     );
   },
 
@@ -243,15 +242,6 @@ var UiStore = Fluxxor.createStore({
   onAnimationSelect: function(name) {
     this.data.animations.selected = name;
     this.emit('change');
-  },
-
-  onAnimationName: function(payload) {
-    this.waitFor(['FileStore'], function(FileStore) {
-      if(this.data.animations.selected === payload.animation) {
-        this.data.animations.selected = payload.name;
-        this.emit('change');
-      }
-    });
   },
 
   _buildSpritePalette: function(FileStore) {
