@@ -177,7 +177,7 @@ var FileStore = Fluxxor.createStore({
     this.data.size = this._sizeFromFile(json.size);
     this.data.frames = this._framesFromFile(json.frames);
     this.data.layers = json.layers.map(this._layerFromFile);
-    this.data.animations = json.animations.map(this._animationFromFile);
+    this.data.animations = _.sortBy(json.animations.map(this._animationFromFile), 'name');
 
     // add z and frame values to saved pixels
     var layerDict = {};

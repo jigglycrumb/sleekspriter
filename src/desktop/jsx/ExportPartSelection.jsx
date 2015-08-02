@@ -1,11 +1,12 @@
-// editor: done
+// Flux: done, editor: done
 var ExportPartSelection = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     var parts = [
       {name: 'spritesheet', el: 'Spritesheet as single image'},
       {name: 'oneframe', el:  <span>
                                 Frame&nbsp;
-                                <input type="number" value={this.props.frame} min={1} max={this.props.ui.frames.total} onChange={this.setFrame} />
+                                <input type="number" value={this.props.ui.export.frame} min={1} max={this.props.ui.frames.total} onChange={this.setFrame} />
                                 &nbsp;/&nbsp;
                                 {this.props.ui.frames.total} as image
                               </span>},
@@ -14,7 +15,7 @@ var ExportPartSelection = React.createClass({
 
     if(this.props.file.animations.length > 0) {
 
-      var id = this.props.animation === null ? this.props.file.animations[0].id : this.props.animation,
+      var id = this.props.ui.export.animation === null ? this.props.file.animations[0].id : this.props.ui.export.animation,
           animation = storeUtils.animations.getById(id),
           runtime = Math.round(1000/animation.fps * animation.frames.length);
 
@@ -22,7 +23,7 @@ var ExportPartSelection = React.createClass({
         name: 'animation',
         el: <span>
               Animation&nbsp;
-              <select onChange={this.setAnimation} defaultValue={name}>
+              <select onChange={this.setAnimation} defaultValue={id}>
                 {this.props.file.animations.map(function(animation) {
                   return( <option key={animation.id} value={animation.id}>{animation.name}</option> )
                 }, this)}
@@ -40,7 +41,7 @@ var ExportPartSelection = React.createClass({
         <h6>Export</h6>
         <ul>
           {parts.map(function(part) {
-            var checked = part.name === this.props.part ? true : false;
+            var checked = part.name === this.props.ui.export.part ? true : false;
             return (
               <li key={part.name}>
                 <label>
@@ -55,12 +56,12 @@ var ExportPartSelection = React.createClass({
     )
   },
   setPart: function(event) {
-    channel.gui.publish('export.part.set', {part: event.target.value});
+    this.getFlux().actions.exportPart(event.target.value);
   },
   setFrame: function(event) {
-    channel.gui.publish('export.frame.set', {frame: +event.target.value});
+    this.getFlux().actions.exportFrame(event.target.value);
   },
   setAnimation: function(event) {
-    channel.gui.publish('export.animation.set', {animation: event.target.value});
+    this.getFlux().actions.exportAnimation(event.target.value);
   },
 });

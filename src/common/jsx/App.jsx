@@ -62,7 +62,7 @@ var App = React.createClass({
             layer={this.state.layer} />
 
           <ScreenAnimate ui={this.state.ui} file={this.state.file} />
-          <ScreenExport ui={this.state.ui} file={this.state.file} editor={this.props.editor} />
+          <ScreenExport ui={this.state.ui} file={this.state.file} />
           <ScreenDebug ui={this.state.ui} />
         </div>
         <Modal ui={this.state.ui} file={this.state.file} />

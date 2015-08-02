@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var ExportPreviewAnimation = React.createClass({
   getInitialState: function() {
     return {
@@ -18,7 +19,6 @@ var ExportPreviewAnimation = React.createClass({
             width={this.props.width}
             height={this.props.height}
             frameSize={this.props.frameSize}
-            format={this.props.format}
             ui={this.props.ui}
             file={this.props.file} />
 
@@ -33,7 +33,6 @@ var ExportPreviewAnimation = React.createClass({
                   width={self.props.width}
                   height={self.props.height}
                   frameSize={self.props.frameSize}
-                  format={self.props.format}
                   ui={this.props.ui}
                   file={this.props.file} />
               )

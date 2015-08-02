@@ -1,7 +1,8 @@
+// Flux: done, editor: done
 var ExportPreviewAllFrames = React.createClass({
   render: function() {
     var frames = [];
-    for(var i=0; i < this.props.frames.total; i++) frames.push(i+1);
+    for(var i=0; i < this.props.ui.frames.total; i++) frames.push(i+1);
     return (
       <div>
       {frames.map(function(frame) {
@@ -12,7 +13,6 @@ var ExportPreviewAllFrames = React.createClass({
             width={this.props.width}
             height={this.props.height}
             frameSize={this.props.frameSize}
-            format={this.props.format}
             backgroundColor={this.props.backgroundColor}
             ui={this.props.ui}
             file={this.props.file} />

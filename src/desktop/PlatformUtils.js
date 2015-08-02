@@ -30,8 +30,15 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
     self.updateDefaultFolder();
     flux.actions.fileLoad(data);
     flux.actions.tabSelect('paint');
+
+    // actions to init paint screen
     flux.actions.frameSelect(1);
     flux.actions.layerTopSelect();
+
+    // actions to init export screen
+    if(flux.stores.FileStore.getData().animations.length > 0) {
+      flux.actions.exportAnimation(flux.stores.FileStore.getData().animations[0].id);
+    }
   });
 };
 

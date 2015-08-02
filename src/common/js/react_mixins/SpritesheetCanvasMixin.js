@@ -1,10 +1,10 @@
 var SpritesheetCanvasMixin = {
   propTypes: {
-     width: React.PropTypes.number.isRequired, // file width
-     height: React.PropTypes.number.isRequired, // file height
      zoom:  React.PropTypes.number.isRequired, // zoom
+     backgroundColor: React.PropTypes.string.isRequired, // background color
+     file: React.PropTypes.object.isRequired // instance of FileStore
   },
-
+  /*
   getInitialState: function() {
     return {
       subscriptions: {
@@ -28,6 +28,7 @@ var SpritesheetCanvasMixin = {
       //   break;
     }
   },
+  */
   componentDidMount: function() {
     this.paintSpritesheet();
   },
@@ -58,7 +59,7 @@ var SpritesheetCanvasMixin = {
   paintSpritesheet: function() {
 
     var canvas = this.getDOMNode(),
-        pixels = editor.pixels.file;
+        pixels = flux.stores.FileStore.getData().pixels;
 
     // clear canvas
     canvas.width = canvas.width;
@@ -78,13 +79,13 @@ var SpritesheetCanvasMixin = {
   },
   getPixelSpritesheetPosition: function(pixel) {
     var framePos = {
-      x: (x = pixel.frame % this.props.frames.x) === 0 ? this.props.frames.x : x,
-      y: Math.ceil(pixel.frame / this.props.frames.x),
+      x: (x = pixel.frame % this.props.file.frames.x) === 0 ? this.props.file.frames.x : x,
+      y: Math.ceil(pixel.frame / this.props.file.frames.x),
     };
 
     var targetPos = {
-      x: ((framePos.x-1) * this.props.width) + pixel.x,
-      y: ((framePos.y-1) * this.props.height) + pixel.y,
+      x: ((framePos.x-1) * this.props.file.size.width) + pixel.x,
+      y: ((framePos.y-1) * this.props.file.size.height) + pixel.y,
     };
     return targetPos;
   },

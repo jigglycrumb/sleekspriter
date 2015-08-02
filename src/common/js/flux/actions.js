@@ -102,4 +102,19 @@ var actions = {
   animationFrameSelect: function(position) {
     this.dispatch(constants.ANIMATION_FRAME_SELECT, position);
   },
+  exportPart: function(part) {
+    this.dispatch(constants.EXPORT_PART, part);
+  },
+  exportFrame: function(frame) {
+    this.dispatch(constants.EXPORT_FRAME, frame);
+  },
+  exportAnimation: function(animation) {
+    this.dispatch(constants.EXPORT_ANIMATION, animation);
+  },
+  exportZoom: function(zoom) {
+    this.dispatch(constants.EXPORT_ZOOM, zoom);
+  },
+  exportFormat: function(format) {
+    this.dispatch(constants.EXPORT_FORMAT, format);
+  },
 };

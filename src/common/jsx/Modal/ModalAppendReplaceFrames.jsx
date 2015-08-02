@@ -16,7 +16,7 @@ var ModalAppendReplaceFrames = React.createClass({
   },
   appendFrames: function() {
     var animation = storeUtils.animations.getSelected();
-    this.props.data.frames.forEach(function(frame) {
+    this.props.ui.modal.data.frames.forEach(function(frame) {
       this.getFlux().actions.animationFrameAdd(this.props.ui.animations.selected, animation.frames.length, frame);
     }, this);
     this.hide();

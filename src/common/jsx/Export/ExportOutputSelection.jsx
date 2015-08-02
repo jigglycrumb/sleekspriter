@@ -1,7 +1,9 @@
+// Flux: done, editor: done
 var ExportOutputSelection = React.createClass({
+  mixins: [FluxMixin],
   render: function() {
     var formats = ['png', 'jpg'];
-    if(this.props.part === 'animation') {
+    if(this.props.ui.export.part === 'animation') {
       formats = ['gif']; //, 'mov'];
     }
 
@@ -10,7 +12,7 @@ var ExportOutputSelection = React.createClass({
         <h6>Output</h6>
         <ul>
           <li>
-            <select onChange={this.setFormatFromSelectbox} value={this.props.format}>
+            <select onChange={this.setFormat} value={this.props.ui.export.format}>
               {formats.map(function(format) {
                 return( <option key={format} value={format === 'jpg' ? 'jpeg' : format}>{format}</option> )
               }, this)}
@@ -20,10 +22,7 @@ var ExportOutputSelection = React.createClass({
       </div>
     )
   },
-  setFormatFromSelectbox: function(event) {
-    this.setFormat(event.target.value);
-  },
-  setFormat: function(format) {
-    channel.gui.publish('export.format.set', {format: format});
+  setFormat: function(event) {
+    this.getFlux().actions.exportFormat(event.target.value);
   },
 });

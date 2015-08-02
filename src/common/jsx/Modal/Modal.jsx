@@ -10,7 +10,6 @@ var Modal = React.createClass({
       component = React.createElement(this.props.ui.modal.component, {
         ui: this.props.ui,
         file: this.props.file,
-        data: this.props.ui.modal.data,
       });
     }
 

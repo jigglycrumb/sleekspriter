@@ -27,7 +27,12 @@ var UiStore = Fluxxor.createStore({
       constants.LAYER_TOP_SELECT,           this.onLayerTopSelect,
       constants.ANIMATION_SELECT,           this.onAnimationSelect,
       constants.ANIMATION_DELETE,           this.onAnimationDelete,
-      constants.ANIMATION_FRAME_SELECT,     this.onAnimationFrameSelect
+      constants.ANIMATION_FRAME_SELECT,     this.onAnimationFrameSelect,
+      constants.EXPORT_PART,                this.onExportPart,
+      constants.EXPORT_FRAME,               this.onExportFrame,
+      constants.EXPORT_ANIMATION,           this.onExportAnimation,
+      constants.EXPORT_ZOOM,                this.onExportZoom,
+      constants.EXPORT_FORMAT,              this.onExportFormat
     );
   },
 
@@ -96,7 +101,11 @@ var UiStore = Fluxxor.createStore({
         frame: null,
       },
       export: {
-
+        part: 'spritesheet',
+        frame: 1,
+        animation: null,
+        zoom: 1,
+        format: 'png',
       },
     };
 
@@ -248,6 +257,31 @@ var UiStore = Fluxxor.createStore({
 
   onAnimationFrameSelect: function(position) {
     this.data.animations.frame = position;
+    this.emit('change');
+  },
+
+  onExportPart: function(part) {
+    this.data.export.part = part;
+    this.emit('change');
+  },
+
+  onExportFrame: function(frame) {
+    this.data.export.frame = parseInt(frame);
+    this.emit('change');
+  },
+
+  onExportAnimation: function(animation) {
+    this.data.export.animation = parseInt(animation);
+    this.emit('change');
+  },
+
+  onExportZoom: function(zoom) {
+    this.data.export.zoom = parseInt(zoom);
+    this.emit('change');
+  },
+
+  onExportFormat: function(format) {
+    this.data.export.format = format;
     this.emit('change');
   },
 
