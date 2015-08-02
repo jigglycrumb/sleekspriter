@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var ExportButton = React.createClass({
   mixins: [FluxMixin],
   render: function() {
@@ -8,14 +9,34 @@ var ExportButton = React.createClass({
   export: function() {
     var self = this,
         fs = require('fs'),
-        sys = require('sys');
+        sys = require('sys'),
+        path = require('path'),
+        finishedStatusText;
 
     if(this.props.file.folder === null) {
       this.getFlux().actions.modalShow(ModalErrorSaveBeforeExport);
       return;
     }
 
-    if(this.props.ui.export.part === 'animation') {
+    switch(this.props.ui.export.part) {
+      case 'animation':
+        var animation = storeUtils.animations.getById(this.props.ui.export.animation);
+        finishedStatusText = 'Exported to '+this.props.file.folder+path.sep+this.props.file.name+'-'+animation.name+'.gif';
+        writeAnimation();
+        break;
+
+      case 'allframes':
+        finishedStatusText = 'Exported '+self.props.ui.frames.total+' frames as '+(this.props.ui.export.format === 'jpeg' ? 'jpg' : this.props.ui.export.format)+' to '+this.props.file.folder;
+        writeImages();
+        break;
+
+      default:
+        finishedStatusText = 'Exported to '+this.props.file.folder+path.sep+this.props.file.name+'.'+(this.props.ui.export.format === 'jpeg' ? 'jpg' : this.props.ui.export.format);
+        writeImages();
+        break;
+    }
+
+    function writeAnimation() {
       var gif = new GIF({
                       workers: 2,
                       quality: 1,
@@ -23,7 +44,14 @@ var ExportButton = React.createClass({
                       transparent: 0x000000,
                     }),
           canvas = NodeList2Array(document.getElementById('ExportPreview').querySelector('.animation-frames').querySelectorAll('.preview')),
-          delay = 1000/storeUtils.animations.getById(this.props.ui.export.animation).fps;
+          delay = 1000/animation.fps;
+
+      canvas.forEach(function(canvas) {
+        gif.addFrame(canvas, {delay: delay});
+      });
+
+      gif.on('finished', exportGif);
+      gif.render();
 
       function exportGif(blob) {
        var reader = new FileReader();
@@ -34,28 +62,16 @@ var ExportButton = React.createClass({
       function writeGif(e) {
         var data = e.target.result.replace(/^data:image\/\w+;base64,/, ""),
             buf = new Buffer(data, 'base64'),
-            target = this.props.file.folder+'/'+this.props.file.name+'-'+self.props.ui.export.animation+'.gif';
+            target = self.props.file.folder+'/'+self.props.file.name+'-'+self.props.ui.export.animation+'.gif';
 
         fs.writeFile(target, buf);
 
-        channel.gui.publish('export.finished', {
-          folder: this.props.file.folder,
-          name: this.props.file.name,
-          format: self.props.ui.export.format,
-          part: self.props.ui.export.part,
-          frames: self.props.ui.frames.total,
-          animation: self.props.ui.export.animation,
-        });
+        self.getFlux().actions.exportStatus(finishedStatusText);
       }
-
-      canvas.forEach(function(canvas) {
-        gif.addFrame(canvas, {delay: delay});
-      });
-
-      gif.on('finished', exportGif);
-      gif.render();
     }
-    else {
+
+
+    function writeImages() {
       var canvas = NodeList2Array(document.getElementById('ExportPreview').querySelectorAll('.preview')),
           frame = 1;
 
@@ -63,13 +79,13 @@ var ExportButton = React.createClass({
         var img = canvas.toDataURL('image/'+self.props.ui.export.format),
             data = img.replace(/^data:image\/\w+;base64,/, ""),
             buf = new Buffer(data, 'base64'),
-            target = this.props.file.folder+'/'+fileName+'.'+(self.props.ui.export.format === 'jpeg' ? 'jpg' : self.props.ui.export.format);
+            target = self.props.file.folder+'/'+fileName+'.'+(self.props.ui.export.format === 'jpeg' ? 'jpg' : self.props.ui.export.format);
 
         fs.writeFile(target, buf);
       }
 
       canvas.forEach(function(canvas) {
-        var fileName = this.props.file.name;
+        var fileName = self.props.file.name;
         if(self.props.ui.export.part === 'oneframe') fileName+= '-frame-'+self.props.ui.export.frame;
         else if(self.props.ui.export.part === 'allframes') {
           fileName+= '-frame-'+frame;
@@ -78,13 +94,8 @@ var ExportButton = React.createClass({
         saveCanvas(canvas, fileName);
       });
 
-      channel.gui.publish('export.finished', {
-        folder: this.props.file.folder,
-        name: this.props.file.name,
-        format: this.props.ui.export.format,
-        part: this.props.ui.export.part,
-        frames: this.props.ui.frames.total,
-      });
+      self.getFlux().actions.exportStatus(finishedStatusText);
     }
+
   },
 });

@@ -41,7 +41,7 @@ var ScreenExport = React.createClass({
         </div>
 
         <div className="area statusbar">
-          <ExportStatus />
+          <ExportStatus ui={this.props.ui} />
         </div>
       </section>
     )

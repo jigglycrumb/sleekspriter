@@ -32,7 +32,8 @@ var UiStore = Fluxxor.createStore({
       constants.EXPORT_FRAME,               this.onExportFrame,
       constants.EXPORT_ANIMATION,           this.onExportAnimation,
       constants.EXPORT_ZOOM,                this.onExportZoom,
-      constants.EXPORT_FORMAT,              this.onExportFormat
+      constants.EXPORT_FORMAT,              this.onExportFormat,
+      constants.EXPORT_STATUS,              this.onExportStatus
     );
   },
 
@@ -106,6 +107,7 @@ var UiStore = Fluxxor.createStore({
         animation: null,
         zoom: 1,
         format: 'png',
+        status: '',
       },
     };
 
@@ -282,6 +284,11 @@ var UiStore = Fluxxor.createStore({
 
   onExportFormat: function(format) {
     this.data.export.format = format;
+    this.emit('change');
+  },
+
+  onExportStatus: function(text) {
+    this.data.export.status = text;
     this.emit('change');
   },
 

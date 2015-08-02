@@ -38,4 +38,5 @@ var constants = {
   EXPORT_ANIMATION:           'EXPORT_ANIMATION',
   EXPORT_ZOOM:                'EXPORT_ZOOM',
   EXPORT_FORMAT:              'EXPORT_FORMAT',
+  EXPORT_STATUS:              'EXPORT_STATUS',
 };

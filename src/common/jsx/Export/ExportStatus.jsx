@@ -1,35 +1,24 @@
+// Flux: done, editor: done
 var ExportStatus = React.createClass({
-  mixins: [PostalSubscriptionMixin],
+  mixins: [FluxMixin],
   getInitialState: function() {
     return {
-      subscriptions: {
-        'export.finished': this.setStatus,
-      }
+      timer: null
     }
   },
   render: function() {
     return (
-      <div className="bar" ref="bar"></div>
+      <div className="bar" ref="bar">{this.props.ui.export.status}</div>
     )
   },
-  setStatus: function(data, envelope) {
-    var statusText, self = this;
-
-    if(data.folder === null) statusText = 'Exported to '+data.name+'.'+(data.format === 'jpeg' ? 'jpg' : data.format);
-    else {
-      var path = require('path');
-      if(data.part === 'allframes') {
-        statusText = 'Exported '+data.frames+' frames as '+(data.format === 'jpeg' ? 'jpg' : data.format)+' to '+data.folder;
-      }
-      else if(data.part === 'animation') {
-        statusText = 'Exported to '+data.folder+path.sep+data.name+'-'+data.animation+'.gif';
-      }
-      else statusText = 'Exported to '+data.folder+path.sep+data.name+'.'+(data.format === 'jpeg' ? 'jpg' : data.format);
+  componentDidUpdate: function() {
+    if(this.state.timer === null && this.props.ui.export.status.length > 0) {
+      var timer = setTimeout(this.clearStatus, 5000);
+      this.setState({timer: timer});
     }
-    this.refs.bar.getDOMNode().innerHTML = statusText;
-
-    setTimeout(function() {
-      self.refs.bar.getDOMNode().innerHTML = '';
-    }, 5000);
+  },
+  clearStatus: function() {
+    this.setState({timer: null});
+    this.getFlux().actions.exportStatus('');
   },
 });

@@ -117,4 +117,7 @@ var actions = {
   exportFormat: function(format) {
     this.dispatch(constants.EXPORT_FORMAT, format);
   },
+  exportStatus: function(text) {
+    this.dispatch(constants.EXPORT_STATUS, text);
+  },
 };
