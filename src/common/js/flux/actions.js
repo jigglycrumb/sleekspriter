@@ -78,6 +78,9 @@ var actions = {
   layerAdd: function(selectedLayer) {
     this.dispatch(constants.LAYER_ADD, selectedLayer);
   },
+  layerDelete: function(layer) {
+    this.dispatch(constants.LAYER_DELETE, layer);
+  },
   animationSelect: function(name) {
     this.dispatch(constants.ANIMATION_SELECT, name);
   },

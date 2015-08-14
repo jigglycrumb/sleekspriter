@@ -59,11 +59,11 @@ Editor.prototype.pixels.init = function() {
   //   self.frame = _.where(self.file, {frame: data.frame});
   // });
 
-  channel.gui.subscribe('layer.delete', function(data, envelope) {
-    self.scope = [];
-    self.file = file.pixels;
-    self.frame = _.where(self.file, {frame: data.frame});
-  });
+  // channel.gui.subscribe('layer.delete', function(data, envelope) {
+  //   self.scope = [];
+  //   self.file = file.pixels;
+  //   self.frame = _.where(self.file, {frame: data.frame});
+  // });
 
   channel.gui.subscribe('layer.drop', function(data, envelope) {
     self.file = file.pixels;

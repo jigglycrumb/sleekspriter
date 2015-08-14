@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var ModalConfirmDeleteLayer = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {
@@ -14,7 +15,9 @@ var ModalConfirmDeleteLayer = React.createClass({
     )
   },
   deleteLayer: function() {
-    channel.file.publish('layer.delete', {layer: this.props.ui.layers.selected});
+    this.getFlux().actions.layerDelete(this.props.ui.layers.selected);
+    this.getFlux().actions.layerTopSelect();
+    this.getFlux().actions.scopeSet(null, 'layer');
     this.hide();
   },
 });

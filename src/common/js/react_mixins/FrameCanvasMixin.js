@@ -78,7 +78,12 @@ var FrameCanvasMixin = {
   paintFrame: function() {
 
     var canvas = this.getDOMNode(),
-        pixels = [];
+        pixels = [],
+        layersVisible = [];
+
+    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+      if(layer.frame === this.props.id) layersVisible[layer.id] = layer.visible;
+    }, this);
 
     // collect frame pixels
     function grab(px) {
@@ -86,7 +91,7 @@ var FrameCanvasMixin = {
     }
 
     this.props.file.pixels.forEach(grab, this);
-    this.props.ui.pixels.scope.forEach(grab, this);
+    //this.props.ui.pixels.scope.forEach(grab, this);
 
     // clear canvas
     canvas.width = canvas.width;
@@ -98,9 +103,11 @@ var FrameCanvasMixin = {
     }
 
     // paint
+    // TODO: pixels below don't get drawn, fix that.
     pixels.forEach(function(px) {
       var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
-      if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
+
+      if(layersVisible[px.layer] === true && pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
     }, this);
   },
   previewFrame: function(pixels) {

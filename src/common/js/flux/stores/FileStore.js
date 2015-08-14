@@ -10,6 +10,7 @@ var FileStore = Fluxxor.createStore({
       constants.LAYER_OPACITY,            this.onLayerOpacity,
       constants.LAYER_NAME,               this.onLayerName,
       constants.LAYER_ADD,                this.onLayerAdd,
+      constants.LAYER_DELETE,             this.onLayerDelete,
 
       constants.ANIMATION_NAME,           this.onAnimationName,
       constants.ANIMATION_FPS,            this.onAnimationFps,
@@ -108,7 +109,46 @@ var FileStore = Fluxxor.createStore({
 
   onLayerAdd: function(selectedLayer) {
 
+    var selectedFrame = flux.stores.UiStore.getData().frames.selected,
+        index = 0;
 
+    for(var i=0; i < this.data.layers.length; i++) {
+      if(this.data.layers[i].id === selectedLayer) {
+        index = i;
+        break;
+      }
+    }
+
+    var frameLayers = _.where(this.data.layers, {frame: selectedFrame});
+    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
+
+    var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;
+    var newLayer = this._layerFromFile([newId, selectedFrame, 'Layer ' + newId, newZIndex, 100, true]);
+
+    this.data.layers.splice(index, 0, newLayer);
+    this._fixLayerZ(selectedFrame);
+
+    this.emit('change');
+  },
+
+  onLayerDelete: function(id) {
+
+    var selectedFrame = flux.stores.UiStore.getData().frames.selected,
+        index = 0;
+
+    this._deletePixelsOfLayer(id);
+
+    for(var i=0; i < this.data.layers.length; i++) {
+      if(this.data.layers[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+
+    this.data.layers.splice(index, 1);
+    this._fixLayerZ(selectedFrame);
+
+    this.emit('change');
   },
 
   onAnimationName: function(payload) {
@@ -240,6 +280,24 @@ var FileStore = Fluxxor.createStore({
       fps: animation[2],
       frames: animation[3],
     }
+  },
+
+  _fixLayerZ: function(frame) {
+    this.data.layers.reverse();
+    var z = 0;
+    for(var i = 0; i < this.data.layers.length; i++) {
+      if( this.data.layers[i].frame == frame) {
+        this.data.layers[i].z = z;
+        z++;
+      }
+    }
+    this.data.layers.reverse();
+  },
+
+  _deletePixelsOfLayer: function(layer) {
+    this.data.pixels = this.data.pixels.filter(function(pixel) {
+      return pixel.layer !== layer;
+    });
   },
 
 });

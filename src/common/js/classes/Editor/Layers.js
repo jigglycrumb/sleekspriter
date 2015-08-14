@@ -35,8 +35,8 @@ Editor.prototype.layers.init = function() {
   //   channel.gui.publish('scope.set', scopeData);
   // });
 
-  channel.gui.subscribe('layer.add', updateFrameLayers);
-  channel.gui.subscribe('layer.delete', updateFrameLayers);
+  // channel.gui.subscribe('layer.add', updateFrameLayers);
+  // channel.gui.subscribe('layer.delete', updateFrameLayers);
   // channel.gui.subscribe('size.set', updateFrameLayers);
 
   channel.gui.subscribe('layer.drop', updateFrameLayers);

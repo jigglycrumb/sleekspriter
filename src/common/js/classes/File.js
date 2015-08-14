@@ -72,11 +72,11 @@ var File = function() {
     return _.findWhere(this.animations, {name: name}) || false;
   }
 
-  this.deletePixelsOfLayer = function(layer) {
-    this.pixels = this.pixels.filter(function(pixel) {
-      return pixel.layer !== layer;
-    });
-  };
+  // this.deletePixelsOfLayer = function(layer) {
+  //   this.pixels = this.pixels.filter(function(pixel) {
+  //     return pixel.layer !== layer;
+  //   });
+  // };
 
   this.toJSONString = function() {
     var strObj = {
@@ -244,64 +244,64 @@ var File = function() {
   });
 
   // handle addition of new layer
-  channel.file.subscribe('layer.add', function(data, envelope) {
-    var index = 0;
-    for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === data.layer) {
-        index = i;
-        break;
-      }
-    }
+  // channel.file.subscribe('layer.add', function(data, envelope) {
+  //   var index = 0;
+  //   for(var i=0; i < self.layers.length; i++) {
+  //     if(self.layers[i].id === data.layer) {
+  //       index = i;
+  //       break;
+  //     }
+  //   }
 
-    var frameLayers = _.where(self.layers, {frame: editor.frames.selected});
-    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
+  //   var frameLayers = _.where(self.layers, {frame: editor.frames.selected});
+  //   var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
-    var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = layerFromFile([newId, editor.frames.selected, 'Layer ' + newId, newZIndex, 100, true]);
+  //   var newId = (_.max(self.layers, function(layer) { return layer.id; })).id + 1;
+  //   var newLayer = layerFromFile([newId, editor.frames.selected, 'Layer ' + newId, newZIndex, 100, true]);
 
-    self.layers.splice(index, 0, newLayer);
-    fixLayerZ(editor.frames.selected);
+  //   self.layers.splice(index, 0, newLayer);
+  //   fixLayerZ(editor.frames.selected);
 
-    channel.gui.publish('layer.add', {frame: editor.frames.selected, layer: newId});
-  });
+  //   channel.gui.publish('layer.add', {frame: editor.frames.selected, layer: newId});
+  // });
 
   // handle layer removal
-  channel.file.subscribe('layer.delete', function(data, envelope) {
-    // delete layer pixels
-    self.deletePixelsOfLayer(data.layer);
+  // channel.file.subscribe('layer.delete', function(data, envelope) {
+  //   // delete layer pixels
+  //   self.deletePixelsOfLayer(data.layer);
 
-    // get layer array index of all layers
-    var index = 0;
-    for(var i=0; i < self.layers.length; i++) {
-      if(self.layers[i].id === data.layer) {
-        index = i;
-        break;
-      }
-    }
+  //   // get layer array index of all layers
+  //   var index = 0;
+  //   for(var i=0; i < self.layers.length; i++) {
+  //     if(self.layers[i].id === data.layer) {
+  //       index = i;
+  //       break;
+  //     }
+  //   }
 
-    // get layer array index of frame layers
-    var frameLayers = _.where(self.layers, {frame: editor.frames.selected});
-    var fIndex = 0;
-    for(var i=0; i < frameLayers.length; i++) {
-      if(frameLayers[i].id === data.layer) {
-        fIndex = i;
-        break;
-      }
-    }
+  //   // get layer array index of frame layers
+  //   var frameLayers = _.where(self.layers, {frame: editor.frames.selected});
+  //   var fIndex = 0;
+  //   for(var i=0; i < frameLayers.length; i++) {
+  //     if(frameLayers[i].id === data.layer) {
+  //       fIndex = i;
+  //       break;
+  //     }
+  //   }
 
-    // determine next layer to be selected in the UI
-    var shouldSelectLayer;
-    if(_.isUndefined(frameLayers[fIndex+1]))
-      shouldSelectLayer = frameLayers[fIndex-1].id;
-    else
-      shouldSelectLayer = frameLayers[fIndex+1].id;
+  //   // determine next layer to be selected in the UI
+  //   var shouldSelectLayer;
+  //   if(_.isUndefined(frameLayers[fIndex+1]))
+  //     shouldSelectLayer = frameLayers[fIndex-1].id;
+  //   else
+  //     shouldSelectLayer = frameLayers[fIndex+1].id;
 
-    // delete layer, reorder z indices, inform App of update
-    self.layers.splice(index, 1);
-    fixLayerZ(editor.frames.selected);
+  //   // delete layer, reorder z indices, inform App of update
+  //   self.layers.splice(index, 1);
+  //   fixLayerZ(editor.frames.selected);
 
-    channel.gui.publish('layer.delete', {frame: editor.frames.selected, layer: shouldSelectLayer});
-  });
+  //   channel.gui.publish('layer.delete', {frame: editor.frames.selected, layer: shouldSelectLayer});
+  // });
 
   // handle addition of new animation
   // channel.file.subscribe('animation.add', function(data, envelope) {
