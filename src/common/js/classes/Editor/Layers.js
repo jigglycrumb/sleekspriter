@@ -17,23 +17,23 @@ Editor.prototype.layers.init = function() {
   //   setTimeout(self.selectTop.bind(self), 0); // select top layer
   // });
 
-  channel.gui.subscribe('layer.select', function(data, envelope) {
-    // save old scope layer
-    var oldScope = self.selected;
+  // channel.gui.subscribe('layer.select', function(data, envelope) {
+  //   // save old scope layer
+  //   var oldScope = self.selected;
 
-    // set new layer selected
-    self.selected = data.layer;
+  //   // set new layer selected
+  //   self.selected = data.layer;
 
-    // restrict scope to layer
-    var scopeData = {
-      old: oldScope,
-      scope: 'layer',
-      data: self.selected,
-    };
+  //   // restrict scope to layer
+  //   var scopeData = {
+  //     old: oldScope,
+  //     scope: 'layer',
+  //     data: self.selected,
+  //   };
 
-    // set new scope
-    channel.gui.publish('scope.set', scopeData);
-  });
+  //   // set new scope
+  //   channel.gui.publish('scope.set', scopeData);
+  // });
 
   channel.gui.subscribe('layer.add', updateFrameLayers);
   channel.gui.subscribe('layer.delete', updateFrameLayers);

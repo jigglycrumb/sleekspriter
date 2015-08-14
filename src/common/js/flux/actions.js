@@ -75,6 +75,9 @@ var actions = {
   layerTopSelect: function() {
     this.dispatch(constants.LAYER_TOP_SELECT);
   },
+  layerAdd: function(selectedLayer) {
+    this.dispatch(constants.LAYER_ADD, selectedLayer);
+  },
   animationSelect: function(name) {
     this.dispatch(constants.ANIMATION_SELECT, name);
   },
@@ -119,5 +122,8 @@ var actions = {
   },
   exportStatus: function(text) {
     this.dispatch(constants.EXPORT_STATUS, text);
+  },
+  scopeSet: function(oldScope, type, data) {
+    this.dispatch(constants.SCOPE_SET, {oldScope: oldScope, type: type, data: data});
   },
 };

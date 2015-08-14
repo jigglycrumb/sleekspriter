@@ -9,6 +9,7 @@ var FileStore = Fluxxor.createStore({
       constants.LAYER_VISIBILITY,         this.onLayerVisibility,
       constants.LAYER_OPACITY,            this.onLayerOpacity,
       constants.LAYER_NAME,               this.onLayerName,
+      constants.LAYER_ADD,                this.onLayerAdd,
 
       constants.ANIMATION_NAME,           this.onAnimationName,
       constants.ANIMATION_FPS,            this.onAnimationFps,
@@ -103,6 +104,11 @@ var FileStore = Fluxxor.createStore({
       if(l.id === layer.id) l = layer;
     });
     this.emit('change');
+  },
+
+  onLayerAdd: function(selectedLayer) {
+
+
   },
 
   onAnimationName: function(payload) {

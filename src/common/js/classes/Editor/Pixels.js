@@ -70,41 +70,41 @@ Editor.prototype.pixels.init = function() {
     self.frame = _.where(self.file, {frame: data.frame});
   });
 
-  channel.gui.subscribe('scope.set', function(data, envelope) {
+  // channel.gui.subscribe('scope.set', function(data, envelope) {
 
     // update pixels in scope
 
-    if(data.old !== null && self.scope.length > 0) {
-      // merge scope pixels back to frame
-      self.scope.forEach(function(px) {
-        var oldPixel = _.findWhere(self.frame, {x: px.x, y: px.y});
-        if(!_.isUndefined(oldPixel)) {
-          deletePixel('frame', px.layer, px.x, px.y);
-        }
-        self.frame.push(px);
-      });
+    // if(data.old !== null && self.scope.length > 0) {
+    //   // merge scope pixels back to frame
+    //   self.scope.forEach(function(px) {
+    //     var oldPixel = _.findWhere(self.frame, {x: px.x, y: px.y});
+    //     if(!_.isUndefined(oldPixel)) {
+    //       deletePixel('frame', px.layer, px.x, px.y);
+    //     }
+    //     self.frame.push(px);
+    //   });
 
-      self.scope = [];
-    }
+    //   self.scope = [];
+    // }
 
-    var layer = data.scope === 'layer' ? data.data : data.old;
+    // var layer = data.scope === 'layer' ? data.data : data.old;
 
-    switch(data.scope) {
-      case 'selection':
-        // move pixels in selection to scope
-        self.scope = _.remove(self.frame, function(px) {
-          return px.layer === layer && editor.selection.contains(px);
-        });
-        break;
+    // switch(data.scope) {
+    //   case 'selection':
+    //     // move pixels in selection to scope
+    //     self.scope = _.remove(self.frame, function(px) {
+    //       return px.layer === layer && editor.selection.contains(px);
+    //     });
+    //     break;
 
-      case 'layer':
-        // move pixels of layer to scope
-        self.scope = _.remove(self.frame, {layer: layer});
-        break;
-    }
+    //   case 'layer':
+    //     // move pixels of layer to scope
+    //     self.scope = _.remove(self.frame, {layer: layer});
+    //     break;
+    // }
 
-    self.log();
-  });
+    // self.log();
+  // });
 
   channel.gui.subscribe('pixels.move', function(data, envelope) {
     var wrapPixel = function(px) { px.wrap(data.distance) };

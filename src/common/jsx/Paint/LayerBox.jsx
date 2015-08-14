@@ -4,10 +4,10 @@ var LayerBox = React.createClass({
     return {
       dragPosition: 0,
       dragLayer: 0,
-      shouldSelectLayer: false,
+      //shouldSelectLayer: false,
       subscriptions: {
-        'layer.add': this.shouldSelectLayer,
-        'layer.delete': this.shouldSelectLayer,
+        // 'layer.add': this.shouldSelectLayer,
+        // 'layer.delete': this.shouldSelectLayer,
         'box.fold': this.fitHeight,
         'layer.dragstart': this.dragStart,
       }
@@ -50,22 +50,24 @@ var LayerBox = React.createClass({
     );
   },
   componentDidUpdate: function() {
-    if(this.state.shouldSelectLayer !== false) {
-      channel.gui.publish('layer.select', {layer: this.state.shouldSelectLayer});
-      this.setState({ shouldSelectLayer: false });
-    }
+    // if(this.state.shouldSelectLayer !== false) {
+    //   channel.gui.publish('layer.select', {layer: this.state.shouldSelectLayer});
+    //   this.setState({ shouldSelectLayer: false });
+    // }
 
     this.fitHeight();
   },
   dispatchLayerAdded: function() {
-    channel.file.publish('layer.add', {layer: this.props.ui.layers.selected});
+    // channel.file.publish('layer.add', {layer: this.props.ui.layers.selected});
+
+    this.getFlux().actions.layerAdd(this.props.ui.layers.selected);
   },
   confirmLayerDelete: function() {
     this.getFlux().actions.modalShow(ModalConfirmDeleteLayer);
   },
-  shouldSelectLayer: function(data) {
-    this.setState({ shouldSelectLayer: data.layer });
-  },
+  // shouldSelectLayer: function(data) {
+  //   this.setState({ shouldSelectLayer: data.layer });
+  // },
   fitHeight: function() {
     var areaRightHeight = document.querySelector('.area.right').clientHeight,
         otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight,

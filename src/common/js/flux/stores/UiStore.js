@@ -33,7 +33,8 @@ var UiStore = Fluxxor.createStore({
       constants.EXPORT_ANIMATION,           this.onExportAnimation,
       constants.EXPORT_ZOOM,                this.onExportZoom,
       constants.EXPORT_FORMAT,              this.onExportFormat,
-      constants.EXPORT_STATUS,              this.onExportStatus
+      constants.EXPORT_STATUS,              this.onExportStatus,
+      constants.SCOPE_SET,                  this.onScopeSet
     );
   },
 
@@ -292,6 +293,46 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  onScopeSet: function(params) {
+    console.log(params);
+
+    // update pixels in scope
+    if(params.oldScope !== null && this.data.pixels.scope.length > 0) {
+      // merge scope pixels back to frame
+      this.data.pixels.scope.forEach(function(px) {
+        var oldPixel = _.findWhere(this.data.pixels.frame, {x: px.x, y: px.y});
+        if(!_.isUndefined(oldPixel)) {
+          this._deletePixel(this.data.pixels.frame, px.layer, px.x, px.y);
+        }
+        this.data.pixels.frame.push(px);
+      }, this);
+
+      this.data.pixels.scope = [];
+    }
+
+    var layer = params.type === 'layer' ? params.data : params.oldScope;
+    // use selected layer if no layer data was given
+    if(layer === undefined) layer = this.data.layers.selected;
+
+    switch(params.type) {
+      case 'selection':
+        // move pixels in selection to scope
+        this.data.pixels.scope = _.remove(this.data.pixels.frame, function(px) {
+          // return px.layer === layer && editor.selection.contains(px); // TODO
+        });
+        break;
+
+      case 'layer':
+        // move pixels of layer to scope
+        this.data.pixels.scope = _.remove(this.data.pixels.frame, {layer: layer});
+        break;
+    }
+
+    this._logPixels();
+
+    this.emit('change');
+  },
+
   _buildSpritePalette: function(FileStore) {
       var palette = [],
           pixels  = FileStore.getData('pixels');
@@ -301,5 +342,19 @@ var UiStore = Fluxxor.createStore({
       });
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
-  }
+  },
+
+  _logPixels: function() {
+    console.log('clipboard: '+this.data.pixels.clipboard.length+' '+
+                'scope: '+this.data.pixels.scope.length+' '+
+                'frame: '+this.data.pixels.frame.length);
+  },
+
+  _deletePixel: function(pixels, layer, x, y) {
+    pixels = pixels.filter(function(px) {
+      return !(px.layer == layer && px.x == x && px.y == y);
+    });
+  },
+
+
 });

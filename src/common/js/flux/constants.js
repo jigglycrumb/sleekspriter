@@ -24,6 +24,7 @@ var constants = {
   LAYER_OPACITY:              'LAYER_OPACITY',
   LAYER_NAME:                 'LAYER_NAME',
   LAYER_TOP_SELECT:           'LAYER_TOP_SELECT',
+  LAYER_ADD:                  'LAYER_ADD',
   ANIMATION_SELECT:           'ANIMATION_SELECT',
   ANIMATION_NAME:             'ANIMATION_NAME',
   ANIMATION_FPS:              'ANIMATION_FPS',
@@ -39,4 +40,5 @@ var constants = {
   EXPORT_ZOOM:                'EXPORT_ZOOM',
   EXPORT_FORMAT:              'EXPORT_FORMAT',
   EXPORT_STATUS:              'EXPORT_STATUS',
+  SCOPE_SET:                  'SCOPE_SET',
 };

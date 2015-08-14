@@ -34,6 +34,7 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
     // actions to init paint screen
     flux.actions.frameSelect(1);
     flux.actions.layerTopSelect();
+    flux.actions.scopeSet(null, 'layer');
 
     // actions to init export screen
     if(flux.stores.FileStore.getData().animations.length > 0) {

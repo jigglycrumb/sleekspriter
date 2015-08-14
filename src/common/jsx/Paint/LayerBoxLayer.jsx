@@ -31,7 +31,9 @@ var LayerBoxLayer = React.createClass({
     );
   },
   dispatchLayerSelected: function() {
+    var oldScope = this.props.ui.layers.selected;
     this.getFlux().actions.layerSelect(this.props.layer.id);
+    this.getFlux().actions.scopeSet(oldScope, 'layer', this.props.layer.id);
   },
   dispatchLayerVisibilityChanged: function(event) {
     this.getFlux().actions.layerVisibility(this.props.layer.id, event.target.checked);
