@@ -11,6 +11,7 @@ var FileStore = Fluxxor.createStore({
       constants.LAYER_NAME,               this.onLayerName,
       constants.LAYER_ADD,                this.onLayerAdd,
       constants.LAYER_DELETE,             this.onLayerDelete,
+      constants.LAYER_DROP,               this.onLayerDrop,
 
       constants.ANIMATION_NAME,           this.onAnimationName,
       constants.ANIMATION_FPS,            this.onAnimationFps,
@@ -147,6 +148,40 @@ var FileStore = Fluxxor.createStore({
 
     this.data.layers.splice(index, 1);
     this._fixLayerZ(selectedFrame);
+
+    this.emit('change');
+  },
+
+  onLayerDrop: function(payload) {
+
+    var dropLayer = storeUtils.layers.getById(payload.layer),
+        dropFrame = dropLayer.frame;
+
+    var tempLayers = _.partition(this.data.layers, function(layer) {
+      return layer.frame == dropFrame;
+    });
+
+    var frameLayers = tempLayers[0],
+        otherLayers = tempLayers[1];
+
+    // remove dragged layer from frame layers
+    frameLayers = frameLayers.filter(function(item) {
+      return item.id !== payload.layer;
+    });
+
+    // re-insert layer at new position
+    frameLayers.splice(payload.position, 0, dropLayer).join();
+
+    // merge layers back together
+    this.data.layers = frameLayers.concat(otherLayers);
+
+    // fix layer z-indices
+    this._fixLayerZ(dropFrame);
+
+    // fix pixel z-indices
+    this._fixPixelZ();
+
+    // payload.frame = dropFrame;
 
     this.emit('change');
   },
@@ -292,6 +327,20 @@ var FileStore = Fluxxor.createStore({
       }
     }
     this.data.layers.reverse();
+  },
+
+  // refresh z values of all pixels
+  _fixPixelZ: function() {
+    var layerZ = {};
+    this.data.layers.forEach(function(layer) {
+      layerZ[layer.id] = layer.z;
+    });
+
+    this.data.pixels.forEach(function(pixel) {
+      var layer = pixel[0],
+              z = layerZ[layer];
+      pixel.z = z;
+    });
   },
 
   _deletePixelsOfLayer: function(layer) {

@@ -26,6 +26,7 @@ var constants = {
   LAYER_TOP_SELECT:           'LAYER_TOP_SELECT',
   LAYER_ADD:                  'LAYER_ADD',
   LAYER_DELETE:               'LAYER_DELETE',
+  LAYER_DROP:                 'LAYER_DROP',
   ANIMATION_SELECT:           'ANIMATION_SELECT',
   ANIMATION_NAME:             'ANIMATION_NAME',
   ANIMATION_FPS:              'ANIMATION_FPS',

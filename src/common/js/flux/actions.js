@@ -81,6 +81,9 @@ var actions = {
   layerDelete: function(layer) {
     this.dispatch(constants.LAYER_DELETE, layer);
   },
+  layerDrop: function(layer, position) {
+    this.dispatch(constants.LAYER_DROP, {layer: layer, position: position});
+  },
   animationSelect: function(name) {
     this.dispatch(constants.ANIMATION_SELECT, name);
   },

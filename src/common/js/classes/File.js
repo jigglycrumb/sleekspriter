@@ -130,31 +130,31 @@ var File = function() {
     return _.findWhere(this.layers, {id: layer}).frame;
   };
 
-  function fixLayerZ(frame) {
-    self.layers.reverse();
-    var z = 0;
-    for(var i = 0; i < self.layers.length; i++) {
-      if( self.layers[i].frame == frame) {
-        self.layers[i].z = z;
-        z++;
-      }
-    }
-    self.layers.reverse();
-  }
+  // function fixLayerZ(frame) {
+  //   self.layers.reverse();
+  //   var z = 0;
+  //   for(var i = 0; i < self.layers.length; i++) {
+  //     if( self.layers[i].frame == frame) {
+  //       self.layers[i].z = z;
+  //       z++;
+  //     }
+  //   }
+  //   self.layers.reverse();
+  // }
 
-  function fixPixelZ() {
-    // refresh z values of all pixels
-    var layerZ = {};
-    self.layers.forEach(function(layer) {
-      layerZ[layer.id] = layer.z;
-    });
+  // function fixPixelZ() {
+  //   // refresh z values of all pixels
+  //   var layerZ = {};
+  //   self.layers.forEach(function(layer) {
+  //     layerZ[layer.id] = layer.z;
+  //   });
 
-    self.pixels.forEach(function(pixel) {
-      var layer = pixel[0],
-          z = layerZ[layer];
-      pixel.z = z;
-    });
-  }
+  //   self.pixels.forEach(function(pixel) {
+  //     var layer = pixel[0],
+  //         z = layerZ[layer];
+  //     pixel.z = z;
+  //   });
+  // }
 
   // handle file opening
   // channel.file.subscribe('open', function(data, envelope) {
@@ -210,38 +210,38 @@ var File = function() {
   // });
 
   // handle layer drag & drop
-  channel.file.subscribe('layer.drop', function(data, envelope) {
-    var dropLayer = self.getLayerById(data.layer),
-        dropFrame = dropLayer.frame;
+  // channel.file.subscribe('layer.drop', function(data, envelope) {
+  //   var dropLayer = self.getLayerById(data.layer),
+  //       dropFrame = dropLayer.frame;
 
-    var tempLayers = _.partition(self.layers, function(layer) {
-      return layer.frame == dropFrame;
-    });
+  //   var tempLayers = _.partition(self.layers, function(layer) {
+  //     return layer.frame == dropFrame;
+  //   });
 
-    var frameLayers = tempLayers[0],
-        otherLayers = tempLayers[1];
+  //   var frameLayers = tempLayers[0],
+  //       otherLayers = tempLayers[1];
 
-    // remove dragged layer from frame layers
-    frameLayers = frameLayers.filter(function(item) {
-      return item.id !== data.layer;
-    });
+  //   // remove dragged layer from frame layers
+  //   frameLayers = frameLayers.filter(function(item) {
+  //     return item.id !== data.layer;
+  //   });
 
-    // re-insert layer at new position
-    frameLayers.splice(data.position, 0, dropLayer).join();
+  //   // re-insert layer at new position
+  //   frameLayers.splice(data.position, 0, dropLayer).join();
 
-    // merge layers back together
-    self.layers = frameLayers.concat(otherLayers);
+  //   // merge layers back together
+  //   self.layers = frameLayers.concat(otherLayers);
 
-    // fix layer z-indices
-    fixLayerZ(dropFrame);
+  //   // fix layer z-indices
+  //   fixLayerZ(dropFrame);
 
-    // fix pixel z-indices
-    fixPixelZ();
+  //   // fix pixel z-indices
+  //   fixPixelZ();
 
-    data.frame = dropFrame;
+  //   data.frame = dropFrame;
 
-    channel.gui.publish('layer.drop', data);
-  });
+  //   channel.gui.publish('layer.drop', data);
+  // });
 
   // handle addition of new layer
   // channel.file.subscribe('layer.add', function(data, envelope) {

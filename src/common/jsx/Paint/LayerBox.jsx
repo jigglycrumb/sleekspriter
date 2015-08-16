@@ -1,13 +1,13 @@
 var LayerBox = React.createClass({
-  mixins: [FluxMixin, FoldableMixin, PostalSubscriptionMixin],
+  mixins: [FluxMixin, FoldableMixin],
   getInitialState: function() {
     return {
       dragPosition: 0,
       dragLayer: 0,
-      subscriptions: {
-        'box.fold': this.fitHeight,
-        'layer.dragstart': this.dragStart,
-      }
+      // subscriptions: {
+      //   'box.fold': this.fitHeight,
+      //   'layer.dragstart': this.dragStart,
+      // }
     }
   },
   render: function() {
@@ -33,7 +33,8 @@ var LayerBox = React.createClass({
                     layer={layer}
                     selected={selected}
                     dimensions={this.props.file.size}
-                    ui={this.props.ui} />
+                    ui={this.props.ui}
+                    dragStartHandler={this.dragStart} />
                 )
               }
             }, this)}
@@ -62,9 +63,11 @@ var LayerBox = React.createClass({
     this.getDOMNode().querySelector('.layers').style.height = height+'px';
   },
 
-  dragStart: function(data) {
-    this.setState({dragLayer: data.layer});
+  dragStart: function(layer) {
+    console.log('starting to drag layer '+layer);
+    this.setState({dragLayer: layer});
   },
+
   dragOver: function(e) {
     e.preventDefault();
 
@@ -78,10 +81,11 @@ var LayerBox = React.createClass({
     this.setState({dragPosition: dragPosition});
   },
   drop: function(e) {
-    channel.file.publish('layer.drop', {layer: this.state.dragLayer, position: this.state.dragPosition});
+    // channel.file.publish('layer.drop', {layer: this.state.dragLayer, position: this.state.dragPosition});
+    this.getFlux().actions.layerDrop(this.state.dragLayer, this.state.dragPosition);
     this.setState({
       dragLayer: 0,
       dragPosition: 0,
-    })
+    });
   },
 });

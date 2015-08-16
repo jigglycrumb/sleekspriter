@@ -6,11 +6,11 @@ Editor.prototype.layers.frame = [];
  * Initialize layers, setup message subscriptions
  */
 Editor.prototype.layers.init = function() {
-  var self = this;
+  // var self = this;
 
-  function updateFrameLayers(data) {
-    self.frame = _.where(file.layers, {frame: data.frame});
-  }
+  // function updateFrameLayers(data) {
+  //   self.frame = _.where(file.layers, {frame: data.frame});
+  // }
 
   // channel.gui.subscribe('frame.select', function(data, envelope) {
   //   self.frame = _.where(file.layers, {frame: data.frame});
@@ -39,7 +39,7 @@ Editor.prototype.layers.init = function() {
   // channel.gui.subscribe('layer.delete', updateFrameLayers);
   // channel.gui.subscribe('size.set', updateFrameLayers);
 
-  channel.gui.subscribe('layer.drop', updateFrameLayers);
+  // channel.gui.subscribe('layer.drop', updateFrameLayers);
 };
 
 /**

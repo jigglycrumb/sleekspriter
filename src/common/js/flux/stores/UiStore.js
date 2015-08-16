@@ -20,6 +20,7 @@ var UiStore = Fluxxor.createStore({
       constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect,
+
       constants.LAYER_SELECT,               this.onLayerSelect,
       constants.LAYER_VISIBILITY,           this.onLayerAttributeChange,
       constants.LAYER_OPACITY,              this.onLayerAttributeChange,
@@ -27,9 +28,12 @@ var UiStore = Fluxxor.createStore({
       constants.LAYER_TOP_SELECT,           this.onLayerTopSelect,
       constants.LAYER_ADD,                  this.onLayerAdd,
       constants.LAYER_DELETE,               this.onLayerDelete,
+      constants.LAYER_DROP,                 this.onLayerDrop,
+
       constants.ANIMATION_SELECT,           this.onAnimationSelect,
       constants.ANIMATION_DELETE,           this.onAnimationDelete,
       constants.ANIMATION_FRAME_SELECT,     this.onAnimationFrameSelect,
+
       constants.EXPORT_PART,                this.onExportPart,
       constants.EXPORT_FRAME,               this.onExportFrame,
       constants.EXPORT_ANIMATION,           this.onExportAnimation,
@@ -258,6 +262,14 @@ var UiStore = Fluxxor.createStore({
   },
 
   onLayerDelete: function(id) {
+    this.waitFor(['FileStore'], function(FileStore) {
+      this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.pixels.frame = _.where(FileStore.getData().pixels, {frame: this.data.frames.selected});
+      this.emit('change');
+    });
+  },
+
+  onLayerDrop: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.data.pixels.frame = _.where(FileStore.getData().pixels, {frame: this.data.frames.selected});

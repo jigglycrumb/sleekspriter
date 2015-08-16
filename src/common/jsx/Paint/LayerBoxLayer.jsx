@@ -1,3 +1,4 @@
+// Flux: done, editor: done
 var LayerBoxLayer = React.createClass({
   mixins: [FluxMixin],
   propTypes: {
@@ -11,7 +12,7 @@ var LayerBoxLayer = React.createClass({
         });
 
     return (
-      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.dragStart}>
+      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.props.dragStartHandler.bind(null, this.props.layer.id)}>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
         </div>
@@ -43,8 +44,5 @@ var LayerBoxLayer = React.createClass({
   },
   dispatchLayerNameChanged: function(name) {
     this.getFlux().actions.layerName(this.props.layer.id, name);
-  },
-  dragStart: function(e) {
-    channel.gui.publish('layer.dragstart', {layer: this.props.layer.id});
   },
 });
