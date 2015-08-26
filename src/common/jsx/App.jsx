@@ -12,12 +12,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       subscriptions: {
-        'layer.add': this.updateProps,
-        'layer.delete': this.updateProps,
         'layer.drop': this.updateProps,
-
         'size.set': this.updateProps,
-
         'window.resize': this.updateProps,
       }
     }
@@ -54,13 +50,7 @@ var App = React.createClass({
         </nav>
         <div className={windowClasses}>
           <ScreenStart />
-
-          <ScreenPaint
-            editor={this.props.editor}
-            ui={this.state.ui}
-            file={this.state.file}
-            layer={this.state.layer} />
-
+          <ScreenPaint ui={this.state.ui} file={this.state.file} />
           <ScreenAnimate ui={this.state.ui} file={this.state.file} />
           <ScreenExport ui={this.state.ui} file={this.state.file} />
           <ScreenDebug ui={this.state.ui} />

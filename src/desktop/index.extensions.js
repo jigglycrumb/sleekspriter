@@ -2,7 +2,7 @@ function platform_init() {
   window.ondragover = function(e) { e.preventDefault(); return false };
   window.ondrop = function(e) { e.preventDefault(); return false };
 
-  React.render(React.createElement(App, {editor: editor, flux: flux}), container, function() {
+  React.render(React.createElement(App, {flux: flux}), container, function() {
     // show app window after GUI is rendered
     require('nw.gui').Window.get().show();
   });

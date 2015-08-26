@@ -35,7 +35,7 @@ var StageBox = React.createClass({
         onMouseUp={this.mouseup}>
 
         <StageBoxCursorCanvas width={w} height={h} ui={this.props.ui} />
-        <StageBoxSelectionCanvas width={w} height={h} editor={this.props.editor} ui={this.props.ui} />
+        <StageBoxSelectionCanvas width={w} height={h} ui={this.props.ui} />
         <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
 
         {this.props.ui.layers.frame.map(function(layer) {
@@ -158,7 +158,7 @@ var StageBox = React.createClass({
         break;
     }
 
-    if(ok) this.props.editor.pixels.save();
+    // if(ok) this.props.editor.pixels.save();
   },
 
   getLayerPixelColor: function(event) {
@@ -254,7 +254,7 @@ var StageBox = React.createClass({
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
-      var px = _.findWhere(editor.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
+      var px = _.findWhere(this.props.ui.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -284,11 +284,11 @@ var StageBox = React.createClass({
 
     if(storeUtils.selection.isActive) this.previewRectangularSelection(distance);
 
-    editor.pixels.frame.forEach(function(px) {
+    this.props.ui.pixels.frame.forEach(function(px) {
       if(px.layer === this.props.ui.layers.selected) pixels.push(px);
     }, this);
 
-    editor.pixels.scope.forEach(function(px) {
+    this.props.ui.pixels.scope.forEach(function(px) {
       pixels.push(px.wrap(distance, true));
     });
 
