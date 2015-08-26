@@ -40,7 +40,14 @@ var UiStore = Fluxxor.createStore({
       constants.EXPORT_ZOOM,                this.onExportZoom,
       constants.EXPORT_FORMAT,              this.onExportFormat,
       constants.EXPORT_STATUS,              this.onExportStatus,
-      constants.SCOPE_SET,                  this.onScopeSet
+      constants.SCOPE_SET,                  this.onScopeSet,
+
+      constants.SELECTION_START,            this.onSelectionStart,
+      constants.SELECTION_RESIZE,           this.onSelectionResize,
+      constants.SELECTION_PREVIEW,          this.onSelectionPreview,
+      constants.SELECTION_END,              this.onSelectionEnd,
+      constants.SELECTION_CLEAR,            this.onSelectionClear,
+      constants.SELECTION_MOVE,             this.onSelectionMove
     );
   },
 
@@ -115,6 +122,12 @@ var UiStore = Fluxxor.createStore({
         zoom: 1,
         format: 'png',
         status: '',
+      },
+      selection: {
+        start: null,
+        end: null,
+        cursor: null,
+        distance: null,
       },
     };
 
@@ -347,7 +360,7 @@ var UiStore = Fluxxor.createStore({
       case 'selection':
         // move pixels in selection to scope
         this.data.pixels.scope = _.remove(this.data.pixels.frame, function(px) {
-          // return px.layer === layer && editor.selection.contains(px); // TODO
+          return px.layer === layer && storeUtils.selection.contains(px);
         });
         break;
 
@@ -358,6 +371,61 @@ var UiStore = Fluxxor.createStore({
     }
 
     this._logPixels();
+
+    this.emit('change');
+  },
+
+  onSelectionStart: function(point) {
+    this.data.selection.start = point;
+    this.emit('change');
+  },
+
+  onSelectionResize: function(point) {
+    this.data.selection.cursor = point;
+    this.emit('change');
+  },
+
+  onSelectionPreview: function(point) {
+    this.data.selection.distance = point;
+    this.emit('change');
+  },
+
+  onSelectionEnd: function(point) {
+    this.data.selection.cursor = null;
+    this.data.selection.distance = null;
+    this.data.selection.end = point;
+
+    // switch start & end if start is more "lower right" than end
+    // makes calculations with the selection easier later
+    if(this.data.selection.start.x > this.data.selection.end.x
+    || this.data.selection.start.y > this.data.selection.end.y) {
+      var temp = this.data.selection.start;
+      this.data.selection.start = this.data.selection.end;
+      this.data.selection.end = temp;
+    }
+
+    this.emit('change');
+  },
+
+  onSelectionClear: function() {
+    this.data.selection.start = null;
+    this.data.selection.end   = null;
+    this.data.selection.cursor = null;
+    this.data.selection.distance = null;
+
+    this.emit('change');
+  },
+
+  onSelectionMove: function(distance) {
+    this.data.selection.start = new Point(
+      this.data.selection.start.x + distance.x,
+      this.data.selection.start.y + distance.y
+    );
+
+    this.data.selection.end = new Point(
+      this.data.selection.end.x + distance.x,
+      this.data.selection.end.y + distance.y
+    );
 
     this.emit('change');
   },

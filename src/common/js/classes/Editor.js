@@ -9,7 +9,7 @@ var Editor = function() {
   this.frames.init();
   // this.layers.init();
   this.pixels.init();
-  this.selection.init();
+  // this.selection.init();
   this.paintBucket.init();
   // this.palettes.init();
 };

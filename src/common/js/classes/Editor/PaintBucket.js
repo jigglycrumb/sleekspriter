@@ -11,7 +11,7 @@ Editor.prototype.paintBucket.init = function() {
 Editor.prototype.paintBucket.fill = function(point) {
 
   // get the pixel the paint bucket was used on
-  var initialPixel = _.findWhere(editor.pixels.scope, {x: point.x, y: point.y});
+  var initialPixel = _.findWhere(flux.stores.UiStore.pixels.scope, {x: point.x, y: point.y});
   // color object for the first pixels color
   var initialColor;
   // the new pixel color
@@ -21,8 +21,8 @@ Editor.prototype.paintBucket.fill = function(point) {
   if(_.isUndefined(initialPixel)) {
     // pixel doesn't exist yet, create new transparent one
     initialPixel = {
-      frame: editor.frames.selected,
-      layer: editor.layers.selected,
+      frame: flux.stores.UiStore.getData().frames.selected,
+      layer: flux.stores.UiStore.getData().layers.selected,
       x: point.x,
       y: point.y,
       r: 0,
@@ -57,12 +57,12 @@ Editor.prototype.paintBucket.fill = function(point) {
         };
 
     // restrict bounds to selection if active
-    if(editor.selection.isActive) {
+    if(storeUtils.selection.isActive) {
       bounds = {
-        top: editor.selection.bounds.start.y,
-        right: editor.selection.bounds.end.x,
-        bottom: editor.selection.bounds.end.y,
-        left: editor.selection.bounds.start.x,
+        top: flux.stores.UiStore.getData().selection.start.y,
+        right: flux.stores.UiStore.getData().selection.end.x,
+        bottom: flux.stores.UiStore.getData().selection.end.y,
+        left: flux.stores.UiStore.getData().selection.start.x,
       };
     }
 
@@ -88,7 +88,7 @@ Editor.prototype.paintBucket.fill = function(point) {
     // push pixel to filled array
     filled.push(point);
 
-    var pixel = _.findWhere(editor.pixels.scope, {x: point.x, y: point.y}),
+    var pixel = _.findWhere(flux.stores.UiStore.pixels.scope, {x: point.x, y: point.y}),
         pixelColor,
         neighbors;
 
@@ -99,7 +99,7 @@ Editor.prototype.paintBucket.fill = function(point) {
     else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
     if(pixelColor.rgbString() === initialColor.rgbString()) {
-      Pixel.add(editor.frames.selected, editor.layers.selected, point.x, point.y, file.getLayerById(editor.layers.selected).z, fillColor.hexString());
+      Pixel.add(flux.stores.UiStore.getData().frames.selected, flux.stores.UiStore.getData().layers.selected, point.x, point.y, storeUtils.layers.getSelected().z, fillColor.hexString());
 
       neighbors = getAdjacentPixels(point);
       neighbors.forEach(function(n) {

@@ -196,11 +196,14 @@ function menu_init() {
     label: 'All',
     click: function() {
       var start = new Point(1, 1),
-          end = new Point(file.size.width, file.size.height);
+          end = new Point(file.size.width, file.size.height),
+          layer = flux.stores.UiStore.getData().layers.selected;
 
-      channel.gui.publish('selection.clear');
-      channel.gui.publish('selection.start', {point: start});
-      channel.gui.publish('selection.end', {point: end});
+      flux.actions.selectionClear();
+      flux.actions.scopeSet(layer, 'layer', layer);
+      flux.actions.selectionStart(start);
+      flux.actions.selectionEnd(end);
+      flux.actions.scopeSet(layer, 'selection', flux.stores.UiStore.getData().selection);
     },
     key: 'a',
     modifiers: modKey,
@@ -210,7 +213,9 @@ function menu_init() {
   selectMenu.append(new gui.MenuItem({
     label: 'Deselect',
     click: function() {
-      channel.gui.publish('selection.clear');
+      var layer = flux.stores.UiStore.getData().layers.selected;
+      flux.actions.selectionClear();
+      flux.actions.scopeSet(layer, 'layer', layer);
     },
     key: 'd',
     modifiers: modKey,

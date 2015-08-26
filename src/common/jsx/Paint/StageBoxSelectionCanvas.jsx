@@ -21,18 +21,18 @@ var StageBoxSelectionCanvas = React.createClass({
 
     switch(this.props.ui.tool) {
       case 'RectangularSelectionTool':
-        if(this.props.editor.selection.isMoving) this.moveSelection(this.props.editor.selection.bounds.distance);
-        else if(this.props.editor.selection.isResizing) {
-          this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.cursor);
+        if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
+        else if(storeUtils.selection.isResizing) {
+          this.drawSelection(this.props.ui.selection.start, this.props.ui.selection.cursor);
         }
-        else if(this.props.editor.selection.isActive) this.drawLastSelection();
+        else if(storeUtils.selection.isActive) this.drawLastSelection();
         break;
       case 'MoveTool':
-        if(this.props.editor.selection.isMoving) this.moveSelection(this.props.editor.selection.bounds.distance);
-        else if(this.props.editor.selection.isActive) this.drawLastSelection();
+        if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
+        else if(storeUtils.selection.isActive) this.drawLastSelection();
         break;
       default:
-        if(this.props.editor.selection.isActive) this.drawLastSelection();
+        if(storeUtils.selection.isActive) this.drawLastSelection();
         break;
     }
   },
@@ -70,18 +70,18 @@ var StageBoxSelectionCanvas = React.createClass({
   },
 
   drawLastSelection: function() {
-    this.drawSelection(this.props.editor.selection.bounds.start, this.props.editor.selection.bounds.end);
+    this.drawSelection(this.props.ui.selection.start, this.props.ui.selection.end);
   },
 
   moveSelection: function(distance) {
     var newStart = new Point(
-      this.props.editor.selection.bounds.start.x + distance.x,
-      this.props.editor.selection.bounds.start.y + distance.y
+      this.props.ui.selection.start.x + distance.x,
+      this.props.ui.selection.start.y + distance.y
     );
 
     var newEnd = new Point(
-      this.props.editor.selection.bounds.end.x + distance.x,
-      this.props.editor.selection.bounds.end.y + distance.y
+      this.props.ui.selection.end.x + distance.x,
+      this.props.ui.selection.end.y + distance.y
     );
 
     this.drawSelection(newStart, newEnd);

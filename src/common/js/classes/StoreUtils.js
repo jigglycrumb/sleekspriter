@@ -12,7 +12,7 @@ StoreUtils.prototype.layers = {};
  * @returns {Array} layer IDs
  */
 StoreUtils.prototype.layers.getIds = function() {
-  return _.pluck(flux.stores.UiStore.getData('layers').frame, 'id');
+  return _.pluck(flux.stores.UiStore.getData().layers.frame, 'id');
 };
 
 /**
@@ -20,7 +20,7 @@ StoreUtils.prototype.layers.getIds = function() {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getById = function(id) {
-  return _.findWhere(flux.stores.UiStore.getData('layers').frame, {id: id});
+  return _.findWhere(flux.stores.UiStore.getData().layers.frame, {id: id});
 };
 
 /**
@@ -28,7 +28,7 @@ StoreUtils.prototype.layers.getById = function(id) {
  * @returns {Array} layer Objects
  */
 StoreUtils.prototype.layers.getByFrame = function(frame) {
-  return _.where(flux.stores.FileStore.getData('layers'), {frame: frame});
+  return _.where(flux.stores.FileStore.getData().layers, {frame: frame});
 };
 
 
@@ -37,7 +37,7 @@ StoreUtils.prototype.layers.getByFrame = function(frame) {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getSelected = function() {
-  return this.getById(flux.stores.UiStore.getData('layers').selected);
+  return this.getById(flux.stores.UiStore.getData().layers.selected);
 };
 
 /**
@@ -46,7 +46,7 @@ StoreUtils.prototype.layers.getSelected = function() {
  */
 StoreUtils.prototype.layers.getAboveSelected = function() {
   var z = this.getSelected(),
-      above = _.filter(flux.stores.UiStore.getData('layers').frame, function(layer) { return layer.z > z });
+      above = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z > z });
   return above.length === 0 ? false : _.min(above, 'z');
 };
 
@@ -56,7 +56,7 @@ StoreUtils.prototype.layers.getAboveSelected = function() {
  */
 StoreUtils.prototype.layers.getBelowSelected = function() {
   var z = this.getSelected().z,
-      below = _.filter(flux.stores.UiStore.getData('layers').frame, function(layer) { return layer.z < z });
+      below = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z < z });
   return below.length === 0 ? false : _.max(below, 'z');
 };
 
@@ -65,7 +65,7 @@ StoreUtils.prototype.layers.getBelowSelected = function() {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getTop = function() {
-  return _.max(flux.stores.UiStore.getData('layers').frame, function(layer) { return layer.z; });
+  return _.max(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z; });
 };
 
 
@@ -77,7 +77,7 @@ StoreUtils.prototype.animations = {};
  * @returns {Object} animation
  */
 StoreUtils.prototype.animations.getById = function(id) {
-  return _.find(flux.stores.FileStore.getData('animations'), {id: id});
+  return _.find(flux.stores.FileStore.getData().animations, {id: id});
 };
 
 /**
@@ -85,5 +85,52 @@ StoreUtils.prototype.animations.getById = function(id) {
  * @returns {Object} animation
  */
 StoreUtils.prototype.animations.getSelected = function() {
-  return this.getById(flux.stores.UiStore.getData('animations').selected);
+  return this.getById(flux.stores.UiStore.getData().animations.selected);
 };
+
+
+
+// Selection-related helpers
+StoreUtils.prototype.selection = {};
+
+StoreUtils.prototype.selection.contains = function(point) {
+  if(this.isActive) {
+    var s = flux.stores.UiStore.getData().selection;
+    return point.x >= s.start.x
+        && point.x <= s.end.x
+        && point.y >= s.start.y
+        && point.y <= s.end.y;
+  }
+  else return false;
+};
+
+Object.defineProperty(StoreUtils.prototype.selection, 'isActive', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    var s = flux.stores.UiStore.getData().selection;
+    return s.start instanceof Point
+        && s.end instanceof Point;
+  }
+});
+
+Object.defineProperty(StoreUtils.prototype.selection, 'isResizing', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    var s = flux.stores.UiStore.getData().selection;
+    return s.start instanceof Point
+        && s.cursor instanceof Point;
+  }
+});
+
+Object.defineProperty(StoreUtils.prototype.selection, 'isMoving', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    var s = flux.stores.UiStore.getData().selection;
+    return s.start instanceof Point
+        && s.end instanceof Point
+        && s.distance instanceof Point;
+  }
+});

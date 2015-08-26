@@ -132,4 +132,22 @@ var actions = {
   scopeSet: function(oldScope, type, data) {
     this.dispatch(constants.SCOPE_SET, {oldScope: oldScope, type: type, data: data});
   },
+  selectionStart: function(point) {
+    this.dispatch(constants.SELECTION_START, point);
+  },
+  selectionResize: function(point) {
+    this.dispatch(constants.SELECTION_RESIZE, point);
+  },
+  selectionPreview: function(point) {
+    this.dispatch(constants.SELECTION_PREVIEW, point);
+  },
+  selectionEnd: function(point) {
+    this.dispatch(constants.SELECTION_END, point);
+  },
+  selectionClear: function() {
+    this.dispatch(constants.SELECTION_CLEAR);
+  },
+  selectionMove: function(distance) {
+    this.dispatch(constants.SELECTION_MOVE, distance);
+  },
 };

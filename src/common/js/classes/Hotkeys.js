@@ -1,14 +1,18 @@
-var Hotkeys = function(editor) {
+var Hotkeys = function() {
 
   function moveTool(distance) {
     channel.gui.publish('pixels.move', {distance: distance});
-    if(editor.selection.isActive) {
-      channel.gui.publish('selection.move', {distance: distance});
+    if(storeUtils.selection.isActive) {
+      flux.actions.selectionMove(distance);
+      flux.actions.scopeSet(flux.UiStore.getData().layers.selected, 'selection', flux.UiStore.getData().selection);
     }
   }
 
   function rectangularSelectionTool(distance) {
-    if(editor.selection.isActive) channel.gui.publish('selection.move', {distance: distance});
+    if(storeUtils.selection.isActive) {
+      flux.actions.selectionMove(distance);
+      flux.actions.scopeSet(flux.UiStore.getData().layers.selected, 'selection', flux.UiStore.getData().selection);
+    }
   }
 
   this.actions = {

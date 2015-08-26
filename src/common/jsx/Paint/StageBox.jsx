@@ -114,7 +114,7 @@ var StageBox = React.createClass({
           break;
 
         case 'RectangularSelectionTool':
-          if(editor.selection.isActive) this.previewRectangularSelection(distance);
+          if(storeUtils.selection.isActive) this.previewRectangularSelection(distance);
           else this.resizeRectangularSelection(point);
           break;
 
@@ -162,7 +162,7 @@ var StageBox = React.createClass({
   },
 
   getLayerPixelColor: function(event) {
-    var ctx = document.getElementById('StageBoxLayer-'+this.props.editor.layers.selected).getContext('2d'),
+    var ctx = document.getElementById('StageBoxLayer-'+this.props.ui.layers.selected).getContext('2d'),
         px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
         color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
 
@@ -189,14 +189,14 @@ var StageBox = React.createClass({
 
   useBrushTool: function() {
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) {
-        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                      file.getLayerById(editor.layers.selected).z, this.props.ui.color.brush.hexString());
+      if(!storeUtils.selection.isActive) {
+        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+                      storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
       }
       else { // restrict to selection
-        if(editor.selection.contains(this.props.ui.cursor)) {
-          Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                        file.getLayerById(editor.layers.selected).z, this.props.ui.color.brush.hexString());
+        if(storeUtils.selection.contains(this.props.ui.cursor)) {
+          Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+                        storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
         }
       }
       return true;
@@ -205,16 +205,16 @@ var StageBox = React.createClass({
   },
   useEraserTool: function() {
     if(isLayerVisible()) {
-      if(!editor.selection.isActive) {
-        Pixel.delete(this.props.ui.frames.selected, editor.layers.selected,
+      if(!storeUtils.selection.isActive) {
+        Pixel.delete(this.props.ui.frames.selected, this.props.ui.layers.selected,
                      this.props.ui.cursor.x, this.props.ui.cursor.y,
-                     file.getLayerById(editor.layers.selected).z);
+                     storeUtils.layers.getSelected().z);
       }
       else { // restrict to selection
-        if(editor.selection.contains(this.props.ui.cursor)) {
-          Pixel.delete(this.props.ui.frames.selected, editor.layers.selected,
+        if(storeUtils.selection.contains(this.props.ui.cursor)) {
+          Pixel.delete(this.props.ui.frames.selected, this.props.ui.layers.selected,
                        this.props.ui.cursor.x, this.props.ui.cursor.y,
-                       file.getLayerById(editor.layers.selected).z);
+                       storeUtils.layers.getSelected().z);
         }
       }
       return true;
@@ -228,8 +228,8 @@ var StageBox = React.createClass({
   },
   usePaintBucketTool: function(point) {
     if(isLayerVisible()) {
-      if(editor.selection.isActive) {
-        if(editor.selection.contains(point)) channel.gui.publish('stage.tool.paintbucket', {point: point});
+      if(storeUtils.selection.isActive) {
+        if(storeUtils.selection.contains(point)) channel.gui.publish('stage.tool.paintbucket', {point: point});
       }
       else channel.gui.publish('stage.tool.paintbucket', {point: point});
       return true;
@@ -243,27 +243,27 @@ var StageBox = React.createClass({
       function lighten() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
-        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-              file.getLayerById(editor.layers.selected).z, newColor.hexString());
+        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+              storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
       function darken() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
-        Pixel.add(this.props.ui.frames.selected, editor.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-              file.getLayerById(editor.layers.selected).z, newColor.hexString());
+        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+              storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
       var px = _.findWhere(editor.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
-        if(!editor.selection.isActive) {
+        if(!storeUtils.selection.isActive) {
           if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
           else if(this.props.ui.brightnessTool.mode == 'darken') darken();
         }
         else { // restrict to selection
-          if(editor.selection.contains(this.props.ui.cursor)) {
+          if(storeUtils.selection.contains(this.props.ui.cursor)) {
             if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
             else if(this.props.ui.brightnessTool.mode == 'darken') darken();
           }
@@ -279,14 +279,14 @@ var StageBox = React.createClass({
 
   previewMoveTool: function() {
     var distance = this.getMouseDownDistance(),
-        canvas = document.getElementById('StageBoxLayer-'+editor.layers.selected),
+        canvas = document.getElementById('StageBoxLayer-'+this.props.ui.layers.selected),
         pixels = [];
 
-    if(editor.selection.isActive) this.previewRectangularSelection(distance);
+    if(storeUtils.selection.isActive) this.previewRectangularSelection(distance);
 
     editor.pixels.frame.forEach(function(px) {
-      if(px.layer === editor.layers.selected) pixels.push(px);
-    });
+      if(px.layer === this.props.ui.layers.selected) pixels.push(px);
+    }, this);
 
     editor.pixels.scope.forEach(function(px) {
       pixels.push(px.wrap(distance, true));
@@ -294,14 +294,15 @@ var StageBox = React.createClass({
 
     channel.gui.publish('canvas.preview', {
       frame: this.props.ui.frames.selected,
-      layer: editor.layers.selected,
+      layer: this.props.ui.layers.selected,
       pixels: pixels,
     });
   },
   useMoveTool: function(distance) {
     channel.gui.publish('pixels.move', {distance: distance});
-    if(editor.selection.isActive) {
-      channel.gui.publish('selection.move', {distance: distance});
+    if(storeUtils.selection.isActive) {
+      this.getFlux().actions.selectionMove(distance);
+      this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'selection', this.props.ui.selection);
     }
   },
 
@@ -309,26 +310,32 @@ var StageBox = React.createClass({
 
 
   startRectangularSelection: function(point) {
-    if(!editor.selection || !editor.selection.contains(point)) {
-      channel.gui.publish('selection.clear');
-      channel.gui.publish('selection.start', {point: point});
+    if(!storeUtils.selection.isActive || !storeUtils.selection.contains(point)) {
+      this.getFlux().actions.selectionClear();
+      this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'layer', this.props.ui.layers.selected);
+      this.getFlux().actions.selectionStart(point);
     }
   },
   resizeRectangularSelection: function(point) {
-    channel.gui.publish('selection.resize', {point: point});
+    this.getFlux().actions.selectionResize(point);
   },
   previewRectangularSelection: function(distance) {
-    channel.gui.publish('selection.preview', {distance: distance});
+    this.getFlux().actions.selectionPreview(distance);
   },
   endRectangularSelection: function(point, distance) {
-    if(editor.selection.isActive) {
-      channel.gui.publish('selection.move', {distance: distance});
+    if(storeUtils.selection.isActive) {
+      this.getFlux().actions.selectionMove(distance);
+      this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'selection', this.props.ui.selection);
     }
     else {
-      if(_.isEqual(point, this.state.mousedownPoint))
-        channel.gui.publish('selection.clear');
-      else
-        channel.gui.publish('selection.end', {point: point});
+      if(_.isEqual(point, this.state.mousedownPoint)) {
+        this.getFlux().actions.selectionClear();
+        this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'layer', this.props.ui.layers.selected);
+      }
+      else {
+        this.getFlux().actions.selectionEnd(point);
+        this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'selection', this.props.ui.selection);
+      }
     }
   },
   showInvisibleLayerError: function() {

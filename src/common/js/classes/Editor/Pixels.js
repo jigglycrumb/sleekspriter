@@ -31,7 +31,7 @@ Editor.prototype.pixels.init = function() {
 
   // check if a pixel is inside selection bounds
   function pixelHasBeenSelected(pixel) {
-    return editor.selection.contains(pixel) && pixel.layer == editor.layers.selected;
+    return storeUtils.selection.contains(pixel) && pixel.layer == flux.stores.UiStore.getData().layer.selected;
   };
 
   function deletePixel(from, layer, x, y) {
