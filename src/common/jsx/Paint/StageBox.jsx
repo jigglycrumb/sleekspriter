@@ -135,7 +135,7 @@ var StageBox = React.createClass({
 
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance(),
-        ok = true;;
+        ok = true;
 
     this.setState({mousedown: false});
 

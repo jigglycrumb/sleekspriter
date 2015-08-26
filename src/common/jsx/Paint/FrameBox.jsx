@@ -39,6 +39,7 @@ var FrameBox = React.createClass({
             var clickHandler = function() {
               self.getFlux().actions.frameSelect(frame);
               self.getFlux().actions.layerTopSelect();
+              self.getFlux().actions.scopeSet(null, 'layer');
             };
 
             return (
@@ -67,5 +68,6 @@ var FrameBox = React.createClass({
   dispatchFrameSelected: function(event) {
     this.getFlux().actions.frameSelect(parseInt(event.target.value));
     this.getFlux().actions.layerTopSelect();
+    this.getFlux().actions.scopeSet(null, 'layer');
   }
 });
