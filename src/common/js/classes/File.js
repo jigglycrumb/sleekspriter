@@ -90,36 +90,36 @@ var File = function() {
     return JSON.stringify(strObj);
   };
 
-  this.fromJSON = function(json) {
-    this.size = sizeFromFile(json.size);
-    this.frames = framesFromFile(json.frames);
-    this.layers = json.layers.map(layerFromFile);
-    this.animations = json.animations.map(animationFromFile);
+  // this.fromJSON = function(json) {
+  //   this.size = sizeFromFile(json.size);
+  //   this.frames = framesFromFile(json.frames);
+  //   this.layers = json.layers.map(layerFromFile);
+  //   this.animations = json.animations.map(animationFromFile);
 
-    // add z and frame values to saved pixels
-    var layerDict = {};
-    this.layers.forEach(function(layer) {
-      layerDict[layer.id] = {
-        frame: layer.frame,
-        z: layer.z
-      };
-    });
+  //   // add z and frame values to saved pixels
+  //   var layerDict = {};
+  //   this.layers.forEach(function(layer) {
+  //     layerDict[layer.id] = {
+  //       frame: layer.frame,
+  //       z: layer.z
+  //     };
+  //   });
 
-    json.pixels.forEach(function(pixel) {
-      var layer = pixel[0],
-          z = layerDict[layer].z,
-          frame = layerDict[layer].frame;
-      pixel.unshift(frame);
-      pixel.push(z);
-    });
+  //   json.pixels.forEach(function(pixel) {
+  //     var layer = pixel[0],
+  //         z = layerDict[layer].z,
+  //         frame = layerDict[layer].frame;
+  //     pixel.unshift(frame);
+  //     pixel.push(z);
+  //   });
 
-    this.pixels = json.pixels.map(Pixel.fromArray);
+  //   this.pixels = json.pixels.map(Pixel.fromArray);
 
-    // sort layers by z (top to bottom)
-    this.layers = _.sortBy(this.layers, 'z').reverse();
+  //   // sort layers by z (top to bottom)
+  //   this.layers = _.sortBy(this.layers, 'z').reverse();
 
-    channel.file.publish('file.load', {size: this.size, frames: this.frames});
-  };
+  //   channel.file.publish('file.load', {size: this.size, frames: this.frames});
+  // };
 
   this.fromJSONString = function(string) {
     json = JSON.parse(string);

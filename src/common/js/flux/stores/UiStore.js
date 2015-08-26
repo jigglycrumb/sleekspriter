@@ -58,12 +58,31 @@ var UiStore = Fluxxor.createStore({
 
   resetData: function(key) {
     var data = {
-      tab: 'start',
-      tool: 'BrushTool',
-      modal: {
-        visible: false,
-        component: null,
-        data: null,
+      animations: {
+        selected: null,
+        frame: null,
+      },
+      background: {
+        type: 'pattern',
+        value: 'checkerboard',
+      },
+      brightnessTool: {
+        mode: 'lighten',
+        intensity: 10,
+      },
+      color: {
+        brush: new Color('#000000'),
+        layer: new Color('#000000'),
+        frame: new Color('#000000'),
+      },
+      cursor: new Point(1,1),
+      export: {
+        part: 'spritesheet',
+        frame: 1,
+        animation: null,
+        zoom: 1,
+        format: 'png',
+        status: '',
       },
       frames: {
         selected: 1,
@@ -73,23 +92,10 @@ var UiStore = Fluxxor.createStore({
         selected: null,
         frame: [],
       },
-      pixels: {
-        frame: [],
-        scope: [],
-        clipboard: [],
-      },
-      settings: {
-        paint: false,
-        grid: true,
-      },
-      zoom: {
-        min: 1,
-        max: 50,
-        selected: 10,
-      },
-      background: {
-        type: 'pattern',
-        value: 'checkerboard',
+      modal: {
+        visible: false,
+        component: null,
+        data: null,
       },
       offset: {
         top: 40,
@@ -97,37 +103,31 @@ var UiStore = Fluxxor.createStore({
         bottom: 27,
         left: 45,
       },
-      brightnessTool: {
-        mode: 'lighten',
-        intensity: 10,
-      },
-      cursor: new Point(1,1),
-      color: {
-        brush: new Color('#000000'),
-        layer: new Color('#000000'),
-        frame: new Color('#000000'),
-      },
       palettes: {
         selected: 0,
         available: [{"id": "sprite", "title": "Sprite colours", "short": "Sprite", "colors": []}],
       },
-      animations: {
-        selected: null,
-        frame: null,
-      },
-      export: {
-        part: 'spritesheet',
-        frame: 1,
-        animation: null,
-        zoom: 1,
-        format: 'png',
-        status: '',
+      pixels: {
+        frame: [],
+        scope: [],
+        clipboard: [],
       },
       selection: {
         start: null,
         end: null,
         cursor: null,
         distance: null,
+      },
+      settings: {
+        paint: false,
+        grid: true,
+      },
+      tab: 'start',
+      tool: 'BrushTool',
+      zoom: {
+        min: 1,
+        max: 50,
+        selected: 10,
       },
     };
 

@@ -7,9 +7,7 @@ var Editor = function() {
   // init subclasses
   this.file.init();
   this.frames.init();
-  // this.layers.init();
   this.pixels.init();
-  // this.selection.init();
   this.paintBucket.init();
   // this.palettes.init();
 };

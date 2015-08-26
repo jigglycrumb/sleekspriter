@@ -84,10 +84,8 @@ function base_init() {
   storeUtils = new StoreUtils();
   file = new File();
   editor = new Editor();
-  hotkeys = new Hotkeys(editor);
+  hotkeys = new Hotkeys();
   container = document.getElementById('app-container');
-
-  window.onresize = function(e) { channel.gui.publish('window.resize'); };
 }
 
 // read palettes from json file and start App

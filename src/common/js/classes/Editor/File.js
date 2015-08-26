@@ -8,6 +8,6 @@ Editor.prototype.file.init = function() {
         self.size = data.size;
       };
 
-  channel.file.subscribe('file.load', updateSize);
+  // channel.file.subscribe('file.load', updateSize);
   channel.gui.subscribe('size.set', updateSize);
 };

@@ -13,19 +13,19 @@ Editor.prototype.frames.init = function() {
     self.y = data.frames.y;
   }
 
-  channel.file.subscribe('file.load', updateSize);
+  // channel.file.subscribe('file.load', updateSize);
   channel.gui.subscribe('size.set', updateSize);
 
-  channel.gui.subscribe('frame.select', function(data, envelope) {
-    self.selected = parseInt(data.frame);
-  });
+  // channel.gui.subscribe('frame.select', function(data, envelope) {
+  //   self.selected = parseInt(data.frame);
+  // });
 };
 
-Object.defineProperty(Editor.prototype.frames, 'total', {
-  set: function() {
-    throw("You can't set that.");
-  },
-  get: function() {
-    return this.x * this.y;
-  }
-});
+// Object.defineProperty(Editor.prototype.frames, 'total', {
+//   set: function() {
+//     throw("You can't set that.");
+//   },
+//   get: function() {
+//     return this.x * this.y;
+//   }
+// });
