@@ -11,7 +11,7 @@ var ReferenceImage = React.createClass({
   },
 
   render: function() {
-    if(this.props.image.file === null) return false;
+    if(this.props.image === null) return false;
     else {
 
       var style = {
@@ -27,8 +27,8 @@ var ReferenceImage = React.createClass({
             onDragStart={this.dragStart}
             onDragEnd={this.dragEnd}
             onDrag={this.drag}>
-          <img src={this.props.image.file.path} title={this.props.image.file.name} />
-          <button className="remove" onClick={this.remove}>✖</button>
+          <img src={this.props.image.path} title={this.props.image.name} />
+          <button className="remove" onClick={this.props.removeHandler}>✖</button>
         </div>
       );
     }
@@ -55,9 +55,5 @@ var ReferenceImage = React.createClass({
 
   dragEnd: function() {
     this.setState({dragging: false});
-  },
-
-  remove: function() {
-    channel.gui.publish('referenceimage.remove');
   },
 });

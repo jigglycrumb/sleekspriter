@@ -2,23 +2,11 @@ var App = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin('FileStore', 'UiStore')],
   getStateFromFlux: function() {
     var flux = this.getFlux();
-
     return {
       ui: flux.store('UiStore').getData(),
       file: flux.store('FileStore').getData(),
     };
   },
-  /*
-  getInitialState: function() {
-    return {
-      subscriptions: {
-        'layer.drop': this.updateProps,
-        'size.set': this.updateProps,
-        'window.resize': this.updateProps,
-      }
-    }
-  },
-  */
   render: function() {
     var tabs = [],
         windowClasses = {};

@@ -1,13 +1,7 @@
 var ScreenPaint = React.createClass({
-  mixins: [PostalSubscriptionMixin],
   getInitialState: function() {
     return {
-      referenceImage: {
-        file: null,
-      },
-      subscriptions: {
-        'referenceimage.remove': this.resetImage,
-      }
+      referenceImage: null,
     }
   },
 
@@ -19,6 +13,9 @@ var ScreenPaint = React.createClass({
     var frameBox = null;
     if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} fold="frames" />
 
+    var referenceImage = null;
+    if(this.state.referenceImage !== null) referenceImage = <ReferenceImage image={this.state.referenceImage} removeHandler={this.resetImage} />
+
     return (
       <section className="screen paint">
         <div className="area top">
@@ -29,7 +26,7 @@ var ScreenPaint = React.createClass({
         </div>
         <div className="area center" onDrop={this.handleDrop}>
           <StageBox image={this.state.referenceImage} file={this.props.file} ui={this.props.ui} />
-          <ReferenceImage image={this.state.referenceImage} />
+          {referenceImage}
         </div>
         <div className="area right">
           <div id="layerboxhelper">
@@ -59,16 +56,12 @@ var ScreenPaint = React.createClass({
           };
 
       if(file.type in allowed) {
-        var ref = {
-          file: file,
-        };
-
-        this.setState({referenceImage: ref});
+        this.setState({referenceImage: file});
       }
     }
   },
 
   resetImage: function() {
-    this.setState({referenceImage: {file: null}});
+    this.setState({referenceImage: null});
   },
 });

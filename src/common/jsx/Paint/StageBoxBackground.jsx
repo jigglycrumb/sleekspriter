@@ -6,8 +6,6 @@ var StageBoxBackground = React.createClass({
   },
   render: function() {
 
-    if(this.props.image.file !== null) return false;
-
     var style = {},
         classes = {};
 

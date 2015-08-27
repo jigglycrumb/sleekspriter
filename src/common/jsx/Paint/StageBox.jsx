@@ -27,6 +27,11 @@ var StageBox = React.createClass({
     if( h > centerAreaHeight ) css.top = 0;
     else css.top = (centerAreaHeight - h)/2;
 
+    var background = null;
+    if(this.props.image === null) {
+      background = <StageBoxBackground type={this.props.ui.background.type} value={this.props.ui.background.value} />
+    }
+
     return (
       <div id="StageBox"
         style={css}
@@ -51,10 +56,7 @@ var StageBox = React.createClass({
           );
         }, this)}
 
-        <StageBoxBackground
-          type={this.props.ui.background.type}
-          value={this.props.ui.background.value}
-          image={this.props.image} />
+        {background}
       </div>
     );
   },
