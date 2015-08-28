@@ -9,10 +9,10 @@ Editor.prototype.palettes.init = function() {
   //   self.selected = data.palette;
   // });
 
-  channel.gui.subscribe('pixel.add', function(data, envelope) {
-    self.available.sprite.colors.push(data.color);
-    self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
-  });
+  // channel.gui.subscribe('pixel.add', function(data, envelope) {
+  //   self.available.sprite.colors.push(data.color);
+  //   self.available.sprite.colors = _.unique(self.available.sprite.colors, false);
+  // });
 
   channel.gui.subscribe('pixel.delete', function(data, envelope) {
     self.buildAuto();

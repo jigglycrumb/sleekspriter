@@ -49,4 +49,5 @@ var constants = {
   SELECTION_END:              'SELECTION_END',
   SELECTION_CLEAR:            'SELECTION_CLEAR',
   SELECTION_MOVE:             'SELECTION_MOVE',
+  PIXEL_ADD:                  'PIXEL_ADD',
 };

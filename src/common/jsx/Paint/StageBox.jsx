@@ -192,12 +192,12 @@ var StageBox = React.createClass({
   useBrushTool: function() {
     if(isLayerVisible()) {
       if(!storeUtils.selection.isActive) {
-        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
                       storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
       }
       else { // restrict to selection
         if(storeUtils.selection.contains(this.props.ui.cursor)) {
-          Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+          this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
                         storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
         }
       }
@@ -245,14 +245,14 @@ var StageBox = React.createClass({
       function lighten() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
-        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
       function darken() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
-        Pixel.add(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 

@@ -99,7 +99,7 @@ Editor.prototype.paintBucket.fill = function(point) {
     else pixelColor = new Color().rgb(pixel.r, pixel.g, pixel.b);
 
     if(pixelColor.rgbString() === initialColor.rgbString()) {
-      Pixel.add(flux.stores.UiStore.getData().frames.selected, flux.stores.UiStore.getData().layers.selected, point.x, point.y, storeUtils.layers.getSelected().z, fillColor.hexString());
+      flux.actions.pixelAdd(flux.stores.UiStore.getData().frames.selected, flux.stores.UiStore.getData().layers.selected, point.x, point.y, storeUtils.layers.getSelected().z, fillColor.hexString());
 
       neighbors = getAdjacentPixels(point);
       neighbors.forEach(function(n) {

@@ -215,16 +215,16 @@ Pixel.clear = function(canvas, x, y) {
  * @param  {Number} z         Layer z
  * @param  {String} color     Pixel color hex string
  */
-Pixel.add = function(frame, layer, x, y, z, color) {
-  channel.gui.publish('pixel.add', {
-    frame: frame,
-    layer: layer,
-    x: x,
-    y: y,
-    z: z,
-    color: color,
-  });
-};
+// Pixel.add = function(frame, layer, x, y, z, color) {
+//   channel.gui.publish('pixel.add', {
+//     frame: frame,
+//     layer: layer,
+//     x: x,
+//     y: y,
+//     z: z,
+//     color: color,
+//   });
+// };
 
 /**
  * Publishes a pixel.delete message

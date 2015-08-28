@@ -47,7 +47,9 @@ var UiStore = Fluxxor.createStore({
       constants.SELECTION_PREVIEW,          this.onSelectionPreview,
       constants.SELECTION_END,              this.onSelectionEnd,
       constants.SELECTION_CLEAR,            this.onSelectionClear,
-      constants.SELECTION_MOVE,             this.onSelectionMove
+      constants.SELECTION_MOVE,             this.onSelectionMove,
+
+      constants.PIXEL_ADD,                  this.onPixelAdd
     );
   },
 
@@ -105,7 +107,7 @@ var UiStore = Fluxxor.createStore({
       },
       palettes: {
         selected: 0,
-        available: [{"id": "sprite", "title": "Sprite colours", "short": "Sprite", "colors": []}],
+        available: [{'id': 'sprite', 'title': 'Sprite colours', 'short': 'Sprite', 'colors': []}],
       },
       pixels: {
         frame: [],
@@ -428,6 +430,42 @@ var UiStore = Fluxxor.createStore({
     );
 
     this.emit('change');
+  },
+
+  onPixelAdd: function(payload) {
+
+    // add pixel to scope / replace pixel in scope
+    var c = new Color(payload.color),
+        a = 1;
+
+    var newPixel = new Pixel(payload.frame, payload.layer, payload.x, payload.y, c.red(), c.green(), c.blue(), a, payload.z);
+    var oldPixel = _.findWhere(this.data.pixels.scope, {x: payload.x, y: payload.y});
+    if(_.isUndefined(oldPixel)) {
+      console.log('filling pixel', payload.layer, payload.x, payload.y, c.rgbString());
+      this.data.pixels.scope.push(newPixel);
+    }
+    else {
+      console.log('replacing pixel', payload.layer, payload.x, payload.y, c.rgbString());
+      // replace old pixel
+      for(var i = 0; i < this.data.pixels.scope.length; i++) {
+        var p = this.data.pixels.scope[i];
+        if(p.x == payload.x && p.y == payload.y) {
+          p.r = c.red();
+          p.g = c.green();
+          p.b = c.blue();
+          p.a = a;
+          break;
+        }
+      }
+    }
+
+    // update sprite palette
+    this.data.palettes.available[0].colors.push(payload.color);
+    this.data.palettes.available[0].colors = _.unique(this.data.palettes.available[0].colors, false);
+
+    this.emit('change');
+
+    this._logPixels();
   },
 
   _buildSpritePalette: function(FileStore) {

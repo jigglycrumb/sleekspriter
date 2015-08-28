@@ -150,4 +150,7 @@ var actions = {
   selectionMove: function(distance) {
     this.dispatch(constants.SELECTION_MOVE, distance);
   },
+  pixelAdd: function(frame, layer, x, y, z, color) {
+    this.dispatch(constants.PIXEL_ADD, {frame: frame, layer: layer, x: x, y: y, z: z, color: color});
+  },
 };

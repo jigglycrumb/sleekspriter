@@ -112,33 +112,33 @@ Editor.prototype.pixels.init = function() {
     refreshPreviews();
   });
 
-  channel.gui.subscribe('pixel.add', function(data, envelope) {
-    // add/replace pixel
-    var c = new Color(data.color),
-        a = 1;
+  // channel.gui.subscribe('pixel.add', function(data, envelope) {
+  //   // add/replace pixel
+  //   var c = new Color(data.color),
+  //       a = 1;
 
-    var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a, data.z);
-    var oldPixel = _.findWhere(self.scope, {x: data.x, y: data.y});
-    if(_.isUndefined(oldPixel)) {
-      // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
-      self.scope.push(newPixel);
-    }
-    else {
-      // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
+  //   var newPixel = new Pixel(data.frame, data.layer, data.x, data.y, c.red(), c.green(), c.blue(), a, data.z);
+  //   var oldPixel = _.findWhere(self.scope, {x: data.x, y: data.y});
+  //   if(_.isUndefined(oldPixel)) {
+  //     // console.log('filling pixel', data.layer, data.x, data.y, c.rgbString());
+  //     self.scope.push(newPixel);
+  //   }
+  //   else {
+  //     // console.log('replacing pixel', data.layer, data.x, data.y, c.rgbString());
 
-      // replace old pixel
-      for(var i = 0; i < self.scope.length; i++) {
-        var p = self.scope[i];
-        if(p.x == data.x && p.y == data.y) {
-          p.r = c.red();
-          p.g = c.green();
-          p.b = c.blue();
-          p.a = a;
-          break;
-        }
-      }
-    }
-  });
+  //     // replace old pixel
+  //     for(var i = 0; i < self.scope.length; i++) {
+  //       var p = self.scope[i];
+  //       if(p.x == data.x && p.y == data.y) {
+  //         p.r = c.red();
+  //         p.g = c.green();
+  //         p.b = c.blue();
+  //         p.a = a;
+  //         break;
+  //       }
+  //     }
+  //   }
+  // });
 
   channel.gui.subscribe('pixel.delete', function(data, envelope) {
     deletePixel('scope', data.layer, data.x, data.y);
