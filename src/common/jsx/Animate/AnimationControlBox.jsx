@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var AnimationControlBox = React.createClass({
   mixins: [FluxMixin],
   getInitialState: function() {

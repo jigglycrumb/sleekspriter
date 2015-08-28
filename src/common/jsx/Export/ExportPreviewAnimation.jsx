@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportPreviewAnimation = React.createClass({
   getInitialState: function() {
     return {

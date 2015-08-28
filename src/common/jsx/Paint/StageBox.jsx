@@ -190,15 +190,17 @@ var StageBox = React.createClass({
 
 
   useBrushTool: function() {
-    if(isLayerVisible()) {
+    if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive) {
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                      storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
+                                        this.props.ui.cursor.x, this.props.ui.cursor.y,
+                                        storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
       }
       else { // restrict to selection
         if(storeUtils.selection.contains(this.props.ui.cursor)) {
-          this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
-                        storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
+          this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
+                                          this.props.ui.cursor.x, this.props.ui.cursor.y,
+                                          storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
         }
       }
       return true;
@@ -206,17 +208,13 @@ var StageBox = React.createClass({
     else return this.showInvisibleLayerError();
   },
   useEraserTool: function() {
-    if(isLayerVisible()) {
+    if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive) {
-        Pixel.delete(this.props.ui.frames.selected, this.props.ui.layers.selected,
-                     this.props.ui.cursor.x, this.props.ui.cursor.y,
-                     storeUtils.layers.getSelected().z);
+        this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y);
       }
       else { // restrict to selection
         if(storeUtils.selection.contains(this.props.ui.cursor)) {
-          Pixel.delete(this.props.ui.frames.selected, this.props.ui.layers.selected,
-                       this.props.ui.cursor.x, this.props.ui.cursor.y,
-                       storeUtils.layers.getSelected().z);
+          this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y);
         }
       }
       return true;
@@ -229,7 +227,7 @@ var StageBox = React.createClass({
     this.getFlux().actions.colorBrush(this.props.ui.color.frame.hexString());
   },
   usePaintBucketTool: function(point) {
-    if(isLayerVisible()) {
+    if(storeUtils.layers.isVisible) {
       if(storeUtils.selection.isActive) {
         if(storeUtils.selection.contains(point)) channel.gui.publish('stage.tool.paintbucket', {point: point});
       }
@@ -240,7 +238,7 @@ var StageBox = React.createClass({
   },
   useBrightnessTool: function() {
 
-    if(isLayerVisible()) {
+    if(storeUtils.layers.isVisible) {
 
       function lighten() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
@@ -301,7 +299,7 @@ var StageBox = React.createClass({
     });
   },
   useMoveTool: function(distance) {
-    channel.gui.publish('pixels.move', {distance: distance});
+    this.getFlux().actions.pixelsMove(distance);
     if(storeUtils.selection.isActive) {
       this.getFlux().actions.selectionMove(distance);
       this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'selection', this.props.ui.selection);

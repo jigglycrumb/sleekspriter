@@ -1,13 +1,9 @@
-// editor: done
 var AnimationFrameBox = React.createClass({
   mixins: [FluxMixin, PostalSubscriptionMixin],
   getInitialState: function() {
     return {
       row: 0,
       column: 0,
-      subscriptions: {
-        'animation.framebox.frame.select': this.selectFrame,
-      },
     }
   },
   render: function() {
@@ -16,12 +12,15 @@ var AnimationFrameBox = React.createClass({
         containerStyle = {width: (frameSize+1)*this.props.file.frames.x},
         buttonDisplay = this.props.ui.animations.selected === null ? 'none' : 'inline-block';
         rowButtonStyle = {top: (this.state.row*(frameSize+1))+20, display: buttonDisplay},
-        columnButtonStyle = {left: (this.state.column*(frameSize+1))+20, display: buttonDisplay};
+        columnButtonStyle = {left: (this.state.column*(frameSize+1))+20, display: buttonDisplay},
+        classes = {};
 
     for(var i=0; i < this.props.ui.frames.total; i++) frames[i] = i+1;
 
+    if(this.props.ui.animations.selected !== null) classes['animation-selected'] = true;
+
     return (
-      <div id="AnimationFrameBox">
+      <div id="AnimationFrameBox" className={classNames(classes)}>
         <h5>Frames</h5>
         <div className="scroller">
           <div className="inner" style={containerStyle}>
@@ -34,7 +33,9 @@ var AnimationFrameBox = React.createClass({
                 frame={frame} 
                 size={frameSize}
                 ui={this.props.ui} 
-                file={this.props.file} />
+                file={this.props.file}
+                onMouseEnterHandler={this.selectFrame.bind(this, frame)}
+                onMouseLeaveHandler={this.deselectFrame} />
             );
           }, this)}
           </div>
@@ -42,8 +43,18 @@ var AnimationFrameBox = React.createClass({
       </div>
     );
   },
-  selectFrame: function(data) {
-    this.setState(data);
+  selectFrame: function(frame) {
+    if(this.props.ui.animations.selected === null) return;
+    var row = Math.floor((frame-1)/this.props.file.frames.x),
+        column = (frame % this.props.file.frames.x === 0
+               ? this.props.file.frames.x : frame%this.props.file.frames.x)-1;
+
+    this.setState({row: row, column: column});
+  },
+  deselectFrame: function() {
+    if(this.props.ui.animations.selected === null) return;
+    this.setState({row: 0, column: 0});
+    console.log('deselectFrame');
   },
   addRow: function() {
     var frames = [];

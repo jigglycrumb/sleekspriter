@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var AnimationTimelineBox = React.createClass({
   getInitialState: function() {
     return {

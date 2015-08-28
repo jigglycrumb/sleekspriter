@@ -34,11 +34,11 @@ Editor.prototype.pixels.init = function() {
     return storeUtils.selection.contains(pixel) && pixel.layer == flux.stores.UiStore.getData().layer.selected;
   };
 
-  function deletePixel(from, layer, x, y) {
-    self[from] = self[from].filter(function(px) {
-      return !(px.layer == layer && px.x == x && px.y == y);
-    });
-  };
+  // function deletePixel(from, layer, x, y) {
+  //   self[from] = self[from].filter(function(px) {
+  //     return !(px.layer == layer && px.x == x && px.y == y);
+  //   });
+  // };
 
   function flipHorizontal(pixel) {
     return pixel.flipHorizontal();
@@ -65,10 +65,10 @@ Editor.prototype.pixels.init = function() {
   //   self.frame = _.where(self.file, {frame: data.frame});
   // });
 
-  channel.gui.subscribe('layer.drop', function(data, envelope) {
-    self.file = file.pixels;
-    self.frame = _.where(self.file, {frame: data.frame});
-  });
+  // channel.gui.subscribe('layer.drop', function(data, envelope) {
+  //   self.file = file.pixels;
+  //   self.frame = _.where(self.file, {frame: data.frame});
+  // });
 
   // channel.gui.subscribe('scope.set', function(data, envelope) {
 
@@ -106,11 +106,10 @@ Editor.prototype.pixels.init = function() {
     // self.log();
   // });
 
-  channel.gui.subscribe('pixels.move', function(data, envelope) {
-    var wrapPixel = function(px) { px.wrap(data.distance) };
-    self.scope.forEach(wrapPixel);
-    refreshPreviews();
-  });
+  // channel.gui.subscribe('pixels.move', function(data, envelope) {
+  //   var wrapPixel = function(px) { px.wrap(data.distance) };
+  //   self.scope.forEach(wrapPixel);
+  // });
 
   // channel.gui.subscribe('pixel.add', function(data, envelope) {
   //   // add/replace pixel
@@ -140,11 +139,11 @@ Editor.prototype.pixels.init = function() {
   //   }
   // });
 
-  channel.gui.subscribe('pixel.delete', function(data, envelope) {
-    deletePixel('scope', data.layer, data.x, data.y);
-    deletePixel('frame', data.layer, data.x, data.y);
-    deletePixel('file', data.layer, data.x, data.y);
-  });
+  // channel.gui.subscribe('pixel.delete', function(data, envelope) {
+  //   deletePixel('scope', data.layer, data.x, data.y);
+  //   deletePixel('frame', data.layer, data.x, data.y);
+  //   deletePixel('file', data.layer, data.x, data.y);
+  // });
 
   channel.gui.subscribe('scope.copy', function(data, envelope) {
     self.clipboard = self.scope;
@@ -190,27 +189,23 @@ Editor.prototype.pixels.init = function() {
   channel.gui.subscribe('scope.flip.horizontal', function(data, envelope) {
     self.scope.forEach(flipHorizontal);
     self.save();
-    refreshPreviews();
   });
 
   channel.gui.subscribe('scope.flip.vertical', function(data, envelope) {
     self.scope.forEach(flipVertical);
     self.save();
-    refreshPreviews();
   });
 
   channel.gui.subscribe('frame.flip.horizontal', function(data, envelope) {
     self.scope.forEach(flipHorizontal);
     self.frame.forEach(flipHorizontal);
     self.save();
-    refreshPreviews();
   });
 
   channel.gui.subscribe('frame.flip.vertical', function(data, envelope) {
     self.scope.forEach(flipVertical);
     self.frame.forEach(flipVertical);
     self.save();
-    refreshPreviews();
   });
 
 

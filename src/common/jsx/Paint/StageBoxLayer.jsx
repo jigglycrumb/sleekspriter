@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var StageBoxLayer = React.createClass({
   mixins:[LayerCanvasMixin],
   render: function() {

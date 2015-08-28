@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportPreviewAllFrames = React.createClass({
   render: function() {
     var frames = [];

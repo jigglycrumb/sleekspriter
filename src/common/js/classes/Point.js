@@ -43,12 +43,13 @@ Point.prototype.wrap = function(distance, simulate) {
   simulate = simulate || false;
 
   var targetX = this.x + distance.x,
-      targetY = this.y + distance.y;
+      targetY = this.y + distance.y,
+      size    = flux.stores.FileStore.getData().size;
 
-  if(targetX > editor.file.size.width) targetX -= editor.file.size.width;
-  else if(targetX < 1) targetX += editor.file.size.width;
-  if(targetY > editor.file.size.height) targetY -= editor.file.size.height;
-  else if(targetY < 1) targetY += editor.file.size.height;
+  if(targetX > size.width) targetX -= size.width;
+  else if(targetX < 1) targetX += size.width;
+  if(targetY > size.height) targetY -= size.height;
+  else if(targetY < 1) targetY += size.height;
 
   if(simulate === true) {
     return new Point(targetX, targetY);

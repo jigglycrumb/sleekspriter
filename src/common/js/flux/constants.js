@@ -50,4 +50,6 @@ var constants = {
   SELECTION_CLEAR:            'SELECTION_CLEAR',
   SELECTION_MOVE:             'SELECTION_MOVE',
   PIXEL_ADD:                  'PIXEL_ADD',
+  PIXEL_DELETE:               'PIXEL_DELETE',
+  PIXELS_MOVE:                'PIXELS_MOVE',
 };

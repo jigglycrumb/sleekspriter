@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var LayerCanvasMixin = {
   propTypes: {
      id: React.PropTypes.number.isRequired,  // layer id

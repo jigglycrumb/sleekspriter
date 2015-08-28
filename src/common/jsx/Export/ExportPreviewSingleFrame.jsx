@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportPreviewSingleFrame = React.createClass({
   mixins: [FrameCanvasMixin],
   render: function() {

@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportButton = React.createClass({
   mixins: [FluxMixin],
   render: function() {

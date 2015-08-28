@@ -29,11 +29,6 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
   }
 };
 
-function isLayerVisible() {
-  var layer = storeUtils.layers.getSelected();
-  return layer.visible && layer.opacity > 0;
-};
-
 // fix for color.js darken/lighten functions
 // uses absolute instead of relative strengths and works on black/white
 function changeColorLightness(color, delta) {
@@ -46,19 +41,13 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-function refreshPreviews() {
-  channel.gui.publish('canvas.refresh', {
-    frame: flux.stores.UiStore.getData().frames.selected,
-    layer: flux.stores.UiStore.getData().layers.selected,
-  });
-};
-
 var stores, flux, channel, platformUtils, storeUtils, file, editor, hotkeys, container;
 
 function base_init() {
   stores = {
     FileStore: new FileStore(),
     UiStore: new UiStore(),
+    PixelStore: new PixelStore(),
   };
 
   flux = new Fluxxor.Flux(stores, actions);
@@ -68,12 +57,6 @@ function base_init() {
       console.log("[Dispatch]", type, payload);
     }
   });
-
-  // flux.setDispatchInterceptor(function(action, dispatch) {
-  //   React.addons.batchedUpdates(function() {
-  //     dispatch(action);
-  //   });
-  // });
 
   channel = {
     file: postal.channel('file'),

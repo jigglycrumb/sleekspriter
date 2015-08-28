@@ -40,6 +40,16 @@ StoreUtils.prototype.layers.getSelected = function() {
   return this.getById(flux.stores.UiStore.getData().layers.selected);
 };
 
+
+Object.defineProperty(StoreUtils.prototype.layers, 'isVisible', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    var layer = this.getSelected();
+    return layer.visible && layer.opacity > 0;
+  }
+});
+
 /**
  * Get layer above selected layer
  * @returns {Object} layer

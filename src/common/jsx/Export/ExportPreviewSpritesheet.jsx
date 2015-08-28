@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportPreviewSpritesheet = React.createClass({
   mixins: [SpritesheetCanvasMixin],
   render: function() {

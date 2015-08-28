@@ -153,4 +153,10 @@ var actions = {
   pixelAdd: function(frame, layer, x, y, z, color) {
     this.dispatch(constants.PIXEL_ADD, {frame: frame, layer: layer, x: x, y: y, z: z, color: color});
   },
+  pixelDelete: function(layer, x, y) {
+    this.dispatch(constants.PIXEL_DELETE, {layer: layer, x: x, y: y});
+  },
+  pixelsMove: function(distance) {
+    this.dispatch(constants.PIXELS_MOVE, distance);
+  },
 };

@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var Modal = React.createClass({
   render: function() {
     var component = null,

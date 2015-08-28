@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var AnimationListAnimation = React.createClass({
   mixins: [FluxMixin],
   render: function() {

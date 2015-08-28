@@ -1,10 +1,11 @@
 var App = React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin('FileStore', 'UiStore')],
+  mixins: [FluxMixin, StoreWatchMixin('FileStore', 'UiStore', 'PixelStore')],
   getStateFromFlux: function() {
     var flux = this.getFlux();
     return {
       ui: flux.store('UiStore').getData(),
       file: flux.store('FileStore').getData(),
+      pixels: flux.store('PixelStore').getData(),
     };
   },
   render: function() {
@@ -38,9 +39,9 @@ var App = React.createClass({
         </nav>
         <div className={windowClasses}>
           <ScreenStart />
-          <ScreenPaint ui={this.state.ui} file={this.state.file} />
-          <ScreenAnimate ui={this.state.ui} file={this.state.file} />
-          <ScreenExport ui={this.state.ui} file={this.state.file} />
+          <ScreenPaint ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
+          <ScreenAnimate ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
+          <ScreenExport ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
           <ScreenDebug ui={this.state.ui} />
         </div>
         <Modal ui={this.state.ui} file={this.state.file} />

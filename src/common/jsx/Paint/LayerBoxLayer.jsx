@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var LayerBoxLayer = React.createClass({
   mixins: [FluxMixin],
   propTypes: {

@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var DebugSelectionPattern = React.createClass({
   getInitialState: function() {
     return {

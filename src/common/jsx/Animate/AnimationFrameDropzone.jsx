@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var AnimationFrameDropzone = React.createClass({
   mixins: [FluxMixin],
   propTypes: {

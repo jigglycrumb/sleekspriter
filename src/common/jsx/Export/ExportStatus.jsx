@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportStatus = React.createClass({
   mixins: [FluxMixin],
   getInitialState: function() {

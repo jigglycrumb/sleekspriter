@@ -1,4 +1,3 @@
-// editor: done
 var AnimationFrameBoxFrame = React.createClass({
   render: function() {
 
@@ -13,12 +12,12 @@ var AnimationFrameBoxFrame = React.createClass({
 
     return (
       <div
-        id={id} 
-        className={classes}
-        draggable="true"
-        onDragStart={this.dragStart}
-        onMouseEnter={this.select}
-        onMouseLeave={this.unselect}
+          id={id} 
+          className={classes}
+          draggable="true"
+          onDragStart={this.dragStart}
+          onMouseEnter={this.props.onMouseEnterHandler} 
+          onMouseLeave={this.props.onMouseLeaveHandler}
       >
         <FrameCanvas
           id={this.props.frame}
@@ -35,20 +34,5 @@ var AnimationFrameBoxFrame = React.createClass({
   dragStart: function(event) {
     if(this.props.ui.animations.selected === null) return;
     event.dataTransfer.setData('frame', this.props.frame);
-  },
-
-  select: function() {
-    if(this.props.ui.animations.selected === null) return;
-    this.getDOMNode().classList.add('selected');
-    var row = Math.floor((this.props.frame-1)/this.props.file.frames.x),
-        column = (this.props.frame % this.props.file.frames.x === 0
-               ? this.props.file.frames.x : this.props.frame%this.props.file.frames.x)-1;
-
-    channel.gui.publish('animation.framebox.frame.select', {row: row, column: column});
-  },
-
-  unselect: function() {
-    if(this.props.ui.animations.selected === null) return;
-    this.getDOMNode().classList.remove('selected');
   },
 });

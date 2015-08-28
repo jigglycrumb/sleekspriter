@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ExportZoomSelection = React.createClass({
   mixins: [FluxMixin],
   render: function() {

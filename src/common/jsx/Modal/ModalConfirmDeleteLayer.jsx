@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ModalConfirmDeleteLayer = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   render: function() {

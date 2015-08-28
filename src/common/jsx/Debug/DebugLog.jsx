@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var DebugLog = React.createClass({
   getInitialState: function() {
     return {enabled: false}

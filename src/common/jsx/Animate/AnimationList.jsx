@@ -1,15 +1,5 @@
-// Flux: done, editor: done
 var AnimationList = React.createClass({
   mixins: [FluxMixin],
-  // getInitialState: function() {
-  //   return {
-  //     shouldSelectAnimation: false,
-  //     subscriptions: {
-  //       'animation.add': this.shouldSelectAnimation,
-  //       'animation.delete': this.shouldSelectAnimation,
-  //     }
-  //   }
-  // },
   render: function() {
 
     var deleteButtonDisabled = this.props.file.animations.length === 0 || this.props.ui.animations.selected === null
@@ -54,19 +44,10 @@ var AnimationList = React.createClass({
       </div>
     )
   },
-  // componentDidUpdate: function() {
-  //   if(this.state.shouldSelectAnimation !== false) {
-  //     channel.gui.publish('animation.select', {name: this.state.shouldSelectAnimation});
-  //     this.setState({ shouldSelectAnimation: false });
-  //   }
-  // },
   dispatchAnimationAdded: function() {
     this.getFlux().actions.animationAdd();
   },
   dispatchAnimationRemoved: function() {
     this.getFlux().actions.animationDelete(this.props.ui.animations.selected);
   },
-  // shouldSelectAnimation: function(data) {
-  //   if(data.name !== null) this.setState({ shouldSelectAnimation: data.name });
-  // },
 });

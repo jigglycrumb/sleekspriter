@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var AnimationPreviewBox = React.createClass({
   render: function() {
     var preview = null;

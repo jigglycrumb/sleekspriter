@@ -1,4 +1,3 @@
-// Flux: done, editor: done
 var ScreenAnimate = React.createClass({
   getInitialState: function() {
     return {

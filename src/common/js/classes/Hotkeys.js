@@ -1,7 +1,7 @@
 var Hotkeys = function() {
 
   function moveTool(distance) {
-    channel.gui.publish('pixels.move', {distance: distance});
+    flux.actions.pixelsMove(distance);
     if(storeUtils.selection.isActive) {
       flux.actions.selectionMove(distance);
       flux.actions.scopeSet(flux.UiStore.getData().layers.selected, 'selection', flux.UiStore.getData().selection);

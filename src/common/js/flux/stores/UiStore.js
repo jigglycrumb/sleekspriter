@@ -49,7 +49,10 @@ var UiStore = Fluxxor.createStore({
       constants.SELECTION_CLEAR,            this.onSelectionClear,
       constants.SELECTION_MOVE,             this.onSelectionMove,
 
-      constants.PIXEL_ADD,                  this.onPixelAdd
+      constants.PIXEL_ADD,                  this.onPixelAdd,
+      constants.PIXEL_DELETE,               this.onPixelDelete,
+
+      constants.PIXELS_MOVE,                this.onPixelsMove
     );
   },
 
@@ -346,7 +349,7 @@ var UiStore = Fluxxor.createStore({
       this.data.pixels.scope.forEach(function(px) {
         var oldPixel = _.findWhere(this.data.pixels.frame, {x: px.x, y: px.y});
         if(!_.isUndefined(oldPixel)) {
-          this._deletePixel(this.data.pixels.frame, px.layer, px.x, px.y);
+          this.data.pixels.frame = this._deletePixel(this.data.pixels.frame, px.layer, px.x, px.y);
         }
         this.data.pixels.frame.push(px);
       }, this);
@@ -468,6 +471,25 @@ var UiStore = Fluxxor.createStore({
     this._logPixels();
   },
 
+  onPixelDelete: function(payload) {
+    // delete pixel
+    this.data.pixels.scope = this._deletePixel(this.data.pixels.scope, payload.layer, payload.x, payload.y);
+    this.data.pixels.frame = this._deletePixel(this.data.pixels.frame, payload.layer, payload.x, payload.y);
+
+    // TODO: remove color from sprite palette
+
+
+    this.emit('change');
+
+    this._logPixels();
+  },
+
+  onPixelsMove: function(distance) {
+    var wrapPixel = function(px) { px.wrap(distance) };
+    this.data.pixels.scope.forEach(wrapPixel);
+    this.emit('change');
+  },
+
   _buildSpritePalette: function(FileStore) {
       var palette = [],
           pixels  = FileStore.getData('pixels');
@@ -486,7 +508,7 @@ var UiStore = Fluxxor.createStore({
   },
 
   _deletePixel: function(pixels, layer, x, y) {
-    pixels = pixels.filter(function(px) {
+    return pixels.filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
   },
