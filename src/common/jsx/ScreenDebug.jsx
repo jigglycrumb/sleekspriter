@@ -9,13 +9,6 @@ var ScreenDebug = React.createClass({
         <div className="area center">
           <DebugLog />
         </div>
-
-        <div className="area statusbar">
-          <div className="bar">
-            <label>Selection Pattern</label>
-            <DebugSelectionPattern zoom={this.props.ui.zoom.selected} />
-          </div>
-        </div>
       </section>
     )
   }

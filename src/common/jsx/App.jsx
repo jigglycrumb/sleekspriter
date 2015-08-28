@@ -42,7 +42,8 @@ var App = React.createClass({
           <ScreenPaint ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
           <ScreenAnimate ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
           <ScreenExport ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
-          <ScreenDebug ui={this.state.ui} />
+          <ScreenDebug />
+          <ScreenHelper ui={this.state.ui} />
         </div>
         <Modal ui={this.state.ui} file={this.state.file} />
       </div>
