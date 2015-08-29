@@ -1,0 +1,118 @@
+var FrameCanvas = React.createClass({
+  propTypes: {
+    frame: React.PropTypes.number, // frame id
+    zoom: React.PropTypes.number.isRequired, // zoom level
+    file: React.PropTypes.object.isRequired, // FileStore
+    pixels: React.PropTypes.object.isRequired, // PixelStore
+    maxSize: React.PropTypes.number,
+  },
+  mixins: [CanvasMixin],
+  render: function() {
+
+    if(_.isUndefined(this.props.maxSize)) {
+      var width = this.props.file.size.width*this.props.zoom,
+          height = this.props.file.size.height*this.props.zoom,
+          style = {
+            width: width,
+            height: height,
+          };
+    }
+    else {
+      var fitted = this.fitToSize(this.props.maxSize),
+          width = fitted.size.width,
+          height = fitted.size.height,
+          style = fitted.style;
+    }
+
+    style.border = '1px solid red';
+
+    return (
+      <canvas width={width} height={height} style={style}></canvas>
+    );
+  },
+
+  componentDidMount: function() {
+    this.paint();
+  },
+  componentDidUpdate: function() {
+    this.paint();
+  },
+
+  getPixelsAbove: function(pixels, x, y, z) {
+    var above = pixels.filter(function(px) {
+      return px.frame == this.props.frame && px.x == x && px.y == y && px.z > z;
+    }, this);
+
+    if(above.length == 0) return false;
+    return above;
+  },
+
+  getPixelBelow: function(pixels, x, y, z) {
+    var below = pixels.filter(function(px) {
+      return px.frame == this.props.frame && px.x == x && px.y == y && px.z < z;
+    }, this);
+
+    if(below.length == 0) return false;
+
+    return _.max(below, function(px) {
+      return px.z;
+    });
+  },
+
+  paint: function() {
+
+    var canvas = this.getDOMNode(),
+        pixels = [],
+        layersVisible = [];
+
+    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+      if(layer.frame === this.props.frame) layersVisible[layer.id] = layer.visible;
+    }, this);
+
+    // collect frame pixels
+    function grab(px) {
+      if(px.frame === this.props.frame) pixels.push(px);
+    }
+
+    this.props.pixels.file.forEach(grab, this);
+    this.props.pixels.scope.forEach(grab, this);
+
+    this.clear();
+
+    // if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
+    //   var ctx = canvas.getContext('2d');
+    //   ctx.fillStyle = this.props.backgroundColor;
+    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // }
+
+    // paint
+    // TODO: pixels below don't get drawn, fix that.
+    pixels.forEach(function(px) {
+      var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
+      if(layersVisible[px.layer] === true && pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
+    }, this);
+  },
+
+  // previewFrame: function(pixels) {
+  //   var canvas = this.getDOMNode();
+
+  //   this.props.ui.pixels.frame.forEach(function(px) {
+  //     if(px.layer !== this.state.data.layer) pixels.push(px);
+  //   }, this);
+
+  //   this.clear();
+
+  //   if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
+  //     var ctx = canvas.getContext('2d');
+  //     ctx.fillStyle = this.props.backgroundColor;
+  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
+  //   }
+
+  //   // paint
+  //   pixels.forEach(function(px) {
+  //     var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
+  //     if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
+  //   }, this);
+  // },
+
+});

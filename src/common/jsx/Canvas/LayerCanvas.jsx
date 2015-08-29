@@ -30,13 +30,13 @@ var LayerCanvas = React.createClass({
   },
 
   componentDidMount: function() {
-    this.paintLayer();
+    this.paint();
   },
   componentDidUpdate: function() {
-    this.paintLayer();
+    this.paint();
   },
 
-  paintLayer: function() {
+  paint: function() {
     if(this.isMounted()) { // needed because of the setTimeout
                            // or removed layers after size.set will throw
                            // an Invariant Violation
@@ -55,18 +55,18 @@ var LayerCanvas = React.createClass({
       this.props.pixels.frame.forEach(paint, this);
     }
   },
-  previewLayer: function(pixels) {
+  // previewLayer: function(pixels) {
 
-    this.clear();
+  //   this.clear();
 
-    var canvas = this.getDOMNode(),
-        pixels = [];
+  //   var canvas = this.getDOMNode(),
+  //       pixels = [];
 
-    // paint
-    pixels.forEach(function(px) {
-      if(px.layer === this.props.layer) {
-        Pixel.paint(canvas, px.x, px.y, px.toHex());
-      }
-    }, this);
-  },
+  //   // paint
+  //   pixels.forEach(function(px) {
+  //     if(px.layer === this.props.layer) {
+  //       Pixel.paint(canvas, px.x, px.y, px.toHex());
+  //     }
+  //   }, this);
+  // },
 });
