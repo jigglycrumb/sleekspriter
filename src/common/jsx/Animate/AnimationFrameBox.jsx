@@ -1,5 +1,5 @@
 var AnimationFrameBox = React.createClass({
-  mixins: [FluxMixin, PostalSubscriptionMixin],
+  mixins: [FluxMixin],
   getInitialState: function() {
     return {
       row: 0,

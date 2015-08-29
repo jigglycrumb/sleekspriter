@@ -1,4 +1,10 @@
 var SpritesheetCanvas = React.createClass({
+  propTypes: {
+    zoom: React.PropTypes.number.isRequired, // zoom level
+    file: React.PropTypes.object.isRequired, // FileStore
+    pixels: React.PropTypes.object.isRequired, // PixelStore
+    maxSize: React.PropTypes.number,
+  },
   mixins: [CanvasMixin],
   render: function() {
 
