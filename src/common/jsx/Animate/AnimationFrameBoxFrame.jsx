@@ -19,7 +19,7 @@ var AnimationFrameBoxFrame = React.createClass({
           onMouseEnter={this.props.onMouseEnterHandler} 
           onMouseLeave={this.props.onMouseLeaveHandler}
       >
-        <FrameCanvas
+        <OldFrameCanvas
           id={this.props.frame}
           width={this.props.file.size.width}
           height={this.props.file.size.height}

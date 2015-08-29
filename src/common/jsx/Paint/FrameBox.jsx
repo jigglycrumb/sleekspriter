@@ -44,7 +44,7 @@ var FrameBox = React.createClass({
 
             return (
               <div key={id} className={classes} style={frameStyle} onClick={clickHandler}>
-                <FrameCanvas
+                <OldFrameCanvas
                   id={frame}
                   width={this.props.file.size.width}
                   height={this.props.file.size.height}

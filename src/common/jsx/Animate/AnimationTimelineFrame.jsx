@@ -8,7 +8,7 @@ var AnimationTimelineFrame = React.createClass({
 
     return (
       <div className={cssClass} onClick={this.dispatchFrameSelect}>
-        <FrameCanvas
+        <OldFrameCanvas
           id={this.props.frame}
           width={this.props.file.size.width}
           height={this.props.file.size.height}

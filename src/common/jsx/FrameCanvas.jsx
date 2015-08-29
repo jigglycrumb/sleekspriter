@@ -1,4 +1,4 @@
-var FrameCanvas = React.createClass({
+var OldFrameCanvas = React.createClass({
   mixins: [FrameCanvasMixin],
   render: function() {
     var fit = fitCanvasIntoSquareContainer(this.props.width, this.props.height, this.props.size);
