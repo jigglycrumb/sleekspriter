@@ -28,14 +28,6 @@ var LayerCanvas = React.createClass({
       <canvas width={width} height={height} style={style}></canvas>
     );
   },
-
-  componentDidMount: function() {
-    this.paint();
-  },
-  componentDidUpdate: function() {
-    this.paint();
-  },
-
   paint: function() {
     if(this.isMounted()) { // needed because of the setTimeout
                            // or removed layers after size.set will throw

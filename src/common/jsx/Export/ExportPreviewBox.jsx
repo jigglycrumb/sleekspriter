@@ -6,10 +6,6 @@ var ExportPreviewBox = React.createClass({
     switch(this.props.ui.export.part) {
       case 'spritesheet':
         preview = <ExportPreviewSpritesheet
-                    id={this.props.ui.export.frame}
-                    zoom={this.props.ui.export.zoom}
-                    backgroundColor={backgroundColor}
-                    frameSize={this.props.file.width*this.props.ui.zoom}
                     ui={this.props.ui}
                     file={this.props.file}
                     pixels={this.props.pixels} />

@@ -24,39 +24,9 @@ var FrameCanvas = React.createClass({
           style = fitted.style;
     }
 
-    style.border = '1px solid red';
-
     return (
       <canvas width={width} height={height} style={style}></canvas>
     );
-  },
-
-  componentDidMount: function() {
-    this.paint();
-  },
-  componentDidUpdate: function() {
-    this.paint();
-  },
-
-  getPixelsAbove: function(pixels, x, y, z) {
-    var above = pixels.filter(function(px) {
-      return px.frame == this.props.frame && px.x == x && px.y == y && px.z > z;
-    }, this);
-
-    if(above.length == 0) return false;
-    return above;
-  },
-
-  getPixelBelow: function(pixels, x, y, z) {
-    var below = pixels.filter(function(px) {
-      return px.frame == this.props.frame && px.x == x && px.y == y && px.z < z;
-    }, this);
-
-    if(below.length == 0) return false;
-
-    return _.max(below, function(px) {
-      return px.z;
-    });
   },
 
   paint: function() {
