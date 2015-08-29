@@ -34,6 +34,7 @@ var AnimationFrameBox = React.createClass({
                 size={frameSize}
                 ui={this.props.ui} 
                 file={this.props.file}
+                pixels={this.props.pixels}
                 onMouseEnterHandler={this.selectFrame.bind(this, frame)}
                 onMouseLeaveHandler={this.deselectFrame} />
             );

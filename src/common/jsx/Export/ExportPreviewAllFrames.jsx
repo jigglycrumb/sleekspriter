@@ -8,13 +8,10 @@ var ExportPreviewAllFrames = React.createClass({
         return (
           <ExportPreviewSingleFrame
             key={frame}
-            id={frame}
-            width={this.props.width}
-            height={this.props.height}
-            frameSize={this.props.frameSize}
-            backgroundColor={this.props.backgroundColor}
+            frame={frame}
             ui={this.props.ui}
-            file={this.props.file} />
+            file={this.props.file}
+            pixels={this.props.pixels} />
         )
       }, this)}
       </div>

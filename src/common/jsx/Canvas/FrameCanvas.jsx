@@ -1,7 +1,7 @@
 var FrameCanvas = React.createClass({
   propTypes: {
     frame: React.PropTypes.number, // frame id
-    zoom: React.PropTypes.number.isRequired, // zoom level
+    zoom: React.PropTypes.number, // zoom level
     file: React.PropTypes.object.isRequired, // FileStore
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,

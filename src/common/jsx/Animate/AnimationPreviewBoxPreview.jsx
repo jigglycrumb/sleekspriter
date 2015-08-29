@@ -1,3 +1,4 @@
+// obsolete
 var AnimationPreviewBoxPreview = React.createClass({
   mixins: [FrameCanvasMixin],
   render: function() {

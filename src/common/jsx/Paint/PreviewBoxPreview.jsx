@@ -1,3 +1,4 @@
+// obsolete
 var PreviewBoxPreview = React.createClass({
   mixins: [FluxMixin, FrameCanvasMixin],
   render: function() {
@@ -10,7 +11,7 @@ var PreviewBoxPreview = React.createClass({
     );
   },
   componentDidUpdate: function() {
-    this.getPixelColor(this.props.ui.cursor);
+    // this.getPixelColor(this.props.ui.cursor);
   },
   getPixelColor: function(position) {
     var scale = this.getScale(),

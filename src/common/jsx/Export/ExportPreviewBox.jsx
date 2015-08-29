@@ -2,53 +2,40 @@ var ExportPreviewBox = React.createClass({
   render: function() {
     var preview = null,
         backgroundColor = this.props.ui.export.format === 'jpeg' ? '#ffffff' : 'transparent';
-        frameSize = {
-          width: this.props.file.size.width * this.props.ui.export.zoom,
-          height: this.props.file.size.height * this.props.ui.export.zoom,
-        };
 
     switch(this.props.ui.export.part) {
       case 'spritesheet':
         preview = <ExportPreviewSpritesheet
                     id={this.props.ui.export.frame}
                     zoom={this.props.ui.export.zoom}
-                    frameSize={frameSize}
                     backgroundColor={backgroundColor}
+                    frameSize={this.props.file.width*this.props.ui.zoom}
                     ui={this.props.ui}
-                    file={this.props.file} />
+                    file={this.props.file}
+                    pixels={this.props.pixels} />
         break;
 
       case 'allframes':
         preview = <ExportPreviewAllFrames
-                    width={this.props.file.size.width}
-                    height={this.props.file.size.height}
-                    frameSize={frameSize}
-                    format={this.props.ui.export.format}
-                    backgroundColor={backgroundColor}
                     ui={this.props.ui}
-                    file={this.props.file} />
+                    file={this.props.file}
+                    pixels={this.props.pixels} />
         break;
 
       case 'oneframe':
         preview = <ExportPreviewSingleFrame
-                    id={this.props.ui.export.frame}
-                    width={this.props.file.size.width}
-                    height={this.props.file.size.height}
-                    frameSize={frameSize}
-                    backgroundColor={backgroundColor}
+                    frame={this.props.ui.export.frame}
                     ui={this.props.ui}
-                    file={this.props.file} />
+                    file={this.props.file}
+                    pixels={this.props.pixels} />
         break;
 
       case 'animation':
         preview = <ExportPreviewAnimation
-                    id={this.props.ui.export.frame}
-                    width={this.props.file.size.width}
-                    height={this.props.file.size.height}
-                    frameSize={frameSize}
                     animation={storeUtils.animations.getById(this.props.ui.export.animation)}
                     ui={this.props.ui}
-                    file={this.props.file} />
+                    file={this.props.file}
+                    pixels={this.props.pixels} />
         break;
     }
 

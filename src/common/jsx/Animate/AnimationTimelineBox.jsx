@@ -121,6 +121,7 @@ var AnimationTimelineBox = React.createClass({
                     position={frameKey-1}
                     ui={this.props.ui}
                     file={this.props.file}
+                    pixels={this.props.pixels}
                     selected={selected} />
                 )
               }

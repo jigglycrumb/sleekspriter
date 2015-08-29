@@ -11,7 +11,7 @@ var ScreenPaint = React.createClass({
         };
 
     var frameBox = null;
-    if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} fold="frames" />
+    if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="frames" />
 
     var referenceImage = null;
     if(this.state.referenceImage !== null) referenceImage = <ReferenceImage image={this.state.referenceImage} removeHandler={this.resetImage} />
@@ -30,10 +30,10 @@ var ScreenPaint = React.createClass({
         </div>
         <div className="area right">
           <div id="layerboxhelper">
-            <PreviewBox file={this.props.file} ui={this.props.ui} fold="preview" />
+            <PreviewBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="preview" />
             {frameBox}
           </div>
-          <LayerBox ui={this.props.ui} file={this.props.file} pixels={this.props.pixels} fold="layers" />
+          <LayerBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="layers" />
         </div>
         <div className="area statusbar">
           <StatusBar ui={this.props.ui} />

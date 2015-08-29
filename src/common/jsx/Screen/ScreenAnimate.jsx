@@ -15,17 +15,18 @@ var ScreenAnimate = React.createClass({
     return (
       <section className={cssClasses}>
         <div className="area left">
-          <AnimationFrameBox ui={this.props.ui} file={this.props.file} />
+          <AnimationFrameBox ui={this.props.ui} file={this.props.file} pixels={this.props.pixels} />
         </div>
 
         <div className="area right">
-          <AnimationPreviewBox ui={this.props.ui} file={this.props.file} />
+          <AnimationPreviewBox ui={this.props.ui} file={this.props.file} pixels={this.props.pixels} />
         </div>
 
         <div className="area center">
           <AnimationTimelineBox
             ui={this.props.ui}
             file={this.props.file}
+            pixels={this.props.pixels}
             listVisible={this.state.listVisible} />
         </div>
 

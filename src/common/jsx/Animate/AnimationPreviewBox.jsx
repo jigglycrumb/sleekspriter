@@ -2,14 +2,9 @@ var AnimationPreviewBox = React.createClass({
   render: function() {
     var preview = null;
     if(this.props.ui.animations.frame !== null) {
-      preview =
-        <AnimationPreviewBoxPreview
-          ref="preview"
-          id={this.props.ui.animations.frame}
-          width={this.props.file.size.width}
-          height={this.props.file.size.height}
-          ui={this.props.ui}
-          file={this.props.file}  />
+      var frame = storeUtils.animations.getSelected().frames[this.props.ui.animations.frame];
+      // TODO: use maxSize instead of zoom, limit to DOM container size
+      preview = <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} zoom={1} />
     }
 
     return (
@@ -20,20 +15,5 @@ var AnimationPreviewBox = React.createClass({
         </div>
       </div>
     )
-  },
-  componentDidMount: function() {
-    this.scalePreview();
-  },
-  componentDidUpdate: function() {
-    this.scalePreview();
-  },
-  scalePreview: function() {
-    if(this.refs.preview) {
-      var inner = this.refs.inner.getDOMNode();
-      // this is a little ugly but works for now
-      // ideally, the canvas should be aware of size changes itself
-      // e.g. window resizes don't work yet
-      this.refs.preview.scale(inner.clientWidth, inner.clientHeight);
-    }
   },
 });

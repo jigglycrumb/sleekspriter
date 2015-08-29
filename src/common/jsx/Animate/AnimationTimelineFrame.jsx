@@ -8,14 +8,7 @@ var AnimationTimelineFrame = React.createClass({
 
     return (
       <div className={cssClass} onClick={this.dispatchFrameSelect}>
-        <OldFrameCanvas
-          id={this.props.frame}
-          width={this.props.file.size.width}
-          height={this.props.file.size.height}
-          size={this.props.size}
-          ui={this.props.ui}
-          file={this.props.file}  />
-
+        <FrameCanvas frame={this.props.frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.size} />
         <label>{this.props.frame}</label>
         <button className="transparent delete" onClick={this.dispatchFrameDelete}><span>&times;</span></button>
       </div>
