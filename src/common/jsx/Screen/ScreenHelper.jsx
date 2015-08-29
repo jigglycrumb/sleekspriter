@@ -8,7 +8,7 @@ var ScreenHelper = React.createClass({
 
         <div className="area center">
           <SelectionPattern zoom={this.props.ui.zoom.selected} />
-          <LayerCanvas zoom={this.props.ui.zoom.selected} layer={this.props.ui.layers.selected} file={this.props.file} pixels={this.props.pixels} />
+          <LayerCanvas zoom={1} layer={this.props.ui.layers.selected} file={this.props.file} pixels={this.props.pixels} />
         </div>
       </section>
     );

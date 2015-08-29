@@ -25,7 +25,7 @@ var ScreenPaint = React.createClass({
           <ToolBox ui={this.props.ui} />
         </div>
         <div className="area center" onDrop={this.handleDrop}>
-          <StageBox image={this.state.referenceImage} file={this.props.file} ui={this.props.ui} />
+          <StageBox image={this.state.referenceImage} file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} />
           {referenceImage}
         </div>
         <div className="area right">
@@ -33,7 +33,7 @@ var ScreenPaint = React.createClass({
             <PreviewBox file={this.props.file} ui={this.props.ui} fold="preview" />
             {frameBox}
           </div>
-          <LayerBox file={this.props.file} ui={this.props.ui} fold="layers" />
+          <LayerBox ui={this.props.ui} file={this.props.file} pixels={this.props.pixels} fold="layers" />
         </div>
         <div className="area statusbar">
           <StatusBar ui={this.props.ui} />

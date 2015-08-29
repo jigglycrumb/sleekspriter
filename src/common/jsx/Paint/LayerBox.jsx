@@ -32,8 +32,9 @@ var LayerBox = React.createClass({
                     key={layer.id}
                     layer={layer}
                     selected={selected}
-                    dimensions={this.props.file.size}
                     ui={this.props.ui}
+                    file={this.props.file}
+                    pixels={this.props.pixels}
                     dragStartHandler={this.dragStart} />
                 )
               }
@@ -81,7 +82,6 @@ var LayerBox = React.createClass({
     this.setState({dragPosition: dragPosition});
   },
   drop: function(e) {
-    // channel.file.publish('layer.drop', {layer: this.state.dragLayer, position: this.state.dragPosition});
     this.getFlux().actions.layerDrop(this.state.dragLayer, this.state.dragPosition);
     this.setState({
       dragLayer: 0,

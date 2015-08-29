@@ -80,4 +80,11 @@ fs.readFile('json/palettes.json', function(error, contents) {
   flux.actions.paletteLoad(json);
   platform_init();
   menu_init();
+  debug_init();
 });
+
+// remove for production
+function debug_init() {
+  require('nw.gui').Window.get().showDevTools();
+
+}

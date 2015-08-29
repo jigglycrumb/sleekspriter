@@ -47,12 +47,10 @@ var StageBox = React.createClass({
           return (
             <StageBoxLayer
               key={layer.id}
-              width={w}
-              height={h}
-              id={layer.id}
               layer={layer}
-              stage={true}
-              ui={this.props.ui} />
+              ui={this.props.ui}
+              file={this.props.file}
+              pixels={this.props.pixels} />
           );
         }, this)}
 
