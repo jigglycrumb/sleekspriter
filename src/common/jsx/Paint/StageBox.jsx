@@ -252,7 +252,7 @@ var StageBox = React.createClass({
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
-      var px = _.findWhere(this.props.ui.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
+      var px = _.findWhere(this.props.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
@@ -282,11 +282,11 @@ var StageBox = React.createClass({
 
     if(storeUtils.selection.isActive) this.previewRectangularSelection(distance);
 
-    this.props.ui.pixels.frame.forEach(function(px) {
+    this.props.pixels.frame.forEach(function(px) {
       if(px.layer === this.props.ui.layers.selected) pixels.push(px);
     }, this);
 
-    this.props.ui.pixels.scope.forEach(function(px) {
+    this.props.pixels.scope.forEach(function(px) {
       pixels.push(px.wrap(distance, true));
     });
 

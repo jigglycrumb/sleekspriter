@@ -133,23 +133,22 @@ var FileStore = Fluxxor.createStore({
   },
 
   onLayerDelete: function(id) {
+    this.waitFor(['PixelStore'], function() {
+      var selectedFrame = flux.stores.UiStore.getData().frames.selected,
+          index = 0;
 
-    var selectedFrame = flux.stores.UiStore.getData().frames.selected,
-        index = 0;
-
-    this._deletePixelsOfLayer(id);
-
-    for(var i=0; i < this.data.layers.length; i++) {
-      if(this.data.layers[i].id === id) {
-        index = i;
-        break;
+      for(var i=0; i < this.data.layers.length; i++) {
+        if(this.data.layers[i].id === id) {
+          index = i;
+          break;
+        }
       }
-    }
 
-    this.data.layers.splice(index, 1);
-    this._fixLayerZ(selectedFrame);
+      this.data.layers.splice(index, 1);
+      this._fixLayerZ(selectedFrame);
 
-    this.emit('change');
+      this.emit('change');
+    });
   },
 
   onLayerDrop: function(payload) {
@@ -177,11 +176,6 @@ var FileStore = Fluxxor.createStore({
 
     // fix layer z-indices
     this._fixLayerZ(dropFrame);
-
-    // fix pixel z-indices
-    this._fixPixelZ();
-
-    // payload.frame = dropFrame;
 
     this.emit('change');
   },
@@ -328,25 +322,4 @@ var FileStore = Fluxxor.createStore({
     }
     this.data.layers.reverse();
   },
-
-  // refresh z values of all pixels
-  _fixPixelZ: function() {
-    var layerZ = {};
-    this.data.layers.forEach(function(layer) {
-      layerZ[layer.id] = layer.z;
-    });
-
-    this.data.pixels.forEach(function(pixel) {
-      var layer = pixel[0],
-              z = layerZ[layer];
-      pixel.z = z;
-    });
-  },
-
-  _deletePixelsOfLayer: function(layer) {
-    this.data.pixels = this.data.pixels.filter(function(pixel) {
-      return pixel.layer !== layer;
-    });
-  },
-
 });

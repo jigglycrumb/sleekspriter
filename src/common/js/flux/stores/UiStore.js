@@ -40,7 +40,6 @@ var UiStore = Fluxxor.createStore({
       constants.EXPORT_ZOOM,                this.onExportZoom,
       constants.EXPORT_FORMAT,              this.onExportFormat,
       constants.EXPORT_STATUS,              this.onExportStatus,
-      constants.SCOPE_SET,                  this.onScopeSet,
 
       constants.SELECTION_START,            this.onSelectionStart,
       constants.SELECTION_RESIZE,           this.onSelectionResize,
@@ -50,9 +49,7 @@ var UiStore = Fluxxor.createStore({
       constants.SELECTION_MOVE,             this.onSelectionMove,
 
       constants.PIXEL_ADD,                  this.onPixelAdd,
-      constants.PIXEL_DELETE,               this.onPixelDelete,
-
-      constants.PIXELS_MOVE,                this.onPixelsMove
+      constants.PIXEL_DELETE,               this.onPixelDelete
     );
   },
 
@@ -112,11 +109,6 @@ var UiStore = Fluxxor.createStore({
         selected: 0,
         available: [{'id': 'sprite', 'title': 'Sprite colours', 'short': 'Sprite', 'colors': []}],
       },
-      pixels: {
-        frame: [],
-        scope: [],
-        clipboard: [],
-      },
       selection: {
         start: null,
         end: null,
@@ -146,9 +138,6 @@ var UiStore = Fluxxor.createStore({
       this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
 
       this.data.layers.frame = storeUtils.layers.getByFrame(1);
-
-      this.data.pixels.frame = [];
-      this.data.pixels.scope = [];
 
       this._buildSpritePalette(FileStore);
       this.emit('change');
@@ -191,12 +180,9 @@ var UiStore = Fluxxor.createStore({
 
   onFrameSelect: function(frame) {
     frame = parseInt(frame);
-    this.waitFor(['FileStore'], function(FileStore) {
-      this.data.frames.selected = frame;
-      this.data.layers.frame = storeUtils.layers.getByFrame(frame);
-      this.data.pixels.frame = _.where(FileStore.getData('pixels'), {frame: frame});
-      this.emit('change');
-    });
+    this.data.frames.selected = frame;
+    this.data.layers.frame = storeUtils.layers.getByFrame(frame);
+    this.emit('change');
   },
 
   onModalShow: function(payload) {
@@ -282,7 +268,6 @@ var UiStore = Fluxxor.createStore({
   onLayerDelete: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
-      this.data.pixels.frame = _.where(FileStore.getData().pixels, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
@@ -290,7 +275,6 @@ var UiStore = Fluxxor.createStore({
   onLayerDrop: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
       this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
-      this.data.pixels.frame = _.where(FileStore.getData().pixels, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
@@ -337,46 +321,6 @@ var UiStore = Fluxxor.createStore({
 
   onExportStatus: function(text) {
     this.data.export.status = text;
-    this.emit('change');
-  },
-
-  onScopeSet: function(params) {
-    console.log(params);
-
-    // update pixels in scope
-    if(params.oldScope !== null && this.data.pixels.scope.length > 0) {
-      // merge scope pixels back to frame
-      this.data.pixels.scope.forEach(function(px) {
-        var oldPixel = _.findWhere(this.data.pixels.frame, {x: px.x, y: px.y});
-        if(!_.isUndefined(oldPixel)) {
-          this.data.pixels.frame = this._deletePixel(this.data.pixels.frame, px.layer, px.x, px.y);
-        }
-        this.data.pixels.frame.push(px);
-      }, this);
-
-      this.data.pixels.scope = [];
-    }
-
-    var layer = params.type === 'layer' ? params.data : params.oldScope;
-    // use selected layer if no layer data was given
-    if(layer === undefined) layer = this.data.layers.selected;
-
-    switch(params.type) {
-      case 'selection':
-        // move pixels in selection to scope
-        this.data.pixels.scope = _.remove(this.data.pixels.frame, function(px) {
-          return px.layer === layer && storeUtils.selection.contains(px);
-        });
-        break;
-
-      case 'layer':
-        // move pixels of layer to scope
-        this.data.pixels.scope = _.remove(this.data.pixels.frame, {layer: layer});
-        break;
-    }
-
-    this._logPixels();
-
     this.emit('change');
   },
 
@@ -436,58 +380,17 @@ var UiStore = Fluxxor.createStore({
   },
 
   onPixelAdd: function(payload) {
-
-    // add pixel to scope / replace pixel in scope
-    var c = new Color(payload.color),
-        a = 1;
-
-    var newPixel = new Pixel(payload.frame, payload.layer, payload.x, payload.y, c.red(), c.green(), c.blue(), a, payload.z);
-    var oldPixel = _.findWhere(this.data.pixels.scope, {x: payload.x, y: payload.y});
-    if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', payload.layer, payload.x, payload.y, c.rgbString());
-      this.data.pixels.scope.push(newPixel);
-    }
-    else {
-      console.log('replacing pixel', payload.layer, payload.x, payload.y, c.rgbString());
-      // replace old pixel
-      for(var i = 0; i < this.data.pixels.scope.length; i++) {
-        var p = this.data.pixels.scope[i];
-        if(p.x == payload.x && p.y == payload.y) {
-          p.r = c.red();
-          p.g = c.green();
-          p.b = c.blue();
-          p.a = a;
-          break;
-        }
-      }
-    }
-
     // update sprite palette
     this.data.palettes.available[0].colors.push(payload.color);
     this.data.palettes.available[0].colors = _.unique(this.data.palettes.available[0].colors, false);
-
     this.emit('change');
-
-    this._logPixels();
   },
 
   onPixelDelete: function(payload) {
-    // delete pixel
-    this.data.pixels.scope = this._deletePixel(this.data.pixels.scope, payload.layer, payload.x, payload.y);
-    this.data.pixels.frame = this._deletePixel(this.data.pixels.frame, payload.layer, payload.x, payload.y);
-
-    // TODO: remove color from sprite palette
-
-
-    this.emit('change');
-
-    this._logPixels();
-  },
-
-  onPixelsMove: function(distance) {
-    var wrapPixel = function(px) { px.wrap(distance) };
-    this.data.pixels.scope.forEach(wrapPixel);
-    this.emit('change');
+    this.waitFor(['PixelStore'], function(PixelStore) {
+      // TODO: remove color from sprite palette
+      this.emit('change');
+    });
   },
 
   _buildSpritePalette: function(FileStore) {
@@ -500,18 +403,5 @@ var UiStore = Fluxxor.createStore({
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
   },
-
-  _logPixels: function() {
-    console.log('clipboard: '+this.data.pixels.clipboard.length+' '+
-                'scope: '+this.data.pixels.scope.length+' '+
-                'frame: '+this.data.pixels.frame.length);
-  },
-
-  _deletePixel: function(pixels, layer, x, y) {
-    return pixels.filter(function(px) {
-      return !(px.layer == layer && px.x == x && px.y == y);
-    });
-  },
-
 
 });

@@ -45,13 +45,11 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onLayerDelete: function(id) {
-    this.waitFor(['UiStore'], function(UiStore) {
-      this.data.file = this.data.file.filter(function(pixel) {
-        return pixel.layer !== id;
-      });
-      this.data.frame = _.where(this.data.file, {frame: UiStore.getData().frames.selected});
-      this.emit('change');
+    this.data.file = this.data.file.filter(function(pixel) {
+      return pixel.layer !== id;
     });
+    this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+    this.emit('change');
   },
 
   onLayerDrop: function(id) {
@@ -67,50 +65,48 @@ var PixelStore = Fluxxor.createStore({
         pixel.z = layerZ[pixel.layer];
       });
 
-      this.data.frame = _.where(this.data.file, {frame: UiStore.getData().frames.selected});
+      this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
       this.emit('change');
     });
   },
 
   onScopeSet: function(params) {
-    this.waitFor(['UiStore'], function(UiStore) {
-      console.log(params);
+    console.log(params);
 
-      // update pixels in scope
-      if(params.oldScope !== null && this.data.scope.length > 0) {
-        // merge scope pixels back to frame
-        this.data.scope.forEach(function(px) {
-          var oldPixel = _.findWhere(this.data.frame, {x: px.x, y: px.y});
-          if(!_.isUndefined(oldPixel)) {
-            this.data.frame = this._deletePixel(this.data.frame, px.layer, px.x, px.y);
-          }
-          this.data.frame.push(px);
-        }, this);
+    // update pixels in scope
+    if(params.oldScope !== null && this.data.scope.length > 0) {
+      // merge scope pixels back to frame
+      this.data.scope.forEach(function(px) {
+        var oldPixel = _.findWhere(this.data.frame, {x: px.x, y: px.y});
+        if(!_.isUndefined(oldPixel)) {
+          this.data.frame = this._deletePixel(this.data.frame, px.layer, px.x, px.y);
+        }
+        this.data.frame.push(px);
+      }, this);
 
-        this.data.scope = [];
-      }
+      this.data.scope = [];
+    }
 
-      var layer = params.type === 'layer' ? params.data : params.oldScope;
-      // use selected layer if no layer data was given
-      if(layer === undefined) layer = UiStore.getData().layers.selected;
+    var layer = params.type === 'layer' ? params.data : params.oldScope;
+    // use selected layer if no layer data was given
+    if(layer === undefined) layer = storeUtils.layers.getSelected().id;
 
-      switch(params.type) {
-        case 'selection':
-          // move pixels in selection to scope
-          this.data.scope = _.remove(this.data.frame, function(px) {
-            return px.layer === layer && storeUtils.selection.contains(px);
-          });
-          break;
+    switch(params.type) {
+      case 'selection':
+        // move pixels in selection to scope
+        this.data.scope = _.remove(this.data.frame, function(px) {
+          return px.layer === layer && storeUtils.selection.contains(px);
+        });
+        break;
 
-        case 'layer':
-          // move pixels of layer to scope
-          this.data.scope = _.remove(this.data.frame, {layer: layer});
-          break;
-      }
+      case 'layer':
+        // move pixels of layer to scope
+        this.data.scope = _.remove(this.data.frame, {layer: layer});
+        break;
+    }
 
-      this.emit('change');
-      this._logPixels();
-    });
+    this.emit('change');
+    this._logPixels();
   },
 
   onPixelAdd: function(payload) {
@@ -151,9 +147,6 @@ var PixelStore = Fluxxor.createStore({
     this.data.scope = this._deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
     this.data.frame = this._deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
 
-    // TODO: remove color from sprite palette
-
-
     this.emit('change');
 
     this._logPixels();
@@ -164,15 +157,6 @@ var PixelStore = Fluxxor.createStore({
     this.data.scope.forEach(wrapPixel);
     this.emit('change');
   },
-
-
-  // onLayerDelete: function(id) {
-  //   this.waitFor(['UiStore'], function(UiStore) {
-
-  //     this.emit('change');
-  //   });
-  // },
-
 
   _logPixels: function() {
     console.log('clipboard: '+this.data.clipboard.length+' '+

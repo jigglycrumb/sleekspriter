@@ -19,7 +19,7 @@ var StatusBar = React.createClass({
         <span ref="cursorY">Y: {this.props.ui.cursor.y}</span>
         <div id="StatusBarColor" style={{background: this.props.ui.color.frame.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.ui.color.frame.alpha() == 0 ? 'transparent': this.props.ui.color.frame.hexString()}</span>
-        <span>Frame {this.props.ui.frames.selected}, {this.props.ui.pixels.frame.length + this.props.ui.pixels.scope.length} pixels</span>
+        <span>Frame {this.props.ui.frames.selected}, {this.props.pixels.frame.length + this.props.pixels.scope.length} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.ui.zoom.selected}</span>
         <div id="StatusBarButtons">
