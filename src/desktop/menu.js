@@ -22,6 +22,13 @@ function closeCredits() {
   creditsWindow.close();
 }
 
+var menu = {};
+
+function enableMenus(enabled) {
+  function enable(item) { item.enabled = enabled; }
+  for(x in menu) if(x !== 'developer') menu[x].items.map(enable);
+}
+
 //------------------------------------------------------------------------------
 
 function menu_init() {
@@ -35,10 +42,10 @@ function menu_init() {
   }
 
   // create "File" menu
-  var fileMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'File', submenu: fileMenu}));
+  menu.file = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'File', submenu: menu.file}));
 
-  fileMenu.append(new gui.MenuItem({
+  menu.file.append(new gui.MenuItem({
     label: 'New',
     click: function() {
       if(flux.stores.UiStore.getData().tab === 'start') {
@@ -50,7 +57,7 @@ function menu_init() {
     modifiers: modKey,
   }));
 
-  fileMenu.append(new gui.MenuItem({
+  menu.file.append(new gui.MenuItem({
     label: 'Open',
     click: function() {
       platformUtils.showOpenFileDialog();
@@ -59,7 +66,7 @@ function menu_init() {
     modifiers: modKey,
   }));
 
-  fileMenu.append(new gui.MenuItem({
+  menu.file.append(new gui.MenuItem({
     label: 'Save',
     click: function() {
       channel.file.publish('save');
@@ -69,7 +76,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  fileMenu.append(new gui.MenuItem({
+  menu.file.append(new gui.MenuItem({
     label: 'Save as',
     click: function() {
       channel.file.publish('path.set');
@@ -79,9 +86,9 @@ function menu_init() {
     enabled: false,
   }));
 
-  fileMenu.append(new gui.MenuItem({ type: 'separator' }));
+  menu.file.append(new gui.MenuItem({ type: 'separator' }));
 
-  fileMenu.append(new gui.MenuItem({
+  menu.file.append(new gui.MenuItem({
     label: 'Close',
     click: function() {
       channel.file.publish('close');
@@ -98,14 +105,14 @@ function menu_init() {
   // append "About" and "Quit" menu items to windows menu
   if(process.platform === 'win32' || process.platform === 'win64') {
 
-    fileMenu.append(new gui.MenuItem({ type: 'separator' }));
-    fileMenu.append(new gui.MenuItem({
+    menu.file.append(new gui.MenuItem({ type: 'separator' }));
+    menu.file.append(new gui.MenuItem({
       label: 'About @@name',
       click: showCredits,
     }));
 
-    fileMenu.append(new gui.MenuItem({ type: 'separator' }));
-    fileMenu.append(new gui.MenuItem({
+    menu.file.append(new gui.MenuItem({ type: 'separator' }));
+    menu.file.append(new gui.MenuItem({
       label: 'Quit @@name',
       click: gui.App.quit,
       key: 'q',
@@ -115,10 +122,10 @@ function menu_init() {
 
   //------------------------------------------------------------------------------
   // create "Edit" menu
-  var editMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'Edit', submenu: editMenu}));
+  menu.edit = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'Edit', submenu: menu.edit}));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Cut',
     click: function() {
       channel.gui.publish('scope.cut');
@@ -128,17 +135,17 @@ function menu_init() {
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Copy',
     click: function() {
-      channel.gui.publish('scope.copy');
+      flux.actions.scopeCopy();
     },
     key: 'c',
     modifiers: modKey,
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Paste',
     click: function() {
       channel.gui.publish('scope.paste');
@@ -148,7 +155,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Delete',
     click: function() {
       channel.gui.publish('scope.delete');
@@ -157,9 +164,9 @@ function menu_init() {
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({ type: 'separator' }));
+  menu.edit.append(new gui.MenuItem({ type: 'separator' }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Flip Horizontal',
     click: function() {
       channel.gui.publish('scope.flip.horizontal');
@@ -167,7 +174,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Flip Vertical',
     click: function() {
       channel.gui.publish('scope.flip.vertical');
@@ -175,9 +182,9 @@ function menu_init() {
     enabled: false,
   }));
 
-  editMenu.append(new gui.MenuItem({ type: 'separator' }));
+  menu.edit.append(new gui.MenuItem({ type: 'separator' }));
 
-  editMenu.append(new gui.MenuItem({
+  menu.edit.append(new gui.MenuItem({
     label: 'Image size...',
     click: function() {
       flux.actions.modalShow(ModalEditImageSize);
@@ -189,10 +196,10 @@ function menu_init() {
 
   //------------------------------------------------------------------------------
   // create "Select" menu
-  var selectMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'Select', submenu: selectMenu}));
+  menu.select = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'Select', submenu: menu.select}));
 
-  selectMenu.append(new gui.MenuItem({
+  menu.select.append(new gui.MenuItem({
     label: 'All',
     click: function() {
       var start = new Point(1, 1),
@@ -210,7 +217,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  selectMenu.append(new gui.MenuItem({
+  menu.select.append(new gui.MenuItem({
     label: 'Deselect',
     click: function() {
       var layer = flux.stores.UiStore.getData().layers.selected;
@@ -225,10 +232,10 @@ function menu_init() {
 
   //------------------------------------------------------------------------------
   // create "Layer" menu
-  var layerMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'Layer', submenu: layerMenu}));
+  menu.layer = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'Layer', submenu: menu.layer}));
 
-  layerMenu.append(new gui.MenuItem({
+  menu.layer.append(new gui.MenuItem({
     label: 'Merge with layer above',
     click: function() {
       var data = {
@@ -242,7 +249,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  layerMenu.append(new gui.MenuItem({
+  menu.layer.append(new gui.MenuItem({
     label: 'Merge with layer below',
     click: function() {
       var data = {
@@ -259,10 +266,10 @@ function menu_init() {
 
   //------------------------------------------------------------------------------
   // create "Frame" menu
-  var frameMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'Frame', submenu: frameMenu}));
+  menu.frame = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'Frame', submenu: menu.frame}));
 
-  frameMenu.append(new gui.MenuItem({
+  menu.frame.append(new gui.MenuItem({
     label: 'Rotate 180°',
     click: function() {
       // channel.gui.publish('frame.flip.horizontal');
@@ -271,7 +278,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  frameMenu.append(new gui.MenuItem({
+  menu.frame.append(new gui.MenuItem({
     label: 'Rotate 90° CW',
     click: function() {
       // channel.gui.publish('frame.flip.horizontal');
@@ -280,7 +287,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  frameMenu.append(new gui.MenuItem({
+  menu.frame.append(new gui.MenuItem({
     label: 'Rotate 90° CCW',
     click: function() {
       // channel.gui.publish('frame.flip.horizontal');
@@ -289,9 +296,9 @@ function menu_init() {
     enabled: false,
   }));
 
-  frameMenu.append(new gui.MenuItem({ type: 'separator' }));
+  menu.frame.append(new gui.MenuItem({ type: 'separator' }));
 
-  frameMenu.append(new gui.MenuItem({
+  menu.frame.append(new gui.MenuItem({
     label: 'Flip Horizontal',
     click: function() {
       channel.gui.publish('frame.flip.horizontal');
@@ -299,7 +306,7 @@ function menu_init() {
     enabled: false,
   }));
 
-  frameMenu.append(new gui.MenuItem({
+  menu.frame.append(new gui.MenuItem({
     label: 'Flip Vertical',
     click: function() {
       channel.gui.publish('frame.flip.vertical');
@@ -309,24 +316,24 @@ function menu_init() {
 
   //------------------------------------------------------------------------------
   // create "Developer" menu
-  var developerMenu = new gui.Menu();
-  menuBar.append(new gui.MenuItem({label: 'Developer', submenu: developerMenu}));
+  menu.developer = new gui.Menu();
+  menuBar.append(new gui.MenuItem({label: 'Developer', submenu: menu.developer}));
 
-  developerMenu.append(new gui.MenuItem({
+  menu.developer.append(new gui.MenuItem({
     label: 'Open Developer Tools',
     click: function() {
       require('nw.gui').Window.get().showDevTools();
     }
   }));
 
-  developerMenu.append(new gui.MenuItem({
+  menu.developer.append(new gui.MenuItem({
     label: 'Reload Application',
     click: function() {
       require('nw.gui').Window.get().reloadDev();
     }
   }));
 
-  developerMenu.append(new gui.MenuItem({
+  menu.developer.append(new gui.MenuItem({
     label: 'Show Debug Screen',
     click: function() {
       flux.actions.tabSelect('debug');
@@ -338,11 +345,11 @@ function menu_init() {
   // enable menus after file was loaded
   channel.file.subscribe('file.load', function() {
     function enable(item) { item.enabled = true; }
-    fileMenu.items.map(enable);
-    editMenu.items.map(enable);
-    selectMenu.items.map(enable);
-    layerMenu.items.map(enable);
-    frameMenu.items.map(enable);
+    menu.file.items.map(enable);
+    menu.edit.items.map(enable);
+    menu.select.items.map(enable);
+    menu.layer.items.map(enable);
+    menu.frame.items.map(enable);
   });
 
   // assign menu to window

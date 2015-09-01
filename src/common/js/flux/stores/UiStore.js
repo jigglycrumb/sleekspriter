@@ -139,7 +139,16 @@ var UiStore = Fluxxor.createStore({
 
       this.data.layers.frame = storeUtils.layers.getByFrame(1);
 
-      this._buildSpritePalette(FileStore);
+      // build sprite palette
+      var palette = [],
+          pixels  = FileStore.getData('pixels');
+
+      pixels.forEach(function(px) { palette.push(px.toHex()); });
+
+      this.data.palettes.available[0].colors = _.unique(palette, false);
+
+      enableMenus(true);
+
       this.emit('change');
     });
   },
@@ -380,7 +389,6 @@ var UiStore = Fluxxor.createStore({
   },
 
   onPixelAdd: function(payload) {
-    // update sprite palette
     this.data.palettes.available[0].colors.push(payload.color);
     this.data.palettes.available[0].colors = _.unique(this.data.palettes.available[0].colors, false);
     this.emit('change');
@@ -388,20 +396,17 @@ var UiStore = Fluxxor.createStore({
 
   onPixelDelete: function(payload) {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      // TODO: remove color from sprite palette
-      this.emit('change');
-    });
-  },
-
-  _buildSpritePalette: function(FileStore) {
       var palette = [],
-          pixels  = FileStore.getData('pixels');
+          pixels  = PixelStore.getData();
 
-      pixels.forEach(function(px) {
-        palette.push(px.toHex());
-      });
+      for(x in pixels) {
+        var pixelArr = pixels[x];
+        pixelArr.forEach(function(px) { palette.push(px.toHex()); });
+      }
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
+      this.emit('change');
+    });
   },
 
 });

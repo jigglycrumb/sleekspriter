@@ -7,7 +7,9 @@ var PixelStore = Fluxxor.createStore({
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_DROP,                   this.onLayerDrop,
       constants.SCOPE_SET,                    this.onScopeSet,
+      constants.SCOPE_COPY,                   this.onScopeCopy,
       constants.PIXEL_ADD,                    this.onPixelAdd,
+      constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove
     );
   },
@@ -109,6 +111,13 @@ var PixelStore = Fluxxor.createStore({
     this._logPixels();
   },
 
+  onScopeCopy: function() {
+    this.data.clipboard = this.data.scope;
+    this.emit('change');
+
+    this._logPixels();
+  },
+
   onPixelAdd: function(payload) {
 
     // add pixel to scope / replace pixel in scope
@@ -142,7 +151,6 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelDelete: function(payload) {
-    // delete pixel
     this.data.file = this._deletePixel(this.data.file, payload.layer, payload.x, payload.y);
     this.data.scope = this._deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
     this.data.frame = this._deletePixel(this.data.frame, payload.layer, payload.x, payload.y);

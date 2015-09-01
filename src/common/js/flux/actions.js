@@ -132,6 +132,9 @@ var actions = {
   scopeSet: function(oldScope, type, data) {
     this.dispatch(constants.SCOPE_SET, {oldScope: oldScope, type: type, data: data});
   },
+  scopeCopy: function() {
+    this.dispatch(constants.SCOPE_COPY);
+  },
   selectionStart: function(point) {
     this.dispatch(constants.SELECTION_START, point);
   },

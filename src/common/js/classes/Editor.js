@@ -9,7 +9,6 @@ var Editor = function() {
   this.frames.init();
   this.pixels.init();
   this.paintBucket.init();
-  // this.palettes.init();
 };
 
 Editor.prototype = {};

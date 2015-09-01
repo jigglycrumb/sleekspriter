@@ -145,9 +145,9 @@ Editor.prototype.pixels.init = function() {
   //   deletePixel('file', data.layer, data.x, data.y);
   // });
 
-  channel.gui.subscribe('scope.copy', function(data, envelope) {
-    self.clipboard = self.scope;
-  });
+  // channel.gui.subscribe('scope.copy', function(data, envelope) {
+  //   self.clipboard = self.scope;
+  // });
 
   channel.gui.subscribe('scope.cut', function(data, envelope) {
     self.clipboard = self.scope;

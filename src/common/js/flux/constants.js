@@ -43,6 +43,7 @@ var constants = {
   EXPORT_FORMAT:              'EXPORT_FORMAT',
   EXPORT_STATUS:              'EXPORT_STATUS',
   SCOPE_SET:                  'SCOPE_SET',
+  SCOPE_COPY:                 'SCOPE_COPY',
   SELECTION_START:            'SELECTION_START',
   SELECTION_RESIZE:           'SELECTION_RESIZE',
   SELECTION_PREVIEW:          'SELECTION_PREVIEW',
