@@ -149,42 +149,42 @@ Editor.prototype.pixels.init = function() {
   //   self.clipboard = self.scope;
   // });
 
-  channel.gui.subscribe('scope.cut', function(data, envelope) {
-    self.clipboard = self.scope;
-    self.scope.forEach(function(px) {
-      channel.gui.publish('pixel.delete', px);
-    });
+  // channel.gui.subscribe('scope.cut', function(data, envelope) {
+  //   self.clipboard = self.scope;
+  //   self.scope.forEach(function(px) {
+  //     channel.gui.publish('pixel.delete', px);
+  //   });
 
-    self.save();
-  });
+  //   self.save();
+  // });
 
-  channel.gui.subscribe('scope.paste', function(data, envelope) {
-    // get current frame & layer
-    var target = {
-      frame: editor.frames.selected,
-      layer: editor.layers.selected,
-      z: file.getLayerById(editor.layers.selected).z,
-    };
+  // channel.gui.subscribe('scope.paste', function(data, envelope) {
+  //   // get current frame & layer
+  //   var target = {
+  //     frame: editor.frames.selected,
+  //     layer: editor.layers.selected,
+  //     z: file.getLayerById(editor.layers.selected).z,
+  //   };
 
-    // transform pixels from clipboard to new layer and add them
-    self.clipboard.forEach(function(px) {
-      var data = target;
-      data.x = px.x;
-      data.y = px.y;
-      data.color = px.toHex();
-      channel.gui.publish('pixel.add', data);
-    });
+  //   // transform pixels from clipboard to new layer and add them
+  //   self.clipboard.forEach(function(px) {
+  //     var data = target;
+  //     data.x = px.x;
+  //     data.y = px.y;
+  //     data.color = px.toHex();
+  //     channel.gui.publish('pixel.add', data);
+  //   });
 
-    self.save();
-  });
+  //   self.save();
+  // });
 
-  channel.gui.subscribe('scope.delete', function(data, envelope) {
-    self.scope.forEach(function(px) {
-      channel.gui.publish('pixel.delete', px);
-    });
+  // channel.gui.subscribe('scope.delete', function(data, envelope) {
+  //   self.scope.forEach(function(px) {
+  //     channel.gui.publish('pixel.delete', px);
+  //   });
 
-    self.save();
-  });
+  //   self.save();
+  // });
 
   channel.gui.subscribe('scope.flip.horizontal', function(data, envelope) {
     self.scope.forEach(flipHorizontal);

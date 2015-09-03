@@ -128,7 +128,7 @@ function menu_init() {
   menu.edit.append(new gui.MenuItem({
     label: 'Cut',
     click: function() {
-      channel.gui.publish('scope.cut');
+      flux.actions.scopeCut();
     },
     key: 'x',
     modifiers: modKey,
@@ -148,7 +148,7 @@ function menu_init() {
   menu.edit.append(new gui.MenuItem({
     label: 'Paste',
     click: function() {
-      channel.gui.publish('scope.paste');
+      flux.actions.scopePaste();
     },
     key: 'v',
     modifiers: modKey,
@@ -158,7 +158,7 @@ function menu_init() {
   menu.edit.append(new gui.MenuItem({
     label: 'Delete',
     click: function() {
-      channel.gui.publish('scope.delete');
+      flux.actions.scopeDelete();
     },
     key: String.fromCharCode(8),
     enabled: false,

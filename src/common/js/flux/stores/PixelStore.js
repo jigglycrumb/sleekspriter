@@ -8,6 +8,9 @@ var PixelStore = Fluxxor.createStore({
       constants.LAYER_DROP,                   this.onLayerDrop,
       constants.SCOPE_SET,                    this.onScopeSet,
       constants.SCOPE_COPY,                   this.onScopeCopy,
+      constants.SCOPE_CUT,                    this.onScopeCut,
+      constants.SCOPE_DELETE,                 this.onScopeDelete,
+      constants.SCOPE_PASTE,                  this.onScopePaste,
       constants.PIXEL_ADD,                    this.onPixelAdd,
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove
@@ -31,6 +34,9 @@ var PixelStore = Fluxxor.createStore({
     else this.data = data;
   },
 
+  //----------------------------------------------------------------------------
+  // Action handlers
+  //----------------------------------------------------------------------------
 
   onFileLoad: function() {
     this.waitFor(['FileStore'], function(FileStore) {
@@ -81,7 +87,7 @@ var PixelStore = Fluxxor.createStore({
       this.data.scope.forEach(function(px) {
         var oldPixel = _.findWhere(this.data.frame, {x: px.x, y: px.y});
         if(!_.isUndefined(oldPixel)) {
-          this.data.frame = this._deletePixel(this.data.frame, px.layer, px.x, px.y);
+          this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
         }
         this.data.frame.push(px);
       }, this);
@@ -108,56 +114,71 @@ var PixelStore = Fluxxor.createStore({
     }
 
     this.emit('change');
-    this._logPixels();
+    this.log();
   },
 
   onScopeCopy: function() {
     this.data.clipboard = this.data.scope;
     this.emit('change');
 
-    this._logPixels();
+    this.log();
+  },
+
+  onScopeCut: function() {
+    this.data.clipboard = this.data.scope;
+    this.data.scope.forEach(function(px) {
+      this.data.file = this.deletePixel(this.data.file, px.layer, px.x, px.y);
+      this.data.scope = this.deletePixel(this.data.scope, px.layer, px.x, px.y);
+      this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
+    }, this);
+
+    this.emit('change');
+
+    this.log();
+  },
+
+  onScopeDelete: function() {
+    this.data.scope.forEach(function(px) {
+      this.data.file = this.deletePixel(this.data.file, px.layer, px.x, px.y);
+      this.data.scope = this.deletePixel(this.data.scope, px.layer, px.x, px.y);
+      this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
+    }, this);
+
+    this.emit('change');
+
+    this.log();
+  },
+
+  onScopePaste: function() {
+    // get current frame & layer
+    var frame = flux.stores.UiStore.getData().frames.selected,
+        layer = flux.stores.UiStore.getData().layers.selected,
+        z = storeUtils.layers.getSelected().z;
+
+    function pastePixel(px) {
+      this.addPixel(frame, layer, px.x, px.y, z, px.toHex());
+    }
+
+    this.data.clipboard.forEach(pastePixel, this);
+    this.emit('change');
+
+    this.log();
   },
 
   onPixelAdd: function(payload) {
-
-    // add pixel to scope / replace pixel in scope
-    var c = new Color(payload.color),
-        a = 1;
-
-    var newPixel = new Pixel(payload.frame, payload.layer, payload.x, payload.y, c.red(), c.green(), c.blue(), a, payload.z);
-    var oldPixel = _.findWhere(this.data.scope, {x: payload.x, y: payload.y});
-    if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', payload.layer, payload.x, payload.y, c.rgbString());
-      this.data.scope.push(newPixel);
-    }
-    else {
-      console.log('replacing pixel', payload.layer, payload.x, payload.y, c.rgbString());
-      // replace old pixel
-      for(var i = 0; i < this.data.scope.length; i++) {
-        var p = this.data.scope[i];
-        if(p.x == payload.x && p.y == payload.y) {
-          p.r = c.red();
-          p.g = c.green();
-          p.b = c.blue();
-          p.a = a;
-          break;
-        }
-      }
-    }
-
+    this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.z, payload.color);
     this.emit('change');
-
-    this._logPixels();
+    this.log();
   },
 
   onPixelDelete: function(payload) {
-    this.data.file = this._deletePixel(this.data.file, payload.layer, payload.x, payload.y);
-    this.data.scope = this._deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
-    this.data.frame = this._deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
+    this.data.file = this.deletePixel(this.data.file, payload.layer, payload.x, payload.y);
+    this.data.scope = this.deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
+    this.data.frame = this.deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
 
     this.emit('change');
 
-    this._logPixels();
+    this.log();
   },
 
   onPixelsMove: function(distance) {
@@ -166,16 +187,48 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  _logPixels: function() {
+
+  //----------------------------------------------------------------------------
+  // Helpers
+  //----------------------------------------------------------------------------
+
+  log: function() {
     console.log('clipboard: '+this.data.clipboard.length+' '+
                 'scope: '+this.data.scope.length+' '+
                 'frame: '+this.data.frame.length);
   },
 
-  _deletePixel: function(pixels, layer, x, y) {
+  deletePixel: function(pixels, layer, x, y) {
     return pixels.filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
+  },
+
+  addPixel: function(frame, layer, x, y, z, color) {
+    // add pixel to scope / replace pixel in scope
+    var c = new Color(color),
+        a = 1;
+
+    var newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a, z);
+    var oldPixel = _.findWhere(this.data.scope, {x: x, y: y});
+    if(_.isUndefined(oldPixel)) {
+      console.log('filling pixel', layer, x, y, c.rgbString());
+      this.data.scope.push(newPixel);
+    }
+    else {
+      console.log('replacing pixel', layer, x, y, c.rgbString());
+      // replace old pixel
+      for(var i = 0; i < this.data.scope.length; i++) {
+        var p = this.data.scope[i];
+        if(p.x == x && p.y == y) {
+          p.r = c.red();
+          p.g = c.green();
+          p.b = c.blue();
+          p.a = a;
+          break;
+        }
+      }
+    }
   },
 
 });

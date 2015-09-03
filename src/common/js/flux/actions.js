@@ -135,6 +135,15 @@ var actions = {
   scopeCopy: function() {
     this.dispatch(constants.SCOPE_COPY);
   },
+  scopeCut: function() {
+    this.dispatch(constants.SCOPE_CUT);
+  },
+  scopeDelete: function() {
+    this.dispatch(constants.SCOPE_DELETE);
+  },
+  scopePaste: function() {
+    this.dispatch(constants.SCOPE_PASTE);
+  },
   selectionStart: function(point) {
     this.dispatch(constants.SELECTION_START, point);
   },
@@ -162,4 +171,5 @@ var actions = {
   pixelsMove: function(distance) {
     this.dispatch(constants.PIXELS_MOVE, distance);
   },
+
 };
