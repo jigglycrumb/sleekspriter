@@ -30,9 +30,9 @@ Editor.prototype.pixels.init = function() {
   var self = this;
 
   // check if a pixel is inside selection bounds
-  function pixelHasBeenSelected(pixel) {
-    return storeUtils.selection.contains(pixel) && pixel.layer == flux.stores.UiStore.getData().layer.selected;
-  };
+  // function pixelHasBeenSelected(pixel) {
+  //   return storeUtils.selection.contains(pixel) && pixel.layer == flux.stores.UiStore.getData().layer.selected;
+  // };
 
   // function deletePixel(from, layer, x, y) {
   //   self[from] = self[from].filter(function(px) {
@@ -40,13 +40,13 @@ Editor.prototype.pixels.init = function() {
   //   });
   // };
 
-  function flipHorizontal(pixel) {
-    return pixel.flipHorizontal();
-  }
+  // function flipHorizontal(pixel) {
+  //   return pixel.flipHorizontal();
+  // }
 
-  function flipVertical(pixel) {
-    return pixel.flipVertical();
-  }
+  // function flipVertical(pixel) {
+  //   return pixel.flipVertical();
+  // }
 
   // message handlers
   // channel.file.subscribe('file.load', function() {
@@ -186,27 +186,27 @@ Editor.prototype.pixels.init = function() {
   //   self.save();
   // });
 
-  channel.gui.subscribe('scope.flip.horizontal', function(data, envelope) {
-    self.scope.forEach(flipHorizontal);
-    self.save();
-  });
+  // channel.gui.subscribe('scope.flip.horizontal', function(data, envelope) {
+  //   self.scope.forEach(flipHorizontal);
+  //   self.save();
+  // });
 
-  channel.gui.subscribe('scope.flip.vertical', function(data, envelope) {
-    self.scope.forEach(flipVertical);
-    self.save();
-  });
+  // channel.gui.subscribe('scope.flip.vertical', function(data, envelope) {
+  //   self.scope.forEach(flipVertical);
+  //   self.save();
+  // });
 
-  channel.gui.subscribe('frame.flip.horizontal', function(data, envelope) {
-    self.scope.forEach(flipHorizontal);
-    self.frame.forEach(flipHorizontal);
-    self.save();
-  });
+  // channel.gui.subscribe('frame.flip.horizontal', function(data, envelope) {
+  //   self.scope.forEach(flipHorizontal);
+  //   self.frame.forEach(flipHorizontal);
+  //   self.save();
+  // });
 
-  channel.gui.subscribe('frame.flip.vertical', function(data, envelope) {
-    self.scope.forEach(flipVertical);
-    self.frame.forEach(flipVertical);
-    self.save();
-  });
+  // channel.gui.subscribe('frame.flip.vertical', function(data, envelope) {
+  //   self.scope.forEach(flipVertical);
+  //   self.frame.forEach(flipVertical);
+  //   self.save();
+  // });
 
 
   channel.gui.subscribe('layer.merge', function(data, envelope) {

@@ -4,6 +4,8 @@ var PixelStore = Fluxxor.createStore({
     this.bindActions(
       constants.FILE_LOAD,                    this.onFileLoad,
       constants.FRAME_SELECT,                 this.onFrameSelect,
+      constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
+      constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_DROP,                   this.onLayerDrop,
       constants.SCOPE_SET,                    this.onScopeSet,
@@ -11,6 +13,8 @@ var PixelStore = Fluxxor.createStore({
       constants.SCOPE_CUT,                    this.onScopeCut,
       constants.SCOPE_DELETE,                 this.onScopeDelete,
       constants.SCOPE_PASTE,                  this.onScopePaste,
+      constants.SCOPE_FLIP_HORIZONTAL,        this.onScopeFlipHorizontal,
+      constants.SCOPE_FLIP_VERTICAL,          this.onScopeFlipVertical,
       constants.PIXEL_ADD,                    this.onPixelAdd,
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove
@@ -52,6 +56,18 @@ var PixelStore = Fluxxor.createStore({
     });
   },
 
+  onFrameFlipHorizontal: function() {
+    this.data.scope.forEach(this.flipHorizontal, this);
+    this.data.frame.forEach(this.flipHorizontal, this);
+    this.emit('change');
+  },
+
+  onFrameFlipVertical: function() {
+    this.data.scope.forEach(this.flipVertical, this);
+    this.data.frame.forEach(this.flipVertical, this);
+    this.emit('change');
+  },
+
   onLayerDelete: function(id) {
     this.data.file = this.data.file.filter(function(pixel) {
       return pixel.layer !== id;
@@ -79,8 +95,6 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onScopeSet: function(params) {
-    console.log(params);
-
     // update pixels in scope
     if(params.oldScope !== null && this.data.scope.length > 0) {
       // merge scope pixels back to frame
@@ -165,6 +179,14 @@ var PixelStore = Fluxxor.createStore({
     this.log();
   },
 
+  onScopeFlipHorizontal: function() {
+    this.data.scope.forEach(this.flipHorizontal, this);
+  },
+
+  onScopeFlipVertical: function() {
+    this.data.scope.forEach(this.flipVertical, this);
+  },
+
   onPixelAdd: function(payload) {
     this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.z, payload.color);
     this.emit('change');
@@ -229,6 +251,14 @@ var PixelStore = Fluxxor.createStore({
         }
       }
     }
+  },
+
+  flipHorizontal: function(pixel) {
+    return pixel.flipHorizontal();
+  },
+
+  flipVertical: function(pixel) {
+    return pixel.flipVertical();
   },
 
 });

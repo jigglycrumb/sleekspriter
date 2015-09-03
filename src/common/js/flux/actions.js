@@ -29,6 +29,12 @@ var actions = {
   frameSelect: function(frame) {
     this.dispatch(constants.FRAME_SELECT, frame);
   },
+  frameFlipHorizontal: function() {
+    this.dispatch(constants.FRAME_FLIP_HORIZONTAL);
+  },
+  frameFlipVertical: function() {
+    this.dispatch(constants.FRAME_FLIP_VERTICAL);
+  },
   modalShow: function(component, data) {
     data = data || {};
     this.dispatch(constants.MODAL_SHOW, {component: component, data: data, visible: true});
@@ -143,6 +149,12 @@ var actions = {
   },
   scopePaste: function() {
     this.dispatch(constants.SCOPE_PASTE);
+  },
+  scopeFlipHorizontal: function() {
+    this.dispatch(constants.SCOPE_FLIP_HORIZONTAL);
+  },
+  scopeFlipVertical: function() {
+    this.dispatch(constants.SCOPE_FLIP_VERTICAL);
   },
   selectionStart: function(point) {
     this.dispatch(constants.SELECTION_START, point);
