@@ -61,4 +61,5 @@ var constants = {
   PIXEL_ADD:                  'PIXEL_ADD',
   PIXEL_DELETE:               'PIXEL_DELETE',
   PIXELS_MOVE:                'PIXELS_MOVE',
+  PAINTBUCKET:                'PAINTBUCKET',
 };

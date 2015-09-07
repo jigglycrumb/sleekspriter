@@ -8,7 +8,6 @@ var Editor = function() {
   this.file.init();
   this.frames.init();
   this.pixels.init();
-  this.paintBucket.init();
 };
 
 Editor.prototype = {};

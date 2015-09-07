@@ -227,9 +227,9 @@ var StageBox = React.createClass({
   usePaintBucketTool: function(point) {
     if(storeUtils.layers.isVisible) {
       if(storeUtils.selection.isActive) {
-        if(storeUtils.selection.contains(point)) channel.gui.publish('stage.tool.paintbucket', {point: point});
+        if(storeUtils.selection.contains(point)) this.getFlux().actions.paintbucket(point);
       }
-      else channel.gui.publish('stage.tool.paintbucket', {point: point});
+      else this.getFlux().actions.paintbucket(point);
       return true;
     }
     else return this.showInvisibleLayerError();

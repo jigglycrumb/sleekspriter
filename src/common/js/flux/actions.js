@@ -186,5 +186,8 @@ var actions = {
   pixelsMove: function(distance) {
     this.dispatch(constants.PIXELS_MOVE, distance);
   },
+  paintbucket: function(point) {
+    this.dispatch(constants.PAINTBUCKET, point);
+  },
 
 };
