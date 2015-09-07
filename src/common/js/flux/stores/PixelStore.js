@@ -8,6 +8,7 @@ var PixelStore = Fluxxor.createStore({
       constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_DROP,                   this.onLayerDrop,
+      constants.LAYER_MERGE,                  this.onLayerMerge,
       constants.SCOPE_SET,                    this.onScopeSet,
       constants.SCOPE_COPY,                   this.onScopeCopy,
       constants.SCOPE_CUT,                    this.onScopeCut,
@@ -69,10 +70,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onLayerDelete: function(id) {
-    this.data.file = this.data.file.filter(function(pixel) {
-      return pixel.layer !== id;
-    });
-    this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+    this.deleteLayerPixels(id);
     this.emit('change');
   },
 
@@ -92,6 +90,39 @@ var PixelStore = Fluxxor.createStore({
       this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
       this.emit('change');
     });
+  },
+
+  // TODO: fix bugs, pixels are getting lost here it seems
+  onLayerMerge: function(payload) {
+    // define where to look for top layer pixels
+    var search = this.data.frame;
+    if(payload.top.id === storeUtils.layers.getSelected().id) {
+      search = this.data.scope;
+    }
+
+    // get pixels of top layer
+    var topLayerPixels = _.filter(search, {layer: payload.top.id});
+
+    // prepare target pixels
+    var target = {
+      frame: payload.bottom.frame,
+      layer: payload.bottom.id,
+      z: payload.bottom.z,
+    };
+
+    // add pixels to bottom layer
+    topLayerPixels.forEach(function(px) {
+      this.addPixel(target.frame, target.layer, px.x, px.y, target.z, px.toHex());
+    }, this);
+
+    // this.save();
+
+    // delete pixels of top layer
+    this.deleteLayerPixels(payload.top.id);
+
+    // this.data.scope = [];
+
+    this.emit('change');
   },
 
   onScopeSet: function(params) {
@@ -226,6 +257,13 @@ var PixelStore = Fluxxor.createStore({
     });
   },
 
+  deleteLayerPixels: function(layer) {
+    this.data.file = this.data.file.filter(function(pixel) {
+      return pixel.layer !== layer;
+    });
+    this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+  },
+
   addPixel: function(frame, layer, x, y, z, color) {
     // add pixel to scope / replace pixel in scope
     var c = new Color(color),
@@ -259,6 +297,18 @@ var PixelStore = Fluxxor.createStore({
 
   flipVertical: function(pixel) {
     return pixel.flipVertical();
+  },
+
+  merge: function(from, to) {
+    this.data[from].forEach(function(px) {
+      this.data[to].push(px);
+    }, this);
+    this.data[to] = _.unique(this.data[to], function(px) { return px.uid() });
+  },
+
+  save: function() {
+    this.merge('scope', 'file');
+    this.merge('frame', 'file');
   },
 
 });

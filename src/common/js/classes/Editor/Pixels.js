@@ -209,41 +209,41 @@ Editor.prototype.pixels.init = function() {
   // });
 
 
-  channel.gui.subscribe('layer.merge', function(data, envelope) {
+  // channel.gui.subscribe('layer.merge', function(data, envelope) {
 
-    // define where to look for top layer pixels
-    var search = self.frame;
-    if(data.top.id === editor.layers.selected) {
-      search = self.scope;
-    }
+  //   // define where to look for top layer pixels
+  //   var search = self.frame;
+  //   if(data.top.id === editor.layers.selected) {
+  //     search = self.scope;
+  //   }
 
-    // get pixels of top layer
-    var topLayerPixels = _.filter(search, {layer: data.top.id});
+  //   // get pixels of top layer
+  //   var topLayerPixels = _.filter(search, {layer: data.top.id});
 
-    // prepare target pixels
-    var target = {
-      frame: data.bottom.frame,
-      layer: data.bottom.id,
-      z: data.bottom.z,
-    };
+  //   // prepare target pixels
+  //   var target = {
+  //     frame: data.bottom.frame,
+  //     layer: data.bottom.id,
+  //     z: data.bottom.z,
+  //   };
 
-    // select bottom layer
-    channel.gui.publish('layer.select', {layer: data.bottom.id});
+  //   // add pixels to bottom layer
+  //   topLayerPixels.forEach(function(px) {
+  //     var data = target;
+  //     data.x = px.x;
+  //     data.y = px.y;
+  //     data.color = px.toHex();
+  //     channel.gui.publish('pixel.add', data);
+  //   });
 
-    // add pixels to bottom layer
-    topLayerPixels.forEach(function(px) {
-      var data = target;
-      data.x = px.x;
-      data.y = px.y;
-      data.color = px.toHex();
-      channel.gui.publish('pixel.add', data);
-    });
+  //   self.save();
 
-    self.save();
+  //   // select bottom layer
+  //   channel.gui.publish('layer.select', {layer: data.bottom.id});
 
-    // delete top layer
-    channel.file.publish('layer.delete', {layer: data.top.id});
-  });
+  //   // delete top layer
+  //   channel.file.publish('layer.delete', {layer: data.top.id});
+  // });
 
 
   channel.gui.subscribe('size.set', function(data, envelope) {

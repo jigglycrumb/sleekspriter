@@ -226,11 +226,13 @@ function menu_init() {
   menu.layer.append(new gui.MenuItem({
     label: 'Merge with layer above',
     click: function() {
-      var data = {
-        top: storeUtils.layers.getAboveSelected(),
-        bottom: storeUtils.layers.getSelected(),
-      };
-      if(data.top) channel.gui.publish('layer.merge', data);
+      var top = storeUtils.layers.getAboveSelected();
+      if(top) {
+        var bottom = storeUtils.layers.getSelected();
+        flux.actions.layerMerge(top, bottom);
+        flux.actions.layerSelect(bottom.id);
+        flux.actions.layerDelete(top.id);
+      }
     },
     key: 'e',
     modifiers: 'shift-'+modKey,
@@ -240,11 +242,13 @@ function menu_init() {
   menu.layer.append(new gui.MenuItem({
     label: 'Merge with layer below',
     click: function() {
-      var data = {
-        top: storeUtils.layers.getSelected(),
-        bottom: storeUtils.layers.getBelowSelected(),
-      };
-      if(data.bottom) channel.gui.publish('layer.merge', data);
+      var bottom = storeUtils.layers.getBelowSelected();
+      if(bottom) {
+        var top = storeUtils.layers.getSelected();
+        flux.actions.layerMerge(top, bottom);
+        flux.actions.layerSelect(bottom.id);
+        flux.actions.layerDelete(top.id);
+      }
     },
     key: 'e',
     modifiers: modKey,

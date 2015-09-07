@@ -90,6 +90,9 @@ var actions = {
   layerDrop: function(layer, position) {
     this.dispatch(constants.LAYER_DROP, {layer: layer, position: position});
   },
+  layerMerge: function(top, bottom) {
+    this.dispatch(constants.LAYER_MERGE, {top: top, bottom: bottom});
+  },
   animationSelect: function(name) {
     this.dispatch(constants.ANIMATION_SELECT, name);
   },
