@@ -9,13 +9,10 @@ module.exports = {
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'classnames/index.js',
-          'conduitjs/lib/conduit.js',
           'fluxxor/build/fluxxor.js',
-          'lodash/dist/lodash.js',
+          'lodash/lodash.js',
           'mousetrap/mousetrap.js',
-          'postal.js/lib/postal.js',
           'react/react-with-addons.js',
-          'zepto/zepto.js',
         ],
         dest: 'build/browser/js/bower_components/',
       },
@@ -24,12 +21,6 @@ module.exports = {
       {src: 'src/browser/index.html', dest: 'build/browser/index.html'},
       // {src: 'src/common/credits.html', dest: 'build/browser/credits.html'},
 
-      // debugging helpers
-      {
-        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
-        dest: 'build/browser/js/bower_components/postaldiagnostics.js',
-      },
-
       // utilities
       {src: 'src/browser/StoreUtils.js', dest: 'build/browser/js/classes/StoreUtils.js'},
       {src: 'src/browser/PlatformUtils.js', dest: 'build/browser/js/classes/PlatformUtils.js'},
@@ -37,7 +28,6 @@ module.exports = {
 
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
-      {src: 'src/browser/File.extensions.js', dest: 'build/browser/js/classes/File.extensions.js'},
 
       // index script
       {src: 'src/browser/index.extensions.js', dest: 'build/browser/js/index.extensions.js'},
@@ -52,13 +42,10 @@ module.exports = {
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'classnames/index.js',
-          'conduitjs/lib/conduit.js',
           'fluxxor/build/fluxxor.js',
-          'lodash/dist/lodash.js',
-          'postal.js/lib/postal.js',
+          'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
-          'zepto/zepto.js',
         ],
         dest: 'build/desktop/mac/js/bower_components/',
       },
@@ -66,12 +53,6 @@ module.exports = {
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/mac/index.html'},
       {src: 'src/desktop/mac/credits.html', dest: 'build/desktop/mac/credits.html'},
-
-      // debugging helpers
-      {
-        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
-        dest: 'build/desktop/mac/js/bower_components/postaldiagnostics.js',
-      },
 
       // utilities
       {src: 'src/desktop/StoreUtils.js', dest: 'build/desktop/mac/js/classes/StoreUtils.js'},
@@ -82,9 +63,6 @@ module.exports = {
         src: 'src/desktop/package.json',
         dest: 'build/desktop/mac/package.json',
       },
-
-      // file handlers
-      {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/mac/js/classes/File.extensions.js'},
 
       // menu script
       {src: 'src/desktop/menu.js', dest: 'build/desktop/mac/js/menu.js'},
@@ -104,13 +82,10 @@ module.exports = {
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'classnames/index.js',
-          'conduitjs/lib/conduit.js',
           'fluxxor/build/fluxxor.js',
-          'lodash/dist/lodash.js',
-          'postal.js/lib/postal.js',
+          'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
-          'zepto/zepto.js',
         ],
         dest: 'build/desktop/windows/js/bower_components/',
       },
@@ -118,12 +93,6 @@ module.exports = {
       // html files
       {src: 'src/desktop/index.html', dest: 'build/desktop/windows/index.html'},
       {src: 'src/desktop/windows/credits.html', dest: 'build/desktop/windows/credits.html'},
-
-      // debugging helpers
-      {
-        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
-        dest: 'build/desktop/windows/js/bower_components/postaldiagnostics.js',
-      },
 
       // utilities
       {src: 'src/desktop/StoreUtils.js', dest: 'build/desktop/windows/js/classes/StoreUtils.js'},
@@ -134,9 +103,6 @@ module.exports = {
         src: 'src/desktop/package.json',
         dest: 'build/desktop/windows/package.json',
       },
-
-      // file handlers
-      {src: 'src/desktop/File.extensions.js', dest: 'build/desktop/windows/js/classes/File.extensions.js'},
 
       // menu script
       {src: 'src/desktop/menu.js', dest: 'build/desktop/windows/js/menu.js'},
@@ -156,13 +122,10 @@ module.exports = {
       {expand: true, flatten: true, cwd: 'src/common/bower_components',
         src: [
           'classnames/index.js',
-          'conduitjs/lib/conduit.js',
           'fluxxor/build/fluxxor.js',
-          'lodash/dist/lodash.js',
-          'postal.js/lib/postal.js',
+          'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
-          'zepto/zepto.js',
         ],
         dest: 'build/tablet/js/bower_components/',
       },
@@ -171,18 +134,9 @@ module.exports = {
       {src: 'src/tablet/index.html', dest: 'build/tablet/index.html'},
       //{src: 'src/tablet/credits.html', dest: 'build/tablet/credits.html'},
 
-      // debugging helpers
-      {
-        src: 'src/common/bower_components/postal.diagnostics/src/postal.diagnostics.js',
-        dest: 'build/tablet/js/bower_components/postaldiagnostics.js',
-      },
-
       // utilities
       {src: 'src/tablet/StoreUtils.js', dest: 'build/tablet/js/classes/StoreUtils.js'},
       {src: 'src/tablet/PlatformUtils.js', dest: 'build/tablet/js/classes/PlatformUtils.js'},
-
-      // file handlers
-      {src: 'src/tablet/File.extensions.js', dest: 'build/tablet/js/classes/File.extensions.js'},
 
       // index script
       {src: 'src/tablet/index.extensions.js', dest: 'build/tablet/js/index.extensions.js'},
