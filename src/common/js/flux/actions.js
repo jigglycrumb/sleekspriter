@@ -6,7 +6,10 @@ var actions = {
     this.dispatch(constants.FILE_LOAD, data);
   },
   fileSave: function() {
-    this.dispatch(constants.FILE_SAVE, {});
+    this.dispatch(constants.FILE_SAVE);
+  },
+  fileSaveAs: function(path) {
+    this.dispatch(constants.FILE_SAVE_AS, path);
   },
   fileSize: function(framesX, framesY, pixelsX, pixelsY) {
     this.dispatch(constants.FILE_SIZE, {frames: {x: framesX, y: framesY}, pixels: {x: pixelsX, y: pixelsY}});

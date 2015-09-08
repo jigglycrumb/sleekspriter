@@ -16,6 +16,6 @@ function platform_init() {
   }, false);
 
   document.getElementById('fileSave').addEventListener('change', function (e) {
-    channel.file.publish('save.as', {path: this.value});
+    flux.actions.fileSaveAs(this.value);
   }, false);
 }

@@ -9,6 +9,10 @@ PlatformUtils.prototype.showOpenFileDialog = function() {
   document.querySelector('#fileOpen').click();
 };
 
+PlatformUtils.prototype.showSaveFileDialog = function() {
+  document.querySelector('#fileSave').click();
+};
+
 PlatformUtils.prototype.loadFile = function(fullPath) {
 
   console.info('loading file', fullPath);
@@ -47,39 +51,40 @@ PlatformUtils.prototype.showSaveFileDialog = function() {
   document.querySelector('#fileSave').click();
 };
 
-/*
-PlatformUtils.prototype.saveFile = function() {
+PlatformUtils.prototype.saveFile = function(json) {
 
-  if(this.path === null) return this.showSaveFileDialog();
+  var path = flux.stores.FileStore.getData().path;
 
-  console.info('saving file', this.path);
+  if(path === null) return this.showSaveFileDialog();
 
-  var fs = require('fs'),
-      self = this;
+  console.info('saving file', path);
 
-  fs.writeFile(this.path, this.toJSONString(), function(error) {
+  var fs = require('fs');
+
+  fs.writeFile(path, json, function(error) {
     if (error) throw error;
   });
 };
 
-PlatformUtils.prototype.saveFileAs = function(fullPath) {
+PlatformUtils.prototype.saveFileAs = function(fullPath, json) {
   var fs = require('fs'),
       p = require('path'),
       self = this;
 
   if(p.extname(fullPath) !== '.pixels') fullPath+= '.pixels';
 
-  console.info('saving file AS', fullPath);
+  console.info('saving file AS', fullPath, json);
 
-  fs.writeFile(fullPath, this.toJSONString(), function(error) {
+  fs.writeFile(fullPath, json, function(error) {
     if (error) throw error;
-    self.path = fullPath;
-    self.name = p.basename(fullPath, '.pixels');
-    self.folder = p.dirname(fullPath);
-    self._updateWorkingDir();
+
+    // TODO: set these in FileStore
+    // self.path = fullPath;
+    // self.name = p.basename(fullPath, '.pixels');
+    // self.folder = p.dirname(fullPath);
+    self.updateDefaultFolder();
   });
 };
-*/
 
 PlatformUtils.prototype.updateDefaultFolder = function(folder) {
   if(!folder) {

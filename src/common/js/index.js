@@ -41,7 +41,7 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-var stores, flux, channel, platformUtils, storeUtils, file, hotkeys, container;
+var stores, flux, platformUtils, storeUtils, hotkeys, container;
 
 function base_init() {
   stores = {
@@ -58,14 +58,8 @@ function base_init() {
     }
   });
 
-  channel = {
-    file: postal.channel('file'),
-    gui: postal.channel('gui'),
-  };
-
   platformUtils = new PlatformUtils();
   storeUtils = new StoreUtils();
-  file = new File();
   hotkeys = new Hotkeys();
   container = document.getElementById('app-container');
 }

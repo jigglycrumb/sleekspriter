@@ -4,6 +4,8 @@ var PixelStore = Fluxxor.createStore({
     this.bindActions(
       constants.FILE_LOAD,                    this.onFileLoad,
       constants.FILE_CREATE,                  this.onFileLoad,
+      constants.FILE_SAVE,                    this.onFileSave,
+      constants.FILE_SAVE_AS,                 this.onFileSave,
 
       constants.FRAME_SELECT,                 this.onFrameSelect,
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
@@ -52,6 +54,11 @@ var PixelStore = Fluxxor.createStore({
       this.data.file = FileStore.getData().pixels;
       this.emit('change');
     });
+  },
+
+  onFileSave: function() {
+    this.save();
+    this.emit('change');
   },
 
   onFrameSelect: function(frame) {

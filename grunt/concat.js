@@ -15,11 +15,6 @@ module.exports = {
 
       'build/browser/js/classes/Point.js',
       'build/browser/js/classes/Pixel.js',
-      'build/browser/js/classes/File.js',
-      'build/browser/js/classes/File.extensions.js',
-
-      'build/browser/js/classes/Editor.js',
-      'build/browser/js/classes/Editor/*.js',
 
       'build/browser/js/classes/Hotkeys.js',
 
@@ -45,11 +40,6 @@ module.exports = {
 
       'build/desktop/mac/js/classes/Point.js',
       'build/desktop/mac/js/classes/Pixel.js',
-      'build/desktop/mac/js/classes/File.js',
-      'build/desktop/mac/js/classes/File.extensions.js',
-
-      'build/desktop/mac/js/classes/Editor.js',
-      'build/desktop/mac/js/classes/Editor/*.js',
 
       'build/desktop/mac/js/classes/Hotkeys.js',
 
@@ -77,11 +67,6 @@ module.exports = {
 
       'build/desktop/windows/js/classes/Point.js',
       'build/desktop/windows/js/classes/Pixel.js',
-      'build/desktop/windows/js/classes/File.js',
-      'build/desktop/windows/js/classes/File.extensions.js',
-
-      'build/desktop/windows/js/classes/Editor.js',
-      'build/desktop/windows/js/classes/Editor/*.js',
 
       'build/desktop/windows/js/classes/Hotkeys.js',
 
@@ -109,11 +94,6 @@ module.exports = {
 
       'build/tablet/js/classes/Point.js',
       'build/tablet/js/classes/Pixel.js',
-      'build/tablet/js/classes/File.js',
-      'build/tablet/js/classes/File.extensions.js',
-
-      'build/tablet/js/classes/Editor.js',
-      'build/tablet/js/classes/Editor/*.js',
 
       'build/tablet/js/classes/Hotkeys.js',
 

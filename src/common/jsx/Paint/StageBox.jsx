@@ -290,11 +290,11 @@ var StageBox = React.createClass({
       pixels.push(px.wrap(distance, true));
     });
 
-    channel.gui.publish('canvas.preview', {
-      frame: this.props.ui.frames.selected,
-      layer: this.props.ui.layers.selected,
-      pixels: pixels,
-    });
+    // channel.gui.publish('canvas.preview', {
+    //   frame: this.props.ui.frames.selected,
+    //   layer: this.props.ui.layers.selected,
+    //   pixels: pixels,
+    // });
   },
   useMoveTool: function(distance) {
     this.getFlux().actions.pixelsMove(distance);

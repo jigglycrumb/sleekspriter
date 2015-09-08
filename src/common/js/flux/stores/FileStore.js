@@ -5,6 +5,7 @@ var FileStore = Fluxxor.createStore({
       constants.FILE_CREATE,              this.onFileCreate,
       constants.FILE_LOAD,                this.onFileLoad,
       constants.FILE_SAVE,                this.onFileSave,
+      constants.FILE_SAVE_AS,             this.onFileSaveAs,
       constants.FILE_SIZE,                this.onFileSize,
 
       constants.LAYER_VISIBILITY,         this.onLayerVisibility,
@@ -81,9 +82,22 @@ var FileStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onFileSave: function(payload) {
-    console.log('FileStore.onFileSave');
-    this.emit('change');
+  onFileSave: function() {
+    this.waitFor(['PixelStore'], function(PixelStore) {
+      this.data.pixels = PixelStore.getData().file;
+      var json = this._toJSON();
+      platformUtils.saveFile(json);
+      this.emit('change');
+    });
+  },
+
+  onFileSaveAs: function(path) {
+    this.waitFor(['PixelStore'], function(PixelStore) {
+      this.data.pixels = PixelStore.getData().file;
+      var json = this._toJSON();
+      platformUtils.saveFileAs(path, json);
+      this.emit('change');
+    });
   },
 
   onFileSize: function(payload) {
@@ -409,6 +423,18 @@ var FileStore = Fluxxor.createStore({
     this.data.layers = _.sortBy(this.data.layers, 'z').reverse();
   },
 
+  _toJSON: function() {
+    var strObj = {
+      size: this._sizeToFile(this.data.size),
+      frames: this._framesToFile(this.data.frames),
+      layers: this.data.layers.map(this._layerToFile),
+      animations: this.data.animations.map(this._animationToFile),
+      pixels: this.data.pixels.map(Pixel.toArray),
+
+    };
+    return JSON.stringify(strObj);
+  },
+
   _sizeFromFile: function(size) {
     return {
       width: size[0],
@@ -416,11 +442,19 @@ var FileStore = Fluxxor.createStore({
     };
   },
 
+  _sizeToFile: function(size) {
+    return [size.width, size.height];
+  },
+
   _framesFromFile: function(frames) {
     return {
       x: frames[0],
       y: frames[1]
     };
+  },
+
+  _framesToFile: function(frames) {
+    return [frames.x, frames.y];
   },
 
   _layerFromFile: function(layer) {
@@ -434,6 +468,17 @@ var FileStore = Fluxxor.createStore({
     };
   },
 
+  _layerToFile: function(layer) {
+    return [
+      layer.id,
+      layer.frame,
+      layer.name,
+      layer.z,
+      layer.opacity,
+      +layer.visible
+    ];
+  },
+
   _animationFromFile: function(animation) {
     return {
       id: animation[0],
@@ -441,6 +486,14 @@ var FileStore = Fluxxor.createStore({
       fps: animation[2],
       frames: animation[3],
     }
+  },
+
+  _animationToFile: function(animation) {
+    return [
+      animation.name,
+      animation.fps,
+      animation.frames,
+    ];
   },
 
   _fixLayerZ: function(frame) {
@@ -454,4 +507,5 @@ var FileStore = Fluxxor.createStore({
     }
     this.data.layers.reverse();
   },
+
 });

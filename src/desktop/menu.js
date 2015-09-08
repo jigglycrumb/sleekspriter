@@ -59,18 +59,14 @@ function menu_init() {
 
   menu.file.append(new gui.MenuItem({
     label: 'Open',
-    click: function() {
-      platformUtils.showOpenFileDialog();
-    },
+    click: platformUtils.showOpenFileDialog,
     key: 'o',
     modifiers: modKey,
   }));
 
   menu.file.append(new gui.MenuItem({
     label: 'Save',
-    click: function() {
-      channel.file.publish('save');
-    },
+    click: flux.actions.fileSave,
     key: 's',
     modifiers: modKey,
     enabled: false,
@@ -78,9 +74,7 @@ function menu_init() {
 
   menu.file.append(new gui.MenuItem({
     label: 'Save as',
-    click: function() {
-      channel.file.publish('path.set');
-    },
+    click: platformUtils.showSaveFileDialog,
     key: 's',
     modifiers: 'shift-'+modKey,
     enabled: false,
@@ -91,7 +85,9 @@ function menu_init() {
   menu.file.append(new gui.MenuItem({
     label: 'Close',
     click: function() {
-      channel.file.publish('close');
+      // todo: ask for save/don't save/cancel, then properly close the file
+      flux.actions.fileSave();
+      flux.actions.screenSelect('start');
     },
     key: 'w',
     modifiers: modKey,
