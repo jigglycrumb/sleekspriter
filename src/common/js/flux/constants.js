@@ -2,6 +2,7 @@ var constants = {
   FILE_CREATE:                'FILE_CREATE',
   FILE_LOAD:                  'FILE_LOAD',
   FILE_SAVE:                  'FILE_SAVE',
+  FILE_SIZE:                  'FILE_SIZE',
   TAB_SELECT:                 'TAB_SELECT',
   TOOL_SELECT:                'TOOL_SELECT',
   SETTINGS_PAINT:             'SETTINGS_PAINT',

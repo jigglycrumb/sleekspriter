@@ -3,12 +3,12 @@ var ModalEditImageSize = React.createClass({
   getInitialState: function() {
     return {
       frames: {
-        x: file.frames.x,
-        y: file.frames.y,
+        x: flux.stores.FileStore.getData().frames.x,
+        y: flux.stores.FileStore.getData().frames.y,
       },
       pixels: {
-        x: file.size.width,
-        y: file.size.height,
+        x: flux.stores.FileStore.getData().size.width,
+        y: flux.stores.FileStore.getData().size.height,
       },
     }
   },
@@ -56,7 +56,7 @@ var ModalEditImageSize = React.createClass({
         pixelsX = +this.refs.pixelsX.getDOMNode().value,
         pixelsY = +this.refs.pixelsY.getDOMNode().value;
 
-    file.updateDimensions(framesX, framesY, pixelsX, pixelsY);
+    this.getFlux().actions.fileSize(framesX, framesY, pixelsX, pixelsY);
     this.hide();
   },
   updateForm: function() {

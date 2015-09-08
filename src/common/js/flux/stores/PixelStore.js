@@ -3,6 +3,8 @@ var PixelStore = Fluxxor.createStore({
     this.resetData();
     this.bindActions(
       constants.FILE_LOAD,                    this.onFileLoad,
+      constants.FILE_CREATE,                  this.onFileLoad,
+
       constants.FRAME_SELECT,                 this.onFrameSelect,
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
       constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
@@ -46,6 +48,7 @@ var PixelStore = Fluxxor.createStore({
 
   onFileLoad: function() {
     this.waitFor(['FileStore'], function(FileStore) {
+      this.resetData();
       this.data.file = FileStore.getData().pixels;
       this.emit('change');
     });

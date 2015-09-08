@@ -46,6 +46,8 @@ var ModalNewFile = React.createClass({
   },
   createFile: function() {
     this.getFlux().actions.fileCreate(this.state.frames.x, this.state.frames.y, this.state.pixels.x, this.state.pixels.y);
+    this.getFlux().actions.frameSelect(1);
+    this.getFlux().actions.layerSelect(1);
     this.hide();
   },
   updateState: function() {

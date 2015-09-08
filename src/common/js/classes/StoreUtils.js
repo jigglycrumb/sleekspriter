@@ -4,7 +4,10 @@ var StoreUtils = function() {};
 StoreUtils.prototype = {};
 StoreUtils.prototype.constructor = StoreUtils;
 
-// Layer-related helpers
+//------------------------------------------------------------------------------
+// Layer Helpers
+//------------------------------------------------------------------------------
+
 StoreUtils.prototype.layers = {};
 
 /**
@@ -79,7 +82,10 @@ Object.defineProperty(StoreUtils.prototype.layers, 'isVisible', {
 });
 
 
-// Animation-related helpers
+//------------------------------------------------------------------------------
+// Animation Helpers
+//------------------------------------------------------------------------------
+
 StoreUtils.prototype.animations = {};
 
 /**
@@ -99,8 +105,10 @@ StoreUtils.prototype.animations.getSelected = function() {
 };
 
 
+//------------------------------------------------------------------------------
+// Selection Helpers
+//------------------------------------------------------------------------------
 
-// Selection-related helpers
 StoreUtils.prototype.selection = {};
 
 StoreUtils.prototype.selection.contains = function(point) {

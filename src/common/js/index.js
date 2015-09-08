@@ -41,7 +41,7 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-var stores, flux, channel, platformUtils, storeUtils, file, editor, hotkeys, container;
+var stores, flux, channel, platformUtils, storeUtils, file, hotkeys, container;
 
 function base_init() {
   stores = {
@@ -66,7 +66,6 @@ function base_init() {
   platformUtils = new PlatformUtils();
   storeUtils = new StoreUtils();
   file = new File();
-  editor = new Editor();
   hotkeys = new Hotkeys();
   container = document.getElementById('app-container');
 }

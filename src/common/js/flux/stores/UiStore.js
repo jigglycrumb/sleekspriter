@@ -3,6 +3,8 @@ var UiStore = Fluxxor.createStore({
     this.resetData();
     this.bindActions(
       constants.FILE_LOAD,                  this.onFileLoad,
+      constants.FILE_CREATE,                this.onFileLoad,
+
       constants.TAB_SELECT,                 this.onTabSelect,
       constants.TOOL_SELECT,                this.onToolSelect,
       constants.SETTINGS_PAINT,             this.onSettingsPaint,
@@ -132,11 +134,15 @@ var UiStore = Fluxxor.createStore({
     else this.data = data;
   },
 
+  //----------------------------------------------------------------------------
+  // Action handlers
+  //----------------------------------------------------------------------------
+
   onFileLoad: function(payload) {
     this.waitFor(['FileStore'], function(FileStore) {
+
       this.data.frames.selected = 1;
       this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
-
       this.data.layers.frame = storeUtils.layers.getByFrame(1);
 
       // build sprite palette

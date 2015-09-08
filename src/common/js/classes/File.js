@@ -412,134 +412,134 @@ File.prototype = {};
  * @param  {Number} pixelsX New width of a single frame
  * @param  {Number} pixelsY New height of a single frame
  */
-File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
+// File.prototype.updateDimensions = function(framesX, framesY, pixelsX, pixelsY) {
 
-  // have frame columns been added?
-  if(this.frames.x < framesX) {
+//   // have frame columns been added?
+//   if(this.frames.x < framesX) {
 
-    var newColumns = framesX - this.frames.x;
+//     var newColumns = framesX - this.frames.x;
 
-    function moveToNewFrame(obj) {
-      var y = Math.ceil(obj.frame/this.frames.x),
-          newFrame = obj.frame+((y-1)*newColumns);
-      obj.frame = newFrame;
-    }
+//     function moveToNewFrame(obj) {
+//       var y = Math.ceil(obj.frame/this.frames.x),
+//           newFrame = obj.frame+((y-1)*newColumns);
+//       obj.frame = newFrame;
+//     }
 
-    // move layers to new frame
-    this.layers.forEach(moveToNewFrame, this);
+//     // move layers to new frame
+//     this.layers.forEach(moveToNewFrame, this);
 
-    // move pixels to new frame
-    this.pixels.forEach(moveToNewFrame, this);
+//     // move pixels to new frame
+//     this.pixels.forEach(moveToNewFrame, this);
 
-    // add new layers
-    for(var y = 1; y <= this.frames.y; y++) {
-      for(var i = 1; i <= newColumns; i++) {
-        var id = _.max(this.layers, 'id').id+1,
-            layer = {
-              frame: (this.frames.x*y)+((y-1)*newColumns)+i,
-              id: id,
-              name: 'Layer '+id,
-              opacity: 100,
-              visible: true,
-              z: 0,
-            };
+//     // add new layers
+//     for(var y = 1; y <= this.frames.y; y++) {
+//       for(var i = 1; i <= newColumns; i++) {
+//         var id = _.max(this.layers, 'id').id+1,
+//             layer = {
+//               frame: (this.frames.x*y)+((y-1)*newColumns)+i,
+//               id: id,
+//               name: 'Layer '+id,
+//               opacity: 100,
+//               visible: true,
+//               z: 0,
+//             };
 
-        this.layers.push(layer);
-      }
-    }
-    this.frames.x = framesX;
-  }
-
-
-  // have frame columns been removed?
-  if(this.frames.x > framesX) {
-
-    var columnsToRemove = this.frames.x - framesX,
-        framesToDelete = [];
-
-    // calc frames to be removed
-    for(var row = 1; row <= this.frames.y; row++) {
-      for(var col = 1; col <= this.frames.x; col++) {
-        var frame = (this.frames.x*(row-1))+col;
-        if(col > framesX) framesToDelete.push(frame);
-      }
-    }
-
-    function deleteFrames(obj) {
-      return !_.includes(framesToDelete, obj.frame);
-    }
-
-    // delete pixels & layers
-    this.pixels = this.pixels.filter(deleteFrames);
-    this.layers = this.layers.filter(deleteFrames);
-
-    function fixFrame(obj) {
-      var y = Math.ceil(obj.frame/this.frames.x),
-          newFrame = obj.frame-((y-1)*columnsToRemove);
-      obj.frame = newFrame;
-    }
-
-    // move remaining pixels & layers
-    this.pixels.forEach(fixFrame, this);
-    this.layers.forEach(fixFrame, this);
-    this.frames.x = framesX;
-  }
-
-  // have frame rows been added?
-  if(this.frames.y < framesY) {
-    this.frames.y = framesY;
-  }
-
-  // have frame rows been removed?
-  if(this.frames.y > framesY) {
-    var lastFrame = this.frames.x * framesY;
-
-    function deleteLastFrames(obj) {
-      return obj.frame <= lastFrame;
-    }
-
-    // delete pixels & layers
-    this.pixels = this.pixels.filter(deleteLastFrames);
-    this.layers = this.layers.filter(deleteLastFrames);
-    this.frames.y = framesY;
-  }
-
-  // new width > old width?
-  if(this.size.width < pixelsX) {
-    this.size.width = pixelsX;
-  }
-
-  // new width < old width?
-  if(this.size.width > pixelsX) {
-    // delete pixels
-    this.pixels = this.pixels.filter(function(px) {
-      return px.x <= pixelsX;
-    });
-    this.size.width = pixelsX;
-  }
-
-  // new height > old height?
-  if(this.size.height < pixelsY) {
-    this.size.height = pixelsY;
-  }
-
-  // new height < old height?
-  if(this.size.height > pixelsY) {
-    // delete pixels
-    this.pixels = this.pixels.filter(function(px) {
-      return px.y <= pixelsY;
-    });
-    this.size.height = pixelsY;
-  }
+//         this.layers.push(layer);
+//       }
+//     }
+//     this.frames.x = framesX;
+//   }
 
 
-  var data = {
-    frames: this.frames,
-    size: this.size,
-  };
+//   // have frame columns been removed?
+//   if(this.frames.x > framesX) {
 
-  channel.gui.publish('size.set', data);
-};
+//     var columnsToRemove = this.frames.x - framesX,
+//         framesToDelete = [];
+
+//     // calc frames to be removed
+//     for(var row = 1; row <= this.frames.y; row++) {
+//       for(var col = 1; col <= this.frames.x; col++) {
+//         var frame = (this.frames.x*(row-1))+col;
+//         if(col > framesX) framesToDelete.push(frame);
+//       }
+//     }
+
+//     function deleteFrames(obj) {
+//       return !_.includes(framesToDelete, obj.frame);
+//     }
+
+//     // delete pixels & layers
+//     this.pixels = this.pixels.filter(deleteFrames);
+//     this.layers = this.layers.filter(deleteFrames);
+
+//     function fixFrame(obj) {
+//       var y = Math.ceil(obj.frame/this.frames.x),
+//           newFrame = obj.frame-((y-1)*columnsToRemove);
+//       obj.frame = newFrame;
+//     }
+
+//     // move remaining pixels & layers
+//     this.pixels.forEach(fixFrame, this);
+//     this.layers.forEach(fixFrame, this);
+//     this.frames.x = framesX;
+//   }
+
+//   // have frame rows been added?
+//   if(this.frames.y < framesY) {
+//     this.frames.y = framesY;
+//   }
+
+//   // have frame rows been removed?
+//   if(this.frames.y > framesY) {
+//     var lastFrame = this.frames.x * framesY;
+
+//     function deleteLastFrames(obj) {
+//       return obj.frame <= lastFrame;
+//     }
+
+//     // delete pixels & layers
+//     this.pixels = this.pixels.filter(deleteLastFrames);
+//     this.layers = this.layers.filter(deleteLastFrames);
+//     this.frames.y = framesY;
+//   }
+
+//   // new width > old width?
+//   if(this.size.width < pixelsX) {
+//     this.size.width = pixelsX;
+//   }
+
+//   // new width < old width?
+//   if(this.size.width > pixelsX) {
+//     // delete pixels
+//     this.pixels = this.pixels.filter(function(px) {
+//       return px.x <= pixelsX;
+//     });
+//     this.size.width = pixelsX;
+//   }
+
+//   // new height > old height?
+//   if(this.size.height < pixelsY) {
+//     this.size.height = pixelsY;
+//   }
+
+//   // new height < old height?
+//   if(this.size.height > pixelsY) {
+//     // delete pixels
+//     this.pixels = this.pixels.filter(function(px) {
+//       return px.y <= pixelsY;
+//     });
+//     this.size.height = pixelsY;
+//   }
+
+
+//   var data = {
+//     frames: this.frames,
+//     size: this.size,
+//   };
+
+//   channel.gui.publish('size.set', data);
+// };
 
 File.prototype.initProps = function() {
   this.path = null;

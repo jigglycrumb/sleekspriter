@@ -5,6 +5,7 @@ var FileStore = Fluxxor.createStore({
       constants.FILE_CREATE,              this.onFileCreate,
       constants.FILE_LOAD,                this.onFileLoad,
       constants.FILE_SAVE,                this.onFileSave,
+      constants.FILE_SIZE,                this.onFileSize,
 
       constants.LAYER_VISIBILITY,         this.onLayerVisibility,
       constants.LAYER_OPACITY,            this.onLayerOpacity,
@@ -45,12 +46,16 @@ var FileStore = Fluxxor.createStore({
     else this.data = data;
   },
 
+  //----------------------------------------------------------------------------
+  // Action handlers
+  //----------------------------------------------------------------------------
+
   onFileCreate: function(payload) {
     var json = {},
-        totalFrames = payload.framesX * payload.framesY;
+        totalFrames = payload.frames.x * payload.frames.y;
 
-    json.frames = [+payload.framesX, +payload.framesY];
-    json.size = [+payload.pixelsX, +payload.pixelsY];
+    json.frames = [+payload.frames.x, +payload.frames.y];
+    json.size = [+payload.pixels.x, +payload.pixels.y];
     json.layers = [];
     json.animations = [];
     json.pixels = [];
@@ -78,6 +83,130 @@ var FileStore = Fluxxor.createStore({
 
   onFileSave: function(payload) {
     console.log('FileStore.onFileSave');
+    this.emit('change');
+  },
+
+  onFileSize: function(payload) {
+    // TODO: fetch current data from other stores
+
+    // have frame columns been added?
+    if(this.data.frames.x < payload.frames.x) {
+
+      var newColumns = payload.frames.x - this.data.frames.x;
+
+      function moveToNewFrame(obj) {
+        var y = Math.ceil(obj.frame/this.data.frames.x),
+            newFrame = obj.frame+((y-1)*newColumns);
+        obj.frame = newFrame;
+      }
+
+      // move layers to new frame
+      this.data.layers.forEach(moveToNewFrame, this);
+
+      // move pixels to new frame
+      this.data.pixels.forEach(moveToNewFrame, this);
+
+      // add new layers
+      for(var y = 1; y <= this.data.frames.y; y++) {
+        for(var i = 1; i <= newColumns; i++) {
+          var id = _.max(this.data.layers, 'id').id+1,
+              layer = {
+                frame: (this.data.frames.x*y)+((y-1)*newColumns)+i,
+                id: id,
+                name: 'Layer '+id,
+                opacity: 100,
+                visible: true,
+                z: 0,
+              };
+
+          this.data.layers.push(layer);
+        }
+      }
+      this.data.frames.x = payload.frames.x;
+    }
+
+
+    // have frame columns been removed?
+    if(this.data.frames.x > payload.frames.x) {
+
+      var columnsToRemove = this.data.frames.x - payload.frames.x,
+          framesToDelete = [];
+
+      // calc frames to be removed
+      for(var row = 1; row <= this.data.frames.y; row++) {
+        for(var col = 1; col <= this.data.frames.x; col++) {
+          var frame = (this.data.frames.x*(row-1))+col;
+          if(col > payload.frames.x) framesToDelete.push(frame);
+        }
+      }
+
+      function deleteFrames(obj) {
+        return !_.includes(framesToDelete, obj.frame);
+      }
+
+      // delete pixels & layers
+      this.data.pixels = this.data.pixels.filter(deleteFrames);
+      this.data.layers = this.data.layers.filter(deleteFrames);
+
+      function fixFrame(obj) {
+        var y = Math.ceil(obj.frame/this.data.frames.x),
+            newFrame = obj.frame-((y-1)*columnsToRemove);
+        obj.frame = newFrame;
+      }
+
+      // move remaining pixels & layers
+      this.data.pixels.forEach(fixFrame, this);
+      this.data.layers.forEach(fixFrame, this);
+      this.data.frames.x = payload.frames.x;
+    }
+
+    // have frame rows been added?
+    if(this.data.frames.y < payload.frames.y) {
+      this.data.frames.y = payload.frames.y;
+    }
+
+    // have frame rows been removed?
+    if(this.data.frames.y > payload.frames.y) {
+      var lastFrame = this.data.frames.x * payload.frames.y;
+
+      function deleteLastFrames(obj) {
+        return obj.frame <= lastFrame;
+      }
+
+      // delete pixels & layers
+      this.data.pixels = this.data.pixels.filter(deleteLastFrames);
+      this.data.layers = this.data.layers.filter(deleteLastFrames);
+      this.data.frames.y = payload.frames.y;
+    }
+
+    // new width > old width?
+    if(this.data.size.width < payload.pixels.x) {
+      this.data.size.width = payload.pixels.x;
+    }
+
+    // new width < old width?
+    if(this.data.size.width > payload.pixels.x) {
+      // delete pixels
+      this.data.pixels = this.data.pixels.filter(function(px) {
+        return px.x <= payload.pixels.x;
+      });
+      this.data.size.width = payload.pixels.x;
+    }
+
+    // new height > old height?
+    if(this.data.size.height < payload.pixels.y) {
+      this.data.size.height = payload.pixels.y;
+    }
+
+    // new height < old height?
+    if(this.data.size.height > payload.pixels.y) {
+      // delete pixels
+      this.data.pixels = this.data.pixels.filter(function(px) {
+        return px.y <= payload.pixels.y;
+      });
+      this.data.size.height = payload.pixels.y;
+    }
+
     this.emit('change');
   },
 
@@ -247,6 +376,9 @@ var FileStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  //----------------------------------------------------------------------------
+  // Helpers
+  //----------------------------------------------------------------------------
 
   _fromJSON: function(json) {
     this.data.size = this._sizeFromFile(json.size);

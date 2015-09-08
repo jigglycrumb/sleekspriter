@@ -1,12 +1,15 @@
 var actions = {
   fileCreate: function(framesX, framesY, pixelsX, pixelsY) {
-    this.dispatch(constants.FILE_CREATE, {framesX: framesX, framesY: framesY, pixelsX: pixelsX, pixelsY: pixelsY});
+    this.dispatch(constants.FILE_CREATE, {frames: {x: framesX, y: framesY}, pixels: {x: pixelsX, y: pixelsY}});
   },
   fileLoad: function(data) {
     this.dispatch(constants.FILE_LOAD, data);
   },
   fileSave: function() {
     this.dispatch(constants.FILE_SAVE, {});
+  },
+  fileSize: function(framesX, framesY, pixelsX, pixelsY) {
+    this.dispatch(constants.FILE_SIZE, {frames: {x: framesX, y: framesY}, pixels: {x: pixelsX, y: pixelsY}});
   },
   tabSelect: function(tab) {
     this.dispatch(constants.TAB_SELECT, tab);
