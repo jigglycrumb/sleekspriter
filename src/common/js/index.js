@@ -51,13 +51,6 @@ function base_init() {
   };
 
   flux = new Fluxxor.Flux(stores, actions);
-
-  flux.on('dispatch', function(type, payload) {
-    if(console && console.log) {
-      console.log("[Dispatch]", type, payload);
-    }
-  });
-
   platformUtils = new PlatformUtils();
   storeUtils = new StoreUtils();
   hotkeys = new Hotkeys();
@@ -73,11 +66,16 @@ fs.readFile('json/palettes.json', function(error, contents) {
   flux.actions.paletteLoad(json);
   platform_init();
   menu_init();
-  debug_init();
+  // debug_init();
 });
 
 // remove for production
 function debug_init() {
-  require('nw.gui').Window.get().showDevTools();
+  flux.on('dispatch', function(type, payload) {
+    if(console && console.log) {
+      console.log("[Dispatch]", type, payload);
+    }
+  });
 
+  require('nw.gui').Window.get().showDevTools();
 }

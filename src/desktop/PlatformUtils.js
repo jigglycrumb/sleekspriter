@@ -47,6 +47,97 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
   });
 };
 
+PlatformUtils.prototype.exportFile = function(settings) {
+  var self = this,
+      fs = require('fs'),
+      sys = require('sys'),
+      path = require('path'),
+      finishedStatusText;
+
+  if(settings.file.folder === null) {
+    flux.actions.modalShow(ModalErrorSaveBeforeExport);
+    return;
+  }
+
+  switch(settings.ui.export.part) {
+    case 'animation':
+      var animation = storeUtils.animations.getById(settings.ui.export.animation);
+      finishedStatusText = 'Exported to '+settings.file.folder+path.sep+settings.file.name+'-'+animation.name+'.gif';
+      writeAnimation();
+      break;
+
+    case 'allframes':
+      finishedStatusText = 'Exported '+settings.ui.frames.total+' frames as '+(settings.ui.export.format === 'jpeg' ? 'jpg' : settings.ui.export.format)+' to '+settings.file.folder;
+      writeImages();
+      break;
+
+    default:
+      finishedStatusText = 'Exported to '+settings.file.folder+path.sep+settings.file.name+'.'+(settings.ui.export.format === 'jpeg' ? 'jpg' : settings.ui.export.format);
+      writeImages();
+      break;
+  }
+
+  function writeAnimation() {
+    var gif = new GIF({
+                    workers: 2,
+                    quality: 1,
+                    // background: '#ff0000',
+                    transparent: 0x000000,
+                  }),
+        canvas = NodeList2Array(document.getElementById('ExportPreview').querySelector('.animation-frames').querySelectorAll('.preview canvas')),
+        delay = 1000/animation.fps;
+
+    canvas.forEach(function(canvas) {
+      gif.addFrame(canvas, {delay: delay});
+    });
+
+    gif.on('finished', exportGif);
+    gif.render();
+
+    function exportGif(blob) {
+      var reader = new FileReader();
+      reader.onload = writeGif;
+      reader.readAsDataURL(blob);
+    }
+
+    function writeGif(e) {
+      var data = e.target.result.replace(/^data:image\/\w+;base64,/, ""),
+          buf = new Buffer(data, 'base64'),
+          target = settings.file.folder+'/'+settings.file.name+'-'+settings.ui.export.animation+'.gif';
+
+      fs.writeFile(target, buf);
+
+      flux.actions.exportStatus(finishedStatusText);
+    }
+  }
+
+  function writeImages() {
+    var canvas = NodeList2Array(document.getElementById('ExportPreview').querySelectorAll('.preview canvas')),
+        frame = 1;
+
+    function saveCanvas(canvas, fileName) {
+      var img = canvas.toDataURL('image/'+settings.ui.export.format),
+          data = img.replace(/^data:image\/\w+;base64,/, ""),
+          buf = new Buffer(data, 'base64'),
+          target = settings.file.folder+'/'+fileName+'.'+(settings.ui.export.format === 'jpeg' ? 'jpg' : settings.ui.export.format);
+
+      fs.writeFile(target, buf);
+    }
+
+    canvas.forEach(function(canvas) {
+      var fileName = settings.file.name;
+      if(settings.ui.export.part === 'oneframe') fileName+= '-frame-'+settings.ui.export.frame;
+      else if(settings.ui.export.part === 'allframes') {
+        fileName+= '-frame-'+frame;
+        frame++;
+      }
+      saveCanvas(canvas, fileName);
+    });
+
+    flux.actions.exportStatus(finishedStatusText);
+  }
+};
+
 PlatformUtils.prototype.showSaveFileDialog = function() {
   document.querySelector('#fileSave').click();
 };
@@ -55,7 +146,7 @@ PlatformUtils.prototype.saveFile = function(json) {
 
   var path = flux.stores.FileStore.getData().path;
 
-  if(path === null) return this.showSaveFileDialog();
+  if(path === '') return this.showSaveFileDialog();
 
   console.info('saving file', path);
 
