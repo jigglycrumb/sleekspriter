@@ -41,41 +41,16 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
-var stores, flux, platformUtils, storeUtils, hotkeys, container;
-
-function base_init() {
-  stores = {
+var stores = {
     FileStore: new FileStore(),
     UiStore: new UiStore(),
     PixelStore: new PixelStore(),
-  };
+  },
 
-  flux = new Fluxxor.Flux(stores, actions);
-  platformUtils = new PlatformUtils();
-  storeUtils = new StoreUtils();
-  hotkeys = new Hotkeys();
+  flux = new Fluxxor.Flux(stores, actions),
+  platformUtils = new PlatformUtils(),
+  storeUtils = new StoreUtils(),
+  hotkeys = new Hotkeys(),
   container = document.getElementById('app-container');
-}
 
-// read palettes from json file and start App
-var fs = require('fs');
-fs.readFile('json/palettes.json', function(error, contents) {
-  if(error) throw error;
-  var json = JSON.parse(contents);
-  base_init();
-  flux.actions.paletteLoad(json);
-  platform_init();
-  menu_init();
-  // debug_init();
-});
-
-// remove for production
-function debug_init() {
-  flux.on('dispatch', function(type, payload) {
-    if(console && console.log) {
-      console.log("[Dispatch]", type, payload);
-    }
-  });
-
-  require('nw.gui').Window.get().showDevTools();
-}
+platformUtils.boot();

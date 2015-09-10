@@ -185,3 +185,37 @@ PlatformUtils.prototype.updateDefaultFolder = function(folder) {
   document.querySelector('#fileOpen').setAttribute('nwworkingdir', folder);
   document.querySelector('#fileSave').setAttribute('nwworkingdir', folder);
 };
+
+PlatformUtils.prototype.boot = function() {
+
+  window.ondragover = function(e) { e.preventDefault(); return false };
+  window.ondrop = function(e) { e.preventDefault(); return false };
+
+  // setup nwjs file load/save hidden inputs
+  this.updateDefaultFolder();
+
+  // bind file input change handlers
+  document.getElementById('fileOpen').addEventListener('change', function (e) {
+    platformUtils.loadFile(this.value);
+  }, false);
+
+  document.getElementById('fileSave').addEventListener('change', function (e) {
+    flux.actions.fileSaveAs(this.value);
+  }, false);
+
+  // read palettes from json file and start App
+  var fs = require('fs');
+  fs.readFile('json/palettes.json', function(error, contents) {
+    if(error) throw error;
+
+    React.render(React.createElement(App, {flux: flux}), container, function() {
+      // show app window after GUI is rendered
+      require('nw.gui').Window.get().show();
+    });
+
+    var json = JSON.parse(contents);
+    flux.actions.paletteLoad(json);
+
+    menu_init();
+  });
+};
