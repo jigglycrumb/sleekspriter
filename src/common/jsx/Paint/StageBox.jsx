@@ -92,13 +92,15 @@ var StageBox = React.createClass({
 
     event = event.nativeEvent;
 
-    //this.getLayerPixelColor(event);
-
     var point = this.getWorldCoordinates(event),
         distance = this.getMouseDownDistance();
 
-    if(event.timeStamp > this.state.last + 10 && point.x > 0 && point.y > 0) {
-      this.getFlux().actions.cursorSet(point);
+    if((event.timeStamp > this.state.last + 10)
+    && (point.x > 0 && point.y > 0)
+    && (point.x !== this.props.ui.cursor.x || point.y !== this.props.ui.cursor.y)) {
+      var layerColor = this.getLayerPixelColor(point),
+          frameColor = this.getFramePixelColor(point);
+      this.getFlux().actions.cursorSet(point, layerColor, frameColor);
     }
 
     if(this.state.mousedown === true) {
@@ -161,13 +163,22 @@ var StageBox = React.createClass({
     // if(ok) this.props.editor.pixels.save();
   },
 
-  getLayerPixelColor: function(event) {
-    var ctx = document.getElementById('StageBoxLayer-'+this.props.ui.layers.selected).getContext('2d'),
-        px = ctx.getImageData(event.offsetX, event.offsetY, 1, 1).data,
+  getLayerPixelColor: function(point) {
+    var ctx = document.querySelector('#LayerHelper canvas').getContext('2d'),
+        px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
         color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
-
-    this.getFlux().actions.colorLayer(color.hexString());
+    return color;
   },
+
+  getFramePixelColor: function(point) {
+    var ctx = document.querySelector('#FrameHelper canvas').getContext('2d'),
+        px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
+        color = new Color({r:px[0], g:px[1], b:px[2], a:px[3]});
+    return color;
+  },
+
+
+
   getWorldCoordinates: function(event) {
     return new Point(
       Math.ceil(event.layerX/this.props.ui.zoom.selected),
@@ -257,13 +268,13 @@ var StageBox = React.createClass({
 
       if(pixelExists) {
         if(!storeUtils.selection.isActive) {
-          if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
-          else if(this.props.ui.brightnessTool.mode == 'darken') darken();
+          if(this.props.ui.brightnessTool.mode == 'lighten') lighten.call(this);
+          else if(this.props.ui.brightnessTool.mode == 'darken') darken.call(this);
         }
         else { // restrict to selection
           if(storeUtils.selection.contains(this.props.ui.cursor)) {
-            if(this.props.ui.brightnessTool.mode == 'lighten') lighten();
-            else if(this.props.ui.brightnessTool.mode == 'darken') darken();
+            if(this.props.ui.brightnessTool.mode == 'lighten') lighten.call(this);
+            else if(this.props.ui.brightnessTool.mode == 'darken') darken.call(this);
           }
         }
       }

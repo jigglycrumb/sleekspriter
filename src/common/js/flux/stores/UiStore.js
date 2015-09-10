@@ -18,8 +18,8 @@ var UiStore = Fluxxor.createStore({
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
       constants.CURSOR_SET,                 this.onCursorSet,
       constants.COLOR_BRUSH,                this.onColorBrush,
-      constants.COLOR_LAYER,                this.onColorLayer,
-      constants.COLOR_FRAME,                this.onColorFrame,
+      // constants.COLOR_LAYER,                this.onColorLayer,
+      // constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect,
 
@@ -220,8 +220,10 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onCursorSet: function(position) {
-    this.data.cursor = position;
+  onCursorSet: function(payload) {
+    this.data.cursor = payload.position;
+    this.data.color.layer = payload.color.layer;
+    this.data.color.frame = payload.color.frame;
     this.emit('change');
   },
 
@@ -230,15 +232,15 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onColorLayer: function(hexcode) {
-    this.data.color.layer = new Color(hexcode);
-    this.emit('change');
-  },
+  // onColorLayer: function(color) {
+  //   this.data.color.layer = color;
+  //   this.emit('change');
+  // },
 
-  onColorFrame: function(hexcode) {
-    this.data.color.frame = new Color(hexcode);
-    this.emit('change');
-  },
+  // onColorFrame: function(color) {
+  //   this.data.color.frame = color;
+  //   this.emit('change');
+  // },
 
   onPaletteLoad: function(palettes) {
     var self = this;

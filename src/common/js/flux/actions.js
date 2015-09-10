@@ -54,18 +54,18 @@ var actions = {
   brightnessToolIntensity: function(intensity) {
     this.dispatch(constants.BRIGHTNESSTOOL_INTENSITY, intensity);
   },
-  cursorSet: function(position) {
-    this.dispatch(constants.CURSOR_SET, position);
+  cursorSet: function(position, layerColor, frameColor) {
+    this.dispatch(constants.CURSOR_SET, {position: position, color: {layer: layerColor, frame: frameColor}});
   },
   colorBrush: function(hexcode) {
     this.dispatch(constants.COLOR_BRUSH, hexcode);
   },
-  colorLayer: function(hexcode) {
-    this.dispatch(constants.COLOR_LAYER, hexcode);
-  },
-  colorFrame: function(hexcode) {
-    this.dispatch(constants.COLOR_FRAME, hexcode);
-  },
+  // colorLayer: function(color) {
+  //   this.dispatch(constants.COLOR_LAYER, color);
+  // },
+  // colorFrame: function(color) {
+  //   this.dispatch(constants.COLOR_FRAME, color);
+  // },
   paletteLoad: function(json) {
     this.dispatch(constants.PALETTE_LOAD, json);
   },

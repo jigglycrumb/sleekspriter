@@ -25,12 +25,8 @@ module.exports = {
       {src: 'src/browser/StoreUtils.js', dest: 'build/browser/js/classes/StoreUtils.js'},
       {src: 'src/browser/PlatformUtils.js', dest: 'build/browser/js/classes/PlatformUtils.js'},
 
-
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
-
-      // index script
-      {src: 'src/browser/index.extensions.js', dest: 'build/browser/js/index.extensions.js'},
     ]
   },
   desktopMac: {
@@ -66,9 +62,6 @@ module.exports = {
 
       // menu script
       {src: 'src/desktop/menu.js', dest: 'build/desktop/mac/js/menu.js'},
-
-      // index script
-      {src: 'src/desktop/index.extensions.js', dest: 'build/desktop/mac/js/index.extensions.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
     ]
@@ -107,9 +100,6 @@ module.exports = {
       // menu script
       {src: 'src/desktop/menu.js', dest: 'build/desktop/windows/js/menu.js'},
 
-      // index script
-      {src: 'src/desktop/index.extensions.js', dest: 'build/desktop/windows/js/index.extensions.js'},
-
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
     ]
   },
@@ -137,9 +127,6 @@ module.exports = {
       // utilities
       {src: 'src/tablet/StoreUtils.js', dest: 'build/tablet/js/classes/StoreUtils.js'},
       {src: 'src/tablet/PlatformUtils.js', dest: 'build/tablet/js/classes/PlatformUtils.js'},
-
-      // index script
-      {src: 'src/tablet/index.extensions.js', dest: 'build/tablet/js/index.extensions.js'},
 
       {src: 'src/common/bower_components/gif.js/dist/gif.worker.js', dest: 'build/tablet/gif.worker.js'},
 

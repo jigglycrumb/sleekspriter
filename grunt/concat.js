@@ -24,7 +24,6 @@ module.exports = {
       'build/browser/js/flux/**/*.js',
 
       'build/browser/js/index.js',
-      'build/browser/js/index.extensions.js',
     ],
     // the location of the resulting JS file
     dest: 'build/browser/<%= package.shortname %>.js'
@@ -49,7 +48,6 @@ module.exports = {
       'build/desktop/mac/js/flux/**/*.js',
 
       'build/desktop/mac/js/index.js',
-      'build/desktop/mac/js/index.extensions.js',
 
       'build/desktop/mac/js/menu.js',
     ],
@@ -76,7 +74,6 @@ module.exports = {
       'build/desktop/windows/js/flux/**/*.js',
 
       'build/desktop/windows/js/index.js',
-      'build/desktop/windows/js/index.extensions.js',
 
       'build/desktop/windows/js/menu.js',
     ],
@@ -103,7 +100,6 @@ module.exports = {
       'build/tablet/js/flux/**/*.js',
 
       'build/tablet/js/index.js',
-      'build/tablet/js/index.extensions.js',
 
       'build/tablet/js/menu.js',
     ],
