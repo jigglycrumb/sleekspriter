@@ -4,10 +4,6 @@ var LayerBox = React.createClass({
     return {
       dragPosition: 0,
       dragLayer: 0,
-      // subscriptions: {
-      //   'box.fold': this.fitHeight,
-      //   'layer.dragstart': this.dragStart,
-      // }
     }
   },
   render: function() {
@@ -18,10 +14,18 @@ var LayerBox = React.createClass({
       layers.splice(this.state.dragPosition, 0, 'dropzone').join();
     }
 
+    var handleClasses = {'foldable-handle': true},
+        boxStyle = {display: 'block'};
+
+    if(this.props.ui.fold.layers === true) {
+      handleClasses['folded'] = true;
+      boxStyle.display = 'none';
+    }
+
     return (
       <div id="LayerBox" className="box">
-        <h4 className="foldable-handle">Layers</h4>
-        <div className="foldable-fold">
+        <h4 className={classNames(handleClasses)} onClick={this.fold}>Layers</h4>
+        <div className="foldable-fold" style={boxStyle}>
           <div ref="layers" className="layers" onDragOver={this.dragOver} onDrop={this.drop}>
             {layers.map(function(layer) {
               if(layer === 'dropzone') return <LayerBoxDrophelper key="layerdropzone" />

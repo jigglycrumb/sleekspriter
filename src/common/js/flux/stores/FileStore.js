@@ -342,7 +342,7 @@ var FileStore = Fluxxor.createStore({
   },
 
   onAnimationAdd: function() {
-    var newId = (_.max(this.data.animations, function(animation) { return animation.id; })).id + 1,
+    var newId = (_.max(this.data.animations, function(animation) { return animation.id; })).id + 1 || 1,
         animation = {
           id: newId,
           name: 'Animation '+ newId,

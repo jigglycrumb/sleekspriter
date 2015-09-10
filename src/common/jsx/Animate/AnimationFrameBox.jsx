@@ -11,8 +11,8 @@ var AnimationFrameBox = React.createClass({
         frameSize = 100,
         containerStyle = {width: (frameSize+1)*this.props.file.frames.x},
         buttonDisplay = this.props.ui.animations.selected === null ? 'none' : 'inline-block';
-        rowButtonStyle = {top: (this.state.row*(frameSize+1))+20, display: buttonDisplay},
-        columnButtonStyle = {left: (this.state.column*(frameSize+1))+20, display: buttonDisplay},
+        rowButtonStyle = {top: (this.state.row*(frameSize+5))+24, display: buttonDisplay},
+        columnButtonStyle = {left: (this.state.column*frameSize)+this.state.column+24, display: buttonDisplay},
         classes = {};
 
     for(var i=0; i < this.props.ui.frames.total; i++) frames[i] = i+1;
@@ -35,8 +35,7 @@ var AnimationFrameBox = React.createClass({
                 ui={this.props.ui} 
                 file={this.props.file}
                 pixels={this.props.pixels}
-                onMouseEnterHandler={this.selectFrame.bind(this, frame)}
-                onMouseLeaveHandler={this.deselectFrame} />
+                onMouseEnterHandler={this.selectFrame.bind(this, frame)} />
             );
           }, this)}
           </div>
@@ -51,11 +50,6 @@ var AnimationFrameBox = React.createClass({
                ? this.props.file.frames.x : frame%this.props.file.frames.x)-1;
 
     this.setState({row: row, column: column});
-  },
-  deselectFrame: function() {
-    if(this.props.ui.animations.selected === null) return;
-    this.setState({row: 0, column: 0});
-    console.log('deselectFrame');
   },
   addRow: function() {
     var frames = [];

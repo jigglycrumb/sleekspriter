@@ -3,7 +3,7 @@
   .area.left {
     top: 0;
     left: 0;
-    bottom: 200px;
+    bottom: 213px;
     width: 61.8%;
     background: @light;
     border-top: 1px solid @dark;
@@ -17,15 +17,15 @@
     bottom: 0;
     left: 0;
 
-    @offset: 20px;
+    @offset: 25px;
     @frameSize: 100px;
 
     .scroller {
       position: absolute;
       top: 30px;
       left: 0;
-      right: 0;
-      bottom: 20px;
+      right: 3px;
+      bottom: 3px;
       overflow: auto;
 
       .inner {
@@ -35,54 +35,34 @@
 
     .mass-add {
       position: absolute;
-      top: 0;
-      left: 0;
+      z-index: 3;
 
       &.row {
         top: @offset;
-        width: @offset;
-        height: @frameSize + 2;
+        left: 5px;
+        width: @offset - 5;
+        height: @frameSize + 6;
       }
 
       &.column {
+        top: 5px;
         left: @offset;
         width: @frameSize + 2;
-        height: @offset;
+        height: @offset - 5;
       }
     }
 
     .frame {
       width: @frameSize;
       height: @frameSize;
-      float: left;
-      border-top: 1px solid @medium;
-      border-right: 1px solid @medium;
-      border-bottom: none;
-      border-left: none;
+      border: 1px solid @medium;
       cursor: grab;
       position: relative;
       z-index: 1;
-
-      &.top {
-        border-top: none;
-
-        &.selected {
-          margin-bottom: -2px;
-          top: -1px;
-        }
-      }
-
-      &.right {
-        border-right: none;
-      }
-
-      &.bottom {
-        border-bottom: none;
-      }
-
-      &.left {
-        border-left: none;
-      }
+      border-collapse: collapse;
+      display: inline-table;
+      margin-top: -1px;
+      margin-left: -1px;
 
       label {
         position: absolute;
@@ -95,9 +75,6 @@
 
   #AnimationFrameBox.animation-selected .frame:hover {
     z-index: 2;
-    left: -1px;
-    margin-bottom: -1px;
-    margin-right: -1px;
     border: 1px solid lighten(@selected, 10%) !important;
     box-shadow: 0 0 1px 0 lighten(@selected, 10%);
   }
@@ -105,7 +82,7 @@
   .area.right {
     top: 0;
     right: 0;
-    bottom: 200px;
+    bottom: 213px;
     width: 38.2%;
     background: @light;
     border-top: 1px solid @dark;
@@ -116,7 +93,7 @@
     position: absolute;
     left: 0;
     top: 10px;
-    bottom: 10px;
+    bottom: 3px;
     content: "";
     border-left: 1px solid @medium;
   }
@@ -142,7 +119,7 @@
     left: 0;
     right: 0;
     bottom: 27px;
-    height: 172px;
+    height: 185px;
     background: @dark;
     z-index: 0;
     overflow: auto;

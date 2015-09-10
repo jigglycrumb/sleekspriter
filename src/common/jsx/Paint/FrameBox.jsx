@@ -15,25 +15,28 @@ var FrameBox = React.createClass({
     for(var i=0; i < this.props.ui.frames.total; i++) frames.push(i+1);
 
     containerStyle.width = (frameSize+1)*this.props.file.frames.x;
-    containerStyle.marginLeft = (200-containerStyle.width)/2;
 
     frameStyle.width = frameSize;
     frameStyle.height = frameSize;
 
+    var handleClasses = {'foldable-handle': true},
+        boxStyle = {display: 'block'};
+
+    if(this.props.ui.fold.frames === true) {
+      handleClasses['folded'] = true;
+      boxStyle.display = 'none';
+    }
+
     return (
       <div id="FrameBox" className="box">
-        <h4 className="foldable-handle">Frames</h4>
-        <div className="foldable-fold">
+        <h4 className={classNames(handleClasses)} onClick={this.fold}>Frames</h4>
+        <div className="foldable-fold" style={boxStyle}>
           <div id="FrameBoxFrames" style={containerStyle}>
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame,
                 classes = classNames({
                   'frame': true,
                   'selected': frame == this.props.ui.frames.selected,
-                  'top': frame <= this.props.file.frames.x,
-                  'right': frame % this.props.file.frames.x == 0,
-                  'bottom': frame > this.props.ui.frames.total - this.props.file.frames.x,
-                  'left': (frame-1) % this.props.file.frames.x == 0,
                 });
 
             var clickHandler = function() {

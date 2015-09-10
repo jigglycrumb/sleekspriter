@@ -18,8 +18,6 @@ var UiStore = Fluxxor.createStore({
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
       constants.CURSOR_SET,                 this.onCursorSet,
       constants.COLOR_BRUSH,                this.onColorBrush,
-      // constants.COLOR_LAYER,                this.onColorLayer,
-      // constants.COLOR_FRAME,                this.onColorFrame,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect,
 
@@ -51,7 +49,9 @@ var UiStore = Fluxxor.createStore({
       constants.SELECTION_MOVE,             this.onSelectionMove,
 
       constants.PIXEL_ADD,                  this.onPixelAdd,
-      constants.PIXEL_DELETE,               this.onPixelDelete
+      constants.PIXEL_DELETE,               this.onPixelDelete,
+
+      constants.BOX_FOLD,                   this.onBoxFold
     );
   },
 
@@ -127,6 +127,11 @@ var UiStore = Fluxxor.createStore({
         min: 1,
         max: 50,
         selected: 10,
+      },
+      fold: {
+        preview: false,
+        frames: false,
+        layers: false,
       },
     };
 
@@ -231,16 +236,6 @@ var UiStore = Fluxxor.createStore({
     this.data.color.brush = new Color(hexcode);
     this.emit('change');
   },
-
-  // onColorLayer: function(color) {
-  //   this.data.color.layer = color;
-  //   this.emit('change');
-  // },
-
-  // onColorFrame: function(color) {
-  //   this.data.color.frame = color;
-  //   this.emit('change');
-  // },
 
   onPaletteLoad: function(palettes) {
     var self = this;
@@ -415,6 +410,11 @@ var UiStore = Fluxxor.createStore({
       this.data.palettes.available[0].colors = _.unique(palette, false);
       this.emit('change');
     });
+  },
+
+  onBoxFold: function(box) {
+    this.data.fold[box] = !this.data.fold[box];
+    this.emit('change');
   },
 
 });

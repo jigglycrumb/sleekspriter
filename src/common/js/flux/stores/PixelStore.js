@@ -63,6 +63,7 @@ var PixelStore = Fluxxor.createStore({
 
   onFrameSelect: function(frame) {
     this.waitFor(['UiStore'], function(UiStore) {
+      this.save();
       this.data.frame = _.where(this.data.file, {frame: frame});
       this.emit('change');
     });
@@ -137,6 +138,8 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onScopeSet: function(params) {
+    this.save();
+
     // update pixels in scope
     if(params.oldScope !== null && this.data.scope.length > 0) {
       // merge scope pixels back to frame

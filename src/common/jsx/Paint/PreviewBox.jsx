@@ -1,6 +1,15 @@
 var PreviewBox = React.createClass({
-  mixins: [FoldableMixin],
+  mixins: [FluxMixin, FoldableMixin],
   render: function() {
+
+    var handleClasses = {'foldable-handle': true},
+        boxStyle = {display: 'block'};
+
+    if(this.props.ui.fold.preview === true) {
+      handleClasses['folded'] = true;
+      boxStyle.display = 'none';
+    }
+
 
     var scale = 1,
         maxWidth = 160,
@@ -17,8 +26,8 @@ var PreviewBox = React.createClass({
 
     return (
       <div id="PreviewBox" className="box">
-        <h4 className="foldable-handle">Preview</h4>
-        <div className="foldable-fold">
+        <h4 className={classNames(handleClasses)} onClick={this.fold}>Preview</h4>
+        <div className="foldable-fold" style={boxStyle}>
           <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} zoom={scale} />
         </div>
       </div>

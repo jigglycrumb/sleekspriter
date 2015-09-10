@@ -19,8 +19,6 @@ var constants = {
   BRIGHTNESSTOOL_INTENSITY:   'BRIGHTNESSTOOL_INTENSITY',
   CURSOR_SET:                 'CURSOR_SET',
   COLOR_BRUSH:                'COLOR_BRUSH',
-  // COLOR_FRAME:                'COLOR_FRAME',
-  // COLOR_LAYER:                'COLOR_LAYER',
   PALETTE_LOAD:               'PALETTE_LOAD',
   PALETTE_SELECT:             'PALETTE_SELECT',
   LAYER_SELECT:               'LAYER_SELECT',
@@ -64,4 +62,5 @@ var constants = {
   PIXEL_DELETE:               'PIXEL_DELETE',
   PIXELS_MOVE:                'PIXELS_MOVE',
   PAINTBUCKET:                'PAINTBUCKET',
+  BOX_FOLD:                   'BOX_FOLD',
 };

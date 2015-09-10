@@ -60,12 +60,6 @@ var actions = {
   colorBrush: function(hexcode) {
     this.dispatch(constants.COLOR_BRUSH, hexcode);
   },
-  // colorLayer: function(color) {
-  //   this.dispatch(constants.COLOR_LAYER, color);
-  // },
-  // colorFrame: function(color) {
-  //   this.dispatch(constants.COLOR_FRAME, color);
-  // },
   paletteLoad: function(json) {
     this.dispatch(constants.PALETTE_LOAD, json);
   },
@@ -194,6 +188,9 @@ var actions = {
   },
   paintbucket: function(point) {
     this.dispatch(constants.PAINTBUCKET, point);
+  },
+  boxFold: function(box) {
+    this.dispatch(constants.BOX_FOLD, box);
   },
 
 };
