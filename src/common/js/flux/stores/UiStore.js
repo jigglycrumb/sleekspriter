@@ -4,6 +4,7 @@ var UiStore = Fluxxor.createStore({
     this.bindActions(
       constants.FILE_LOAD,                  this.onFileLoad,
       constants.FILE_CREATE,                this.onFileLoad,
+      constants.FILE_SIZE,                  this.onFileSize,
 
       constants.TAB_SELECT,                 this.onTabSelect,
       constants.TOOL_SELECT,                this.onToolSelect,
@@ -164,6 +165,22 @@ var UiStore = Fluxxor.createStore({
 
       enableMenus(true);
 
+      this.emit('change');
+    });
+  },
+
+  onFileSize: function() {
+    this.waitFor(['FileStore'], function(FileStore) {
+
+      this.data.frames.total = FileStore.getData('frames').x * FileStore.getData('frames').y;
+
+      // build sprite palette
+      var palette = [],
+          pixels  = FileStore.getData('pixels');
+
+      pixels.forEach(function(px) { palette.push(px.toHex()); });
+
+      this.data.palettes.available[0].colors = _.unique(palette, false);
       this.emit('change');
     });
   },

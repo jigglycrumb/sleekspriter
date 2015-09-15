@@ -6,6 +6,7 @@ var PixelStore = Fluxxor.createStore({
       constants.FILE_CREATE,                  this.onFileLoad,
       constants.FILE_SAVE,                    this.onFileSave,
       constants.FILE_SAVE_AS,                 this.onFileSave,
+      constants.FILE_SIZE,                    this.onFileSave,
 
       constants.FRAME_SELECT,                 this.onFrameSelect,
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
