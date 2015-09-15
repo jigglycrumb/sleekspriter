@@ -79,6 +79,8 @@ var FileStore = Fluxxor.createStore({
     this.data.name    = payload.name;
     this.data.folder  = payload.folder;
 
+    platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
+
     this.emit('change');
   },
 
@@ -87,6 +89,7 @@ var FileStore = Fluxxor.createStore({
       this.data.pixels = PixelStore.getData().file;
       var json = this._toJSON();
       platformUtils.saveFile(json);
+      platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
       this.emit('change');
     });
   },
@@ -104,6 +107,7 @@ var FileStore = Fluxxor.createStore({
 
       var json = this._toJSON();
       platformUtils.saveFile(json);
+      platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
       this.emit('change');
     });
   },

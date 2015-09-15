@@ -216,3 +216,10 @@ PlatformUtils.prototype.boot = function() {
     flux.actions.windowResize();
   });
 };
+
+PlatformUtils.prototype.setWindowTitle = function(title) {
+  var gui = require('nw.gui'),
+      win = gui.Window.get();
+
+  win.title = title;
+};
