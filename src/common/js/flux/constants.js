@@ -63,4 +63,5 @@ var constants = {
   PIXELS_MOVE:                'PIXELS_MOVE',
   PAINTBUCKET:                'PAINTBUCKET',
   BOX_FOLD:                   'BOX_FOLD',
+  WINDOW_RESIZE:              'WINDOW_RESIZE',
 };

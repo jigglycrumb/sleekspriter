@@ -1,4 +1,6 @@
-var PlatformUtils = function() {};
+var PlatformUtils = function(callback) {
+  this.callback = callback;
+};
 
 PlatformUtils.prototype = {};
 PlatformUtils.prototype.constructor = PlatformUtils;
@@ -190,6 +192,7 @@ PlatformUtils.prototype.boot = function() {
 
   window.ondragover = function(e) { e.preventDefault(); return false };
   window.ondrop = function(e) { e.preventDefault(); return false };
+  window.onresize = flux.actions.windowResize;
 
   // setup nwjs file load/save hidden inputs
   this.updateDefaultFolder();
@@ -217,5 +220,7 @@ PlatformUtils.prototype.boot = function() {
     flux.actions.paletteLoad(json);
 
     menu_init();
+
+    flux.actions.windowResize();
   });
 };

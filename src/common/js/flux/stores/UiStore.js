@@ -51,7 +51,8 @@ var UiStore = Fluxxor.createStore({
       constants.PIXEL_ADD,                  this.onPixelAdd,
       constants.PIXEL_DELETE,               this.onPixelDelete,
 
-      constants.BOX_FOLD,                   this.onBoxFold
+      constants.BOX_FOLD,                   this.onBoxFold,
+      constants.WINDOW_RESIZE,              this.onWindowResize
     );
   },
 
@@ -132,6 +133,9 @@ var UiStore = Fluxxor.createStore({
         preview: false,
         frames: false,
         layers: false,
+      },
+      size: {
+        animationPreview: 100,
       },
     };
 
@@ -414,6 +418,15 @@ var UiStore = Fluxxor.createStore({
 
   onBoxFold: function(box) {
     this.data.fold[box] = !this.data.fold[box];
+    this.emit('change');
+  },
+
+  onWindowResize: function() {
+    // scale animation preview
+    var rect = document.getElementById('AnimationPreviewWrapper').getBoundingClientRect(),
+        max = rect.width > rect.height ? rect.height : rect.width;
+
+    this.data.size.animationPreview = Math.floor(max);
     this.emit('change');
   },
 

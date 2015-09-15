@@ -192,5 +192,7 @@ var actions = {
   boxFold: function(box) {
     this.dispatch(constants.BOX_FOLD, box);
   },
-
+  windowResize: function() {
+    this.dispatch(constants.WINDOW_RESIZE);
+  },
 };
