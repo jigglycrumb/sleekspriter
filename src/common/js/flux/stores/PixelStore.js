@@ -24,7 +24,8 @@ var PixelStore = Fluxxor.createStore({
       constants.PIXEL_ADD,                    this.onPixelAdd,
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove,
-      constants.PAINTBUCKET,                  this.onPaintbucket
+      constants.PAINTBUCKET,                  this.onPaintbucket,
+      constants.PREVIEW_MOVE_TOOL,            this.onPreviewMoveTool
     );
   },
 
@@ -252,6 +253,7 @@ var PixelStore = Fluxxor.createStore({
   onPixelsMove: function(distance) {
     var wrapPixel = function(px) { px.wrap(distance) };
     this.data.scope.forEach(wrapPixel);
+    this.data.preview = [];
     this.emit('change');
   },
 
@@ -357,6 +359,11 @@ var PixelStore = Fluxxor.createStore({
       }
     }
 
+    this.emit('change');
+  },
+
+  onPreviewMoveTool: function(payload) {
+    this.data.preview = payload.pixels;
     this.emit('change');
   },
 

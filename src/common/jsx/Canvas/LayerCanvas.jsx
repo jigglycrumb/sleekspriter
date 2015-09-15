@@ -43,8 +43,13 @@ var LayerCanvas = React.createClass({
           };
 
       // paint
-      this.props.pixels.scope.forEach(paint, this);
-      this.props.pixels.frame.forEach(paint, this);
+      if(this.props.pixels.preview.length > 0) {
+        this.props.pixels.preview.forEach(paint, this);
+      }
+      else {
+        this.props.pixels.scope.forEach(paint, this);
+        this.props.pixels.frame.forEach(paint, this);
+      }
     }
   },
   // previewLayer: function(pixels) {

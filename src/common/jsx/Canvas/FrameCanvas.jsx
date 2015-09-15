@@ -44,16 +44,15 @@ var FrameCanvas = React.createClass({
       if(px.frame === this.props.frame) pixels.push(px);
     }
 
-    this.props.pixels.file.forEach(grab, this);
-    this.props.pixels.scope.forEach(grab, this);
+    if(this.props.pixels.preview.length > 0) {
+      this.props.pixels.preview.forEach(grab, this);
+    }
+    else {
+      this.props.pixels.file.forEach(grab, this);
+      this.props.pixels.scope.forEach(grab, this);
+    }
 
     this.clear();
-
-    // if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
-    //   var ctx = canvas.getContext('2d');
-    //   ctx.fillStyle = this.props.backgroundColor;
-    //   ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // }
 
     // paint
     // TODO: pixels below don't get drawn, fix that.
@@ -62,27 +61,4 @@ var FrameCanvas = React.createClass({
       if(layersVisible[px.layer] === true && pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
     }, this);
   },
-
-  // previewFrame: function(pixels) {
-  //   var canvas = this.getDOMNode();
-
-  //   this.props.ui.pixels.frame.forEach(function(px) {
-  //     if(px.layer !== this.state.data.layer) pixels.push(px);
-  //   }, this);
-
-  //   this.clear();
-
-  //   if(this.props.backgroundColor && this.props.backgroundColor !== 'transparent') {
-  //     var ctx = canvas.getContext('2d');
-  //     ctx.fillStyle = this.props.backgroundColor;
-  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  //   }
-
-  //   // paint
-  //   pixels.forEach(function(px) {
-  //     var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
-  //     if(pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
-  //   }, this);
-  // },
-
 });

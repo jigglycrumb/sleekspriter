@@ -195,4 +195,7 @@ var actions = {
   windowResize: function() {
     this.dispatch(constants.WINDOW_RESIZE);
   },
+  previewMoveTool: function(frame, layer, pixels) {
+    this.dispatch(constants.PREVIEW_MOVE_TOOL, {frame: frame, layer: layer, pixels: pixels});
+  },
 };

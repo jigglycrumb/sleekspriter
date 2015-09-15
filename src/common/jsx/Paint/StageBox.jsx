@@ -136,8 +136,7 @@ var StageBox = React.createClass({
     event = event.nativeEvent;
 
     var point = this.getWorldCoordinates(event),
-        distance = this.getMouseDownDistance(),
-        ok = true;
+        distance = this.getMouseDownDistance();
 
     this.setState({mousedown: false});
 
@@ -152,15 +151,13 @@ var StageBox = React.createClass({
         break;
 
       case 'PaintBucketTool':
-        ok = this.usePaintBucketTool(point);
+        this.usePaintBucketTool(point);
         break;
 
       case 'MoveTool':
-        this.useMoveTool(point);
+        this.applyMoveTool(distance);
         break;
     }
-
-    // if(ok) this.props.editor.pixels.save();
   },
 
   getLayerPixelColor: function(point) {
@@ -294,20 +291,16 @@ var StageBox = React.createClass({
     if(storeUtils.selection.isActive) this.previewRectangularSelection(distance);
 
     this.props.pixels.frame.forEach(function(px) {
-      if(px.layer === this.props.ui.layers.selected) pixels.push(px);
+      pixels.push(px);
     }, this);
 
     this.props.pixels.scope.forEach(function(px) {
       pixels.push(px.wrap(distance, true));
     });
 
-    // channel.gui.publish('canvas.preview', {
-    //   frame: this.props.ui.frames.selected,
-    //   layer: this.props.ui.layers.selected,
-    //   pixels: pixels,
-    // });
+    this.getFlux().actions.previewMoveTool(this.props.ui.frames.selected, this.props.ui.layers.selected, pixels);
   },
-  useMoveTool: function(distance) {
+  applyMoveTool: function(distance) {
     this.getFlux().actions.pixelsMove(distance);
     if(storeUtils.selection.isActive) {
       this.getFlux().actions.selectionMove(distance);

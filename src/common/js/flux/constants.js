@@ -64,4 +64,5 @@ var constants = {
   PAINTBUCKET:                'PAINTBUCKET',
   BOX_FOLD:                   'BOX_FOLD',
   WINDOW_RESIZE:              'WINDOW_RESIZE',
+  PREVIEW_MOVE_TOOL:          'PREVIEW_MOVE_TOOL',
 };
