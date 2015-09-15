@@ -490,6 +490,7 @@ var FileStore = Fluxxor.createStore({
 
   _animationToFile: function(animation) {
     return [
+      animation.id,
       animation.name,
       animation.fps,
       animation.frames,
