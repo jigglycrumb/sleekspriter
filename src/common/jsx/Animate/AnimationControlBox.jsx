@@ -1,11 +1,5 @@
 var AnimationControlBox = React.createClass({
   mixins: [FluxMixin],
-  getInitialState: function() {
-    return {
-      animationInterval: null,
-      scroll: false,
-    }
-  },
   render: function() {
     var animation = {
           name: 'none',
@@ -36,7 +30,7 @@ var AnimationControlBox = React.createClass({
       }
     }
 
-    if(this.state.animationInterval !== null) {
+    if(this.props.ui.animations.playing === true) {
       playButtonStyle.display = 'none';
       pauseButtonStyle.display = 'inline-block';
     }
@@ -51,10 +45,10 @@ var AnimationControlBox = React.createClass({
         </div>
         <div>
           <label>FPS</label>
-          <input type="number" value={animation.fps} onChange={this.setAnimationFps} disabled={fpsDisabled} />
+          <input type="number" min={1} value={animation.fps} onChange={this.setAnimationFps} disabled={fpsDisabled} />
         </div>
         <div>
-          <button className={controlButtonClasses} title="Previous frame" onClick={this.selectPreviousFrame} disabled={controlsDisabled}>
+          <button className={controlButtonClasses} title="Select previous frame" onClick={this.selectPreviousFrame} disabled={controlsDisabled}>
             <i className="flaticon-previous2"/>
           </button>
           <button className={controlButtonClasses} title="Play animation" onClick={this.playAnimation} disabled={controlsDisabled} style={playButtonStyle}>
@@ -63,7 +57,7 @@ var AnimationControlBox = React.createClass({
           <button className={controlButtonClasses} title="Pause animation" onClick={this.pauseAnimation} disabled={controlsDisabled} style={pauseButtonStyle}>
             <i className="flaticon-small38"/>
           </button>
-          <button className={controlButtonClasses} title="Next frame" onClick={this.selectNextFrame} disabled={controlsDisabled}>
+          <button className={controlButtonClasses} title="Select next frame" onClick={this.selectNextFrame} disabled={controlsDisabled}>
             <i className="flaticon-next"/>
           </button>
         </div>
@@ -73,7 +67,6 @@ var AnimationControlBox = React.createClass({
   setAnimationFps: function(event) {
     var fps = +event.target.value;
     this.getFlux().actions.animationFps(this.props.ui.animations.selected, fps);
-    if(this.state.animationInterval !== null) this.adjustAnimationFps(fps);
   },
   selectNextFrame: function() {
     var animation = storeUtils.animations.getSelected(),
@@ -92,23 +85,9 @@ var AnimationControlBox = React.createClass({
     this.getFlux().actions.animationFrameSelect(frame);
   },
   playAnimation: function() {
-    if(this.state.animationInterval === null) {
-      var animation = storeUtils.animations.getSelected(),
-          ms = 1000/animation.fps,
-          interval = setInterval(this.selectNextFrame, ms);
-      this.setState({animationInterval: interval});
-    }
+    this.getFlux().actions.animationPlay();
   },
   pauseAnimation: function() {
-    if(this.state.animationInterval !== null) {
-      clearInterval(this.state.animationInterval);
-      this.setState({animationInterval: null});
-    }
-  },
-  adjustAnimationFps: function(fps) {
-      var ms = 1000/fps;
-      clearInterval(this.state.animationInterval);
-      interval = setInterval(this.selectNextFrame, ms);
-      this.setState({animationInterval: interval});
+    this.getFlux().actions.animationPause();
   },
 });

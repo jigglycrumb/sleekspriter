@@ -1,8 +1,8 @@
-// build nodewebkit
+// build nwjs
 module.exports = {
     options: {
       cacheDir: 'dist/cache',
-      version: '0.12.1', // nodewebkit version to use
+      version: '0.12.1', // nwjs version to use
       // appName: 'my cool app',
       // appVerison: '1.2.3.4',
     },

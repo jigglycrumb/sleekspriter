@@ -3,7 +3,20 @@ var AnimationPreviewBox = React.createClass({
     var preview = null;
     if(this.props.ui.animations.frame !== null) {
       var frame = storeUtils.animations.getSelected().frames[this.props.ui.animations.frame];
-      preview = <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.ui.size.animationPreview} />
+
+      if(this.props.ui.animations.playing === true)
+        preview = <AnimationCanvas
+          animation={storeUtils.animations.getSelected()}
+          ui={this.props.ui}
+          file={this.props.file}
+          pixels={this.props.pixels}
+          play={this.props.ui.animations.playing} />
+      else
+        preview = <FrameCanvas
+          frame={frame}
+          file={this.props.file}
+          pixels={this.props.pixels}
+          maxSize={this.props.ui.size.animationPreview} />
     }
 
     return (

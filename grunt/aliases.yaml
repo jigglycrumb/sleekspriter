@@ -19,7 +19,7 @@ desktop:
   - 'uglify:desktopMac'
   - 'uglify:desktopWindows'
   - 'clean:postbuild'
-  - 'nodewebkit'
+  - 'nwjs'
   - 'compress'
 
 tablet:
@@ -33,6 +33,6 @@ all:
   - 'basic'
   - 'uglify'
   - 'clean:postbuild'
-  - 'nodewebkit'
+  - 'nwjs'
   - 'compress'
   - 'phonegap-build'

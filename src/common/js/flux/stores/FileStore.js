@@ -369,6 +369,7 @@ var FileStore = Fluxxor.createStore({
   onAnimationFps: function(payload) {
     var animation = storeUtils.animations.getById(payload.animation);
     animation.fps = parseInt(payload.fps);
+    if(animation.fps < 1) animation.fps = 1;
     this.data.animations.forEach(function(a) {
       if(a.id === payload.animation) a = animation;
     });

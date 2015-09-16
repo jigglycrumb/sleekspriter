@@ -16,7 +16,7 @@ module.exports = {
       */
       download: {
         //ios: 'release/<%= package.version %>/-<%= package.version %>.ipa',
-        android: 'release/<%= package.version %>/<%= package.name %>-<%= package.version %>.apk'
+        android: 'release/<%= package.version %>/<%= package.longname %>-<%= package.version %>.apk'
       }
     }
   }

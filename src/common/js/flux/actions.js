@@ -120,6 +120,12 @@ var actions = {
   animationFrameSelect: function(position) {
     this.dispatch(constants.ANIMATION_FRAME_SELECT, position);
   },
+  animationPlay: function() {
+    this.dispatch(constants.ANIMATION_PLAY);
+  },
+  animationPause: function() {
+    this.dispatch(constants.ANIMATION_PAUSE);
+  },
   exportPart: function(part) {
     this.dispatch(constants.EXPORT_PART, part);
   },

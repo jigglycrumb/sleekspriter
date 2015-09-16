@@ -34,6 +34,8 @@ var UiStore = Fluxxor.createStore({
       constants.ANIMATION_SELECT,           this.onAnimationSelect,
       constants.ANIMATION_DELETE,           this.onAnimationDelete,
       constants.ANIMATION_FRAME_SELECT,     this.onAnimationFrameSelect,
+      constants.ANIMATION_PLAY,             this.onAnimationPlay,
+      constants.ANIMATION_PAUSE,            this.onAnimationPause,
 
       constants.EXPORT_PART,                this.onExportPart,
       constants.EXPORT_FRAME,               this.onExportFrame,
@@ -67,6 +69,7 @@ var UiStore = Fluxxor.createStore({
       animations: {
         selected: null,
         frame: null,
+        playing: false,
       },
       background: {
         type: 'pattern',
@@ -324,6 +327,16 @@ var UiStore = Fluxxor.createStore({
 
   onAnimationFrameSelect: function(position) {
     this.data.animations.frame = position;
+    this.emit('change');
+  },
+
+  onAnimationPlay: function() {
+    this.data.animations.playing = true;
+    this.emit('change');
+  },
+
+  onAnimationPause: function() {
+    this.data.animations.playing = false;
     this.emit('change');
   },
 

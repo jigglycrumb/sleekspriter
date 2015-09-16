@@ -1,11 +1,11 @@
 module.exports = {
   options: {
     patterns: [
-      { match: 'shortname', replacement: '<%= package.shortname %>' },
+      { match: 'shortname', replacement: '<%= package.name %>' },
       { match: 'version', replacement: '<%= package.version %>' },
       { match: 'author', replacement: '<%= package.author %>' },
       { match: 'description', replacement: '<%= package.description %>' },
-      { match: 'name', replacement: '<%= package.name %>' },
+      { match: 'name', replacement: '<%= package.longname %>' },
     ]
   },
 

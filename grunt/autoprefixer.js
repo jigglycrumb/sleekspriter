@@ -8,7 +8,7 @@ module.exports = {
   },
   desktopMac: {
     options: {
-      browsers: ['last 2 Chrome versions']
+      browsers: ['Chrome >= 40']
     },
     files: [{
       expand: true,
@@ -19,7 +19,7 @@ module.exports = {
   },
   desktopWindows: {
     options: {
-      browsers: ['last 2 Chrome versions']
+      browsers: ['Chrome >= 40']
     },
     files: [{
       expand: true,
