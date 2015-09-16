@@ -10,10 +10,9 @@ var PreviewBox = React.createClass({
       boxStyle.display = 'none';
     }
 
-
     var scale = 1,
-        maxWidth = 160,
-        maxHeight = 90;
+        maxWidth = 200,
+        maxHeight = 120;
 
     if(this.props.file.size.width > this.props.file.size.height) {
       // scale to width

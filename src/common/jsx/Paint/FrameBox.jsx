@@ -3,18 +3,12 @@ var FrameBox = React.createClass({
   mixins: [FluxMixin, FoldableMixin],
   render: function() {
     var self = this,
-        containerStyle = {},
+        maxWidth = 200,
         frameStyle = {},
         frames = [], // array for mapping the frame components
-        frameSize = Math.floor(180/this.props.file.frames.x)-1;
-
-    if(frameSize * this.props.file.frames.y > 200) {
-      frameSize = Math.floor(180/this.props.file.frames.y)-1;
-    }
+        frameSize = Math.floor(maxWidth/this.props.file.frames.x)-1;
 
     for(var i=0; i < this.props.ui.frames.total; i++) frames.push(i+1);
-
-    containerStyle.width = (frameSize+1)*this.props.file.frames.x;
 
     frameStyle.width = frameSize;
     frameStyle.height = frameSize;
@@ -31,7 +25,7 @@ var FrameBox = React.createClass({
       <div id="FrameBox" className="box">
         <h4 className={classNames(handleClasses)} onClick={this.fold}>Frames</h4>
         <div className="foldable-fold" style={boxStyle}>
-          <div id="FrameBoxFrames" style={containerStyle}>
+          <div id="FrameBoxFrames">
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame,
                 classes = classNames({
