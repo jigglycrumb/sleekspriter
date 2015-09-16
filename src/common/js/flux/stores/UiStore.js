@@ -105,7 +105,7 @@ var UiStore = Fluxxor.createStore({
       },
       offset: {
         top: 40,
-        right: 205,
+        right: 222,
         bottom: 27,
         left: 45,
       },
