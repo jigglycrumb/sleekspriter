@@ -2,9 +2,9 @@
 module.exports = {
     options: {
       cacheDir: 'dist/cache',
-      version: '0.12.1', // nwjs version to use
-      // appName: 'my cool app',
-      // appVerison: '1.2.3.4',
+      version: '0.12.1', // '0.12.3',// nwjs version to use
+      appName: '<%= package.longname %>',
+      appVerison: '<%= package.version %>',
     },
 
     desktopMac: {
