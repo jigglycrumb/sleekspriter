@@ -3,7 +3,7 @@ var FrameBox = React.createClass({
   mixins: [FluxMixin, FoldableMixin],
   render: function() {
     var self = this,
-        maxWidth = 200,
+        maxWidth = 206,
         frameStyle = {},
         frames = [], // array for mapping the frame components
         frameSize = Math.floor(maxWidth/this.props.file.frames.x)-1;

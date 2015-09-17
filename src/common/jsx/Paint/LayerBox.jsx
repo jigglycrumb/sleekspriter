@@ -64,7 +64,7 @@ var LayerBox = React.createClass({
   fitHeight: function() {
     var areaRightHeight = document.querySelector('.area.right').clientHeight,
         otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight,
-        height = areaRightHeight - otherBoxesHeight - 48;
+        height = areaRightHeight - otherBoxesHeight - 47;
     this.getDOMNode().querySelector('.layers').style.height = height+'px';
   },
 

@@ -10,7 +10,8 @@ var AnimationPreviewBox = React.createClass({
           ui={this.props.ui}
           file={this.props.file}
           pixels={this.props.pixels}
-          play={this.props.ui.animations.playing} />
+          play={this.props.ui.animations.playing}
+          maxSize={this.props.ui.size.animationPreview} />
       else
         preview = <FrameCanvas
           frame={frame}

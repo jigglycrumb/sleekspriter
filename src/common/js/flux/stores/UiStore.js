@@ -55,7 +55,9 @@ var UiStore = Fluxxor.createStore({
       constants.PIXEL_DELETE,               this.onPixelDelete,
 
       constants.BOX_FOLD,                   this.onBoxFold,
-      constants.WINDOW_RESIZE,              this.onWindowResize
+      constants.WINDOW_RESIZE,              this.onWindowResize,
+
+      constants.BOX_PREVIEW_TOGGLE,         this.onBoxPreviewToggle
     );
   },
 
@@ -125,6 +127,7 @@ var UiStore = Fluxxor.createStore({
       settings: {
         paint: false,
         grid: true,
+        animatedPaintPreview: false,
       },
       tab: 'start',
       tool: 'BrushTool',
@@ -457,6 +460,11 @@ var UiStore = Fluxxor.createStore({
         max = rect.width > rect.height ? rect.height : rect.width;
 
     this.data.size.animationPreview = Math.floor(max);
+    this.emit('change');
+  },
+
+  onBoxPreviewToggle: function(isAnimated) {
+    this.data.settings.animatedPaintPreview = isAnimated;
     this.emit('change');
   },
 

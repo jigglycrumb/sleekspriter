@@ -67,4 +67,5 @@ var constants = {
   BOX_FOLD:                   'BOX_FOLD',
   WINDOW_RESIZE:              'WINDOW_RESIZE',
   PREVIEW_MOVE_TOOL:          'PREVIEW_MOVE_TOOL',
+  BOX_PREVIEW_TOGGLE:         'BOX_PREVIEW_TOGGLE',
 };

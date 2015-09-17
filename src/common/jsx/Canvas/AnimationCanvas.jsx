@@ -12,7 +12,7 @@ var AnimationCanvas = React.createClass({
           frame = this.props.animation.frames[this.state.frameIndex] || 1;
 
       return (
-        <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.ui.size.animationPreview} />
+        <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.maxSize} />
       )
     }
   },
@@ -42,15 +42,11 @@ var AnimationCanvas = React.createClass({
     return diff;
   },
   start: function() {
-    if(this.state.timer === null && this.props.animation.frames.length > 0) {
-      this.nextFrame();
-    }
+    this.nextFrame();
   },
   stop: function() {
-    if(this.state.timer !== null) {
-      clearTimeout(this.state.timer);
-      this.setState(this.getInitialState());
-    }
+    clearTimeout(this.state.timer);
+    this.setState(this.getInitialState());
   },
   nextFrame: function() {
     if(this.isMounted()) {

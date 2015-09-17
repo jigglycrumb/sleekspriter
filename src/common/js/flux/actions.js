@@ -204,4 +204,7 @@ var actions = {
   previewMoveTool: function(frame, layer, pixels) {
     this.dispatch(constants.PREVIEW_MOVE_TOOL, {frame: frame, layer: layer, pixels: pixels});
   },
+  boxPreviewToggle: function(isAnimation) {
+    this.dispatch(constants.BOX_PREVIEW_TOGGLE, isAnimation);
+  },
 };
