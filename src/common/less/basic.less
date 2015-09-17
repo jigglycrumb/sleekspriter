@@ -14,36 +14,40 @@
   margin-left: inherit;
 }
 
-.flaticon-plus25:before,
-.flaticon-double31:before,
-.flaticon-minus18:before {
-  position: relative;
-  left: -.25em;
+.flaticon-little9:before,
+.flaticon-hand118:before {
+  font-size: .6em;
 }
 
 .flaticon-paint2:before,
 .flaticon-selection7:before {
-  font-size: 1.3em;
+  position: relative;
+  left: .25em;
+}
+
+.flaticon-plus25:before,
+.flaticon-minus18:before {
+  font-size: .8em;
 }
 
 .icon-eye {
-  content: "\e007"; // flaticon-eye46
+  content: "\e002"; // flaticon-eye46
 }
 
 .icon-eye-slashed {
-  content: "\e008"; // flaticon-eye48
+  content: "\e003"; // flaticon-eye48
 }
 
 .icon-arrow-down {
-  content: "\e01e"; // flaticon-little9
+  content: "\e020"; // flaticon-little9
 }
 
 .icon-arrow-right {
-  content: "\e011"; // flaticon-mini7
+  content: "\e00f"; // flaticon-mini7
 }
 
 .icon-checkmark {
-  content: "\e005"; // flaticon-done
+  content: "\e000"; // flaticon-done
 }
 
 // general styles
@@ -358,9 +362,10 @@ ul {
     font-family: Flaticon;
     position: absolute;
     top: 4px;
-    left: 2px;
+    left: 4px;
     color: darken(@font-color, 20%);
     .icon-arrow-down;
+    font-size: .6em;
   }
 
   &.folded:before {

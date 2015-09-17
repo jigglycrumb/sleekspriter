@@ -28,6 +28,15 @@ var PreviewBox = React.createClass({
         <h4 className={classNames(handleClasses)} onClick={this.fold}>Preview</h4>
         <div className="foldable-fold" style={boxStyle}>
           <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} zoom={scale} />
+
+          <div className="actions">
+           <button className="left" type="button" title="Preview Frame">
+              <i className="flaticon-man13"></i>
+            </button>
+           <button className="right" type="button" title="Preview Animation">
+              <i className="flaticon-man-silhouette1"></i>
+            </button>
+          </div>
         </div>
       </div>
     );
