@@ -21,7 +21,9 @@ var FileStore = Fluxxor.createStore({
       constants.ANIMATION_DELETE,         this.onAnimationDelete,
       constants.ANIMATION_FRAME_ADD,      this.onAnimationFrameAdd,
       constants.ANIMATION_FRAME_EMPTY,    this.onAnimationFrameEmpty,
-      constants.ANIMATION_FRAME_DELETE,   this.onAnimationFrameDelete
+      constants.ANIMATION_FRAME_DELETE,   this.onAnimationFrameDelete,
+
+      constants.FRAME_DUPLICATE,          this.onFrameDuplicate
     );
   },
 
@@ -422,6 +424,49 @@ var FileStore = Fluxxor.createStore({
     this.data.animations.forEach(function(a) {
       if(a.id === payload.animation) a = animation;
     });
+    this.emit('change');
+  },
+
+  onFrameDuplicate: function(payload) {
+    this.data.pixels = flux.stores.PixelStore.getData().file;
+
+    // collect layers & pixels of source frame
+    var layers = [],
+        pixels = [];
+
+    this.data.layers.forEach(function(layer) {
+      if(layer.frame === payload.source) layers.push(_.clone(layer, true));
+    });
+
+    this.data.pixels.forEach(function(pixel) {
+      if(pixel.frame === payload.source) pixels.push(pixel.clone());
+    });
+
+    // delete pixels of target frame
+    this.data.pixels = _.filter(this.data.pixels, function(n) { return n.frame !== payload.target }, this);
+
+    // delete layers of target frame
+    this.data.layers = _.filter(this.data.layers, function(n) { return n.frame !== payload.target }, this);
+
+    var layerdict = {},
+        maxId = (_.max(this.data.layers, 'id')).id;
+
+    // add layers
+    layers.forEach(function(layer, i) {
+      var oldId = layer.id;
+      layer.id = maxId + i + 1;
+      layer.frame = payload.target;
+      layerdict[oldId] = maxId + i + 1;
+      this.data.layers.push(layer);
+    }, this);
+
+    // add pixels
+    pixels.forEach(function(px) {
+      px.frame = payload.target;
+      px.layer = layerdict[px.layer];
+      this.data.pixels.push(px);
+    }, this);
+
     this.emit('change');
   },
 

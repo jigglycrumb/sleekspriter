@@ -13,6 +13,7 @@ var constants = {
   FRAME_SELECT:               'FRAME_SELECT',
   FRAME_FLIP_HORIZONTAL:      'FRAME_FLIP_HORIZONTAL',
   FRAME_FLIP_VERTICAL:        'FRAME_FLIP_VERTICAL',
+  FRAME_DUPLICATE:            'FRAME_DUPLICATE',
   MODAL_SHOW:                 'MODAL_SHOW',
   MODAL_HIDE:                 'MODAL_HIDE',
   BRIGHTNESSTOOL_MODE:        'BRIGHTNESSTOOL_MODE',
@@ -68,4 +69,5 @@ var constants = {
   WINDOW_RESIZE:              'WINDOW_RESIZE',
   PREVIEW_MOVE_TOOL:          'PREVIEW_MOVE_TOOL',
   BOX_PREVIEW_TOGGLE:         'BOX_PREVIEW_TOGGLE',
+  PIXELS_SAVE:                'PIXELS_SAVE',
 };

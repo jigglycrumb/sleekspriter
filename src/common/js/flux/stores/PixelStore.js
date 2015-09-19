@@ -11,6 +11,8 @@ var PixelStore = Fluxxor.createStore({
       constants.FRAME_SELECT,                 this.onFrameSelect,
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
       constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
+      constants.FRAME_DUPLICATE,              this.onFrameDuplicate,
+
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_DROP,                   this.onLayerDrop,
       constants.LAYER_MERGE,                  this.onLayerMerge,
@@ -25,7 +27,9 @@ var PixelStore = Fluxxor.createStore({
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove,
       constants.PAINTBUCKET,                  this.onPaintbucket,
-      constants.PREVIEW_MOVE_TOOL,            this.onPreviewMoveTool
+      constants.PREVIEW_MOVE_TOOL,            this.onPreviewMoveTool,
+
+      constants.PIXELS_SAVE,                  this.onFileSave
     );
   },
 
@@ -367,6 +371,12 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  onFrameDuplicate: function() {
+    this.waitFor(['FileStore'], function(FileStore) {
+      this.data.file = FileStore.getData().pixels;
+      this.emit('change');
+    });
+  },
 
   //----------------------------------------------------------------------------
   // Helpers

@@ -153,7 +153,9 @@ Pixel.prototype.rotate = function() {
 
 };
 
-
+Pixel.prototype.clone = function() {
+  return new Pixel(this.frame, this.layer, this.x, this.y, this.r, this.g, this.b, this.a, this.z);
+};
 
 
 /**

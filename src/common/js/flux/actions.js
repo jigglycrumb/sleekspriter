@@ -41,6 +41,9 @@ var actions = {
   frameFlipVertical: function() {
     this.dispatch(constants.FRAME_FLIP_VERTICAL);
   },
+  frameDuplicate: function(source, target) {
+    this.dispatch(constants.FRAME_DUPLICATE, {source: source, target: target});
+  },
   modalShow: function(component, data) {
     data = data || {};
     this.dispatch(constants.MODAL_SHOW, {component: component, data: data, visible: true});
@@ -206,5 +209,8 @@ var actions = {
   },
   boxPreviewToggle: function(isAnimation) {
     this.dispatch(constants.BOX_PREVIEW_TOGGLE, isAnimation);
+  },
+  pixelsSave: function() {
+    this.dispatch(constants.PIXELS_SAVE);
   },
 };

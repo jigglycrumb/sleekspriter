@@ -295,6 +295,18 @@ function menu_init() {
     enabled: false,
   }));
 
+  menu.frame.append(new gui.MenuItem({ type: 'separator' }));
+
+  menu.frame.append(new gui.MenuItem({
+    label: 'Duplicate...',
+    click: function() {
+      flux.actions.modalShow(ModalDuplicateFrame);
+    },
+    key: 'd',
+    modifiers: 'shift+'+modKey,
+    enabled: false,
+  }));
+
   //----------------------------------------------------------------------------
   // "Developer" menu
   menu.developer = new gui.Menu();
