@@ -213,4 +213,13 @@ var actions = {
   pixelsSave: function() {
     this.dispatch(constants.PIXELS_SAVE);
   },
+  onionToggle: function() {
+    this.dispatch(constants.ONION_TOGGLE);
+  },
+  onionMode: function(mode) {
+    this.dispatch(constants.ONION_MODE, mode);
+  },
+  onionFrame: function(mode, value) {
+    this.dispatch(constants.ONION_FRAME, {mode: mode, value: value});
+  },
 };

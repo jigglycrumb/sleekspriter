@@ -57,7 +57,10 @@ var UiStore = Fluxxor.createStore({
       constants.BOX_FOLD,                   this.onBoxFold,
       constants.WINDOW_RESIZE,              this.onWindowResize,
 
-      constants.BOX_PREVIEW_TOGGLE,         this.onBoxPreviewToggle
+      constants.BOX_PREVIEW_TOGGLE,         this.onBoxPreviewToggle,
+      constants.ONION_TOGGLE,               this.onOnionToggle,
+      constants.ONION_MODE,                 this.onOnionMode,
+      constants.ONION_FRAME,                this.onOnionFrame
     );
   },
 
@@ -113,6 +116,14 @@ var UiStore = Fluxxor.createStore({
         right: 222,
         bottom: 27,
         left: 45,
+      },
+      onion: {
+        active: false,
+        frame: {
+          fixed: 1,
+          relative: 1,
+        },
+        mode: 'fixed', // 'fixed' or 'relative'
       },
       palettes: {
         selected: 0,
@@ -468,4 +479,18 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  onOnionToggle: function() {
+    this.data.onion.active = !this.data.onion.active;
+    this.emit('change');
+  },
+
+  onOnionMode: function(mode) {
+    this.data.onion.mode = mode;
+    this.emit('change');
+  },
+
+  onOnionFrame: function(payload) {
+    this.data.onion.frame[payload.mode] = payload.value;
+    this.emit('change');
+  },
 });

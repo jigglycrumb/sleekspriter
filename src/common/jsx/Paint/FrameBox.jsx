@@ -1,4 +1,3 @@
-// Flux: done
 var FrameBox = React.createClass({
   mixins: [FluxMixin, FoldableMixin],
   render: function() {
@@ -20,6 +19,14 @@ var FrameBox = React.createClass({
       handleClasses['folded'] = true;
       boxStyle.display = 'none';
     }
+
+    var onionButtonClasses = {
+      'toggle-onion': true,
+      'transparent': true,
+      'active': this.props.ui.onion.active,
+    };
+
+    var onionPanel = this.props.ui.onion.active === true ? <FrameBoxOnionPanel ui={this.props.ui} /> : null;
 
     return (
       <div id="FrameBox" className="box">
@@ -51,7 +58,16 @@ var FrameBox = React.createClass({
             <input type="number" className="frame-number" min="1" max={this.props.ui.frames.total} value={this.props.ui.frames.selected} onChange={this.dispatchFrameSelected} />
             &nbsp;/&nbsp;
             {this.props.ui.frames.total}
+
+            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} title="Toggle Onion Skinning">
+              <i className="flaticon-fruit28"></i>&nbsp;
+              <i className="flaticon-vegetable38"></i>&nbsp;
+              <i className="flaticon-vegetable49"></i>&nbsp;
+              <i className="flaticon-onions"></i>&nbsp;
+              <i className="flaticon-vegetable24"></i>&nbsp;
+            </button>
           </div>
+          {onionPanel}
         </div>
       </div>
     );
@@ -60,5 +76,8 @@ var FrameBox = React.createClass({
     this.getFlux().actions.frameSelect(parseInt(event.target.value));
     this.getFlux().actions.layerTopSelect();
     this.getFlux().actions.scopeSet(null, 'layer');
-  }
+  },
+  toggleOnionSkinning: function() {
+    this.getFlux().actions.onionToggle();
+  },
 });

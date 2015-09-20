@@ -70,4 +70,7 @@ var constants = {
   PREVIEW_MOVE_TOOL:          'PREVIEW_MOVE_TOOL',
   BOX_PREVIEW_TOGGLE:         'BOX_PREVIEW_TOGGLE',
   PIXELS_SAVE:                'PIXELS_SAVE',
+  ONION_TOGGLE:               'ONION_TOGGLE',
+  ONION_MODE:                 'ONION_MODE',
+  ONION_FRAME:                'ONION_FRAME',
 };

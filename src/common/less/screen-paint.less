@@ -345,7 +345,7 @@
   #FrameBox {
 
     #FrameBoxFrames {
-      width: 200px;
+      width: 206px;
       margin: 10px;
       text-align: center;
     }
@@ -371,7 +371,38 @@
 
     .actions {
       width: 90%;
-      margin-left: 5%;
+      margin: 0 5%;
+
+      .toggle-onion {
+        float: right;
+        font-size: 12px;
+        transition: color 500ms linear;
+
+        &.active {
+          color: @onion;
+        }
+      }
+    }
+
+    .onion-panel {
+      width: 100%;
+      margin-top: 5px;
+      border-top: 1px solid @dark;
+      float: left;
+
+      .tab {
+        width: 50%;
+        box-sizing: border-box;
+
+        &.relative {
+          border-right: none;
+        }
+      }
+
+      .onion-settings {
+        margin: 10px;
+        height: 18px;
+      }
     }
   }
 
