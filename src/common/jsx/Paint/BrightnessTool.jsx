@@ -1,4 +1,3 @@
-// Flux: done
 var BrightnessTool = React.createClass({
   mixins: [FluxMixin],
   render: function() {
@@ -23,14 +22,12 @@ var BrightnessTool = React.createClass({
       <div id="Brightness-Tool" className="ToolComponent">
         <i className="icon flaticon-sun4"></i>
         <button onClick={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-dark26"></i></button>
-        <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
-
+        <button onClick={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear325"></i></button>
 
         <input type="range" min="1" max="100" value={this.props.ui.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>{capitaliseFirstLetter(this.props.ui.brightnessTool.mode)} by</span>
         <input type="number" min="1" max="100" value={this.props.ui.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>%</span>
-
 
         <span className="spacer"></span>
         <span className="hint">Make existing pixels brighter or darker with this brush.</span>

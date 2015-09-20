@@ -1,4 +1,3 @@
-// Flux: done
 var StageBoxBackground = React.createClass({
   propTypes: {
     type: React.PropTypes.oneOf(['color','pattern','image']).isRequired,

@@ -1,4 +1,3 @@
-// Flux: done
 var ToolBox = React.createClass({
   render: function() {
 

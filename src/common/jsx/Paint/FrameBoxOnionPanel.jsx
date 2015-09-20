@@ -4,28 +4,30 @@ var FrameBoxOnionPanel = React.createClass({
     var fixedTabClasses = {
           tab: true,
           fixed: true,
-          active: this.props.ui.onion.mode === 'fixed' ? true: false,
+          active: this.props.ui.onion.mode == 'fixed',
         }
         fixedPanelClasses = {
           'onion-settings': true,
           fixed: true,
-          hidden: this.props.ui.onion.mode === 'fixed' ? false: true,
+          hidden: this.props.ui.onion.mode != 'fixed',
         },
 
         relativeTabClasses = {
           tab: true,
           relative: true,
-          active: this.props.ui.onion.mode === 'relative' ? true: false,
+          active: this.props.ui.onion.mode == 'relative',
         },
         relativePanelClasses = {
           'onion-settings': true,
           relative: true,
-          hidden: this.props.ui.onion.mode === 'relative' ? false: true,
+          hidden: this.props.ui.onion.mode != 'relative',
         },
         frameLabel = this.props.ui.onion.frame.relative == 1 ? ' frame ' : ' frames ';
 
     return (
       <div className="onion-panel">
+
+        <h4>Onion Skin</h4>
 
         <div className={classNames(fixedTabClasses)} onClick={this.setOnionMode.bind(this, 'fixed')}>Fixed</div>
         <div className={classNames(relativeTabClasses)} onClick={this.setOnionMode.bind(this, 'relative')}>Relative</div>

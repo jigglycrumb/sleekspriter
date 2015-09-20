@@ -152,3 +152,17 @@ Object.defineProperty(StoreUtils.prototype.selection, 'isMoving', {
         && s.distance instanceof Point;
   }
 });
+
+
+StoreUtils.prototype.onion = {};
+
+StoreUtils.prototype.onion.getActualFrame = function() {
+  var ui = flux.stores.UiStore.getData();
+  var onionFrame = ui.onion.frame[ui.onion.mode];
+
+  if(ui.onion.mode == 'relative') onionFrame = onionFrame + ui.frames.selected;
+  if(onionFrame > ui.frames.total) onionFrame = onionFrame - ui.frames.total;
+  if(onionFrame < 1) onionFrame = onionFrame + ui.frames.total;
+
+  return onionFrame;
+};

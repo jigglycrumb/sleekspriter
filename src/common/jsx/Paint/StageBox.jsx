@@ -32,6 +32,14 @@ var StageBox = React.createClass({
       background = <StageBoxBackground type={this.props.ui.background.type} value={this.props.ui.background.value} />
     }
 
+    var onionFrame = null;
+    if(this.props.ui.onion.active === true) {
+      onionFrame =
+        <div id="StageBoxOnionCanvas" className="Layer">
+          <FrameCanvas frame={storeUtils.onion.getActualFrame()} file={this.props.file} pixels={this.props.pixels} zoom={this.props.ui.zoom.selected} />
+        </div>
+    }
+
     return (
       <div id="StageBox"
         style={css}
@@ -54,6 +62,7 @@ var StageBox = React.createClass({
           );
         }, this)}
 
+        {onionFrame}
         {background}
       </div>
     );

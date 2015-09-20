@@ -1,4 +1,3 @@
-// Flux: done
 var ToolBoxTool = React.createClass({
   mixins: [FluxMixin],
   render: function() {

@@ -1,4 +1,3 @@
-// Flux: done
 var StageBoxCursorCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
   render: function() {

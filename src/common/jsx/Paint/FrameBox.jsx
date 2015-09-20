@@ -20,6 +20,8 @@ var FrameBox = React.createClass({
       boxStyle.display = 'none';
     }
 
+    var onionFrame = storeUtils.onion.getActualFrame();
+
     var onionButtonClasses = {
       'toggle-onion': true,
       'transparent': true,
@@ -35,10 +37,11 @@ var FrameBox = React.createClass({
           <div id="FrameBoxFrames">
           {frames.map(function(frame) {
             var id = 'FrameBoxFrame-'+frame,
-                classes = classNames({
+                classes = {
                   'frame': true,
                   'selected': frame == this.props.ui.frames.selected,
-                });
+                  'onion': this.props.ui.onion.active === true && frame == onionFrame,
+                };
 
             var clickHandler = function() {
               self.getFlux().actions.frameSelect(frame);
@@ -47,7 +50,7 @@ var FrameBox = React.createClass({
             };
 
             return (
-              <div key={id} className={classes} style={frameStyle} onClick={clickHandler}>
+              <div key={id} className={classNames(classes)} style={frameStyle} onClick={clickHandler}>
                 <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={frameSize} />
               </div>
             );
@@ -60,11 +63,7 @@ var FrameBox = React.createClass({
             {this.props.ui.frames.total}
 
             <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} title="Toggle Onion Skinning">
-              <i className="flaticon-fruit28"></i>&nbsp;
-              <i className="flaticon-vegetable38"></i>&nbsp;
-              <i className="flaticon-vegetable49"></i>&nbsp;
-              <i className="flaticon-onions"></i>&nbsp;
-              <i className="flaticon-vegetable24"></i>&nbsp;
+              <i className="flaticon-vegetable38"></i>
             </button>
           </div>
           {onionPanel}

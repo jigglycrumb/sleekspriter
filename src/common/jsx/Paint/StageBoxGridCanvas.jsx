@@ -1,5 +1,3 @@
-// Flux: done
-
 var StageBoxGridCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
   render: function() {

@@ -1,4 +1,3 @@
-// Flux: done
 var ZoomTool = React.createClass({
   mixins: [FluxMixin],
   render: function() {
