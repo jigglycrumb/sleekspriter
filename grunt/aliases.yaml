@@ -22,7 +22,7 @@ desktop:
   - 'nwjs'
   - 'compress'
 
-tablet:
+mobile:
   - 'basic'
   - 'uglify:tablet'
   - 'clean:postbuild'
