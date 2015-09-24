@@ -21,7 +21,10 @@ var StageBoxCursorCanvas = React.createClass({
     var canvas = this.getDOMNode(),
         ctx = canvas.getContext('2d');
 
-    ctx.strokeStyle="#FF0000";
+    ctx.strokeStyle = "#FF0000";
+    ctx.lineCap = 'square';
+    if(this.props.ui.zoom.selected < 5 ) ctx.lineWidth = 1;
+    else ctx.lineWidth = 2;
 
     var left = (x*zoom)-zoom+0.5,
         right = (x*zoom)+0.5,

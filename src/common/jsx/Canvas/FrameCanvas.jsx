@@ -41,7 +41,10 @@ var FrameCanvas = React.createClass({
 
     // collect frame pixels
     function grab(px) {
-      if(px.frame === this.props.frame) pixels.push(px);
+      if(px.frame === this.props.frame) {
+        if(!pixels[px.z]) pixels[px.z] = [];
+        pixels[px.z].push(px);
+      }
     }
 
     if(this.props.pixels.preview.length > 0) {
@@ -54,11 +57,10 @@ var FrameCanvas = React.createClass({
 
     this.clear();
 
-    // paint
-    // TODO: pixels below don't get drawn, fix that.
-    pixels.forEach(function(px) {
-      var pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z);
-      if(layersVisible[px.layer] === true && pixelsAbove === false) Pixel.paint(canvas, px.x, px.y, px.toHex());
+    pixels.forEach(function(zLayer) {
+      zLayer.forEach(function(px) {
+        if(layersVisible[px.layer] === true) Pixel.paint(canvas, px.x, px.y, px.toHex());
+      }, this);
     }, this);
   },
 });

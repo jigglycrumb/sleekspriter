@@ -31,17 +31,29 @@ var SpritesheetCanvas = React.createClass({
   paint: function() {
 
     var canvas = this.getDOMNode(),
-        pixels = this.props.pixels.file;
+        pixels = [],
+        layersVisible = [];
+
+    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+      layersVisible[layer.id] = layer.visible;
+    }, this);
+
+    this.props.pixels.file.forEach(function(px) {
+      if(!pixels[px.z]) pixels[px.z] = [];
+      pixels[px.z].push(px);
+    });
 
     this.clear();
 
     // paint
-    pixels.forEach(function(px) {
-      var targetPos = this.getPixelSpritesheetPosition(px),
-          pixelsAbove = this.getPixelsAbove(pixels, px.x, px.y, px.z, px.frame);
-      if(pixelsAbove === false) Pixel.paint(canvas, targetPos.x, targetPos.y, px.toHex(), this.props.zoom);
+    pixels.forEach(function(zLayer) {
+      zLayer.forEach(function(px) {
+        var targetPos = this.getPixelSpritesheetPosition(px);
+        if(layersVisible[px.layer] === true) Pixel.paint(canvas, targetPos.x, targetPos.y, px.toHex(), this.props.zoom);
+      }, this);
     }, this);
   },
+
   getPixelSpritesheetPosition: function(pixel) {
     var framePos = {
       x: (x = pixel.frame % this.props.file.frames.x) === 0 ? this.props.file.frames.x : x,
