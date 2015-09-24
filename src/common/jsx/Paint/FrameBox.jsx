@@ -29,6 +29,7 @@ var FrameBox = React.createClass({
     };
 
     var onionPanel = this.props.ui.onion.active === true ? <FrameBoxOnionPanel ui={this.props.ui} /> : null;
+    var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.toggleOnion.key+')';
 
     return (
       <div id="FrameBox" className="box">
@@ -62,7 +63,7 @@ var FrameBox = React.createClass({
             &nbsp;/&nbsp;
             {this.props.ui.frames.total}
 
-            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} title="Toggle Onion Skinning">
+            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} title={onionToggleTitle}>
               <i className="flaticon-vegetable38"></i>
             </button>
           </div>

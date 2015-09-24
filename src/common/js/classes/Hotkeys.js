@@ -37,7 +37,7 @@ var Hotkeys = function() {
       action: function() { flux.actions.toolSelect('PaintBucketTool'); }
     },
     selectBrightnessTool: {
-      key: 'o',
+      key: 'l',
       action: function() { flux.actions.toolSelect('BrightnessTool'); }
     },
     selectMoveTool: {
@@ -51,6 +51,10 @@ var Hotkeys = function() {
     toggleGrid: {
       key: 'g',
       action: function() { flux.actions.settingsGrid(!flux.stores.UiStore.getData().settings.grid); }
+    },
+    toggleOnion: {
+      key: 'o',
+      action: function() { flux.actions.onionToggle(); }
     },
 
 
