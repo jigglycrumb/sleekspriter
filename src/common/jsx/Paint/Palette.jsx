@@ -44,6 +44,10 @@ var Palette = React.createClass({
       </div>
     );
   },
+  componentDidMount: function() {
+    this.setInnerWidth();
+    this.resetScroll();
+  },
   componentDidUpdate: function() {
     this.setInnerWidth();
     if(this.state.resetScroll) {
