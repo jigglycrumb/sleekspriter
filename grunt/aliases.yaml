@@ -24,14 +24,14 @@ desktop:
 
 mobile:
   - 'basic'
-  - 'uglify:tablet'
+#  - 'uglify:tablet'
   - 'clean:postbuild'
   - 'compress:tablet'
   - 'phonegap-build'
 
 all:
   - 'basic'
-  - 'uglify'
+#  - 'uglify'
   - 'clean:postbuild'
   - 'nwjs'
   - 'compress'

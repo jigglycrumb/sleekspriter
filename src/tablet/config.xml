@@ -17,7 +17,11 @@
   <!-- weinre access -->
   <access origin="*" />
 
-  <preference name="orientation" value="landscape" />
+  <feature name="http://api.phonegap.com/1.0/file" />
+
+  <!--<preference name="orientation" value="landscape" />-->
   <preference name="fullscreen" value="true" />
   <!--<preference name="permissions" value="none" />-->
+
+  <gap:plugin name="org.apache.cordova.file" version="1.3.1" />
 </widget>

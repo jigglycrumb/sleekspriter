@@ -140,10 +140,6 @@ PlatformUtils.prototype.exportFile = function(settings) {
   }
 };
 
-PlatformUtils.prototype.showSaveFileDialog = function() {
-  document.querySelector('#fileSave').click();
-};
-
 PlatformUtils.prototype.saveFile = function(json) {
 
   var fs = require('fs'),

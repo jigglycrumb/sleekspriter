@@ -79,6 +79,7 @@ var UiStore = Fluxxor.createStore({
       background: {
         type: 'pattern',
         value: 'checkerboard',
+        color: '#ffffff',
       },
       brightnessTool: {
         mode: 'lighten',
