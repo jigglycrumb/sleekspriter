@@ -5,6 +5,7 @@ var FrameCanvas = React.createClass({
     file: React.PropTypes.object.isRequired, // FileStore
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
+    noAlpha: React.PropTypes.boolean,
   },
   mixins: [CanvasMixin],
   render: function() {
@@ -60,7 +61,8 @@ var FrameCanvas = React.createClass({
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
         if(layerDict[px.layer].visible === true) {
-          var alpha = px.a * (layerDict[px.layer].opacity / 100);
+          if(this.props.noAlpha) var alpha = 1;
+          else var alpha = px.a * (layerDict[px.layer].opacity / 100);
           Pixel.paint(canvas, px.x, px.y, px.toHex(), alpha);
         }
       }, this);
