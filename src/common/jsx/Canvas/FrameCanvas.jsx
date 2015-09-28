@@ -33,10 +33,10 @@ var FrameCanvas = React.createClass({
 
     var canvas = this.getDOMNode(),
         pixels = [],
-        layersVisible = [];
+        layerDict = [];
 
     flux.stores.FileStore.getData().layers.forEach(function(layer) {
-      if(layer.frame === this.props.frame) layersVisible[layer.id] = layer.visible;
+      if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
     }, this);
 
     // collect frame pixels
@@ -59,7 +59,10 @@ var FrameCanvas = React.createClass({
 
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
-        if(layersVisible[px.layer] === true) Pixel.paint(canvas, px.x, px.y, px.toHex());
+        if(layerDict[px.layer].visible === true) {
+          var alpha = px.a * (layerDict[px.layer].opacity / 100);
+          Pixel.paint(canvas, px.x, px.y, px.toHex(), alpha);
+        }
       }, this);
     }, this);
   },

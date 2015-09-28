@@ -32,10 +32,10 @@ var SpritesheetCanvas = React.createClass({
 
     var canvas = this.getDOMNode(),
         pixels = [],
-        layersVisible = [];
+        layerDict = [];
 
     flux.stores.FileStore.getData().layers.forEach(function(layer) {
-      layersVisible[layer.id] = layer.visible;
+      layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
     }, this);
 
     this.props.pixels.file.forEach(function(px) {
@@ -48,8 +48,11 @@ var SpritesheetCanvas = React.createClass({
     // paint
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
-        var targetPos = this.getPixelSpritesheetPosition(px);
-        if(layersVisible[px.layer] === true) Pixel.paint(canvas, targetPos.x, targetPos.y, px.toHex(), this.props.zoom);
+        if(layerDict[px.layer].visible === true) {
+          var targetPos = this.getPixelSpritesheetPosition(px),
+              alpha = px.a * (layerDict[px.layer].opacity / 100);
+          Pixel.paint(canvas, targetPos.x, targetPos.y, px.toHex(), alpha, this.props.zoom);
+        }
       }, this);
     }, this);
   },

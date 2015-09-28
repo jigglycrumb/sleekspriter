@@ -182,13 +182,16 @@ Pixel.toArray = function(pixel) {
  * @param {Number} x - pixel x-coordinate
  * @param {Number} y - pixel y-coordinate
  * @param {String} color - hex-string of color to paint
+ * @param {Number} alpha - alpha value
  */
-Pixel.paint = function(canvas, x, y, color, scale) {
-  var scale = scale || canvas.width/flux.stores.FileStore.getData().size.width,
+Pixel.paint = function(canvas, x, y, color, alpha, scale) {
+  var alpha = alpha || 1,
+      scale = scale || canvas.width/flux.stores.FileStore.getData().size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
+  ctx.globalAlpha = alpha;
   ctx.fillStyle = color;
   ctx.fillRect(cX, cY, scale, scale);
 };
