@@ -26,9 +26,6 @@ var StatusBar = React.createClass({
           <button id="toggleGrid" className={gridButtonClasses} onClick={this.dispatchGridToggled} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
           </button>
-          <button id="fileSettings" className={settingsButtonClasses} onClick={this.dispatchSettingsToggled} title="Stage Settings">
-            <i className="flaticon-settings21"></i>
-          </button>
         </div>
       </div>
     );

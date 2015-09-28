@@ -8,10 +8,8 @@ var UiStore = Fluxxor.createStore({
 
       constants.TAB_SELECT,                 this.onTabSelect,
       constants.TOOL_SELECT,                this.onToolSelect,
-      constants.SETTINGS_PAINT,             this.onSettingsPaint,
       constants.SETTINGS_GRID,              this.onSettingsGrid,
       constants.ZOOM_SELECT,                this.onZoomSelect,
-      constants.BACKGROUND_SELECT,          this.onBackgroundSelect,
       constants.FRAME_SELECT,               this.onFrameSelect,
       constants.MODAL_SHOW,                 this.onModalShow,
       constants.MODAL_HIDE,                 this.onModalHide,
@@ -76,11 +74,6 @@ var UiStore = Fluxxor.createStore({
         frame: null,
         playing: false,
       },
-      background: {
-        type: 'pattern',
-        value: 'checkerboard',
-        color: '#ffffff',
-      },
       brightnessTool: {
         mode: 'lighten',
         intensity: 10,
@@ -137,7 +130,6 @@ var UiStore = Fluxxor.createStore({
         distance: null,
       },
       settings: {
-        paint: false,
         grid: true,
         animatedPaintPreview: false,
       },
@@ -213,11 +205,6 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onSettingsPaint: function(visible) {
-    this.data.settings.paint = !!visible;
-    this.emit('change');
-  },
-
   onSettingsGrid: function(visible) {
     this.data.settings.grid = !!visible;
     this.emit('change');
@@ -228,12 +215,6 @@ var UiStore = Fluxxor.createStore({
     z = z > this.data.zoom.max ? this.data.zoom.max : z;
     z = z < this.data.zoom.min ? this.data.zoom.min : z;
     this.data.zoom.selected = z;
-    this.emit('change');
-  },
-
-  onBackgroundSelect: function(payload) {
-    this.data.background.type   = payload.type;
-    this.data.background.value  = payload.value;
     this.emit('change');
   },
 

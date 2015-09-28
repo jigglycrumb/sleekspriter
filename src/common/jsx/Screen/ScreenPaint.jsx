@@ -6,10 +6,6 @@ var ScreenPaint = React.createClass({
   },
 
   render: function() {
-    var settingsBoxStyle = {
-          display: this.props.ui.settings.paint === true ? 'block' : 'none',
-        };
-
     var frameBox = null;
     if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="frames" />
 
@@ -37,9 +33,6 @@ var ScreenPaint = React.createClass({
         </div>
         <div className="area statusbar">
           <StatusBar ui={this.props.ui} pixels={this.props.pixels} />
-        </div>
-        <div className="area settings" style={settingsBoxStyle}>
-          <SettingsBox ui={this.props.ui} />
         </div>
       </section>
     )

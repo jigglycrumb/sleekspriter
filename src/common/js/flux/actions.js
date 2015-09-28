@@ -20,17 +20,11 @@ var actions = {
   toolSelect: function(tool) {
     this.dispatch(constants.TOOL_SELECT, tool);
   },
-  settingsPaint: function(visible) {
-    this.dispatch(constants.SETTINGS_PAINT, visible);
-  },
   settingsGrid: function(visible) {
     this.dispatch(constants.SETTINGS_GRID, visible);
   },
   zoomSelect: function(zoom) {
     this.dispatch(constants.ZOOM_SELECT, zoom);
-  },
-  backgroundSelect: function(type, value) {
-    this.dispatch(constants.BACKGROUND_SELECT, {type: type, value: value});
   },
   frameSelect: function(frame) {
     this.dispatch(constants.FRAME_SELECT, frame);

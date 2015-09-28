@@ -5,7 +5,7 @@ var FrameCanvas = React.createClass({
     file: React.PropTypes.object.isRequired, // FileStore
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
-    noAlpha: React.PropTypes.boolean,
+    noAlpha: React.PropTypes.bool,
   },
   mixins: [CanvasMixin],
   render: function() {

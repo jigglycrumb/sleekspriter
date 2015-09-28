@@ -27,11 +27,6 @@ var StageBox = React.createClass({
     if( h > centerAreaHeight ) css.top = 0;
     else css.top = (centerAreaHeight - h)/2;
 
-    var background = null;
-    if(this.props.image === null) {
-      background = <StageBoxBackground type={this.props.ui.background.type} value={this.props.ui.background.value} />
-    }
-
     var onionFrame = null;
     if(this.props.ui.onion.active === true) {
       onionFrame =
@@ -40,8 +35,13 @@ var StageBox = React.createClass({
         </div>
     }
 
+    var cssClasses = {
+      checkerboard: this.props.image === null ? true : false,
+    };
+
     return (
       <div id="StageBox"
+        className={classNames(cssClasses)}
         style={css}
         onMouseDown={this.mousedown}
         onMouseMove={this.mousemove}
@@ -63,7 +63,6 @@ var StageBox = React.createClass({
         }, this)}
 
         {onionFrame}
-        {background}
       </div>
     );
   },
