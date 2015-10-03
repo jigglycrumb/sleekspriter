@@ -6,6 +6,7 @@ var FrameCanvas = React.createClass({
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
     noAlpha: React.PropTypes.bool,
+    background: React.PropTypes.string,
   },
   mixins: [CanvasMixin],
   render: function() {
@@ -57,6 +58,12 @@ var FrameCanvas = React.createClass({
     }
 
     this.clear();
+
+    if(this.props.background) {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = this.props.background;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {

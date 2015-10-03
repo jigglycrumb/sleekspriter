@@ -4,6 +4,7 @@ var SpritesheetCanvas = React.createClass({
     file: React.PropTypes.object.isRequired, // FileStore
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
+    background: React.PropTypes.string,
   },
   mixins: [CanvasMixin],
   render: function() {
@@ -44,6 +45,12 @@ var SpritesheetCanvas = React.createClass({
     });
 
     this.clear();
+
+    if(this.props.background) {
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = this.props.background;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     // paint
     pixels.forEach(function(zLayer) {

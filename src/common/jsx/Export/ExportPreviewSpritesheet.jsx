@@ -9,11 +9,12 @@ var ExportPreviewSpritesheet = React.createClass({
         style = {
           width: width,
           height: height,
-        };
+        },
+        background = (this.props.ui.export.format === 'png' || this.props.ui.export.format === 'gif') ? null : '#ffffff';
 
     return (
       <div className={classNames(classes)} style={style}>
-        <SpritesheetCanvas file={this.props.file} pixels={this.props.pixels} zoom={this.props.ui.export.zoom} />
+        <SpritesheetCanvas file={this.props.file} pixels={this.props.pixels} zoom={this.props.ui.export.zoom} background={background} />
       </div>
     )
   }
