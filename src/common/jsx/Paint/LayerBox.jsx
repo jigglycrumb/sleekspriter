@@ -69,7 +69,6 @@ var LayerBox = React.createClass({
   },
 
   dragStart: function(layer) {
-    console.log('starting to drag layer '+layer);
     this.setState({dragLayer: layer});
   },
 

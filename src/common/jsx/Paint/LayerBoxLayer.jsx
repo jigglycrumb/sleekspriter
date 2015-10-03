@@ -13,7 +13,7 @@ var LayerBoxLayer = React.createClass({
     return (
       <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.props.dragStartHandler.bind(null, this.props.layer.id)}>
         <div className="visibility">
-          <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged}/>
+          <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged} />
         </div>
         <div className="preview" onClick={this.dispatchLayerSelected}>
           <LayerCanvas layer={this.props.layer.id} zoom={this.props.ui.zoom.selected} file={this.props.file} pixels={this.props.pixels} maxSize={30} />
