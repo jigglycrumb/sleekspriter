@@ -38,6 +38,9 @@ var actions = {
   frameDuplicate: function(source, target) {
     this.dispatch(constants.FRAME_DUPLICATE, {source: source, target: target});
   },
+  frameRotate: function(angle) {
+    this.dispatch(constants.FRAME_ROTATE, angle);
+  },
   modalShow: function(component, data) {
     data = data || {};
     this.dispatch(constants.MODAL_SHOW, {component: component, data: data, visible: true});
@@ -161,6 +164,9 @@ var actions = {
   },
   scopeFlipVertical: function() {
     this.dispatch(constants.SCOPE_FLIP_VERTICAL);
+  },
+  scopeRotate: function(angle) {
+    this.dispatch(constants.SCOPE_ROTATE, angle);
   },
   selectionStart: function(point) {
     this.dispatch(constants.SELECTION_START, point);

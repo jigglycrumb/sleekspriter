@@ -155,6 +155,32 @@ function menu_init() {
   menu.edit.append(new gui.MenuItem({ type: 'separator' }));
 
   menu.edit.append(new gui.MenuItem({
+    label: 'Rotate 180°',
+    click: function() {
+      flux.actions.scopeRotate(180);
+    },
+    enabled: false,
+  }));
+
+  menu.edit.append(new gui.MenuItem({
+    label: 'Rotate 90° CW',
+    click: function() {
+      flux.actions.scopeRotate(90);
+    },
+    enabled: false,
+  }));
+
+  menu.edit.append(new gui.MenuItem({
+    label: 'Rotate 90° CCW',
+    click: function() {
+      flux.actions.scopeRotate(270);
+    },
+    enabled: false,
+  }));
+
+  menu.edit.append(new gui.MenuItem({ type: 'separator' }));
+
+  menu.edit.append(new gui.MenuItem({
     label: 'Flip Horizontal',
     click: flux.actions.scopeFlipHorizontal,
     enabled: false,
@@ -260,7 +286,7 @@ function menu_init() {
   menu.frame.append(new gui.MenuItem({
     label: 'Rotate 180°',
     click: function() {
-      alert('not yet, sorry');
+      flux.actions.frameRotate(180);
     },
     enabled: false,
   }));
@@ -268,7 +294,7 @@ function menu_init() {
   menu.frame.append(new gui.MenuItem({
     label: 'Rotate 90° CW',
     click: function() {
-      alert('not yet, sorry');
+      flux.actions.frameRotate(90);
     },
     enabled: false,
   }));
@@ -276,7 +302,7 @@ function menu_init() {
   menu.frame.append(new gui.MenuItem({
     label: 'Rotate 90° CCW',
     click: function() {
-      alert('not yet, sorry');
+      flux.actions.frameRotate(270);
     },
     enabled: false,
   }));

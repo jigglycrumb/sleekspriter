@@ -58,7 +58,9 @@ var UiStore = Fluxxor.createStore({
       constants.BOX_PREVIEW_TOGGLE,         this.onBoxPreviewToggle,
       constants.ONION_TOGGLE,               this.onOnionToggle,
       constants.ONION_MODE,                 this.onOnionMode,
-      constants.ONION_FRAME,                this.onOnionFrame
+      constants.ONION_FRAME,                this.onOnionFrame,
+
+      constants.SCOPE_SET,                  this.onScopeSet
     );
   },
 
@@ -122,6 +124,9 @@ var UiStore = Fluxxor.createStore({
       palettes: {
         selected: 0,
         available: [{'id': 'sprite', 'title': 'Sprite colours', 'short': 'Sprite', 'colors': []}],
+      },
+      scope: {
+        center: new Point(0,0),
       },
       selection: {
         start: null,
@@ -473,6 +478,28 @@ var UiStore = Fluxxor.createStore({
 
   onOnionFrame: function(payload) {
     this.data.onion.frame[payload.mode] = payload.value;
+    this.emit('change');
+  },
+
+  onScopeSet: function(payload) {
+    // set scope center
+    var center;
+
+    if(payload.type == 'layer') { // layer scope
+      var s = flux.stores.FileStore.getData().size;
+      center = new Point(
+        (s.width+1)/2,
+        (s.height+1)/2
+      );
+    }
+    else if(payload.type == 'selection') { // selection scope
+      center = new Point(
+        (payload.data.start.x+payload.data.end.x+1)/2,
+        (payload.data.start.y+payload.data.end.y+1)/2
+      );
+    }
+
+    this.data.scope.center = center;
     this.emit('change');
   },
 });

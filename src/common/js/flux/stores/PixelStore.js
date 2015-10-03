@@ -12,10 +12,12 @@ var PixelStore = Fluxxor.createStore({
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
       constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
       constants.FRAME_DUPLICATE,              this.onFrameDuplicate,
+      constants.FRAME_ROTATE,                 this.onFrameRotate,
 
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_DROP,                   this.onLayerDrop,
       constants.LAYER_MERGE,                  this.onLayerMerge,
+
       constants.SCOPE_SET,                    this.onScopeSet,
       constants.SCOPE_COPY,                   this.onScopeCopy,
       constants.SCOPE_CUT,                    this.onScopeCut,
@@ -23,6 +25,8 @@ var PixelStore = Fluxxor.createStore({
       constants.SCOPE_PASTE,                  this.onScopePaste,
       constants.SCOPE_FLIP_HORIZONTAL,        this.onScopeFlipHorizontal,
       constants.SCOPE_FLIP_VERTICAL,          this.onScopeFlipVertical,
+      constants.SCOPE_ROTATE,                 this.onScopeRotate,
+
       constants.PIXEL_ADD,                    this.onPixelAdd,
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove,
@@ -84,6 +88,18 @@ var PixelStore = Fluxxor.createStore({
   onFrameFlipVertical: function() {
     this.data.scope.forEach(this.flipVertical, this);
     this.data.frame.forEach(this.flipVertical, this);
+    this.emit('change');
+  },
+
+  onFrameRotate: function(angle) {
+    var s = flux.stores.FileStore.getData().size,
+        pivot = new Point(
+          (s.width+1)/2,
+          (s.height+1)/2
+        );
+
+    this.data.scope.forEach(this.rotatePivot.bind(this, angle, pivot), this);
+    this.data.frame.forEach(this.rotatePivot.bind(this, angle, pivot), this);
     this.emit('change');
   },
 
@@ -232,10 +248,17 @@ var PixelStore = Fluxxor.createStore({
 
   onScopeFlipHorizontal: function() {
     this.data.scope.forEach(this.flipHorizontal, this);
+    this.emit('change');
   },
 
   onScopeFlipVertical: function() {
     this.data.scope.forEach(this.flipVertical, this);
+    this.emit('change');
+  },
+
+  onScopeRotate: function(angle) {
+    this.data.scope.forEach(this.rotateScope.bind(this, angle), this);
+    this.emit('change');
   },
 
   onPixelAdd: function(payload) {
@@ -434,6 +457,14 @@ var PixelStore = Fluxxor.createStore({
 
   flipVertical: function(pixel) {
     return pixel.flipVertical();
+  },
+
+  rotatePivot: function(angle, pivot, pixel) {
+    return pixel.rotate(angle, pivot);
+  },
+
+  rotateScope: function(angle, pixel) {
+    return pixel.rotate(angle);
   },
 
   merge: function(from, to) {

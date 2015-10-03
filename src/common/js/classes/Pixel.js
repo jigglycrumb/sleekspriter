@@ -149,8 +149,14 @@ Pixel.prototype.insideBounds = function() {
 
 };
 
-Pixel.prototype.rotate = function() {
-
+Pixel.prototype.rotate = function(angle, pivot) {
+  var center = pivot || flux.stores.UiStore.getData().scope.center;
+  angle = angle*(Math.PI/180); // Convert to radians
+  var rotatedX = Math.round(Math.cos(angle) * (this.x - center.x) - Math.sin(angle) * (this.y - center.y) + center.x);
+  var rotatedY = Math.round(Math.sin(angle) * (this.x - center.x) + Math.cos(angle) * (this.y - center.y) + center.y);
+  this.x = rotatedX;
+  this.y = rotatedY;
+  return this;
 };
 
 Pixel.prototype.clone = function() {
