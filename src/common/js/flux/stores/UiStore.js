@@ -201,7 +201,9 @@ var UiStore = Fluxxor.createStore({
   },
 
   onTabSelect: function(tab) {
+    hotkeys.unbind(this.data.tab);
     this.data.tab = tab;
+    hotkeys.bind(tab);
     this.emit('change');
   },
 

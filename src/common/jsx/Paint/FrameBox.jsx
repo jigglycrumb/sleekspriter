@@ -29,7 +29,7 @@ var FrameBox = React.createClass({
     };
 
     var onionPanel = this.props.ui.onion.active === true ? <FrameBoxOnionPanel ui={this.props.ui} /> : null;
-    var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.toggleOnion.key+')';
+    var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.paint.toggleOnion.key+')';
 
     return (
       <div id="FrameBox" className="box">

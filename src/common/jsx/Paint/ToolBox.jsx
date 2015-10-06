@@ -2,14 +2,14 @@ var ToolBox = React.createClass({
   render: function() {
 
     var titles = {
-      brushTool: 'Brush Tool ('+hotkeys.actions.selectBrushTool.key+')',
-      eraserTool: 'Eraser Tool ('+hotkeys.actions.selectEraserTool.key+')',
-      eyedropperTool: 'Eyedropper Tool ('+hotkeys.actions.selectEyedropperTool.key+')',
-      rectangularSelectionTool: 'Selection Tool ('+hotkeys.actions.selectRectangularSelectionTool.key+')',
-      paintBucketTool: 'Paint Bucket Tool ('+hotkeys.actions.selectPaintBucketTool.key+')',
-      brightnessTool: 'Brightness Tool ('+hotkeys.actions.selectBrightnessTool.key+')',
-      moveTool: 'Move Tool ('+hotkeys.actions.selectMoveTool.key+')',
-      zoomTool: 'Zoom Tool ('+hotkeys.actions.selectZoomTool.key+')',
+      brushTool: 'Brush Tool ('+hotkeys.actions.paint.selectBrushTool.key+')',
+      eraserTool: 'Eraser Tool ('+hotkeys.actions.paint.selectEraserTool.key+')',
+      eyedropperTool: 'Eyedropper Tool ('+hotkeys.actions.paint.selectEyedropperTool.key+')',
+      rectangularSelectionTool: 'Selection Tool ('+hotkeys.actions.paint.selectRectangularSelectionTool.key+')',
+      paintBucketTool: 'Paint Bucket Tool ('+hotkeys.actions.paint.selectPaintBucketTool.key+')',
+      brightnessTool: 'Brightness Tool ('+hotkeys.actions.paint.selectBrightnessTool.key+')',
+      moveTool: 'Move Tool ('+hotkeys.actions.paint.selectMoveTool.key+')',
+      zoomTool: 'Zoom Tool ('+hotkeys.actions.paint.selectZoomTool.key+')',
     };
 
     return (

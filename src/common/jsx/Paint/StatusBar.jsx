@@ -1,7 +1,7 @@
 var StatusBar = React.createClass({
   mixins: [FluxMixin],
   render: function() {
-    var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.toggleGrid.key+')',
+    var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.paint.toggleGrid.key+')',
         settingsButtonClasses = classNames({
           tiny: true,
           transparent: true,
