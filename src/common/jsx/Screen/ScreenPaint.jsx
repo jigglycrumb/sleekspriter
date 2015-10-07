@@ -4,6 +4,20 @@ var ScreenPaint = React.createClass({
       referenceImage: null,
     }
   },
+  shouldComponentUpdate: function() {
+    switch(stateHistory.lastAction) {
+      case 'EXPORT_PART':
+      case 'EXPORT_FRAME':
+      case 'EXPORT_ANIMATION':
+      case 'EXPORT_ZOOM':
+      case 'EXPORT_FORMAT':
+      case 'EXPORT_STATUS':
+        return false;
+
+      default:
+        return true;
+    }
+  },
 
   render: function() {
     var frameBox = null;

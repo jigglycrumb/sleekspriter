@@ -51,6 +51,7 @@ var stores = {
   platformUtils = new PlatformUtils(),
   storeUtils = new StoreUtils(),
   hotkeys = new Hotkeys(),
+  stateHistory = new StateHistory(),
   container = document.getElementById('app-container');
 
 platformUtils.boot();

@@ -37,6 +37,7 @@ module.exports = {
       'build/desktop/mac/js/react_mixins/**/*.js',
       'build/desktop/mac/js/react_components/**/*.js',
 
+      'build/desktop/mac/js/classes/StateHistory.js',
       'build/desktop/mac/js/classes/Point.js',
       'build/desktop/mac/js/classes/Pixel.js',
 
@@ -63,6 +64,7 @@ module.exports = {
       'build/desktop/windows/js/react_mixins/**/*.js',
       'build/desktop/windows/js/react_components/**/*.js',
 
+      'build/desktop/windows/js/classes/StateHistory.js',
       'build/desktop/windows/js/classes/Point.js',
       'build/desktop/windows/js/classes/Pixel.js',
 

@@ -195,14 +195,14 @@ var PixelStore = Fluxxor.createStore({
     }
 
     this.emit('change');
-    this.log();
+    // this.log();
   },
 
   onScopeCopy: function() {
     this.data.clipboard = this.data.scope;
     this.emit('change');
 
-    this.log();
+    // this.log();
   },
 
   onScopeCut: function() {
@@ -215,7 +215,7 @@ var PixelStore = Fluxxor.createStore({
 
     this.emit('change');
 
-    this.log();
+    // this.log();
   },
 
   onScopeDelete: function() {
@@ -227,7 +227,7 @@ var PixelStore = Fluxxor.createStore({
 
     this.emit('change');
 
-    this.log();
+    // this.log();
   },
 
   onScopePaste: function() {
@@ -243,7 +243,7 @@ var PixelStore = Fluxxor.createStore({
     this.data.clipboard.forEach(pastePixel, this);
     this.emit('change');
 
-    this.log();
+    // this.log();
   },
 
   onScopeFlipHorizontal: function() {
@@ -264,7 +264,7 @@ var PixelStore = Fluxxor.createStore({
   onPixelAdd: function(payload) {
     this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.z, payload.color);
     this.emit('change');
-    this.log();
+    // this.log();
   },
 
   onPixelDelete: function(payload) {
@@ -274,7 +274,7 @@ var PixelStore = Fluxxor.createStore({
 
     this.emit('change');
 
-    this.log();
+    // this.log();
   },
 
   onPixelsMove: function(distance) {
@@ -432,11 +432,11 @@ var PixelStore = Fluxxor.createStore({
     var newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a, z);
     var oldPixel = _.findWhere(this.data.scope, {x: x, y: y});
     if(_.isUndefined(oldPixel)) {
-      console.log('filling pixel', layer, x, y, c.rgbString());
+      // console.log('filling pixel', layer, x, y, c.rgbString());
       this.data.scope.push(newPixel);
     }
     else {
-      console.log('replacing pixel', layer, x, y, c.rgbString());
+      // console.log('replacing pixel', layer, x, y, c.rgbString());
       // replace old pixel
       for(var i = 0; i < this.data.scope.length; i++) {
         var p = this.data.scope[i];

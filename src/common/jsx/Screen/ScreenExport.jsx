@@ -1,4 +1,33 @@
 var ScreenExport = React.createClass({
+  shouldComponentUpdate: function() {
+    switch(stateHistory.lastAction) {
+      case 'CURSOR_SET':
+      case 'TOOL_SELECT':
+      case 'SETTINGS_GRID':
+      case 'ZOOM_SELECT':
+      case 'FRAME_SELECT':
+      case 'BRIGHTNESSTOOL_MODE':
+      case 'BRIGHTNESSTOOL_INTENSITY':
+      case 'COLOR_BRUSH':
+      case 'PALETTE_SELECT':
+      case 'LAYER_SELECT':
+      case 'LAYER_TOP_SELECT':
+      case 'BOX_FOLD':
+      case 'BOX_PREVIEW_TOGGLE':
+      case 'ONION_TOGGLE':
+      case 'ONION_MODE':
+      case 'ONION_FRAME':
+      case 'SELECTION_START':
+      case 'SELECTION_RESIZE':
+      case 'SELECTION_PREVIEW':
+      case 'SELECTION_END':
+      case 'SELECTION_CLEAR':
+        return false;
+
+      default:
+        return true;
+    }
+  },
   render: function() {
 
     var partSelection = this.props.ui.frames.total === 1
