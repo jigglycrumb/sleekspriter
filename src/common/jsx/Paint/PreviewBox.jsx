@@ -64,7 +64,7 @@ var PreviewBox = React.createClass({
     }
 
     if(this.props.ui.settings.animatedPaintPreview === false) {
-      preview = <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} maxSize={maxSize} />
+      preview = <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} maxSize={maxSize} noMargin={true} />
     }
     else if(this.props.ui.settings.animatedPaintPreview === true) {
         preview = <AnimationCanvas
@@ -73,7 +73,8 @@ var PreviewBox = React.createClass({
           file={this.props.file}
           pixels={this.props.pixels}
           play={true}
-          maxSize={maxSize} />
+          maxSize={maxSize}
+          noMargin={true} />
     }
 
     return (

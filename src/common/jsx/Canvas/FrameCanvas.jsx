@@ -6,6 +6,7 @@ var FrameCanvas = React.createClass({
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
     noAlpha: React.PropTypes.bool,
+    noMargin: React.PropTypes.bool,
     background: React.PropTypes.string,
   },
   mixins: [CanvasMixin],
@@ -20,7 +21,8 @@ var FrameCanvas = React.createClass({
           };
     }
     else {
-      var fitted = this.fitToSize(this.props.maxSize),
+      var noMargin = this.props.noMargin ? true : false,
+          fitted = this.fitToSize(this.props.maxSize, noMargin),
           width = fitted.size.width,
           height = fitted.size.height,
           style = fitted.style;

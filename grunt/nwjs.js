@@ -2,7 +2,7 @@
 module.exports = {
     options: {
       cacheDir: 'dist/cache',
-      version: '0.12.1', // '0.12.3',// nwjs version to use
+      version: '0.12.3', // nwjs version to use
       appName: '<%= package.longname %>',
       appVerison: '<%= package.version %>',
     },

@@ -9,10 +9,11 @@ var AnimationCanvas = React.createClass({
     if(this.props.animation !== null && this.props.animation.frames.length > 0) {
       var self = this,
           i = 1,
-          frame = this.props.animation.frames[this.state.frameIndex] || 1;
+          frame = this.props.animation.frames[this.state.frameIndex] || 1,
+          noMargin = this.props.noMargin ? true : false;
 
       return (
-        <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.maxSize} />
+        <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.maxSize} noMargin={noMargin} />
       )
     }
   },
