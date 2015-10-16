@@ -35,7 +35,7 @@ var FileStore = Fluxxor.createStore({
   resetData: function(key) {
     var data = {
       path: '',
-      name: '',
+      name: 'Unnamed',
       folder: '',
 
       size: {width: 0, height: 0},
@@ -69,6 +69,8 @@ var FileStore = Fluxxor.createStore({
 
     this.resetData();
     this._fromJSON(json);
+
+    platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
 
     this.emit('change');
   },
