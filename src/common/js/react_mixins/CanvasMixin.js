@@ -9,21 +9,24 @@ var CanvasMixin = {
   },
 
   fitToSize: function(size, noMargin) {
+
     var w = this.props.file.size.width,
         h = this.props.file.size.height,
         style = {},
         scale;
 
-    if(w > h) scale = Math.floor(size/w);
-    else scale = Math.floor(size/h);
+    if(w > h) scale = size/w;
+    else scale = size/h;
 
-    if(!noMargin) {
-      style.marginTop = Math.floor((size - Math.round(h*scale))/2);
-      style.marginLeft = Math.floor((size - Math.round(w*scale))/2);
-    }
+    if(scale > 1) scale = Math.floor(scale);
 
     w = Math.round(w*scale);
     h = Math.round(h*scale);
+
+    if(!noMargin) {
+      style.marginTop = Math.round((size - h)/2);
+      style.marginLeft = Math.round((size - w)/2);
+    }
 
     return {
       size: {
