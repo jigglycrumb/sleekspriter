@@ -1,4 +1,3 @@
-// Flux: done
 var PaintBucketTool = React.createClass({
   mixins: [FluxMixin],
   render: function() {

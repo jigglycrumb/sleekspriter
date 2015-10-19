@@ -54,6 +54,9 @@ module.exports = {
       {src: 'src/desktop/StoreUtils.js', dest: 'build/desktop/mac/js/classes/StoreUtils.js'},
       {src: 'src/desktop/PlatformUtils.js', dest: 'build/desktop/mac/js/classes/PlatformUtils.js'},
 
+      // workers
+      {expand: true, cwd: 'src/common/js', src: ['workers/**'], dest: 'build/desktop/mac'},
+
       // package.json
       {
         src: 'src/desktop/package.json',
@@ -90,6 +93,9 @@ module.exports = {
       // utilities
       {src: 'src/desktop/StoreUtils.js', dest: 'build/desktop/windows/js/classes/StoreUtils.js'},
       {src: 'src/desktop/PlatformUtils.js', dest: 'build/desktop/windows/js/classes/PlatformUtils.js'},
+
+      // workers
+      {expand: true, cwd: 'src/common/js', src: ['workers/**'], dest: 'build/desktop/windows'},
 
       // package.json
       {

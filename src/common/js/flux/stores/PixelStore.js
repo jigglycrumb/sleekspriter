@@ -285,6 +285,26 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPaintbucket: function(point) {
+    var data = {
+      point: point,
+      pixels: this.data.scope,
+    };
+
+    function workerDone(e) {
+      console.log('worker returned');
+    }
+
+    function workerFail(e) {
+      console.log('worker failed', e);
+    }
+
+    var worker = new Worker('workers/paintbucket.js');
+    worker.onmessage = workerDone;
+    worker.onerror = workerFail;
+    worker.postMessage(data);
+
+
+
 
     // get the pixel the paint bucket was used on
     var initialPixel = _.findWhere(this.data.scope, {x: point.x, y: point.y});
