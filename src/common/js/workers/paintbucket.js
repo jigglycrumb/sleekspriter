@@ -35,11 +35,56 @@ this.onmessage = function(e) {
   // create color object from initial pixel
   var initialColor = {r: initialPixel.r, g: initialPixel.g, b: initialPixel.b, a: initialPixel.a};
 
-  // object for coords of already filled pixels
-  var filled = {};
+  var filled = {},
+      currentGeneration = [initialPixel];
 
-  // start recursively filling the pixels
-  rFill.call(this, initialPixel);
+  while(currentGeneration.length > 0) {
+
+    var nextGeneration = [],
+        foundNeighbors = {};
+
+    currentGeneration.forEach(function(point) {
+
+      // push pixel to filled array
+      filled[hash(point)] = true;
+
+      var pixel = getByPosition(pixels, point),
+          pixelColor,
+          neighbors;
+
+      if(!pixel) {
+        pixelColor = {r: 0, g: 0, b: 0, a: 0};
+      }
+      else pixelColor = {r: pixel.r, g: pixel.g, b: pixel.b, a: pixel.a};
+
+      if(colorIsSame(pixelColor, initialColor)) {
+
+        newPixels.push({
+          frame: frame,
+          layer: layer,
+          x: point.x,
+          y: point.y,
+          z: layerZ,
+          r: fillColor.r,
+          g: fillColor.g,
+          b: fillColor.b,
+          a: fillColor.a,
+        });
+
+        var neighbors = getAdjacentPixels(point);
+
+        neighbors.forEach(function(n) {
+          if(!filled[hash(n)] && !foundNeighbors[hash(n)]) {
+            nextGeneration.push(n);
+            foundNeighbors[hash(n)] = true;
+          }
+        }, this);
+      }
+
+    }, this);
+
+    currentGeneration = nextGeneration.slice(0);
+  }
 
   // post back the new pixels
   this.postMessage(newPixels);
@@ -67,46 +112,7 @@ this.onmessage = function(e) {
 
     return arr;
   }
-
-  // function to recursively fill the pixels
-  function rFill(point) {
-
-    // push pixel to filled array
-    filled[point.x + ':' + point.y] = true;
-
-    console.log('Filled '+Object.keys(filled).length+' points');
-
-    var pixel = getByPosition(pixels, point),
-        pixelColor,
-        neighbors;
-
-    if(!pixel) {
-      pixelColor = {r: 0, g: 0, b: 0, a: 0};
-    }
-    else pixelColor = {r: pixel.r, g: pixel.g, b: pixel.b, a: pixel.a};
-
-    if(colorIsSame(pixelColor, initialColor)) {
-
-      newPixels.push({
-        frame: frame,
-        layer: layer,
-        x: point.x,
-        y: point.y,
-        z: layerZ,
-        r: fillColor.r,
-        g: fillColor.g,
-        b: fillColor.b,
-        a: fillColor.a,
-      });
-
-      neighbors = getAdjacentPixels(point);
-      neighbors.forEach(function(n) {
-        if(!filled[n.x+':'+n.y]) rFill.call(this, n);
-      }, this);
-    }
-  }
 }
-
 
 // helper function to filter the pixels array for a specific positioned pixel
 function getByPosition(array, position) {
@@ -117,7 +123,10 @@ function getByPosition(array, position) {
   return filtered.length == 1 ? filtered[0] : false;
 }
 
-// helper function to compare two color objects
 function colorIsSame(a, b) {
   return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a
+}
+
+function hash(point) {
+  return point.x+':'+point.y;
 }
