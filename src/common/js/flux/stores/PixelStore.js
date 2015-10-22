@@ -328,7 +328,7 @@ var PixelStore = Fluxxor.createStore({
     }
 
     function workerFail(e) {
-      console.log('worker failed', e);
+      console.log('worker failed in line '+e.lineno+' with message: '+e.message);
       self.emit('change');
     }
 

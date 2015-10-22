@@ -35,11 +35,18 @@ this.onmessage = function(e) {
   // create color object from initial pixel
   var initialColor = {r: initialPixel.r, g: initialPixel.g, b: initialPixel.b, a: initialPixel.a};
 
-  // array for already filled pixels
-  var filled = [];
+  // object for coords of already filled pixels
+  var filled = {};
 
+  // start recursively filling the pixels
+  rFill.call(this, initialPixel);
 
-  // helper function to get neighbors of a pixel
+  // post back the new pixels
+  this.postMessage(newPixels);
+
+  //----------------------------------------------------------------------------
+
+  // function to get neighbors of a pixel
   function getAdjacentPixels(point) {
 
     var p, // helper point
@@ -65,7 +72,9 @@ this.onmessage = function(e) {
   function rFill(point) {
 
     // push pixel to filled array
-    filled.push(point);
+    filled[point.x + ':' + point.y] = true;
+
+    console.log('Filled '+Object.keys(filled).length+' points');
 
     var pixel = getByPosition(pixels, point),
         pixelColor,
@@ -92,16 +101,10 @@ this.onmessage = function(e) {
 
       neighbors = getAdjacentPixels(point);
       neighbors.forEach(function(n) {
-        var old = getByPosition(filled, {x: n.x, y: n.y});
-        if(!old) rFill.call(this, n);
+        if(!filled[n.x+':'+n.y]) rFill.call(this, n);
       }, this);
     }
   }
-
-  // start recursively filling the pixels
-  rFill.call(this, initialPixel);
-
-  this.postMessage(newPixels);
 }
 
 
