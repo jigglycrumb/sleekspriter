@@ -286,6 +286,8 @@ var PixelStore = Fluxxor.createStore({
 
   onPaintbucket: function(point) {
 
+    document.getElementById('ScreenBlocker').style.display = 'block';
+
     var self = this,
         brush = flux.stores.UiStore.getData().color.brush;
 
@@ -324,12 +326,13 @@ var PixelStore = Fluxxor.createStore({
       });
 
       self.data.scope = _.unique(newPixels.concat(self.data.scope), function(px) { return px.uid() });
-
+      document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }
 
     function workerFail(e) {
       console.log('worker failed in line '+e.lineno+' with message: '+e.message);
+      document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }
 
