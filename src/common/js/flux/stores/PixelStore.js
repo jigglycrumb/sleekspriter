@@ -317,12 +317,13 @@ var PixelStore = Fluxxor.createStore({
     }
 
     function workerDone(e) {
-      console.log('worker returned');
-      self.data.scope = []; // todo: merge & overwrite instead of clearing
+      var newPixels = [];
 
       e.data.forEach(function(p) {
-        self.data.scope.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
+        newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
       });
+
+      self.data.scope = _.unique(newPixels.concat(self.data.scope), function(px) { return px.uid() });
 
       self.emit('change');
     }

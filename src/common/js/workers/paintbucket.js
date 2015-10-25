@@ -1,9 +1,6 @@
 // paintbucket worker
 
 this.onmessage = function(e) {
-
-  console.log('worker called');
-
   var newPixels = []; // the worker will return this
 
   var point = e.data.point,
