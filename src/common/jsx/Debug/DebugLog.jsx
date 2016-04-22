@@ -19,7 +19,7 @@ var DebugLog = React.createClass({
     this.setState({enabled: enabled});
   },
   clearLog: function() {
-    this.refs.log.getDOMNode().innerHTML = '';
+    this.refs.log.innerHTML = '';
   },
   componentDidMount: function() {
     flux.on('dispatch', this.log);
@@ -29,7 +29,7 @@ var DebugLog = React.createClass({
   },
   log: function(type, payload) {
     if(this.state.enabled === true) {
-      var log = this.refs.log.getDOMNode(),
+      var log = this.refs.log,
           logLine = "[Dispatch] "+type+" "+JSON.stringify(payload, 2)+"\n",
           logText = log.innerHTML || "";
 

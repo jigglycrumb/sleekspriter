@@ -37,7 +37,7 @@ var SelectionPattern = React.createClass({
   },
   drawPattern: function() {
     var frame = this.state.frame,
-        canvas = this.getDOMNode(),
+        canvas = ReactDOM.findDOMNode(this),
         ctx = canvas.getContext('2d');
 
     ctx.imageSmoothingEnabled = false;

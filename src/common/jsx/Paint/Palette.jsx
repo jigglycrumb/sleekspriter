@@ -62,7 +62,7 @@ var Palette = React.createClass({
     return this.getSelectedPaletteData().colors.length;
   },
   getOuterWidth: function() {
-    return this.getDOMNode().querySelector('.outer').clientWidth;
+    return ReactDOM.findDOMNode(this).querySelector('.outer').clientWidth;
   },
   getInnerWidth: function() {
     return this.state.swatchWidth*this.getSwatchCount();
@@ -75,13 +75,13 @@ var Palette = React.createClass({
         diff = ow - (swatchesVisible*this.state.swatchWidth),
         newWidth = (swatchesVisible*this.state.swatchWidth*pages)+diff;
 
-    this.getDOMNode().querySelector('.inner').style.width = newWidth+'px';
+    ReactDOM.findDOMNode(this).querySelector('.inner').style.width = newWidth+'px';
   },
   getScrollPosition: function() {
-    return this.getDOMNode().querySelector('.outer').scrollLeft;
+    return ReactDOM.findDOMNode(this).querySelector('.outer').scrollLeft;
   },
   setScrollPosition: function(x) {
-    this.getDOMNode().querySelector('.outer').scrollLeft = x;
+    ReactDOM.findDOMNode(this).querySelector('.outer').scrollLeft = x;
   },
   setScrollButtons: function(pos) {
     var iw = this.getInnerWidth(),
@@ -101,8 +101,8 @@ var Palette = React.createClass({
       if(pos < w) scrollButtonStyle.right = 'visible';
     }
 
-    this.refs.buttonScrollLeft.getDOMNode().style.visibility = scrollButtonStyle.left;
-    this.refs.buttonScrollRight.getDOMNode().style.visibility = scrollButtonStyle.right;
+    this.refs.buttonScrollLeft.style.visibility = scrollButtonStyle.left;
+    this.refs.buttonScrollRight.style.visibility = scrollButtonStyle.right;
   },
   scrollTo: function(x) {
     var self = this,
@@ -144,10 +144,10 @@ var Palette = React.createClass({
     this.scrollTo(0);
   },
   showPalettes: function() {
-    this.refs.paletteList.getDOMNode().style.display = 'block';
+    this.refs.paletteList.style.display = 'block';
   },
   hidePalettes: function() {
-    this.refs.paletteList.getDOMNode().style.display = 'none';
+    this.refs.paletteList.style.display = 'none';
   },
   selectPalette: function(event) {
     event.stopPropagation();

@@ -49,7 +49,7 @@ PlatformUtils.prototype.boot = function() {
       if (request.readyState == 4) {
         console.log('ajaxload', request.responseText);
 
-        React.render(React.createElement(App, {flux: flux}), container);
+        ReactDOM.render(React.createElement(App, {flux: flux}), container);
 
         var json = JSON.parse(contents);
         flux.actions.paletteLoad(json);
@@ -58,7 +58,7 @@ PlatformUtils.prototype.boot = function() {
 
         flux.actions.windowResize();
       }
-    }
+    };
 
     request.send();
   }

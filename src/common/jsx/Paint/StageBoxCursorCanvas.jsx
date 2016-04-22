@@ -18,7 +18,7 @@ var StageBoxCursorCanvas = React.createClass({
 
     if(x == 0 && y == 0) return;
 
-    var canvas = this.getDOMNode(),
+    var canvas = ReactDOM.findDOMNode(this),
         ctx = canvas.getContext('2d');
 
     ctx.strokeStyle = "#FF0000";

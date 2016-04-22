@@ -38,7 +38,7 @@ var NameEditable = React.createClass({
   },
   showNameInput: function() {
     this.setState({inputVisible: true}, function() {
-      this.refs.nameText.getDOMNode().focus();
+      this.refs.nameText.focus();
     });
   },
   handleNameChange: function(event) {
@@ -47,8 +47,8 @@ var NameEditable = React.createClass({
 
     // user pressed ESC, reset
     if(event.type === 'keydown' && event.keyCode === 27) {
-      this.refs.nameLabel.getDOMNode().innerHTML = oldName;
-      this.refs.nameText.getDOMNode().value = oldName;
+      this.refs.nameLabel.innerHTML = oldName;
+      this.refs.nameText.value = oldName;
       this.setState({inputVisible: false});
       return;
     }

@@ -133,7 +133,7 @@ var AnimationTimelineBox = React.createClass({
   },
   componentDidUpdate: function() {
     if(this.state.scroll === true) {
-      this.refs.inner.getDOMNode().querySelector('.frame.selected').scrollIntoView();
+      this.refs.inner.querySelector('.frame.selected').scrollIntoView();
       this.setState({scroll: false});
     }
   },

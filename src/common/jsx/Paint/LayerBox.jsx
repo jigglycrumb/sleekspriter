@@ -65,7 +65,7 @@ var LayerBox = React.createClass({
     var areaRightHeight = document.querySelector('.area.right').clientHeight,
         otherBoxesHeight = document.getElementById('layerboxhelper').clientHeight,
         height = areaRightHeight - otherBoxesHeight - 47;
-    this.getDOMNode().querySelector('.layers').style.height = height+'px';
+    ReactDOM.findDOMNode(this).querySelector('.layers').style.height = height+'px';
   },
 
   dragStart: function(layer) {

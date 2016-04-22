@@ -32,7 +32,7 @@ var AnimationFrameDropzone = React.createClass({
   setOver: function(event, over) {
     var method = over === true ? 'add' : 'remove';
     event.preventDefault();
-    this.getDOMNode().classList[method]('over');
+    ReactDOM.findDOMNode(this).classList[method]('over');
   },
   dragOver: function(event) {
     this.setOver(event, true);

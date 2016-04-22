@@ -24,8 +24,8 @@ var CanvasMixin = {
     h = Math.round(h*scale);
 
     if(!noMargin) {
-      style.marginTop = Math.round((size - h)/2);
-      style.marginLeft = Math.round((size - w)/2);
+      style.marginTop = Math.round((size - h)/2 || 0);
+      style.marginLeft = Math.round((size - w)/2 || 0);
     }
 
     return {
@@ -38,7 +38,7 @@ var CanvasMixin = {
   },
 
   clear: function() {
-    var canvas = this.getDOMNode();
+    var canvas = ReactDOM.findDOMNode(this);
     canvas.width = canvas.width;
   },
 };

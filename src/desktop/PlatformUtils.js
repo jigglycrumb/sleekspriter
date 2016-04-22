@@ -199,7 +199,7 @@ PlatformUtils.prototype.boot = function() {
   fs.readFile('json/palettes.json', function(error, contents) {
     if(error) throw error;
 
-    React.render(React.createElement(App, {flux: flux}), container, function() {
+    ReactDOM.render(React.createElement(App, {flux: flux}), container, function() {
       // show app window after GUI is rendered
       require('nw.gui').Window.get().show();
     });

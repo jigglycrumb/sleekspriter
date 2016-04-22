@@ -13,7 +13,7 @@ var StageBoxGridCanvas = React.createClass({
     else this.clear();
   },
   drawGrid: function() {
-    var canvas = this.getDOMNode(),
+    var canvas = ReactDOM.findDOMNode(this),
         zoom = this.props.ui.zoom.selected;
 
     if(zoom < 3) return;

@@ -53,8 +53,8 @@ var FrameBoxOnionPanel = React.createClass({
     this.getFlux().actions.onionFrame('fixed', +event.target.value);
   },
   setOnionFrameRelative: function(event) {
-    var prefix = this.refs.onionRelativePrefix.getDOMNode().value,
-        number = this.refs.onionRelativeNumber.getDOMNode().value,
+    var prefix = this.refs.onionRelativePrefix.value,
+        number = this.refs.onionRelativeNumber.value,
         val    = +(prefix.toString()+number.toString());
 
     this.getFlux().actions.onionFrame('relative', val);

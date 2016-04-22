@@ -53,12 +53,12 @@ var ModalNewFile = React.createClass({
   updateState: function() {
     var size = {
       frames: {
-        x: this.refs.framesX.getDOMNode().value,
-        y: this.refs.framesY.getDOMNode().value,
+        x: this.refs.framesX.value,
+        y: this.refs.framesY.value,
       },
       pixels: {
-        x: this.refs.pixelsX.getDOMNode().value,
-        y: this.refs.pixelsY.getDOMNode().value,
+        x: this.refs.pixelsX.value,
+        y: this.refs.pixelsY.value,
       },
     };
     this.setState(size);

@@ -13,6 +13,7 @@ module.exports = {
           'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
+          'react/react-dom.js',
         ],
         dest: 'build/browser/js/bower_components/',
       },
@@ -42,6 +43,7 @@ module.exports = {
           'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
+          'react/react-dom.js',
         ],
         dest: 'build/desktop/mac/js/bower_components/',
       },
@@ -82,6 +84,7 @@ module.exports = {
           'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
+          'react/react-dom.js',
         ],
         dest: 'build/desktop/windows/js/bower_components/',
       },
@@ -122,6 +125,7 @@ module.exports = {
           'lodash/lodash.js',
           'mousetrap/mousetrap.js',
           'react/react-with-addons.js',
+          'react/react-dom.js',
         ],
         dest: 'build/tablet/js/bower_components/',
       },
@@ -140,4 +144,4 @@ module.exports = {
       {src: 'src/tablet/config.xml', dest: 'build/tablet/config.xml'},
     ]
   },
-}
+};

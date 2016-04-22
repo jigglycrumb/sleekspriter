@@ -35,7 +35,7 @@ var LayerCanvas = React.createClass({
 
       this.clear();
 
-      var canvas = this.getDOMNode(),
+      var canvas = ReactDOM.findDOMNode(this),
           paint = function(px) {
             if(px.layer === this.props.layer) {
               Pixel.paint(canvas, px.x, px.y, px.toHex());
@@ -56,7 +56,7 @@ var LayerCanvas = React.createClass({
 
   //   this.clear();
 
-  //   var canvas = this.getDOMNode(),
+  //   var canvas = ReactDOM.findDOMNode(this),
   //       pixels = [];
 
   //   // paint

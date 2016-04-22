@@ -31,7 +31,7 @@ var SpritesheetCanvas = React.createClass({
 
   paint: function() {
 
-    var canvas = this.getDOMNode(),
+    var canvas = ReactDOM.findDOMNode(this),
         pixels = [],
         layerDict = [];
 

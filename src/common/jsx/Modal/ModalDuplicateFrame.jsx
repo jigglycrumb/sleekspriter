@@ -32,8 +32,8 @@ var ModalDuplicateFrame = React.createClass({
     )
   },
   updateForm: function() {
-    var source = +this.refs.source.getDOMNode().value,
-        target = +this.refs.target.getDOMNode().value;
+    var source = +this.refs.source.value,
+        target = +this.refs.target.value;
 
     this.setState({
       source: source,

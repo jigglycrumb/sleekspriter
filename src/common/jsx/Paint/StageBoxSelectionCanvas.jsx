@@ -38,7 +38,7 @@ var StageBoxSelectionCanvas = React.createClass({
   },
 
   drawSelection: function(start, end) {
-    var canvas = this.getDOMNode(),
+    var canvas = ReactDOM.findDOMNode(this),
         zoom = this.props.ui.zoom.selected,
         ctx = canvas.getContext('2d'),
         width = (end.x - start.x),

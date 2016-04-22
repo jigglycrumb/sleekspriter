@@ -1,3 +1,35 @@
+function sources(target) {
+  return [
+    'build/' + target + '/js/bower_components/index.js',
+    'build/' + target + '/js/bower_components/lodash.js',
+    'build/' + target + '/js/bower_components/mousetrap.js',
+    'build/' + target + '/js/bower_components/react-with-addons.js',
+    'build/' + target + '/js/bower_components/react-dom.js',
+    'build/' + target + '/js/bower_components/fluxxor.js',
+
+    'build/' + target + '/js/lib/**/*.js',
+
+    'build/' + target + '/js/strict.js',
+    'build/' + target + '/js/react_mixins/**/*.js',
+    'build/' + target + '/js/react_components/**/*.js',
+
+    'build/' + target + '/js/classes/StateHistory.js',
+    'build/' + target + '/js/classes/Point.js',
+    'build/' + target + '/js/classes/Pixel.js',
+
+    'build/' + target + '/js/classes/Hotkeys.js',
+
+    'build/' + target + '/js/classes/StoreUtils.js',
+    'build/' + target + '/js/classes/PlatformUtils.js',
+
+    'build/' + target + '/js/flux/**/*.js',
+
+    'build/' + target + '/js/index.js',
+
+    'build/' + target + '/js/menu.js',
+  ];
+}
+
 module.exports = {
   options: {
     separator: "\n", //add a new line after each file
@@ -5,107 +37,23 @@ module.exports = {
     footer: "" //added after everything
   },
   browser: {
-    src: [
-      'build/browser/js/bower_components/*.js',
-      'build/browser/js/lib/**/*.js',
-
-      'build/browser/js/strict.js',
-      'build/browser/js/react_mixins/**/*.js',
-      'build/browser/js/react_components/**/*.js',
-
-      'build/browser/js/classes/Point.js',
-      'build/browser/js/classes/Pixel.js',
-
-      'build/browser/js/classes/Hotkeys.js',
-
-      'build/browser/js/classes/StoreUtils.js',
-      'build/browser/js/classes/PlatformUtils.js',
-
-      'build/browser/js/flux/**/*.js',
-
-      'build/browser/js/index.js',
-    ],
+    src: sources('browser'),
     // the location of the resulting JS file
     dest: 'build/browser/<%= package.name %>.js'
   },
   desktopMac: {
-    src: [
-      'build/desktop/mac/js/bower_components/*.js',
-      'build/desktop/mac/js/lib/**/*.js',
-
-      'build/desktop/mac/js/strict.js',
-      'build/desktop/mac/js/react_mixins/**/*.js',
-      'build/desktop/mac/js/react_components/**/*.js',
-
-      'build/desktop/mac/js/classes/StateHistory.js',
-      'build/desktop/mac/js/classes/Point.js',
-      'build/desktop/mac/js/classes/Pixel.js',
-
-      'build/desktop/mac/js/classes/Hotkeys.js',
-
-      'build/desktop/mac/js/classes/StoreUtils.js',
-      'build/desktop/mac/js/classes/PlatformUtils.js',
-
-      'build/desktop/mac/js/flux/**/*.js',
-
-      'build/desktop/mac/js/index.js',
-
-      'build/desktop/mac/js/menu.js',
-    ],
+    src: sources('desktop/mac'),
     // the location of the resulting JS file
     dest: 'build/desktop/mac/<%= package.name %>.js'
   },
   desktopWindows: {
-    src: [
-      'build/desktop/windows/js/bower_components/*.js',
-      'build/desktop/windows/js/lib/**/*.js',
-
-      'build/desktop/windows/js/strict.js',
-      'build/desktop/windows/js/react_mixins/**/*.js',
-      'build/desktop/windows/js/react_components/**/*.js',
-
-      'build/desktop/windows/js/classes/StateHistory.js',
-      'build/desktop/windows/js/classes/Point.js',
-      'build/desktop/windows/js/classes/Pixel.js',
-
-      'build/desktop/windows/js/classes/Hotkeys.js',
-
-      'build/desktop/windows/js/classes/StoreUtils.js',
-      'build/desktop/windows/js/classes/PlatformUtils.js',
-
-      'build/desktop/windows/js/flux/**/*.js',
-
-      'build/desktop/windows/js/index.js',
-
-      'build/desktop/windows/js/menu.js',
-    ],
+    src: sources('desktop/windows'),
     // the location of the resulting JS file
     dest: 'build/desktop/windows/<%= package.name %>.js'
   },
   tablet: {
-    src: [
-      'build/tablet/js/bower_components/*.js',
-      'build/tablet/js/lib/**/*.js',
-
-      'build/tablet/js/strict.js',
-      'build/tablet/js/react_mixins/**/*.js',
-      'build/tablet/js/react_components/**/*.js',
-
-      'build/tablet/js/classes/Point.js',
-      'build/tablet/js/classes/Pixel.js',
-
-      'build/tablet/js/classes/Hotkeys.js',
-
-      'build/tablet/js/classes/StoreUtils.js',
-      'build/tablet/js/classes/PlatformUtils.js',
-
-      'build/tablet/js/flux/**/*.js',
-
-      'build/tablet/js/index.js',
-
-      'build/tablet/js/menu.js',
-    ],
+    src: sources('tablet'),
     // the location of the resulting JS file
     dest: 'build/tablet/<%= package.name %>.js'
   }
-}
+};
