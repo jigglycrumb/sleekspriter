@@ -2,8 +2,8 @@ var ModalNewFile = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
   getInitialState: function() {
     return {
-      frames: {x:  1, y:  1},
-      pixels: {x: 20, y: 20},
+      frames: {x:  2, y:  2},
+      pixels: {x: 200, y: 200},
     }
   },
   render: function() {

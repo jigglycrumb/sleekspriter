@@ -44,6 +44,7 @@ function changeColorLightness(color, delta) {
 function setupFluxDispatcher() {
   // save type of action when dispatching
   flux.setDispatchInterceptor(function(action, dispatch) {
+    console.log(action.type);
     flux.last = {
       action: action.type,
       payload: action.payload

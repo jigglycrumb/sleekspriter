@@ -7,6 +7,22 @@ var CanvasMixin = {
   componentDidUpdate: function() {
     switch(flux.last.action) {
       case "CURSOR_SET":
+      case "TOOL_SELECT":
+      case "SELECTION_CLEAR":
+      case "SCOPE_SET":
+      case "BRIGHTNESSTOOL_INTENSITY":
+      case "BRIGHTNESSTOOL_MODE":
+      case "TAB_SELECT":
+      case "PALETTE_SELECT":
+      case "COLOR_BRUSH":
+      case "ANIMATION_ADD":
+      case "ANIMATION_SELECT":
+      case "ANIMATION_NAME":
+      case "ANIMATION_FPS":
+      case "ANIMATION_DELETE":
+      case "ANIMATION_FRAME_ADD":
+      case "MODAL_SHOW":
+      case "MODAL_HIDE":
         // no-op
         break;
 
