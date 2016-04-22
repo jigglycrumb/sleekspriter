@@ -41,6 +41,21 @@ function changeColorLightness(color, delta) {
   return newColor;
 };
 
+function setupFluxDispatcher() {
+  // save type of action when dispatching
+  flux.setDispatchInterceptor(function(action, dispatch) {
+    flux.last = {
+      action: action.type,
+      payload: action.payload
+    };
+    //dispatch(action);
+    ReactDOM.unstable_batchedUpdates(function() {
+      dispatch(action);
+    });
+  });
+};
+
+
 var stores = {
     FileStore: new FileStore(),
     UiStore: new UiStore(),

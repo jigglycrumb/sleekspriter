@@ -51,7 +51,7 @@ var AnimationControlBox = React.createClass({
           <button className={controlButtonClasses} title="Select previous frame" onClick={this.selectPreviousFrame} disabled={controlsDisabled}>
             <i className="flaticon-previous2"/>
           </button>
-          <button className={controlButtonClasses} title="Play animation" onClick={this.playAnimation} disabled={controlsDisabled} style={playButtonStyle}>
+          <button className={controlButtonClasses} title="Play animation" onClick={this.playAnimation} disabled={controlsDisabled} style={playButtonStyle}>
             <i className="flaticon-play87"/>
           </button>
           <button className={controlButtonClasses} title="Pause animation" onClick={this.pauseAnimation} disabled={controlsDisabled} style={pauseButtonStyle}>

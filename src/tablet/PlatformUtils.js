@@ -49,6 +49,8 @@ PlatformUtils.prototype.boot = function() {
       if (request.readyState == 4) {
         console.log('ajaxload', request.responseText);
 
+        setupFluxDispatcher();
+
         ReactDOM.render(React.createElement(App, {flux: flux}), container);
 
         var json = JSON.parse(contents);

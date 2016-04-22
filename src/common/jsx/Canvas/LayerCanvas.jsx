@@ -8,7 +8,6 @@ var LayerCanvas = React.createClass({
   },
   mixins: [CanvasMixin],
   render: function() {
-
     if(_.isUndefined(this.props.maxSize)) {
       var width = this.props.file.size.width*this.props.zoom,
           height = this.props.file.size.height*this.props.zoom,
@@ -50,6 +49,15 @@ var LayerCanvas = React.createClass({
         this.props.pixels.scope.forEach(paint, this);
         this.props.pixels.frame.forEach(paint, this);
       }
+    }
+  },
+
+  paintPixel: function() {
+    var px = flux.last.payload,
+        canvas = ReactDOM.findDOMNode(this);
+
+    if(px.layer === this.props.layer) {
+      Pixel.paint(canvas, px.x, px.y, px.color);
     }
   },
   // previewLayer: function(pixels) {

@@ -64,6 +64,22 @@ var SpritesheetCanvas = React.createClass({
     }, this);
   },
 
+  paintPixel: function() {
+    var layerDict = [],
+        px = flux.last.payload,
+        canvas = ReactDOM.findDOMNode(this);
+
+    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+      layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
+    }, this);
+
+    if(layerDict[px.layer].visible === true) {
+      var targetPos = this.getPixelSpritesheetPosition(px),
+          alpha = px.a * (layerDict[px.layer].opacity / 100);
+      Pixel.paint(canvas, targetPos.x, targetPos.y, px.color, alpha, this.props.zoom);
+    }
+  },
+
   getPixelSpritesheetPosition: function(pixel) {
     var framePos = {
       x: (x = pixel.frame % this.props.file.frames.x) === 0 ? this.props.file.frames.x : x,

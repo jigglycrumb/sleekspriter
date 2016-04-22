@@ -45,7 +45,7 @@ var App = React.createClass({
           <ScreenDebug />
           <ScreenHelper ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
         </div>
-        <Modal ui={this.state.ui} file={this.state.file} />
+        <Modal ui={this.state.ui} file={this.state.file} />
         <ScreenBlocker />
       </div>
     );

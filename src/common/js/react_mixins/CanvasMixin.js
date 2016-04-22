@@ -5,7 +5,19 @@ var CanvasMixin = {
   },
 
   componentDidUpdate: function() {
-    this.paint();
+    switch(flux.last.action) {
+      case "CURSOR_SET":
+        // no-op
+        break;
+
+      case "PIXEL_ADD":
+        this.paintPixel();
+        break;
+
+      default:
+        this.paint();
+        break;
+    }
   },
 
   fitToSize: function(size, noMargin) {

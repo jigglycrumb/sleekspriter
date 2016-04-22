@@ -99,27 +99,16 @@ var StageBox = React.createClass({
   mousemove: function(event) {
 
     var event = event.nativeEvent,
-        point = this.getWorldCoordinates(event);
-
+        point = this.getWorldCoordinates(event),
+        distance = this.getMouseDownDistance();
 
     if((event.timeStamp > this.state.last + 10)
     && (point.x > 0 && point.y > 0)
     && (point.x !== this.props.ui.cursor.x || point.y !== this.props.ui.cursor.y)) {
-      var tmp = new Color('#ff0000');
-      this.getFlux().actions.cursorSet(point, tmp, tmp);
+      var layerColor = this.getLayerPixelColor(point),
+         frameColor = this.getFramePixelColor(point);
+      this.getFlux().actions.cursorSet(point, layerColor, frameColor);
     }
-
-
-    // var point = this.getWorldCoordinates(event),
-    //     distance = this.getMouseDownDistance();
-    //
-    // if((event.timeStamp > this.state.last + 10)
-    // && (point.x > 0 && point.y > 0)
-    // && (point.x !== this.props.ui.cursor.x || point.y !== this.props.ui.cursor.y)) {
-    //   var layerColor = this.getLayerPixelColor(point),
-    //      frameColor = this.getFramePixelColor(point);
-    //   this.getFlux().actions.cursorSet(point, layerColor, frameColor);
-    // }
 
     if(this.state.mousedown === true) {
 

@@ -159,7 +159,7 @@ PlatformUtils.prototype.saveFile = function(json) {
 
 PlatformUtils.prototype.updateDefaultFolder = function(folder) {
   if(!folder) {
-    folder = process.env[(process.platform == 'win32' || process.platform == 'win64') ? 'USERPROFILE' : 'HOME'];
+    folder = process.env[(process.platform == 'win32' || process.platform == 'win64') ? 'USERPROFILE' : 'HOME'];
   }
 
   document.querySelector('#fileOpen').setAttribute('nwworkingdir', folder);
@@ -198,6 +198,8 @@ PlatformUtils.prototype.boot = function() {
   var fs = require('fs');
   fs.readFile('json/palettes.json', function(error, contents) {
     if(error) throw error;
+
+    setupFluxDispatcher();
 
     ReactDOM.render(React.createElement(App, {flux: flux}), container, function() {
       // show app window after GUI is rendered
