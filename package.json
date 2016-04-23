@@ -30,7 +30,7 @@
     "classnames": "^2.2.3",
     "fluxxor": "^1.7.3",
     "gif.js": "^0.1.6",
-    "lodash": "^4.11.1",
+    "lodash": "^3.10.1",
     "mousetrap": "^1.5.3",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
