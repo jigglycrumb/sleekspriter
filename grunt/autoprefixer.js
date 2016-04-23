@@ -28,7 +28,6 @@ module.exports = {
       dest: 'build/desktop/windows'
     }],
   },
-
   tablet: {
     files: [{
       expand: true,
@@ -37,4 +36,4 @@ module.exports = {
       dest: 'build/tablet'
     }],
   },
-}
+};

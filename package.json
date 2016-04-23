@@ -10,6 +10,7 @@
   "devDependencies": {
     "grunt": "latest",
     "grunt-autoprefixer": "latest",
+    "grunt-browserify": "^5.0.0",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-compress": "latest",
     "grunt-contrib-concat": "latest",
@@ -33,9 +34,5 @@
     "mousetrap": "^1.5.3",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t [ babelify --presets [ react ] ] src/common/js/bundle.js -o build/bundle.js"
   }
 }

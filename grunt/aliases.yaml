@@ -4,6 +4,7 @@ default:
 basic:
   - 'clean:build'
   - 'copy'
+#  - 'browserify'
   - 'react'
   - 'concat'
   - 'less'

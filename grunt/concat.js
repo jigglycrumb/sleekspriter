@@ -1,5 +1,7 @@
 function sources(target) {
   return [
+    // 'build/bundle.js',
+
     'build/' + target + '/js/bower_components/index.js',
     'build/' + target + '/js/bower_components/lodash.js',
     'build/' + target + '/js/bower_components/mousetrap.js',
