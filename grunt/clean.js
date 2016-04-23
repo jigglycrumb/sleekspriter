@@ -8,7 +8,7 @@ module.exports = {
       'build/desktop/mac/js',
       'build/desktop/windows/js',
       'build/tablet/js',
-      //'build/bundle.js',
+      'build/bundle.js',
     ]
   },
   dist: {

@@ -1,13 +1,13 @@
 function sources(target) {
   return [
-    // 'build/bundle.js',
+    'build/bundle.js',
 
-    'build/' + target + '/js/bower_components/index.js',
+    //'build/' + target + '/js/bower_components/index.js',
     'build/' + target + '/js/bower_components/lodash.js',
-    'build/' + target + '/js/bower_components/mousetrap.js',
-    'build/' + target + '/js/bower_components/react-with-addons.js',
-    'build/' + target + '/js/bower_components/react-dom.js',
-    'build/' + target + '/js/bower_components/fluxxor.js',
+    //'build/' + target + '/js/bower_components/mousetrap.js',
+    //'build/' + target + '/js/bower_components/react-with-addons.js',
+    //'build/' + target + '/js/bower_components/react-dom.js',
+    //'build/' + target + '/js/bower_components/fluxxor.js',
 
     'build/' + target + '/js/lib/**/*.js',
 

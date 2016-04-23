@@ -1,4 +1,4 @@
-_ = require('lodash');
+//_ = require('lodash');
 Fluxxor = require('fluxxor');
 React = require('react');
 ReactDOM = require('react-dom');

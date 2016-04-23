@@ -57,16 +57,16 @@ function setupFluxDispatcher() {
 }
 
 var stores = {
-    FileStore: new FileStore(),
-    UiStore: new UiStore(),
-    PixelStore: new PixelStore(),
-  },
+  FileStore: new FileStore(),
+  UiStore: new UiStore(),
+  PixelStore: new PixelStore(),
+},
 
-  flux = new Fluxxor.Flux(stores, actions),
-  platformUtils = new PlatformUtils(),
-  storeUtils = new StoreUtils(),
-  hotkeys = new Hotkeys(),
-  stateHistory = new StateHistory(),
-  container = document.getElementById('app-container');
+flux = new Fluxxor.Flux(stores, actions),
+platformUtils = new PlatformUtils(),
+storeUtils = new StoreUtils(),
+hotkeys = new Hotkeys(),
+stateHistory = new StateHistory(),
+container = document.getElementById('app-container');
 
 platformUtils.boot();
