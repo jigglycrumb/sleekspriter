@@ -2,6 +2,9 @@ module.exports = {
   build: {
     src: 'build'
   },
+  dist: {
+    src: 'dist'
+  },
   postbuild: {
     src: [
       'build/browser/js',
@@ -10,9 +13,6 @@ module.exports = {
       'build/tablet/js',
       'build/bundle.js',
     ]
-  },
-  dist: {
-    src: 'dist'
   },
   all: {
     src: [
