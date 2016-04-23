@@ -24,8 +24,14 @@ var StageBox = React.createClass({
     if( w > centerAreaWidth ) css.left = 0;
     else css.left = (centerAreaWidth - w)/2;
 
+    if(css.left < 5) css.left = 5;
+
     if( h > centerAreaHeight ) css.top = 0;
     else css.top = (centerAreaHeight - h)/2;
+
+    if(css.top < 5) css.top = 5;
+
+    console.log("center area: "+centerAreaWidth+"x"+centerAreaHeight, w, h, css);
 
     var onionFrame = null;
     if(this.props.ui.onion.active === true) {

@@ -3,7 +3,7 @@ var ModalNewFile = React.createClass({
   getInitialState: function() {
     return {
       frames: {x:  2, y:  2},
-      pixels: {x: 200, y: 200},
+      pixels: {x: 50, y: 50},
     }
   },
   render: function() {
