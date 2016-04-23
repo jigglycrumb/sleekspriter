@@ -81,9 +81,9 @@ var UiStore = Fluxxor.createStore({
         intensity: 10,
       },
       color: {
-        brush: new Color('#000000'),
-        layer: new Color('#000000'),
-        frame: new Color('#000000'),
+        brush: new Color('#FFFFFF'),
+        layer: new Color('#FFFFFF'),
+        frame: new Color('#FFFFFF'),
       },
       cursor: new Point(1,1),
       export: {
@@ -437,11 +437,12 @@ var UiStore = Fluxxor.createStore({
   onPixelDelete: function(payload) {
     this.waitFor(['PixelStore'], function(PixelStore) {
       var palette = [],
-          pixels  = PixelStore.getData();
+          pixels  = PixelStore.getData(),
+          pushToPalette = function(px) { palette.push(px.toHex()); };
 
-      for(x in pixels) {
+      for(var x in pixels) {
         var pixelArr = pixels[x];
-        pixelArr.forEach(function(px) { palette.push(px.toHex()); });
+        pixelArr.forEach(pushToPalette);
       }
 
       this.data.palettes.available[0].colors = _.unique(palette, false);

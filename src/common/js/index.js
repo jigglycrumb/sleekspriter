@@ -1,11 +1,11 @@
 function NodeList2Array(NodeList) {
   //return [ ... NodeList ]; // ES6 version, doesn't work with JSX compiler
   return [].slice.call(NodeList);
-};
+}
 
 function inArray(array, value) {
   return array.indexOf(value) > -1;
-};
+}
 
 function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) {
   var w = canvasWidth,
@@ -26,8 +26,8 @@ function fitCanvasIntoSquareContainer(canvasWidth, canvasHeight, containerSize) 
     width: w,
     height: h,
     style: style
-  }
-};
+  };
+}
 
 // fix for color.js darken/lighten functions
 // uses absolute instead of relative strengths and works on black/white
@@ -39,7 +39,7 @@ function changeColorLightness(color, delta) {
   newColor.values.hsl[2] = l;
   newColor.setValues("hsl", newColor.values.hsl);
   return newColor;
-};
+}
 
 function setupFluxDispatcher() {
   // save type of action when dispatching
@@ -54,8 +54,7 @@ function setupFluxDispatcher() {
       dispatch(action);
     });
   });
-};
-
+}
 
 var stores = {
     FileStore: new FileStore(),

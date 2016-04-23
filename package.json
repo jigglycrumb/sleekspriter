@@ -22,5 +22,20 @@
     "grunt-replace": "latest",
     "load-grunt-config": "latest",
     "time-grunt": "latest"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.2.0",
+    "classnames": "^2.2.3",
+    "fluxxor": "^1.7.3",
+    "gif.js": "^0.1.6",
+    "lodash": "^4.11.1",
+    "mousetrap": "^1.5.3",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t [ babelify --presets [ react ] ] src/common/js/bundle.js -o build/bundle.js"
   }
 }
