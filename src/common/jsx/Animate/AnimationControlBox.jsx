@@ -38,7 +38,7 @@ var AnimationControlBox = React.createClass({
     return (
       <div id="AnimationControlBox" className="bar">
         <div>
-          <button className={listButtonClasses} onClick={this.props.toggleAnimationList} title="Animation list">
+          <button className={listButtonClasses} onClick={this.props.toggleAnimationList} onTouchStart={this.props.toggleAnimationList} title="Animation list">
             <i className="flaticon-list67"/>
           </button>
           <label>Animation: {animation.name}</label>
@@ -48,16 +48,16 @@ var AnimationControlBox = React.createClass({
           <input type="number" min={1} value={animation.fps} onChange={this.setAnimationFps} disabled={fpsDisabled} />
         </div>
         <div>
-          <button className={controlButtonClasses} title="Select previous frame" onClick={this.selectPreviousFrame} disabled={controlsDisabled}>
+          <button className={controlButtonClasses} title="Select previous frame" onClick={this.selectPreviousFrame} onTouchStart={this.selectPreviousFrame}  disabled={controlsDisabled}>
             <i className="flaticon-previous2"/>
           </button>
-          <button className={controlButtonClasses} title="Play animation" onClick={this.playAnimation} disabled={controlsDisabled} style={playButtonStyle}>
+          <button className={controlButtonClasses} title="Play animation" onClick={this.playAnimation} onTouchStart={this.playAnimation}  disabled={controlsDisabled} style={playButtonStyle}>
             <i className="flaticon-play87"/>
           </button>
-          <button className={controlButtonClasses} title="Pause animation" onClick={this.pauseAnimation} disabled={controlsDisabled} style={pauseButtonStyle}>
+          <button className={controlButtonClasses} title="Pause animation" onClick={this.pauseAnimation} onTouchStart={this.pauseAnimation}  disabled={controlsDisabled} style={pauseButtonStyle}>
             <i className="flaticon-small38"/>
           </button>
-          <button className={controlButtonClasses} title="Select next frame" onClick={this.selectNextFrame} disabled={controlsDisabled}>
+          <button className={controlButtonClasses} title="Select next frame" onClick={this.selectNextFrame} onTouchStart={this.selectNextFrame}  disabled={controlsDisabled}>
             <i className="flaticon-next"/>
           </button>
         </div>

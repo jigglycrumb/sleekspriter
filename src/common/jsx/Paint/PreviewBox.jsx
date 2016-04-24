@@ -47,10 +47,10 @@ var PreviewBox = React.createClass({
       animation = storeUtils.animations.getById(this.state.animation);
       animationToggle =
         <div className="actions paint-preview">
-         <button className={classNames(leftButtonClasses)} type="button" title="Preview Frame" onClick={this.previewFrame}>
+         <button className={classNames(leftButtonClasses)} type="button" title="Preview Frame" onClick={this.previewFrame} onTouchStart={this.previewFrame}>
             <i className="flaticon-man13"></i>
           </button>
-          <button className={classNames(middleButtonClasses)} type="button" title="Preview Animation" onClick={this.previewAnimation}>
+          <button className={classNames(middleButtonClasses)} type="button" title="Preview Animation" onClick={this.previewAnimation} onTouchStart={this.previewAnimation}>
             <i className="flaticon-man-silhouette1"></i>
           </button>
           <span className="right">
@@ -79,7 +79,7 @@ var PreviewBox = React.createClass({
 
     return (
       <div id="PreviewBox" className="box">
-        <h4 className={classNames(handleClasses)} onClick={this.fold}>Preview</h4>
+        <h4 className={classNames(handleClasses)} onClick={this.fold} onTouchStart={this.fold}>Preview</h4>
         <div className="foldable-fold" style={boxStyle}>
           {preview}
           {animationToggle}

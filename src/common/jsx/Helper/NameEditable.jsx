@@ -24,6 +24,7 @@ var NameEditable = React.createClass({
         <label
           ref="nameLabel"
           onClick={this.showNameInput}
+          onTouchStart={this.showNameInput}
           style={labelStyle}>{this.props.name}</label>
 
         <input
@@ -54,7 +55,7 @@ var NameEditable = React.createClass({
     }
 
     // user pressed Return or input lost focus, check for name change and fire callback
-    if(event.type === 'blur' || (event.type === 'keydown' && event.keyCode === 13)) {
+    if(event.type === 'blur' || (event.type === 'keydown' && event.keyCode === 13)) {
       if(!_.isEmpty(newName)) {
         this.setState({inputVisible: false});
         this.props.callback.call(null, newName);

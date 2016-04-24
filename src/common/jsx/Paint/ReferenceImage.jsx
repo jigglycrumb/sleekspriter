@@ -28,7 +28,7 @@ var ReferenceImage = React.createClass({
             onDragEnd={this.dragEnd}
             onDrag={this.drag}>
           <img src={this.props.image.path} title={this.props.image.name} />
-          <button className="remove" onClick={this.props.removeHandler}>✖</button>
+          <button className="remove" onClick={this.props.removeHandler} onTouchStart={this.props.removeHandler}>✖</button>
         </div>
       );
     }

@@ -24,7 +24,7 @@ var LayerBox = React.createClass({
 
     return (
       <div id="LayerBox" className="box">
-        <h4 className={classNames(handleClasses)} onClick={this.fold}>Layers</h4>
+        <h4 className={classNames(handleClasses)} onClick={this.fold} onTouchStart={this.fold}>Layers</h4>
         <div className="foldable-fold" style={boxStyle}>
           <div ref="layers" className="layers" onDragOver={this.dragOver} onDrop={this.drop}>
             {layers.map(function(layer) {
@@ -45,8 +45,8 @@ var LayerBox = React.createClass({
             }, this)}
           </div>
           <div className="actions">
-            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
-            <button title="Delete selected layer" onClick={this.confirmLayerDelete} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
+            <button title="New layer above selected layer" onClick={this.dispatchLayerAdded} onTouchStart={this.dispatchLayerAdded} className="tiny transparent"><i className="flaticon-plus25"></i></button>
+            <button title="Delete selected layer" onClick={this.confirmLayerDelete} onTouchStart={this.confirmLayerDelete} className="tiny transparent" disabled={disabled}><i className="flaticon-minus18"></i></button>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 var ModalDuplicateFrame = React.createClass({
   mixins: [FluxMixin, ModalBasicMixin],
-  getInitialState: function() {
+  getInitialState: function() {
     return {
       source: this.props.ui.frames.selected,
       target: 1,
@@ -25,8 +25,8 @@ var ModalDuplicateFrame = React.createClass({
           </ul>
         </div>
         <div className="actions">
-          <button onClick={this.duplicateFrame}>Ok, do it!</button>
-          <button onClick={this.hide}>Cancel</button>
+          <button onClick={this.duplicateFrame} onTouchStart={this.duplicateFrame}>Ok, do it!</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
         </div>
       </div>
     )

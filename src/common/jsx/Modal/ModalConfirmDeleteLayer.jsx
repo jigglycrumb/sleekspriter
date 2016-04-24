@@ -7,8 +7,8 @@ var ModalConfirmDeleteLayer = React.createClass({
         <div className="title">Confirmation needed</div>
         <div className="text">Are you sure you want to delete the layer "{layer.name}"?</div>
         <div className="actions">
-          <button onClick={this.deleteLayer}>Delete layer</button>
-          <button onClick={this.hide}>Cancel</button>
+          <button onClick={this.deleteLayer} onTouchStart={this.deleteLayer}>Delete layer</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
         </div>
       </div>
     )

@@ -2,7 +2,7 @@ var ExportButton = React.createClass({
   mixins: [FluxMixin],
   render: function() {
     return (
-      <a className="button" ref="theButton" onClick={this.export}>Export</a>
+      <a className="button" ref="theButton" onClick={this.export} onTouchStart={this.export}>Export</a>
     )
   },
   export: function() {

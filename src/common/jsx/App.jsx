@@ -33,7 +33,7 @@ var App = React.createClass({
                     active: this.state.ui.tab === tab ? true : false,
                   });
               return (
-                <div className={classes} key={tab} data-target={tab} onClick={this.tabSelect}>{label}</div>
+                <div className={classes} key={tab} data-target={tab} onClick={this.tabSelect} onTouchStart={this.tabSelect}>{label}</div>
               )
             }, this)}
         </nav>

@@ -6,9 +6,9 @@ var ModalAppendReplaceFrames = React.createClass({
         <div className="title">Decision needed</div>
         <div className="text">Append frames to animation or replace existing frames?</div>
         <div className="actions">
-          <button onClick={this.appendFrames}>Append</button>
-          <button onClick={this.replaceFrames}>Replace</button>
-          <button onClick={this.hide}>Cancel</button>
+          <button onClick={this.appendFrames} onTouchStart={this.appendFrames}>Append</button>
+          <button onClick={this.replaceFrames} onTouchStart={this.replaceFrames}>Replace</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
         </div>
       </div>
     )

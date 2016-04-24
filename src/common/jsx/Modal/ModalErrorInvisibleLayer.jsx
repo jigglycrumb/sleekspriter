@@ -6,7 +6,7 @@ var ModalErrorInvisibleLayer = React.createClass({
         <div className="title">Error</div>
         <div className="text">Cannot change an invisible or completely transparent layer.</div>
         <div className="actions">
-          <button onClick={this.hide}>Ok, got it.</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Ok, got it.</button>
         </div>
       </div>
     )

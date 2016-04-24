@@ -24,18 +24,18 @@ var AnimationFrameBox = React.createClass({
         <h5>Frames</h5>
         <div className="scroller">
           <div className="inner" style={containerStyle}>
-          <button className="mass-add row" title="Add row to animation" style={rowButtonStyle} onClick={this.addRow}>+</button>
-          <button className="mass-add column" title="Add column to animation" style={columnButtonStyle} onClick={this.addColumn}>+</button>
+          <button className="mass-add row" title="Add row to animation" style={rowButtonStyle} onClick={this.addRow} onTouchStart={this.addRow} >+</button>
+          <button className="mass-add column" title="Add column to animation" style={columnButtonStyle} onClick={this.addColumn} onTouchStart={this.addColumn} >+</button>
           {frames.map(function(frame) {
             return (
               <AnimationFrameBoxFrame
-                key={frame} 
-                frame={frame} 
+                key={frame}
+                frame={frame}
                 size={frameSize}
-                ui={this.props.ui} 
+                ui={this.props.ui}
                 file={this.props.file}
                 pixels={this.props.pixels}
-                onMouseEnterHandler={this.selectFrame.bind(this, frame)} />
+                onMouseEnterHandler={this.selectFrame.bind(this, frame)} />
             );
           }, this)}
           </div>

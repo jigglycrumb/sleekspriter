@@ -26,7 +26,7 @@ var AnimationList = React.createClass({
         {animations.map(function(animation) {
           var selected = animation.id === this.props.ui.animations.selected ? true : false;
           return (
-            <AnimationListAnimation key={animation.id} animation={animation} selected={selected} />
+            <AnimationListAnimation key={animation.id} animation={animation} selected={selected} />
           )
         }, this)}
         </ul>
@@ -34,10 +34,10 @@ var AnimationList = React.createClass({
         {helpingHand}
 
         <div className="animations-footer">
-          <button title="New animation" className="transparent" onClick={this.dispatchAnimationAdded}>
+          <button title="New animation" className="transparent" onClick={this.dispatchAnimationAdded} onTouchStart={this.dispatchAnimationAdded}>
             <i className="flaticon-plus25" />
           </button>
-          <button title="Delete selected animation" className="transparent" onClick={this.dispatchAnimationRemoved} disabled={deleteButtonDisabled}>
+          <button title="Delete selected animation" className="transparent" onClick={this.dispatchAnimationRemoved} onTouchStart={this.dispatchAnimationRemoved} disabled={deleteButtonDisabled}>
             <i className="flaticon-minus18" />
           </button>
         </div>

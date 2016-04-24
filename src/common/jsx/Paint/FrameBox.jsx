@@ -33,7 +33,7 @@ var FrameBox = React.createClass({
 
     return (
       <div id="FrameBox" className="box">
-        <h4 className={classNames(handleClasses)} onClick={this.fold}>Frames</h4>
+        <h4 className={classNames(handleClasses)} onClick={this.fold} onTouchStart={this.fold}>Frames</h4>
         <div className="foldable-fold" style={boxStyle}>
           <div id="FrameBoxFrames">
           {frames.map(function(frame) {
@@ -51,7 +51,7 @@ var FrameBox = React.createClass({
             };
 
             return (
-              <div key={id} className={classNames(classes)} style={frameStyle} onClick={clickHandler}>
+              <div key={id} className={classNames(classes)} style={frameStyle} onClick={clickHandler} onTouchStart={clickHandler}>
                 <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={frameSize} />
               </div>
             );
@@ -59,11 +59,11 @@ var FrameBox = React.createClass({
           </div>
           <div className="actions">
             Frame&nbsp;
-            <input type="number" className="frame-number" min="1" max={this.props.ui.frames.total} value={this.props.ui.frames.selected} onChange={this.dispatchFrameSelected} />
+            <input type="number" className="frame-number" min="1" max={this.props.ui.frames.total} value={this.props.ui.frames.selected} onChange={this.dispatchFrameSelected} />
             &nbsp;/&nbsp;
             {this.props.ui.frames.total}
 
-            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} title={onionToggleTitle}>
+            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} onTouchStart={this.toggleOnionSkinning} title={onionToggleTitle}>
               <i className="flaticon-vegetable38"></i>
             </button>
           </div>

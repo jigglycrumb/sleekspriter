@@ -15,7 +15,7 @@ var LayerBoxLayer = React.createClass({
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged} />
         </div>
-        <div className="preview" onClick={this.dispatchLayerSelected}>
+        <div className="preview" onClick={this.dispatchLayerSelected} onTouchStart={this.dispatchLayerSelected}>
           <LayerCanvas layer={this.props.layer.id} zoom={this.props.ui.zoom.selected} file={this.props.file} pixels={this.props.pixels} maxSize={30} />
         </div>
         <NameEditable name={this.props.layer.name} callback={this.dispatchLayerNameChanged} />

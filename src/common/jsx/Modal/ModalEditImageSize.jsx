@@ -44,8 +44,8 @@ var ModalEditImageSize = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.updateFile}>Ok</button>
-          <button onClick={this.hide}>Cancel</button>
+          <button onClick={this.updateFile} onTouchStart={this.updateFile}>Ok</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
         </div>
       </div>
     )

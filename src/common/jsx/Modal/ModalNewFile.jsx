@@ -38,8 +38,8 @@ var ModalNewFile = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.createFile}>Ok</button>
-          <button onClick={this.hide}>Cancel</button>
+          <button onClick={this.createFile} onTouchStart={this.createFile}>Ok</button>
+          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
         </div>
       </div>
     )

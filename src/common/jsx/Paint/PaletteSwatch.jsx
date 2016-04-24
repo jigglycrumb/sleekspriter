@@ -10,7 +10,8 @@ var PaletteSwatch = React.createClass({
         className="colorswatch"
         style={{background: this.props.color}}
         title={this.props.color}
-        onClick={this.select} />
+        onClick={this.select}
+        onTouchStart={this.select} />
     );
   },
   select: function() {
