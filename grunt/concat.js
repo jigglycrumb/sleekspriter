@@ -15,8 +15,6 @@ function sources(target) {
 
     'build/' + target + '/js/classes/PlatformUtils.js',
 
-    // 'build/' + target + '/js/flux/constants.js',
-    // 'build/' + target + '/js/flux/actions.js',
     'build/' + target + '/js/flux/stores/*.js',
 
     'build/' + target + '/js/index.js',

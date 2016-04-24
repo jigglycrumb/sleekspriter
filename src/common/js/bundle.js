@@ -12,7 +12,7 @@ stateHistory = require('./classes/StateHistory');
 
 constants = require('./flux/constants');
 actions = require('./flux/actions');
-//
+
 // stores = {
 //   FileStore: require('./flux/stores/FileStore'),
 //   UiStore: require('./flux/stores/UiStore'),

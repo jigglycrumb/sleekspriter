@@ -434,4 +434,4 @@ var PixelStore = Fluxxor.createStore({
 
 });
 
-// module.exports = PixelStore;
+// module.exports = new PixelStore();

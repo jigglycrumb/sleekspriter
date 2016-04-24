@@ -593,4 +593,4 @@ var FileStore = Fluxxor.createStore({
 
 });
 
-// module.exports = FileStore;
+// module.exports = new FileStore();

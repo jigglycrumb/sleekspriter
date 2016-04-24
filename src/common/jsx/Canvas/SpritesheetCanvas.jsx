@@ -82,6 +82,7 @@ var SpritesheetCanvas = React.createClass({
 
   erasePixel: function() {
     // console.log(stateHistory.last.payload);
+    this.paint(); // TODO implement a better method instead of repainting everything
   },
 
   getPixelSpritesheetPosition: function(pixel) {
