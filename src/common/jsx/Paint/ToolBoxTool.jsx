@@ -11,7 +11,8 @@ var ToolBoxTool = React.createClass({
         className={cssClasses}
         title={this.props.title}
         disabled={selected}
-        onClick={this.dispatchToolSelected.bind(this, this.props.id)}>
+        onClick={this.dispatchToolSelected.bind(this, this.props.id)}
+        onTouchStart={this.dispatchToolSelected.bind(this, this.props.id)}>
           <i className={this.props.icon}></i>
       </button>
     );
