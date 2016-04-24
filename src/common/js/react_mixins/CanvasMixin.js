@@ -5,7 +5,7 @@ var CanvasMixin = {
   },
 
   componentDidUpdate: function() {
-    switch(flux.last.action) {
+    switch(stateHistory.last.action) {
       case "CURSOR_SET":
       case "TOOL_SELECT":
       case "SELECTION_CLEAR":
@@ -24,6 +24,10 @@ var CanvasMixin = {
       case "MODAL_SHOW":
       case "MODAL_HIDE":
         // no-op
+        break;
+
+      case "PIXEL_DELETE":
+        this.erasePixel();
         break;
 
       case "PIXEL_ADD":
@@ -62,7 +66,7 @@ var CanvasMixin = {
         height: h,
       },
       style: style
-    }
+    };
   },
 
   clear: function() {

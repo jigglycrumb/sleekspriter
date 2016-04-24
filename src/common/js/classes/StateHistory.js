@@ -1,9 +1,10 @@
 var StateHistory = function() {
-  this.lastAction = null;
+  this.last = {
+    action: null,
+    payload: null,
+  };
 };
 
 StateHistory.prototype.constructor = StateHistory;
 
-StateHistory.prototype.setLastAction = function(action) {
-  this.lastAction = action;
-};
+module.exports = new StateHistory();

@@ -10,6 +10,11 @@ var FrameCanvas = React.createClass({
     background: React.PropTypes.string,
   },
   mixins: [CanvasMixin],
+  getInitialState: function() {
+    return {
+      layerDict: [],
+    }
+  },
   render: function() {
 
     if(_.isUndefined(this.props.maxSize)) {
@@ -79,7 +84,7 @@ var FrameCanvas = React.createClass({
   },
   paintPixel: function() {
     var layerDict = [],
-        px = flux.last.payload,
+        px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
     flux.stores.FileStore.getData().layers.forEach(function(layer) {
@@ -91,5 +96,10 @@ var FrameCanvas = React.createClass({
       else var alpha = px.a * (layerDict[px.layer].opacity / 100);
       Pixel.paint(canvas, px.x, px.y, px.color, alpha);
     }
+  },
+
+
+  erasePixel: function() {
+    // console.log(stateHistory.last.payload);
   },
 });

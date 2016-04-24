@@ -278,7 +278,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelsMove: function(distance) {
-    var wrapPixel = function(px) { px.wrap(distance) };
+    var wrapPixel = function(px) { px.wrap(distance); };
     this.data.scope.forEach(wrapPixel);
     this.data.preview = [];
     this.emit('change');
@@ -325,7 +325,7 @@ var PixelStore = Fluxxor.createStore({
         newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
       });
 
-      self.data.scope = _.unique(newPixels.concat(self.data.scope), function(px) { return px.uid() });
+      self.data.scope = _.unique(newPixels.concat(self.data.scope), function(px) { return px.uid(); });
       document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }
@@ -424,7 +424,7 @@ var PixelStore = Fluxxor.createStore({
     this.data[from].forEach(function(px) {
       this.data[to].push(px);
     }, this);
-    this.data[to] = _.unique(this.data[to], function(px) { return px.uid() });
+    this.data[to] = _.unique(this.data[to], function(px) { return px.uid(); });
   },
 
   save: function() {
@@ -433,3 +433,5 @@ var PixelStore = Fluxxor.createStore({
   },
 
 });
+
+// module.exports = PixelStore;

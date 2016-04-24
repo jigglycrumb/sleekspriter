@@ -19,7 +19,7 @@ Point.prototype.constructor = Point;
  * @return {Object} the updated Point
  */
 Point.prototype.translate = function(distance, simulate) {
-  simulate = simulate || false;
+  simulate = simulate || false;
 
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
@@ -31,7 +31,7 @@ Point.prototype.translate = function(distance, simulate) {
   this.x = targetX;
   this.y = targetY;
   return this;
-}
+};
 
 /**
  * Moves a point by a given distance, wrapping around if the canvas end is reached
@@ -40,7 +40,7 @@ Point.prototype.translate = function(distance, simulate) {
  * @return {Object} the updated Point
  */
 Point.prototype.wrap = function(distance, simulate) {
-  simulate = simulate || false;
+  simulate = simulate || false;
 
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y,

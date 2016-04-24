@@ -10,16 +10,14 @@ function sources(target) {
     'build/' + target + '/js/react_mixins/**/*.js',
     'build/' + target + '/js/react_components/**/*.js',
 
-    'build/' + target + '/js/classes/StateHistory.js',
     'build/' + target + '/js/classes/Point.js',
     'build/' + target + '/js/classes/Pixel.js',
 
-    'build/' + target + '/js/classes/Hotkeys.js',
-
-    'build/' + target + '/js/classes/StoreUtils.js',
     'build/' + target + '/js/classes/PlatformUtils.js',
 
-    'build/' + target + '/js/flux/**/*.js',
+    // 'build/' + target + '/js/flux/constants.js',
+    // 'build/' + target + '/js/flux/actions.js',
+    'build/' + target + '/js/flux/stores/*.js',
 
     'build/' + target + '/js/index.js',
 

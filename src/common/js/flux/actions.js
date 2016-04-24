@@ -223,3 +223,5 @@ var actions = {
     this.dispatch(constants.ONION_FRAME, {mode: mode, value: value});
   },
 };
+
+module.exports = actions;

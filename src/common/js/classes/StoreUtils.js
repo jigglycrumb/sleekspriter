@@ -20,7 +20,7 @@ StoreUtils.prototype.layers.getIds = function() {
 
 /**
  * Get layer by ID
- * @returns {Object} layer
+ * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getById = function(id) {
   return _.findWhere(flux.stores.UiStore.getData().layers.frame, {id: id});
@@ -77,7 +77,7 @@ Object.defineProperty(StoreUtils.prototype.layers, 'isVisible', {
   configurable: false,
   get: function() {
     var layer = this.getSelected();
-    return layer.visible && layer.opacity > 0;
+    return layer.visible && layer.opacity > 0;
   }
 });
 
@@ -90,7 +90,7 @@ StoreUtils.prototype.animations = {};
 
 /**
  * Get animation by ID
- * @returns {Object} animation
+ * @returns {Object} animation
  */
 StoreUtils.prototype.animations.getById = function(id) {
   return _.find(flux.stores.FileStore.getData().animations, {id: id});
@@ -114,10 +114,10 @@ StoreUtils.prototype.selection = {};
 StoreUtils.prototype.selection.contains = function(point) {
   if(this.isActive) {
     var s = flux.stores.UiStore.getData().selection;
-    return point.x >= s.start.x
-        && point.x <= s.end.x
-        && point.y >= s.start.y
-        && point.y <= s.end.y;
+    return point.x >= s.start.x &&
+           point.x <= s.end.x &&
+           point.y >= s.start.y &&
+           point.y <= s.end.y;
   }
   else return false;
 };
@@ -127,8 +127,8 @@ Object.defineProperty(StoreUtils.prototype.selection, 'isActive', {
   configurable: false,
   get: function() {
     var s = flux.stores.UiStore.getData().selection;
-    return s.start instanceof Point
-        && s.end instanceof Point;
+    return s.start instanceof Point &&
+           s.end instanceof Point;
   }
 });
 
@@ -137,8 +137,8 @@ Object.defineProperty(StoreUtils.prototype.selection, 'isResizing', {
   configurable: false,
   get: function() {
     var s = flux.stores.UiStore.getData().selection;
-    return s.start instanceof Point
-        && s.cursor instanceof Point;
+    return s.start instanceof Point &&
+           s.cursor instanceof Point;
   }
 });
 
@@ -147,9 +147,9 @@ Object.defineProperty(StoreUtils.prototype.selection, 'isMoving', {
   configurable: false,
   get: function() {
     var s = flux.stores.UiStore.getData().selection;
-    return s.start instanceof Point
-        && s.end instanceof Point
-        && s.distance instanceof Point;
+    return s.start instanceof Point &&
+           s.end instanceof Point &&
+           s.distance instanceof Point;
   }
 });
 
@@ -166,3 +166,5 @@ StoreUtils.prototype.onion.getActualFrame = function() {
 
   return onionFrame;
 };
+
+module.exports = new StoreUtils();

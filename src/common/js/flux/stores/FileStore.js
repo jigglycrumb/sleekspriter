@@ -289,7 +289,7 @@ var FileStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onLayerAdd: function(selectedLayer) {
+  onLayerAdd: function(selectedLayer) {
 
     var selectedFrame = flux.stores.UiStore.getData().frames.selected,
         index = 0;
@@ -302,9 +302,9 @@ var FileStore = Fluxxor.createStore({
     }
 
     var frameLayers = _.where(this.data.layers, {frame: selectedFrame});
-    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
+    var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
-    var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;
+    var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;
     var newLayer = this._layerFromFile([newId, selectedFrame, 'Layer ' + newId, newZIndex, 100, true]);
 
     this.data.layers.splice(index, 0, newLayer);
@@ -381,7 +381,7 @@ var FileStore = Fluxxor.createStore({
   },
 
   onAnimationAdd: function() {
-    var newId = (_.max(this.data.animations, function(animation) { return animation.id; })).id + 1 || 1,
+    var newId = (_.max(this.data.animations, function(animation) { return animation.id; })).id + 1 || 1,
         animation = {
           id: newId,
           name: 'Animation '+ newId,
@@ -445,10 +445,10 @@ var FileStore = Fluxxor.createStore({
     });
 
     // delete pixels of target frame
-    this.data.pixels = _.filter(this.data.pixels, function(n) { return n.frame !== payload.target }, this);
+    this.data.pixels = _.filter(this.data.pixels, function(n) { return n.frame !== payload.target; }, this);
 
     // delete layers of target frame
-    this.data.layers = _.filter(this.data.layers, function(n) { return n.frame !== payload.target }, this);
+    this.data.layers = _.filter(this.data.layers, function(n) { return n.frame !== payload.target; }, this);
 
     var layerdict = {},
         maxId = (_.max(this.data.layers, 'id')).id;
@@ -567,7 +567,7 @@ var FileStore = Fluxxor.createStore({
       name: animation[1],
       fps: animation[2],
       frames: animation[3],
-    }
+    };
   },
 
   _animationToFile: function(animation) {
@@ -592,3 +592,5 @@ var FileStore = Fluxxor.createStore({
   },
 
 });
+
+// module.exports = FileStore;

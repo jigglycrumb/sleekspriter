@@ -281,3 +281,5 @@ Hotkeys.prototype.unbind = function(tab) {
     }, this);
   }
 };
+
+module.exports = new Hotkeys();

@@ -1,6 +1,6 @@
 var ScreenExport = React.createClass({
   shouldComponentUpdate: function() {
-    switch(stateHistory.lastAction) {
+    switch(stateHistory.last.action) {
       case 'CURSOR_SET':
       case 'TOOL_SELECT':
       case 'SETTINGS_GRID':

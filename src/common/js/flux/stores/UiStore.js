@@ -506,3 +506,5 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 });
+
+// module.exports = UiStore;

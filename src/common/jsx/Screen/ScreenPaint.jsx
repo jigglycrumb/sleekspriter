@@ -5,7 +5,7 @@ var ScreenPaint = React.createClass({
     }
   },
   shouldComponentUpdate: function() {
-    switch(stateHistory.lastAction) {
+    switch(stateHistory.last.action) {
       case 'EXPORT_PART':
       case 'EXPORT_FRAME':
       case 'EXPORT_ANIMATION':

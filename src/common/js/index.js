@@ -45,7 +45,7 @@ function setupFluxDispatcher() {
   // save type of action when dispatching
   flux.setDispatchInterceptor(function(action, dispatch) {
     console.log(action.type);
-    flux.last = {
+    stateHistory.last = {
       action: action.type,
       payload: action.payload
     };
@@ -64,9 +64,6 @@ var stores = {
 
 flux = new Fluxxor.Flux(stores, actions),
 platformUtils = new PlatformUtils(),
-storeUtils = new StoreUtils(),
-hotkeys = new Hotkeys(),
-stateHistory = new StateHistory(),
 container = document.getElementById('app-container');
 
 platformUtils.boot();

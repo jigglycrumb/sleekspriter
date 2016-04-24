@@ -66,7 +66,7 @@ var SpritesheetCanvas = React.createClass({
 
   paintPixel: function() {
     var layerDict = [],
-        px = flux.last.payload,
+        px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
     flux.stores.FileStore.getData().layers.forEach(function(layer) {
@@ -78,6 +78,10 @@ var SpritesheetCanvas = React.createClass({
           alpha = px.a * (layerDict[px.layer].opacity / 100);
       Pixel.paint(canvas, targetPos.x, targetPos.y, px.color, alpha, this.props.zoom);
     }
+  },
+
+  erasePixel: function() {
+    // console.log(stateHistory.last.payload);
   },
 
   getPixelSpritesheetPosition: function(pixel) {

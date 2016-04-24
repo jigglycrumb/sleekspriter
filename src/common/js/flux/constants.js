@@ -74,3 +74,5 @@ var constants = {
   ONION_MODE:                 'ONION_MODE',
   ONION_FRAME:                'ONION_FRAME',
 };
+
+module.exports = constants;

@@ -212,10 +212,6 @@ PlatformUtils.prototype.boot = function() {
     menu_init();
 
     flux.actions.windowResize();
-
-    flux.on('dispatch', function(type, payload) {
-      stateHistory.setLastAction(type);
-    });
   });
 
 };

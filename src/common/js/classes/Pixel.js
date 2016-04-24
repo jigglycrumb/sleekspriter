@@ -30,7 +30,7 @@ Object.defineProperty(Pixel.prototype, 'isTransparent', {
   enumerable: true,
   configurable: false,
   get: function() {
-    return this.a == 0 ? true: false;
+    return this.a === 0 ? true: false;
   }
 });
 
@@ -59,9 +59,9 @@ Pixel.prototype.toHex = function() {
     return (s.length == 1 ? '0'+s : s).toUpperCase();
   };
 
-  return '#'+pad(this.r.toString(16))
-            +pad(this.g.toString(16))
-            +pad(this.b.toString(16));
+  return '#' + pad(this.r.toString(16)) +
+               pad(this.g.toString(16)) +
+               pad(this.b.toString(16));
 };
 
 /**
@@ -80,7 +80,7 @@ Pixel.prototype.uid = function() {
  * @return {Object} the updated Pixel
  */
 Pixel.prototype.translate = function(distance, simulate) {
-  simulate = simulate || false;
+  simulate = simulate || false;
 
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
@@ -92,7 +92,7 @@ Pixel.prototype.translate = function(distance, simulate) {
   this.x = targetX;
   this.y = targetY;
   return this;
-}
+};
 
 /**
  * Moves a pixel by a given distance, wrapping around if the canvas end is reached
@@ -101,7 +101,7 @@ Pixel.prototype.translate = function(distance, simulate) {
  * @return {Object} the updated Pixel
  */
 Pixel.prototype.wrap = function(distance, simulate) {
-  simulate = simulate || false;
+  simulate = simulate || false;
 
   var targetX = this.x + distance.x,
       targetY = this.y + distance.y;
@@ -150,7 +150,7 @@ Pixel.prototype.insideBounds = function() {
 };
 
 Pixel.prototype.rotate = function(angle, pivot) {
-  var center = pivot || flux.stores.UiStore.getData().scope.center;
+  var center = pivot || flux.stores.UiStore.getData().scope.center;
   angle = angle*(Math.PI/180); // Convert to radians
   var rotatedX = Math.round(Math.cos(angle) * (this.x - center.x) - Math.sin(angle) * (this.y - center.y) + center.x);
   var rotatedY = Math.round(Math.sin(angle) * (this.x - center.x) + Math.cos(angle) * (this.y - center.y) + center.y);
@@ -191,9 +191,9 @@ Pixel.toArray = function(pixel) {
  * @param {Number} alpha - alpha value
  */
 Pixel.paint = function(canvas, x, y, color, alpha, scale) {
-  var alpha = alpha || 1,
-      scale = scale || canvas.width/flux.stores.FileStore.getData().size.width,
-      cX = (x-1)*scale,
+  alpha = alpha || 1;
+  scale = scale || canvas.width/flux.stores.FileStore.getData().size.width;
+  var cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');
 
@@ -209,7 +209,7 @@ Pixel.paint = function(canvas, x, y, color, alpha, scale) {
  * @param {Number} y - pixel y-coordinate
  */
 Pixel.clear = function(canvas, x, y) {
-  var scale = canvas.clientWidth/file.size.width,
+  var scale = canvas.clientWidth/flux.stores.FileStore.getData().size.width,
       cX = (x-1)*scale,
       cY = (y-1)*scale,
       ctx = canvas.getContext('2d');

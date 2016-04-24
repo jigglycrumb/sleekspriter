@@ -53,11 +53,20 @@ var LayerCanvas = React.createClass({
   },
 
   paintPixel: function() {
-    var px = flux.last.payload,
+    var px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
     if(px.layer === this.props.layer) {
       Pixel.paint(canvas, px.x, px.y, px.color);
+    }
+  },
+
+  erasePixel: function() {
+    var px = stateHistory.last.payload,
+        canvas = ReactDOM.findDOMNode(this);
+
+    if(px.layer === this.props.layer) {
+      Pixel.clear(canvas, px.x, px.y);
     }
   },
   // previewLayer: function(pixels) {
