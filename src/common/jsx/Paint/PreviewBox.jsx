@@ -1,5 +1,5 @@
 var PreviewBox = React.createClass({
-  mixins: [FluxMixin, FoldableMixin],
+  mixins: [FluxMixin, TouchMixin, FoldableMixin],
   getInitialState: function() {
     return {
       animation: null,
@@ -47,10 +47,10 @@ var PreviewBox = React.createClass({
       animation = storeUtils.animations.getById(this.state.animation);
       animationToggle =
         <div className="actions paint-preview">
-         <button className={classNames(leftButtonClasses)} type="button" title="Preview Frame" onClick={this.previewFrame} onTouchStart={this.previewFrame}>
+         <button className={classNames(leftButtonClasses)} type="button" title="Preview Frame" onClick={this.handleClick.bind(this, this.previewFrame)} onTouchStart={this.handleTouch.bind(this, this.previewFrame)}>
             <i className="flaticon-man13"></i>
           </button>
-          <button className={classNames(middleButtonClasses)} type="button" title="Preview Animation" onClick={this.previewAnimation} onTouchStart={this.previewAnimation}>
+          <button className={classNames(middleButtonClasses)} type="button" title="Preview Animation" onClick={this.handleClick.bind(this, this.previewAnimation)} onTouchStart={this.handleTouch.bind(this, this.previewAnimation)}>
             <i className="flaticon-man-silhouette1"></i>
           </button>
           <span className="right">
@@ -79,7 +79,7 @@ var PreviewBox = React.createClass({
 
     return (
       <div id="PreviewBox" className="box">
-        <h4 className={classNames(handleClasses)} onClick={this.fold} onTouchStart={this.fold}>Preview</h4>
+        <h4 className={classNames(handleClasses)} onClick={this.handleClick.bind(this, this.fold)} onTouchStart={this.handleTouch.bind(this, this.fold)}>Preview</h4>
         <div className="foldable-fold" style={boxStyle}>
           {preview}
           {animationToggle}

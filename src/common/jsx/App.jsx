@@ -1,5 +1,5 @@
 var App = React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin('FileStore', 'UiStore', 'PixelStore')],
+  mixins: [FluxMixin, TouchMixin, StoreWatchMixin('FileStore', 'UiStore', 'PixelStore')],
   getStateFromFlux: function() {
     var flux = this.getFlux();
     return {
@@ -33,7 +33,7 @@ var App = React.createClass({
                     active: this.state.ui.tab === tab ? true : false,
                   });
               return (
-                <div className={classes} key={tab} data-target={tab} onClick={this.tabSelect} onTouchStart={this.tabSelect}>{label}</div>
+                <div className={classes} key={tab} data-target={tab} onClick={this.handleClick.bind(this, this.tabSelect)} onTouchStart={this.handleTouch.bind(this, this.tabSelect)}>{label}</div>
               )
             }, this)}
         </nav>

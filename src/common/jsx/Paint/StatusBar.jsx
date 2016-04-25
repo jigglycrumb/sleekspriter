@@ -1,5 +1,5 @@
 var StatusBar = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.paint.toggleGrid.key+')',
         gridButtonClasses = classNames({
@@ -18,7 +18,7 @@ var StatusBar = React.createClass({
         &nbsp;
         <span>Zoom &times;{this.props.ui.zoom.selected}</span>
         <div id="StatusBarButtons">
-          <button id="toggleGrid" className={gridButtonClasses} onClick={this.dispatchGridToggled} onTouchStart={this.dispatchGridToggled} title={toggleGridTitle}>
+          <button id="toggleGrid" className={gridButtonClasses} onClick={this.handleClick.bind(this, this.dispatchGridToggled)} onTouchStart={this.handleTouch.bind(this, this.dispatchGridToggled)} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
           </button>
         </div>

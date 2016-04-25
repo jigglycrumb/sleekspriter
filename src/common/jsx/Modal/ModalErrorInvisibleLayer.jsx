@@ -1,12 +1,12 @@
 var ModalErrorInvisibleLayer = React.createClass({
-  mixins: [FluxMixin, ModalBasicMixin],
+  mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
   render: function() {
     return (
       <div className="dialog">
         <div className="title">Error</div>
         <div className="text">Cannot change an invisible or completely transparent layer.</div>
         <div className="actions">
-          <button onClick={this.hide} onTouchStart={this.hide}>Ok, got it.</button>
+          <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Ok, got it.</button>
         </div>
       </div>
     )

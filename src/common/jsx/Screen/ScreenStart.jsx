@@ -1,5 +1,5 @@
 var ScreenStart = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     return (
       <section className="screen start" onDrop={this.handleDrop}>
@@ -7,8 +7,8 @@ var ScreenStart = React.createClass({
           <div className="inner">
             <div className="logo">@@name</div>
             <ul>
-              <li><a onClick={this.newFile} onTouchStart={this.newFile}>New file</a></li>
-              <li><a onClick={this.openFile} onTouchStart={this.openFile}>Open file</a></li>
+              <li><a onClick={this.handleClick.bind(this, this.newFile)} onTouchStart={this.handleTouch.bind(this, this.newFile)}>New file</a></li>
+              <li><a onClick={this.handleClick.bind(this, this.openFile)} onTouchStart={this.handleTouch.bind(this, this.openFile)}>Open file</a></li>
             </ul>
           </div>
         </div>

@@ -1,5 +1,5 @@
 var BrightnessTool = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
 
     function capitaliseFirstLetter(string) { // used in the brightness tool
@@ -21,8 +21,8 @@ var BrightnessTool = React.createClass({
     return (
       <div id="Brightness-Tool" className="ToolComponent">
         <i className="icon flaticon-sun4"></i>
-        <button onClick={this.selectLightenTool} onTouchStart={this.selectLightenTool} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-clear325"></i></button>
-        <button onClick={this.selectDarkenTool} onTouchStart={this.selectDarkenTool} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
+        <button onClick={this.handleClick.bind(this, this.selectLightenTool)} onTouchStart={this.handleTouch.bind(this, this.selectLightenTool)} className={lClass} disabled={lDisabled} title="Lighten pixels"><i className="flaticon-clear325"></i></button>
+        <button onClick={this.handleClick.bind(this, this.selectDarkenTool)} onTouchStart={this.handleTouch.bind(this, this.selectDarkenTool)} className={dClass} disabled={dDisabled} title="Darken pixels"><i className="flaticon-clear3"></i></button>
 
         <input type="range" min="1" max="100" value={this.props.ui.brightnessTool.intensity} onChange={this.setIntensity} />
         <span>{capitaliseFirstLetter(this.props.ui.brightnessTool.mode)} by</span>

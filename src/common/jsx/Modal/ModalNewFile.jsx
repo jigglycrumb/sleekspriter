@@ -1,5 +1,5 @@
 var ModalNewFile = React.createClass({
-  mixins: [FluxMixin, ModalBasicMixin],
+  mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
   getInitialState: function() {
     return {
       frames: {x:  2, y:  2},
@@ -38,8 +38,8 @@ var ModalNewFile = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.createFile} onTouchStart={this.createFile}>Ok</button>
-          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
+          <button onClick={this.handleClick.bind(this, this.createFile)} onTouchStart={this.handleTouch.bind(this, this.createFile)}>Ok</button>
+          <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
     )

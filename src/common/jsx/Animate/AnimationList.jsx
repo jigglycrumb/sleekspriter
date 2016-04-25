@@ -1,5 +1,5 @@
 var AnimationList = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
 
     var deleteButtonDisabled = this.props.file.animations.length === 0 || this.props.ui.animations.selected === null
@@ -34,10 +34,10 @@ var AnimationList = React.createClass({
         {helpingHand}
 
         <div className="animations-footer">
-          <button title="New animation" className="transparent" onClick={this.dispatchAnimationAdded} onTouchStart={this.dispatchAnimationAdded}>
+          <button title="New animation" className="transparent" onClick={this.handleClick.bind(this, this.dispatchAnimationAdded)} onTouchStart={this.handleTouch.bind(this, this.dispatchAnimationAdded)}>
             <i className="flaticon-plus25" />
           </button>
-          <button title="Delete selected animation" className="transparent" onClick={this.dispatchAnimationRemoved} onTouchStart={this.dispatchAnimationRemoved} disabled={deleteButtonDisabled}>
+          <button title="Delete selected animation" className="transparent" onClick={this.handleClick.bind(this, this.dispatchAnimationRemoved)} onTouchStart={this.handleTouch.bind(this, this.dispatchAnimationRemoved)} disabled={deleteButtonDisabled}>
             <i className="flaticon-minus18" />
           </button>
         </div>

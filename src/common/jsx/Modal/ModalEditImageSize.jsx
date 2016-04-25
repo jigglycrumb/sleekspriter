@@ -1,5 +1,5 @@
 var ModalEditImageSize = React.createClass({
-  mixins: [FluxMixin, ModalBasicMixin],
+  mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
   getInitialState: function() {
     return {
       frames: {
@@ -44,8 +44,8 @@ var ModalEditImageSize = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.updateFile} onTouchStart={this.updateFile}>Ok</button>
-          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
+          <button onClick={this.handleClick.bind(this, this.updateFile)} onTouchStart={this.handleTouch.bind(this, this.updateFile)}>Ok</button>
+          <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
     )

@@ -1,14 +1,14 @@
 var ModalAppendReplaceFrames = React.createClass({
-  mixins: [FluxMixin, ModalBasicMixin],
+  mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
   render: function() {
     return (
       <div className="dialog">
         <div className="title">Decision needed</div>
         <div className="text">Append frames to animation or replace existing frames?</div>
         <div className="actions">
-          <button onClick={this.appendFrames} onTouchStart={this.appendFrames}>Append</button>
-          <button onClick={this.replaceFrames} onTouchStart={this.replaceFrames}>Replace</button>
-          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
+          <button onClick={this.handleClick.bind(this, this.appendFrames)} onTouchStart={this.handleTouch.bind(this, this.appendFrames)}>Append</button>
+          <button onClick={this.handleClick.bind(this, this.replaceFrames)} onTouchStart={this.handleTouch.bind(this, this.replaceFrames)}>Replace</button>
+          <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
     )

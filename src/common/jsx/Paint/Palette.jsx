@@ -1,6 +1,6 @@
 // Flux: done
 var Palette = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   getInitialState: function() {
     return {
       swatchWidth: 28,
@@ -14,19 +14,19 @@ var Palette = React.createClass({
 
     return (
       <div className="palette">
-        <div className="switch" onClick={this.showPalettes} onTouchStart={this.showPalettes}>
+        <div className="switch" onClick={this.handleClick.bind(this, this.showPalettes)} onTouchStart={this.handleTouch.bind(this, this.showPalettes)}>
           <i className="icon flaticon-color1"/>
           <i className="switch-arrow flaticon-little9"/>
           <div className="name">{palette.short}</div>
           <ul ref="paletteList" className="list">
             {palettes.map(function(palette, i) {
               return (
-                <li key={i} data-palette={i} onClick={this.selectPalette} onTouchStart={this.selectPalette}>{palette.title} ({palette.colors.length} colours)</li>
+                <li key={i} data-palette={i} onClick={this.handleClick.bind(this, this.selectPalette)} onTouchStart={this.handleTouch.bind(this, this.selectPalette)}>{palette.title} ({palette.colors.length} colours)</li>
               );
             }, this)}
           </ul>
         </div>
-        <button ref="buttonScrollLeft" className="scroll left" onClick={this.scrollLeft} onTouchStart={this.scrollLeft}>
+        <button ref="buttonScrollLeft" className="scroll left" onClick={this.handleClick.bind(this, this.scrollLeft)} onTouchStart={this.handleTouch.bind(this, this.scrollLeft)}>
           <i className="flaticon-arrow85"/>
         </button>
         <div className="outer">
@@ -38,7 +38,7 @@ var Palette = React.createClass({
             }, this)}
           </div>
         </div>
-        <button ref="buttonScrollRight" className="scroll right" onClick={this.scrollRight} onTouchStart={this.scrollRight}>
+        <button ref="buttonScrollRight" className="scroll right" onClick={this.handleClick.bind(this, this.scrollRight)} onTouchStart={this.handleTouch.bind(this, this.scrollRight)}>
           <i className="flaticon-mini7"/>
         </button>
       </div>

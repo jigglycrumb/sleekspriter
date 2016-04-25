@@ -1,5 +1,6 @@
 // Flux: done
 var NameEditable = React.createClass({
+  mixins: [TouchMixin],
   propTypes: {
     name: React.PropTypes.string.isRequired,
     callback: React.PropTypes.func.isRequired,
@@ -23,8 +24,8 @@ var NameEditable = React.createClass({
       <div className="name">
         <label
           ref="nameLabel"
-          onClick={this.showNameInput}
-          onTouchStart={this.showNameInput}
+          onClick={this.handleClick.bind(this, this.showNameInput)}
+          onTouchStart={this.handleTouch.bind(this, this.showNameInput)}
           style={labelStyle}>{this.props.name}</label>
 
         <input

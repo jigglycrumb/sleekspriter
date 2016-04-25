@@ -1,5 +1,5 @@
 var FrameBox = React.createClass({
-  mixins: [FluxMixin, FoldableMixin],
+  mixins: [FluxMixin, TouchMixin, FoldableMixin],
   render: function() {
     var self = this,
         maxWidth = 206,
@@ -33,7 +33,7 @@ var FrameBox = React.createClass({
 
     return (
       <div id="FrameBox" className="box">
-        <h4 className={classNames(handleClasses)} onClick={this.fold} onTouchStart={this.fold}>Frames</h4>
+        <h4 className={classNames(handleClasses)} onClick={this.handleClick.bind(this, this.fold)} onTouchStart={this.handleTouch.bind(this, this.fold)}>Frames</h4>
         <div className="foldable-fold" style={boxStyle}>
           <div id="FrameBoxFrames">
           {frames.map(function(frame) {
@@ -51,7 +51,7 @@ var FrameBox = React.createClass({
             };
 
             return (
-              <div key={id} className={classNames(classes)} style={frameStyle} onClick={clickHandler} onTouchStart={clickHandler}>
+              <div key={id} className={classNames(classes)} style={frameStyle} onClick={this.handleClick.bind(this, clickHandler)} onTouchStart={this.handleTouch.bind(this, clickHandler)}>
                 <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={frameSize} />
               </div>
             );
@@ -63,7 +63,7 @@ var FrameBox = React.createClass({
             &nbsp;/&nbsp;
             {this.props.ui.frames.total}
 
-            <button className={classNames(onionButtonClasses)} onClick={this.toggleOnionSkinning} onTouchStart={this.toggleOnionSkinning} title={onionToggleTitle}>
+            <button className={classNames(onionButtonClasses)} onClick={this.handleClick.bind(this, this.toggleOnionSkinning)} onTouchStart={this.handleTouch.bind(this, this.toggleOnionSkinning)} title={onionToggleTitle}>
               <i className="flaticon-vegetable38"></i>
             </button>
           </div>

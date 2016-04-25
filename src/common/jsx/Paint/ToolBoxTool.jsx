@@ -1,5 +1,5 @@
 var ToolBoxTool = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     var selected = this.props.id == this.props.ui.tool ? true : false;
     var cssClasses = 'ToolBoxTool transparent';
@@ -12,7 +12,7 @@ var ToolBoxTool = React.createClass({
         title={this.props.title}
         disabled={selected}
         onClick={this.dispatchToolSelected.bind(this, this.props.id)}
-        onTouchStart={this.dispatchToolSelected.bind(this, this.props.id)}>
+        onTouchStart={this.handleTouch.bind(this, this.dispatchToolSelected.bind(this, this.props.id))}>
           <i className={this.props.icon}></i>
       </button>
     );

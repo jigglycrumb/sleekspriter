@@ -1,19 +1,19 @@
 var ZoomTool = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon flaticon-magnifier5"></i>
-        <button onClick={this.zoomIn} onTouchStart={this.zoomIn} className="small" title="Zoom in">
+        <button onClick={this.handleClick.bind(this, this.zoomIn)} onTouchStart={this.handleTouch.bind(this, this.zoomIn)} className="small" title="Zoom in">
           <i className="flaticon-plus25"></i>
         </button>
-        <button onClick={this.zoomOut} onTouchStart={this.zoomOut} className="small" title="Zoom out">
+        <button onClick={this.handleClick.bind(this, this.zoomOut)} onTouchStart={this.handleTouch.bind(this, this.zoomOut)} className="small" title="Zoom out">
           <i className="flaticon-minus18"></i>
         </button>
         <input type="range" min={this.props.ui.zoom.min} max={this.props.ui.zoom.max} value={this.props.ui.zoom.selected} onChange={this.dispatchZoomChanged} />
         <span>Zoom &times;</span>
         <input type="number" min={this.props.ui.zoom.min} max={this.props.ui.zoom.max} value={this.props.ui.zoom.selected} onChange={this.dispatchZoomChanged} />
-        <button onClick={this.fitToScreen} onTouchStart={this.fitToScreen} className="small">Fit to screen</button>
+        <button onClick={this.handleClick.bind(this, this.fitToScreen)} onTouchStart={this.handleTouch.bind(this, this.fitToScreen)} className="small">Fit to screen</button>
         <span className="spacer"></span>
         <span className="hint">A pixel in your sprite is now {this.props.ui.zoom.selected} pixels on your screen.</span>
       </div>

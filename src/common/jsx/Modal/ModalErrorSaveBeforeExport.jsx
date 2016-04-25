@@ -1,5 +1,5 @@
 var ModalErrorSaveBeforeExport = React.createClass({
-  mixins: [FluxMixin, ModalBasicMixin],
+  mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
   render: function() {
     return (
       <div className="dialog">
@@ -8,8 +8,8 @@ var ModalErrorSaveBeforeExport = React.createClass({
           The export gets written to the folder where you saved your .pixels file.
           Please save your work first and export again.</div>
         <div className="actions">
-          <button onClick={this.saveFile} onTouchStart={this.saveFile}>Save now</button>
-          <button onClick={this.hide} onTouchStart={this.hide}>Cancel</button>
+          <button onClick={this.handleClick.bind(this, this.saveFile)} onTouchStart={this.handleTouch.bind(this, this.saveFile)}>Save now</button>
+          <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
     )

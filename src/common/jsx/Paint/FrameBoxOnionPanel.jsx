@@ -1,5 +1,5 @@
 var FrameBoxOnionPanel = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     var fixedTabClasses = {
           tab: true,
@@ -29,8 +29,8 @@ var FrameBoxOnionPanel = React.createClass({
 
         <h4>Onion Skin</h4>
 
-        <div className={classNames(fixedTabClasses)} onClick={this.setOnionMode.bind(this, 'fixed')} onTouchStart={this.setOnionMode.bind(this, 'fixed')}>Fixed</div>
-        <div className={classNames(relativeTabClasses)} onClick={this.setOnionMode.bind(this, 'relative')} onTouchStart={this.setOnionMode.bind(this, 'relative')}>Relative</div>
+        <div className={classNames(fixedTabClasses)} onClick={this.setOnionMode.bind(this, 'fixed')} onTouchStart={this.handleTouch.bind(this, this.setOnionMode.bind(this, 'fixed'))}>Fixed</div>
+        <div className={classNames(relativeTabClasses)} onClick={this.setOnionMode.bind(this, 'relative')} onTouchStart={this.handleTouch.bind(this, this.setOnionMode.bind(this, 'relative'))}>Relative</div>
 
         <div className={classNames(fixedPanelClasses)}>
           Onion is always frame <input type="number" min="1" max={this.props.ui.frames.total} value={this.props.ui.onion.frame.fixed} onChange={this.setOnionFrameFixed}/>

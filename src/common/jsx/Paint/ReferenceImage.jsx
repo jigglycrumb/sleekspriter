@@ -1,5 +1,5 @@
 var ReferenceImage = React.createClass({
-
+  mixins: [TouchMixin],
   getInitialState: function() {
     return {
       position: {
@@ -28,7 +28,7 @@ var ReferenceImage = React.createClass({
             onDragEnd={this.dragEnd}
             onDrag={this.drag}>
           <img src={this.props.image.path} title={this.props.image.name} />
-          <button className="remove" onClick={this.props.removeHandler} onTouchStart={this.props.removeHandler}>✖</button>
+          <button className="remove" onClick={this.handleClick.bind(this, this.props.removeHandler)} onTouchStart={this.handleTouch.bind(this, this.props.removeHandler)}>✖</button>
         </div>
       );
     }

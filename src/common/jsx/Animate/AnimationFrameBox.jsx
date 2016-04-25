@@ -1,5 +1,5 @@
 var AnimationFrameBox = React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, TouchMixin],
   getInitialState: function() {
     return {
       row: 0,
@@ -24,8 +24,8 @@ var AnimationFrameBox = React.createClass({
         <h5>Frames</h5>
         <div className="scroller">
           <div className="inner" style={containerStyle}>
-          <button className="mass-add row" title="Add row to animation" style={rowButtonStyle} onClick={this.addRow} onTouchStart={this.addRow} >+</button>
-          <button className="mass-add column" title="Add column to animation" style={columnButtonStyle} onClick={this.addColumn} onTouchStart={this.addColumn} >+</button>
+          <button className="mass-add row" title="Add row to animation" style={rowButtonStyle} onClick={this.handleClick.bind(this, this.addRow)} onTouchStart={this.handleTouch.bind(this, this.addRow)} >+</button>
+          <button className="mass-add column" title="Add column to animation" style={columnButtonStyle} onClick={this.handleClick.bind(this, this.addColumn)} onTouchStart={this.handleTouch.bind(this, this.addColumn)}>+</button>
           {frames.map(function(frame) {
             return (
               <AnimationFrameBoxFrame

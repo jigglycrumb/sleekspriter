@@ -1,4 +1,5 @@
 var DebugLog = React.createClass({
+  mixins: [TouchMixin],
   getInitialState: function() {
     return {enabled: false}
   },
@@ -9,7 +10,7 @@ var DebugLog = React.createClass({
           <input type="checkbox" onChange={this.toggle} />
           Logging enabled
         </label>
-        <button onClick={this.clearLog} onTouchStart={this.clearLog}>Clear log</button>
+        <button onClick={this.handleClick.bind(this, this.clearLog)} onTouchStart={this.handleTouch.bind(this, this.clearLog)}>Clear log</button>
         <textarea ref="log" readOnly></textarea>
       </div>
     )
