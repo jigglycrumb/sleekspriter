@@ -47,18 +47,19 @@ PlatformUtils.prototype.boot = function() {
     request.open("GET", palettesFile);
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
-        console.log('ajaxload', request.responseText);
+        window.onresize = flux.actions.windowResize;
+        screen.onorientationchange = flux.actions.windowResize;
 
         setupFluxDispatcher();
 
         ReactDOM.render(React.createElement(App, {flux: flux}), container);
 
-        var json = JSON.parse(contents);
+        var json = JSON.parse(request.responseText);
         flux.actions.paletteLoad(json);
 
         // menu_init();
 
-        flux.actions.windowResize();
+        setTimeout(flux.actions.windowResize, 0);
       }
     };
 

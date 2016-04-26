@@ -82,22 +82,26 @@ var FrameCanvas = React.createClass({
       }, this);
     }, this);
   },
+
   paintPixel: function() {
     var layerDict = [],
         px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
-    flux.stores.FileStore.getData().layers.forEach(function(layer) {
-      if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
-    }, this);
+    if(px.frame === this.props.frame) {
 
-    if(layerDict[px.layer].visible === true) {
-      if(this.props.noAlpha) var alpha = 1;
-      else var alpha = px.a * (layerDict[px.layer].opacity / 100);
-      Pixel.paint(canvas, px.x, px.y, px.color, alpha);
+      flux.stores.FileStore.getData().layers.forEach(function(layer) {
+        console.log('layer', layer);
+        if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
+      }, this);
+
+      if(layerDict[px.layer].visible === true) {
+        if(this.props.noAlpha) var alpha = 1;
+        else var alpha = px.a * (layerDict[px.layer].opacity / 100);
+        Pixel.paint(canvas, px.x, px.y, px.color, alpha);
+      }
     }
   },
-
 
   erasePixel: function() {
     // console.log(stateHistory.last.payload);
