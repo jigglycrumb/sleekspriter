@@ -1,5 +1,6 @@
 var StageBox = React.createClass({
   mixins: [FluxMixin],
+  touched: false,
   getInitialState: function() {
     return {
       mousedown: false,
@@ -49,7 +50,10 @@ var StageBox = React.createClass({
         style={css}
         onMouseDown={this.mousedown}
         onMouseMove={this.mousemove}
-        onMouseUp={this.mouseup}>
+        onMouseUp={this.mouseup}
+        onTouchStart={this.touchstart}
+        onTouchMove={this.touchmove}
+        onTouchEnd={this.touchend}>
 
         <StageBoxCursorCanvas width={w} height={h} ui={this.props.ui} />
         <StageBoxSelectionCanvas width={w} height={h} ui={this.props.ui} />
@@ -72,6 +76,7 @@ var StageBox = React.createClass({
   },
 
   mousedown: function(event) {
+    if(this.touched) return false;
 
     event = event.nativeEvent;
 
@@ -100,7 +105,39 @@ var StageBox = React.createClass({
     if(ok) this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
   },
 
+  touchstart: function(event) {
+
+    var coords = event.touches[0]
+
+    var point = this.getTouchCoordinates(event),
+        ok = true;
+
+    this.touched = true;
+
+    console.log('touchstart', point, event.touches[0]);
+
+    switch(this.props.ui.tool) {
+
+      case 'BrushTool':
+        ok = this.useBrushTool();
+        break;
+
+      case 'EraserTool':
+        ok = this.useEraserTool();
+        break;
+
+      case 'BrightnessTool':
+        ok = this.useBrightnessTool();
+        break;
+
+      case 'RectangularSelectionTool':
+        this.startRectangularSelection(point);
+        break;
+    }
+  },
+
   mousemove: function(event) {
+    if(this.touched) return false;
 
     var event = event.nativeEvent,
         point = this.getWorldCoordinates(event),
@@ -142,7 +179,12 @@ var StageBox = React.createClass({
     }
   },
 
+  touchmove: function(event) {
+    // console.log('touchmove', event);
+  },
+
   mouseup: function(event) {
+    if(this.touched) return false;
 
     event = event.nativeEvent;
 
@@ -171,6 +213,10 @@ var StageBox = React.createClass({
     }
   },
 
+  touchend: function(event) {
+    // console.log('touchend', event);
+  },
+
   getLayerPixelColor: function(point) {
     var ctx = document.querySelector('#LayerHelper canvas').getContext('2d'),
         px = ctx.getImageData(point.x-1, point.y-1, 1, 1).data,
@@ -185,14 +231,24 @@ var StageBox = React.createClass({
     return color;
   },
 
-
-
   getWorldCoordinates: function(event) {
     return new Point(
-      Math.ceil(event.layerX/this.props.ui.zoom.selected),
-      Math.ceil(event.layerY/this.props.ui.zoom.selected)
+      Math.ceil(event.layerX / this.props.ui.zoom.selected),
+      Math.ceil(event.layerY / this.props.ui.zoom.selected)
     );
   },
+
+  getTouchCoordinates: function(event) {
+
+    var touch = event.touches[0],
+        offset = {x: 0, y: 0};
+
+    return new Point(
+      Math.ceil((event.touches[0].pageX - offset.x) / this.props.ui.zoom.selected),
+      Math.ceil((event.touches[0].pageY - offset.y) / this.props.ui.zoom.selected)
+    );
+  },
+
   getMouseDownDistance: function() {
     return new Point(
       this.props.ui.cursor.x - this.state.mousedownPoint.x,
@@ -323,7 +379,7 @@ var StageBox = React.createClass({
 
 
   startRectangularSelection: function(point) {
-    if(!storeUtils.selection.isActive || !storeUtils.selection.contains(point)) {
+    if(!storeUtils.selection.isActive || !storeUtils.selection.contains(point)) {
       this.getFlux().actions.selectionClear();
       this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'layer', this.props.ui.layers.selected);
       this.getFlux().actions.selectionStart(point);

@@ -91,7 +91,6 @@ var FrameCanvas = React.createClass({
     if(px.frame === this.props.frame) {
 
       flux.stores.FileStore.getData().layers.forEach(function(layer) {
-        console.log('layer', layer);
         if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
       }, this);
 
