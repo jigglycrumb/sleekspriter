@@ -44,15 +44,15 @@ function changeColorLightness(color, delta) {
 function setupFluxDispatcher() {
   // save type of action when dispatching
   flux.setDispatchInterceptor(function(action, dispatch) {
-    console.log(action.type);
+    console.log(action.type, action.payload);
     stateHistory.last = {
       action: action.type,
       payload: action.payload
     };
-    //dispatch(action);
-    ReactDOM.unstable_batchedUpdates(function() {
-      dispatch(action);
-    });
+    dispatch(action);
+    // ReactDOM.unstable_batchedUpdates(function() {
+    //   dispatch(action);
+    // });
   });
 }
 

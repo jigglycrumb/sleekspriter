@@ -178,7 +178,9 @@ var UiStore = Fluxxor.createStore({
 
       this.data.palettes.available[0].colors = _.unique(palette, false);
 
-      enableMenus(true);
+      if(platformUtils.device == 'desktop') {
+        enableMenus(true);
+      }
 
       this.emit('change');
     });

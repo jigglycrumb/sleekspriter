@@ -1,6 +1,16 @@
 var StageBox = React.createClass({
   mixins: [FluxMixin],
   touched: false,
+  cursor: {
+    x: 0,
+    y: 0,
+  },
+  css: {
+    width: 0,
+    height: 0,
+    top: 0,
+    left: 0,
+  },
   getInitialState: function() {
     return {
       mousedown: false,
@@ -44,6 +54,8 @@ var StageBox = React.createClass({
       checkerboard: this.props.image === null ? true : false,
     };
 
+    this.css = css;
+
     return (
       <div id="StageBox"
         className={classNames(cssClasses)}
@@ -55,7 +67,7 @@ var StageBox = React.createClass({
         onTouchMove={this.touchmove}
         onTouchEnd={this.touchend}>
 
-        <StageBoxCursorCanvas width={w} height={h} ui={this.props.ui} />
+        <StageBoxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.ui.zoom.selected} />
         <StageBoxSelectionCanvas width={w} height={h} ui={this.props.ui} />
         <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
 
@@ -80,7 +92,7 @@ var StageBox = React.createClass({
 
     event = event.nativeEvent;
 
-    var point = this.getWorldCoordinates(event),
+    var point = this.getClickCoordinates(event),
         ok = true;
 
     switch(this.props.ui.tool) {
@@ -107,19 +119,19 @@ var StageBox = React.createClass({
 
   touchstart: function(event) {
 
-    var coords = event.touches[0]
-
-    var point = this.getTouchCoordinates(event),
+    var coords = event.touches[0],
+        point = this.getTouchCoordinates(event),
         ok = true;
 
     this.touched = true;
+    this._updateCursor(point);
 
     console.log('touchstart', point, event.touches[0]);
 
     switch(this.props.ui.tool) {
 
       case 'BrushTool':
-        ok = this.useBrushTool();
+        //ok = this.useBrushTool();
         break;
 
       case 'EraserTool':
@@ -140,15 +152,14 @@ var StageBox = React.createClass({
     if(this.touched) return false;
 
     var event = event.nativeEvent,
-        point = this.getWorldCoordinates(event),
+        point = this.getClickCoordinates(event),
         distance = this.getMouseDownDistance();
 
-    if((event.timeStamp > this.state.last + 10)
-    && (point.x > 0 && point.y > 0)
-    && (point.x !== this.props.ui.cursor.x || point.y !== this.props.ui.cursor.y)) {
-      var layerColor = this.getLayerPixelColor(point),
-         frameColor = this.getFramePixelColor(point);
-      this.getFlux().actions.cursorSet(point, layerColor, frameColor);
+    if(event.timeStamp > this.state.last + 10) {
+      //   var layerColor = this.getLayerPixelColor(point),
+      //      frameColor = this.getFramePixelColor(point);
+      //   this.getFlux().actions.cursorSet(point, layerColor, frameColor);
+      this._updateCursor(point);
     }
 
     if(this.state.mousedown === true) {
@@ -180,7 +191,16 @@ var StageBox = React.createClass({
   },
 
   touchmove: function(event) {
-    // console.log('touchmove', event);
+
+    var coords = event.touches[0],
+        point = this.getTouchCoordinates(event),
+        ok = true;
+
+    // this.touched = true;
+
+    this._updateCursor(point);
+
+    console.log('touchmove', point, event.touches[0]);
   },
 
   mouseup: function(event) {
@@ -188,7 +208,7 @@ var StageBox = React.createClass({
 
     event = event.nativeEvent;
 
-    var point = this.getWorldCoordinates(event),
+    var point = this.getClickCoordinates(event),
         distance = this.getMouseDownDistance();
 
     this.setState({mousedown: false});
@@ -214,7 +234,7 @@ var StageBox = React.createClass({
   },
 
   touchend: function(event) {
-    // console.log('touchend', event);
+    console.log('touchend', event);
   },
 
   getLayerPixelColor: function(point) {
@@ -231,7 +251,7 @@ var StageBox = React.createClass({
     return color;
   },
 
-  getWorldCoordinates: function(event) {
+  getClickCoordinates: function(event) {
     return new Point(
       Math.ceil(event.layerX / this.props.ui.zoom.selected),
       Math.ceil(event.layerY / this.props.ui.zoom.selected)
@@ -241,7 +261,12 @@ var StageBox = React.createClass({
   getTouchCoordinates: function(event) {
 
     var touch = event.touches[0],
-        offset = {x: 0, y: 0};
+        offset = {
+          x: this.css.left + this.props.ui.offset.left,
+          y: this.css.top + this.props.ui.offset.left
+        };
+
+    // console.log('getTouchCoordinates', this.css);
 
     return new Point(
       Math.ceil((event.touches[0].pageX - offset.x) / this.props.ui.zoom.selected),
@@ -266,13 +291,13 @@ var StageBox = React.createClass({
     if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive) {
         this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
-                                        this.props.ui.cursor.x, this.props.ui.cursor.y,
+                                        this.cursor.x, this.cursor.y,
                                         storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
       }
       else { // restrict to selection
         if(storeUtils.selection.contains(this.props.ui.cursor)) {
           this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
-                                          this.props.ui.cursor.x, this.props.ui.cursor.y,
+                                          this.cursor.x, this.cursor.y,
                                           storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
         }
       }
@@ -280,6 +305,7 @@ var StageBox = React.createClass({
     }
     else return this.showInvisibleLayerError();
   },
+
   useEraserTool: function() {
     if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive) {
@@ -294,11 +320,13 @@ var StageBox = React.createClass({
     }
     else return this.showInvisibleLayerError();
   },
+
   useEyedropperTool: function() {
     if(this.props.ui.color.frame.alpha() == 0) return; // skip transparent pixels
     this.getFlux().actions.toolSelect('BrushTool');
     this.getFlux().actions.colorBrush(this.props.ui.color.frame.hexString());
   },
+
   usePaintBucketTool: function(point) {
     if(storeUtils.layers.isVisible) {
       if(storeUtils.selection.isActive) {
@@ -309,6 +337,7 @@ var StageBox = React.createClass({
     }
     else return this.showInvisibleLayerError();
   },
+
   useBrightnessTool: function() {
 
     if(storeUtils.layers.isVisible) {
@@ -367,6 +396,7 @@ var StageBox = React.createClass({
 
     this.getFlux().actions.previewMoveTool(this.props.ui.frames.selected, this.props.ui.layers.selected, pixels);
   },
+
   applyMoveTool: function(distance) {
     this.getFlux().actions.pixelsMove(distance);
     if(storeUtils.selection.isActive) {
@@ -375,9 +405,6 @@ var StageBox = React.createClass({
     }
   },
 
-
-
-
   startRectangularSelection: function(point) {
     if(!storeUtils.selection.isActive || !storeUtils.selection.contains(point)) {
       this.getFlux().actions.selectionClear();
@@ -385,12 +412,15 @@ var StageBox = React.createClass({
       this.getFlux().actions.selectionStart(point);
     }
   },
+
   resizeRectangularSelection: function(point) {
     this.getFlux().actions.selectionResize(point);
   },
+
   previewRectangularSelection: function(distance) {
     this.getFlux().actions.selectionPreview(distance);
   },
+
   endRectangularSelection: function(point, distance) {
     if(storeUtils.selection.isActive) {
       this.getFlux().actions.selectionMove(distance);
@@ -407,9 +437,20 @@ var StageBox = React.createClass({
       }
     }
   },
+
   showInvisibleLayerError: function() {
     this.getFlux().actions.modalShow(ModalErrorInvisibleLayer);
     return false;
+  },
+
+
+
+  _updateCursor: function(point) {
+    if((point.x > 0 && point.y > 0)
+    && (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
+      this.cursor = point;
+      this.refs.cursorCanvas.drawPixelCursor(this.cursor.x, this.cursor.y);
+    }
   },
 
 });

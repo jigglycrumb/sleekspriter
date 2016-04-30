@@ -5,16 +5,11 @@ var StageBoxCursorCanvas = React.createClass({
       <canvas id="StageBoxCursorCanvas" className="Layer" width={this.props.width} height={this.props.height} />
     );
   },
-  componentDidUpdate: function() {
-    this.drawPixelCursor();
-  },
-  drawPixelCursor: function() {
+  drawPixelCursor: function(x, y) {
 
     this.clear();
 
-    var zoom = this.props.ui.zoom.selected,
-        x = this.props.ui.cursor.x,
-        y = this.props.ui.cursor.y;
+    var zoom = this.props.zoom;
 
     if(x == 0 && y == 0) return;
 
@@ -23,7 +18,7 @@ var StageBoxCursorCanvas = React.createClass({
 
     ctx.strokeStyle = "#FF0000";
     ctx.lineCap = 'square';
-    if(this.props.ui.zoom.selected < 5 ) ctx.lineWidth = 1;
+    if(zoom < 5 ) ctx.lineWidth = 1;
     else ctx.lineWidth = 2;
 
     var left = (x*zoom)-zoom+0.5,

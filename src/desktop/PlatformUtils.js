@@ -1,5 +1,7 @@
 var PlatformUtils = function(callback) {
   this.callback = callback;
+
+  this.device = 'desktop';
 };
 
 PlatformUtils.prototype = {};

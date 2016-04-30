@@ -1,5 +1,7 @@
 var PlatformUtils = function() {
   console.log('Initializing PlatformUtils...');
+
+  this.device = 'tablet';
 };
 
 PlatformUtils.prototype = {};
