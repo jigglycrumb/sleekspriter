@@ -11,16 +11,14 @@ var StageBox = React.createClass({
     top: 0,
     left: 0,
   },
-  pixels: [],
-  getInitialState: function() {
-    return {
-      mousedown: false,
-      mousedownPoint: new Point(0, 0),
-      last: null, // we need to record the mousedown timestamp because of a chrome bug,
-                  // see https://code.google.com/p/chromium/issues/detail?id=161464
-                  // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
-    };
+  mouse: {
+    down: false,
+    downPoint: {x: 0, y: 0},
+    last: null, // we need to record the mousedown timestamp because of a chrome bug,
+                // see https://code.google.com/p/chromium/issues/detail?id=161464
+                // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
   },
+  pixels: [],
   render: function() {
 
     var w = this.props.file.size.width * this.props.ui.zoom.selected,
@@ -89,6 +87,8 @@ var StageBox = React.createClass({
     );
   },
 
+  // Mouse handlers
+
   mousedown: function(event) {
     if(this.touched) return false;
 
@@ -116,29 +116,11 @@ var StageBox = React.createClass({
         break;
     }
 
-    if(ok) this.setState({mousedown: true, mousedownPoint: point, last: event.timeStamp});
-  },
-
-  touchstart: function(event) {
-
-    var coords = event.touches[0],
-        point = this.getTouchCoordinates(event);
-
-    this.touched = true;
-    this.updateCursor(point);
-
-    // console.log('touchstart', point, event.touches[0]);
-
-    switch(this.props.ui.tool) {
-      case 'BrushTool':
-        // ok = this.useBrushTool();
-
-        this.touchBrushTool();
-
-        console.log(this.pixels);
-
-        break;
-    }
+    if(ok) this.mouse = {
+      down: true,
+      downPoint: point,
+      last: event.timeStamp
+    };
   },
 
   mousemove: function(event) {
@@ -148,14 +130,14 @@ var StageBox = React.createClass({
         point = this.getClickCoordinates(event),
         distance = this.getMouseDownDistance();
 
-    if(event.timeStamp > this.state.last + 10) {
+    if(event.timeStamp > this.mouse.last + 10) {
       //   var layerColor = this.getLayerPixelColor(point),
       //      frameColor = this.getFramePixelColor(point);
       //   this.getFlux().actions.cursorSet(point, layerColor, frameColor);
       this.updateCursor(point);
     }
 
-    if(this.state.mousedown === true) {
+    if(this.mouse.down === true) {
       switch(this.props.ui.tool) {
 
         case 'BrushTool':
@@ -182,16 +164,6 @@ var StageBox = React.createClass({
     }
   },
 
-  touchmove: function(event) {
-
-    var coords = event.touches[0],
-        point = this.getTouchCoordinates(event);
-
-    this.updateCursor(point);
-
-    // console.log('touchmove', point, event.touches[0]);
-  },
-
   mouseup: function(event) {
     if(this.touched) return false;
 
@@ -200,7 +172,7 @@ var StageBox = React.createClass({
     var point = this.getClickCoordinates(event),
         distance = this.getMouseDownDistance();
 
-    this.setState({mousedown: false});
+    this.mouse.down = false;
 
     switch(this.props.ui.tool) {
 
@@ -222,13 +194,62 @@ var StageBox = React.createClass({
     }
   },
 
+
+  // Touch handlers
+
+  touchstart: function(event) {
+
+    var coords = event.touches[0],
+        point = this.getTouchCoordinates(event);
+
+    this.touched = true;
+    this.updateCursor(point);
+
+    // console.log('touchstart', point, event.touches[0]);
+
+    switch(this.props.ui.tool) {
+      case 'BrushTool':
+        this.touchBrushTool();
+        // console.log(this.pixels);
+        break;
+    }
+  },
+
+  touchmove: function(event) {
+
+    var coords = event.touches[0],
+        point = this.getTouchCoordinates(event),
+        oldCursor = this.cursor;
+
+    this.updateCursor(point);
+
+    if(this.cursor.x != oldCursor.x && this.cursor.y != oldCursor.y) {
+      switch(this.props.ui.tool) {
+        case 'BrushTool':
+          this.touchBrushTool();
+          // console.log(this.pixels);
+          break;
+      }
+    }
+
+    // console.log('touchmove', point, event.touches[0]);
+  },
+
   touchend: function(event) {
     // console.log('touchend', event);
 
     var coords = event.touches[0],
         point = this.getTouchCoordinates(event);
 
-    this.refs.cursorCanvas.clear();
+    switch(this.props.ui.tool) {
+      case 'BrushTool':
+        this.flux.actions.pixelsAdd(this.pixels);
+        this.pixels = [];
+        break;
+
+    }
+
+    // this.refs.cursorCanvas.clear();
   },
 
   getLayerPixelColor: function(point) {
@@ -267,8 +288,8 @@ var StageBox = React.createClass({
 
   getMouseDownDistance: function() {
     return new Point(
-      this.cursor.x - this.state.mousedownPoint.x,
-      this.cursor.y - this.state.mousedownPoint.y
+      this.cursor.x - this.mouse.downPoint.x,
+      this.cursor.y - this.mouse.downPoint.y
     );
   },
 
@@ -310,7 +331,7 @@ var StageBox = React.createClass({
         this.pixels.push(px);
 
         var layerCanvas = this.refs['layer_' + this.props.ui.layers.selected].refs.layerCanvas;
-        layerCanvas.paintPixel({x: px.x, y: px.y, color: px.toHex()});
+        layerCanvas.paintPixel({x: px.x, y: px.y, layer: this.props.ui.layers.selected, color: px.toHex()});
       }
       return true;
     }
@@ -426,7 +447,7 @@ var StageBox = React.createClass({
       this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'selection', this.props.ui.selection);
     }
     else {
-      if(_.isEqual(point, this.state.mousedownPoint)) {
+      if(_.isEqual(point, this.mouse.downPoint)) {
         this.getFlux().actions.selectionClear();
         this.getFlux().actions.scopeSet(this.props.ui.layers.selected, 'layer', this.props.ui.layers.selected);
       }

@@ -13,6 +13,8 @@ stateHistory = require('./classes/StateHistory');
 constants = require('./flux/constants');
 actions = require('./flux/actions');
 
+// ColorPicker = require('react-color');
+
 // stores = {
 //   FileStore: require('./flux/stores/FileStore'),
 //   UiStore: require('./flux/stores/UiStore'),

@@ -56,6 +56,8 @@ var LayerCanvas = React.createClass({
     var px = pixel || stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
+    // console.log('paintPixel', px);
+
     if(px.layer === this.props.layer) {
       Pixel.paint(canvas, px.x, px.y, px.color); // px.color == hex string
     }

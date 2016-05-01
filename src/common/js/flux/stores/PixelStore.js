@@ -28,6 +28,7 @@ var PixelStore = Fluxxor.createStore({
       constants.SCOPE_ROTATE,                 this.onScopeRotate,
 
       constants.PIXEL_ADD,                    this.onPixelAdd,
+      constants.PIXELS_ADD,                   this.onPixelsAdd,
       constants.PIXEL_DELETE,                 this.onPixelDelete,
       constants.PIXELS_MOVE,                  this.onPixelsMove,
       constants.PAINTBUCKET,                  this.onPaintbucket,
@@ -265,6 +266,11 @@ var PixelStore = Fluxxor.createStore({
     this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.z, payload.color);
     this.emit('change');
     // this.log();
+  },
+
+  onPixelsAdd: function(pixels) {
+    self.data.scope = _.unique(pixels.concat(self.data.scope), function(px) { return px.uid(); });
+    self.emit('change');
   },
 
   onPixelDelete: function(payload) {

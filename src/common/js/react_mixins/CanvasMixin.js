@@ -6,32 +6,32 @@ var CanvasMixin = {
 
   componentDidUpdate: function() {
     switch(stateHistory.last.action) {
-      case "CURSOR_SET":
-      case "TOOL_SELECT":
-      case "SELECTION_CLEAR":
-      case "SCOPE_SET":
-      case "BRIGHTNESSTOOL_INTENSITY":
-      case "BRIGHTNESSTOOL_MODE":
-      case "TAB_SELECT":
-      case "PALETTE_SELECT":
-      case "COLOR_BRUSH":
-      case "ANIMATION_ADD":
-      case "ANIMATION_SELECT":
-      case "ANIMATION_NAME":
-      case "ANIMATION_FPS":
-      case "ANIMATION_DELETE":
-      case "ANIMATION_FRAME_ADD":
-      case "MODAL_SHOW":
-      case "MODAL_HIDE":
-      case "PIXELS_ADD":
+      case constants.CURSOR_SET:
+      case constants.TOOL_SELECT:
+      case constants.SELECTION_CLEAR:
+      case constants.SCOPE_SET:
+      case constants.BRIGHTNESSTOOL_INTENSITY:
+      case constants.BRIGHTNESSTOOL_MODE:
+      case constants.TAB_SELECT:
+      case constants.PALETTE_SELECT:
+      case constants.COLOR_BRUSH:
+      case constants.ANIMATION_ADD:
+      case constants.ANIMATION_SELECT:
+      case constants.ANIMATION_NAME:
+      case constants.ANIMATION_FPS:
+      case constants.ANIMATION_DELETE:
+      case constants.ANIMATION_FRAME_ADD:
+      case constants.MODAL_SHOW:
+      case constants.MODAL_HIDE:
+      // case "PIXELS_ADD":
         // no-op
         break;
 
-      case "PIXEL_DELETE":
+      case constants.PIXEL_DELETE:
         this.erasePixel();
         break;
 
-      case "PIXEL_ADD":
+      case constants.PIXEL_ADD:
         this.paintPixel();
         break;
 
