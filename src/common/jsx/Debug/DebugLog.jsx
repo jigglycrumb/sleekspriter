@@ -17,24 +17,25 @@ var DebugLog = React.createClass({
   },
   toggle: function(event) {
     var enabled = event.target.value === 'on' ? true : false;
+    if(enabled) {
+      flux.on('dispatch', this.log);
+    }
+    else {
+      flux.removeListener('dispatch', this.log);
+    }
     this.setState({enabled: enabled});
   },
   clearLog: function() {
     this.refs.log.innerHTML = '';
   },
-  componentDidMount: function() {
-    flux.on('dispatch', this.log);
-  },
   componentWillUnmount: function() {
     flux.removeListener('dispatch', this.log);
   },
   log: function(type, payload) {
-    if(this.state.enabled === true) {
-      var log = this.refs.log,
-          logLine = "[Dispatch] "+type+" "+JSON.stringify(payload, 2)+"\n",
-          logText = log.innerHTML || "";
+    var log = this.refs.log,
+        logLine = "[Dispatch] "+type+" "+JSON.stringify(payload, 2)+"\n",
+        logText = log.innerHTML || "";
 
-      log.innerHTML = logText + logLine;
-    }
+    log.innerHTML = logText + logLine;
   },
 });
