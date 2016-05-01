@@ -52,12 +52,12 @@ var LayerCanvas = React.createClass({
     }
   },
 
-  paintPixel: function() {
-    var px = stateHistory.last.payload,
+  paintPixel: function(pixel) {
+    var px = pixel || stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
     if(px.layer === this.props.layer) {
-      Pixel.paint(canvas, px.x, px.y, px.color);
+      Pixel.paint(canvas, px.x, px.y, px.color); // px.color == hex string
     }
   },
 

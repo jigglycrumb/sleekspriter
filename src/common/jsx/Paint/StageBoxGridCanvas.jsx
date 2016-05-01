@@ -1,5 +1,9 @@
 var StageBoxGridCanvas = React.createClass({
   mixins: [StageBoxCanvasMixin],
+  shouldComponentUpdate: function() {
+    var valid = [constants.SETTINGS_GRID, constants.ZOOM_SELECT, constants.LAYER_SELECT];
+    return inArray(valid, stateHistory.last.action);
+  },
   render: function() {
     return (
       <canvas id="StageBoxGridCanvas" className="Layer" width={this.props.width} height={this.props.height} />

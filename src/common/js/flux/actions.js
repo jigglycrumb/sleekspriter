@@ -42,7 +42,7 @@ var actions = {
     this.dispatch(constants.FRAME_ROTATE, angle);
   },
   modalShow: function(component, data) {
-    data = data || {};
+    data = data || {};
     this.dispatch(constants.MODAL_SHOW, {component: component, data: data, visible: true});
   },
   modalHide: function() {
@@ -191,6 +191,9 @@ var actions = {
   },
   pixelDelete: function(layer, x, y) {
     this.dispatch(constants.PIXEL_DELETE, {layer: layer, x: x, y: y});
+  },
+  pixelsAdd: function(pixels) {
+    this.dispatch(constants.PIXELS_ADD, pixels);
   },
   pixelsMove: function(distance) {
     this.dispatch(constants.PIXELS_MOVE, distance);

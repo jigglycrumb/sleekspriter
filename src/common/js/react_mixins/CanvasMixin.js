@@ -23,6 +23,7 @@ var CanvasMixin = {
       case "ANIMATION_FRAME_ADD":
       case "MODAL_SHOW":
       case "MODAL_HIDE":
+      case "PIXELS_ADD":
         // no-op
         break;
 

@@ -11,6 +11,7 @@ var StageBox = React.createClass({
     top: 0,
     left: 0,
   },
+  pixels: [],
   getInitialState: function() {
     return {
       mousedown: false,
@@ -78,7 +79,8 @@ var StageBox = React.createClass({
               layer={layer}
               ui={this.props.ui}
               file={this.props.file}
-              pixels={this.props.pixels} />
+              pixels={this.props.pixels}
+              ref={'layer_' + layer.id} />
           );
         }, this)}
 
@@ -120,30 +122,21 @@ var StageBox = React.createClass({
   touchstart: function(event) {
 
     var coords = event.touches[0],
-        point = this.getTouchCoordinates(event),
-        ok = true;
+        point = this.getTouchCoordinates(event);
 
     this.touched = true;
-    this._updateCursor(point);
+    this.updateCursor(point);
 
-    console.log('touchstart', point, event.touches[0]);
+    // console.log('touchstart', point, event.touches[0]);
 
     switch(this.props.ui.tool) {
-
       case 'BrushTool':
-        //ok = this.useBrushTool();
-        break;
+        // ok = this.useBrushTool();
 
-      case 'EraserTool':
-        ok = this.useEraserTool();
-        break;
+        this.touchBrushTool();
 
-      case 'BrightnessTool':
-        ok = this.useBrightnessTool();
-        break;
+        console.log(this.pixels);
 
-      case 'RectangularSelectionTool':
-        this.startRectangularSelection(point);
         break;
     }
   },
@@ -159,11 +152,10 @@ var StageBox = React.createClass({
       //   var layerColor = this.getLayerPixelColor(point),
       //      frameColor = this.getFramePixelColor(point);
       //   this.getFlux().actions.cursorSet(point, layerColor, frameColor);
-      this._updateCursor(point);
+      this.updateCursor(point);
     }
 
     if(this.state.mousedown === true) {
-
       switch(this.props.ui.tool) {
 
         case 'BrushTool':
@@ -193,14 +185,11 @@ var StageBox = React.createClass({
   touchmove: function(event) {
 
     var coords = event.touches[0],
-        point = this.getTouchCoordinates(event),
-        ok = true;
+        point = this.getTouchCoordinates(event);
 
-    // this.touched = true;
+    this.updateCursor(point);
 
-    this._updateCursor(point);
-
-    console.log('touchmove', point, event.touches[0]);
+    // console.log('touchmove', point, event.touches[0]);
   },
 
   mouseup: function(event) {
@@ -234,7 +223,12 @@ var StageBox = React.createClass({
   },
 
   touchend: function(event) {
-    console.log('touchend', event);
+    // console.log('touchend', event);
+
+    var coords = event.touches[0],
+        point = this.getTouchCoordinates(event);
+
+    this.refs.cursorCanvas.clear();
   },
 
   getLayerPixelColor: function(point) {
@@ -259,14 +253,11 @@ var StageBox = React.createClass({
   },
 
   getTouchCoordinates: function(event) {
-
     var touch = event.touches[0],
         offset = {
           x: this.css.left + this.props.ui.offset.left,
           y: this.css.top + this.props.ui.offset.left
         };
-
-    // console.log('getTouchCoordinates', this.css);
 
     return new Point(
       Math.ceil((event.touches[0].pageX - offset.x) / this.props.ui.zoom.selected),
@@ -276,8 +267,8 @@ var StageBox = React.createClass({
 
   getMouseDownDistance: function() {
     return new Point(
-      this.props.ui.cursor.x - this.state.mousedownPoint.x,
-      this.props.ui.cursor.y - this.state.mousedownPoint.y
+      this.cursor.x - this.state.mousedownPoint.x,
+      this.cursor.y - this.state.mousedownPoint.y
     );
   },
 
@@ -289,17 +280,37 @@ var StageBox = React.createClass({
 
   useBrushTool: function() {
     if(storeUtils.layers.isVisible) {
-      if(!storeUtils.selection.isActive) {
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
+      if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.cursor)) {
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected,
+                                        this.props.ui.layers.selected,
                                         this.cursor.x, this.cursor.y,
-                                        storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
+                                        storeUtils.layers.getSelected().z,
+                                        this.props.ui.color.brush.hexString());
       }
-      else { // restrict to selection
-        if(storeUtils.selection.contains(this.props.ui.cursor)) {
-          this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected,
-                                          this.cursor.x, this.cursor.y,
-                                          storeUtils.layers.getSelected().z, this.props.ui.color.brush.hexString());
-        }
+      return true;
+    }
+    else return this.showInvisibleLayerError();
+  },
+
+  touchBrushTool: function() {
+    if(storeUtils.layers.isVisible) {
+      if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.cursor)) {
+        var px = new Pixel(
+          this.props.ui.frames.selected,
+          this.props.ui.layers.selected,
+          this.cursor.x,
+          this.cursor.y,
+          this.props.ui.color.brush.red(),
+          this.props.ui.color.brush.green(),
+          this.props.ui.color.brush.blue(),
+          this.props.ui.color.brush.alpha(),
+          storeUtils.layers.getSelected().z
+        );
+
+        this.pixels.push(px);
+
+        var layerCanvas = this.refs['layer_' + this.props.ui.layers.selected].refs.layerCanvas;
+        layerCanvas.paintPixel({x: px.x, y: px.y, color: px.toHex()});
       }
       return true;
     }
@@ -308,13 +319,8 @@ var StageBox = React.createClass({
 
   useEraserTool: function() {
     if(storeUtils.layers.isVisible) {
-      if(!storeUtils.selection.isActive) {
-        this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y);
-      }
-      else { // restrict to selection
-        if(storeUtils.selection.contains(this.props.ui.cursor)) {
-          this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y);
-        }
+      if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.cursor)) {
+        this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.cursor.x, this.cursor.y);
       }
       return true;
     }
@@ -329,10 +335,9 @@ var StageBox = React.createClass({
 
   usePaintBucketTool: function(point) {
     if(storeUtils.layers.isVisible) {
-      if(storeUtils.selection.isActive) {
-        if(storeUtils.selection.contains(point)) this.getFlux().actions.paintbucket(point);
+      if(!storeUtils.selection.isActive || storeUtils.selection.contains(point)) {
+        this.getFlux().actions.paintbucket(point);
       }
-      else this.getFlux().actions.paintbucket(point);
       return true;
     }
     else return this.showInvisibleLayerError();
@@ -345,14 +350,14 @@ var StageBox = React.createClass({
       function lighten() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
       function darken() {
         if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
         var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.props.ui.cursor.x, this.props.ui.cursor.y,
+        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
               storeUtils.layers.getSelected().z, newColor.hexString());
       };
 
@@ -360,15 +365,9 @@ var StageBox = React.createClass({
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
-        if(!storeUtils.selection.isActive) {
+        if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.props.ui.cursor)) {
           if(this.props.ui.brightnessTool.mode == 'lighten') lighten.call(this);
           else if(this.props.ui.brightnessTool.mode == 'darken') darken.call(this);
-        }
-        else { // restrict to selection
-          if(storeUtils.selection.contains(this.props.ui.cursor)) {
-            if(this.props.ui.brightnessTool.mode == 'lighten') lighten.call(this);
-            else if(this.props.ui.brightnessTool.mode == 'darken') darken.call(this);
-          }
         }
       }
       return true;
@@ -445,7 +444,7 @@ var StageBox = React.createClass({
 
 
 
-  _updateCursor: function(point) {
+  updateCursor: function(point) {
     if((point.x > 0 && point.y > 0)
     && (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
       this.cursor = point;

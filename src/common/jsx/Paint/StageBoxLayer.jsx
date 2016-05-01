@@ -10,7 +10,7 @@ var StageBoxLayer = React.createClass({
 
     return (
       <div id={htmlId} className="Layer" style={style}>
-        <LayerCanvas layer={this.props.layer.id} zoom={this.props.ui.zoom.selected} file={this.props.file} pixels={this.props.pixels} />
+        <LayerCanvas layer={this.props.layer.id} zoom={this.props.ui.zoom.selected} file={this.props.file} pixels={this.props.pixels} ref="layerCanvas" />
       </div>
     );
   },

@@ -63,6 +63,7 @@ var constants = {
   SELECTION_MOVE:             'SELECTION_MOVE',
   PIXEL_ADD:                  'PIXEL_ADD',
   PIXEL_DELETE:               'PIXEL_DELETE',
+  PIXELS_ADD:                 'PIXELS_ADD',
   PIXELS_MOVE:                'PIXELS_MOVE',
   PAINTBUCKET:                'PAINTBUCKET',
   BOX_FOLD:                   'BOX_FOLD',
