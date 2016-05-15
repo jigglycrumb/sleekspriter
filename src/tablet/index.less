@@ -28,15 +28,23 @@ body {
   line-height: 40px;
 }
 
-.screen.start .splash .inner {
-  width: 600px;
-  height: 400px;
-  padding: 30px;
-}
+.screen.start {
+  .splash {
+    a {
+      line-height: 2em;
+    }
 
-.screen.start .splash .logo {
-  height: 240px;
-  font-size: 4rem;
+    .inner {
+      width: 600px;
+      height: 400px;
+      padding: 30px;
+    }
+
+    .logo {
+      height: 240px;
+      font-size: 4rem;
+    }
+  }
 }
 
 .screen.paint {
@@ -50,12 +58,85 @@ body {
     font-size: 1.5rem;
   }
 
+  .ToolComponent {
+    height: 50px;
+    line-height: 50px;
+
+    i.icon {
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 1.5rem;
+    }
+
+    & > span {
+      margin: 16px 10px 0 0;
+    }
+
+    .spacer {
+      width: 1rem;
+    }
+
+    .colorswatch {
+      margin-top: 6px;
+      margin-right: 4px;
+    }
+
+    .palette {
+      .name {
+        width: 135px;
+      }
+
+      .outer {
+        left: 375px;
+        right: 45px;
+        height: 50px;
+      }
+
+      .inner {
+        height: 46px;
+      }
+
+      .switch-arrow {
+        left: 0;
+      }
+
+      .switch {
+        width: 200px;
+
+        .list {
+          width: 460px;
+
+          li {
+            padding: 1rem;
+          }
+        }
+      }
+
+      .scroll {
+        height: 36px;
+        width: 36px;
+      }
+    }
+
+  } // .ToolComponent
+
+
+  .area.top {
+    height: 49px;
+  }
+
   .area.left {
+    top: 50px;
     width: 63px;
   }
 
   .area.center {
     left: 65px;
+  }
+
+  .area.right {
+    top: 50px;
   }
 
   .statusbar {
@@ -81,8 +162,52 @@ button, .button {
 input[type=text],
 input[type=number] {
   font-size: 1.3rem;
+  padding: 0.5rem;
+}
+
+#Modal .title {
+  height: 40px;
+  line-height: 40px;
 }
 
 #Modal .frame-size {
   width: 420px;
+}
+
+.foldable-handle {
+  padding-left: 2rem;
+}
+
+.foldable-handle:before {
+  font-size: 1rem;
+  left: 6px;
+}
+
+
+.screen.export {
+  .area.left {
+    width: 500px;
+  }
+
+  .area.right {
+    left: 500px;
+  }
+}
+
+input[type=color] {
+  width: 40px;
+  height: 44px;
+}
+
+.colorswatch {
+  width: 36px;
+  height: 36px;
+}
+
+button.small {
+    height: 36px;
+}
+
+button.tiny {
+    height: 36px;
 }

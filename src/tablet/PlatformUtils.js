@@ -18,23 +18,21 @@ PlatformUtils.prototype.showSaveFileDialog = function() {
 PlatformUtils.prototype.loadFile = function(fullPath) {
   console.log('PlatformUtils.loadFile', fullPath);
 
+  //cordova.file.externalApplicationStorageDirectory
 
-  function readFile() {
-      window.requestFileSystem(window.LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-          fileSystem.root.getFile('readme.txt',
-              {create: false, exclusive: false}, function(fileEntry) {
-                  fileEntry.file(function(file) {
-                      var reader = new window.FileReader();
-                      reader.onloadend = function(evt) {console.log(evt.target.result);};
-                      reader.onerror = function(evt) {console.log(evt.target.result);};
-                      reader.readAsText(file);
-                  }, function(e){console.log(e);});
-              }, function(e){console.log(e);});
-      }, function(e) {console.log(e);});
+  function onSuccess(fileEntry) {
+      console.log(fileEntry.name);
+
+      console.log('got fileentry', fileEntry);
+      fileEntry.file(function(file) {
+          var reader = new window.FileReader();
+          reader.onloadend = function(evt) {console.log('file loaded', evt.target.result);};
+          reader.onerror = function(evt) {console.log('file load error', evt.target.result);};
+          reader.readAsText(file);
+      }, function(e){console.log(e);});
   }
 
-
-
+  window.resolveLocalFileSystemURL("file:///storage/emulated/0/Download/coin.pixels", onSuccess, null);
 };
 
 PlatformUtils.prototype.exportFile = function(settings) {
@@ -79,7 +77,7 @@ PlatformUtils.prototype.boot = function() {
 
         // menu_init();
 
-        setTimeout(flux.actions.windowResize, 0);
+        setTimeout(flux.actions.windowResize, 250);
       }
     };
 
