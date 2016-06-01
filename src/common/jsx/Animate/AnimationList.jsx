@@ -2,8 +2,7 @@ var AnimationList = React.createClass({
   mixins: [FluxMixin, TouchMixin],
   render: function() {
 
-    var deleteButtonDisabled = this.props.file.animations.length === 0 || this.props.ui.animations.selected === null
-                             ? true : false,
+    var deleteButtonDisabled = this.props.file.animations.length === 0 || this.props.ui.animations.selected === null ? true : false,
         animations = _.sortBy(this.props.file.animations, 'name'),
         helpingHand = null;
 
@@ -27,7 +26,7 @@ var AnimationList = React.createClass({
           var selected = animation.id === this.props.ui.animations.selected ? true : false;
           return (
             <AnimationListAnimation key={animation.id} animation={animation} selected={selected} />
-          )
+          );
         }, this)}
         </ul>
 
@@ -42,7 +41,7 @@ var AnimationList = React.createClass({
           </button>
         </div>
       </div>
-    )
+    );
   },
   dispatchAnimationAdded: function() {
     this.getFlux().actions.animationAdd();

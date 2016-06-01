@@ -29,11 +29,13 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
     if(error) throw error;
 
     var data = {
-      json: JSON.parse(contents),
-      path: fullPath,
-      name: p.basename(fullPath, '.pixels'),
-      folder: p.dirname(fullPath),
+      json: JSON.parse(contents), // the file content parsed as JSON
+      path: fullPath,             // the complete absolute file path
+      name: p.basename(fullPath, '.pixels'), // the file name without extension, e.g. "coin"
+      folder: p.dirname(fullPath), // the complete absolute folder (same as path without the file name)
     };
+
+    // console.log('data:', data);
 
     self.updateDefaultFolder();
     flux.actions.fileLoad(data);

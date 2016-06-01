@@ -1,3 +1,5 @@
+// remember: do not use :hover, there is none on touch devices
+
 @import "../common/less/common.less";
 
 body {
@@ -6,6 +8,9 @@ body {
 
 .menu {
   height: 40px;
+  left: 60px;
+  right: 0;
+  width: auto;
 
   .version {
     height: 40px;
@@ -210,4 +215,31 @@ button.small {
 
 button.tiny {
     height: 36px;
+}
+
+#AppMenu {
+  height: 39px;
+  line-height: 38px;
+  position: relative;
+  width: 60px;
+  z-index: 2;
+}
+
+#AppMenuToggle {
+  border-bottom: 1px solid @medium;
+  border-right: 1px solid @medium;
+  font-size: 24px;
+  text-align: center;
+}
+
+#AppMenuWrapper {
+  background: @medium;
+  border: 1px solid @light;
+  display: block;
+  margin: 0;
+  width: 300px;
+
+  & > li {
+    padding: 20px;
+  }
 }

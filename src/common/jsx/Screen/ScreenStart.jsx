@@ -1,6 +1,18 @@
 var ScreenStart = React.createClass({
   mixins: [FluxMixin, TouchMixin],
   render: function() {
+
+    var tips = {
+      desktop: [
+        'Tip: Drop .pixels files on this screen to open them directly.',
+      ],
+      tablet: [
+        'Tap the list icon in the upper left corner to open the main menu.',
+      ],
+    };
+
+    var tip = tips[platformUtils.device][_.random(0, tips[platformUtils.device].length - 1)];
+
     return (
       <section className="screen start" onDrop={this.handleDrop}>
         <div className="splash">
@@ -13,12 +25,10 @@ var ScreenStart = React.createClass({
           </div>
         </div>
         <div className="area statusbar">
-          <div className="bar">
-            Tip: Drop .pixels files on this screen to open them directly.
-          </div>
+          <div className="bar">{tip}</div>
         </div>
       </section>
-    )
+    );
   },
   shouldComponentUpdate: function() {
     switch(stateHistory.last.action) {

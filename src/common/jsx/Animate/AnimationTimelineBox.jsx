@@ -80,38 +80,39 @@ var AnimationTimelineBox = React.createClass({
           <div ref="inner" className="inner" style={innerStyle}>
             <AnimationFrameDropzone
               cssClass={dropzoneClass}
-              text={dropzoneHtml} 
+              text={dropzoneHtml}
               position={0}
               animation={this.props.ui.animations.selected} />
 
-            {finalElements.map(function(element) {
+            {finalElements.map(function(element) {
+              var key;
               if(element === 'dropzone') {
-                var key = 'dropzone-'+dropzoneKey;
+                key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone 
+                  <AnimationFrameDropzone
                     key={key}
                     cssClass={dropzoneClass}
                     text={dropzoneHtml}
-                    position={dropzoneKey-1} 
+                    position={dropzoneKey-1}
                     animation={this.props.ui.animations.selected} />
-                )
+                );
               }
               else if(element === 'dropzone-last') {
-                var key = 'dropzone-'+dropzoneKey;
+                key = 'dropzone-'+dropzoneKey;
                 dropzoneKey++;
                 return (
-                  <AnimationFrameDropzone 
+                  <AnimationFrameDropzone
                     key={key}
                     cssClass="last"
                     text={dropzoneHtml}
-                    position={dropzoneKey-1} 
+                    position={dropzoneKey-1}
                     animation={this.props.ui.animations.selected} />
-                )
+                );
               }
               else {
-                var key = 'frame-'+frameKey,
-                    selected = this.props.ui.animations.frame === frameKey ? true : false;
+                key = 'frame-'+frameKey;
+                selected = this.props.ui.animations.frame === frameKey ? true : false;
                 frameKey++;
                 return (
                   <AnimationTimelineFrame
@@ -123,7 +124,7 @@ var AnimationTimelineBox = React.createClass({
                     file={this.props.file}
                     pixels={this.props.pixels}
                     selected={selected} />
-                )
+                );
               }
             }, this)}
           </div>

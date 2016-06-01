@@ -9,6 +9,8 @@ PlatformUtils.prototype.constructor = PlatformUtils;
 
 PlatformUtils.prototype.showOpenFileDialog = function() {
   console.log('PlatformUtils.showOpenFileDialog');
+
+  console.log(window.plugins.mfilechooser);
 };
 
 PlatformUtils.prototype.showSaveFileDialog = function() {
@@ -16,9 +18,16 @@ PlatformUtils.prototype.showSaveFileDialog = function() {
 };
 
 PlatformUtils.prototype.loadFile = function(fullPath) {
+
+  var self = this;
+
+  fullPath = "file:///storage/emulated/0/Download/coin.pixels";
+
   console.log('PlatformUtils.loadFile', fullPath);
 
   //cordova.file.externalApplicationStorageDirectory
+
+  // var fileEntry;
 
   function onSuccess(fileEntry) {
       console.log(fileEntry.name);
@@ -26,13 +35,43 @@ PlatformUtils.prototype.loadFile = function(fullPath) {
       console.log('got fileentry', fileEntry);
       fileEntry.file(function(file) {
           var reader = new window.FileReader();
-          reader.onloadend = function(evt) {console.log('file loaded', evt.target.result);};
+          reader.onloadend = init.bind(fileEntry);
           reader.onerror = function(evt) {console.log('file load error', evt.target.result);};
           reader.readAsText(file);
-      }, function(e){console.log(e);});
+      }, function(e) { console.log(e); });
   }
 
-  window.resolveLocalFileSystemURL("file:///storage/emulated/0/Download/coin.pixels", onSuccess, null);
+  function init(e) {
+    console.log('init', this);
+
+    var suffix = '.pixels',
+        contents = e.target.result;
+
+    var data = {
+      json: JSON.parse(contents),
+      path: fullPath,
+      name: this.name.substring(0, this.name.length - suffix.length),
+      folder: fullPath.substring(0, fullPath.length - this.name.length),
+    };
+
+    console.log('data:', data);
+
+    self.updateDefaultFolder();
+    flux.actions.fileLoad(data);
+    flux.actions.tabSelect('paint');
+
+    // actions to init paint screen
+    flux.actions.frameSelect(1);
+    flux.actions.layerTopSelect();
+    flux.actions.scopeSet(null, 'layer');
+
+    // actions to init export screen
+    if(flux.stores.FileStore.getData().animations.length > 0) {
+      flux.actions.exportAnimation(flux.stores.FileStore.getData().animations[0].id);
+    }
+  }
+
+  window.resolveLocalFileSystemURL(fullPath, onSuccess, null);
 };
 
 PlatformUtils.prototype.exportFile = function(settings) {
@@ -56,6 +95,7 @@ PlatformUtils.prototype.boot = function() {
   function onDeviceReady() {
     console.log('PlatformUtils.boot');
     console.log(cordova.file);
+    // console.log(device);
 
     var palettesFile = 'json/palettes.json';
 

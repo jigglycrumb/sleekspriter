@@ -10,7 +10,8 @@ var App = React.createClass({
   },
   render: function() {
     var tabs = [],
-        windowClasses = {};
+        windowClasses = {},
+        appMenu = platformUtils.device == 'desktop' ? null : <AppMenu />
 
         if(this.state.ui.tab !== 'start') {
           tabs.push('paint');
@@ -24,6 +25,7 @@ var App = React.createClass({
 
     return (
       <div className="app">
+        {appMenu}
         <nav className="menu" ref="menu">
           {this.state.ui.tab === 'start' ? <label className="version">version @@version</label> :
             tabs.map(function(tab) {

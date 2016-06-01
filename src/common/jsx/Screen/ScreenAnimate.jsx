@@ -2,7 +2,7 @@ var ScreenAnimate = React.createClass({
   getInitialState: function() {
     return {
       listVisible: false,
-    }
+    };
   },
   shouldComponentUpdate: function() {
     switch(stateHistory.last.action) {
@@ -77,7 +77,7 @@ var ScreenAnimate = React.createClass({
           file={this.props.file}
           listVisible={this.state.listVisible} />
       </section>
-    )
+    );
   },
   toggleAnimationList: function() {
     this.setState({listVisible: !this.state.listVisible});
