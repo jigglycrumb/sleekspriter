@@ -18,7 +18,7 @@ var StageBox = React.createClass({
                 // see https://code.google.com/p/chromium/issues/detail?id=161464
                 // and http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
   },
-  pixels: [],
+  pixels: [], // temporary holds pixels until the end of the tool usage (currently touch only)
   render: function() {
 
     var w = this.props.file.size.width * this.props.ui.zoom.selected,
@@ -126,8 +126,8 @@ var StageBox = React.createClass({
   mousemove: function(event) {
     if(this.touched) return false;
 
-    var event = event.nativeEvent,
-        point = this.getClickCoordinates(event),
+    event = event.nativeEvent;
+    var point = this.getClickCoordinates(event),
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.mouse.last + 10) {
@@ -349,7 +349,7 @@ var StageBox = React.createClass({
   },
 
   useEyedropperTool: function() {
-    if(this.props.ui.color.frame.alpha() == 0) return; // skip transparent pixels
+    if(this.props.ui.color.frame.alpha() === 0) return; // skip transparent pixels
     this.getFlux().actions.toolSelect('BrushTool');
     this.getFlux().actions.colorBrush(this.props.ui.color.frame.hexString());
   },
@@ -366,21 +366,21 @@ var StageBox = React.createClass({
 
   useBrightnessTool: function() {
 
+    function lighten() {
+      if(this.props.ui.color.layer.alpha() === 0) return; // skip transparent pixels
+      var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
+      this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
+            storeUtils.layers.getSelected().z, newColor.hexString());
+    }
+
+    function darken() {
+      if(this.props.ui.color.layer.alpha() === 0) return; // skip transparent pixels
+      var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
+      this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
+            storeUtils.layers.getSelected().z, newColor.hexString());
+    }
+
     if(storeUtils.layers.isVisible) {
-
-      function lighten() {
-        if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
-              storeUtils.layers.getSelected().z, newColor.hexString());
-      };
-
-      function darken() {
-        if(this.props.ui.color.layer.alpha() == 0) return; // skip transparent pixels
-        var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
-        this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
-              storeUtils.layers.getSelected().z, newColor.hexString());
-      };
 
       var px = _.findWhere(this.props.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
@@ -466,8 +466,8 @@ var StageBox = React.createClass({
 
 
   updateCursor: function(point) {
-    if((point.x > 0 && point.y > 0)
-    && (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
+    if((point.x > 0 && point.y > 0) &&
+    (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
       this.cursor = point;
       this.refs.cursorCanvas.drawPixelCursor(this.cursor.x, this.cursor.y);
     }
