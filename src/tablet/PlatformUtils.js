@@ -9,8 +9,6 @@ PlatformUtils.prototype.constructor = PlatformUtils;
 
 PlatformUtils.prototype.showOpenFileDialog = function() {
   console.log('PlatformUtils.showOpenFileDialog');
-
-  console.log(window.plugins.mfilechooser);
 };
 
 PlatformUtils.prototype.showSaveFileDialog = function() {

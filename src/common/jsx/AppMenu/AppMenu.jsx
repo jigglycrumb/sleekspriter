@@ -19,6 +19,5 @@ var AppMenu = React.createClass({
   },
   toggle: function() {
     this.setState({visible: !this.state.visible});
-    console.log('toggle', this.state.visible);
   },
 });

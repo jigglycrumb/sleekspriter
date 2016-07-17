@@ -9,6 +9,9 @@ var ScreenStart = React.createClass({
       tablet: [
         'Tap the list icon in the upper left corner to open the main menu.',
       ],
+      browser: [
+        'Click the list icon in the upper left corner to open the main menu.',
+      ],
     };
 
     var tip = tips[platformUtils.device][_.random(0, tips[platformUtils.device].length - 1)];

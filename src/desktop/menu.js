@@ -25,7 +25,7 @@ function closeCredits() {
 
 function enableMenus(enabled) {
   function enable(item) { item.enabled = enabled; }
-  for(x in menu) if(x !== 'developer') menu[x].items.map(enable);
+  for(var x in menu) if(x !== 'developer') menu[x].items.map(enable);
 }
 
 //------------------------------------------------------------------------------

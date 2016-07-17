@@ -37,8 +37,33 @@ PlatformUtils.prototype.getPathData = function(fullPath) {
 
 PlatformUtils.prototype.boot = function() {
   console.log('PlatformUtils.boot');
+
+  var palettesFile = 'json/palettes.json';
+  var request = new XMLHttpRequest();
+
+  request.open("GET", palettesFile);
+  request.onreadystatechange = function() {
+    if (request.readyState == 4) {
+      window.onresize = flux.actions.windowResize;
+      screen.onorientationchange = flux.actions.windowResize;
+
+      setupFluxDispatcher();
+
+      ReactDOM.render(React.createElement(App, {flux: flux}), container);
+
+      var json = JSON.parse(request.responseText);
+      flux.actions.paletteLoad(json);
+
+      // menu_init();
+
+      setTimeout(flux.actions.windowResize, 250);
+    }
+  };
+
+  request.send();
 };
 
 PlatformUtils.prototype.setWindowTitle = function(title) {
   console.log('PlatformUtils.setWindowTitle', title);
+  document.title = title;
 };

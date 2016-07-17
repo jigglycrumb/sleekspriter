@@ -437,3 +437,43 @@ ul {
 .hidden {
   display: none;
 }
+
+#AppMenu {
+  height: 19px;
+  line-height: 18px;
+  position: relative;
+  width: 60px;
+  z-index: 2;
+}
+
+#AppMenuToggle {
+  border-bottom: 1px solid @medium;
+  border-right: 1px solid @medium;
+  // font-size: 24px;
+  text-align: center;
+}
+
+#AppMenuWrapper {
+  display: block;
+  margin: 0;
+  width: 300px;
+
+  li {
+    background: @medium;
+    border: 1px solid @light;
+    box-sizing: border-box;
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    width: 150px;
+  }
+
+  & > li {
+
+    & > ul {
+      position: absolute;
+      top: -1px;
+      right: -150px;
+    }
+  }
+}
