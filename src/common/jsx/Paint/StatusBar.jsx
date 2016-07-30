@@ -8,13 +8,15 @@ var StatusBar = React.createClass({
           active: this.props.ui.settings.grid,
         });
 
+    var pixelCount = this.props.pixels.frame.length + this.props.pixels.scope.length || 0;
+
     return (
       <div className="bar">
         <span ref="cursorX">X: {this.props.ui.cursor.x}</span>
         <span ref="cursorY">Y: {this.props.ui.cursor.y}</span>
         <div id="StatusBarColor" style={{background: this.props.ui.color.frame.rgbaString()}}></div>
-        <span id="StatusBarColorString">{this.props.ui.color.frame.alpha() == 0 ? 'transparent': this.props.ui.color.frame.hexString()}</span>
-        <span>Frame {this.props.ui.frames.selected}, {this.props.pixels.frame.length + this.props.pixels.scope.length} pixels</span>
+        <span id="StatusBarColorString">{this.props.ui.color.frame.alpha() === 0 ? 'transparent': this.props.ui.color.frame.hexString()}</span>
+        <span>Frame {this.props.ui.frames.selected}, {pixelCount} pixels</span>
         &nbsp;
         <span>Zoom &times;{this.props.ui.zoom.selected}</span>
         <div id="StatusBarButtons">

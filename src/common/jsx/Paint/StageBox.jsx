@@ -382,7 +382,7 @@ var StageBox = React.createClass({
 
     if(storeUtils.layers.isVisible) {
 
-      var px = _.findWhere(this.props.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
+      var px = _.find(this.props.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {

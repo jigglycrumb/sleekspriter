@@ -2,9 +2,9 @@ var ScreenBlocker = React.createClass({
   getInitialState: function() {
     return {
       pac: 0
-    }
+    };
   },
-  render: function() {
+  render: function() {
 
     var pac = [
       <circle stroke="#979797" fill="#FFFFFF" cx="201" cy="201" r="200"></circle>,
@@ -16,7 +16,7 @@ var ScreenBlocker = React.createClass({
     return (
       <div id="ScreenBlocker">
         <div>
-          <svg width="50px" height="70px" viewBox="0 0 402 402" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <svg width="50px" height="70px" viewBox="0 0 402 402" version="1.1">
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
               {pacman}
             </g>
@@ -24,7 +24,7 @@ var ScreenBlocker = React.createClass({
           <div>working, please wait...</div>
         </div>
       </div>
-    )
+    );
   },
   componentDidMount: function() {
     this.interval = setInterval(this.tick, 100);
@@ -33,7 +33,7 @@ var ScreenBlocker = React.createClass({
     clearInterval(this.interval);
   },
   tick: function() {
-    if(this.state.pac == 0) this.setState({pac: 1});
+    if(this.state.pac === 0) this.setState({pac: 1});
     else this.setState({pac: 0});
   },
 });

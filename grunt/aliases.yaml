@@ -1,5 +1,5 @@
 default:
-  - 'dev'
+  - 'watch'
 
 basic:
   - 'clean:build'
@@ -12,7 +12,14 @@ basic:
   - 'replace'
 
 dev:
-  - 'basic'
+  - 'clean:build'
+  - 'copy:browser'
+  - 'browserify'
+  - 'react:browser'
+  - 'concat:browser'
+  - 'less:browser'
+  - 'autoprefixer:browser'
+  - 'replace:browser'
   - 'clean:postbuild'
 
 desktop:

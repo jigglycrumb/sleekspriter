@@ -176,7 +176,7 @@ var UiStore = Fluxxor.createStore({
 
       pixels.forEach(function(px) { palette.push(px.toHex()); });
 
-      this.data.palettes.available[0].colors = _.unique(palette, false);
+      this.data.palettes.available[0].colors = _.uniq(palette);
 
       if(platformUtils.device == 'desktop') {
         enableMenus(true);
@@ -197,7 +197,7 @@ var UiStore = Fluxxor.createStore({
 
       pixels.forEach(function(px) { palette.push(px.toHex()); });
 
-      this.data.palettes.available[0].colors = _.unique(palette, false);
+      this.data.palettes.available[0].colors = _.uniq(palette);
       this.emit('change');
     });
   },
@@ -301,21 +301,21 @@ var UiStore = Fluxxor.createStore({
 
   onLayerAdd: function() {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
 
   onLayerDelete: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
 
   onLayerDrop: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.where(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
@@ -432,7 +432,7 @@ var UiStore = Fluxxor.createStore({
 
   onPixelAdd: function(payload) {
     this.data.palettes.available[0].colors.push(payload.color);
-    this.data.palettes.available[0].colors = _.unique(this.data.palettes.available[0].colors, false);
+    this.data.palettes.available[0].colors = _.uniq(this.data.palettes.available[0].colors);
     this.emit('change');
   },
 
@@ -447,7 +447,7 @@ var UiStore = Fluxxor.createStore({
         pixelArr.forEach(pushToPalette);
       }
 
-      this.data.palettes.available[0].colors = _.unique(palette, false);
+      this.data.palettes.available[0].colors = _.uniq(palette);
       this.emit('change');
     });
   },

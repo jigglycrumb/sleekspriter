@@ -17,6 +17,7 @@
     "grunt-contrib-copy": "latest",
     "grunt-contrib-less": "latest",
     "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
     "grunt-nw-builder": "latest",
     "grunt-phonegap-build": "latest",
     "grunt-react": "latest",

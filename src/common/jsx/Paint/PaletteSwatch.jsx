@@ -1,4 +1,3 @@
-// Flux: done
 var PaletteSwatch = React.createClass({
   mixins: [FluxMixin, TouchMixin],
   propTypes: {

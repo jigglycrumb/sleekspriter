@@ -301,7 +301,7 @@ var FileStore = Fluxxor.createStore({
       }
     }
 
-    var frameLayers = _.where(this.data.layers, {frame: selectedFrame});
+    var frameLayers = _.find(this.data.layers, {frame: selectedFrame});
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;

@@ -23,7 +23,7 @@ StoreUtils.prototype.layers.getIds = function() {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getById = function(id) {
-  return _.findWhere(flux.stores.UiStore.getData().layers.frame, {id: id});
+  return _.find(flux.stores.UiStore.getData().layers.frame, {id: id});
 };
 
 /**
@@ -31,7 +31,7 @@ StoreUtils.prototype.layers.getById = function(id) {
  * @returns {Array} layer Objects
  */
 StoreUtils.prototype.layers.getByFrame = function(frame) {
-  return _.where(flux.stores.FileStore.getData().layers, {frame: frame});
+  return _.filter(flux.stores.FileStore.getData().layers, {frame: frame});
 };
 
 

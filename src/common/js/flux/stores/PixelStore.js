@@ -75,7 +75,7 @@ var PixelStore = Fluxxor.createStore({
   onFrameSelect: function(frame) {
     this.waitFor(['UiStore'], function(UiStore) {
       this.save();
-      this.data.frame = _.where(this.data.file, {frame: frame});
+      this.data.frame = _.find(this.data.file, {frame: frame}) || [];
       this.emit('change');
     });
   },
@@ -122,14 +122,14 @@ var PixelStore = Fluxxor.createStore({
         pixel.z = layerZ[pixel.layer];
       });
 
-      this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+      this.data.frame = _.find(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected}) || [];
       this.emit('change');
     });
   },
 
   // TODO: fix bugs, pixels are getting lost here it seems
   onLayerMerge: function(payload) {
-    // define where to look for top layer pixels
+    // define find to look for top layer pixels
     var search = this.data.frame;
     if(payload.top.id === storeUtils.layers.getSelected().id) {
       search = this.data.scope;
@@ -167,7 +167,7 @@ var PixelStore = Fluxxor.createStore({
     if(params.oldScope !== null && this.data.scope.length > 0) {
       // merge scope pixels back to frame
       this.data.scope.forEach(function(px) {
-        var oldPixel = _.findWhere(this.data.frame, {x: px.x, y: px.y});
+        var oldPixel = _.find(this.data.frame, {x: px.x, y: px.y});
         if(!_.isUndefined(oldPixel)) {
           this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
         }
@@ -269,7 +269,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelsAdd: function(pixels) {
-    self.data.scope = _.unique(pixels.concat(self.data.scope), function(px) { return px.uid(); });
+    self.data.scope = _.uniq(pixels.concat(self.data.scope), false, this.pixelId);
     self.emit('change');
   },
 
@@ -331,7 +331,7 @@ var PixelStore = Fluxxor.createStore({
         newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
       });
 
-      self.data.scope = _.unique(newPixels.concat(self.data.scope), function(px) { return px.uid(); });
+      self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelId);
       document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }
@@ -380,7 +380,7 @@ var PixelStore = Fluxxor.createStore({
     this.data.file = this.data.file.filter(function(pixel) {
       return pixel.layer !== layer;
     });
-    this.data.frame = _.where(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+    this.data.frame = _.find(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected}) || [];
   },
 
   addPixel: function(frame, layer, x, y, z, color) {
@@ -389,7 +389,7 @@ var PixelStore = Fluxxor.createStore({
         a = 1;
 
     var newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a, z);
-    var oldPixel = _.findWhere(this.data.scope, {x: x, y: y});
+    var oldPixel = _.find(this.data.scope, {x: x, y: y});
     if(_.isUndefined(oldPixel)) {
       // console.log('filling pixel', layer, x, y, c.rgbString());
       this.data.scope.push(newPixel);
@@ -430,7 +430,7 @@ var PixelStore = Fluxxor.createStore({
     this.data[from].forEach(function(px) {
       this.data[to].push(px);
     }, this);
-    this.data[to] = _.unique(this.data[to], function(px) { return px.uid(); });
+    this.data[to] = _.uniq(this.data[to], false, this.pixelId);
   },
 
   save: function() {
@@ -438,6 +438,9 @@ var PixelStore = Fluxxor.createStore({
     this.merge('frame', 'file');
   },
 
+  pixelId: function(px) {
+    return px.uid();
+  },
 });
 
 // module.exports = new PixelStore();
