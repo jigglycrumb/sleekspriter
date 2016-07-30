@@ -1,17 +1,30 @@
 var PaintBucketTool = React.createClass({
-  mixins: [FluxMixin],
+  getInitialState: function() {
+    return {
+      pickerVisible: false
+    };
+  },
   render: function() {
     var hex = this.props.ui.color.brush.hexString();
     return (
       <div id="PaintBucket-Tool" className="ToolComponent">
         <i className="icon flaticon-paint2"/>
-        <input type="color" id="PaintBucket-Colorpicker" className="ColorSwatch" value={hex} onChange={this.dispatchColorSelected} title={hex} />
+
+        <div
+          className="colorswatch"
+          style={{background: hex}}
+          title={hex}
+          onClick={this.togglePicker}
+        />
+
+        <PixelColorPicker color={hex} visible={this.state.pickerVisible} />
+
         <span className="spacer"/>
         <Palette ui={this.props.ui} />
       </div>
     );
   },
-  dispatchColorSelected: function(event) {
-    this.getFlux().actions.colorBrush(event.target.value);
+  togglePicker: function() {
+    this.setState({pickerVisible: !this.state.pickerVisible});
   }
 });

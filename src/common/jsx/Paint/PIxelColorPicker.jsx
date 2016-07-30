@@ -1,7 +1,6 @@
-var CustomColorPicker = React.createClass({
+var PixelColorPicker = React.createClass({
   mixins: [FluxMixin],
   render: function() {
-
     var css = {
       display: this.props.visible ? 'block' : 'none'
     };

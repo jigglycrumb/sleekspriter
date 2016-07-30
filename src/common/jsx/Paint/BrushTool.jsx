@@ -9,7 +9,6 @@ var BrushTool = React.createClass({
     return (
       <div id="Brush-Tool" className="ToolComponent">
         <i className="icon flaticon-small23"></i>
-        {/*<input type="color" id="Brush-Colorpicker" className="ColorSwatch" value={hex} onChange={this.dispatchColorSelected} title={hex} />*/}
 
         <div
           className="colorswatch"
@@ -18,7 +17,7 @@ var BrushTool = React.createClass({
           onClick={this.togglePicker}
         />
 
-        <CustomColorPicker color={hex} visible={this.state.pickerVisible} />
+        <PixelColorPicker color={hex} visible={this.state.pickerVisible} />
 
         <span className="spacer"/>
         <Palette ui={this.props.ui} />
@@ -26,7 +25,6 @@ var BrushTool = React.createClass({
     );
   },
   togglePicker: function() {
-    console.log('click');
     this.setState({pickerVisible: !this.state.pickerVisible});
   }
 });
