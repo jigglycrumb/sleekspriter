@@ -3,7 +3,7 @@ var AnimationCanvas = React.createClass({
     return {
       timer: null,
       frameIndex: 0,
-    }
+    };
   },
   render: function() {
     if(this.props.animation !== null && this.props.animation.frames.length > 0) {
@@ -14,7 +14,7 @@ var AnimationCanvas = React.createClass({
 
       return (
         <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={this.props.maxSize} noMargin={noMargin} />
-      )
+      );
     }
   },
   componentDidUpdate: function(prevProps) {
@@ -33,7 +33,7 @@ var AnimationCanvas = React.createClass({
   },
   animationIsDifferent: function(animation1, animation2) {
     var diff = false;
-    for(x in animation1) {
+    for(var x in animation1) {
       if(animation1[x] !== animation2[x]) {
         diff = true;
         break;

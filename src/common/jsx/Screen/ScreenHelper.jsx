@@ -1,7 +1,6 @@
 var ScreenHelper = React.createClass({
   shouldComponentUpdate: function() {
     switch(stateHistory.last.action) {
-      case 'CURSOR_SET':
       case 'TOOL_SELECT':
       case 'SETTINGS_GRID':
       case 'ZOOM_SELECT':

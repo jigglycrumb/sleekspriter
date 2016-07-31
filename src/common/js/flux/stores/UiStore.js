@@ -15,7 +15,6 @@ var UiStore = Fluxxor.createStore({
       constants.MODAL_HIDE,                 this.onModalHide,
       constants.BRIGHTNESSTOOL_MODE,        this.onBrightnessToolMode,
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
-      constants.CURSOR_SET,                 this.onCursorSet,
       constants.COLOR_BRUSH,                this.onColorBrush,
       constants.PALETTE_LOAD,               this.onPaletteLoad,
       constants.PALETTE_SELECT,             this.onPaletteSelect,
@@ -85,7 +84,6 @@ var UiStore = Fluxxor.createStore({
         layer: new Color('#FFFFFF'),
         frame: new Color('#FFFFFF'),
       },
-      cursor: new Point(1,1),
       export: {
         part: 'spritesheet',
         frame: 1,
@@ -254,13 +252,6 @@ var UiStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onCursorSet: function(payload) {
-    this.data.cursor = payload.position;
-    this.data.color.layer = payload.color.layer;
-    this.data.color.frame = payload.color.frame;
-    this.emit('change');
-  },
-
   onColorBrush: function(hexcode) {
     this.data.color.brush = new Color(hexcode);
     this.emit('change');
@@ -275,7 +266,7 @@ var UiStore = Fluxxor.createStore({
   },
 
   onPaletteSelect: function(palette) {
-    this.data.palettes.selected = parseInt(palette)
+    this.data.palettes.selected = parseInt(palette);
     this.emit('change');
   },
 
@@ -397,8 +388,8 @@ var UiStore = Fluxxor.createStore({
 
     // switch start & end if start is more "lower right" than end
     // makes calculations with the selection easier later
-    if(this.data.selection.start.x > this.data.selection.end.x
-    || this.data.selection.start.y > this.data.selection.end.y) {
+    if(this.data.selection.start.x > this.data.selection.end.x ||
+       this.data.selection.start.y > this.data.selection.end.y) {
       var temp = this.data.selection.start;
       this.data.selection.start = this.data.selection.end;
       this.data.selection.end = temp;

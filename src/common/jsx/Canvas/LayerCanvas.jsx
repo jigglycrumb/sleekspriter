@@ -6,21 +6,24 @@ var LayerCanvas = React.createClass({
     pixels: React.PropTypes.object.isRequired, // PixelStore
     maxSize: React.PropTypes.number,
   },
-  mixins: [CanvasMixin],
+  mixins: [CanvasMixin], // must implement paint, paintPixel, erasePixel
   render: function() {
+
+    var width, height, style;
+
     if(_.isUndefined(this.props.maxSize)) {
-      var width = this.props.file.size.width*this.props.zoom,
-          height = this.props.file.size.height*this.props.zoom,
-          style = {
-            width: width,
-            height: height,
-          };
+      width = this.props.file.size.width*this.props.zoom;
+      height = this.props.file.size.height*this.props.zoom;
+      style = {
+        width: width,
+        height: height,
+      };
     }
     else {
-      var fitted = this.fitToSize(this.props.maxSize),
-          width = fitted.size.width,
-          height = fitted.size.height,
-          style = fitted.style;
+      var fitted = this.fitToSize(this.props.maxSize);
+      width = fitted.size.width;
+      height = fitted.size.height;
+      style = fitted.style;
     }
 
     return (
@@ -34,21 +37,37 @@ var LayerCanvas = React.createClass({
 
       this.clear();
 
-      var canvas = ReactDOM.findDOMNode(this),
-          paint = function(px) {
-            if(px.layer === this.props.layer) {
-              Pixel.paint(canvas, px.x, px.y, px.toHex());
-            }
-          };
+      var canvas = ReactDOM.findDOMNode(this);
+          // var paint = function(px) {
+          //   if(px.layer === this.props.layer) {
+          //     Pixel.paint(canvas, px.x, px.y, px.toHex());
+          //   }
+          // };
 
       // paint
-      if(this.props.pixels.preview.length > 0) {
-        this.props.pixels.preview.forEach(paint, this);
-      }
-      else {
-        this.props.pixels.scope.forEach(paint, this);
-        this.props.pixels.frame.forEach(paint, this);
-      }
+      var x, y;
+      var frame = storeUtils.frames.getSelected();
+
+      try {
+        var scope = this.props.pixels.dict[frame][this.props.layer];
+
+        for(x in scope) {
+          for(y in scope) {
+            var px = scope[x][y];
+            Pixel.paint(canvas, px.x, px.y, px.toHex());
+          }
+        }
+      } catch(e) {}
+
+
+      //
+      // if(this.props.pixels.preview.length > 0) {
+      //   this.props.pixels.preview.forEach(paint, this);
+      // }
+      // else {
+      //   this.props.pixels.scope.forEach(paint, this);
+      //   this.props.pixels.frame.forEach(paint, this);
+      // }
     }
   },
 

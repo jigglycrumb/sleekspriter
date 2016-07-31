@@ -54,9 +54,6 @@ var actions = {
   brightnessToolIntensity: function(intensity) {
     this.dispatch(constants.BRIGHTNESSTOOL_INTENSITY, intensity);
   },
-  cursorSet: function(position, layerColor, frameColor) {
-    this.dispatch(constants.CURSOR_SET, {position: position, color: {layer: layerColor, frame: frameColor}});
-  },
   colorBrush: function(hexcode) {
     this.dispatch(constants.COLOR_BRUSH, hexcode);
   },

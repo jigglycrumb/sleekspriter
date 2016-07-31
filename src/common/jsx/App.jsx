@@ -11,7 +11,7 @@ var App = React.createClass({
   render: function() {
     var tabs = [],
         windowClasses = {},
-        appMenu = platformUtils.device == 'desktop' ? null : <AppMenu />
+        appMenu = platformUtils.device == 'desktop' ? null : <AppMenu />;
 
         if(this.state.ui.tab !== 'start') {
           tabs.push('paint');
@@ -36,7 +36,7 @@ var App = React.createClass({
                   });
               return (
                 <div className={classes} key={tab} data-target={tab} onClick={this.handleClick.bind(this, this.tabSelect)} onTouchStart={this.handleTouch.bind(this, this.tabSelect)}>{label}</div>
-              )
+              );
             }, this)}
         </nav>
         <div className={windowClasses}>

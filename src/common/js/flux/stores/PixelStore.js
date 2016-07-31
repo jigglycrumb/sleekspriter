@@ -285,8 +285,6 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelDelete: function(payload) {
-
-    console.log(payload);
     this.data.file = this.deletePixel(this.data.file, payload.layer, payload.x, payload.y);
     this.data.scope = this.deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
     this.data.frame = this.deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
@@ -460,16 +458,12 @@ var PixelStore = Fluxxor.createStore({
   },
 
   writeToDictionary: function(pixel) {
-    this.createDictionaryKey(pixel);
-    this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
-  },
-
-  createDictionaryKey: function(pixel) {
-    console.log(this.data.dict);
     if(undefined === this.data.dict[pixel.frame]) this.data.dict[pixel.frame] = {};
     if(undefined === this.data.dict[pixel.frame][pixel.layer]) this.data.dict[pixel.frame][pixel.layer] = {};
     if(undefined === this.data.dict[pixel.frame][pixel.layer][pixel.x]) this.data.dict[pixel.frame][pixel.layer][pixel.x] = {};
     if(undefined === this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y]) this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = {};
+
+    this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
   },
 });
 

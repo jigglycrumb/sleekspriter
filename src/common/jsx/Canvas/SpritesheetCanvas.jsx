@@ -6,22 +6,24 @@ var SpritesheetCanvas = React.createClass({
     maxSize: React.PropTypes.number,
     background: React.PropTypes.string,
   },
-  mixins: [CanvasMixin],
+  mixins: [CanvasMixin], // must implement paint, paintPixel, erasePixel
   render: function() {
 
+    var width, height, style;
+
     if(_.isUndefined(this.props.maxSize)) {
-      var width = this.props.file.size.width * this.props.file.frames.x * this.props.zoom,
-          height = this.props.file.size.height * this.props.file.frames.y * this.props.zoom,
-          style = {
-            width: width,
-            height: height,
-          };
+      width = this.props.file.size.width * this.props.file.frames.x * this.props.zoom;
+      height = this.props.file.size.height * this.props.file.frames.y * this.props.zoom;
+      style = {
+        width: width,
+        height: height,
+      };
     }
     else {
-      var fitted = this.fitToSize(this.props.maxSize),
-          width = fitted.size.width,
-          height = fitted.size.height,
-          style = fitted.style;
+      var fitted = this.fitToSize(this.props.maxSize);
+      width = fitted.size.width;
+      height = fitted.size.height;
+      style = fitted.style;
     }
 
     return (

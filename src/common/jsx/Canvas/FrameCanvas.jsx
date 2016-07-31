@@ -9,28 +9,30 @@ var FrameCanvas = React.createClass({
     noMargin: React.PropTypes.bool,
     background: React.PropTypes.string,
   },
-  mixins: [CanvasMixin],
+  mixins: [CanvasMixin], // must implement paint, paintPixel, erasePixel
   getInitialState: function() {
     return {
       layerDict: [],
-    }
+    };
   },
   render: function() {
 
+    var width, height, style;
+
     if(_.isUndefined(this.props.maxSize)) {
-      var width = this.props.file.size.width*this.props.zoom,
-          height = this.props.file.size.height*this.props.zoom,
-          style = {
-            width: width,
-            height: height,
-          };
+      width = this.props.file.size.width*this.props.zoom;
+      height = this.props.file.size.height*this.props.zoom;
+      style = {
+        width: width,
+        height: height,
+      };
     }
     else {
       var noMargin = this.props.noMargin ? true : false,
-          fitted = this.fitToSize(this.props.maxSize, noMargin),
-          width = fitted.size.width,
-          height = fitted.size.height,
-          style = fitted.style;
+          fitted = this.fitToSize(this.props.maxSize, noMargin);
+      width = fitted.size.width;
+      height = fitted.size.height;
+      style = fitted.style;
     }
 
     return (
@@ -75,8 +77,9 @@ var FrameCanvas = React.createClass({
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
         if(layerDict[px.layer].visible === true) {
-          if(this.props.noAlpha) var alpha = 1;
-          else var alpha = px.a * (layerDict[px.layer].opacity / 100);
+          var alpha;
+          if(this.props.noAlpha) alpha = 1;
+          else alpha = px.a * (layerDict[px.layer].opacity / 100);
           Pixel.paint(canvas, px.x, px.y, px.toHex(), alpha);
         }
       }, this);
@@ -95,8 +98,9 @@ var FrameCanvas = React.createClass({
       }, this);
 
       if(layerDict[px.layer].visible === true) {
-        if(this.props.noAlpha) var alpha = 1;
-        else var alpha = px.a * (layerDict[px.layer].opacity / 100);
+        var alpha;
+        if(this.props.noAlpha) alpha = 1;
+        else alpha = px.a * (layerDict[px.layer].opacity / 100);
         Pixel.paint(canvas, px.x, px.y, px.color, alpha);
       }
     }

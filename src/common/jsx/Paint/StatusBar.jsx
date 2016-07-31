@@ -12,8 +12,8 @@ var StatusBar = React.createClass({
 
     return (
       <div className="bar">
-        <span ref="cursorX">X: {this.props.ui.cursor.x}</span>
-        <span ref="cursorY">Y: {this.props.ui.cursor.y}</span>
+        <span id="StatusBarCursorX">X: 0</span>
+        <span id="StatusBarCursorY">Y: 0</span>
         <div id="StatusBarColor" style={{background: this.props.ui.color.frame.rgbaString()}}></div>
         <span id="StatusBarColorString">{this.props.ui.color.frame.alpha() === 0 ? 'transparent': this.props.ui.color.frame.hexString()}</span>
         <span>Frame {this.props.ui.frames.selected}, {pixelCount} pixels</span>

@@ -4,6 +4,24 @@ var StoreUtils = function() {};
 StoreUtils.prototype = {};
 StoreUtils.prototype.constructor = StoreUtils;
 
+
+
+//------------------------------------------------------------------------------
+// Frame Helpers
+//------------------------------------------------------------------------------
+
+StoreUtils.prototype.frames = {};
+/**
+ * Get selected frame
+ * @returns {Number} Frame number
+ */
+StoreUtils.prototype.frames.getSelected = function() {
+  return flux.stores.UiStore.getData().frames.selected;
+};
+
+
+
+
 //------------------------------------------------------------------------------
 // Layer Helpers
 //------------------------------------------------------------------------------

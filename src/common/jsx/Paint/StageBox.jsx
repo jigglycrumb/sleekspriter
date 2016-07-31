@@ -131,9 +131,6 @@ var StageBox = React.createClass({
         distance = this.getMouseDownDistance();
 
     if(event.timeStamp > this.mouse.last + 10) {
-      //   var layerColor = this.getLayerPixelColor(point),
-      //      frameColor = this.getFramePixelColor(point);
-      //   this.getFlux().actions.cursorSet(point, layerColor, frameColor);
       this.updateCursor(point);
     }
 
@@ -469,7 +466,10 @@ var StageBox = React.createClass({
     if((point.x > 0 && point.y > 0) &&
     (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
       this.cursor = point;
-      this.refs.cursorCanvas.drawPixelCursor(this.cursor.x, this.cursor.y);
+      this.refs.cursorCanvas.drawPixelCursor(point.x, point.y);
+
+      document.getElementById("StatusBarCursorX").innerHTML = "X: " + point.x;
+      document.getElementById("StatusBarCursorY").innerHTML = "Y: " + point.y;
     }
   },
 

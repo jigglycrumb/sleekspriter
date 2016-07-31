@@ -6,7 +6,6 @@ var CanvasMixin = {
 
   componentDidUpdate: function() {
     switch(stateHistory.last.action) {
-      case constants.CURSOR_SET:
       case constants.TOOL_SELECT:
       case constants.SELECTION_CLEAR:
       case constants.SCOPE_SET:
