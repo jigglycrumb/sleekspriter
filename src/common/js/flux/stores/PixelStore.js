@@ -2,8 +2,8 @@ var PixelStore = Fluxxor.createStore({
   initialize: function() {
     this.resetData();
     this.bindActions(
-      constants.FILE_LOAD,                    this.onFileLoad,
-      constants.FILE_CREATE,                  this.onFileLoad,
+      constants.FILE_LOAD,                    this.onFileCreateAndLoad,
+      constants.FILE_CREATE,                  this.onFileCreateAndLoad,
       constants.FILE_SAVE,                    this.onFileSave,
       constants.FILE_SAVE_AS,                 this.onFileSave,
       constants.FILE_SIZE,                    this.onFileSave,
@@ -42,27 +42,33 @@ var PixelStore = Fluxxor.createStore({
     return this.data;
   },
 
-  resetData: function(key) {
+  resetData: function() {
     var data = {
       file: [],
       frame: [],
       scope: [],
       clipboard: [],
       preview: [],
+
+      dict: {},
     };
 
-    if(key && data[key]) this.data[key] = data[key];
-    else this.data = data;
+    this.data = data;
   },
 
   //----------------------------------------------------------------------------
   // Action handlers
   //----------------------------------------------------------------------------
 
-  onFileLoad: function() {
+  onFileCreateAndLoad: function() {
     this.waitFor(['FileStore'], function(FileStore) {
       this.resetData();
       this.data.file = FileStore.getData().pixels;
+
+      FileStore.getData().pixels.forEach(function(px) {
+        this.writeToDictionary(px);
+      }, this);
+
       this.emit('change');
     });
   },
@@ -269,14 +275,23 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelsAdd: function(pixels) {
-    self.data.scope = _.uniq(pixels.concat(self.data.scope), false, this.pixelId);
+    self.data.scope = _.uniq(pixels.concat(self.data.scope), false, this.pixelHash);
+
+    pixels.forEach(function(px) {
+      this.writeToDictionary(px);
+    }, this);
+
     self.emit('change');
   },
 
   onPixelDelete: function(payload) {
+
+    console.log(payload);
     this.data.file = this.deletePixel(this.data.file, payload.layer, payload.x, payload.y);
     this.data.scope = this.deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
     this.data.frame = this.deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
+
+    delete this.data.dict[payload.frame][payload.layer][payload.x][payload.y];
 
     this.emit('change');
 
@@ -331,7 +346,7 @@ var PixelStore = Fluxxor.createStore({
         newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
       });
 
-      self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelId);
+      self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelHash);
       document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }
@@ -408,6 +423,8 @@ var PixelStore = Fluxxor.createStore({
         }
       }
     }
+
+    this.writeToDictionary(newPixel);
   },
 
   flipHorizontal: function(pixel) {
@@ -430,7 +447,7 @@ var PixelStore = Fluxxor.createStore({
     this.data[from].forEach(function(px) {
       this.data[to].push(px);
     }, this);
-    this.data[to] = _.uniq(this.data[to], false, this.pixelId);
+    this.data[to] = _.uniq(this.data[to], false, this.pixelHash);
   },
 
   save: function() {
@@ -438,8 +455,21 @@ var PixelStore = Fluxxor.createStore({
     this.merge('frame', 'file');
   },
 
-  pixelId: function(px) {
-    return px.uid();
+  pixelHash: function(px) {
+    return px.hash;
+  },
+
+  writeToDictionary: function(pixel) {
+    this.createDictionaryKey(pixel);
+    this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
+  },
+
+  createDictionaryKey: function(pixel) {
+    console.log(this.data.dict);
+    if(undefined === this.data.dict[pixel.frame]) this.data.dict[pixel.frame] = {};
+    if(undefined === this.data.dict[pixel.frame][pixel.layer]) this.data.dict[pixel.frame][pixel.layer] = {};
+    if(undefined === this.data.dict[pixel.frame][pixel.layer][pixel.x]) this.data.dict[pixel.frame][pixel.layer][pixel.x] = {};
+    if(undefined === this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y]) this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = {};
   },
 });
 

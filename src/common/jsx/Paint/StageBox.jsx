@@ -46,7 +46,7 @@ var StageBox = React.createClass({
       onionFrame =
         <div id="StageBoxOnionCanvas" className="Layer">
           <FrameCanvas frame={storeUtils.onion.getActualFrame()} file={this.props.file} pixels={this.props.pixels} zoom={this.props.ui.zoom.selected} />
-        </div>
+        </div>;
     }
 
     var cssClasses = {
@@ -341,7 +341,7 @@ var StageBox = React.createClass({
   useEraserTool: function() {
     if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.cursor)) {
-        this.getFlux().actions.pixelDelete(this.props.ui.layers.selected, this.cursor.x, this.cursor.y);
+        this.getFlux().actions.pixelDelete(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y);
       }
       return true;
     }

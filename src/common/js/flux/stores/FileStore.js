@@ -32,7 +32,7 @@ var FileStore = Fluxxor.createStore({
     else return this.data;
   },
 
-  resetData: function(key) {
+  resetData: function() {
     var data = {
       path: '',
       name: 'Unnamed',
@@ -45,8 +45,7 @@ var FileStore = Fluxxor.createStore({
       pixels: [],
     };
 
-    if(key && data[key]) this.data[key] = data[key];
-    else this.data = data;
+    this.data = data;
   },
 
   //----------------------------------------------------------------------------
@@ -120,16 +119,16 @@ var FileStore = Fluxxor.createStore({
     this.waitFor(['PixelStore'], function(PixelStore) {
       this.data.pixels = PixelStore.getData().file;
 
+      function moveToNewFrame(obj) {
+        var y = Math.ceil(obj.frame/this.data.frames.x),
+            newFrame = obj.frame+((y-1)*newColumns);
+        obj.frame = newFrame;
+      }
+
       // have frame columns been added?
       if(this.data.frames.x < payload.frames.x) {
 
         var newColumns = payload.frames.x - this.data.frames.x;
-
-        function moveToNewFrame(obj) {
-          var y = Math.ceil(obj.frame/this.data.frames.x),
-              newFrame = obj.frame+((y-1)*newColumns);
-          obj.frame = newFrame;
-        }
 
         // move layers to new frame
         this.data.layers.forEach(moveToNewFrame, this);
@@ -156,6 +155,15 @@ var FileStore = Fluxxor.createStore({
         this.data.frames.x = payload.frames.x;
       }
 
+      function deleteFrames(obj) {
+        return !_.includes(framesToDelete, obj.frame);
+      }
+
+      function fixFrame(obj) {
+        var y = Math.ceil(obj.frame/this.data.frames.x),
+            newFrame = obj.frame-((y-1)*columnsToRemove);
+        obj.frame = newFrame;
+      }
 
       // have frame columns been removed?
       if(this.data.frames.x > payload.frames.x) {
@@ -171,19 +179,9 @@ var FileStore = Fluxxor.createStore({
           }
         }
 
-        function deleteFrames(obj) {
-          return !_.includes(framesToDelete, obj.frame);
-        }
-
         // delete pixels & layers
         this.data.pixels = this.data.pixels.filter(deleteFrames);
         this.data.layers = this.data.layers.filter(deleteFrames);
-
-        function fixFrame(obj) {
-          var y = Math.ceil(obj.frame/this.data.frames.x),
-              newFrame = obj.frame-((y-1)*columnsToRemove);
-          obj.frame = newFrame;
-        }
 
         // move remaining pixels & layers
         this.data.pixels.forEach(fixFrame, this);
@@ -216,13 +214,13 @@ var FileStore = Fluxxor.createStore({
         this.data.frames.y = payload.frames.y;
       }
 
+      function deleteLastFrames(obj) {
+        return obj.frame <= lastFrame;
+      }
+
       // have frame rows been removed?
       if(this.data.frames.y > payload.frames.y) {
         var lastFrame = this.data.frames.x * payload.frames.y;
-
-        function deleteLastFrames(obj) {
-          return obj.frame <= lastFrame;
-        }
 
         // delete pixels & layers
         this.data.pixels = this.data.pixels.filter(deleteLastFrames);

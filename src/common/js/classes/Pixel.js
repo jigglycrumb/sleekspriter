@@ -26,11 +26,39 @@ var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
 Pixel.prototype = Point.prototype;
 Pixel.prototype.constructor = Pixel;
 
+/**
+ * Tells if the pixel is transparent or not
+ * @return {Bool} Pixel transparency
+ */
 Object.defineProperty(Pixel.prototype, 'isTransparent', {
   enumerable: true,
   configurable: false,
   get: function() {
     return this.a === 0 ? true: false;
+  }
+});
+
+/**
+ * Tells the pixels dictionary key
+ * @return {Bool} Pixel dictionary key
+ */
+Object.defineProperty(Pixel.prototype, 'key', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    return this.layer + ':' + this.x + ':' + this.y;
+  }
+});
+
+/**
+ * Tells the pixels unique hash
+ * @return {String} Pixel hash
+ */
+Object.defineProperty(Pixel.prototype, 'hash', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    return btoa(this.key);
   }
 });
 
@@ -63,15 +91,6 @@ Pixel.prototype.toHex = function() {
                pad(this.g.toString(16)) +
                pad(this.b.toString(16));
 };
-
-/**
- * Creates a unique string from pixel values
- * @return {String} The unique id
- */
-Pixel.prototype.uid = function() {
-  return btoa(this.layer+':'+this.x+':'+this.y);
-};
-
 
 /**
  * Moves a pixel by a given distance

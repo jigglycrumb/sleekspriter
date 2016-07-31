@@ -444,7 +444,9 @@ var UiStore = Fluxxor.createStore({
 
       for(var x in pixels) {
         var pixelArr = pixels[x];
-        pixelArr.forEach(pushToPalette);
+        try {
+          pixelArr.forEach(pushToPalette);
+        } catch(e) {}
       }
 
       this.data.palettes.available[0].colors = _.uniq(palette);
