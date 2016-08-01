@@ -78,6 +78,10 @@ Pixel.prototype.toRgb = function() {
   return 'rgb('+this.r+','+this.g+','+this.b+')';
 };
 
+Pixel.prototype.toRgbHuman = function() { // used to show RGB values in EyedropperTool
+  return this.r+', '+this.g+', '+this.b;
+};
+
 /**
  * Creates a hex string from pixel color values
  * @return {String} The hex string

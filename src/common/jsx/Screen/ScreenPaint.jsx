@@ -2,7 +2,7 @@ var ScreenPaint = React.createClass({
   getInitialState: function() {
     return {
       referenceImage: null,
-    }
+    };
   },
   shouldComponentUpdate: function() {
     switch(stateHistory.last.action) {
@@ -21,10 +21,10 @@ var ScreenPaint = React.createClass({
 
   render: function() {
     var frameBox = null;
-    if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="frames" />
+    if(this.props.ui.frames.total > 1) frameBox = <FrameBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="frames" />;
 
     var referenceImage = null;
-    if(this.state.referenceImage !== null) referenceImage = <ReferenceImage image={this.state.referenceImage} removeHandler={this.resetImage} />
+    if(this.state.referenceImage !== null) referenceImage = <ReferenceImage image={this.state.referenceImage} removeHandler={this.resetImage} />;
 
     return (
       <section className="screen paint">
@@ -49,7 +49,7 @@ var ScreenPaint = React.createClass({
           <StatusBar ui={this.props.ui} pixels={this.props.pixels} />
         </div>
       </section>
-    )
+    );
   },
 
   handleDrop: function(e) {

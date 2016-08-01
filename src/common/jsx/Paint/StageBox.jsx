@@ -5,6 +5,7 @@ var StageBox = React.createClass({
     x: 0,
     y: 0,
   },
+  cursorColor: 'transparent',
   css: {
     width: 0,
     height: 0,
@@ -346,9 +347,9 @@ var StageBox = React.createClass({
   },
 
   useEyedropperTool: function() {
-    if(this.props.ui.color.frame.alpha() === 0) return; // skip transparent pixels
+    if(this.cursorColor == 'transparent') return;
     this.getFlux().actions.toolSelect('BrushTool');
-    this.getFlux().actions.colorBrush(this.props.ui.color.frame.hexString());
+    this.getFlux().actions.colorBrush(this.cursorColor);
   },
 
   usePaintBucketTool: function(point) {
@@ -364,14 +365,14 @@ var StageBox = React.createClass({
   useBrightnessTool: function() {
 
     function lighten() {
-      if(this.props.ui.color.layer.alpha() === 0) return; // skip transparent pixels
+      if(this.cursorColor == 'transparent') return;
       var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
       this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
             storeUtils.layers.getSelected().z, newColor.hexString());
     }
 
     function darken() {
-      if(this.props.ui.color.layer.alpha() === 0) return; // skip transparent pixels
+      if(this.cursorColor == 'transparent') return;
       var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
       this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
             storeUtils.layers.getSelected().z, newColor.hexString());
@@ -465,11 +466,35 @@ var StageBox = React.createClass({
   updateCursor: function(point) {
     if((point.x > 0 && point.y > 0) &&
     (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
+
+      // update cursor position
       this.cursor = point;
       this.refs.cursorCanvas.drawPixelCursor(point.x, point.y);
 
       document.getElementById("StatusBarCursorX").innerHTML = "X: " + point.x;
       document.getElementById("StatusBarCursorY").innerHTML = "Y: " + point.y;
+
+      // update color under cursor
+      var cursorColorHex, cursorColorRGB;
+      try {
+        var currentPixel = this.props.pixels.dict[this.props.ui.frames.selected][this.props.ui.layers.selected][point.x][point.y];
+        cursorColorHex = currentPixel.toHex();
+        cursorColorRGB = currentPixel.toRgbHuman();
+      } catch(e) {
+        cursorColorHex = 'transparent';
+        cursorColorRGB = '-, -, -';
+      }
+
+      document.getElementById('StatusBarColor').style.backgroundColor = cursorColorHex;
+      document.getElementById('StatusBarColorString').innerHTML = cursorColorHex;
+
+      this.cursorColor = cursorColorHex;
+
+      if(this.props.ui.tool == 'EyedropperTool') {
+        document.getElementById('EyedropperSwatch').style.backgroundColor = cursorColorHex;
+        document.getElementById('EyedropperHex').innerHTML = cursorColorHex;
+        document.getElementById('EyedropperRGB').innerHTML = cursorColorRGB;
+      }
     }
   },
 
