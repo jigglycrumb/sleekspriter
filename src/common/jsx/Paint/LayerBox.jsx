@@ -4,13 +4,13 @@ var LayerBox = React.createClass({
     return {
       dragPosition: 0,
       dragLayer: 0,
-    }
+    };
   },
   render: function() {
     var disabled = this.props.ui.layers.frame.length <= 1 ? true : false;
     var layers = _.clone(this.props.ui.layers.frame, true);
 
-    if(this.state.dragLayer != 0) {
+    if(this.state.dragLayer !== 0) {
       layers.splice(this.state.dragPosition, 0, 'dropzone').join();
     }
 
@@ -28,7 +28,7 @@ var LayerBox = React.createClass({
         <div className="foldable-fold" style={boxStyle}>
           <div ref="layers" className="layers" onDragOver={this.dragOver} onDrop={this.drop}>
             {layers.map(function(layer) {
-              if(layer === 'dropzone') return <LayerBoxDrophelper key="layerdropzone" />
+              if(layer === 'dropzone') return <LayerBoxDrophelper key="layerdropzone" />;
               else {
                 var selected = layer.id === this.props.ui.layers.selected ? true : false;
                 return (
@@ -40,7 +40,7 @@ var LayerBox = React.createClass({
                     file={this.props.file}
                     pixels={this.props.pixels}
                     dragStartHandler={this.dragStart} />
-                )
+                );
               }
             }, this)}
           </div>

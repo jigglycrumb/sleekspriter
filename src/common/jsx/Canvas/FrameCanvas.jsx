@@ -51,20 +51,41 @@ var FrameCanvas = React.createClass({
     }, this);
 
     // collect frame pixels
-    function grab(px) {
-      if(px.frame === this.props.frame) {
-        if(!pixels[px.z]) pixels[px.z] = [];
-        pixels[px.z].push(px);
-      }
-    }
+    var layer, x, y;
 
-    if(this.props.pixels.preview.length > 0) {
-      this.props.pixels.preview.forEach(grab, this);
-    }
-    else {
-      this.props.pixels.file.forEach(grab, this);
-      this.props.pixels.scope.forEach(grab, this);
-    }
+    try {
+      var scope = this.props.pixels.dict[this.props.frame];
+
+      for(layer in scope) {
+        for(x in scope) {
+          for(y in scope) {
+            var px = scope[layer][x][y];
+
+            if(!pixels[px.z]) pixels[px.z] = [];
+            pixels[px.z].push(px);
+            //Pixel.paint(canvas, px.x, px.y, px.toHex());
+            // pixels.push(px);
+          }
+        }
+      }
+    } catch(e) {}
+
+
+
+    // function grab(px) {
+    //   if(px.frame === this.props.frame) {
+    //     if(!pixels[px.z]) pixels[px.z] = [];
+    //     pixels[px.z].push(px);
+    //   }
+    // }
+    //
+    // if(this.props.pixels.preview.length > 0) {
+    //   this.props.pixels.preview.forEach(grab, this);
+    // }
+    // else {
+    //   this.props.pixels.file.forEach(grab, this);
+    //   this.props.pixels.scope.forEach(grab, this);
+    // }
 
     this.clear();
 
