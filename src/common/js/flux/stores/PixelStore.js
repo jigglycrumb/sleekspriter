@@ -81,7 +81,7 @@ var PixelStore = Fluxxor.createStore({
   onFrameSelect: function(frame) {
     this.waitFor(['UiStore'], function(UiStore) {
       this.save();
-      this.data.frame = _.find(this.data.file, {frame: frame}) || [];
+      this.data.frame = _.filter(this.data.file, {frame: frame});
       this.emit('change');
     });
   },
@@ -128,7 +128,7 @@ var PixelStore = Fluxxor.createStore({
         pixel.z = layerZ[pixel.layer];
       });
 
-      this.data.frame = _.find(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected}) || [];
+      this.data.frame = _.filter(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
       this.emit('change');
     });
   },
@@ -393,7 +393,7 @@ var PixelStore = Fluxxor.createStore({
     this.data.file = this.data.file.filter(function(pixel) {
       return pixel.layer !== layer;
     });
-    this.data.frame = _.find(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected}) || [];
+    this.data.frame = _.filter(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
   },
 
   addPixel: function(frame, layer, x, y, z, color) {

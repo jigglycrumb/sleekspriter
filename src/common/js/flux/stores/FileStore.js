@@ -63,7 +63,7 @@ var FileStore = Fluxxor.createStore({
     json.pixels = [];
 
     for(var i = 0; i < totalFrames; i++) {
-      json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]);
+      json.layers.push([i+1, i+1, 'Layer '+(i+1), 0, 100, 1]); // create initial layers
     }
 
     this.resetData();
@@ -292,6 +292,7 @@ var FileStore = Fluxxor.createStore({
     var selectedFrame = flux.stores.UiStore.getData().frames.selected,
         index = 0;
 
+    // get position of selected layer
     for(var i=0; i < this.data.layers.length; i++) {
       if(this.data.layers[i].id === selectedLayer) {
         index = i;
@@ -299,7 +300,7 @@ var FileStore = Fluxxor.createStore({
       }
     }
 
-    var frameLayers = _.find(this.data.layers, {frame: selectedFrame});
+    var frameLayers = _.filter(this.data.layers, {frame: selectedFrame});
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;

@@ -292,21 +292,21 @@ var UiStore = Fluxxor.createStore({
 
   onLayerAdd: function() {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.filter(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
 
   onLayerDelete: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.filter(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
 
   onLayerDrop: function(id) {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.layers.frame = _.find(FileStore.getData().layers, {frame: this.data.frames.selected});
+      this.data.layers.frame = _.filter(FileStore.getData().layers, {frame: this.data.frames.selected});
       this.emit('change');
     });
   },
