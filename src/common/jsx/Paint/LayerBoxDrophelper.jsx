@@ -6,6 +6,6 @@ var LayerBoxDrophelper = React.createClass({
         <div className="dropzone-inner center"></div>
         <div className="dropzone-inner right"></div>
       </div>
-    )
+    );
   }
 });

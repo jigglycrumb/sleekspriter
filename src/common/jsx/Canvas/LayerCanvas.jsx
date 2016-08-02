@@ -35,43 +35,41 @@ var LayerCanvas = React.createClass({
                            // or removed layers after size.set will throw
                            // an Invariant Violation
 
+      // console.log('LayerCanvas.paint');
+
       this.clear();
 
       var canvas = ReactDOM.findDOMNode(this);
-          // var paint = function(px) {
-          //   if(px.layer === this.props.layer) {
-          //     Pixel.paint(canvas, px.x, px.y, px.toHex());
-          //   }
-          // };
 
       // paint
-      var x, y;
+      var scope, xValues, yValues, x, y;
       var frame = storeUtils.frames.getSelected();
 
       try {
-        var scope = this.props.pixels.dict[frame][this.props.layer];
+        scope = this.props.pixels.dict[frame][this.props.layer];
 
-        for(x in scope) {
-          for(y in scope) {
+        xValues = Object.keys(scope);
+        xValues.forEach(function(x) {
+
+          yValues = Object.keys(scope[x]);
+          yValues.forEach(function(y) {
             var px = scope[x][y];
             Pixel.paint(canvas, px.x, px.y, px.toHex());
-          }
-        }
+          });
+        });
       } catch(e) {}
-
 
       //
       // if(this.props.pixels.preview.length > 0) {
       //   this.props.pixels.preview.forEach(paint, this);
       // }
-      // else {
-      //   this.props.pixels.scope.forEach(paint, this);
-      //   this.props.pixels.frame.forEach(paint, this);
-      // }
     }
   },
 
   paintPixel: function(pixel) {
+
+    // console.log('LayerCanvas.paintPixel');
+
     var px = pixel || stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
@@ -83,6 +81,8 @@ var LayerCanvas = React.createClass({
   },
 
   erasePixel: function() {
+    // console.log('LayerCanvas.erasePixel');
+
     var px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 

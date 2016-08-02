@@ -3,8 +3,8 @@ var ModalNewFile = React.createClass({
   getInitialState: function() {
     return {
       frames: {x:  2, y:  2},
-      pixels: {x: 50, y: 50},
-    }
+      pixels: {x: 10, y: 10},
+    };
   },
   render: function() {
 
@@ -42,7 +42,7 @@ var ModalNewFile = React.createClass({
           <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
-    )
+    );
   },
   createFile: function() {
     this.hide();

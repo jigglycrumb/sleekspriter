@@ -10,11 +10,6 @@ var FrameCanvas = React.createClass({
     background: React.PropTypes.string,
   },
   mixins: [CanvasMixin], // must implement paint, paintPixel, erasePixel
-  getInitialState: function() {
-    return {
-      layerDict: [],
-    };
-  },
   render: function() {
 
     var width, height, style;
@@ -42,49 +37,43 @@ var FrameCanvas = React.createClass({
 
   paint: function() {
 
+    this.guard();
+
+    console.log('FrameCanvas.paint');
+
     var canvas = ReactDOM.findDOMNode(this),
         pixels = [],
-        layerDict = [];
+        layerDict = {};
 
     flux.stores.FileStore.getData().layers.forEach(function(layer) {
       if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
     }, this);
 
-    // collect frame pixels
+    // collect frame pixels and sort them by z value
     var layer, x, y;
 
     try {
-      var scope = this.props.pixels.dict[this.props.frame];
+      var scope = this.props.pixels.dict[this.props.frame],
+          layers = Object.keys(scope);
 
-      for(layer in scope) {
-        for(x in scope) {
-          for(y in scope) {
+      var xValues, yValues;
+
+      layers.forEach(function(layer) {
+        xValues = Object.keys(scope[layer]);
+        xValues.forEach(function(x) {
+
+          yValues = Object.keys(scope[layer][x]);
+          yValues.forEach(function(y) {
             var px = scope[layer][x][y];
-
             if(!pixels[px.z]) pixels[px.z] = [];
             pixels[px.z].push(px);
-            //Pixel.paint(canvas, px.x, px.y, px.toHex());
-            // pixels.push(px);
-          }
-        }
-      }
+          });
+        });
+      });
     } catch(e) {}
 
-
-
-    // function grab(px) {
-    //   if(px.frame === this.props.frame) {
-    //     if(!pixels[px.z]) pixels[px.z] = [];
-    //     pixels[px.z].push(px);
-    //   }
-    // }
-    //
     // if(this.props.pixels.preview.length > 0) {
     //   this.props.pixels.preview.forEach(grab, this);
-    // }
-    // else {
-    //   this.props.pixels.file.forEach(grab, this);
-    //   this.props.pixels.scope.forEach(grab, this);
     // }
 
     this.clear();
@@ -108,6 +97,11 @@ var FrameCanvas = React.createClass({
   },
 
   paintPixel: function() {
+
+    this.guard();
+
+    // console.log('FrameCanvas.paintPixel');
+
     var layerDict = [],
         px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
@@ -128,7 +122,16 @@ var FrameCanvas = React.createClass({
   },
 
   erasePixel: function() {
+
+    this.guard();
+
+    // console.log('FrameCanvas.erasePixel');
+
     // console.log(stateHistory.last.payload);
     this.paint(); // TODO implement a better method instead of repainting everything
+  },
+
+  guard: function() {
+    if(storeUtils.frames.getSelected() != this.props.frame) return;
   },
 });

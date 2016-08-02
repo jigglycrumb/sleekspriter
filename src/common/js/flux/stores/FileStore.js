@@ -336,9 +336,7 @@ var FileStore = Fluxxor.createStore({
     var dropLayer = storeUtils.layers.getById(payload.layer),
         dropFrame = dropLayer.frame;
 
-    var tempLayers = _.partition(this.data.layers, function(layer) {
-      return layer.frame == dropFrame;
-    });
+    var tempLayers = _.partition(this.data.layers, {frame: dropFrame});
 
     var frameLayers = tempLayers[0],
         otherLayers = tempLayers[1];

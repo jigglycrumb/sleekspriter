@@ -65,9 +65,7 @@ var PixelStore = Fluxxor.createStore({
       this.resetData();
       this.data.file = FileStore.getData().pixels;
 
-      FileStore.getData().pixels.forEach(function(px) {
-        this.writeToDictionary(px);
-      }, this);
+      this.rebuildDictionary(FileStore);
 
       this.emit('change');
     });
@@ -129,6 +127,9 @@ var PixelStore = Fluxxor.createStore({
       });
 
       this.data.frame = _.filter(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
+
+      //this.rebuildDictionary(FileStore);
+
       this.emit('change');
     });
   },
@@ -464,6 +465,14 @@ var PixelStore = Fluxxor.createStore({
     if(undefined === this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y]) this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = {};
 
     this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
+  },
+
+  rebuildDictionary: function(FileStore) {
+    this.data.dict = {};
+
+    FileStore.getData().pixels.forEach(function(px) {
+      this.writeToDictionary(px);
+    }, this);
   },
 });
 
