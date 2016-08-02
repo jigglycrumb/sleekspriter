@@ -39,7 +39,7 @@ var FrameCanvas = React.createClass({
 
     this.guard();
 
-    console.log('FrameCanvas.paint');
+    // console.log('FrameCanvas.paint');
 
     var canvas = ReactDOM.findDOMNode(this),
         pixels = [],

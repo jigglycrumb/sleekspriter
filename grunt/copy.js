@@ -21,6 +21,9 @@ module.exports = {
       // utilities
       {src: 'src/browser/PlatformUtils.js', dest: 'build/browser/js/classes/PlatformUtils.js'},
 
+      // workers
+      {expand: true, cwd: 'src/common/js', src: ['workers/**'], dest: 'build/browser'},
+
       // file handlers
       {src: 'src/browser/loadfile.php', dest: 'build/browser/loadfile.php'},
     ])

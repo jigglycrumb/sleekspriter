@@ -346,6 +346,11 @@ var PixelStore = Fluxxor.createStore({
       });
 
       self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelHash);
+
+      newPixels.forEach(function(pixel) {
+        self.writeToDictionary(pixel);
+      });
+
       document.getElementById('ScreenBlocker').style.display = 'none';
       self.emit('change');
     }

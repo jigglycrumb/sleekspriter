@@ -9,7 +9,7 @@ this.onmessage = function(e) {
       layer = e.data.layer,
       layerZ = e.data.layerZ,
       frame = e.data.frame,
-      bounds = e.data.bounds
+      bounds = e.data.bounds;
 
   // get the pixel the paint bucket was used on
   var initialPixel = getByPosition(pixels, point);
@@ -68,7 +68,7 @@ this.onmessage = function(e) {
           a: fillColor.a,
         });
 
-        var neighbors = getAdjacentPixels(point);
+        neighbors = getAdjacentPixels(point);
 
         neighbors.forEach(function(n) {
           if(!filled[hash(n)] && !foundNeighbors[hash(n)]) {
@@ -109,19 +109,19 @@ this.onmessage = function(e) {
 
     return arr;
   }
-}
+};
 
 // helper function to filter the pixels array for a specific positioned pixel
 function getByPosition(array, position) {
   var filtered = array.filter(function(pixel) {
-    return pixel.x == position.x && pixel.y == position.y
+    return pixel.x == position.x && pixel.y == position.y;
   });
 
   return filtered.length == 1 ? filtered[0] : false;
 }
 
 function colorIsSame(a, b) {
-  return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a
+  return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
 function hash(point) {
