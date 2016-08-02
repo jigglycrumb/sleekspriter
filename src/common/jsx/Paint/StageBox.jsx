@@ -366,21 +366,21 @@ var StageBox = React.createClass({
 
     function lighten() {
       if(this.cursorColor == 'transparent') return;
-      var newColor = changeColorLightness(this.props.ui.color.layer, this.props.ui.brightnessTool.intensity);
+      var newColor = changeColorLightness(new Color(this.cursorColor), this.props.ui.brightnessTool.intensity);
       this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
             storeUtils.layers.getSelected().z, newColor.hexString());
     }
 
     function darken() {
       if(this.cursorColor == 'transparent') return;
-      var newColor = changeColorLightness(this.props.ui.color.layer, -this.props.ui.brightnessTool.intensity);
+      var newColor = changeColorLightness(new Color(this.cursorColor), -this.props.ui.brightnessTool.intensity);
       this.getFlux().actions.pixelAdd(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y,
             storeUtils.layers.getSelected().z, newColor.hexString());
     }
 
     if(storeUtils.layers.isVisible) {
 
-      var px = _.find(this.props.pixels.scope, {x: this.props.ui.cursor.x, y: this.props.ui.cursor.y }),
+      var px = _.find(this.props.pixels.scope, {x: this.cursor.x, y: this.cursor.y }),
           pixelExists = !_.isUndefined(px);
 
       if(pixelExists) {
