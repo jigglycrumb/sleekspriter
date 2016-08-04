@@ -355,6 +355,8 @@ var PixelStore = Fluxxor.createStore({
       });
 
       document.getElementById('ScreenBlocker').style.display = 'none';
+
+      stateHistory.addUndoState();
       self.emit('change');
     }
 

@@ -42,6 +42,7 @@ function changeColorLightness(color, delta) {
 }
 
 function setupFluxDispatcher() {
+
   flux.setDispatchInterceptor(function(action, dispatch) {
 
     console.log(action.type, action.payload);
@@ -54,7 +55,11 @@ function setupFluxDispatcher() {
     dispatch(action);
 
     // add undo state (method decides if necessary, so we call it every time)
-    stateHistory.addUndoState();
+    // this won't work for async ops like paintbucket, those should take of it themselves
+    var async = ['PAINTBUCKET'];
+    if(!inArray(async, action.type)) {
+      stateHistory.addUndoState();
+    }
   });
 }
 
