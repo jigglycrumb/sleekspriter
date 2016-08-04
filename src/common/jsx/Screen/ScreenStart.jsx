@@ -72,6 +72,7 @@ var ScreenStart = React.createClass({
     this.getFlux().actions.modalShow(ModalNewFile);
   },
   openFile: function() {
+    this.getFlux().actions.tabSelect('paint');
     platformUtils.showOpenFileDialog();
   },
   handleDrop: function(e) {

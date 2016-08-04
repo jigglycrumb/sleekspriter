@@ -11,7 +11,7 @@ var ModalAppendReplaceFrames = React.createClass({
           <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
-    )
+    );
   },
   appendFrames: function() {
     var animation = storeUtils.animations.getSelected();

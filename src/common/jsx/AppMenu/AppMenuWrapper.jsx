@@ -11,8 +11,8 @@ var AppMenuWrapper = React.createClass({
 
     var fileMenuItems = [
       {title: 'New', action: Menu.actions.file.newFile},
-      {title: 'Open', action: null},
-      {title: 'Save', action: null},
+      {title: 'Open', action: Menu.actions.file.openFile},
+      {title: 'Save', action: Menu.actions.file.saveFile},
       {title: 'Save as', action: null},
       {title: '---', action: null},
       {title: 'Close', action: null},

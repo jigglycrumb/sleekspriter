@@ -8,7 +8,15 @@ var Menu = {
   actions: {
     file: {
       newFile: function() {
-        console.log('newFile');
+        flux.actions.modalShow(ModalNewFile);
+      },
+      openFile: function() {
+        console.log('openFile');
+        platformUtils.showOpenFileDialog();
+      },
+      saveFile: function() {
+        console.log('saveFile');
+        platformUtils.showSaveFileDialog();
       },
     },
     edit: {},

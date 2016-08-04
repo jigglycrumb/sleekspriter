@@ -69,7 +69,7 @@ var FileStore = Fluxxor.createStore({
     this.resetData();
     this._fromJSON(json);
 
-    platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
+    platformUtils.setWindowTitle('@@name - '+this.data.name);
 
     this.emit('change');
   },
@@ -82,7 +82,7 @@ var FileStore = Fluxxor.createStore({
     this.data.name    = payload.name;
     this.data.folder  = payload.folder;
 
-    platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
+    platformUtils.setWindowTitle('@@name - '+this.data.name);
 
     this.emit('change');
   },
@@ -90,9 +90,9 @@ var FileStore = Fluxxor.createStore({
   onFileSave: function() {
     this.waitFor(['PixelStore'], function(PixelStore) {
       this.data.pixels = PixelStore.getData().file;
-      var json = this._toJSON();
+      var json = this.toJSON();
       platformUtils.saveFile(json);
-      platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
+      platformUtils.setWindowTitle('@@name - '+this.data.name);
       this.emit('change');
     });
   },
@@ -108,9 +108,9 @@ var FileStore = Fluxxor.createStore({
       this.data.name = p.name;
       this.data.folder = p.folder;
 
-      var json = this._toJSON();
+      var json = this.toJSON();
       platformUtils.saveFile(json);
-      platformUtils.setWindowTitle('@@name - '+this.data.name+'.pixels');
+      platformUtils.setWindowTitle('@@name - '+this.data.name);
       this.emit('change');
     });
   },
@@ -473,6 +473,18 @@ var FileStore = Fluxxor.createStore({
   // Helpers
   //----------------------------------------------------------------------------
 
+  toJSON: function() {
+    var strObj = {
+      size: this._sizeToFile(this.data.size),
+      frames: this._framesToFile(this.data.frames),
+      layers: this.data.layers.map(this._layerToFile),
+      animations: this.data.animations.map(this._animationToFile),
+      pixels: this.data.pixels.map(Pixel.toArray),
+
+    };
+    return JSON.stringify(strObj);
+  },
+
   _fromJSON: function(json) {
     this.data.size = this._sizeFromFile(json.size);
     this.data.frames = this._framesFromFile(json.frames);
@@ -500,18 +512,6 @@ var FileStore = Fluxxor.createStore({
 
     // sort layers by z (top to bottom)
     this.data.layers = _.sortBy(this.data.layers, 'z').reverse();
-  },
-
-  _toJSON: function() {
-    var strObj = {
-      size: this._sizeToFile(this.data.size),
-      frames: this._framesToFile(this.data.frames),
-      layers: this.data.layers.map(this._layerToFile),
-      animations: this.data.animations.map(this._animationToFile),
-      pixels: this.data.pixels.map(Pixel.toArray),
-
-    };
-    return JSON.stringify(strObj);
   },
 
   _sizeFromFile: function(size) {
