@@ -9,7 +9,6 @@ var StatusBar = React.createClass({
         }),
         historyButtonClasses = classNames({
           tiny: true,
-          // transparent: true,
         }),
         undoDisabled = stateHistory.undoPointer <= 0 && stateHistory.last.pixels.length > 0 ? true : false,
         redoDisabled = stateHistory.undoPointer >= stateHistory.last.pixels.length - 1 ? true : false;
@@ -47,11 +46,9 @@ var StatusBar = React.createClass({
     this.getFlux().actions.settingsPaint(!this.props.ui.settings.paint);
   },
   dispatchHistoryUndo: function() {
-    console.log('undopointer', stateHistory.undoPointer);
     stateHistory.undo();
   },
   dispatchHistoryRedo: function() {
-    console.log('undopointer', stateHistory.undoPointer);
     stateHistory.redo();
   },
 });

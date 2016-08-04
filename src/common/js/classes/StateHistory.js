@@ -100,8 +100,6 @@ StateHistory.prototype.undo = function() {
   if(this.undoPointer >= 0) {
     this.undoPointer -= 1;
     flux.actions.historyUndo();
-
-    // if(this.undoPointer < 0) this.undoPointer = 0;
   }
 };
 
