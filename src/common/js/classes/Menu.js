@@ -9,14 +9,18 @@ var Menu = {
     file: {
       newFile: function() {
         flux.actions.modalShow(ModalNewFile);
+        flux.actions.menuHide();
       },
       openFile: function() {
-        console.log('openFile');
         platformUtils.showOpenFileDialog();
       },
       saveFile: function() {
-        console.log('saveFile');
-        platformUtils.showSaveFileDialog();
+        flux.actions.fileSave();
+        flux.actions.menuHide();
+
+        if(platformUtils.device == 'browser') {
+          platformUtils.showSaveFileDialog();
+        }
       },
     },
     edit: {},

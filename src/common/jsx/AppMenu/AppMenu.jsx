@@ -1,10 +1,5 @@
 var AppMenu = React.createClass({
-  getInitialState: function() {
-    return {
-      visible: false
-    };
-  },
-  mixins: [TouchMixin],
+  mixins: [FluxMixin, TouchMixin],
   render: function() {
     return (
       <div id="AppMenu">
@@ -13,11 +8,16 @@ var AppMenu = React.createClass({
           onTouchStart={this.handleTouch.bind(this, this.toggle)}>
             <i className="flaticon-list67"/>
         </div>
-        <AppMenuWrapper visible={this.state.visible} />
+        <AppMenuWrapper visible={this.props.ui.menu.visible} />
       </div>
     );
   },
   toggle: function() {
-    this.setState({visible: !this.state.visible});
+    if(this.props.ui.menu.visible === true) {
+      this.getFlux().actions.menuHide();
+    }
+    else {
+      this.getFlux().actions.menuShow();
+    }
   },
 });

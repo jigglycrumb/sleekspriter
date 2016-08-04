@@ -11,7 +11,7 @@ var App = React.createClass({
   render: function() {
     var tabs = [],
         windowClasses = {},
-        appMenu = platformUtils.device == 'desktop' ? null : <AppMenu />;
+        appMenu = platformUtils.device == 'desktop' ? null : <AppMenu ui={this.state.ui} />;
 
         if(this.state.ui.tab !== 'start') {
           tabs.push('paint');

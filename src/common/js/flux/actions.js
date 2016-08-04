@@ -48,6 +48,12 @@ var actions = {
   modalHide: function() {
     this.dispatch(constants.MODAL_HIDE);
   },
+  menuShow: function() {
+    this.dispatch(constants.MENU_SHOW);
+  },
+  menuHide: function() {
+    this.dispatch(constants.MENU_HIDE);
+  },
   brightnessToolMode: function(mode) {
     this.dispatch(constants.BRIGHTNESSTOOL_MODE, mode);
   },

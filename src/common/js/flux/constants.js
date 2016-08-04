@@ -15,6 +15,8 @@ var constants = {
   FRAME_ROTATE:               'FRAME_ROTATE',
   MODAL_SHOW:                 'MODAL_SHOW',
   MODAL_HIDE:                 'MODAL_HIDE',
+  MENU_SHOW:                  'MENU_SHOW',
+  MENU_HIDE:                  'MENU_HIDE',
   BRIGHTNESSTOOL_MODE:        'BRIGHTNESSTOOL_MODE',
   BRIGHTNESSTOOL_INTENSITY:   'BRIGHTNESSTOOL_INTENSITY',
   COLOR_BRUSH:                'COLOR_BRUSH',

@@ -89,10 +89,16 @@ var FileStore = Fluxxor.createStore({
 
   onFileSave: function() {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = PixelStore.getData().file;
-      var json = this.toJSON();
-      platformUtils.saveFile(json);
-      platformUtils.setWindowTitle('@@name - '+this.data.name);
+      //this.data.pixels = PixelStore.getData().file;
+
+      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
+
+      if(platformUtils.device !== 'browser') {
+        var json = this.toJSON();
+        platformUtils.saveFile(json);
+        platformUtils.setWindowTitle('@@name - '+this.data.name);
+      }
+
       this.emit('change');
     });
   },
@@ -586,6 +592,49 @@ var FileStore = Fluxxor.createStore({
       }
     }
     this.data.layers.reverse();
+  },
+
+  _dictToArray: function(dict) {
+    var flen, llen, xlen, ylen,
+        frames, f, frame,
+        layers, l, layer,
+        xValues, x, xValue,
+        yValues, y, yValue,
+        pixel, pixels;
+
+    pixels = [];
+
+    frames = Object.keys(dict);
+    flen = frames.length;
+
+    for(f = 0; f < flen; f++) {
+      frame = frames[f];
+
+      layers = Object.keys(dict[frame]);
+      llen = layers.length;
+
+      for(l = 0; l < llen; l++) {
+        layer = layers[l];
+
+        xValues = Object.keys(dict[frame][layer]);
+        xlen = xValues.length;
+
+        for(x = 0; x < xlen; x++) {
+          xValue = xValues[x];
+
+          yValues = Object.keys(dict[frame][layer][xValue]);
+          ylen = yValues.length;
+
+          for(y = 0; y < ylen; y++) {
+            yValue = yValues[y];
+            pixel = dict[frame][layer][xValue][yValue];
+            pixels.push(pixel);
+          }
+        }
+      }
+    }
+
+    return pixels;
   },
 
 });

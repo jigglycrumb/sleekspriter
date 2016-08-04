@@ -13,6 +13,8 @@ var UiStore = Fluxxor.createStore({
       constants.FRAME_SELECT,               this.onFrameSelect,
       constants.MODAL_SHOW,                 this.onModalShow,
       constants.MODAL_HIDE,                 this.onModalHide,
+      constants.MENU_SHOW,                  this.onMenuShow,
+      constants.MENU_HIDE,                  this.onMenuHide,
       constants.BRIGHTNESSTOOL_MODE,        this.onBrightnessToolMode,
       constants.BRIGHTNESSTOOL_INTENSITY,   this.onBrightnessToolIntensity,
       constants.COLOR_BRUSH,                this.onColorBrush,
@@ -104,6 +106,9 @@ var UiStore = Fluxxor.createStore({
         visible: false,
         component: null,
         data: null,
+      },
+      menu: {
+        visible: false,
       },
       offset: {
         top: 40,
@@ -239,6 +244,16 @@ var UiStore = Fluxxor.createStore({
 
   onModalHide: function() {
     this.resetData('modal');
+    this.emit('change');
+  },
+
+  onMenuShow: function() {
+    this.data.menu.visible = true;
+    this.emit('change');
+  },
+
+  onMenuHide: function() {
+    this.data.menu.visible = false;
     this.emit('change');
   },
 

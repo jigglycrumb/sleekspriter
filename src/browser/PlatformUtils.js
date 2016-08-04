@@ -12,7 +12,6 @@ PlatformUtils.prototype.showOpenFileDialog = function() {
 };
 
 PlatformUtils.prototype.showSaveFileDialog = function() {
-  console.log('PlatformUtils.showSaveFileDialog');
   flux.actions.modalShow(ModalSaveFile);
 };
 
@@ -40,10 +39,6 @@ PlatformUtils.prototype.loadFile = function(json) {
 
 PlatformUtils.prototype.exportFile = function(settings) {
   console.log('PlatformUtils.exportFile', settings);
-};
-
-PlatformUtils.prototype.saveFile = function(json) {
-  console.log('PlatformUtils.saveFile', json);
 };
 
 PlatformUtils.prototype.updateDefaultFolder = function(folder) {
