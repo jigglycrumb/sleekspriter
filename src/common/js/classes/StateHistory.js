@@ -92,6 +92,7 @@ StateHistory.prototype.addUndoState = function() {
 
     if(this.last.pixels.length > this.undoLimit) {
       this.last.pixels.shift();
+      this.undoPointer -= 1;
     }
   }
 };
