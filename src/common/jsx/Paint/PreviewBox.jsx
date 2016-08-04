@@ -56,15 +56,15 @@ var PreviewBox = React.createClass({
           <span className="right">
             <select onChange={this.setAnimation} defaultValue={animation.id}>
               {this.props.file.animations.map(function(animation) {
-                return( <option key={animation.id} value={animation.id}>{animation.name}</option> )
+                return( <option key={animation.id} value={animation.id}>{animation.name}</option> );
               }, this)}
             </select>
           </span>
-        </div>
+        </div>;
     }
 
     if(this.props.ui.settings.animatedPaintPreview === false) {
-      preview = <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} maxSize={maxSize} noMargin={true} />
+      preview = <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} maxSize={maxSize} noMargin={true} />;
     }
     else if(this.props.ui.settings.animatedPaintPreview === true) {
         preview = <AnimationCanvas
@@ -74,7 +74,7 @@ var PreviewBox = React.createClass({
           pixels={this.props.pixels}
           play={true}
           maxSize={maxSize}
-          noMargin={true} />
+          noMargin={true} />;
     }
 
     return (
@@ -95,7 +95,7 @@ var PreviewBox = React.createClass({
   },
 
   componentDidUpdate: function() {
-    if(this.props.file.animations.length > 0 && this.state.animation == null) {
+    if(this.props.file.animations.length > 0 && this.state.animation === null) {
       this.setState({animation: this.props.file.animations[0].id});
     }
   },

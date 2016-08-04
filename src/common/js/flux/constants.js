@@ -75,6 +75,8 @@ var constants = {
   ONION_TOGGLE:               'ONION_TOGGLE',
   ONION_MODE:                 'ONION_MODE',
   ONION_FRAME:                'ONION_FRAME',
+  HISTORY_UNDO:               'HISTORY_UNDO',
+  HISTORY_REDO:               'HISTORY_REDO',
 };
 
 module.exports = constants;

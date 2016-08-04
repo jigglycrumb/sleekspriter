@@ -6,7 +6,13 @@ var StatusBar = React.createClass({
           tiny: true,
           transparent: true,
           active: this.props.ui.settings.grid,
-        });
+        }),
+        historyButtonClasses = classNames({
+          tiny: true,
+          // transparent: true,
+        }),
+        undoDisabled = stateHistory.undoPointer <= 0 && stateHistory.last.pixels.length > 0 ? true : false,
+        redoDisabled = stateHistory.undoPointer >= stateHistory.last.pixels.length - 1 ? true : false;
 
     var pixelCount = this.props.pixels.frame.length + this.props.pixels.scope.length || 0;
 
@@ -20,6 +26,13 @@ var StatusBar = React.createClass({
         &nbsp;
         <span>Zoom &times;{this.props.ui.zoom.selected}</span>
         <div id="StatusBarButtons">
+          <button id="historyUndo" className={historyButtonClasses} disabled={undoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryUndo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryUndo)}>
+            <i className="flaticon-back-arrow"></i>
+          </button>
+          <button id="historyRedo" className={historyButtonClasses} disabled={redoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryRedo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryRedo)}>
+            <i className="flaticon-arrow"></i>
+          </button>
+
           <button id="toggleGrid" className={gridButtonClasses} onClick={this.handleClick.bind(this, this.dispatchGridToggled)} onTouchStart={this.handleTouch.bind(this, this.dispatchGridToggled)} title={toggleGridTitle}>
             <i className="flaticon-3x3"></i>
           </button>
@@ -32,5 +45,13 @@ var StatusBar = React.createClass({
   },
   dispatchSettingsToggled: function(event) {
     this.getFlux().actions.settingsPaint(!this.props.ui.settings.paint);
+  },
+  dispatchHistoryUndo: function() {
+    console.log('undopointer', stateHistory.undoPointer);
+    stateHistory.undo();
+  },
+  dispatchHistoryRedo: function() {
+    console.log('undopointer', stateHistory.undoPointer);
+    stateHistory.redo();
   },
 });

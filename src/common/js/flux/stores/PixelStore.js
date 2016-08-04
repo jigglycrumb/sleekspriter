@@ -34,7 +34,10 @@ var PixelStore = Fluxxor.createStore({
       constants.PAINTBUCKET,                  this.onPaintbucket,
       constants.PREVIEW_MOVE_TOOL,            this.onPreviewMoveTool,
 
-      constants.PIXELS_SAVE,                  this.onFileSave
+      constants.PIXELS_SAVE,                  this.onFileSave,
+
+      constants.HISTORY_UNDO,                 this.onHistoryUndo,
+      constants.HISTORY_REDO,                 this.onHistoryRedo
     );
   },
 
@@ -377,6 +380,18 @@ var PixelStore = Fluxxor.createStore({
       this.data.file = FileStore.getData().pixels;
       this.emit('change');
     });
+  },
+
+  onHistoryUndo: function() {
+    var pixels = stateHistory.last.pixels[stateHistory.undoPointer];
+    this.data.dict = pixels;
+    this.emit('change');
+  },
+
+  onHistoryRedo: function() {
+    var pixels = stateHistory.last.pixels[stateHistory.undoPointer];
+    this.data.dict = pixels;
+    this.emit('change');
   },
 
   //----------------------------------------------------------------------------

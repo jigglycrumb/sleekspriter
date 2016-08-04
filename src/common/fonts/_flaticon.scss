@@ -1,9 +1,9 @@
-	/*
-  	Flaticon icon font: Flaticon
-  	Creation date: 04/08/2016 18:03
-  	*/
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 04/08/2016 18:03
+    */
 
-@font-face {
+    @font-face {
   font-family: "Flaticon";
   src: url("./Flaticon.eot");
   src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
@@ -21,15 +21,22 @@
   }
 }
 
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
-  font-family: Flaticon;
-        font-size: 20px;
-font-style: normal;
-margin-left: 20px;
-}
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
 
-.flaticon-3x3:before { content: "\f100"; }
+    .flaticon-3x3:before { content: "\f100"; }
 .flaticon-arrow:before { content: "\f101"; }
 .flaticon-arrow85:before { content: "\f102"; }
 .flaticon-back-arrow:before { content: "\f103"; }
@@ -65,3 +72,40 @@ margin-left: 20px;
 .flaticon-stamp2:before { content: "\f121"; }
 .flaticon-sun4:before { content: "\f122"; }
 .flaticon-vegetable38:before { content: "\f123"; }
+    
+    $font-Flaticon-3x3: "\f100";
+    $font-Flaticon-arrow: "\f101";
+    $font-Flaticon-arrow85: "\f102";
+    $font-Flaticon-back-arrow: "\f103";
+    $font-Flaticon-clear3: "\f104";
+    $font-Flaticon-color1: "\f105";
+    $font-Flaticon-dark26: "\f106";
+    $font-Flaticon-done: "\f107";
+    $font-Flaticon-double31: "\f108";
+    $font-Flaticon-eye46: "\f109";
+    $font-Flaticon-eye48: "\f10a";
+    $font-Flaticon-eyedropper2: "\f10b";
+    $font-Flaticon-hand118: "\f10c";
+    $font-Flaticon-layer13: "\f10d";
+    $font-Flaticon-list67: "\f10e";
+    $font-Flaticon-little16: "\f10f";
+    $font-Flaticon-little9: "\f110";
+    $font-Flaticon-magnifier5: "\f111";
+    $font-Flaticon-man-silhouette1: "\f112";
+    $font-Flaticon-man13: "\f113";
+    $font-Flaticon-mini7: "\f114";
+    $font-Flaticon-minus18: "\f115";
+    $font-Flaticon-move11: "\f116";
+    $font-Flaticon-next: "\f117";
+    $font-Flaticon-paint2: "\f118";
+    $font-Flaticon-play87: "\f119";
+    $font-Flaticon-plus25: "\f11a";
+    $font-Flaticon-previous2: "\f11b";
+    $font-Flaticon-right3: "\f11c";
+    $font-Flaticon-selection7: "\f11d";
+    $font-Flaticon-settings21: "\f11e";
+    $font-Flaticon-small23: "\f11f";
+    $font-Flaticon-small38: "\f120";
+    $font-Flaticon-stamp2: "\f121";
+    $font-Flaticon-sun4: "\f122";
+    $font-Flaticon-vegetable38: "\f123";

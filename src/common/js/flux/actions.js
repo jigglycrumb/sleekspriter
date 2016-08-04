@@ -228,6 +228,12 @@ var actions = {
   onionFrame: function(mode, value) {
     this.dispatch(constants.ONION_FRAME, {mode: mode, value: value});
   },
+  historyUndo: function() {
+    this.dispatch(constants.HISTORY_UNDO);
+  },
+  historyRedo: function() {
+    this.dispatch(constants.HISTORY_REDO);
+  },
 };
 
 module.exports = actions;

@@ -258,6 +258,14 @@ var Hotkeys = function() {
           }
         }
       },
+      historyUndo: {
+        key: ['meta+z'],
+        action: function() { stateHistory.undo(); },
+      },
+      historyRedo: {
+        key: ['meta+y'],
+        action: function() { stateHistory.redo(); },
+      },
     }, // paint hotkeys
     animate: {},
     export: {},

@@ -31,23 +31,23 @@
 }
 
 .icon-checkmark {
-  content: "\e000"; // flaticon-done
+  content: "\f107"; // flaticon-done
 }
 
 .icon-eye {
-  content: "\e002"; // flaticon-eye46
+  content: "\f109"; // flaticon-eye46
 }
 
 .icon-eye-slashed {
-  content: "\e003"; // flaticon-eye48
+  content: "\f10a"; // flaticon-eye48
 }
 
 .icon-arrow-down {
-  content: "\e021"; // flaticon-little9
+  content: "\f110"; // flaticon-little9
 }
 
 .icon-arrow-right {
-  content: "\e010"; // flaticon-mini7
+  content: "\f114"; // flaticon-mini7
 }
 
 // general styles
@@ -97,22 +97,24 @@ h5, h6 {
 
 button,
 .button {
-  display: inline-block;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  text-align: center;
-  text-decoration: none;
-  position: relative;
-  cursor: pointer;
-  outline: none;
+  .gradient-light;
   border: 1px solid #303030;
   border-radius: 2px;
-  color: @font-color;
   box-sizing: border-box;
-  .gradient-light;
+  color: @font-color;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
 }
 
 button[disabled],
 .button[disabled] {
+  .gradient;
+  color: darken(@font-color, 50%);
   cursor: auto;
 }
 
@@ -137,6 +139,10 @@ button.small {
 
 button.tiny {
   height: 18px;
+
+  &:after {
+    border-bottom: none;
+  }
 }
 
 button.transparent {

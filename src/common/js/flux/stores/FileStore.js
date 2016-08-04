@@ -89,8 +89,6 @@ var FileStore = Fluxxor.createStore({
 
   onFileSave: function() {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      //this.data.pixels = PixelStore.getData().file;
-
       this.data.pixels = this._dictToArray(PixelStore.getData().dict);
 
       if(platformUtils.device !== 'browser') {
@@ -105,7 +103,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileSaveAs: function(path) {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = PixelStore.getData().file;
+      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
 
       var p = platformUtils.getPathData(path);
 
@@ -123,7 +121,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileSize: function(payload) {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = PixelStore.getData().file;
+      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
 
       function moveToNewFrame(obj) {
         var y = Math.ceil(obj.frame/this.data.frames.x),
@@ -320,6 +318,8 @@ var FileStore = Fluxxor.createStore({
 
   onLayerDelete: function(id) {
     this.waitFor(['PixelStore'], function() {
+      //this.data.pixels = this._dictToArray(PixelStore.getData().dict);
+
       var selectedFrame = flux.stores.UiStore.getData().frames.selected,
           index = 0;
 
