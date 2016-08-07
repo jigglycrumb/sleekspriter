@@ -34,7 +34,12 @@ var FrameCanvas = React.createClass({
       <canvas width={width} height={height} style={style}></canvas>
     );
   },
-
+  componentDidUpdate: function(prevProps) {
+    if(this.props.frame !== prevProps.frame) {
+      this.clear();
+      this.paint();
+    }
+  },
   paint: function() {
 
     this.guard();
@@ -45,7 +50,7 @@ var FrameCanvas = React.createClass({
         pixels = [],
         layerDict = {};
 
-    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+    this.props.file.layers.forEach(function(layer) {
       if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
     }, this);
 
@@ -108,7 +113,7 @@ var FrameCanvas = React.createClass({
 
     if(px.frame === this.props.frame) {
 
-      flux.stores.FileStore.getData().layers.forEach(function(layer) {
+      this.props.file.layers.forEach(function(layer) {
         if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
       }, this);
 

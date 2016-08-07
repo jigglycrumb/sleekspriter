@@ -33,18 +33,56 @@ var SpritesheetCanvas = React.createClass({
 
   paint: function() {
 
+    // console.log('SpritesheetCanvas.paint');
+
     var canvas = ReactDOM.findDOMNode(this),
         pixels = [],
         layerDict = [];
 
-    flux.stores.FileStore.getData().layers.forEach(function(layer) {
+    this.props.file.layers.forEach(function(layer) {
       layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
     }, this);
 
-    this.props.pixels.file.forEach(function(px) {
-      if(!pixels[px.z]) pixels[px.z] = [];
-      pixels[px.z].push(px);
-    });
+    // sort pixels via z value
+    var dict = this.props.pixels.dict,
+        flen, llen, xlen, ylen,
+        frames, f, frame,
+        layers, l, layer,
+        xValues, x, xValue,
+        yValues, y, yValue,
+        pixel;
+
+    frames = Object.keys(dict);
+    flen = frames.length;
+
+    for(f = 0; f < flen; f++) {
+      frame = frames[f];
+
+      layers = Object.keys(dict[frame]);
+      llen = layers.length;
+
+      for(l = 0; l < llen; l++) {
+        layer = layers[l];
+
+        xValues = Object.keys(dict[frame][layer]);
+        xlen = xValues.length;
+
+        for(x = 0; x < xlen; x++) {
+          xValue = xValues[x];
+
+          yValues = Object.keys(dict[frame][layer][xValue]);
+          ylen = yValues.length;
+
+          for(y = 0; y < ylen; y++) {
+            yValue = yValues[y];
+            pixel = dict[frame][layer][xValue][yValue].clone();
+
+            if(!pixels[pixel.z]) pixels[pixel.z] = [];
+            pixels[pixel.z].push(pixel);
+          }
+        }
+      }
+    }
 
     this.clear();
 
@@ -67,6 +105,9 @@ var SpritesheetCanvas = React.createClass({
   },
 
   paintPixel: function() {
+
+    // console.log('SpritesheetCanvas.paintPixel');
+
     var layerDict = [],
         px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
@@ -83,6 +124,8 @@ var SpritesheetCanvas = React.createClass({
   },
 
   erasePixel: function() {
+    // console.log('SpritesheetCanvas.erasePixel');
+
     // console.log(stateHistory.last.payload);
     this.paint(); // TODO implement a better method instead of repainting everything
   },

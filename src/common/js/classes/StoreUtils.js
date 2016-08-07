@@ -4,13 +4,12 @@ var StoreUtils = function() {};
 StoreUtils.prototype = {};
 StoreUtils.prototype.constructor = StoreUtils;
 
-
-
 //------------------------------------------------------------------------------
 // Frame Helpers
 //------------------------------------------------------------------------------
 
 StoreUtils.prototype.frames = {};
+
 /**
  * Get selected frame
  * @returns {Number} Frame number
@@ -18,9 +17,6 @@ StoreUtils.prototype.frames = {};
 StoreUtils.prototype.frames.getSelected = function() {
   return flux.stores.UiStore.getData().frames.selected;
 };
-
-
-
 
 //------------------------------------------------------------------------------
 // Layer Helpers
@@ -52,7 +48,6 @@ StoreUtils.prototype.layers.getByFrame = function(frame) {
   return _.filter(flux.stores.FileStore.getData().layers, {frame: frame});
 };
 
-
 /**
  * Get selected layer
  * @returns {Object} layer
@@ -67,7 +62,7 @@ StoreUtils.prototype.layers.getSelected = function() {
  */
 StoreUtils.prototype.layers.getAboveSelected = function() {
   var z = this.getSelected(),
-      above = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z > z });
+      above = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z > z; });
   return above.length === 0 ? false : _.min(above, 'z');
 };
 
@@ -77,7 +72,7 @@ StoreUtils.prototype.layers.getAboveSelected = function() {
  */
 StoreUtils.prototype.layers.getBelowSelected = function() {
   var z = this.getSelected().z,
-      below = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z < z });
+      below = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z < z; });
   return below.length === 0 ? false : _.max(below, 'z');
 };
 
@@ -98,7 +93,6 @@ Object.defineProperty(StoreUtils.prototype.layers, 'isVisible', {
     return layer.visible && layer.opacity > 0;
   }
 });
-
 
 //------------------------------------------------------------------------------
 // Animation Helpers
@@ -121,7 +115,6 @@ StoreUtils.prototype.animations.getById = function(id) {
 StoreUtils.prototype.animations.getSelected = function() {
   return this.getById(flux.stores.UiStore.getData().animations.selected);
 };
-
 
 //------------------------------------------------------------------------------
 // Selection Helpers
@@ -171,6 +164,9 @@ Object.defineProperty(StoreUtils.prototype.selection, 'isMoving', {
   }
 });
 
+//------------------------------------------------------------------------------
+// Onion Helpers
+//------------------------------------------------------------------------------
 
 StoreUtils.prototype.onion = {};
 
@@ -183,6 +179,16 @@ StoreUtils.prototype.onion.getActualFrame = function() {
   if(onionFrame < 1) onionFrame = onionFrame + ui.frames.total;
 
   return onionFrame;
+};
+
+//------------------------------------------------------------------------------
+// Pixel Helpers
+//------------------------------------------------------------------------------
+
+StoreUtils.prototype.pixels = {};
+
+StoreUtils.prototype.pixels.manipulate = function(frame, layer, x, y, callback) {
+
 };
 
 module.exports = new StoreUtils();

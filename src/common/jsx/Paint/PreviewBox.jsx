@@ -3,7 +3,7 @@ var PreviewBox = React.createClass({
   getInitialState: function() {
     return {
       animation: null,
-    }
+    };
   },
   render: function() {
 
@@ -11,7 +11,7 @@ var PreviewBox = React.createClass({
         boxStyle = {display: 'block'};
 
     if(this.props.ui.fold.preview === true) {
-      handleClasses['folded'] = true;
+      handleClasses.folded = true;
       boxStyle.display = 'none';
     }
 
@@ -64,17 +64,22 @@ var PreviewBox = React.createClass({
     }
 
     if(this.props.ui.settings.animatedPaintPreview === false) {
-      preview = <FrameCanvas frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} maxSize={maxSize} noMargin={true} />;
+      preview = <FrameCanvas
+        frame={this.props.ui.frames.selected}
+        file={this.props.file}
+        pixels={this.props.pixels}
+        maxSize={maxSize}
+        noMargin={true} />;
     }
     else if(this.props.ui.settings.animatedPaintPreview === true) {
-        preview = <AnimationCanvas
-          animation={animation}
-          ui={this.props.ui}
-          file={this.props.file}
-          pixels={this.props.pixels}
-          play={true}
-          maxSize={maxSize}
-          noMargin={true} />;
+      preview = <AnimationCanvas
+        animation={animation}
+        ui={this.props.ui}
+        file={this.props.file}
+        pixels={this.props.pixels}
+        play={true}
+        maxSize={maxSize}
+        noMargin={true} />;
     }
 
     return (

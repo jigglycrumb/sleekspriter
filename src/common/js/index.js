@@ -55,7 +55,7 @@ function setupFluxDispatcher() {
     dispatch(action);
 
     // add undo state (method decides if necessary, so we call it every time)
-    // this won't work for async ops like paintbucket, those should take of it themselves
+    // this won't work for async ops like paintbucket, those should take care of it themselves
     var async = ['PAINTBUCKET'];
     if(!inArray(async, action.type)) {
       stateHistory.addUndoState();
