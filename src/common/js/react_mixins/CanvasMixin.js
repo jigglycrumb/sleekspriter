@@ -5,6 +5,9 @@ var CanvasMixin = {
   },
 
   componentDidUpdate: function() {
+
+    // console.log('CanvasMixin.componentDidUpdate', stateHistory.last.action);
+
     switch(stateHistory.last.action) {
       case constants.TOOL_SELECT:
       case constants.SELECTION_CLEAR:
@@ -21,8 +24,6 @@ var CanvasMixin = {
       case constants.ANIMATION_DELETE:
       case constants.ANIMATION_FRAME_ADD:
       case constants.MODAL_SHOW:
-      case constants.MODAL_HIDE:
-      // case "PIXELS_ADD":
         // no-op
         break;
 
@@ -35,6 +36,7 @@ var CanvasMixin = {
         break;
 
       default:
+        // console.log('CanvasMixin calling paint');
         this.paint();
         break;
     }

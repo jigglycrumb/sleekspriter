@@ -13,6 +13,7 @@ var Menu = {
       },
       openFile: function() {
         platformUtils.showOpenFileDialog();
+        flux.actions.menuHide();
       },
       saveFile: function() {
         flux.actions.fileSave();

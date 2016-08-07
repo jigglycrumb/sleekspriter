@@ -2,6 +2,8 @@ var StatusBar = React.createClass({
   mixins: [FluxMixin, TouchMixin],
   render: function() {
     var toggleGridTitle = 'Toggle grid ('+hotkeys.actions.paint.toggleGrid.key+')',
+        historyUndoTitle = 'Undo ('+hotkeys.actions.paint.historyUndo.key+')',
+        historyRedoTitle = 'Redo ('+hotkeys.actions.paint.historyRedo.key+')',
         gridButtonClasses = classNames({
           tiny: true,
           transparent: true,
@@ -25,10 +27,12 @@ var StatusBar = React.createClass({
         &nbsp;
         <span>Zoom &times;{this.props.ui.zoom.selected}</span>
         <div id="StatusBarButtons">
-          <button id="historyUndo" className={historyButtonClasses} disabled={undoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryUndo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryUndo)}>
+
+          <button id="historyUndo" className={historyButtonClasses} disabled={undoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryUndo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryUndo)} title={historyUndoTitle}>
             <i className="flaticon-back-arrow"></i>
           </button>
-          <button id="historyRedo" className={historyButtonClasses} disabled={redoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryRedo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryRedo)}>
+
+          <button id="historyRedo" className={historyButtonClasses} disabled={redoDisabled} onClick={this.handleClick.bind(this, this.dispatchHistoryRedo)} onTouchStart={this.handleTouch.bind(this, this.dispatchHistoryRedo)} title={historyRedoTitle}>
             <i className="flaticon-arrow"></i>
           </button>
 

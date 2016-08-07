@@ -112,7 +112,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onLayerDelete: function(id) {
-    this.deleteLayerPixels(id);
+    delete this.data.dict[flux.stores.UiStore.getData().frames.selected][id];
     this.emit('change');
   },
 
@@ -163,7 +163,7 @@ var PixelStore = Fluxxor.createStore({
     // this.save();
 
     // delete pixels of top layer
-    this.deleteLayerPixels(payload.top.id);
+    delete this.data.dict[flux.stores.UiStore.getData().frames.selected][payload.top.id];
 
     // this.data.scope = [];
 
@@ -279,7 +279,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelsAdd: function(pixels) {
-    self.data.scope = _.uniq(pixels.concat(self.data.scope), false, this.pixelHash);
+    // self.data.scope = _.uniq(pixels.concat(self.data.scope), false, this.pixelHash);
 
     pixels.forEach(function(px) {
       this.writeToDictionary(px);
@@ -289,15 +289,12 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelDelete: function(payload) {
-    this.data.file = this.deletePixel(this.data.file, payload.layer, payload.x, payload.y);
-    this.data.scope = this.deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
-    this.data.frame = this.deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
+    // this.data.file = this.deletePixel(this.data.file, payload.layer, payload.x, payload.y);
+    // this.data.scope = this.deletePixel(this.data.scope, payload.layer, payload.x, payload.y);
+    // this.data.frame = this.deletePixel(this.data.frame, payload.layer, payload.x, payload.y);
 
     delete this.data.dict[payload.frame][payload.layer][payload.x][payload.y];
-
     this.emit('change');
-
-    // this.log();
   },
 
   onPixelsMove: function(distance) {
@@ -348,7 +345,7 @@ var PixelStore = Fluxxor.createStore({
         newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
       });
 
-      self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelHash);
+      // self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelHash);
 
       newPixels.forEach(function(pixel) {
         self.writeToDictionary(pixel);
@@ -410,13 +407,6 @@ var PixelStore = Fluxxor.createStore({
     return pixels.filter(function(px) {
       return !(px.layer == layer && px.x == x && px.y == y);
     });
-  },
-
-  deleteLayerPixels: function(layer) {
-    this.data.file = this.data.file.filter(function(pixel) {
-      return pixel.layer !== layer;
-    });
-    this.data.frame = _.filter(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
   },
 
   addPixel: function(frame, layer, x, y, z, color) {

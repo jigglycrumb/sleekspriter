@@ -42,7 +42,7 @@ var FrameCanvas = React.createClass({
   },
   paint: function() {
 
-    this.guard();
+    if(storeUtils.frames.getSelected() != this.props.frame) return;
 
     // console.log('FrameCanvas.paint');
 
@@ -103,7 +103,7 @@ var FrameCanvas = React.createClass({
 
   paintPixel: function() {
 
-    this.guard();
+    if(storeUtils.frames.getSelected() != this.props.frame) return;
 
     // console.log('FrameCanvas.paintPixel');
 
@@ -128,15 +128,35 @@ var FrameCanvas = React.createClass({
 
   erasePixel: function() {
 
-    this.guard();
+    if(storeUtils.frames.getSelected() != this.props.frame) return;
 
     // console.log('FrameCanvas.erasePixel');
 
-    // console.log(stateHistory.last.payload);
-    this.paint(); // TODO implement a better method instead of repainting everything
-  },
+    var payload = stateHistory.last.payload,
+        canvas = ReactDOM.findDOMNode(this);
 
-  guard: function() {
-    if(storeUtils.frames.getSelected() != this.props.frame) return;
+    // get all pixels at coordinate
+    var pixels = [],
+        scope = this.props.pixels.dict[payload.frame],
+        layers = Object.keys(scope),
+        pixel;
+
+    layers.forEach(function(layer) {
+      try {
+        pixel = scope[layer][payload.x][payload.y];
+        pixels[pixel.z] = pixel;
+      } catch(e) {}
+    });
+
+    if(pixels.length === 0) {
+      Pixel.clear(canvas, payload.x, payload.y);
+    }
+    else {
+      pixel = pixels.pop();
+      var alpha;
+      if(this.props.noAlpha) alpha = 1;
+      else alpha = pixel.a * (storeUtils.layers.getById(pixel.layer).opacity / 100);
+      Pixel.paint(canvas, pixel.x, pixel.y, pixel.toHex(), alpha);
+    }
   },
 });

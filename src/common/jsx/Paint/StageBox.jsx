@@ -337,6 +337,7 @@ var StageBox = React.createClass({
   },
 
   useEraserTool: function() {
+    if(this.cursorColor == 'transparent') return;
     if(storeUtils.layers.isVisible) {
       if(!storeUtils.selection.isActive || storeUtils.selection.contains(this.cursor)) {
         this.getFlux().actions.pixelDelete(this.props.ui.frames.selected, this.props.ui.layers.selected, this.cursor.x, this.cursor.y);

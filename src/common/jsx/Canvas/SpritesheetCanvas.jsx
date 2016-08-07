@@ -124,10 +124,36 @@ var SpritesheetCanvas = React.createClass({
   },
 
   erasePixel: function() {
+
     // console.log('SpritesheetCanvas.erasePixel');
 
-    // console.log(stateHistory.last.payload);
-    this.paint(); // TODO implement a better method instead of repainting everything
+    var payload = stateHistory.last.payload,
+        canvas = ReactDOM.findDOMNode(this);
+
+    // get all pixels at coordinate
+    var pixels = [],
+        scope = this.props.pixels.dict[payload.frame],
+        layers = Object.keys(scope),
+        pixel;
+
+    layers.forEach(function(layer) {
+      try {
+        pixel = scope[layer][payload.x][payload.y];
+        pixels[pixel.z] = pixel;
+      } catch(e) {}
+    });
+
+    if(pixels.length === 0) {
+      Pixel.clear(canvas, payload.x, payload.y);
+    }
+    else {
+      pixel = pixels.pop();
+      var targetPos = this.getPixelSpritesheetPosition(pixel),
+          alpha;
+      if(this.props.noAlpha) alpha = 1;
+      else alpha = pixel.a * (storeUtils.layers.getById(pixel.layer).opacity / 100);
+      Pixel.paint(canvas, targetPos.x, targetPos.y, pixel.toHex(), alpha, this.props.zoom);
+    }
   },
 
   getPixelSpritesheetPosition: function(pixel) {
@@ -140,6 +166,7 @@ var SpritesheetCanvas = React.createClass({
       x: ((framePos.x-1) * this.props.file.size.width) + pixel.x,
       y: ((framePos.y-1) * this.props.file.size.height) + pixel.y,
     };
+
     return targetPos;
   },
 });
