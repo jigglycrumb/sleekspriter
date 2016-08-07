@@ -12,6 +12,9 @@ var LayerBoxLayer = React.createClass({
 
     return (
       <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.props.dragStartHandler.bind(null, this.props.layer.id)}>
+        <div className="order up">
+          <i className="flaticon-little16"></i>
+        </div>
         <div className="visibility">
           <input type="checkbox" checked={this.props.layer.visible} onChange={this.dispatchLayerVisibilityChanged} />
         </div>
@@ -21,6 +24,9 @@ var LayerBoxLayer = React.createClass({
         <NameEditable name={this.props.layer.name} callback={this.dispatchLayerNameChanged} />
         <input type="range" className="opacity-slider" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />
         <input type="number" className="opacity-number" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />
+        <div className="order down">
+          <i className="flaticon-little16"></i>
+        </div>
       </div>
     );
   },

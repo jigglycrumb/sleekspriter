@@ -430,23 +430,69 @@
   #LayerBox {
 
     .layers {
-      overflow-y: auto;
       background: @dark;
+      overflow-y: auto;
     }
 
     .LayerBoxLayer {
       background: @medium;
       border-bottom: 1px solid @dark;
-      position: relative;
       float: left;
-      width: 100%;
       height: 40px;
+      position: relative;
+      width: 100%;
 
       &.selected {
         background: @selected;
 
         .preview {
           border: 1px solid @dark;
+        }
+
+        .order {
+          &.up {
+            .linear-gradient(darken(@selected, 5%), transparent);
+          }
+
+          &.down {
+            .linear-gradient(transparent, darken(@selected, 5%));
+          }
+        }
+      }
+
+      &:hover {
+        height: 60px;
+
+        .order {
+          display: block;
+        }
+      }
+
+      .order {
+        cursor: pointer;
+        display: none;
+        float: left;
+        height: 10px;
+        line-height: 10px;
+        text-align: center;
+        width: 100%;
+
+        i {
+          bottom: 2px;
+          font-size: 6px;
+          position: relative;
+        }
+
+        &.up {
+          .linear-gradient(darken(@medium, 5%), transparent);
+        }
+
+        &.down {
+          .linear-gradient(transparent, darken(@medium, 5%));
+
+          i {
+            transform: rotate(180deg);
+          }
         }
       }
 
