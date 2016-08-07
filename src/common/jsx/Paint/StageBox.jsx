@@ -322,8 +322,7 @@ var StageBox = React.createClass({
           this.props.ui.color.brush.red(),
           this.props.ui.color.brush.green(),
           this.props.ui.color.brush.blue(),
-          this.props.ui.color.brush.alpha(),
-          storeUtils.layers.getSelected().z
+          this.props.ui.color.brush.alpha()
         );
 
         this.pixels.push(px);

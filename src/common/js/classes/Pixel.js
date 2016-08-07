@@ -11,7 +11,7 @@
  * @param {Number} a - pixel alpha value (0-1)
  * @param {Number} z - pixel z value (== layer z, duplicated for faster sorts)
  */
-var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
+var Pixel = function(frame, layer, x, y, r, g, b, a) {
   this.frame = frame;
   this.layer = layer;
   this.x = x;
@@ -20,7 +20,7 @@ var Pixel = function(frame, layer, x, y, r, g, b, a, z) {
   this.g = g;
   this.b = b;
   this.a = a;
-  this.z = z;
+  // this.z = z;
 };
 
 Pixel.prototype = Point.prototype;
@@ -61,6 +61,19 @@ Object.defineProperty(Pixel.prototype, 'hash', {
     return btoa(this.key);
   }
 });
+
+/**
+ * Tells the pixels z value
+ * @return {Number} Pixel z value
+ */
+Object.defineProperty(Pixel.prototype, 'z', {
+  enumerable: true,
+  configurable: false,
+  get: function() {
+    return storeUtils.layers.getById(this.layer).z;
+  }
+});
+
 
 /**
  * Creates CSS rgba() string from pixel values
@@ -109,7 +122,7 @@ Pixel.prototype.translate = function(distance, simulate) {
       targetY = this.y + distance.y;
 
   if(simulate === true) {
-    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a);
   }
 
   this.x = targetX;
@@ -135,7 +148,7 @@ Pixel.prototype.wrap = function(distance, simulate) {
   else if(targetY < 1) targetY += flux.stores.FileStore.getData().size.height;
 
   if(simulate === true) {
-    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a, this.z);
+    return new Pixel(this.frame, this.layer, targetX, targetY, this.r, this.g, this.b, this.a);
   }
 
   this.x = targetX;
@@ -183,17 +196,17 @@ Pixel.prototype.rotate = function(angle, pivot) {
 };
 
 Pixel.prototype.clone = function() {
-  return new Pixel(this.frame, this.layer, this.x, this.y, this.r, this.g, this.b, this.a, this.z);
+  return new Pixel(this.frame, this.layer, this.x, this.y, this.r, this.g, this.b, this.a);
 };
 
 
 /**
  * Creates a new pixel from flat array
- * @param {Number[]} arr [frame, layer, x, y, r, g, b, a, z]
+ * @param {Number[]} arr [frame, layer, x, y, r, g, b, a]
  * @return {Object} The pixel object
  */
 Pixel.fromArray = function(arr) {
-  return new Pixel(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]);
+  return new Pixel(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7]);
 };
 
 /**

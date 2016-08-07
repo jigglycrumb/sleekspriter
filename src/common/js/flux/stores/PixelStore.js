@@ -15,7 +15,6 @@ var PixelStore = Fluxxor.createStore({
       constants.FRAME_ROTATE,                 this.onFrameRotate,
 
       constants.LAYER_DELETE,                 this.onLayerDelete,
-      constants.LAYER_DROP,                   this.onLayerDrop,
       constants.LAYER_MERGE,                  this.onLayerMerge,
 
       constants.SCOPE_SET,                    this.onScopeSet,
@@ -116,27 +115,6 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onLayerDrop: function(id) {
-    this.waitFor(['FileStore'], function(FileStore) {
-
-      // refresh z values of all pixels
-      var layerZ = {};
-      FileStore.getData().layers.forEach(function(layer) {
-        layerZ[layer.id] = layer.z;
-      });
-
-      this.data.file.forEach(function(pixel) {
-        pixel.z = layerZ[pixel.layer];
-      });
-
-      this.data.frame = _.filter(this.data.file, {frame: flux.stores.UiStore.getData().frames.selected});
-
-      //this.rebuildDictionary(FileStore);
-
-      this.emit('change');
-    });
-  },
-
   // TODO: fix bugs, pixels are getting lost here it seems
   onLayerMerge: function(payload) {
     // define find to look for top layer pixels
@@ -152,12 +130,11 @@ var PixelStore = Fluxxor.createStore({
     var target = {
       frame: payload.bottom.frame,
       layer: payload.bottom.id,
-      z: payload.bottom.z,
     };
 
     // add pixels to bottom layer
     topLayerPixels.forEach(function(px) {
-      this.addPixel(target.frame, target.layer, px.x, px.y, target.z, px.toHex());
+      this.addPixel(target.frame, target.layer, px.x, px.y, px.toHex());
     }, this);
 
     // this.save();
@@ -248,7 +225,7 @@ var PixelStore = Fluxxor.createStore({
         z = storeUtils.layers.getSelected().z;
 
     function pastePixel(px) {
-      this.addPixel(frame, layer, px.x, px.y, z, px.toHex());
+      this.addPixel(frame, layer, px.x, px.y, px.toHex());
     }
 
     this.data.clipboard.forEach(pastePixel, this);
@@ -273,7 +250,7 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelAdd: function(payload) {
-    this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.z, payload.color);
+    this.addPixel(payload.frame, payload.layer, payload.x, payload.y, payload.color);
     this.emit('change');
     // this.log();
   },
@@ -342,7 +319,7 @@ var PixelStore = Fluxxor.createStore({
       var newPixels = [];
 
       e.data.forEach(function(p) {
-        newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a, p.z));
+        newPixels.push(new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a));
       });
 
       // self.data.scope = _.uniq(newPixels.concat(self.data.scope), false, this.pixelHash);
@@ -409,12 +386,12 @@ var PixelStore = Fluxxor.createStore({
     });
   },
 
-  addPixel: function(frame, layer, x, y, z, color) {
+  addPixel: function(frame, layer, x, y, color) {
     // add pixel to scope / replace pixel in scope
     var c = new Color(color),
         a = 1;
 
-    var newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a, z);
+    var newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a);
     var oldPixel = _.find(this.data.scope, {x: x, y: y});
     if(_.isUndefined(oldPixel)) {
       // console.log('filling pixel', layer, x, y, c.rgbString());
