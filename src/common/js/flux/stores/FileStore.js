@@ -67,7 +67,7 @@ var FileStore = Fluxxor.createStore({
     }
 
     this.resetData();
-    this._fromJSON(json);
+    this.fromJSON(json);
 
     platformUtils.setWindowTitle('@@name - '+this.data.name);
 
@@ -76,7 +76,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileLoad: function(payload) {
     this.resetData();
-    this._fromJSON(payload.json);
+    this.fromJSON(payload.json);
 
     this.data.path    = payload.path;
     this.data.name    = payload.name;
@@ -89,7 +89,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileSave: function() {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
+      this.data.pixels = this.dictToArray(PixelStore.getData().dict);
 
       if(platformUtils.device !== 'browser') {
         var json = this.toJSON();
@@ -103,7 +103,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileSaveAs: function(path) {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
+      this.data.pixels = this.dictToArray(PixelStore.getData().dict);
 
       var p = platformUtils.getPathData(path);
 
@@ -121,7 +121,7 @@ var FileStore = Fluxxor.createStore({
 
   onFileSize: function(payload) {
     this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = this._dictToArray(PixelStore.getData().dict);
+      this.data.pixels = this.dictToArray(PixelStore.getData().dict);
 
       function moveToNewFrame(obj) {
         var y = Math.ceil(obj.frame/this.data.frames.x),
@@ -267,28 +267,19 @@ var FileStore = Fluxxor.createStore({
   onLayerVisibility: function(payload) {
     var layer = storeUtils.layers.getById(parseInt(payload.layer));
     layer.visible = !!payload.visible;
-    this.data.layers.forEach(function(l) {
-      if(l.id === layer.id) l = layer;
-    });
-    this.emit('change');
+    this.saveLayer(layer);
   },
 
   onLayerOpacity: function(payload) {
     var layer = storeUtils.layers.getById(parseInt(payload.layer));
     layer.opacity = parseInt(payload.opacity);
-    this.data.layers.forEach(function(l) {
-      if(l.id === layer.id) l = layer;
-    });
-    this.emit('change');
+    this.saveLayer(layer);
   },
 
   onLayerName: function(payload) {
     var layer = storeUtils.layers.getById(parseInt(payload.layer));
     layer.name = payload.name;
-    this.data.layers.forEach(function(l) {
-      if(l.id === layer.id) l = layer;
-    });
-    this.emit('change');
+    this.saveLayer(layer);
   },
 
   onLayerAdd: function(selectedLayer) {
@@ -308,18 +299,16 @@ var FileStore = Fluxxor.createStore({
     var newZIndex = (_.max(frameLayers, function(layer) { return layer.z; })).z + 1;
 
     var newId = (_.max(this.data.layers, function(layer) { return layer.id; })).id + 1;
-    var newLayer = this._layerFromFile([newId, selectedFrame, 'Layer ' + newId, newZIndex, 100, true]);
+    var newLayer = this.layerFromFile([newId, selectedFrame, 'Layer ' + newId, newZIndex, 100, true]);
 
     this.data.layers.splice(index, 0, newLayer);
-    this._fixLayerZ(selectedFrame);
+    this.fixLayerZ(selectedFrame);
 
     this.emit('change');
   },
 
   onLayerDelete: function(id) {
     this.waitFor(['PixelStore'], function() {
-      //this.data.pixels = this._dictToArray(PixelStore.getData().dict);
-
       var selectedFrame = flux.stores.UiStore.getData().frames.selected,
           index = 0;
 
@@ -331,7 +320,7 @@ var FileStore = Fluxxor.createStore({
       }
 
       this.data.layers.splice(index, 1);
-      this._fixLayerZ(selectedFrame);
+      this.fixLayerZ(selectedFrame);
 
       this.emit('change');
     });
@@ -359,7 +348,7 @@ var FileStore = Fluxxor.createStore({
     this.data.layers = frameLayers.concat(otherLayers);
 
     // fix layer z-indices
-    this._fixLayerZ(dropFrame);
+    this.fixLayerZ(dropFrame);
 
     this.emit('change');
   },
@@ -367,20 +356,14 @@ var FileStore = Fluxxor.createStore({
   onAnimationName: function(payload) {
     var animation = storeUtils.animations.getById(payload.animation);
     animation.name = payload.name;
-    this.data.animations.forEach(function(a) {
-      if(a.id === payload.animation) a = animation;
-    });
-    this.emit('change');
+    this.saveAnimation(animation);
   },
 
   onAnimationFps: function(payload) {
     var animation = storeUtils.animations.getById(payload.animation);
     animation.fps = parseInt(payload.fps);
     if(animation.fps < 1) animation.fps = 1;
-    this.data.animations.forEach(function(a) {
-      if(a.id === payload.animation) a = animation;
-    });
-    this.emit('change');
+    this.saveAnimation(animation);
   },
 
   onAnimationAdd: function() {
@@ -406,19 +389,13 @@ var FileStore = Fluxxor.createStore({
   onAnimationFrameAdd: function(payload) {
     var animation = storeUtils.animations.getById(payload.animation);
     animation.frames.splice(payload.position, 0, payload.frame);
-    this.data.animations.forEach(function(a) {
-      if(a.id === payload.animation) a = animation;
-    });
-    this.emit('change');
+    this.saveAnimation(animation);
   },
 
   onAnimationFrameEmpty: function(id) {
     var animation = storeUtils.animations.getById(id);
     animation.frames = [];
-    this.data.animations.forEach(function(a) {
-      if(a.id === id) a = animation;
-    });
-    this.emit('change');
+    this.saveAnimation(animation);
   },
 
   onAnimationFrameDelete: function(payload) {
@@ -426,14 +403,13 @@ var FileStore = Fluxxor.createStore({
     if(animation.frames[payload.position] === payload.frame) {
       animation.frames.splice(payload.position, 1);
     }
-    this.data.animations.forEach(function(a) {
-      if(a.id === payload.animation) a = animation;
-    });
-    this.emit('change');
+    this.saveAnimation(animation);
   },
 
   onFrameDuplicate: function(payload) {
-    this.data.pixels = flux.stores.PixelStore.getData().file;
+    // this.data.pixels = flux.stores.PixelStore.getData().file;
+
+    var dict = flux.stores.PixelStore.getData().dict;
 
     // collect layers & pixels of source frame
     var layers = [],
@@ -481,21 +457,21 @@ var FileStore = Fluxxor.createStore({
 
   toJSON: function() {
     var strObj = {
-      size: this._sizeToFile(this.data.size),
-      frames: this._framesToFile(this.data.frames),
-      layers: this.data.layers.map(this._layerToFile),
-      animations: this.data.animations.map(this._animationToFile),
+      size: this.sizeToFile(this.data.size),
+      frames: this.framesToFile(this.data.frames),
+      layers: this.data.layers.map(this.layerToFile),
+      animations: this.data.animations.map(this.animationToFile),
       pixels: this.data.pixels.map(Pixel.toArray),
 
     };
     return JSON.stringify(strObj);
   },
 
-  _fromJSON: function(json) {
-    this.data.size = this._sizeFromFile(json.size);
-    this.data.frames = this._framesFromFile(json.frames);
-    this.data.layers = json.layers.map(this._layerFromFile);
-    this.data.animations = _.sortBy(json.animations.map(this._animationFromFile), 'name');
+  fromJSON: function(json) {
+    this.data.size = this.sizeFromFile(json.size);
+    this.data.frames = this.framesFromFile(json.frames);
+    this.data.layers = json.layers.map(this.layerFromFile);
+    this.data.animations = _.sortBy(json.animations.map(this.animationFromFile), 'name');
 
     // add z and frame values to saved pixels
     var layerDict = {};
@@ -520,29 +496,29 @@ var FileStore = Fluxxor.createStore({
     this.data.layers = _.sortBy(this.data.layers, 'z').reverse();
   },
 
-  _sizeFromFile: function(size) {
+  sizeFromFile: function(size) {
     return {
       width: size[0],
       height: size[1]
     };
   },
 
-  _sizeToFile: function(size) {
+  sizeToFile: function(size) {
     return [size.width, size.height];
   },
 
-  _framesFromFile: function(frames) {
+  framesFromFile: function(frames) {
     return {
       x: frames[0],
       y: frames[1]
     };
   },
 
-  _framesToFile: function(frames) {
+  framesToFile: function(frames) {
     return [frames.x, frames.y];
   },
 
-  _layerFromFile: function(layer) {
+  layerFromFile: function(layer) {
     return {
       id: layer[0],
       frame: layer[1],
@@ -553,7 +529,7 @@ var FileStore = Fluxxor.createStore({
     };
   },
 
-  _layerToFile: function(layer) {
+  layerToFile: function(layer) {
     return [
       layer.id,
       layer.frame,
@@ -564,7 +540,7 @@ var FileStore = Fluxxor.createStore({
     ];
   },
 
-  _animationFromFile: function(animation) {
+  animationFromFile: function(animation) {
     return {
       id: animation[0],
       name: animation[1],
@@ -573,7 +549,7 @@ var FileStore = Fluxxor.createStore({
     };
   },
 
-  _animationToFile: function(animation) {
+  animationToFile: function(animation) {
     return [
       animation.id,
       animation.name,
@@ -582,7 +558,7 @@ var FileStore = Fluxxor.createStore({
     ];
   },
 
-  _fixLayerZ: function(frame) {
+  fixLayerZ: function(frame) {
     this.data.layers.reverse();
     var z = 0;
     for(var i = 0; i < this.data.layers.length; i++) {
@@ -594,7 +570,7 @@ var FileStore = Fluxxor.createStore({
     this.data.layers.reverse();
   },
 
-  _dictToArray: function(dict) {
+  dictToArray: function(dict) {
     var flen, llen, xlen, ylen,
         frames, f, frame,
         layers, l, layer,
@@ -635,6 +611,20 @@ var FileStore = Fluxxor.createStore({
     }
 
     return pixels;
+  },
+
+  saveLayer: function(layer) {
+    this.data.layers.forEach(function(l) {
+      if(l.id === layer.id) l = layer;
+    });
+    this.emit('change');
+  },
+
+  saveAnimation: function(animation) {
+    this.data.animations.forEach(function(a) {
+      if(a.id === animation.id) a = animation;
+    });
+    this.emit('change');
   },
 
 });

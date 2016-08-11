@@ -15,7 +15,7 @@ var AppMenuWrapper = React.createClass({
       {title: 'Save', action: Menu.actions.file.saveFile},
       {title: 'Save as', action: null},
       {title: '---', action: null},
-      {title: 'Close', action: null},
+      {title: 'Close', action: Menu.actions.file.closeFile},
     ];
 
     var editMenuItems = [
@@ -45,14 +45,14 @@ var AppMenuWrapper = React.createClass({
     ];
 
     var frameMenuItems = [
-      {title: 'Rotate 180°', action: null},
-      {title: 'Rotate 90° CW', action: null},
-      {title: 'Rotate 90° CCW', action: null},
+      {title: 'Rotate 180°', action: Menu.actions.frame.rotate180},
+      {title: 'Rotate 90° CW', action: Menu.actions.frame.rotate90CW},
+      {title: 'Rotate 90° CCW', action: Menu.actions.frame.rotate90CCW},
       {title: '---', action: null},
-      {title: 'Flip Horizontal', action: null},
-      {title: 'Flip Vertical', action: null},
+      {title: 'Flip Horizontal', action: Menu.actions.frame.flipHorizontal},
+      {title: 'Flip Vertical', action: Menu.actions.frame.flipVertical},
       {title: '---', action: null},
-      {title: 'Duplicate …', action: null},
+      {title: 'Duplicate …', action: Menu.actions.frame.duplicate},
     ];
 
     var developerMenuItems = [

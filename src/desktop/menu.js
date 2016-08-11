@@ -87,7 +87,7 @@ function menu_init() {
     click: function() {
       // todo: ask for save/don't save/cancel, then properly close the file
       flux.actions.fileSave();
-      flux.actions.screenSelect('start');
+      flux.actions.tabSelect('start');
     },
     key: 'w',
     modifiers: modKey,

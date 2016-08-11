@@ -188,7 +188,44 @@ StoreUtils.prototype.onion.getActualFrame = function() {
 StoreUtils.prototype.pixels = {};
 
 StoreUtils.prototype.pixels.manipulate = function(frame, layer, x, y, callback) {
+  var dict = this.props.pixels.dict,
+      flen, llen, xlen, ylen,
+      frames, f, frame,
+      layers, l, layer,
+      xValues, x, xValue,
+      yValues, y, yValue,
+      pixel;
 
+  frames = Object.keys(dict);
+  flen = frames.length;
+
+  for(f = 0; f < flen; f++) {
+    frame = frames[f];
+
+    layers = Object.keys(dict[frame]);
+    llen = layers.length;
+
+    for(l = 0; l < llen; l++) {
+      layer = layers[l];
+
+      xValues = Object.keys(dict[frame][layer]);
+      xlen = xValues.length;
+
+      for(x = 0; x < xlen; x++) {
+        xValue = xValues[x];
+
+        yValues = Object.keys(dict[frame][layer][xValue]);
+        ylen = yValues.length;
+
+        for(y = 0; y < ylen; y++) {
+          yValue = yValues[y];
+          pixel = dict[frame][layer][xValue][yValue].clone();
+
+          callback(pixel);
+        }
+      }
+    }
+  }
 };
 
 module.exports = new StoreUtils();
