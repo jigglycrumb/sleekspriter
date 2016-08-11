@@ -435,11 +435,14 @@
     }
 
     .LayerBoxLayer {
+      @transition-speed: 150ms;
+
       background: @medium;
       border-bottom: 1px solid @dark;
       float: left;
       height: 40px;
       position: relative;
+      transition: height @transition-speed;
       width: 100%;
 
       &.selected {
@@ -460,21 +463,14 @@
         }
       }
 
-      &:hover {
-        height: 60px;
-
-        .order {
-          display: block;
-        }
-      }
-
       .order {
         cursor: pointer;
-        display: none;
         float: left;
-        height: 10px;
+        height: 0;
         line-height: 10px;
+        overflow: hidden;
         text-align: center;
+        transition: height @transition-speed;
         width: 100%;
 
         i {
@@ -484,16 +480,38 @@
         }
 
         &.up {
-          .linear-gradient(darken(@medium, 5%), transparent);
+          .linear-gradient(darken(@medium, 3%), transparent);
         }
 
         &.down {
-          .linear-gradient(transparent, darken(@medium, 5%));
+          .linear-gradient(transparent, darken(@medium, 3%));
 
           i {
             transform: rotate(180deg);
           }
         }
+      }
+
+      &:hover {
+        height: 60px;
+
+        .order {
+          height: 10px;
+        }
+      }
+
+      &.first:hover,
+      &.last:hover {
+        height: 50px;
+      }
+
+      &.first.last:hover {
+        height: 40px;
+      }
+
+      &.first:hover .order.up, // do not display up arrow on first layer
+      &.last:hover .order.down { // do not display down arrow on last layer
+        height: 0;
       }
 
       .visibility {
@@ -541,10 +559,11 @@
       }
 
       .name {
-        width: 137px;
-        height: 20px;
+        cursor: text;
         float: left;
+        height: 20px;
         margin-left: 5px;
+        width: 137px;
 
         label {
           margin-top: 3px;
@@ -559,15 +578,16 @@
       }
 
       .opacity-slider {
+        cursor: pointer;
+        float: left;
         margin-left: 5px;
         width: 90px;
-        float: left;
       }
 
       .opacity-number {
-        margin-left: 3px;
-        height: 13px;
         float: left;
+        height: 13px;
+        margin-left: 3px;
       }
     } // .LayerBoxLayer
 

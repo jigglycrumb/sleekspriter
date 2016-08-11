@@ -8,11 +8,13 @@ var LayerBoxLayer = React.createClass({
         cssClass  = classNames({
           LayerBoxLayer: true,
           selected: this.props.selected,
+          first: this.props.position === 0,
+          last: this.props.position === this.props.ui.layers.frame.length - 1,
         });
 
     return (
-      <div id={htmlId} className={cssClass} draggable="true" onDragStart={this.props.dragStartHandler.bind(null, this.props.layer.id)}>
-        <div className="order up">
+      <div id={htmlId} className={cssClass}>
+        <div className="order up" onClick={this.handleClick.bind(this, this.dispatchMoveLayerUp)} onTouchStart={this.handleTouch.bind(this, this.dispatchMoveLayerUp)}>
           <i className="flaticon-little16"></i>
         </div>
         <div className="visibility">
@@ -24,7 +26,7 @@ var LayerBoxLayer = React.createClass({
         <NameEditable name={this.props.layer.name} callback={this.dispatchLayerNameChanged} />
         <input type="range" className="opacity-slider" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />
         <input type="number" className="opacity-number" min="0" max="100" value={this.props.layer.opacity} onChange={this.dispatchLayerOpacityChanged} />
-        <div className="order down">
+        <div className="order down" onClick={this.handleClick.bind(this, this.dispatchMoveLayerDown)} onTouchStart={this.handleTouch.bind(this, this.dispatchMoveLayerDown)}>
           <i className="flaticon-little16"></i>
         </div>
       </div>
@@ -43,5 +45,17 @@ var LayerBoxLayer = React.createClass({
   },
   dispatchLayerNameChanged: function(name) {
     this.getFlux().actions.layerName(this.props.layer.id, name);
+  },
+  dispatchMoveLayerUp: function() {
+    var newPosition = this.props.position - 1;
+    if(newPosition >= 0) {
+      this.getFlux().actions.layerDrop(this.props.layer.id, newPosition);
+    }
+  },
+  dispatchMoveLayerDown: function() {
+    var newPosition = this.props.position + 1;
+    if(newPosition < this.props.ui.layers.frame.length) {
+      this.getFlux().actions.layerDrop(this.props.layer.id, newPosition);
+    }
   },
 });
