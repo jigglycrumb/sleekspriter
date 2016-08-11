@@ -107,22 +107,35 @@ var FrameCanvas = React.createClass({
 
     // console.log('FrameCanvas.paintPixel');
 
+    var payload = stateHistory.last.payload;
+
+    // get maximum z value at coordinate
+    var maxZ = 0,
+        scope = this.props.pixels.dict[payload.frame],
+        layers = Object.keys(scope),
+        pixel;
+
+    layers.forEach(function(layer) {
+      try {
+        pixel = scope[layer][payload.x][payload.y];
+        if(pixel.z > maxZ) maxZ = pixel.z;
+      } catch(e) {}
+    });
+
+    // build layer dicitionary
     var layerDict = [],
-        px = stateHistory.last.payload,
         canvas = ReactDOM.findDOMNode(this);
 
-    if(px.frame === this.props.frame) {
+    this.props.file.layers.forEach(function(layer) {
+      if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity, z: layer.z};
+    }, this);
 
-      this.props.file.layers.forEach(function(layer) {
-        if(layer.frame === this.props.frame) layerDict[layer.id] = {visible: layer.visible, opacity: layer.opacity};
-      }, this);
-
-      if(layerDict[px.layer].visible === true) {
-        var alpha;
-        if(this.props.noAlpha) alpha = 1;
-        else alpha = px.a * (layerDict[px.layer].opacity / 100);
-        Pixel.paint(canvas, px.x, px.y, px.color, alpha);
-      }
+    // paint only if layer is visible and on top
+    if(layerDict[payload.layer].visible === true && layerDict[payload.layer].z >= maxZ) {
+      var alpha;
+      if(this.props.noAlpha) alpha = 1;
+      else alpha = layerDict[payload.layer].opacity / 100;
+      Pixel.paint(canvas, payload.x, payload.y, payload.color, alpha);
     }
   },
 
