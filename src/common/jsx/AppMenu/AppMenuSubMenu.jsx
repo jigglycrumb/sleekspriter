@@ -9,17 +9,22 @@ var AppMenuSubMenu = React.createClass({
       display: this.props.visible === true ? 'block' : 'none'
     };
 
-    return (
-      <li onClick={this.props.clickHandler}>
-        <label>{this.props.label}</label>
-        <ul style={style}>
-          {this.props.items.map(function(item, i) {
-            return (
-              <li key={i} onClick={item.action}>{item.title}</li>
-            );
-          })}
-        </ul>
-      </li>
-    );
+    if(this.props.label == '---') {
+      return <hr />;
+    }
+    else {
+      return (
+        <li onClick={this.props.clickHandler}>
+          <label>{this.props.label}</label>
+          <ul style={style}>
+            {this.props.items.map(function(item, i) {
+              return (
+                <li key={i} onClick={item.action}>{item.label}</li>
+              );
+            })}
+          </ul>
+        </li>
+      );
+    }
   },
 });

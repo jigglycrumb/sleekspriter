@@ -1,5 +1,8 @@
 function sources(target) {
   return [
+
+    'build/' + target + '/js/classes/PlatformUtils.js',
+
     'build/bundle.js',
 
     'build/' + target + '/js/lib/color.js',
@@ -12,8 +15,6 @@ function sources(target) {
 
     'build/' + target + '/js/classes/Point.js',
     'build/' + target + '/js/classes/Pixel.js',
-
-    'build/' + target + '/js/classes/PlatformUtils.js',
 
     'build/' + target + '/js/flux/stores/*.js',
 

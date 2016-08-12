@@ -70,7 +70,6 @@ var stores = {
 },
 
 flux = new Fluxxor.Flux(stores, actions),
-platformUtils = new PlatformUtils(),
 container = document.getElementById('app-container');
 
 platformUtils.boot();

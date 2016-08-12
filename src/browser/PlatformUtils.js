@@ -80,3 +80,7 @@ PlatformUtils.prototype.boot = function() {
 PlatformUtils.prototype.setWindowTitle = function(title) {
   document.title = title;
 };
+
+
+var platformUtils = new PlatformUtils();
+// module.exports = new PlatformUtils();

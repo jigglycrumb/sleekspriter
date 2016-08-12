@@ -6,6 +6,7 @@ classNames = require('classnames');
 Mousetrap = require('mousetrap');
 // require('gif.js');
 // Color = require('./lib/color');
+// platformUtils = require('./classes/PlatformUtils');
 hotkeys = require('./classes/Hotkeys');
 storeUtils = require('./classes/StoreUtils');
 stateHistory = require('./classes/StateHistory');
