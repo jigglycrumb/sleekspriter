@@ -4,11 +4,8 @@ var PixelStore = Fluxxor.createStore({
     this.bindActions(
       constants.FILE_LOAD,                    this.onFileCreateAndLoad,
       constants.FILE_CREATE,                  this.onFileCreateAndLoad,
-      // constants.FILE_SAVE,                    this.onFileSave,
-      // constants.FILE_SAVE_AS,                 this.onFileSave,
-      // constants.FILE_SIZE,                    this.onFileSave,
+      constants.FILE_SIZE,                    this.onFileCreateAndLoad,
 
-      // constants.FRAME_SELECT,                 this.onFrameSelect,
       constants.FRAME_FLIP_HORIZONTAL,        this.onFrameFlipHorizontal,
       constants.FRAME_FLIP_VERTICAL,          this.onFrameFlipVertical,
       constants.FRAME_DUPLICATE,              this.onFrameDuplicate,
@@ -17,7 +14,6 @@ var PixelStore = Fluxxor.createStore({
       constants.LAYER_DELETE,                 this.onLayerDelete,
       constants.LAYER_MERGE,                  this.onLayerMerge,
 
-      constants.SCOPE_SET,                    this.onScopeSet,
       constants.SCOPE_COPY,                   this.onScopeCopy,
       constants.SCOPE_CUT,                    this.onScopeCut,
       constants.SCOPE_DELETE,                 this.onScopeDelete,
@@ -33,8 +29,6 @@ var PixelStore = Fluxxor.createStore({
       constants.PAINTBUCKET,                  this.onPaintbucket,
       constants.PREVIEW_MOVE_TOOL,            this.onPreviewMoveTool,
 
-      // constants.PIXELS_SAVE,                  this.onFileSave,
-
       constants.HISTORY_UNDO,                 this.onHistoryUndo,
       constants.HISTORY_REDO,                 this.onHistoryRedo
     );
@@ -46,12 +40,12 @@ var PixelStore = Fluxxor.createStore({
 
   resetData: function() {
     var data = {
-      file: [],
-      frame: [],
-      scope: [],
-      clipboard: [],
-      preview: [],
+      file: [], // deprecated
+      frame: [], // deprecated
+      scope: [], // deprecated
 
+      preview: [],
+      clipboard: [],
       dict: {},
     };
 
@@ -65,26 +59,10 @@ var PixelStore = Fluxxor.createStore({
   onFileCreateAndLoad: function() {
     this.waitFor(['FileStore'], function(FileStore) {
       this.resetData();
-      // this.data.file = FileStore.getData().pixels;
-
       this.rebuildDictionary(FileStore);
-
       this.emit('change');
     });
   },
-
-  // onFileSave: function() {
-  //   this.save();
-  //   this.emit('change');
-  // },
-  //
-  // onFrameSelect: function(frame) {
-  //   this.waitFor(['UiStore'], function(UiStore) {
-  //     this.save();
-  //     this.data.frame = _.filter(this.data.file, {frame: frame});
-  //     this.emit('change');
-  //   });
-  // },
 
   onFrameFlipHorizontal: function() {
     this.manipulateFramePixels(this.flipHorizontal);
@@ -110,7 +88,6 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onLayerMerge: function(payload) {
-
     var frame = payload.top.frame,
         topLayer = payload.top.id,
         bottomLayer = payload.bottom.id,
@@ -138,78 +115,34 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onScopeSet: function(params) {
-    // this.save();
-
-    // update pixels in scope
-    if(params.oldScope !== null && this.data.scope.length > 0) {
-      // merge scope pixels back to frame
-      this.data.scope.forEach(function(px) {
-        var oldPixel = _.find(this.data.frame, {x: px.x, y: px.y});
-        if(!_.isUndefined(oldPixel)) {
-          this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
-        }
-        this.data.frame.push(px);
-      }, this);
-
-      this.data.scope = [];
-    }
-
-    var layer = params.type === 'layer' ? params.data : params.oldScope;
-    // use selected layer if no layer data was given
-    if(layer === undefined) layer = storeUtils.layers.getSelected().id;
-
-    switch(params.type) {
-      case 'selection':
-        // move pixels in selection to scope
-        this.data.scope = _.remove(this.data.frame, function(px) {
-          return px.layer === layer && storeUtils.selection.contains(px);
-        });
-        break;
-
-      case 'layer':
-        // move pixels of layer to scope
-        this.data.scope = _.remove(this.data.frame, {layer: layer});
-        break;
-    }
-
-    this.emit('change');
-  },
-
   onScopeCopy: function() {
-    this.data.clipboard = this.data.scope;
+    var layer = storeUtils.layers.getSelected(),
+        pixels = this._scopeToArray(layer);
+    this.data.clipboard = pixels;
     this.emit('change');
   },
 
   onScopeCut: function() {
-    this.data.clipboard = this.data.scope;
-    this.data.scope.forEach(function(px) {
-      this.data.file = this.deletePixel(this.data.file, px.layer, px.x, px.y);
-      this.data.scope = this.deletePixel(this.data.scope, px.layer, px.x, px.y);
-      this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
-    }, this);
-
+    var layer = storeUtils.layers.getSelected(),
+        pixels = this._scopeToArray(layer);
+    this.data.clipboard = pixels;
+    pixels.forEach(this.deletePixel, this);
     this.emit('change');
   },
 
   onScopeDelete: function() {
-    this.data.scope.forEach(function(px) {
-      this.data.file = this.deletePixel(this.data.file, px.layer, px.x, px.y);
-      this.data.scope = this.deletePixel(this.data.scope, px.layer, px.x, px.y);
-      this.data.frame = this.deletePixel(this.data.frame, px.layer, px.x, px.y);
-    }, this);
-
+    var layer = storeUtils.layers.getSelected(),
+        pixels = this._scopeToArray(layer);
+    pixels.forEach(this.deletePixel, this);
     this.emit('change');
   },
 
   onScopePaste: function() {
-    // get current frame & layer
-    var frame = flux.stores.UiStore.getData().frames.selected,
-        layer = flux.stores.UiStore.getData().layers.selected,
-        z = storeUtils.layers.getSelected().z;
+    var frame = storeUtils.frames.getSelected(),
+        layer = storeUtils.layers.getSelected();
 
     function pastePixel(px) {
-      this.addPixel(frame, layer, px.x, px.y, px.toHex());
+      this.addPixel(frame, layer.id, px.x, px.y, px.toHex());
     }
 
     this.data.clipboard.forEach(pastePixel, this);
@@ -217,18 +150,17 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onScopeFlipHorizontal: function() {
-    this.data.scope.forEach(this.flipHorizontal, this);
+    this.manipulateScopePixels(this.flipHorizontal);
     this.emit('change');
   },
 
   onScopeFlipVertical: function() {
-    this.data.scope.forEach(this.flipVertical, this);
+    this.manipulateScopePixels(this.flipVertical);
     this.emit('change');
   },
 
   onScopeRotate: function(angle) {
-    //this.data.scope.forEach(this.rotateScope.bind(this, angle), this);
-    console.log('PixelStore.onScopeRotate');
+    this.manipulateScopePixels(this.rotateScope.bind(this, angle));
     this.emit('change');
   },
 
@@ -238,11 +170,8 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onPixelsAdd: function(pixels) {
-    pixels.forEach(function(px) {
-      this.writeToDictionary(px);
-    }, this);
-
-    self.emit('change');
+    this.addPixels(pixels);
+    this.emit('change');
   },
 
   onPixelDelete: function(payload) {
@@ -326,10 +255,6 @@ var PixelStore = Fluxxor.createStore({
 
   onFrameDuplicate: function(payload) {
     this.waitFor(['FileStore'], function(FileStore) {
-      // this.data.file = FileStore.getData().pixels;
-
-      // duplicate pixels
-      console.log('PixelStore.onFrameDuplicate', payload);
       this.rebuildDictionary(FileStore);
       this.emit('change');
     });
@@ -351,16 +276,8 @@ var PixelStore = Fluxxor.createStore({
   // Helpers
   //----------------------------------------------------------------------------
 
-  // log: function() {
-  //   console.log('clipboard: '+this.data.clipboard.length+' '+
-  //               'scope: '+this.data.scope.length+' '+
-  //               'frame: '+this.data.frame.length);
-  // },
-
-  deletePixel: function(pixels, layer, x, y) {
-    return pixels.filter(function(px) {
-      return !(px.layer == layer && px.x == x && px.y == y);
-    });
+  deletePixel: function(pixel) {
+    delete this.data.dict[pixel.frame][pixel.layer][pixel.x][pixel.y];
   },
 
   addPixel: function(frame, layer, x, y, color) {
@@ -368,6 +285,12 @@ var PixelStore = Fluxxor.createStore({
         a = 1,
         newPixel = new Pixel(frame, layer, x, y, c.red(), c.green(), c.blue(), a);
     this.writeToDictionary(newPixel);
+  },
+
+  addPixels: function(pixels) {
+    pixels.forEach(function(px) {
+      this.writeToDictionary(px);
+    }, this);
   },
 
   flipHorizontal: function(pixel) {
@@ -484,6 +407,32 @@ var PixelStore = Fluxxor.createStore({
     return pixels;
   },
 
+  _scopeToArray: function(layer) {
+    var frame = layer.frame,
+        xValues, x, xValue,
+        yValues, y, yValue,
+        pixel, pixels = [];
+
+    xValues = Object.keys(this.data.dict[frame][layer.id]);
+    xlen = xValues.length;
+
+    // TODO: consider selection
+    for(x = 0; x < xlen; x++) {
+      xValue = xValues[x];
+
+      yValues = Object.keys(this.data.dict[frame][layer.id][xValue]);
+      ylen = yValues.length;
+
+      for(y = 0; y < ylen; y++) {
+        yValue = yValues[y];
+        pixel = this.data.dict[frame][layer.id][xValue][yValue];
+        pixels.push(pixel);
+      }
+    }
+
+    return pixels;
+  },
+
   manipulateFramePixels: function(callback) {
     var frame = storeUtils.frames.getSelected(),
         pixels = this._frameToArray(frame);
@@ -497,6 +446,19 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
+  manipulateScopePixels: function(callback) {
+    var frame = storeUtils.frames.getSelected(),
+        layer = storeUtils.layers.getSelected(),
+        pixels = this._scopeToArray(layer);
+
+    delete this.data.dict[frame][layer.id];
+    pixels.forEach(callback, this);
+    pixels.forEach(function(pixel) {
+      this.writeToDictionary(pixel);
+    }, this);
+
+    this.emit('change');
+  },
 });
 
 // module.exports = new PixelStore();

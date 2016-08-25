@@ -51,21 +51,39 @@ var Menu = function() {
 
   // Edit menu
   items = [
-    {label: 'Cut', action: null},
-    {label: 'Copy', action: null},
-    {label: 'Paste', action: null},
-    {label: 'Delete', action: null},
+    {label: 'Cut', action: function() {
+      flux.actions.scopeCut();
+    }},
+    {label: 'Copy', action: function() {
+      flux.actions.scopeCopy();
+    }},
+    {label: 'Paste', action: function() {
+      flux.actions.scopePaste();
+    }},
+    {label: 'Delete', action: function() {
+      flux.actions.scopeDelete();
+    }},
     separator,
     {label: 'Rotate 180°', action: function() {
       flux.actions.scopeRotate(180);
     }},
-    {label: 'Rotate 90° CW', action: null},
-    {label: 'Rotate 90° CCW', action: null},
+    {label: 'Rotate 90° CW', action: function() {
+      flux.actions.scopeRotate(90);
+    }},
+    {label: 'Rotate 90° CCW', action: function() {
+      flux.actions.scopeRotate(270);
+    }},
     separator,
-    {label: 'Flip Horizontal', action: null},
-    {label: 'Flip Vertical', action: null},
+    {label: 'Flip Horizontal', action: function() {
+      flux.actions.scopeFlipHorizontal();
+    }},
+    {label: 'Flip Vertical', action: function() {
+      flux.actions.scopeFlipVertical();
+    }},
     separator,
-    {label: 'Image size …', action: null},
+    {label: 'Image size …', action: function() {
+      flux.actions.modalShow(ModalEditImageSize);
+    }},
   ];
 
   menu[1].items = items;

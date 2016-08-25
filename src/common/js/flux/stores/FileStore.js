@@ -120,148 +120,148 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFileSize: function(payload) {
-    this.waitFor(['PixelStore'], function(PixelStore) {
-      this.data.pixels = this.dictToArray(PixelStore.getData().dict);
+    var y, i, id, layer;
 
-      function moveToNewFrame(obj) {
-        var y = Math.ceil(obj.frame/this.data.frames.x),
-            newFrame = obj.frame+((y-1)*newColumns);
-        obj.frame = newFrame;
-      }
+    this.data.pixels = this.dictToArray(PixelStore.getData().dict);
 
-      // have frame columns been added?
-      if(this.data.frames.x < payload.frames.x) {
+    function moveToNewFrame(obj) {
+      var y = Math.ceil(obj.frame/this.data.frames.x),
+          newFrame = obj.frame+((y-1)*newColumns);
+      obj.frame = newFrame;
+    }
 
-        var newColumns = payload.frames.x - this.data.frames.x;
+    // have frame columns been added?
+    if(this.data.frames.x < payload.frames.x) {
 
-        // move layers to new frame
-        this.data.layers.forEach(moveToNewFrame, this);
+      var newColumns = payload.frames.x - this.data.frames.x;
 
-        // move pixels to new frame
-        this.data.pixels.forEach(moveToNewFrame, this);
+      // move layers to new frame
+      this.data.layers.forEach(moveToNewFrame, this);
 
-        // add new layers
-        for(var y = 1; y <= this.data.frames.y; y++) {
-          for(var i = 1; i <= newColumns; i++) {
-            var id = _.max(this.data.layers, 'id').id+1,
-                layer = {
-                  frame: (this.data.frames.x*y)+((y-1)*newColumns)+i,
-                  id: id,
-                  name: 'Layer '+id,
-                  opacity: 100,
-                  visible: true,
-                  z: 0,
-                };
+      // move pixels to new frame
+      this.data.pixels.forEach(moveToNewFrame, this);
 
-            this.data.layers.push(layer);
-          }
+      // add new layers
+      for(y = 1; y <= this.data.frames.y; y++) {
+        for(i = 1; i <= newColumns; i++) {
+          id = _.max(this.data.layers, 'id').id+1;
+          layer = {
+            frame: (this.data.frames.x*y)+((y-1)*newColumns)+i,
+            id: id,
+            name: 'Layer '+id,
+            opacity: 100,
+            visible: true,
+            z: 0,
+          };
+
+          this.data.layers.push(layer);
         }
-        this.data.frames.x = payload.frames.x;
       }
+      this.data.frames.x = payload.frames.x;
+    }
 
-      function deleteFrames(obj) {
-        return !_.includes(framesToDelete, obj.frame);
-      }
+    function deleteFrames(obj) {
+      return !_.includes(framesToDelete, obj.frame);
+    }
 
-      function fixFrame(obj) {
-        var y = Math.ceil(obj.frame/this.data.frames.x),
-            newFrame = obj.frame-((y-1)*columnsToRemove);
-        obj.frame = newFrame;
-      }
+    function fixFrame(obj) {
+      var y = Math.ceil(obj.frame/this.data.frames.x),
+          newFrame = obj.frame-((y-1)*columnsToRemove);
+      obj.frame = newFrame;
+    }
 
-      // have frame columns been removed?
-      if(this.data.frames.x > payload.frames.x) {
+    // have frame columns been removed?
+    if(this.data.frames.x > payload.frames.x) {
 
-        var columnsToRemove = this.data.frames.x - payload.frames.x,
-            framesToDelete = [];
+      var columnsToRemove = this.data.frames.x - payload.frames.x,
+          framesToDelete = [];
 
-        // calc frames to be removed
-        for(var row = 1; row <= this.data.frames.y; row++) {
-          for(var col = 1; col <= this.data.frames.x; col++) {
-            var frame = (this.data.frames.x*(row-1))+col;
-            if(col > payload.frames.x) framesToDelete.push(frame);
-          }
+      // calc frames to be removed
+      for(var row = 1; row <= this.data.frames.y; row++) {
+        for(var col = 1; col <= this.data.frames.x; col++) {
+          var frame = (this.data.frames.x*(row-1))+col;
+          if(col > payload.frames.x) framesToDelete.push(frame);
         }
-
-        // delete pixels & layers
-        this.data.pixels = this.data.pixels.filter(deleteFrames);
-        this.data.layers = this.data.layers.filter(deleteFrames);
-
-        // move remaining pixels & layers
-        this.data.pixels.forEach(fixFrame, this);
-        this.data.layers.forEach(fixFrame, this);
-        this.data.frames.x = payload.frames.x;
       }
 
-      // have frame rows been added?
-      if(this.data.frames.y < payload.frames.y) {
+      // delete pixels & layers
+      this.data.pixels = this.data.pixels.filter(deleteFrames);
+      this.data.layers = this.data.layers.filter(deleteFrames);
 
-        var newRows = payload.frames.y - this.data.frames.y;
+      // move remaining pixels & layers
+      this.data.pixels.forEach(fixFrame, this);
+      this.data.layers.forEach(fixFrame, this);
+      this.data.frames.x = payload.frames.x;
+    }
 
-        // add new layers
-        for(var y = this.data.frames.y; y <= payload.frames.y; y++) {
-          for(var i = 1; i <= this.data.frames.x; i++) {
-            var id = _.max(this.data.layers, 'id').id+1,
-                layer = {
-                  frame: (this.data.frames.x*y)+i,
-                  id: id,
-                  name: 'Layer '+id,
-                  opacity: 100,
-                  visible: true,
-                  z: 0,
-                };
+    // have frame rows been added?
+    if(this.data.frames.y < payload.frames.y) {
 
-            this.data.layers.push(layer);
-          }
+      var newRows = payload.frames.y - this.data.frames.y;
+
+      // add new layers
+      for(y = this.data.frames.y; y <= payload.frames.y; y++) {
+        for(i = 1; i <= this.data.frames.x; i++) {
+          id = _.max(this.data.layers, 'id').id + 1;
+          layer = {
+            frame: (this.data.frames.x*y)+i,
+            id: id,
+            name: 'Layer '+id,
+            opacity: 100,
+            visible: true,
+            z: 0,
+          };
+
+          this.data.layers.push(layer);
         }
-
-        this.data.frames.y = payload.frames.y;
       }
 
-      function deleteLastFrames(obj) {
-        return obj.frame <= lastFrame;
-      }
+      this.data.frames.y = payload.frames.y;
+    }
 
-      // have frame rows been removed?
-      if(this.data.frames.y > payload.frames.y) {
-        var lastFrame = this.data.frames.x * payload.frames.y;
+    function deleteLastFrames(obj) {
+      return obj.frame <= lastFrame;
+    }
 
-        // delete pixels & layers
-        this.data.pixels = this.data.pixels.filter(deleteLastFrames);
-        this.data.layers = this.data.layers.filter(deleteLastFrames);
-        this.data.frames.y = payload.frames.y;
-      }
+    // have frame rows been removed?
+    if(this.data.frames.y > payload.frames.y) {
+      var lastFrame = this.data.frames.x * payload.frames.y;
 
-      // new width > old width?
-      if(this.data.size.width < payload.pixels.x) {
-        this.data.size.width = payload.pixels.x;
-      }
+      // delete pixels & layers
+      this.data.pixels = this.data.pixels.filter(deleteLastFrames);
+      this.data.layers = this.data.layers.filter(deleteLastFrames);
+      this.data.frames.y = payload.frames.y;
+    }
 
-      // new width < old width?
-      if(this.data.size.width > payload.pixels.x) {
-        // delete pixels
-        this.data.pixels = this.data.pixels.filter(function(px) {
-          return px.x <= payload.pixels.x;
-        });
-        this.data.size.width = payload.pixels.x;
-      }
+    // new width > old width?
+    if(this.data.size.width < payload.pixels.x) {
+      this.data.size.width = payload.pixels.x;
+    }
 
-      // new height > old height?
-      if(this.data.size.height < payload.pixels.y) {
-        this.data.size.height = payload.pixels.y;
-      }
+    // new width < old width?
+    if(this.data.size.width > payload.pixels.x) {
+      // delete pixels
+      this.data.pixels = this.data.pixels.filter(function(px) {
+        return px.x <= payload.pixels.x;
+      });
+      this.data.size.width = payload.pixels.x;
+    }
 
-      // new height < old height?
-      if(this.data.size.height > payload.pixels.y) {
-        // delete pixels
-        this.data.pixels = this.data.pixels.filter(function(px) {
-          return px.y <= payload.pixels.y;
-        });
-        this.data.size.height = payload.pixels.y;
-      }
+    // new height > old height?
+    if(this.data.size.height < payload.pixels.y) {
+      this.data.size.height = payload.pixels.y;
+    }
 
-      this.emit('change');
-    });
+    // new height < old height?
+    if(this.data.size.height > payload.pixels.y) {
+      // delete pixels
+      this.data.pixels = this.data.pixels.filter(function(px) {
+        return px.y <= payload.pixels.y;
+      });
+      this.data.size.height = payload.pixels.y;
+    }
+
+    this.emit('change');
   },
 
   onLayerVisibility: function(payload) {
@@ -407,9 +407,6 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFrameDuplicate: function(payload) {
-
-    console.log('FileStore.onFrameDuplicate', payload);
-
     // collect layers & pixels of source frame
     var dict = this.dictToArray(flux.stores.PixelStore.getData().dict),
         layers = [],
