@@ -109,34 +109,31 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  // TODO: fix bugs, pixels are getting lost here it seems
   onLayerMerge: function(payload) {
-    // define find to look for top layer pixels
-    var search = this.data.frame;
-    if(payload.top.id === storeUtils.layers.getSelected().id) {
-      search = this.data.scope;
+
+    var frame = payload.top.frame,
+        topLayer = payload.top.id,
+        bottomLayer = payload.bottom.id,
+        xValues = Object.keys(this.data.dict[frame][topLayer]),
+        xlen = xValues.length,
+        pixel;
+
+    for(x = 0; x < xlen; x++) {
+      xValue = xValues[x];
+
+      yValues = Object.keys(this.data.dict[frame][topLayer][xValue]);
+      ylen = yValues.length;
+
+      for(y = 0; y < ylen; y++) {
+        yValue = yValues[y];
+        pixel = this.data.dict[frame][topLayer][xValue][yValue].clone();
+        pixel.layer = bottomLayer;
+        this.writeToDictionary(pixel);
+      }
     }
 
-    // get pixels of top layer
-    var topLayerPixels = _.filter(search, {layer: payload.top.id});
-
-    // prepare target pixels
-    var target = {
-      frame: payload.bottom.frame,
-      layer: payload.bottom.id,
-    };
-
-    // add pixels to bottom layer
-    topLayerPixels.forEach(function(px) {
-      this.addPixel(target.frame, target.layer, px.x, px.y, px.toHex());
-    }, this);
-
-    // this.save();
-
     // delete pixels of top layer
-    delete this.data.dict[flux.stores.UiStore.getData().frames.selected][payload.top.id];
-
-    // this.data.scope = [];
+    delete this.data.dict[frame][topLayer];
 
     this.emit('change');
   },
@@ -230,7 +227,8 @@ var PixelStore = Fluxxor.createStore({
   },
 
   onScopeRotate: function(angle) {
-    this.data.scope.forEach(this.rotateScope.bind(this, angle), this);
+    //this.data.scope.forEach(this.rotateScope.bind(this, angle), this);
+    console.log('PixelStore.onScopeRotate');
     this.emit('change');
   },
 
@@ -326,9 +324,13 @@ var PixelStore = Fluxxor.createStore({
     this.emit('change');
   },
 
-  onFrameDuplicate: function() {
+  onFrameDuplicate: function(payload) {
     this.waitFor(['FileStore'], function(FileStore) {
-      this.data.file = FileStore.getData().pixels;
+      // this.data.file = FileStore.getData().pixels;
+
+      // duplicate pixels
+      console.log('PixelStore.onFrameDuplicate', payload);
+      this.rebuildDictionary(FileStore);
       this.emit('change');
     });
   },

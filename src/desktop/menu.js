@@ -99,7 +99,7 @@ function menu_init() {
 
 
   // append "About" and "Quit" menu items to windows menu
-  if(process.platform === 'win32' || process.platform === 'win64') {
+  if(process.platform === 'win32' || process.platform === 'win64') {
 
     menu.file.append(new gui.MenuItem({ type: 'separator' }));
     menu.file.append(new gui.MenuItem({

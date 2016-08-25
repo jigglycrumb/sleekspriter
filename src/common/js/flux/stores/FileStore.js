@@ -407,19 +407,19 @@ var FileStore = Fluxxor.createStore({
   },
 
   onFrameDuplicate: function(payload) {
-    // this.data.pixels = flux.stores.PixelStore.getData().file;
 
-    var dict = flux.stores.PixelStore.getData().dict;
+    console.log('FileStore.onFrameDuplicate', payload);
 
     // collect layers & pixels of source frame
-    var layers = [],
+    var dict = this.dictToArray(flux.stores.PixelStore.getData().dict),
+        layers = [],
         pixels = [];
 
     this.data.layers.forEach(function(layer) {
       if(layer.frame === payload.source) layers.push(_.clone(layer, true));
     });
 
-    this.data.pixels.forEach(function(pixel) {
+    dict.forEach(function(pixel) {
       if(pixel.frame === payload.source) pixels.push(pixel.clone());
     });
 
@@ -447,6 +447,8 @@ var FileStore = Fluxxor.createStore({
       px.layer = layerdict[px.layer];
       this.data.pixels.push(px);
     }, this);
+
+    console.log('FileStore.pixels', this.data.pixels);
 
     this.emit('change');
   },

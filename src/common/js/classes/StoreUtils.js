@@ -37,7 +37,7 @@ StoreUtils.prototype.layers.getIds = function() {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getById = function(id) {
-  return _.find(flux.stores.UiStore.getData().layers.frame, {id: id});
+  return _.find(flux.stores.FileStore.getData().layers, {id: id});
 };
 
 /**
@@ -61,7 +61,7 @@ StoreUtils.prototype.layers.getSelected = function() {
  * @returns {Object} layer
  */
 StoreUtils.prototype.layers.getAboveSelected = function() {
-  var z = this.getSelected(),
+  var z = this.getSelected().z,
       above = _.filter(flux.stores.UiStore.getData().layers.frame, function(layer) { return layer.z > z; });
   return above.length === 0 ? false : _.min(above, 'z');
 };

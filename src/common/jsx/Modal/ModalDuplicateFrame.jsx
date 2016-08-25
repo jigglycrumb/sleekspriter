@@ -42,9 +42,10 @@ var ModalDuplicateFrame = React.createClass({
   },
   duplicateFrame: function() {
     if(this.state.source !== this.state.target) {
-      this.getFlux().actions.pixelsSave();
       this.getFlux().actions.frameDuplicate(this.state.source, this.state.target);
     }
+    this.getFlux().actions.menuHide();
+
     this.hide();
   },
 });

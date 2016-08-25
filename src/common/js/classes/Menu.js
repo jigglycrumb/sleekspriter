@@ -8,6 +8,8 @@ var Menu = function() {
     {label: "Frame", items: []},
   ];
 
+  var separator = {label: '---', action: null};
+
   // File menu
   var items = [
     {label: 'New', action: function() {
@@ -32,7 +34,7 @@ var Menu = function() {
     items.push({label: 'Save as', action: null});
   }
 
-  items.push({label: '---', action: null});
+  items.push(separator);
   items.push({label: 'Close', action: function() {
     flux.actions.fileSave();
     flux.actions.menuHide();
@@ -53,14 +55,16 @@ var Menu = function() {
     {label: 'Copy', action: null},
     {label: 'Paste', action: null},
     {label: 'Delete', action: null},
-    {label: '---', action: null},
-    {label: 'Rotate 180°', action: null},
+    separator,
+    {label: 'Rotate 180°', action: function() {
+      flux.actions.scopeRotate(180);
+    }},
     {label: 'Rotate 90° CW', action: null},
     {label: 'Rotate 90° CCW', action: null},
-    {label: '---', action: null},
+    separator,
     {label: 'Flip Horizontal', action: null},
     {label: 'Flip Vertical', action: null},
-    {label: '---', action: null},
+    separator,
     {label: 'Image size …', action: null},
   ];
 
@@ -68,16 +72,42 @@ var Menu = function() {
 
   // Select menu
   items = [
-    {label: 'All', action: null},
-    {label: 'Deselect', action: null},
+    {label: 'All', action: function() {
+      var start = new Point(1, 1),
+          end = new Point(flux.stores.FileStore.getData().size.width, flux.stores.FileStore.getData().size.height),
+          layer = flux.stores.UiStore.getData().layers.selected;
+
+      flux.actions.selectionClear();
+      flux.actions.selectionStart(start);
+      flux.actions.selectionEnd(end);
+    }},
+    {label: 'Deselect', action: function() {
+      flux.actions.selectionClear();
+    }},
   ];
 
   menu[2].items = items;
 
   // Layer menu
   items = [
-    {label: 'Merge with layer above', action: null},
-    {label: 'Merge with layer below', action: null},
+    {label: 'Merge with layer above', action: function() {
+      var top = storeUtils.layers.getAboveSelected();
+      if(top) {
+        var bottom = storeUtils.layers.getSelected();
+        flux.actions.layerMerge(top, bottom);
+        flux.actions.layerSelect(bottom.id);
+        flux.actions.layerDelete(top.id);
+      }
+    }},
+    {label: 'Merge with layer below', action: function() {
+      var bottom = storeUtils.layers.getBelowSelected();
+      if(bottom) {
+        var top = storeUtils.layers.getSelected();
+        flux.actions.layerMerge(top, bottom);
+        flux.actions.layerSelect(bottom.id);
+        flux.actions.layerDelete(top.id);
+      }
+    }},
   ];
 
   menu[3].items = items;
@@ -93,14 +123,14 @@ var Menu = function() {
     {label: 'Rotate 90° CCW', action: function() {
       flux.actions.frameRotate(270);
     }},
-    {label: '---', action: null},
+    separator,
     {label: 'Flip Horizontal', action: function() {
       flux.actions.frameFlipHorizontal();
     }},
     {label: 'Flip Vertical', action: function() {
       flux.actions.frameFlipVertical();
     }},
-    {label: '---', action: null},
+    separator,
     {label: 'Duplicate …', action: function() {
       flux.actions.modalShow(ModalDuplicateFrame);
     }},
@@ -113,9 +143,21 @@ var Menu = function() {
 
     // Developer menu
     items = [
-      {label: 'Open Developer Tools', action: null},
-      {label: 'Reload App', action: null},
-      {label: 'Show Debug Screen', action: null},
+      {label: 'Open Developer Tools', action: function() {
+        if(platformUtils.device == 'desktop') {
+          // require('nw.gui').Window.get().showDevTools();
+        }
+      }},
+      {label: 'Reload App', action: function() {
+        if(platformUtils.device == 'desktop') {
+          // require('nw.gui').Window.get().reloadDev();
+        }
+      }},
+      {label: 'Show Debug Screen', action: function() {
+        if(platformUtils.device == 'desktop') {
+          flux.actions.tabSelect('debug');
+        }
+      }},
     ];
 
     menu[5].items = items;
