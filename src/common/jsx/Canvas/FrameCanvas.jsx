@@ -42,8 +42,6 @@ var FrameCanvas = React.createClass({
   },
   paint: function() {
 
-    if(storeUtils.frames.getSelected() != this.props.frame) return;
-
     // console.log('FrameCanvas.paint');
 
     var canvas = ReactDOM.findDOMNode(this),

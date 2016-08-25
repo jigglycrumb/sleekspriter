@@ -445,8 +445,6 @@ var FileStore = Fluxxor.createStore({
       this.data.pixels.push(px);
     }, this);
 
-    console.log('FileStore.pixels', this.data.pixels);
-
     this.emit('change');
   },
 

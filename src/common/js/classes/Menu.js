@@ -53,36 +53,46 @@ var Menu = function() {
   items = [
     {label: 'Cut', action: function() {
       flux.actions.scopeCut();
+      flux.actions.menuHide();
     }},
     {label: 'Copy', action: function() {
       flux.actions.scopeCopy();
+      flux.actions.menuHide();
     }},
     {label: 'Paste', action: function() {
       flux.actions.scopePaste();
+      flux.actions.menuHide();
     }},
     {label: 'Delete', action: function() {
       flux.actions.scopeDelete();
+      flux.actions.menuHide();
     }},
     separator,
     {label: 'Rotate 180°', action: function() {
       flux.actions.scopeRotate(180);
+      flux.actions.menuHide();
     }},
     {label: 'Rotate 90° CW', action: function() {
       flux.actions.scopeRotate(90);
+      flux.actions.menuHide();
     }},
     {label: 'Rotate 90° CCW', action: function() {
       flux.actions.scopeRotate(270);
+      flux.actions.menuHide();
     }},
     separator,
     {label: 'Flip Horizontal', action: function() {
       flux.actions.scopeFlipHorizontal();
+      flux.actions.menuHide();
     }},
     {label: 'Flip Vertical', action: function() {
       flux.actions.scopeFlipVertical();
+      flux.actions.menuHide();
     }},
     separator,
     {label: 'Image size …', action: function() {
       flux.actions.modalShow(ModalEditImageSize);
+      flux.actions.menuHide();
     }},
   ];
 
@@ -98,9 +108,11 @@ var Menu = function() {
       flux.actions.selectionClear();
       flux.actions.selectionStart(start);
       flux.actions.selectionEnd(end);
+      flux.actions.menuHide();
     }},
     {label: 'Deselect', action: function() {
       flux.actions.selectionClear();
+      flux.actions.menuHide();
     }},
   ];
 
@@ -116,6 +128,7 @@ var Menu = function() {
         flux.actions.layerSelect(bottom.id);
         flux.actions.layerDelete(top.id);
       }
+      flux.actions.menuHide();
     }},
     {label: 'Merge with layer below', action: function() {
       var bottom = storeUtils.layers.getBelowSelected();
@@ -125,6 +138,7 @@ var Menu = function() {
         flux.actions.layerSelect(bottom.id);
         flux.actions.layerDelete(top.id);
       }
+      flux.actions.menuHide();
     }},
   ];
 
@@ -134,23 +148,29 @@ var Menu = function() {
   items = [
     {label: 'Rotate 180°', action: function() {
       flux.actions.frameRotate(180);
+      flux.actions.menuHide();
     }},
     {label: 'Rotate 90° CW', action: function() {
       flux.actions.frameRotate(90);
+      flux.actions.menuHide();
     }},
     {label: 'Rotate 90° CCW', action: function() {
       flux.actions.frameRotate(270);
+      flux.actions.menuHide();
     }},
     separator,
     {label: 'Flip Horizontal', action: function() {
       flux.actions.frameFlipHorizontal();
+      flux.actions.menuHide();
     }},
     {label: 'Flip Vertical', action: function() {
       flux.actions.frameFlipVertical();
+      flux.actions.menuHide();
     }},
     separator,
     {label: 'Duplicate …', action: function() {
       flux.actions.modalShow(ModalDuplicateFrame);
+      flux.actions.menuHide();
     }},
   ];
 
@@ -174,6 +194,7 @@ var Menu = function() {
       {label: 'Show Debug Screen', action: function() {
         if(platformUtils.device == 'desktop') {
           flux.actions.tabSelect('debug');
+          flux.actions.menuHide();
         }
       }},
     ];
