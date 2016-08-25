@@ -8,31 +8,34 @@ var ExportPartSelection = React.createClass({
                                 <input type="number" value={this.props.ui.export.frame} min={1} max={this.props.ui.frames.total} onChange={this.setFrame} />
                                 &nbsp;/&nbsp;
                                 {this.props.ui.frames.total} as image
-                              </span>},
-      {name: 'allframes', el: 'Every frame as single image'},
+                              </span>}
     ];
 
-    if(this.props.file.animations.length > 0) {
+    if(platformUtils.device !== 'browser') {
+      parts.push({name: 'allframes', el: 'Every frame as single image'});
 
-      var id = this.props.ui.export.animation === null ? this.props.file.animations[0].id : this.props.ui.export.animation,
-          animation = storeUtils.animations.getById(id),
-          runtime = Math.round(1000/animation.fps * animation.frames.length);
+      if(this.props.file.animations.length > 0) {
 
-      parts.push({
-        name: 'animation',
-        el: <span>
-              Animation&nbsp;
-              <select onChange={this.setAnimation} defaultValue={id}>
-                {this.props.file.animations.map(function(animation) {
-                  return( <option key={animation.id} value={animation.id}>{animation.name}</option> )
-                }, this)}
-              </select>
-              <i className="animation-info">
-                {animation.frames.length} frames, {animation.fps} fps<br />
-                Runtime: {runtime} ms
-              </i>
-            </span>
-      });
+        var id = this.props.ui.export.animation === null ? this.props.file.animations[0].id : this.props.ui.export.animation,
+            animation = storeUtils.animations.getById(id),
+            runtime = Math.round(1000/animation.fps * animation.frames.length);
+
+        parts.push({
+          name: 'animation',
+          el: <span>
+                Animation&nbsp;
+                <select onChange={this.setAnimation} defaultValue={id}>
+                  {this.props.file.animations.map(function(animation) {
+                    return( <option key={animation.id} value={animation.id}>{animation.name}</option> )
+                  }, this)}
+                </select>
+                <i className="animation-info">
+                  {animation.frames.length} frames, {animation.fps} fps<br />
+                  Runtime: {runtime} ms
+                </i>
+              </span>
+        });
+      }
     }
 
     return (
@@ -44,7 +47,7 @@ var ExportPartSelection = React.createClass({
             return (
               <li key={part.name}>
                 <label>
-                  <input type="radio" name="export-part" value={part.name} onChange={this.setPart} checked={checked} />
+                  <input type="radio" name="export-part" value={part.name} onChange={this.setPart} checked={checked} />
                   {part.el}
                 </label>
               </li>
