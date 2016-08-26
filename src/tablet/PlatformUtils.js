@@ -126,3 +126,5 @@ PlatformUtils.prototype.boot = function() {
 PlatformUtils.prototype.setWindowTitle = function(title) {
   console.log('PlatformUtils.setWindowTitle', title);
 };
+
+var platformUtils = new PlatformUtils();

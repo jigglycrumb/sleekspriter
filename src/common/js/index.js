@@ -63,6 +63,8 @@ function setupFluxDispatcher() {
   });
 }
 
+menuConfig = new MenuConfig();
+
 var stores = {
   FileStore: new FileStore(),
   UiStore: new UiStore(),

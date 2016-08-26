@@ -3,7 +3,7 @@ function sources(target) {
 
     'build/' + target + '/js/classes/PlatformUtils.js',
 
-    'build/bundle.js',
+    'build/' + target + '/js/browserify-bundle.js',
 
     'build/' + target + '/js/lib/color.js',
     'build/' + target + '/js/lib/gif.js',
@@ -18,6 +18,7 @@ function sources(target) {
 
     'build/' + target + '/js/flux/stores/*.js',
 
+    'build/' + target + '/js/classes/MenuConfig.js',
     'build/' + target + '/js/index.js',
 
     'build/' + target + '/js/menu.js',

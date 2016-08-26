@@ -11,7 +11,7 @@ var AppMenuWrapper = React.createClass({
 
     return (
       <ul id="AppMenuWrapper" style={style}>
-        {Menu.map(function(submenu) {
+        {menuConfig.map(function(submenu) {
           return (
             <AppMenuSubMenu
               key={submenu.label}

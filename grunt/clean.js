@@ -11,7 +11,6 @@ module.exports = {
       'build/desktop/mac/js',
       'build/desktop/windows/js',
       'build/tablet/js',
-      'build/bundle.js',
     ]
   },
   all: {

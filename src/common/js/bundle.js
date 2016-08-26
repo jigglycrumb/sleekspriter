@@ -10,7 +10,9 @@ Mousetrap = require('mousetrap');
 hotkeys = require('./classes/Hotkeys');
 storeUtils = require('./classes/StoreUtils');
 stateHistory = require('./classes/StateHistory');
-Menu = require('./classes/Menu');
+// Menu = require('./classes/Menu');
+
+// console.log(Menu);
 
 constants = require('./flux/constants');
 actions = require('./flux/actions');

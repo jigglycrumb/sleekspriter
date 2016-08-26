@@ -226,3 +226,5 @@ PlatformUtils.prototype.setWindowTitle = function(title) {
 
   win.title = title;
 };
+
+var platformUtils = new PlatformUtils();

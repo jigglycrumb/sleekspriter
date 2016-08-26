@@ -22,6 +22,10 @@ dev:
   - 'replace:browser'
   - 'clean:postbuild'
 
+preview:
+  - 'basic'
+  - 'clean:postbuild'
+
 desktop:
   - 'basic'
   - 'uglify:desktopMac'
