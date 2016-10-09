@@ -64,6 +64,16 @@ var MenuConfig = function() {
     });
   }
 
+  items.push({
+    label: 'Import …',
+    key: 'i',
+    modifiers: MOD_SHIFT_META,
+    action: function() {
+      flux.actions.modalShow(ModalImportFile);
+      flux.actions.menuHide();
+    }
+  });
+
   items.push(separator);
 
   items.push({
