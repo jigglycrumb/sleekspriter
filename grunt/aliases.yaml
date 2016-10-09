@@ -11,7 +11,7 @@ basic:
   - 'autoprefixer'
   - 'replace'
 
-dev:
+browser:
   - 'clean:build'
   - 'copy:browser'
   - 'browserify'

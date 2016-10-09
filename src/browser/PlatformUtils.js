@@ -15,26 +15,34 @@ PlatformUtils.prototype.showSaveFileDialog = function() {
   flux.actions.modalShow(ModalSaveFile);
 };
 
-PlatformUtils.prototype.loadFile = function(json) {
-  var data = {
-    json: json, // the file content parsed as JSON
-    path: '/unnamed.pixels',             // the complete absolute file path
-    name: 'unnamed.pixels', // the file name without extension, e.g. "coin"
-    folder: '/', // the complete absolute folder (same as path without the file name)
-  };
+PlatformUtils.prototype.loadFile = function(file) {
+  var reader = new FileReader();
+  reader.onload = (function(theFile) {
+    return function(e) {
+      var json = JSON.parse(e.target.result);
 
-  flux.actions.fileLoad(data);
-  flux.actions.tabSelect('paint');
+      var data = {
+        json: json, // the file content parsed as JSON
+        path: '/unnamed.pixels',             // the complete absolute file path
+        name: 'unnamed.pixels', // the file name without extension, e.g. "coin"
+        folder: '/', // the complete absolute folder (same as path without the file name)
+      };
 
-  // actions to init paint screen
-  flux.actions.frameSelect(1);
-  flux.actions.layerTopSelect();
-  flux.actions.scopeSet(null, 'layer');
+      flux.actions.fileLoad(data);
+      flux.actions.tabSelect('paint');
 
-  // actions to init export screen
-  if(flux.stores.FileStore.getData().animations.length > 0) {
-    flux.actions.exportAnimation(flux.stores.FileStore.getData().animations[0].id);
-  }
+      // actions to init paint screen
+      flux.actions.frameSelect(1);
+      flux.actions.layerTopSelect();
+      flux.actions.scopeSet(null, 'layer');
+
+      // actions to init export screen
+      if(flux.stores.FileStore.getData().animations.length > 0) {
+        flux.actions.exportAnimation(flux.stores.FileStore.getData().animations[0].id);
+      }
+    };
+  })(file);
+  reader.readAsText(file);
 };
 
 PlatformUtils.prototype.exportFile = function(settings) {

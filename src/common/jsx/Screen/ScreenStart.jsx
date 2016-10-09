@@ -17,7 +17,7 @@ var ScreenStart = React.createClass({
     var tip = tips[platformUtils.device][_.random(0, tips[platformUtils.device].length - 1)];
 
     return (
-      <section className="screen start" onDrop={this.handleDrop}>
+      <section className="screen start" onDragOver={this.cancel} onDrop={this.handleDrop}>
         <div className="splash">
           <div className="inner">
             <div className="logo">@@name</div>
@@ -75,13 +75,27 @@ var ScreenStart = React.createClass({
     this.getFlux().actions.tabSelect('paint');
     platformUtils.showOpenFileDialog();
   },
-  handleDrop: function(e) {
+  cancel: function(e) {
+    e.stopPropagation();
     e.preventDefault();
+  },
+  handleDrop: function(e) {
+    this.cancel(e);
+
     if(e.dataTransfer.files.length >= 1) {
-      var name = e.dataTransfer.files[0].name,
+      var file = e.dataTransfer.files[0],
+          path = file.path,
+          name = file.name,
           suffix = name.substr(name.lastIndexOf('.')+1);
 
-      if(suffix === 'pixels') platformUtils.loadFile(e.dataTransfer.files[0].path);
+      if(suffix === 'pixels') {
+        if(platformUtils.device === "browser") {
+          platformUtils.loadFile(file);
+        }
+        else {
+          platformUtils.loadFile(path);
+        }
+      }
       else alert('Error: Could not read file format');
     }
   },

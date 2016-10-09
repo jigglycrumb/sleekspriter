@@ -182,8 +182,8 @@ PlatformUtils.prototype.getPathData = function(fullPath) {
 
 PlatformUtils.prototype.boot = function() {
 
-  window.ondragover = function(e) { e.preventDefault(); return false; };
-  window.ondrop = function(e) { e.preventDefault(); return false; };
+  window.ondragover = function(e) { e.stopPropagation(); e.preventDefault(); return false; };
+  window.ondrop = function(e) { e.stopPropagation(); e.preventDefault(); return false; };
   window.onresize = flux.actions.windowResize;
 
   // setup nwjs file load/save hidden inputs
