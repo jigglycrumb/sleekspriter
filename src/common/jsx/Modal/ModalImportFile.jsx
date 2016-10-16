@@ -1,20 +1,24 @@
 var ModalImportFile = React.createClass({
   mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
+
+  frames: {x:  1, y:  1},
+  pixels: {x: 10, y: 10},
+  zoom: 1,
+
   getInitialState: function() {
     return {
       image: null,
       imageDataURL: null,
       frames: {x:  1, y:  1},
       pixels: {x: 10, y: 10},
+      zoom: 1,
     };
   },
   render: function() {
-
-    var fileType = this.state.frames.x * this.state.frames.y === 1 ? 'Image' : 'Spritesheet';
-
     var image;
+
     if(this.state.imageDataURL !== null) {
-      image = <img src={this.state.imageDataURL} title={this.state.image.name} />;
+      image = <img src={this.state.imageDataURL} title={this.state.image.name} ref="importImage" />;
     }
     else {
       image = <h3>Drop image here</h3>;
@@ -24,7 +28,7 @@ var ModalImportFile = React.createClass({
       <div className="dialog">
         <div className="title">Import file</div>
         <div className="text">
-          <ul className="frame-size">
+          <ul>
             <li>
               <div id="image-import-dropzone" onDragOver={this.cancel} onDrop={this.handleDrop}>
                 {image}
@@ -43,40 +47,74 @@ var ModalImportFile = React.createClass({
               <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={this.updateState} />
               px
             </li>
-            <li>
-              <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y} pixels</i>
-            </li>
           </ul>
-          <div>
-            <span>Layout</span>
-            <FrameGrid frames={this.state.frames} />
-          </div>
         </div>
         <div className="actions">
-          <button onClick={this.handleClick.bind(this, this.createFile)} onTouchStart={this.handleTouch.bind(this, this.createFile)}>Ok</button>
+          <button onClick={this.handleClick.bind(this, this.import)} onTouchStart={this.handleTouch.bind(this, this.import)}>Ok</button>
           <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
     );
   },
-  createFile: function() {
+
+  import: function() {
+
+    // document.getElementById('ScreenBlocker').style.display = 'block';
+
+    // create canvas element
+    var canvas = document.createElement('canvas'),
+        ctx    = canvas.getContext('2d'),
+        image    = this.refs.importImage;
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    this.pixels.x = canvas.width;
+    this.pixels.y = canvas.height;
+
+    // copy dropped image to canvas
+    ctx.drawImage(image, 0, 0);
+
+    // get pixel data
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    var json = {
+      size: [this.pixels.x, this.pixels.y],
+      frames: [this.frames.x, this.frames.y],
+      layers: [[1,1,"Layer 1",0,100,1]],
+      animations: [],
+      pixels: [],
+    };
+
+    var layer = 1,
+        x = 1,
+        y = 1;
+
+    for(var i = 0; i < imageData.data.length; i+=4) {
+      var red = imageData.data[i],
+          green = imageData.data[i+1],
+          blue = imageData.data[i+2],
+          alpha = 1; //1-(imageData.data[i+2]/255);
+
+      // if(alpha !== 0) {
+        var pixel = [layer, x, y, red, green, blue, alpha];
+        json.pixels.push(pixel);
+      // }
+
+      if(x == canvas.width) {
+        x = 1;
+        y++;
+      }
+      else x++;
+    }
+
+    // document.getElementById('ScreenBlocker').style.display = 'none';
+
     this.hide();
-    this.getFlux().actions.fileCreate(this.state.frames.x, this.state.frames.y, this.state.pixels.x, this.state.pixels.y);
+    platformUtils.loadFromJSON(json);
     this.getFlux().actions.frameSelect(1);
     this.getFlux().actions.layerSelect(1);
-  },
-  updateState: function() {
-    var size = {
-      frames: {
-        x: this.refs.framesX.value,
-        y: this.refs.framesY.value,
-      },
-      pixels: {
-        x: this.refs.pixelsX.value,
-        y: this.refs.pixelsY.value,
-      },
-    };
-    this.setState(size);
+
   },
 
   cancel: function(e) {
@@ -101,6 +139,7 @@ var ModalImportFile = React.createClass({
         var reader = new FileReader();
 
         reader.onload = (function(theFile) {
+          console.log(file);
           return function(e) {
             self.setState({image: file, imageDataURL: e.target.result});
           };
@@ -113,5 +152,19 @@ var ModalImportFile = React.createClass({
 
   resetImage: function() {
     this.setState({image: null, imageDataURL: null});
+  },
+
+  updateState: function() {
+    var size = {
+      frames: {
+        x: this.refs.framesX.value,
+        y: this.refs.framesY.value,
+      },
+      pixels: {
+        x: this.refs.pixelsX.value,
+        y: this.refs.pixelsY.value,
+      },
+    };
+    this.setState(size);
   },
 });

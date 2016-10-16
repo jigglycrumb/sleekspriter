@@ -103,7 +103,18 @@
   }
 
   #image-import-dropzone {
-    border: 1px solid red;
+    max-height: 500px;
+    overflow: auto;
+    text-align: center;
+
+    h3 {
+      padding: 20px;
+    }
+
+    img {
+      .inset-shadow;
+      border: 1px solid @dark;
+    }
   }
 } // #Modal
 
