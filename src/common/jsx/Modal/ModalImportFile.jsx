@@ -1,53 +1,64 @@
 var ModalImportFile = React.createClass({
   mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
 
-  frames: {x:  1, y:  1},
-  pixels: {x: 10, y: 10},
-  zoom: 1,
-
   getInitialState: function() {
     return {
-      image: null,
-      imageDataURL: null,
-      frames: {x:  1, y:  1},
-      pixels: {x: 10, y: 10},
+      image: {
+        width: 0,
+        height: 0,
+        name: null,
+        data: null,
+      },
+      frames: {
+        x: 1,
+        y: 1,
+      },
       zoom: 1,
     };
   },
   render: function() {
-    var image;
+    var content;
 
-    if(this.state.imageDataURL !== null) {
-      image = <img src={this.state.imageDataURL} title={this.state.image.name} ref="importImage" />;
+    if(this.state.image.data !== null) {
+      var wrapperCss = {
+        width: this.state.image.width,
+        height: this.state.image.height
+      };
+
+      content = <div>
+                  <div className="image-import-dropzone-wrapper" style={wrapperCss}>
+                    <img src={this.state.image.data} title={this.state.image.name} ref="importImage" />
+                    <GridCanvas
+                      width={this.state.image.width}
+                      height={this.state.image.height}
+                      columns={this.state.frames.x}
+                      rows={this.state.frames.y} />
+                  </div>
+                  <ul>
+                    <li>
+                      <label>Frames:</label>
+                      <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateFrames} />
+                      x
+                      <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateFrames} />
+                    </li>
+                    <li>
+                      <label>Frame size:</label>
+                      {this.state.image.width/this.state.frames.x}x{this.state.image.height/this.state.frames.y}px
+                    </li>
+                  </ul>
+                </div>;
     }
     else {
-      image = <h3>Drop image here</h3>;
+      content = <h3>Drop image here</h3>;
     }
 
     return (
       <div className="dialog">
         <div className="title">Import file</div>
         <div className="text">
-          <ul>
-            <li>
-              <div id="image-import-dropzone" onDragOver={this.cancel} onDrop={this.handleDrop}>
-                {image}
-              </div>
-            </li>
-            <li>
-              <label>Frames:</label>
-              <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateState} />
-              x
-              <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateState} />
-            </li>
-            <li>
-              <label>Frame size:</label>
-              <input type="number" ref="pixelsX" value={this.state.pixels.x} min="1" onChange={this.updateState} />
-              x
-              <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={this.updateState} />
-              px
-            </li>
-          </ul>
+          <div id="image-import-dropzone" onDragOver={this.cancel} onDrop={this.handleDrop}>
+            {content}
+          </div>
         </div>
         <div className="actions">
           <button onClick={this.handleClick.bind(this, this.import)} onTouchStart={this.handleTouch.bind(this, this.import)}>Ok</button>
@@ -69,8 +80,8 @@ var ModalImportFile = React.createClass({
     canvas.width = image.width;
     canvas.height = image.height;
 
-    this.pixels.x = canvas.width;
-    this.pixels.y = canvas.height;
+    // this.pixels.x = canvas.width;
+    // this.pixels.y = canvas.height;
 
     // copy dropped image to canvas
     ctx.drawImage(image, 0, 0);
@@ -79,8 +90,8 @@ var ModalImportFile = React.createClass({
     var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     var json = {
-      size: [this.pixels.x, this.pixels.y],
-      frames: [this.frames.x, this.frames.y],
+      size: [this.state.pixels.x, this.state.pixels.y],
+      frames: [this.state.frames.x, this.state.frames.y],
       layers: [[1,1,"Layer 1",0,100,1]],
       animations: [],
       pixels: [],
@@ -137,34 +148,40 @@ var ModalImportFile = React.createClass({
 
       if(file.type in allowed) {
         var reader = new FileReader();
-
         reader.onload = (function(theFile) {
-          console.log(file);
           return function(e) {
-            self.setState({image: file, imageDataURL: e.target.result});
+            var data = e.target.result,
+                dummy = document.createElement('img');
+
+            dummy.src = data;
+
+            self.setState({
+              image: {
+                width: dummy.width,
+                height: dummy.height,
+                name: file.name,
+                data: data,
+              }
+            });
+
+            delete dummy;
           };
         })(file);
-
         reader.readAsDataURL(file);
       }
     }
   },
 
   resetImage: function() {
-    this.setState({image: null, imageDataURL: null});
+    this.setState({image: this.getInitialState().image});
   },
 
-  updateState: function() {
-    var size = {
+  updateFrames: function() {
+    this.setState({
       frames: {
-        x: this.refs.framesX.value,
-        y: this.refs.framesY.value,
-      },
-      pixels: {
-        x: this.refs.pixelsX.value,
-        y: this.refs.pixelsY.value,
-      },
-    };
-    this.setState(size);
+        x: +this.refs.framesX.value,
+        y: +this.refs.framesY.value,
+      }
+    });
   },
 });
