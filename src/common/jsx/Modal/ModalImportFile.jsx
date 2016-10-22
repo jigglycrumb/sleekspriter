@@ -17,13 +17,31 @@ var ModalImportFile = React.createClass({
     };
   },
   render: function() {
-    var content;
+    var content,
+        okButtonDisabled = true;
 
     if(this.state.image.data !== null) {
       var wrapperCss = {
         width: this.state.image.width,
         height: this.state.image.height
       };
+
+      var s = this.calculateFrameSize(),
+          frameWidth = s.width,
+          frameHeight = s.height,
+          frameSize,
+          validation = this.validateFrameSize();
+
+      if(validation.allValid) {
+        okButtonDisabled = false;
+        frameSize = <span>{frameWidth} x {frameHeight} px</span>;
+      }
+      else {
+        var w = validation.widthValid ? frameWidth : <span className="error">{frameWidth.toFixed(1)}</span>,
+            h = validation.heightValid ? frameHeight : <span className="error">{frameHeight.toFixed(1)}</span>;
+
+        frameSize = <span>{w} x {h} px</span>;
+      }
 
       content = <div>
                   <div className="image-import-dropzone-wrapper" style={wrapperCss}>
@@ -42,8 +60,7 @@ var ModalImportFile = React.createClass({
                       <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateFrames} />
                     </li>
                     <li>
-                      <label>Frame size:</label>
-                      {this.state.image.width/this.state.frames.x}x{this.state.image.height/this.state.frames.y}px
+                      <label>Frame size:</label> {frameSize}
                     </li>
                   </ul>
                 </div>;
@@ -61,7 +78,7 @@ var ModalImportFile = React.createClass({
           </div>
         </div>
         <div className="actions">
-          <button onClick={this.handleClick.bind(this, this.import)} onTouchStart={this.handleTouch.bind(this, this.import)}>Ok</button>
+          <button onClick={this.handleClick.bind(this, this.import)} onTouchStart={this.handleTouch.bind(this, this.import)} disabled={okButtonDisabled}>Ok</button>
           <button onClick={this.handleClick.bind(this, this.hide)} onTouchStart={this.handleTouch.bind(this, this.hide)}>Cancel</button>
         </div>
       </div>
@@ -70,62 +87,96 @@ var ModalImportFile = React.createClass({
 
   import: function() {
 
-    // document.getElementById('ScreenBlocker').style.display = 'block';
+    if(this.validateFrameSize().allValid) {
+      // document.getElementById('ScreenBlocker').style.display = 'block';
 
-    // create canvas element
-    var canvas = document.createElement('canvas'),
-        ctx    = canvas.getContext('2d'),
-        image    = this.refs.importImage;
+      // create canvas element
+      var canvas = document.createElement('canvas'),
+          ctx    = canvas.getContext('2d'),
+          image    = this.refs.importImage;
 
-    canvas.width = image.width;
-    canvas.height = image.height;
+      canvas.width = image.width;
+      canvas.height = image.height;
 
-    // this.pixels.x = canvas.width;
-    // this.pixels.y = canvas.height;
+      // copy dropped image to canvas
+      ctx.drawImage(image, 0, 0);
 
-    // copy dropped image to canvas
-    ctx.drawImage(image, 0, 0);
+      // get pixel data
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    // get pixel data
-    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var frameSize = this.calculateFrameSize();
 
-    var json = {
-      size: [this.state.pixels.x, this.state.pixels.y],
-      frames: [this.state.frames.x, this.state.frames.y],
-      layers: [[1,1,"Layer 1",0,100,1]],
-      animations: [],
-      pixels: [],
-    };
+      var json = {
+        size: [frameSize.width, frameSize.height],
+        frames: [this.state.frames.x, this.state.frames.y],
+        layers: [],
+        animations: [],
+        pixels: [],
+      };
 
-    var layer = 1,
-        x = 1,
-        y = 1;
-
-    for(var i = 0; i < imageData.data.length; i+=4) {
-      var red = imageData.data[i],
-          green = imageData.data[i+1],
-          blue = imageData.data[i+2],
-          alpha = 1; //1-(imageData.data[i+2]/255);
-
-      // if(alpha !== 0) {
-        var pixel = [layer, x, y, red, green, blue, alpha];
-        json.pixels.push(pixel);
-      // }
-
-      if(x == canvas.width) {
-        x = 1;
-        y++;
+      // create layers
+      var totalFrames = this.state.frames.x * this.state.frames.y;
+      for(var i = 1; i <= totalFrames; i++) {
+        json.layers.push([i,i,"Layer "+i,0,100,1]);
       }
-      else x++;
+
+      var frame = 1, // will also serve as layer id
+      position = {
+        canvas: { x: 1, y: 1 },
+        frame: { x: 1, y: 1 }
+      };
+
+      // loop over image data and create pixels
+      for(var i = 0; i < imageData.data.length; i+=4) {
+        var red = imageData.data[i],
+            green = imageData.data[i+1],
+            blue = imageData.data[i+2],
+            alpha = 1; //1-(imageData.data[i+2]/255);
+
+        // if(alpha !== 0) {
+        var pixel = [frame, position.frame.x, position.frame.y, red, green, blue, alpha];
+        json.pixels.push(pixel);
+        // }
+
+        if(position.frame.x == frameSize.width) {
+          frame++;
+          position.frame.x = 1;
+        }
+        else {
+          position.frame.x++;
+        }
+
+        if(position.canvas.x == canvas.width) {
+          var row = Math.floor(position.canvas.y/(canvas.height/this.state.frames.y));
+
+          frame = 1 + (this.state.frames.x * row);
+
+          position.frame.x = 1;
+
+          if(position.canvas.y%(canvas.height/this.state.frames.y) === 0) {
+            position.frame.y = 1;
+          }
+          else {
+            position.frame.y++;
+          }
+
+          position.canvas.x = 1;
+          position.canvas.y++;
+        }
+        else {
+          position.canvas.x++;
+        }
+      }
+
+      // document.getElementById('ScreenBlocker').style.display = 'none';
+
+      // console.log(json);
+
+      platformUtils.loadFromJSON(json);
+      this.getFlux().actions.frameSelect(1);
+      this.getFlux().actions.layerSelect(1);
+      this.hide();
     }
-
-    // document.getElementById('ScreenBlocker').style.display = 'none';
-
-    this.hide();
-    platformUtils.loadFromJSON(json);
-    this.getFlux().actions.frameSelect(1);
-    this.getFlux().actions.layerSelect(1);
-
   },
 
   cancel: function(e) {
@@ -183,5 +234,24 @@ var ModalImportFile = React.createClass({
         y: +this.refs.framesY.value,
       }
     });
+  },
+
+  calculateFrameSize: function() {
+    return {
+      width: this.state.image.width/this.state.frames.x,
+      height: this.state.image.height/this.state.frames.y
+    }
+  },
+
+  validateFrameSize: function() {
+    var s = this.calculateFrameSize(),
+        widthValid = s.width === parseInt(s.width, 10),
+        heightValid = s.height === parseInt(s.height, 10);
+
+    return {
+      widthValid: widthValid,
+      heightValid: heightValid,
+      allValid: widthValid && heightValid
+    }
   },
 });
