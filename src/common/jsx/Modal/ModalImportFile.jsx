@@ -131,12 +131,12 @@ var ModalImportFile = React.createClass({
         var red = imageData.data[i],
             green = imageData.data[i+1],
             blue = imageData.data[i+2],
-            alpha = 1; //1-(imageData.data[i+2]/255);
+            alpha = (imageData.data[i+3]/255).toFixed(2);
 
-        // if(alpha !== 0) {
-        var pixel = [frame, position.frame.x, position.frame.y, red, green, blue, alpha];
-        json.pixels.push(pixel);
-        // }
+        if(alpha > 0) {
+          var pixel = [frame, position.frame.x, position.frame.y, red, green, blue, alpha];
+          json.pixels.push(pixel);
+        }
 
         if(position.frame.x == frameSize.width) {
           frame++;
@@ -170,7 +170,7 @@ var ModalImportFile = React.createClass({
 
       // document.getElementById('ScreenBlocker').style.display = 'none';
 
-      // console.log(json);
+      console.log(json);
 
       platformUtils.loadFromJSON(json);
       this.getFlux().actions.frameSelect(1);
