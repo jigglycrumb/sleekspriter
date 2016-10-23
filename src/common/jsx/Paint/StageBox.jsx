@@ -56,6 +56,15 @@ var StageBox = React.createClass({
 
     this.css = css;
 
+    var grid = null;
+    if(this.props.ui.settings.grid === true) {
+      grid =  <GridCanvas
+                      width={w}
+                      height={h}
+                      columns={w/this.props.ui.zoom.selected}
+                      rows={h/this.props.ui.zoom.selected} />
+    }
+
     return (
       <div id="StageBox"
         className={classNames(cssClasses)}
@@ -69,7 +78,7 @@ var StageBox = React.createClass({
 
         <StageBoxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.ui.zoom.selected} />
         <StageBoxSelectionCanvas width={w} height={h} ui={this.props.ui} />
-        <StageBoxGridCanvas width={w} height={h} ui={this.props.ui} />
+        {grid}
 
         {this.props.ui.layers.frame.map(function(layer) {
           return (

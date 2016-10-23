@@ -31,25 +31,27 @@ var GridCanvas = React.createClass({
           height: this.props.height/this.props.rows
         };
 
-    ctx.strokeStyle = "#828282";
-    ctx.beginPath();
+    if(cell.width >= 2 && cell.height >= 2) {
+      ctx.strokeStyle = "#828282";
+      ctx.beginPath();
 
-    if(this.props.columns > 1) {
-      // vertical lines
-      for(var x = cell.width+0.5; x < this.props.width; x+= cell.width) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
+      if(this.props.columns > 1) {
+        // vertical lines
+        for(var x = cell.width+0.5; x < this.props.width; x+= cell.width) {
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, canvas.height);
+        }
       }
-    }
 
-    if(this.props.rows > 1) {
-      // horizontal lines
-      for(var y = cell.height+0.5; y < this.props.height; y+= cell.height) {
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
+      if(this.props.rows > 1) {
+        // horizontal lines
+        for(var y = cell.height+0.5; y < this.props.height; y+= cell.height) {
+          ctx.moveTo(0, y);
+          ctx.lineTo(canvas.width, y);
+        }
       }
-    }
 
-    ctx.stroke();
+      ctx.stroke();
+    }
   },
 });
