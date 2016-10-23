@@ -16,7 +16,8 @@ var ModalImportFile = React.createClass({
     };
   },
   render: function() {
-    var content,
+    var imageDropZone,
+        frameSettings,
         okButtonDisabled = true;
 
     if(this.state.image.data !== null) {
@@ -42,7 +43,7 @@ var ModalImportFile = React.createClass({
         frameSize = <span>{w} x {h} px</span>;
       }
 
-      content = <div>
+      imageDropZone = <div>
                   <div className="image-import-dropzone-wrapper" style={wrapperCss}>
                     <img src={this.state.image.data} title={this.state.image.name} ref="importImage" />
                     <GridCanvas
@@ -51,30 +52,33 @@ var ModalImportFile = React.createClass({
                       columns={this.state.frames.x}
                       rows={this.state.frames.y} />
                   </div>
-                  <ul>
-                    <li>
-                      <label>Frames:</label>
-                      <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateFrames} />
-                      x
-                      <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateFrames} />
-                    </li>
-                    <li>
-                      <label>Frame size:</label> {frameSize}
-                    </li>
-                  </ul>
                 </div>;
+
+      frameSettings =   <ul>
+                          <li>
+                            <label>Frames:</label>
+                            <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateFrames} />
+                            x
+                            <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={this.updateFrames} />
+                          </li>
+                          <li>
+                            <label>Frame size:</label> {frameSize}
+                          </li>
+                        </ul>;
     }
     else {
-      content = <h3>Drop image here</h3>;
+      imageDropZone = <h3>Drop image here</h3>;
+      frameSettings = null;
     }
 
     return (
       <div className="dialog">
         <div className="title">Import file</div>
         <div className="text">
-          <div id="image-import-dropzone" onDragOver={this.cancel} onDrop={this.handleDrop}>
-            {content}
+          <div className="new-file-preview" onDragOver={this.cancel} onDrop={this.handleDrop}>
+            {imageDropZone}
           </div>
+          {frameSettings}
         </div>
         <div className="actions">
           <button onClick={this.handleClick.bind(this, this.import)} onTouchStart={this.handleTouch.bind(this, this.import)} disabled={okButtonDisabled}>Ok</button>

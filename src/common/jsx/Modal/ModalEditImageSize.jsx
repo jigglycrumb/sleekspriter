@@ -16,11 +16,28 @@ var ModalEditImageSize = React.createClass({
 
     var fileType = this.state.frames.x * this.state.frames.y === 1 ? 'Image' : 'Spritesheet';
 
+    var wrapperCss = {
+      width: this.state.pixels.x*this.state.frames.x,
+      height: this.state.pixels.y*this.state.frames.y
+    };
+
     return (
       <div className="dialog">
         <div className="title">Image size</div>
         <div className="text">
-          <ul className="frame-size">
+
+          <div className="new-file-preview">
+            <div className="new-file-preview-headline">Layout preview</div>
+            <div className="new-file-preview-content" style={wrapperCss}>
+              <GridCanvas
+                width={wrapperCss.width}
+                height={wrapperCss.height}
+                columns={this.state.frames.x}
+                rows={this.state.frames.y} />
+            </div>
+          </div>
+
+          <ul className="new-file-frame-size">
             <li>
               <label>Frames:</label>
               <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={this.updateForm} />
@@ -38,10 +55,6 @@ var ModalEditImageSize = React.createClass({
               <i ref="size">{fileType} size: {this.state.frames.x*this.state.pixels.x}x{this.state.frames.y*this.state.pixels.y} pixels</i>
             </li>
           </ul>
-          <div>
-            <span>Layout</span>
-            <FrameGrid frames={this.state.frames} />
-          </div>
         </div>
         <div className="actions">
           <button onClick={this.handleClick.bind(this, this.updateFile)} onTouchStart={this.handleTouch.bind(this, this.updateFile)}>Ok</button>

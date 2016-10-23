@@ -85,28 +85,25 @@
   }
 
   // special styles for different modals
-  .frame-size {
-    width: 277px;
-    float: left;
-    margin: 0;
-  }
 
-  .frame-grid {
-    width: 100px;
-    height: 100px;
-    border-collapse: collapse;
-    margin-top: 10px;
-
-    td {
-      border: 1px solid lighten(@light, 10%);
-    }
-  }
-
-  #image-import-dropzone {
+  .new-file-preview {
     max-height: 500px;
     overflow: auto;
     text-align: center;
 
+    .new-file-preview-headline {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .new-file-preview-content {
+      .checkerboard;
+      border: 1px solid @light;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    // styles for image import modal
     .image-import-dropzone-wrapper {
       position: relative;
       margin: 0 auto;
@@ -117,9 +114,13 @@
     }
 
     img {
-      .inset-shadow;
+      .checkerboard;
       border: 1px solid @dark;
     }
+  }
+
+  .new-file-frame-size {
+    margin: 10px 0;
   }
 } // #Modal
 
