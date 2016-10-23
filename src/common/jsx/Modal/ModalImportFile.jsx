@@ -13,7 +13,6 @@ var ModalImportFile = React.createClass({
         x: 1,
         y: 1,
       },
-      zoom: 1,
     };
   },
   render: function() {
@@ -88,7 +87,7 @@ var ModalImportFile = React.createClass({
   import: function() {
 
     if(this.validateFrameSize().allValid) {
-      // document.getElementById('ScreenBlocker').style.display = 'block';
+      document.getElementById('ScreenBlocker').style.display = 'block';
 
       // create canvas element
       var canvas = document.createElement('canvas'),
@@ -106,76 +105,36 @@ var ModalImportFile = React.createClass({
 
       var frameSize = this.calculateFrameSize();
 
-      var json = {
-        size: [frameSize.width, frameSize.height],
-        frames: [this.state.frames.x, this.state.frames.y],
-        layers: [],
-        animations: [],
-        pixels: [],
+      var data = {
+        frameSize: frameSize,
+        imageData: imageData,
+        state: this.state,
+        imageDimensions: {
+          width: image.width,
+          height: image.height
+        },
       };
 
-      // create layers
-      var totalFrames = this.state.frames.x * this.state.frames.y;
-      for(var i = 1; i <= totalFrames; i++) {
-        json.layers.push([i,i,"Layer "+i,0,100,1]);
+      var self = this;
+
+      function workerDone(e) {
+        platformUtils.loadFromJSON(e.data);
+        self.getFlux().actions.frameSelect(1);
+        self.getFlux().actions.layerSelect(1);
+        self.hide();
+        document.getElementById('ScreenBlocker').style.display = 'none';
       }
 
-      var frame = 1, // will also serve as layer id
-      position = {
-        canvas: { x: 1, y: 1 },
-        frame: { x: 1, y: 1 }
-      };
-
-      // loop over image data and create pixels
-      for(var i = 0; i < imageData.data.length; i+=4) {
-        var red = imageData.data[i],
-            green = imageData.data[i+1],
-            blue = imageData.data[i+2],
-            alpha = (imageData.data[i+3]/255).toFixed(2);
-
-        if(alpha > 0) {
-          var pixel = [frame, position.frame.x, position.frame.y, red, green, blue, alpha];
-          json.pixels.push(pixel);
-        }
-
-        if(position.frame.x == frameSize.width) {
-          frame++;
-          position.frame.x = 1;
-        }
-        else {
-          position.frame.x++;
-        }
-
-        if(position.canvas.x == canvas.width) {
-          var row = Math.floor(position.canvas.y/(canvas.height/this.state.frames.y));
-
-          frame = 1 + (this.state.frames.x * row);
-
-          position.frame.x = 1;
-
-          if(position.canvas.y%(canvas.height/this.state.frames.y) === 0) {
-            position.frame.y = 1;
-          }
-          else {
-            position.frame.y++;
-          }
-
-          position.canvas.x = 1;
-          position.canvas.y++;
-        }
-        else {
-          position.canvas.x++;
-        }
+      function workerFail(e) {
+        console.error('worker failed in line '+e.lineno+' with message: '+e.message);
+        self.hide();
+        document.getElementById('ScreenBlocker').style.display = 'none';
       }
 
-      // document.getElementById('ScreenBlocker').style.display = 'none';
-
-      console.log(json);
-
-      platformUtils.loadFromJSON(json);
-      this.getFlux().actions.frameSelect(1);
-      this.getFlux().actions.layerSelect(1);
-      this.hide();
+      var worker = new Worker('workers/import.js');
+      worker.onmessage = workerDone;
+      worker.onerror = workerFail;
+      worker.postMessage(data);
     }
   },
 
