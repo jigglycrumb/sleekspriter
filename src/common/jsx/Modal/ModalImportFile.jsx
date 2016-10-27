@@ -122,7 +122,7 @@ var ModalImportFile = React.createClass({
       var self = this;
 
       function workerDone(e) {
-        platformUtils.loadFromJSON(e.data);
+        utils.loadFileFromJSON(e.data);
         self.getFlux().actions.frameSelect(1);
         self.getFlux().actions.layerSelect(1);
         self.hide();
