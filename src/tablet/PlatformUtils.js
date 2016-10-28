@@ -113,8 +113,6 @@ PlatformUtils.prototype.boot = function() {
         var json = JSON.parse(request.responseText);
         flux.actions.paletteLoad(json);
 
-        // menu_init();
-
         setTimeout(flux.actions.windowResize, 250);
       }
     };

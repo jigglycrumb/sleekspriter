@@ -42,9 +42,6 @@ module.exports = {
       // package.json
       {src: 'src/desktop/package.json', dest: 'build/desktop/mac/package.json'},
 
-      // menu script
-      {src: 'src/desktop/menu.js', dest: 'build/desktop/mac/js/menu.js'},
-
       {src: 'src/common/js/lib/gif.worker.js', dest: 'build/desktop/mac/gif.worker.js'},
     ])
   },
@@ -61,9 +58,6 @@ module.exports = {
 
       // package.json
       {src: 'src/desktop/package.json', dest: 'build/desktop/windows/package.json'},
-
-      // menu script
-      {src: 'src/desktop/menu.js', dest: 'build/desktop/windows/js/menu.js'},
 
       {src: 'src/common/js/lib/gif.worker.js', dest: 'build/desktop/windows/gif.worker.js'},
     ])

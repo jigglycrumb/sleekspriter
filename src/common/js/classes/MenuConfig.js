@@ -1,5 +1,34 @@
 // var platformUtils = require('./PlatformUtils');
 
+// define keyboard mod key
+if(platformUtils.device === 'desktop') {
+  var modKey = process.platform === 'darwin' ? 'cmd' : 'ctrl';
+  var gui = require('nw.gui');
+  var menuBar = new gui.Menu({ type: "menubar" });
+
+  var showCredits = function() {
+    creditsWindow = gui.Window.open('credits.html', {
+      "title": "About @@name",
+      // "icon": "link.png",
+      "toolbar": false,
+      // "frame": false,
+      "width": 500,
+      "height": 375,
+      "position": "center",
+      "resizable": false,
+    });
+  };
+
+  var closeCredits = function() {
+    creditsWindow.close();
+  };
+}
+
+
+
+
+var creditsWindow;
+
 var MOD_META = 1,
     MOD_SHIFT_META = 2;
 
@@ -60,7 +89,10 @@ var MenuConfig = function() {
       key: 's',
       modifiers: MOD_SHIFT_META,
       enabled: false,
-      action: null
+      action: function() {
+        flux.actions.menuHide();
+        platformUtils.showSaveFileDialog();
+      }
     });
   }
 
@@ -93,6 +125,33 @@ var MenuConfig = function() {
       flux.actions.tabSelect('start');
     }
   });
+
+  if(platformUtils.device === 'desktop') {
+    // append "About" and "Quit" menu items to windows menu
+    if(process.platform === 'win32' || process.platform === 'win64') {
+
+      items.push(separator);
+
+      items.push({
+        label: 'About @@name',
+        enabled: false,
+        action: function() {
+          showCredits();
+        }
+      });
+
+      items.push(separator);
+
+      items.push({
+        label: 'Quit @@name',
+        key: 'q',
+        modifiers: MOD_META,
+        action: function() {
+          gui.App.quit();
+        }
+      });
+    }
+  }
 
   menu[0].items = items;
 
@@ -361,6 +420,52 @@ var MenuConfig = function() {
   return menu;
 };
 
+MenuConfig.prototype = Object.create(null);
 MenuConfig.prototype.constructor = MenuConfig;
+
+function initializeDesktopMenu() {
+  if(platformUtils.device === 'desktop') {
+    if(process.platform === 'darwin') {
+      // create default mac menu
+      menuBar.createMacBuiltin("@@name", {
+        hideEdit: true,
+        hideWindow: true
+      });
+    }
+
+    menuConfig.forEach(function(cfg) {
+      var subMenu = new gui.Menu();
+      menuBar.append(new gui.MenuItem({label: cfg.label, submenu: subMenu}));
+
+      cfg.items.forEach(function(itemCfg) {
+        if(itemCfg.label == '---') {
+          subMenu.append(new gui.MenuItem({ type: 'separator' }));
+        }
+        else {
+          var item = itemCfg;
+          item.click = function() {
+            item.action();
+          };
+
+          try {
+            switch(item.modifiers) {
+              case MOD_META:
+                item.modifiers = modKey;
+                break;
+              case MOD_SHIFT_META:
+                item.modifiers = 'shift-'+modKey;
+                break;
+            }
+          } catch(e) {}
+
+          subMenu.append(new gui.MenuItem(item));
+        }
+      });
+    });
+
+    // assign menu to window
+    gui.Window.get().menu = menuBar;
+  }
+};
 
 // module.exports = new MenuConfig();

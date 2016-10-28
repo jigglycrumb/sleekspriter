@@ -16,12 +16,12 @@ module.exports = {
       },
       src: ['build/desktop/mac/**/*']
     },
-    // desktopWindows: {
-    //   options: {
-    //       platforms: ['win64'],
-    //       buildDir: 'dist/desktop/windows',
-    //       // winIco: 'src/icons/icon.ico',
-    //   },
-    //   src: ['build/desktop/windows/**/*']
-    // },
+    desktopWindows: {
+      options: {
+          platforms: ['win64'],
+          buildDir: 'dist/desktop/windows',
+          // winIco: 'src/icons/icon.ico',
+      },
+      src: ['build/desktop/windows/**/*']
+    },
 };

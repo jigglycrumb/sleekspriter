@@ -213,7 +213,7 @@ PlatformUtils.prototype.boot = function() {
     var json = JSON.parse(contents);
     flux.actions.paletteLoad(json);
 
-    menu_init();
+    initializeDesktopMenu();
 
     flux.actions.windowResize();
   });

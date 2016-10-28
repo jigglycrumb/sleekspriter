@@ -17,12 +17,12 @@ module.exports = {
   //   },
   //   files: [{expand: true, cwd: 'dist/desktop/windows/<%= package.longname %>/win32/', src: '**/*', dest: '.'}],
   // },
-  // desktopWin64: {
-  //   options: {
-  //     archive: 'release/<%= package.version %>/<%= package.longname %>-<%= package.version %>-win64.zip',
-  //   },
-  //   files: [{expand: true, cwd: 'dist/desktop/windows/<%= package.longname %>/win64/', src: '**/*', dest: '.'}],
-  // },
+  desktopWin64: {
+    options: {
+      archive: 'release/<%= package.version %>/<%= package.longname %>-<%= package.version %>-win64.zip',
+    },
+    files: [{expand: true, cwd: 'dist/desktop/windows/<%= package.longname %>/win64/', src: '**/*', dest: '.'}],
+  },
   /*
   desktopLinux32: {
     options: {
