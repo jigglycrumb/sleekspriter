@@ -10,17 +10,16 @@ Mousetrap = require('mousetrap');
 hotkeys = require('./classes/Hotkeys');
 storeUtils = require('./classes/StoreUtils');
 stateHistory = require('./classes/StateHistory');
-// Menu = require('./classes/Menu');
 utils = require('./classes/Utils');
 // console.log(Menu);
 
 constants = require('./flux/constants');
 actions = require('./flux/actions');
 
-ColorPicker = require('react-color');
-
 // stores = {
 //   FileStore: require('./flux/stores/FileStore'),
 //   UiStore: require('./flux/stores/UiStore'),
 //   PixelStore: require('./flux/stores/PixelStore'),
 // };
+
+ColorPicker = require('react-color');

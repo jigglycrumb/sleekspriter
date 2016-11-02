@@ -22,9 +22,15 @@ if(platformUtils.device === 'desktop') {
   var closeCredits = function() {
     creditsWindow.close();
   };
+
+  var enableMenus = function(enabled) {
+    function enable(item) { item.enabled = enabled; }
+
+    menuBar.items.forEach(function(menu) {
+      menu.submenu.items.map(enable);
+    });
+  };
 }
-
-
 
 
 var creditsWindow;
@@ -466,6 +472,6 @@ function initializeDesktopMenu() {
     // assign menu to window
     gui.Window.get().menu = menuBar;
   }
-};
+}
 
 // module.exports = new MenuConfig();
