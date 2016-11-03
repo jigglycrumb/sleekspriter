@@ -3,12 +3,12 @@ var Utils = function() {};
 Utils.prototype = Object.create(null);
 Utils.prototype.constructor = Utils;
 
-Utils.prototype.loadFileFromJSON = function(json) {
+Utils.prototype.loadFileFromJSON = function(name, folder, json) {
   var data = {
     json: json, // the file content parsed as JSON
-    path: '/unnamed.pixels',             // the complete absolute file path
-    name: 'unnamed.pixels', // the file name without extension, e.g. "coin"
-    folder: '/', // the complete absolute folder (same as path without the file name)
+    path: folder + '/' + name + '.pixels',             // the complete absolute file path
+    name: name + '.pixels', // the file name without extension, e.g. "coin"
+    folder: folder, // the complete absolute folder (same as path without the file name)
   };
 
   flux.actions.fileLoad(data);

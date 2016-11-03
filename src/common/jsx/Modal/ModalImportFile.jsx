@@ -1,11 +1,11 @@
 var ModalImportFile = React.createClass({
   mixins: [FluxMixin, TouchMixin, ModalBasicMixin],
-
   getInitialState: function() {
     return {
       image: {
         width: 0,
         height: 0,
+        folder: null,
         name: null,
         data: null,
       },
@@ -122,7 +122,7 @@ var ModalImportFile = React.createClass({
       var self = this;
 
       function workerDone(e) {
-        utils.loadFileFromJSON(e.data);
+        utils.loadFileFromJSON(self.state.image.name, self.state.image.folder, e.data);
         self.getFlux().actions.frameSelect(1);
         self.getFlux().actions.layerSelect(1);
         self.hide();
@@ -169,11 +169,20 @@ var ModalImportFile = React.createClass({
 
             dummy.src = data;
 
+            // remove file name extension
+            var fileName = file.name.split(".");
+            fileName.pop();
+            fileName = fileName.join(".");
+
+            // get file folder
+            var folder = file.path.substr(0, file.path.lastIndexOf("/"));
+
             self.setState({
               image: {
                 width: dummy.width,
                 height: dummy.height,
-                name: file.name,
+                folder: folder,
+                name: fileName,
                 data: data,
               }
             });
