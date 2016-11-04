@@ -1,6 +1,6 @@
 function sources(target) {
   return [
-
+    'build/' + target + '/js/globals.js',
     'build/' + target + '/js/classes/PlatformUtils.js',
 
     'build/' + target + '/js/browserify-bundle.js',

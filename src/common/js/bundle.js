@@ -8,6 +8,7 @@ Mousetrap = require('mousetrap');
 // Color = require('./lib/color');
 // platformUtils = require('./classes/PlatformUtils');
 hotkeys = require('./classes/Hotkeys');
+// menuConfig = require('./classes/MenuConfig');
 storeUtils = require('./classes/StoreUtils');
 stateHistory = require('./classes/StateHistory');
 utils = require('./classes/Utils');

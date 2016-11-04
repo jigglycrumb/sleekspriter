@@ -65,13 +65,13 @@ function setupFluxDispatcher() {
 
 menuConfig = new MenuConfig();
 
-var stores = {
+stores = {
   FileStore: new FileStore(),
   UiStore: new UiStore(),
   PixelStore: new PixelStore(),
-},
+};
 
-flux = new Fluxxor.Flux(stores, actions),
+flux = new Fluxxor.Flux(stores, actions);
 container = document.getElementById('app-container');
 
 platformUtils.boot();
