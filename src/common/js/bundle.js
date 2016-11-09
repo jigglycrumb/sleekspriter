@@ -24,3 +24,6 @@ actions = require('./flux/actions');
 // };
 
 ColorPicker = require('react-color');
+
+
+redux = require('redux');

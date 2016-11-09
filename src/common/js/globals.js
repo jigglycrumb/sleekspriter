@@ -11,7 +11,8 @@ var _,
     utils,
     constants,
     actions,
-    ColorPicker;
+    ColorPicker,
+    redux;
 
 // not yet bundled
 var menuConfig,
