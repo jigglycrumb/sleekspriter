@@ -65,11 +65,9 @@ function setupFluxDispatcher() {
 
 menuConfig = new MenuConfig();
 
-stores = {
-  FileStore: new FileStore(),
-  UiStore: new UiStore(),
-  PixelStore: new PixelStore(),
-};
+stores.FileStore = new FileStore();
+stores.UiStore = new UiStore();
+stores.PixelStore = new PixelStore();
 
 flux = new Fluxxor.Flux(stores, actions);
 container = document.getElementById('app-container');

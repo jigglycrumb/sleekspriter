@@ -76,3 +76,5 @@ var CanvasMixin = {
     canvas.width = canvas.width;
   },
 };
+
+module.exports = CanvasMixin;

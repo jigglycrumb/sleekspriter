@@ -9,3 +9,5 @@ var TouchMixin = {
     typeof fn === 'string' ? this[fn](e) : fn.call(this, e);
   }
 };
+
+module.exports = TouchMixin;

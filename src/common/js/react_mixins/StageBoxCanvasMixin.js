@@ -4,3 +4,5 @@ var StageBoxCanvasMixin = {
     canvas.width = canvas.width;
   },
 };
+
+module.exports = StageBoxCanvasMixin;

@@ -1,3 +1,10 @@
+// requires
+// constants
+// flux
+// stateHistory
+// storeUtils
+
+
 var PixelStore = Fluxxor.createStore({
   initialize: function() {
     this.resetData();

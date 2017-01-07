@@ -59,3 +59,5 @@ Point.prototype.wrap = function(distance, simulate) {
   this.y = targetY;
   return this;
 };
+
+ module.exports = Point;

@@ -1,6 +1,5 @@
 var PlatformUtils = function() {
   console.log('Initializing PlatformUtils...');
-
   this.device = 'browser';
 };
 

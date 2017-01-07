@@ -4,3 +4,5 @@ var ModalBasicMixin = {
     this.getFlux().actions.modalHide();
   },
 };
+
+module.exports = ModalBasicMixin;

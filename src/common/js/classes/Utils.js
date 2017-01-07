@@ -25,5 +25,4 @@ Utils.prototype.loadFileFromJSON = function(name, folder, json) {
   }
 };
 
-
 module.exports = new Utils();

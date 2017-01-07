@@ -10,11 +10,7 @@ function sources(target) {
     'build/' + target + '/js/lib/tween.js',
 
     'build/' + target + '/js/strict.js',
-    'build/' + target + '/js/react_mixins/**/*.js',
     'build/' + target + '/js/react_components/**/*.js',
-
-    'build/' + target + '/js/classes/Point.js',
-    'build/' + target + '/js/classes/Pixel.js',
 
     'build/' + target + '/js/flux/stores/*.js',
 

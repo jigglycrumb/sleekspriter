@@ -252,3 +252,5 @@ Pixel.clear = function(canvas, x, y) {
 
   ctx.clearRect(cX, cY, scale, scale);
 };
+
+module.exports = Pixel;

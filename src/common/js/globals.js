@@ -12,10 +12,21 @@ var _,
     constants,
     actions,
     ColorPicker,
-    redux;
+    redux,
+    Point,
+    Pixel,
+    CanvasMixin,
+    FoldableMixin,
+    ModalBasicMixin,
+    StageBoxCanvasMixin,
+    TouchMixin;
 
 // not yet bundled
 var menuConfig,
     stores,
     flux,
     container;
+
+// shortcuts
+var FluxMixin,
+    StoreWatchMixin;
