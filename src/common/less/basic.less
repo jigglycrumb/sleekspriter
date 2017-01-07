@@ -272,13 +272,6 @@ ul {
   transition-timing-function: ease-in-out;
   transition-delay: 0;
   z-index: 0;
-
-  &.start { transform: translate3d(100%, 0, 0); }
-  &.paint { transform: translate3d(0, 0, 0); }
-  &.animate { transform: translate3d(-100%, 0, 0); }
-  &.export { transform: translate3d(-200%, 0, 0); }
-  &.debug { transform: translate3d(-300%, 0, 0); }
-  &.helper { transform: translate3d(-400%, 0, 0); }
 }
 
 .screen {
@@ -287,12 +280,9 @@ ul {
   height: 100%;
   overflow: hidden;
 
-  &.start { left: -100%; }
-  &.paint { left: 0; }
-  &.animate { left: 100%; }
-  &.export { left: 200%; }
-  &.debug { left: 300%; }
-  &.helper { left: 400%; }
+  &.debug, &.helper {
+    display: none;
+  }
 }
 
 .area {

@@ -467,10 +467,12 @@ var UiStore = Fluxxor.createStore({
 
   onWindowResize: function() {
     // scale animation preview
-    var rect = document.getElementById('AnimationPreviewWrapper').getBoundingClientRect(),
-        max = rect.width > rect.height ? rect.height : rect.width;
+    if(document.getElementById('AnimationPreviewWrapper')) {
+      var rect = document.getElementById('AnimationPreviewWrapper').getBoundingClientRect(),
+          max = rect.width > rect.height ? rect.height : rect.width;
 
-    this.data.size.animationPreview = Math.floor(max);
+      this.data.size.animationPreview = Math.floor(max);
+    }
     this.emit('change');
   },
 

@@ -23,6 +23,25 @@ var App = React.createClass({
         windowClasses[this.state.ui.tab] = true;
         windowClasses = classNames(windowClasses);
 
+    var activeScreen;
+    switch(this.state.ui.tab) {
+      case 'start':
+        activeScreen = <ScreenStart />;
+        break;
+
+      case 'paint':
+        activeScreen = <ScreenPaint ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />;
+        break;
+
+      case 'animate':
+        activeScreen = <ScreenAnimate ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />;
+        break;
+
+      case 'export':
+        activeScreen = <ScreenExport ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />;
+        break;
+    }
+
     return (
       <div className="app">
         {appMenu}
@@ -40,12 +59,9 @@ var App = React.createClass({
             }, this)}
         </nav>
         <div className={windowClasses}>
-          <ScreenStart />
-          <ScreenPaint ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
-          <ScreenAnimate ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
-          <ScreenExport ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
-          <ScreenDebug />
           <ScreenHelper ui={this.state.ui} file={this.state.file} pixels={this.state.pixels} />
+          <ScreenDebug />
+          {activeScreen}
         </div>
         <Modal ui={this.state.ui} file={this.state.file} />
         <ScreenBlocker />
