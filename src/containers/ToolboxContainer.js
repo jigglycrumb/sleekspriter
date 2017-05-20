@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ToolboxTool from '../views/ToolboxTool';
+import ToolboxTool from '../views/paint/ToolboxTool';
 
 import actions from '../state/actions';
 const { selectTool } = actions;
