@@ -1,11 +1,13 @@
 import React from 'react';
+
+import ToolContainer from '../containers/ToolContainer';
 import ToolboxContainer from '../containers/ToolboxContainer';
 
 const ScreenPaint = () => {
   return (
     <section className="screen paint">
       <div className="area top">
-        {/*<ToolContainer ui={this.props.ui} file={this.props.file} />*/}
+        <ToolContainer />
       </div>
       <div className="area left">
         <ToolboxContainer />

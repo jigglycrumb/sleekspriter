@@ -1,4 +1,4 @@
-import initialState from './initialState';
+import initialState from '../initialState';
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
 

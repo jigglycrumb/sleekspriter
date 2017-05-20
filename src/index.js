@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './views/App';
 import store from './state/store';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 
 store.subscribe(() => {
   console.info('Store changed', store.getState());
