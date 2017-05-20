@@ -4,18 +4,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   context: path.resolve(__dirname, '.'),
-  entry: './src/app.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     // publicPath: 'dist/',
     filename: 'bundle.js'
   },
   resolve: {
-     extensions: ['.less', '.js', '.jsx']
+     extensions: ['.less', '.css', '.js', '.jsx']
   },
   module: {
     rules: [{
-        test: /\.less$/,
+        test: /\.(css|less)$/,
         use: [{
             loader: "style-loader"
         }, {
