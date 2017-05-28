@@ -1,14 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import actions from '../state/actions';
-const {
-  selectZoom,
-  zoomIn,
-  zoomOut,
-  zoomFit,
-} = actions;
-
 import {
   EraserTool,
   EyedropperTool,
@@ -16,10 +8,14 @@ import {
   ZoomTool
 } from '../views/paint/tools';
 
+const {
+  selectZoom,
+  zoomIn,
+  zoomOut,
+  zoomFit,
+} = actions;
+
 const mapStateToProps = (state) => {
-
-  console.info(state);
-
   return {
     tool: state.ui.paint.tool,
     zoom: state.ui.paint.zoom,

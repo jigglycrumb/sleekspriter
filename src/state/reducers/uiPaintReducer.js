@@ -25,9 +25,9 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       if(newZoom < zoom.min) newZoom = zoom.min;
       return { ...state, zoom: newZoom };
     case 'ZOOM_FIT':
-      newZoom = Math.floor((window.innerHeight - offset.top - offset.bottom)/action.fileSize.height);
-      if((action.fileSize.width*zoom) > (window.innerWidth - offset.left - offset.right)) {
-        newZoom = Math.floor((window.innerWidth - offset.left - offset.right)/action.fileSize.width);
+      newZoom = Math.floor((window.innerHeight - offset.top - offset.bottom) / action.fileSize.height);
+      if((action.fileSize.width * newZoom) > (window.innerWidth - offset.left - offset.right)) {
+        newZoom = Math.floor((window.innerWidth - offset.left - offset.right) / action.fileSize.width);
       }
       return { ...state, zoom: newZoom };
 
