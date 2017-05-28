@@ -21,7 +21,7 @@ const Statusbar = (props) => {
       <span id="StatusBarColorString">transparent</span>
       <span>Frame x, x pixels</span>
       &nbsp;
-      <span>Zoom &times;y</span>
+      <span>Zoom &times;{props.zoom}</span>
       <div id="StatusBarButtons">
 
         <button id="historyUndo" className={historyButtonClasses}>

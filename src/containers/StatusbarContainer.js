@@ -8,7 +8,8 @@ const { toggleGrid } = actions;
 
 const mapStateToProps = (state) => {
   return {
-    grid: state.ui.paint.grid
+    grid: state.ui.paint.grid,
+    zoom: state.ui.paint.zoom
   };
 };
 
@@ -18,11 +19,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const StatusBarContainer = (props) => {
-  return <Statusbar grid={props.grid} toggleGrid={props.toggleGrid} />;
-};
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(StatusBarContainer);
+)(Statusbar);
