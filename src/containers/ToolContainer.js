@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import EraserTool from '../views/paint/tools/EraserTool';
-import EyedropperTool from '../views/paint/tools/EyedropperTool';
-
-// console.log(EraserTool);
+import {
+  EraserTool,
+  EyedropperTool,
+  MoveTool,
+  ZoomTool
+} from '../views/paint/tools';
 
 const mapStateToProps = (state) => {
   return {
@@ -12,9 +14,16 @@ const mapStateToProps = (state) => {
   };
 };
 
+const components = {
+    EraserTool,
+    EyedropperTool,
+    MoveTool,
+    ZoomTool
+};
+
 const ToolContainer = (props) => {
-  return <props.tool />;
-  // return React.createElement(props.tool);
+  const ToolComponent = components[props.tool];
+  return <ToolComponent />;
 };
 
 export default connect(

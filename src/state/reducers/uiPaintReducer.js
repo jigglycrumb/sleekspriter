@@ -7,6 +7,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
   switch (action.type) {
     case 'SELECT_TOOL':
       return { ...state, tool: action.tool };
+    case 'TOGGLE_GRID':
+      return { ...state, grid: !state.grid };
 
     default:
       return state;

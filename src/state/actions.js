@@ -5,4 +5,9 @@ export default {
       tool
     };
   },
+  toggleGrid: function() {
+    return {
+      type: 'TOGGLE_GRID'
+    }
+  },
 };

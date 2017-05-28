@@ -2,6 +2,7 @@ import React from 'react';
 
 import ToolContainer from '../containers/ToolContainer';
 import ToolboxContainer from '../containers/ToolboxContainer';
+import StatusbarContainer from '../containers/StatusbarContainer';
 
 const ScreenPaint = () => {
   return (
@@ -24,7 +25,7 @@ const ScreenPaint = () => {
         {/*<LayerBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="layers" />*/}
       </div>
       <div className="area statusbar">
-        {/*<StatusBar ui={this.props.ui} pixels={this.props.pixels} />*/}
+        <StatusbarContainer />
       </div>
     </section>
   );

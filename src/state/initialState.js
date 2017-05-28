@@ -1,7 +1,8 @@
 const state = {
   ui: {
     paint: {
-      tool: 'BrushTool'
+      tool: 'EraserTool',
+      grid: true,
     },
   },
 };
