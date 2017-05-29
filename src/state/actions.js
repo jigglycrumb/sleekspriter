@@ -1,4 +1,16 @@
 export default {
+  brightnessToolIntensity: function(intensity) {
+    return {
+      type: 'BRIGHTNESSTOOL_INTENSITY',
+      intensity
+    }
+  },
+  brightnessToolMode: function(mode) {
+    return {
+      type: 'BRIGHTNESSTOOL_MODE',
+      mode
+    }
+  },
   selectTool: function(tool) {
     return {
       type: 'SELECT_TOOL',
