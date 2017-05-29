@@ -1,11 +1,11 @@
 const state = {
   ui: {
     paint: {
-      tool: 'EraserTool',
+      tool: "EraserTool",
       grid: true,
       zoom: 10,
       brightnessTool: {
-        mode: 'darken',
+        mode: "darken",
         intensity: 10,
       },
     },

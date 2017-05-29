@@ -1,14 +1,25 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import actions from '../state/actions';
+import React from "react";
+import { connect } from "react-redux";
+import actions from "../state/actions";
 import {
   BrightnessTool,
+  BrushTool,
   EraserTool,
   EyedropperTool,
   MoveTool,
   RectangularSelectionTool,
   ZoomTool
-} from '../views/paint/tools';
+} from "../views/paint/tools";
+
+const components = {
+  BrightnessTool,
+  BrushTool,
+  EraserTool,
+  EyedropperTool,
+  MoveTool,
+  RectangularSelectionTool,
+  ZoomTool
+};
 
 const {
   brightnessToolIntensity,
@@ -37,15 +48,6 @@ const mapDispatchToProps = (dispatch) => {
     zoomOut: () => dispatch(zoomOut()),
     zoomFit: (fileSize) => dispatch(zoomFit(fileSize)),
   };
-};
-
-const components = {
-    BrightnessTool,
-    EraserTool,
-    EyedropperTool,
-    MoveTool,
-    RectangularSelectionTool,
-    ZoomTool
 };
 
 const ToolContainer = (props) => {
