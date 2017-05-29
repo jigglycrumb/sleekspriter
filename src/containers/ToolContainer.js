@@ -6,6 +6,7 @@ import {
   EraserTool,
   EyedropperTool,
   MoveTool,
+  RectangularSelectionTool,
   ZoomTool
 } from '../views/paint/tools';
 
@@ -43,6 +44,7 @@ const components = {
     EraserTool,
     EyedropperTool,
     MoveTool,
+    RectangularSelectionTool,
     ZoomTool
 };
 
