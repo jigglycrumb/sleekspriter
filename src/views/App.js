@@ -1,5 +1,5 @@
-import React from 'react';
-import ScreenPaint from './ScreenPaint';
+import React from "react";
+import ScreenPaint from "./screens/ScreenPaint";
 
 const App = () => {
   return (

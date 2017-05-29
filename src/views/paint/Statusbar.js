@@ -1,23 +1,23 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
+import classnames from "classnames";
 
 const Statusbar = (props) => {
 
   const gridButtonClasses = classnames({
-          tiny: true,
-          transparent: true,
-          active: props.grid,
-        }),
+      tiny: true,
+      transparent: true,
+      active: props.grid,
+    }),
 
-        historyButtonClasses = classnames({
-          tiny: true,
-        });
+    historyButtonClasses = classnames({
+      tiny: true,
+    });
 
   return (
     <div className="bar">
       <span id="StatusBarCursorX">X: 0</span>
       <span id="StatusBarCursorY">Y: 0</span>
-      <div id="StatusBarColor" style={{background: 'transparent'}}></div>
+      <div id="StatusBarColor" style={{background: "transparent"}}></div>
       <span id="StatusBarColorString">transparent</span>
       <span>Frame x, x pixels</span>
       &nbsp;

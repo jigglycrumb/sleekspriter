@@ -1,8 +1,7 @@
-import React from 'react';
-
-import ToolContainer from '../containers/ToolContainer';
-import ToolboxContainer from '../containers/ToolboxContainer';
-import StatusbarContainer from '../containers/StatusbarContainer';
+import React from "react";
+import ToolContainer from "../../containers/ToolContainer";
+import ToolboxContainer from "../../containers/ToolboxContainer";
+import StatusbarContainer from "../../containers/StatusbarContainer";
 
 const ScreenPaint = () => {
   return (

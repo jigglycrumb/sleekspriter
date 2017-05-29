@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const ToolboxTool = (props) => {
-  let cssClasses = 'ToolBoxTool transparent';
-  if(props.selected) cssClasses+= ' active';
+  let cssClasses = "ToolBoxTool transparent";
+  if(props.selected) cssClasses+= " active";
 
   return (
     <button
