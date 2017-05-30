@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Statusbar from "../views/paint/Statusbar";
-import actions from "../state/actions";
-const { toggleGrid } = actions;
-
+import { toggleGrid } from "../state/actions";
 
 const mapStateToProps = (state) => {
   return {

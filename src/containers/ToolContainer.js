@@ -1,6 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import actions from "../state/actions";
+import {
+  brightnessToolIntensity,
+  brightnessToolMode,
+  selectZoom,
+  zoomIn,
+  zoomOut,
+  zoomFit,
+} from "../state/actions";
+
 import {
   BrightnessTool,
   BrushTool,
@@ -20,15 +28,6 @@ const components = {
   RectangularSelectionTool,
   ZoomTool
 };
-
-const {
-  brightnessToolIntensity,
-  brightnessToolMode,
-  selectZoom,
-  zoomIn,
-  zoomOut,
-  zoomFit,
-} = actions;
 
 const mapStateToProps = (state) => {
   return {
