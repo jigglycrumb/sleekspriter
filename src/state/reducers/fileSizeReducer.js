@@ -1,7 +1,4 @@
-import initialState from '../initialState';
-import config from '../../config';
-
-const { zoom, offset } = config;
+import initialState from "../initialState";
 
 function fileSizeReducer(state = initialState.file.size, action) {
 
@@ -9,8 +6,8 @@ function fileSizeReducer(state = initialState.file.size, action) {
 
   switch (action.type) {
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
 

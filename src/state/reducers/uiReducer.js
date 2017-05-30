@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import uiPaintReducer from './uiPaintReducer';
+import { combineReducers } from "redux";
+import uiPaintReducer from "./uiPaintReducer";
 
 const uiReducer = combineReducers({
   paint: uiPaintReducer

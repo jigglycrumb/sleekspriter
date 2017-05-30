@@ -1,12 +1,14 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore } from "redux";
 import {
+  cacheReducer,
+  fileReducer,
   uiReducer,
-  fileReducer
-} from './reducers';
+} from "./reducers";
 
 const rootReducer = combineReducers({
-  ui: uiReducer,
+  cache: cacheReducer,
   file: fileReducer,
+  ui: uiReducer,
 });
 
 export default createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

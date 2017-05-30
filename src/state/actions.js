@@ -1,5 +1,7 @@
 export const brightnessToolIntensity = (intensity) => ({ type: "BRIGHTNESSTOOL_INTENSITY", intensity });
 export const brightnessToolMode = (mode)  => ({ type: "BRIGHTNESSTOOL_MODE", mode });
+export const foldBox = (box) => ({ type: "FOLD_BOX", box });
+export const layerAdd = () => ({ type: "LAYER_ADD" });
 export const selectTool = (tool) => ({ type: "SELECT_TOOL", tool });
 export const selectZoom = (zoom) => ({ type: "SELECT_ZOOM", zoom });
 export const toggleGrid = () => ({ type: "TOGGLE_GRID" });

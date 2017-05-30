@@ -4,11 +4,6 @@ import config from "../../../config";
 const { min, max } = config.zoom;
 
 class ZoomTool extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const zoomInDisabled = this.props.zoom === max,
           zoomOutDisabled = this.props.zoom === min;

@@ -1,7 +1,9 @@
-import uiReducer from './uiReducer';
-import fileReducer from './fileReducer';
+import cacheReducer from "./cacheReducer";
+import fileReducer from "./fileReducer";
+import uiReducer from "./uiReducer";
 
 export {
-  uiReducer,
+  cacheReducer,
   fileReducer,
+  uiReducer,
 };
