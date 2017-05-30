@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import Statusbar from '../views/paint/Statusbar';
-import actions from '../state/actions';
+import Statusbar from "../views/paint/Statusbar";
+import actions from "../state/actions";
 const { toggleGrid } = actions;
 
 

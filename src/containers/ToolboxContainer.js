@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import ToolboxTool from '../views/paint/ToolboxTool';
+import React from "react";
+import { connect } from "react-redux";
+import ToolboxTool from "../views/paint/ToolboxTool";
 
-import actions from '../state/actions';
+import actions from "../state/actions";
 const { selectTool } = actions;
 
 const mapStateToProps = (state) => {
@@ -42,13 +42,13 @@ class ToolboxContainer extends React.Component {
                       id={tool.id}
                       icon={tool.icon}
                       selected={tool.id === this.props.tool}
-                      selectTool={this.props.selectTool} />
+                      selectTool={this.props.selectTool} />;
           }, this)}
         </div>
       </div>
     );
   }
-};
+}
 
 export default connect(
   mapStateToProps,

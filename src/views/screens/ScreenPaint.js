@@ -1,7 +1,9 @@
 import React from "react";
-import ToolContainer from "../../containers/ToolContainer";
-import ToolboxContainer from "../../containers/ToolboxContainer";
+
+import LayerboxContainer from "../../containers/LayerboxContainer";
 import StatusbarContainer from "../../containers/StatusbarContainer";
+import ToolboxContainer from "../../containers/ToolboxContainer";
+import ToolContainer from "../../containers/ToolContainer";
 
 const ScreenPaint = () => {
   return (
@@ -22,6 +24,7 @@ const ScreenPaint = () => {
           {/*frameBox*/}
         </div>
         {/*<LayerBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="layers" />*/}
+        <LayerboxContainer />
       </div>
       <div className="area statusbar">
         <StatusbarContainer />

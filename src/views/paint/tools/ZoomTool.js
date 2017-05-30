@@ -1,5 +1,5 @@
-import React from 'react';
-import config from '../../../config';
+import React from "react";
+import config from "../../../config";
 
 const { min, max } = config.zoom;
 
@@ -7,12 +7,6 @@ class ZoomTool extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.selectZoom = this.selectZoom.bind(this);
-    this.zoomFit = this.zoomFit.bind(this);
-
-    this.zoomIn = this.props.zoomIn.bind(this);
-    this.zoomOut = this.props.zoomOut.bind(this);
   }
 
   render() {
@@ -22,16 +16,16 @@ class ZoomTool extends React.Component {
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon flaticon-magnifier5"></i>
-        <button className="small" title="Zoom in" onClick={this.zoomIn} disabled={zoomInDisabled}>
+        <button className="small" title="Zoom in" onClick={::this.props.zoomIn} disabled={zoomInDisabled}>
           <i className="flaticon-plus25"></i>
         </button>
-        <button className="small" title="Zoom out" onClick={this.zoomOut} disabled={zoomOutDisabled}>
+        <button className="small" title="Zoom out" onClick={::this.props.zoomOut} disabled={zoomOutDisabled}>
           <i className="flaticon-minus18"></i>
         </button>
-        <input type="range" min={min} max={max} value={this.props.zoom} onChange={this.selectZoom} />
+        <input type="range" min={min} max={max} value={this.props.zoom} onChange={::this.selectZoom} />
         <span>Zoom &times;</span>
-        <input type="number" min={min} max={max} value={this.props.zoom} onChange={this.selectZoom} />
-        <button className="small" onClick={this.zoomFit}>Fit to screen</button>
+        <input type="number" min={min} max={max} value={this.props.zoom} onChange={::this.selectZoom} />
+        <button className="small" onClick={::this.zoomFit}>Fit to screen</button>
         <span className="spacer"></span>
         <span className="hint">A pixel in your sprite is now {this.props.zoom} pixels on your screen.</span>
       </div>
@@ -45,6 +39,6 @@ class ZoomTool extends React.Component {
   zoomFit() {
     this.props.zoomFit(this.props.fileSize);
   }
-};
+}
 
 export default ZoomTool;
