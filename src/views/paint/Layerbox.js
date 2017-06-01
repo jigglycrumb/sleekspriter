@@ -1,11 +1,9 @@
 import React from "react";
 import classnames from "classnames";
+import LayerboxLayer from "./LayerboxLayer";
 
 class Layerbox extends React.Component {
   render() {
-
-    console.info(this.props.layers.length);
-
     let
       deleteButtonDisabled = this.props.layers.length <= 1, //this.props.layers.frame.length <= 1,
       handleClasses = { "foldable-handle": true },
@@ -21,6 +19,18 @@ class Layerbox extends React.Component {
         <h4 className={classnames(handleClasses)} onClick={::this.fold}>Layers</h4>
         <div className="foldable-fold" style={boxStyle}>
           <div ref="layers" className="layers">
+          {this.props.layers.map((layer, i) => {
+            return <LayerboxLayer
+              key={`layer-${i}`}
+              layer={layer}
+              layerCount={this.props.layers.length}
+              position={i}
+              selected={layer.id === this.props.selected}
+              layerName={this.props.layerName}
+              layerOpacity={this.props.layerOpacity}
+              layerSelect={this.props.layerSelect}
+              layerVisibility={this.props.layerVisibility} />;
+          })}
           </div>
           <div className="actions">
             <button title="New layer above selected layer" className="tiny transparent" onClick={::this.props.layerAdd}>

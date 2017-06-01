@@ -36,6 +36,7 @@
     "gif.js": "^0.1.6",
     "lodash": "^3.10.1",
     "mousetrap": "^1.5.3",
+    "prop-types": "^15.5.10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",

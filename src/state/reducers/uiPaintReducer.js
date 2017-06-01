@@ -16,6 +16,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, brightnessTool: { mode: action.mode, intensity: state.brightnessTool.intensity }};
   case "FOLD_BOX":
     return { ...state, fold: { ...state.fold, [action.box]: !state.fold[action.box] }};
+  case "LAYER_SELECT":
+    return { ...state, layer: +action.layer };
   case "SELECT_TOOL":
     return { ...state, tool: action.tool };
   case "SELECT_ZOOM":
