@@ -7,6 +7,8 @@ export const layerName = (layer, name) => ({ type: "LAYER_NAME", layer, name });
 export const layerSelect = (layer) => ({ type: "LAYER_SELECT", layer });
 export const layerOpacity = (layer, opacity) => ({ type: "LAYER_OPACITY", layer, opacity });
 export const layerVisibility = (layer, visible) => ({ type: "LAYER_VISIBILITY", layer, visible });
+export const onionFrame = (mode, frame) => ({ type: "ONION_FRAME", mode, frame });
+export const onionMode = (mode) => ({ type: "ONION_MODE", mode });
 export const selectTool = (tool) => ({ type: "SELECT_TOOL", tool });
 export const selectZoom = (zoom) => ({ type: "SELECT_ZOOM", zoom });
 export const toggleGrid = () => ({ type: "TOGGLE_GRID" });

@@ -20,6 +20,10 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, frame: +action.frame };
   case "LAYER_SELECT":
     return { ...state, layer: +action.layer };
+  case "ONION_FRAME":
+    return { ...state, onion: { ...state.onion, frame: { ...state.onion.frame, [action.mode]: +action.frame }}};
+  case "ONION_MODE":
+    return { ...state, onion: { ...state.onion, mode: action.mode }};
   case "SELECT_TOOL":
     return { ...state, tool: action.tool };
   case "SELECT_ZOOM":

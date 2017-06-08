@@ -3,6 +3,8 @@ import Framebox from "../views/paint/Framebox";
 
 import {
   frameSelect,
+  onionFrame,
+  onionMode,
   toggleOnion,
 } from "../state/actions";
 
@@ -17,6 +19,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     frameSelect: (frame) => dispatch(frameSelect(frame)),
+    onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
+    onionMode: (mode) => dispatch(onionMode(mode)),
     toggleOnion: () => dispatch(toggleOnion()),
   };
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import FrameboxFrame from "./FrameboxFrame.js";
+import FrameboxOnionPanel from "./FrameboxOnionPanel";
 
 class Framebox extends React.Component {
   render() {
@@ -13,7 +14,14 @@ class Framebox extends React.Component {
         "toggle-onion": true,
         "transparent": true,
         "active": this.props.onion.active,
-      });
+      }),
+      onionPanel = this.props.onion.active !== true
+                 ? null
+                 : <FrameboxOnionPanel
+                      onion={this.props.onion}
+                      onionFrame={this.props.onionFrame}
+                      onionMode={this.props.onionMode}
+                      frames={this.props.frames} />;
 
     let
       frameStyle = {},
@@ -24,21 +32,10 @@ class Framebox extends React.Component {
 
     for(var i=0; i < totalFrames; i++) frames.push(i+1);
 
-    // var self = this,
-
     // var onionFrame = storeUtils.onion.getActualFrame();
-    //
-    // var onionButtonClasses = {
-    //   'toggle-onion': true,
-    //   'transparent': true,
-    //   'active': this.props.ui.onion.active,
-    // };
-    //
-    // var onionPanel = this.props.ui.onion.active === true ? <FrameBoxOnionPanel ui={this.props.ui} /> : null;
     // var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.paint.toggleOnion.key+')';
 
     const
-      onionPanel = null,
       onionFrame = 1;
 
     return (

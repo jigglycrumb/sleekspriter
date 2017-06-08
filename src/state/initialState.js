@@ -33,7 +33,10 @@ const state = {
       layer: null,
       onion: {
         active: false,
-        frame: 1,
+        frame: {
+          fixed: 1,
+          relative: 1,
+        },
         mode: "fixed", // fixed or relative
       },
       tool: "EraserTool",
