@@ -2,9 +2,6 @@ import _ from "lodash";
 import initialState from "../initialState";
 
 function fileLayersReducer(state = initialState.file.layers, action) {
-
-  console.log(`fileLayersReducer#${action.type}`);
-
   switch (action.type) {
 
   case "LAYER_ADD":

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import Statusbar from "../views/paint/Statusbar";
 
-import { toggleGrid } from "../state/actions";
+import { gridToggle } from "../state/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleGrid: () => dispatch(toggleGrid())
+    gridToggle: () => dispatch(gridToggle())
   };
 };
 

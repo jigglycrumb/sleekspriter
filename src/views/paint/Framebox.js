@@ -62,7 +62,7 @@ class Framebox extends React.Component {
   }
 
   toggleOnion() {
-    this.props.toggleOnion();
+    this.props.onionToggle();
   }
 }
 

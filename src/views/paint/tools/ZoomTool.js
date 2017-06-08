@@ -17,9 +17,9 @@ class ZoomTool extends React.Component {
         <button className="small" title="Zoom out" onClick={::this.props.zoomOut} disabled={zoomOutDisabled}>
           <i className="flaticon-minus18"></i>
         </button>
-        <input type="range" min={min} max={max} value={this.props.zoom} onChange={::this.selectZoom} />
+        <input type="range" min={min} max={max} value={this.props.zoom} onChange={::this.zoomSelect} />
         <span>Zoom &times;</span>
-        <input type="number" min={min} max={max} value={this.props.zoom} onChange={::this.selectZoom} />
+        <input type="number" min={min} max={max} value={this.props.zoom} onChange={::this.zoomSelect} />
         <button className="small" onClick={::this.zoomFit}>Fit to screen</button>
         <span className="spacer"></span>
         <span className="hint">A pixel in your sprite is now {this.props.zoom} pixels on your screen.</span>
@@ -27,8 +27,8 @@ class ZoomTool extends React.Component {
     );
   }
 
-  selectZoom(e) {
-    this.props.selectZoom(e.target.value);
+  zoomSelect(e) {
+    this.props.zoomSelect(e.target.value);
   }
 
   zoomFit() {

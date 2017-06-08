@@ -5,7 +5,7 @@ import {
   frameSelect,
   onionFrame,
   onionMode,
-  toggleOnion,
+  onionToggle,
 } from "../state/actions";
 
 const mapStateToProps = (state) => {
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
     frameSelect: (frame) => dispatch(frameSelect(frame)),
     onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
     onionMode: (mode) => dispatch(onionMode(mode)),
-    toggleOnion: () => dispatch(toggleOnion()),
+    onionToggle: () => dispatch(onionToggle()),
   };
 };
 

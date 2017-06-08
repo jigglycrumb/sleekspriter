@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ToolboxTool from "../views/paint/ToolboxTool";
 
-import { selectTool } from "../state/actions";
+import { toolSelect } from "../state/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    selectTool: (tool) => dispatch(selectTool(tool))
+    toolSelect: (tool) => dispatch(toolSelect(tool))
   };
 };
 
@@ -41,7 +41,7 @@ class ToolboxContainer extends React.Component {
                       id={tool.id}
                       icon={tool.icon}
                       selected={tool.id === this.props.tool}
-                      selectTool={this.props.selectTool} />;
+                      toolSelect={this.props.toolSelect} />;
           }, this)}
         </div>
       </div>

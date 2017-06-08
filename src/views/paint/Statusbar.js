@@ -32,7 +32,7 @@ const Statusbar = (props) => {
           <i className="flaticon-arrow"></i>
         </button>
 
-        <button id="toggleGrid" className={gridButtonClasses} onClick={props.toggleGrid}>
+        <button id="toggleGrid" className={gridButtonClasses} onClick={props.gridToggle}>
           <i className="flaticon-3x3"></i>
         </button>
       </div>

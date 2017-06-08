@@ -5,7 +5,7 @@ import FrameboxContainer from "./FrameboxContainer";
 import LayerboxContainer from "./LayerboxContainer";
 
 import {
-  foldBox
+  boxFold
 } from "../state/actions";
 
 const mapStateToProps = (state) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    foldBox: (box) => dispatch(foldBox(box)),
+    boxFold: (box) => dispatch(boxFold(box)),
   };
 };
 
@@ -49,7 +49,7 @@ class FoldableContainer extends React.Component {
   }
 
   fold() {
-    this.props.foldBox(this.props.fold);
+    this.props.boxFold(this.props.fold);
   }
 }
 
