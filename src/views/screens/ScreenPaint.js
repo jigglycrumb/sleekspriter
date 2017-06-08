@@ -1,12 +1,9 @@
 import React from "react";
 
-import FrameboxContainer from "../../containers/FrameboxContainer";
-import LayerboxContainer from "../../containers/LayerboxContainer";
+import FoldableContainer from "../../containers/FoldableContainer";
 import StatusbarContainer from "../../containers/StatusbarContainer";
 import ToolboxContainer from "../../containers/ToolboxContainer";
 import ToolContainer from "../../containers/ToolContainer";
-
-import FoldableContainer from "../../containers/FoldableContainer";
 
 const ScreenPaint = () => {
   return (

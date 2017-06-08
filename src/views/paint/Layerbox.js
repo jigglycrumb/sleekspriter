@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import LayerboxLayer from "./LayerboxLayer";
 
 class Layerbox extends React.Component {

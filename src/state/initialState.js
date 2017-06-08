@@ -4,8 +4,8 @@ const state = {
   },
   file: {
     frames: {
-      x: 0,
-      y: 0
+      x: 3,
+      y: 2
     },
     layers: [
       {frame: 1, id: 1, name: "Layer 1", z: 0, opacity: 100, visible: true},
@@ -31,6 +31,11 @@ const state = {
       frame: null,
       grid: true,
       layer: null,
+      onion: {
+        active: false,
+        frame: 1,
+        mode: "fixed", // fixed or relative
+      },
       tool: "EraserTool",
       zoom: 10,
     },

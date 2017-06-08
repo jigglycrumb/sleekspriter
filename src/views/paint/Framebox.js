@@ -1,18 +1,31 @@
 import React from "react";
+import classnames from "classnames";
+import FrameboxFrame from "./FrameboxFrame.js";
 
 class Framebox extends React.Component {
   render() {
+    const
+      maxWidth = 206,
+      frameSize = Math.floor(maxWidth/this.props.frames.x) - 1,
+      // TODO: move the calculation of total frames to reselect and cache it (derived state)
+      totalFrames = this.props.frames.x * this.props.frames.y,
+      onionButtonClasses = classnames({
+        "toggle-onion": true,
+        "transparent": true,
+        "active": this.props.onion.active,
+      });
+
+    let
+      frameStyle = {},
+      frames = [];
+
+    frameStyle.width = frameSize;
+    frameStyle.height = frameSize;
+
+    for(var i=0; i < totalFrames; i++) frames.push(i+1);
+
     // var self = this,
-    //     maxWidth = 206,
-    //     frameStyle = {},
-    //     frames = [], // array for mapping the frame components
-    //     frameSize = Math.floor(maxWidth/this.props.file.frames.x)-1;
-    //
-    // for(var i=0; i < this.props.ui.frames.total; i++) frames.push(i+1);
-    //
-    // frameStyle.width = frameSize;
-    // frameStyle.height = frameSize;
-    //
+
     // var onionFrame = storeUtils.onion.getActualFrame();
     //
     // var onionButtonClasses = {
@@ -25,45 +38,23 @@ class Framebox extends React.Component {
     // var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.paint.toggleOnion.key+')';
 
     const
-      frames = [],
-      onionButtonClasses = {},
-      onionPanel = null;
+      onionPanel = null,
+      onionFrame = 1;
 
     return (
       <div>
         <div id="FrameBoxFrames">
         {frames.map(function(frame) {
-          frame;
-          return null;
-          /*
-          var id = 'FrameBoxFrame-'+frame,
-              classes = {
-                'frame': true,
-                'selected': frame == this.props.ui.frames.selected,
-                'onion': this.props.ui.onion.active === true && frame == onionFrame,
-              };
-
-          var clickHandler = function() {
-            self.getFlux().actions.frameSelect(frame);
-            self.getFlux().actions.layerTopSelect();
-            self.getFlux().actions.scopeSet(null, 'layer');
-          };
-
-          return (
-            <div key={id} className={classNames(classes)} style={frameStyle} onClick={this.handleClick.bind(this, clickHandler)} onTouchStart={this.handleTouch.bind(this, clickHandler)}>
-              <FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={frameSize} />
-            </div>
-          );
-          */
+          return <FrameboxFrame key={frame} size={frameSize} selected={this.props.selected} frame={frame} frameSelect={this.props.frameSelect}/>;
         }, this)}
         </div>
         <div className="actions">
           Frame&nbsp;
-          <input type="number" className="frame-number" min="1" max="5" value="10" />
+          <input type="number" className="frame-number" min="1" max={totalFrames} value="1" />
           &nbsp;/&nbsp;
-          {10}
+          {totalFrames}
 
-          <button className={onionButtonClasses}>
+          <button className={onionButtonClasses} onClick={::this.toggleOnion}>
             <i className="flaticon-vegetable38"></i>
           </button>
         </div>
@@ -71,6 +62,10 @@ class Framebox extends React.Component {
       </div>
     );
 
+  }
+
+  toggleOnion() {
+    this.props.toggleOnion();
   }
 }
 

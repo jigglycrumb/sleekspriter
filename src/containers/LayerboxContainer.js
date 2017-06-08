@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import Layerbox from "../views/paint/Layerbox";
 
 import {
-  foldBox,
   layerAdd,
   layerName,
   layerOpacity,

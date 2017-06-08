@@ -16,6 +16,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, brightnessTool: { mode: action.mode, intensity: state.brightnessTool.intensity }};
   case "FOLD_BOX":
     return { ...state, fold: { ...state.fold, [action.box]: !state.fold[action.box] }};
+  case "FRAME_SELECT":
+    return { ...state, frame: +action.frame };
   case "LAYER_SELECT":
     return { ...state, layer: +action.layer };
   case "SELECT_TOOL":
@@ -24,6 +26,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, zoom: +action.zoom };
   case "TOGGLE_GRID":
     return { ...state, grid: !state.grid };
+  case "TOGGLE_ONION":
+    return { ...state, onion: { ...state.onion, active: !state.onion.active }};
   case "ZOOM_IN":
     newZoom = state.zoom + 1;
     if(newZoom > zoom.max) newZoom = zoom.max;
