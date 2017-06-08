@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 import FrameboxContainer from "./FrameboxContainer";
 import LayerboxContainer from "./LayerboxContainer";
 
+const components = {
+  FrameboxContainer,
+  LayerboxContainer,
+};
+
 import {
   boxFold
 } from "../state/actions";
@@ -20,41 +25,27 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const components = {
-  FrameboxContainer,
-  LayerboxContainer,
+const FoldableContainer = (props) => {
+  const
+    folded = props.folds[props.fold],
+    FoldComponent = components[props.component],
+    handleClasses = classnames({
+      "foldable-handle": true,
+      folded,
+    }),
+    innerBox = folded === true
+             ? null
+             : <div className="foldable-fold">
+                 <FoldComponent {...props} />
+               </div>;
+
+  return (
+    <div id={props.id} className="box">
+      <h4 className={handleClasses} onClick={props.boxFold.bind(this, props.fold)}>{props.title}</h4>
+      {innerBox}
+    </div>
+  );
 };
-
-class FoldableContainer extends React.Component {
-  render() {
-    const FoldComponent = components[this.props.component];
-
-    let
-      handleClasses = {
-        "foldable-handle": true,
-        "folded": true,
-      },
-      innerBox = null;
-
-    if(this.props.folds[this.props.fold] !== true) {
-      handleClasses["folded"] = false;
-      innerBox =  <div className="foldable-fold">
-                    <FoldComponent {...this.props} />
-                  </div>;
-    }
-
-    return (
-      <div id={this.props.id} className="box">
-        <h4 className={classnames(handleClasses)} onClick={::this.fold}>{this.props.title}</h4>
-        {innerBox}
-      </div>
-    );
-  }
-
-  fold() {
-    this.props.boxFold(this.props.fold);
-  }
-}
 
 export default connect(
   mapStateToProps,
