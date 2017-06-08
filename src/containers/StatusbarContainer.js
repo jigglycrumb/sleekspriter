@@ -5,6 +5,7 @@ import { gridToggle } from "../state/actions";
 
 const mapStateToProps = (state) => {
   return {
+    frame: state.ui.paint.frame,
     grid: state.ui.paint.grid,
     zoom: state.ui.paint.zoom
   };

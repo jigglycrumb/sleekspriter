@@ -19,7 +19,7 @@ const Statusbar = (props) => {
       <span id="StatusBarCursorY">Y: 0</span>
       <div id="StatusBarColor" style={{background: "transparent"}}></div>
       <span id="StatusBarColorString">transparent</span>
-      <span>Frame x, x pixels</span>
+      <span>Frame {props.frame}, x pixels</span>
       &nbsp;
       <span>Zoom &times;{props.zoom}</span>
       <div id="StatusBarButtons">
