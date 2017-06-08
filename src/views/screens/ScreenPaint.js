@@ -1,9 +1,12 @@
 import React from "react";
 
+import FrameboxContainer from "../../containers/FrameboxContainer";
 import LayerboxContainer from "../../containers/LayerboxContainer";
 import StatusbarContainer from "../../containers/StatusbarContainer";
 import ToolboxContainer from "../../containers/ToolboxContainer";
 import ToolContainer from "../../containers/ToolContainer";
+
+import FoldableContainer from "../../containers/FoldableContainer";
 
 const ScreenPaint = () => {
   return (
@@ -22,9 +25,9 @@ const ScreenPaint = () => {
         <div id="layerboxhelper">
           {/*<PreviewBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="preview" />*/}
           {/*frameBox*/}
+          <FoldableContainer component="FrameboxContainer" fold="frames" title="Frames" id="FrameBox" />
         </div>
-        {/*<LayerBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="layers" />*/}
-        <LayerboxContainer />
+        <FoldableContainer component="LayerboxContainer" fold="layers" title="Layers" id="LayerBox" />
       </div>
       <div className="area statusbar">
         <StatusbarContainer />

@@ -12,7 +12,6 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    folded: state.ui.paint.fold.layers,
     selected: state.ui.paint.layer,
     layers: state.file.layers,
   };
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    foldBox: (box) => dispatch(foldBox(box)),
     layerAdd: () => dispatch(layerAdd()),
     layerName: (layer, name) => dispatch(layerName(layer, name)),
     layerOpacity: (layer, opacity) => dispatch(layerOpacity(layer, opacity)),

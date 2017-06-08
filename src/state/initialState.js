@@ -3,6 +3,10 @@ const state = {
     layersByFrame: [],
   },
   file: {
+    frames: {
+      x: 0,
+      y: 0
+    },
     layers: [
       {frame: 1, id: 1, name: "Layer 1", z: 0, opacity: 100, visible: true},
       {frame: 1, id: 2, name: "Layer 2", z: 1, opacity: 100, visible: true},

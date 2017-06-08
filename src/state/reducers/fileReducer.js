@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import fileSizeReducer from "./fileSizeReducer";
+import fileFramesReducer from "./fileFramesReducer";
 import fileLayersReducer from "./fileLayersReducer";
+import fileSizeReducer from "./fileSizeReducer";
 
 const fileReducer = combineReducers({
-  size: fileSizeReducer,
+  frames: fileFramesReducer,
   layers: fileLayersReducer,
+  size: fileSizeReducer,
 });
 
 export default fileReducer;
