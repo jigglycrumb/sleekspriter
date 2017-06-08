@@ -28,7 +28,7 @@ const state = {
         frames: false,
         layers: false,
       },
-      frame: null,
+      frame: null, // this causes React warnings
       grid: true,
       layer: null,
       onion: {

@@ -30,20 +30,23 @@ class FoldableContainer extends React.Component {
     const FoldComponent = components[this.props.component];
 
     let
-      handleClasses = { "foldable-handle": true },
-      boxStyle = { display: "block" };
+      handleClasses = {
+        "foldable-handle": true,
+        "folded": true,
+      },
+      innerBox = null;
 
-    if(this.props.folds[this.props.fold] === true) {
-      handleClasses["folded"] = true;
-      boxStyle.display = "none";
+    if(this.props.folds[this.props.fold] !== true) {
+      handleClasses["folded"] = false;
+      innerBox =  <div className="foldable-fold">
+                    <FoldComponent {...this.props} />
+                  </div>;
     }
 
     return (
       <div id={this.props.id} className="box">
         <h4 className={classnames(handleClasses)} onClick={::this.fold}>{this.props.title}</h4>
-        <div className="foldable-fold" style={boxStyle}>
-          <FoldComponent {...this.props} />
-        </div>
+        {innerBox}
       </div>
     );
   }

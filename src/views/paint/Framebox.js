@@ -47,7 +47,7 @@ class Framebox extends React.Component {
         </div>
         <div className="actions">
           Frame&nbsp;
-          <input type="number" className="frame-number" min="1" max={totalFrames} value="1" />
+          <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.selected} onChange={::this.frameSelect} />
           &nbsp;/&nbsp;
           {totalFrames}
 
@@ -59,6 +59,11 @@ class Framebox extends React.Component {
       </div>
     );
 
+  }
+
+  frameSelect(e) {
+    this.props.frameSelect(e.target.value);
+    // TODO: Select top layer after frame change
   }
 
   toggleOnion() {
