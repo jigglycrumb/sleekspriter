@@ -18,7 +18,7 @@ class Palette extends React.Component {
         <div ref="outer" className="outer">
           <div ref="inner" className="inner">
             {this.props.colors.map(function(color) {
-              return <Colorswatch key={color} color={color} action={::this.props.colorBrush} />;
+              return <Colorswatch key={color} color={color} action={::this.props.brushColor} />;
             }, this)}
           </div>
         </div>
@@ -96,17 +96,18 @@ class Palette extends React.Component {
       start = this.getScrollPosition(),
       distance = x - start,
       from = { position: start },
-      to = { position: start + distance },
-      tween = new TWEEN.Tween(from)
-        .to(to, 200)
-        .easing(TWEEN.Easing.Sinusoidal.InOut)
-        .onUpdate(function() {
-          self.setScrollPosition(this.position);
-        })
-        .onComplete(function() {
-          tweenComplete = true;
-        })
-        .start();
+      to = { position: start + distance };
+
+    new TWEEN.Tween(from)
+      .to(to, 200)
+      .easing(TWEEN.Easing.Sinusoidal.InOut)
+      .onUpdate(function() {
+        self.setScrollPosition(this.position);
+      })
+      .onComplete(function() {
+        tweenComplete = true;
+      })
+      .start();
 
     this.setScrollButtons(x);
 

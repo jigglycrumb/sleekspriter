@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   brightnessToolIntensity,
   brightnessToolMode,
+  brushColor,
   zoomIn,
   zoomOut,
   zoomSelect,
@@ -43,6 +44,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     brightnessToolIntensity: (intensity) => dispatch(brightnessToolIntensity(intensity)),
     brightnessToolMode: (mode) => dispatch(brightnessToolMode(mode)),
+    brushColor: (color) => dispatch(brushColor(color)),
     zoomFit: (fileSize) => dispatch(zoomFit(fileSize)),
     zoomIn: () => dispatch(zoomIn()),
     zoomOut: () => dispatch(zoomOut()),

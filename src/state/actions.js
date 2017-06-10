@@ -1,7 +1,7 @@
 export const brightnessToolIntensity = (intensity) => ({ type: "BRIGHTNESSTOOL_INTENSITY", intensity });
 export const brightnessToolMode = (mode)  => ({ type: "BRIGHTNESSTOOL_MODE", mode });
 export const boxFold = (box) => ({ type: "BOX_FOLD", box });
-export const colorBrush = (color) => ({ type: "COLOR_BRUSH", color });
+export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer) => ({ type: "LAYER_ADD", frame, layer });

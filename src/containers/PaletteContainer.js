@@ -4,7 +4,7 @@ import palettes from "../json/palettes";
 import PalettePicker from "../views/paint/PalettePicker";
 import Palette from "../views/paint/Palette";
 import {
-  colorBrush,
+  brushColor,
   paletteSelect,
 } from "../state/actions";
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     paletteSelect: (palette) => dispatch(paletteSelect(palette)),
-    colorBrush: (color) => dispatch(colorBrush(color)),
+    brushColor: (color) => dispatch(brushColor(color)),
   };
 };
 
@@ -26,7 +26,7 @@ const PaletteContainer = (props) => {
   return (
     <div className="palette">
       <PalettePicker palettes={palettes} palette={palette} paletteSelect={props.paletteSelect} />
-      <Palette colors={palette.colors} colorBrush={props.colorBrush} />
+      <Palette colors={palette.colors} brushColor={props.brushColor} />
     </div>
   );
 };
