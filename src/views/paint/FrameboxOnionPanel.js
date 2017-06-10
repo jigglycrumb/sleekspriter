@@ -25,7 +25,6 @@ class FrameboxOnionPanel extends React.Component {
         relative: true,
         hidden: this.props.onion.mode != "relative",
       }),
-      totalFrames = this.props.frames.x * this.props.frames.y,
       frameLabel = this.props.onion.frame.relative == 1 ? " frame " : " frames ";
 
     return (
@@ -34,10 +33,10 @@ class FrameboxOnionPanel extends React.Component {
         <div className={fixedTabClasses} onClick={this.onionMode.bind(this, "fixed")}>Fixed</div>
         <div className={relativeTabClasses} onClick={this.onionMode.bind(this, "relative")}>Relative</div>
         <div className={fixedPanelClasses}>
-          Onion is always frame <input type="number" min="1" max={totalFrames} value={this.props.onion.frame.fixed} onChange={::this.onionFrameFixed}/>
+          Onion is always frame <input type="number" min="1" max={this.props.totalFrames} value={this.props.onion.frame.fixed} onChange={::this.onionFrameFixed}/>
         </div>
         <div className={relativePanelClasses}>
-          Onion is <input ref="onionRelativeNumber" type="number" min="1" max={totalFrames} value={Math.abs(this.props.onion.frame.relative)} onChange={::this.onionFrameRelative} />
+          Onion is <input ref="onionRelativeNumber" type="number" min="1" max={this.props.totalFrames} value={Math.abs(this.props.onion.frame.relative)} onChange={::this.onionFrameRelative} />
           {frameLabel}
           <select ref="onionRelativePrefix" onChange={::this.onionFrameRelative}>
             <option value="+">ahead</option>

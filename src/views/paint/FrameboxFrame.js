@@ -8,7 +8,7 @@ class FrameboxFrame extends React.Component {
       classes = classnames({
         "frame": true,
         "selected": this.props.frame == this.props.selected,
-        // "onion": this.props.ui.onion.active === true && frame == onionFrame,
+        "onion": this.props.onionSelected,
       }),
       frameStyle = {
         height: this.props.size,

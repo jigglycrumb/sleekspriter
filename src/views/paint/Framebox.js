@@ -8,8 +8,6 @@ class Framebox extends React.Component {
     const
       maxWidth = 206,
       frameSize = Math.floor(maxWidth/this.props.frames.x) - 1,
-      // TODO: move the calculation of total frames to reselect and cache it (derived state)
-      totalFrames = this.props.frames.x * this.props.frames.y,
       onionButtonClasses = classnames({
         "toggle-onion": true,
         "transparent": true,
@@ -21,7 +19,7 @@ class Framebox extends React.Component {
                       onion={this.props.onion}
                       onionFrame={this.props.onionFrame}
                       onionMode={this.props.onionMode}
-                      frames={this.props.frames} />;
+                      totalFrames={this.props.totalFrames} />;
 
     let
       frameStyle = {},
@@ -30,26 +28,28 @@ class Framebox extends React.Component {
     frameStyle.width = frameSize;
     frameStyle.height = frameSize;
 
-    for(var i=0; i < totalFrames; i++) frames.push(i+1);
+    for(var i=0; i < this.props.totalFrames; i++) frames.push(i+1);
 
-    // var onionFrame = storeUtils.onion.getActualFrame();
     // var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.paint.toggleOnion.key+')';
-
-    const
-      onionFrame = 1;
 
     return (
       <div>
         <div id="FrameBoxFrames">
         {frames.map(function(frame) {
-          return <FrameboxFrame key={frame} size={frameSize} selected={this.props.selected} frame={frame} frameSelect={this.props.frameSelect}/>;
+          return <FrameboxFrame
+                  key={frame}
+                  size={frameSize}
+                  selected={this.props.selected}
+                  onionSelected={this.props.onion.active && this.props.onionFrameAbsolute === frame}
+                  frame={frame}
+                  frameSelect={this.props.frameSelect} />;
         }, this)}
         </div>
         <div className="actions">
           Frame&nbsp;
-          <input type="number" className="frame-number" min="1" max={totalFrames} value={this.props.selected} onChange={::this.frameSelect} />
+          <input type="number" className="frame-number" min="1" max={this.props.totalFrames} value={this.props.selected} onChange={::this.frameSelect} />
           &nbsp;/&nbsp;
-          {totalFrames}
+          {this.props.totalFrames}
 
           <button className={onionButtonClasses} onClick={::this.toggleOnion}>
             <i className="flaticon-vegetable38"></i>
