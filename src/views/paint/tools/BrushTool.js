@@ -1,4 +1,6 @@
 import React from "react";
+import PaletteContainer from "../../../containers/PaletteContainer";
+import Colorswatch from "../Colorswatch";
 
 class BrushTool extends React.Component {
   constructor(props) {
@@ -7,35 +9,26 @@ class BrushTool extends React.Component {
     this.state = {
       pickerVisible: false
     };
-
-    this.togglePicker = this.togglePicker.bind(this);
   }
 
   render() {
-    // var hex = this.props.ui.color.brush.hexString();
-
-    var hex = "#FFFFFF";
-
     return (
       <div id="Brush-Tool" className="ToolComponent">
         <i className="icon flaticon-small23"></i>
-
-        <div
-          className="colorswatch"
-          style={{background: hex}}
-          title={hex}
-          onClick={this.togglePicker}
-        />
+        <Colorswatch color={this.props.color} action={::this.togglePicker} />
 
         {/*<PixelColorPicker color={hex} visible={this.state.pickerVisible} />*/}
 
         <span className="spacer"/>
-        {/*<Palette ui={this.props.ui} />*/}
+        <div className="palette">
+          <PaletteContainer />
+        </div>
       </div>
     );
   }
 
   togglePicker() {
+    console.log("togglePicker");
     this.setState({pickerVisible: !this.state.pickerVisible});
   }
 }

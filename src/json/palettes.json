@@ -1,5 +1,11 @@
 [
   {
+    "id": "sprite",
+    "title": "Sprite colours",
+    "short": "Sprite",
+    "colors": []
+  },
+  {
     "id": "gameboy",
     "title": "Nintendo Gameboy",
     "short": "GB",

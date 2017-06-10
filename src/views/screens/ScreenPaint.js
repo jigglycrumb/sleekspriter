@@ -22,6 +22,7 @@ const ScreenPaint = () => {
         <div id="layerboxhelper">
           {/*<PreviewBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="preview" />*/}
           {/*frameBox*/}
+          <FoldableContainer component="PreviewboxContainer" fold="preview" title="Preview" id="PreviewBox" />
           <FoldableContainer component="FrameboxContainer" fold="frames" title="Frames" id="FrameBox" />
         </div>
         <FoldableContainer component="LayerboxContainer" fold="layers" title="Layers" id="LayerBox" />

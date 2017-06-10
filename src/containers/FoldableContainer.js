@@ -3,10 +3,12 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 import FrameboxContainer from "./FrameboxContainer";
 import LayerboxContainer from "./LayerboxContainer";
+import PreviewboxContainer from "./PreviewboxContainer";
 
 const components = {
   FrameboxContainer,
   LayerboxContainer,
+  PreviewboxContainer,
 };
 
 import {

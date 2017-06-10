@@ -23,6 +23,7 @@ const state = {
         mode: "darken",
         intensity: 10,
       },
+      color: "#000000",
       fold: {
         preview: false,
         frames: false,
@@ -39,7 +40,8 @@ const state = {
         },
         mode: "fixed", // fixed or relative
       },
-      tool: "EraserTool",
+      palette: 11,
+      tool: "BrushTool",
       zoom: 10,
     },
   },

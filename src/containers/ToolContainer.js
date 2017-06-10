@@ -32,6 +32,7 @@ const components = {
 const mapStateToProps = (state) => {
   return {
     tool: state.ui.paint.tool,
+    color: state.ui.paint.color,
     zoom: state.ui.paint.zoom,
     fileSize: state.file.size,
     brightnessTool: state.ui.paint.brightnessTool,

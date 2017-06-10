@@ -11,7 +11,7 @@ const config = {
     filename: "bundle.js"
   },
   resolve: {
-    extensions: [".less", ".css", ".js", ".jsx"]
+    extensions: [".less", ".css", ".js", ".json", ".jsx"]
   },
   module: {
     rules: [{
@@ -72,7 +72,7 @@ const config = {
     {
       test: /\.html$/,
       use: ["html-loader"]
-    },
+    }
     ]
   },
   plugins: [

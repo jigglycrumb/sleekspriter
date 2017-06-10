@@ -1,6 +1,7 @@
 export const brightnessToolIntensity = (intensity) => ({ type: "BRIGHTNESSTOOL_INTENSITY", intensity });
 export const brightnessToolMode = (mode)  => ({ type: "BRIGHTNESSTOOL_MODE", mode });
 export const boxFold = (box) => ({ type: "BOX_FOLD", box });
+export const colorBrush = (color) => ({ type: "COLOR_BRUSH", color });
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer) => ({ type: "LAYER_ADD", frame, layer });
@@ -11,6 +12,7 @@ export const layerVisibility = (layer, visible) => ({ type: "LAYER_VISIBILITY", 
 export const onionFrame = (mode, frame) => ({ type: "ONION_FRAME", mode, frame });
 export const onionMode = (mode) => ({ type: "ONION_MODE", mode });
 export const onionToggle = () => ({ type: "ONION_TOGGLE" });
+export const paletteSelect = (palette) => ({ type: "PALETTE_SELECT", palette });
 export const toolSelect = (tool) => ({ type: "TOOL_SELECT", tool });
 export const zoomIn = () => ({ type: "ZOOM_IN" });
 export const zoomOut = () => ({ type: "ZOOM_OUT" });
