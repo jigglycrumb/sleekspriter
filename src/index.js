@@ -8,10 +8,6 @@ import { Provider } from "react-redux";
 import App from "./views/App";
 import store from "./state/store";
 
-// store.subscribe(() => {
-//   console.info('Store changed', store.getState());
-// });
-
 window.onload = function() {
   ReactDOM.render(
     <Provider store={store}>
