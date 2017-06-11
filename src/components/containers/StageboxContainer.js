@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-import App from "../views/App";
+import Stagebox from "../paint/Stagebox";
 
 const mapStateToProps = (state) => {
   return {
-    tab: state.ui.app.tab
   };
 };
 
@@ -15,4 +14,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Stagebox);

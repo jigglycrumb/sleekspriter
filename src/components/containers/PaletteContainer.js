@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import palettes from "../json/palettes";
-import PalettePicker from "../views/paint/PalettePicker";
-import Palette from "../views/paint/Palette";
+import palettes from "../../json/palettes";
+import PalettePicker from "../paint/PalettePicker";
+import Palette from "../paint/Palette";
 import {
   brushColor,
   paletteSelect,
-} from "../state/actions";
+} from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {

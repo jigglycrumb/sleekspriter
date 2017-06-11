@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import Statusbar from "../views/paint/Statusbar";
+import Statusbar from "../paint/Statusbar";
 
-import { gridToggle } from "../state/actions";
+import { gridToggle } from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {

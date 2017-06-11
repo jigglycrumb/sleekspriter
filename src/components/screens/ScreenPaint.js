@@ -1,13 +1,13 @@
 import React from "react";
 
-import FoldableBox from "../../containers/FoldableBox";
-import PreviewboxContainer from "../../containers/PreviewboxContainer";
-import FrameboxContainer from "../../containers/FrameboxContainer";
-import LayerboxContainer from "../../containers/LayerboxContainer";
-import StatusbarContainer from "../../containers/StatusbarContainer";
-import ToolboxContainer from "../../containers/ToolboxContainer";
-import ToolContainer from "../../containers/ToolContainer";
-import StageboxContainer from "../../containers/StageboxContainer";
+import FoldableBox from "../containers/FoldableBox";
+import PreviewboxContainer from "../containers/PreviewboxContainer";
+import FrameboxContainer from "../containers/FrameboxContainer";
+import LayerboxContainer from "../containers/LayerboxContainer";
+import StatusbarContainer from "../containers/StatusbarContainer";
+import ToolboxContainer from "../containers/ToolboxContainer";
+import ToolContainer from "../containers/ToolContainer";
+import StageboxContainer from "../containers/StageboxContainer";
 import { t } from "../../utils";
 
 const ScreenPaint = (props) => {

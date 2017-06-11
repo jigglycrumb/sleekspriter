@@ -20,6 +20,11 @@ const state = {
   ui: {
     app: {
       tab: "paint",
+      modal: {
+        visible: true,
+        component: "ModalNewFile",
+        data: null,
+      },
     },
     paint: {
       brightnessTool: {

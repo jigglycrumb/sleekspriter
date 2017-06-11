@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import ToolboxTool from "../views/paint/ToolboxTool";
+import ToolboxTool from "../paint/ToolboxTool";
 
-import { toolSelect } from "../state/actions";
-import { t } from "../utils";
+import { toolSelect } from "../../state/actions";
+import { t } from "../../utils";
 
 const mapStateToProps = (state) => {
   return {

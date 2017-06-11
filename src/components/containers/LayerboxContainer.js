@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Layerbox from "../views/paint/Layerbox";
+import Layerbox from "../paint/Layerbox";
 
 import {
   layerAdd,
@@ -7,7 +7,7 @@ import {
   layerOpacity,
   layerSelect,
   layerVisibility,
-} from "../state/actions";
+} from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {

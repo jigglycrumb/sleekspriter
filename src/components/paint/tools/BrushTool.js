@@ -1,5 +1,5 @@
 import React from "react";
-import PaletteContainer from "../../../containers/PaletteContainer";
+import PaletteContainer from "../../containers/PaletteContainer";
 import Colorswatch from "../Colorswatch";
 import BrushColorpicker from "../BrushColorpicker";
 

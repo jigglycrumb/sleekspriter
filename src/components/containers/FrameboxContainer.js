@@ -1,13 +1,13 @@
 import { connect } from "react-redux";
-import Framebox from "../views/paint/Framebox";
-import { getOnionFrameAbsolute, getTotalFrames } from "../state/selectors";
+import Framebox from "../paint/Framebox";
+import { getOnionFrameAbsolute, getTotalFrames } from "../../state/selectors";
 
 import {
   frameSelect,
   onionFrame,
   onionMode,
   onionToggle,
-} from "../state/actions";
+} from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {

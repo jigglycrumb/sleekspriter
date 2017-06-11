@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Previewbox from "../views/paint/Previewbox";
+import Previewbox from "../paint/Previewbox";
 
 const mapStateToProps = (state) => {
   return {

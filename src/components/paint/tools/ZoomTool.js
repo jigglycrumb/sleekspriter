@@ -5,8 +5,9 @@ const { min, max } = config.zoom;
 
 class ZoomTool extends React.Component {
   render() {
-    const zoomInDisabled = this.props.zoom === max,
-          zoomOutDisabled = this.props.zoom === min;
+    const
+      zoomInDisabled = this.props.zoom === max,
+      zoomOutDisabled = this.props.zoom === min;
 
     return (
       <div id="Zoom-Tool" className="ToolComponent">

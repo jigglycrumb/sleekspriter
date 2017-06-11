@@ -1,9 +1,10 @@
 import React from "react";
 import classnames from "classnames";
+import ModalContainer from "../containers/ModalContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
-import ScreenStart from "./screens/ScreenStart";
-import ScreenHelper from "./screens/ScreenHelper";
-import ScreenBlocker from "./screens/ScreenBlocker";
+import ScreenStart from "../screens/ScreenStart";
+import ScreenHelper from "../screens/ScreenHelper";
+import ScreenBlocker from "../screens/ScreenBlocker";
 
 const App = (props) => {
 
@@ -32,6 +33,7 @@ const App = (props) => {
         <ScreenHelper />
         {activeScreen}
       </div>
+      <ModalContainer />
       <ScreenBlocker />
     </div>
   );

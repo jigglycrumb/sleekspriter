@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import AppContainer from "./containers/AppContainer";
+import AppContainer from "./components/containers/AppContainer";
 import store from "./state/store";
 
 window.onload = function() {

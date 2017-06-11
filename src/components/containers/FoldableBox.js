@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import {
   boxFold
-} from "../state/actions";
+} from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {

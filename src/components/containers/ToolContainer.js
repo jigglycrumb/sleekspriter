@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as components from "../paint/tools";
+
 import {
   brightnessToolIntensity,
   brightnessToolMode,
@@ -8,27 +10,7 @@ import {
   zoomOut,
   zoomSelect,
   zoomFit,
-} from "../state/actions";
-
-import {
-  BrightnessTool,
-  BrushTool,
-  EraserTool,
-  EyedropperTool,
-  MoveTool,
-  RectangularSelectionTool,
-  ZoomTool
-} from "../views/paint/tools";
-
-const components = {
-  BrightnessTool,
-  BrushTool,
-  EraserTool,
-  EyedropperTool,
-  MoveTool,
-  RectangularSelectionTool,
-  ZoomTool
-};
+} from "../../state/actions";
 
 const mapStateToProps = (state) => {
   return {
