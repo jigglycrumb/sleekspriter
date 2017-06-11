@@ -24,3 +24,7 @@ Paint Bucket Tool: Paint Bucket Tool (%s)
 Brightness Tool: Brightness Tool (%s)
 Move Tool: Move Tool (%s)
 Zoom Tool: Zoom Tool (%s)
+Confirmation needed: Confirmation needed
+Are you sure you want to delete the layer ${name}?: Are you sure you want to delete the layer ${name}?
+Delete layer: Delete layer
+Cancel: Cancel
