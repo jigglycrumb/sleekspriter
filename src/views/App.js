@@ -1,10 +1,12 @@
 import React from "react";
-import ScreenPaint from "./screens/ScreenPaint";
+import ScreenPaintContainer from "../containers/ScreenPaintContainer";
+import ScreenHelper from "./screens/ScreenHelper";
 
 const App = () => {
   return (
     <div className="app">
-      <ScreenPaint />
+      <ScreenHelper />
+      <ScreenPaintContainer />
     </div>
   );
 };

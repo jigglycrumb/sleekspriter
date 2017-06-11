@@ -9,6 +9,7 @@ const ToolboxTool = (props) => {
       id={props.id}
       className={cssClasses}
       disabled={props.selected}
+      title={props.title}
       onClick={props.toolSelect.bind(this, props.id)}>
         <i className={props.icon}></i>
     </button>

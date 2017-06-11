@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ToolboxTool from "../views/paint/ToolboxTool";
 
 import { toolSelect } from "../state/actions";
+import { t } from "../utils";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,19 +17,18 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-
 class ToolboxContainer extends React.Component {
   render() {
 
     const tools= [
-      { id: "BrushTool", icon: "flaticon-small23" },
-      { id: "EraserTool", icon: "flaticon-double31" },
-      { id: "EyedropperTool", icon: "flaticon-eyedropper2" },
-      { id: "RectangularSelectionTool", icon: "flaticon-selection7" },
-      { id: "PaintBucketTool", icon: "flaticon-paint2" },
-      { id: "BrightnessTool", icon: "flaticon-sun4" },
-      { id: "MoveTool", icon: "flaticon-move11" },
-      { id: "ZoomTool", icon: "flaticon-magnifier5" },
+      { id: "BrushTool", icon: "flaticon-small23", title: t("Brush Tool") },
+      { id: "EraserTool", icon: "flaticon-double31", title: t("Eraser Tool") },
+      { id: "EyedropperTool", icon: "flaticon-eyedropper2", title: t("Eyedropper Tool") },
+      { id: "RectangularSelectionTool", icon: "flaticon-selection7", title: t("Selection Tool") },
+      { id: "PaintBucketTool", icon: "flaticon-paint2", title: t("Paint Bucket Tool") },
+      { id: "BrightnessTool", icon: "flaticon-sun4", title: t("Brightness Tool") },
+      { id: "MoveTool", icon: "flaticon-move11", title: t("Move Tool") },
+      { id: "ZoomTool", icon: "flaticon-magnifier5", title: t("Zoom Tool") },
     ];
 
     return (
@@ -41,6 +41,7 @@ class ToolboxContainer extends React.Component {
                       id={tool.id}
                       icon={tool.icon}
                       selected={tool.id === this.props.tool}
+                      title={tool.title}
                       toolSelect={this.props.toolSelect} />;
           }, this)}
         </div>

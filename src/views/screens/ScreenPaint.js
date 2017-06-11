@@ -4,8 +4,19 @@ import FoldableContainer from "../../containers/FoldableContainer";
 import StatusbarContainer from "../../containers/StatusbarContainer";
 import ToolboxContainer from "../../containers/ToolboxContainer";
 import ToolContainer from "../../containers/ToolContainer";
+import StageboxContainer from "../../containers/StageboxContainer";
+import { t } from "../../utils";
 
-const ScreenPaint = () => {
+const ScreenPaint = (props) => {
+
+  const framebox = props.totalFrames == 1
+                 ? null
+                 : <FoldableContainer
+                      component="FrameboxContainer"
+                      fold="frames"
+                      title={t("Frames")}
+                      id="FrameBox" />;
+
   return (
     <section className="screen paint">
       <div className="area top">
@@ -15,17 +26,16 @@ const ScreenPaint = () => {
         <ToolboxContainer />
       </div>
       <div className="area center">
+        <StageboxContainer />
         {/*<StageBox image={this.state.referenceImage} file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} />*/}
         {/*referenceImage*/}
       </div>
       <div className="area right">
         <div id="layerboxhelper">
-          {/*<PreviewBox file={this.props.file} ui={this.props.ui} pixels={this.props.pixels} fold="preview" />*/}
-          {/*frameBox*/}
-          <FoldableContainer component="PreviewboxContainer" fold="preview" title="Preview" id="PreviewBox" />
-          <FoldableContainer component="FrameboxContainer" fold="frames" title="Frames" id="FrameBox" />
+          <FoldableContainer component="PreviewboxContainer" fold="preview" title={t("Preview")} id="PreviewBox" />
+          {framebox}
         </div>
-        <FoldableContainer component="LayerboxContainer" fold="layers" title="Layers" id="LayerBox" />
+        <FoldableContainer component="LayerboxContainer" fold="layers" title={t("Layers")} id="LayerBox" />
       </div>
       <div className="area statusbar">
         <StatusbarContainer />
