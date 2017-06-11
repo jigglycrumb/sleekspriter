@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import ModalContainer from "../containers/ModalContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
-import ScreenStart from "../screens/ScreenStart";
+import ScreenStartContainer from "../containers/ScreenStartContainer";
 import ScreenHelper from "../screens/ScreenHelper";
 import ScreenBlocker from "../screens/ScreenBlocker";
 
@@ -23,7 +23,7 @@ const App = (props) => {
   case "export":
   case "start":
   default:
-    activeScreen = <ScreenStart />;
+    activeScreen = <ScreenStartContainer />;
     break;
   }
 

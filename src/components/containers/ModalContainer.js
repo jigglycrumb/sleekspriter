@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import React from "react";
-import * as components from "../modals";
+import * as dialogs from "../modals";
 
 const mapStateToProps = (state) => {
   return {
     visible: state.ui.app.modal.visible,
-    component: state.ui.app.modal.component
+    dialog: state.ui.app.modal.dialog
   };
 };
 
@@ -14,17 +14,21 @@ const ModalContainer = (props) => {
     style = {
       display: props.visible === true ? "table" : "none",
     },
-    Modal = props.component === null
+    Dialog = props.dialog === null
           ? null
-          : components[props.component];
+          : dialogs[props.dialog],
+    modalDialog = props.dialog === null
+          ? null
+          : <Dialog />,
+    composedModal = props.visible === false
+          ? null
+          : <div id="Modal" style={style}>
+              <div className="inner">
+                {modalDialog}
+              </div>
+            </div>;
 
-  return (
-    <div id="Modal" style={style}>
-      <div className="inner">
-        <Modal />
-      </div>
-    </div>
-  );
+  return composedModal;
 };
 
 export default connect(

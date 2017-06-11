@@ -21,8 +21,8 @@ const state = {
     app: {
       tab: "paint",
       modal: {
-        visible: true,
-        component: "ModalNewFile",
+        visible: false,
+        dialog: null,
         data: null,
       },
     },

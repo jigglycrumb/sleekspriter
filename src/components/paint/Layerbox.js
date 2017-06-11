@@ -1,5 +1,6 @@
 import React from "react";
 import LayerboxLayer from "./LayerboxLayer";
+import { t } from "../../utils";
 
 class Layerbox extends React.Component {
   render() {
@@ -22,10 +23,10 @@ class Layerbox extends React.Component {
         })}
         </div>
         <div className="actions">
-          <button title="New layer above selected layer" className="tiny transparent" onClick={::this.props.layerAdd}>
+          <button title={t("New layer above selected layer")} className="tiny transparent" onClick={::this.props.layerAdd}>
             <i className="flaticon-plus25"></i>
           </button>
-          <button title="Delete selected layer" className="tiny transparent" disabled={deleteButtonDisabled}>
+          <button title={t("Delete selected layer")} className="tiny transparent" disabled={deleteButtonDisabled} onClick={::this.confirmLayerDelete}>
             <i className="flaticon-minus18"></i>
           </button>
         </div>
@@ -49,6 +50,10 @@ class Layerbox extends React.Component {
       height = areaRightHeight - otherBoxesHeight - 47;
 
     this.refs.layers.style.height = `${height}px`;
+  }
+
+  confirmLayerDelete() {
+    this.props.modalShow("ModalConfirmDeleteLayer");
   }
 }
 

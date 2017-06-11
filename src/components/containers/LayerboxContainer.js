@@ -7,6 +7,7 @@ import {
   layerOpacity,
   layerSelect,
   layerVisibility,
+  modalShow,
 } from "../../state/actions";
 
 const mapStateToProps = (state) => {
@@ -23,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
     layerOpacity: (layer, opacity) => dispatch(layerOpacity(layer, opacity)),
     layerSelect: (layer) => dispatch(layerSelect(layer)),
     layerVisibility: (layer, visible) => dispatch(layerVisibility(layer, visible)),
+    modalShow: (modal) => dispatch(modalShow(modal)),
   };
 };
 

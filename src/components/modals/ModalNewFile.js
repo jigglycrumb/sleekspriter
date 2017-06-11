@@ -13,14 +13,8 @@ class ModalNewFile extends React.Component {
     super(props);
 
     this.state = {
-      frames: {
-        x: 1,
-        y: 1
-      },
-      pixels: {
-        x: 1,
-        y: 1
-      }
+      frames: { x: 1, y: 1 },
+      pixels: { x: 1, y: 1 }
     };
   }
 
@@ -77,14 +71,8 @@ class ModalNewFile extends React.Component {
 
   updateState() {
     var size = {
-      frames: {
-        x: this.refs.framesX.value,
-        y: this.refs.framesY.value,
-      },
-      pixels: {
-        x: this.refs.pixelsX.value,
-        y: this.refs.pixelsY.value,
-      },
+      frames: { x: this.refs.framesX.value, y: this.refs.framesY.value },
+      pixels: { x: this.refs.pixelsX.value, y: this.refs.pixelsY.value },
     };
     this.setState(size);
   }

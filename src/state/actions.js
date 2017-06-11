@@ -10,6 +10,7 @@ export const layerSelect = (layer) => ({ type: "LAYER_SELECT", layer });
 export const layerOpacity = (layer, opacity) => ({ type: "LAYER_OPACITY", layer, opacity });
 export const layerVisibility = (layer, visible) => ({ type: "LAYER_VISIBILITY", layer, visible });
 export const modalHide = () => ({ type: "MODAL_HIDE" });
+export const modalShow = (dialog) => ({ type: "MODAL_SHOW", dialog });
 export const onionFrame = (mode, frame) => ({ type: "ONION_FRAME", mode, frame });
 export const onionMode = (mode) => ({ type: "ONION_MODE", mode });
 export const onionToggle = () => ({ type: "ONION_TOGGLE" });
