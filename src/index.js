@@ -5,13 +5,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import App from "./views/App";
+import AppContainer from "./containers/AppContainer";
 import store from "./state/store";
 
 window.onload = function() {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <AppContainer />
     </Provider>,
     document.getElementById("app")
   );

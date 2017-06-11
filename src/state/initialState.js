@@ -18,6 +18,9 @@ const state = {
     },
   },
   ui: {
+    app: {
+      tab: "start",
+    },
     paint: {
       brightnessTool: {
         mode: "darken",
