@@ -1,3 +1,3 @@
 export getOnionFrameAbsolute from "./getOnionFrameAbsolute";
-export getSelectedPaintLayer from "./getSelectedPaintLayer";
+export getPaintLayer from "./getPaintLayer";
 export getTotalFrames from "./getTotalFrames";

@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { t } from "../../utils";
-import { getSelectedPaintLayer } from "../../state/selectors";
+import { getPaintLayer } from "../../state/selectors";
 import { layerDelete, modalHide } from "../../state/actions";
 
 const mapStateToProps = (state) => ({
-  layer: getSelectedPaintLayer(state),
+  layer: getPaintLayer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

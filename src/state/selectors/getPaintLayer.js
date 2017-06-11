@@ -2,9 +2,9 @@
 import { createSelector } from "reselect";
 import { getPaintLayerId, getFileLayers } from "./inputSelectors";
 
-const getSelectedPaintLayer = createSelector(
+const getPaintLayer = createSelector(
   [ getPaintLayerId, getFileLayers ],
   (id, layers) => layers.find(layer => layer.id === id)
 );
 
-export default getSelectedPaintLayer;
+export default getPaintLayer;
