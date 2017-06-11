@@ -1,6 +1,9 @@
 import React from "react";
 
-import FoldableContainer from "../../containers/FoldableContainer";
+import FoldableBox from "../../containers/FoldableBox";
+import PreviewboxContainer from "../../containers/PreviewboxContainer";
+import FrameboxContainer from "../../containers/FrameboxContainer";
+import LayerboxContainer from "../../containers/LayerboxContainer";
 import StatusbarContainer from "../../containers/StatusbarContainer";
 import ToolboxContainer from "../../containers/ToolboxContainer";
 import ToolContainer from "../../containers/ToolContainer";
@@ -11,11 +14,9 @@ const ScreenPaint = (props) => {
 
   const framebox = props.totalFrames == 1
                  ? null
-                 : <FoldableContainer
-                      component="FrameboxContainer"
-                      fold="frames"
-                      title={t("Frames")}
-                      id="FrameBox" />;
+                 : <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
+                     <FrameboxContainer />
+                   </FoldableBox>;
 
   return (
     <section className="screen paint">
@@ -32,10 +33,14 @@ const ScreenPaint = (props) => {
       </div>
       <div className="area right">
         <div id="layerboxhelper">
-          <FoldableContainer component="PreviewboxContainer" fold="preview" title={t("Preview")} id="PreviewBox" />
+          <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">
+            <PreviewboxContainer />
+          </FoldableBox>
           {framebox}
         </div>
-        <FoldableContainer component="LayerboxContainer" fold="layers" title={t("Layers")} id="LayerBox" />
+        <FoldableBox fold="layers" title={t("Layers")} id="LayerBox">
+          <LayerboxContainer />
+        </FoldableBox>
       </div>
       <div className="area statusbar">
         <StatusbarContainer />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ScreenStart = () => {
   return (
@@ -13,7 +13,7 @@ const ScreenStart = () => {
         </div>
       </div>
       <div className="area statusbar">
-        <div className="bar"></div>
+        <div className="bar">@@version</div>
       </div>
     </section>
   );

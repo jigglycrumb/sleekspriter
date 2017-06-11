@@ -25,3 +25,14 @@ rules:
     - always
   no-unused-vars:
     - warn
+  no-console:
+    - error
+    - allow:
+      - error
+      - warn
+      - log
+globals:
+  __dirname: false
+  console: false
+  module: false
+  require: false

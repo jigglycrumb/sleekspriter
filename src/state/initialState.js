@@ -19,7 +19,7 @@ const state = {
   },
   ui: {
     app: {
-      tab: "start",
+      tab: "paint",
     },
     paint: {
       brightnessTool: {

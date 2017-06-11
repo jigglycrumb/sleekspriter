@@ -1,6 +1,11 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const metadata = require("./metadata.json");
+
+const replaceConfig = Object.keys(metadata).map(function(key) {
+  return {search: key, replace: metadata[key] };
+});
 
 const config = {
   context: path.resolve(__dirname, "."),
@@ -15,6 +20,12 @@ const config = {
   },
   module: {
     rules: [{
+      test: /\.(html|js)$/,
+      use: [{
+        loader: "string-replace-loader",
+        query: { multiple: replaceConfig }
+      }]
+    },{
       test: /\.(css|less)$/,
       use: [{
         loader: "style-loader"
@@ -82,7 +93,7 @@ const config = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      template: "src/index.html"
+      template: "src/index.html",
     })
   ]
 };

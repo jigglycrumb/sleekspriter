@@ -1,15 +1,6 @@
 import React from "react";
 import classnames from "classnames";
 import { connect } from "react-redux";
-import FrameboxContainer from "./FrameboxContainer";
-import LayerboxContainer from "./LayerboxContainer";
-import PreviewboxContainer from "./PreviewboxContainer";
-
-const components = {
-  FrameboxContainer,
-  LayerboxContainer,
-  PreviewboxContainer,
-};
 
 import {
   boxFold
@@ -27,10 +18,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const FoldableContainer = (props) => {
+const FoldableBox = (props) => {
   const
     folded = props.folds[props.fold],
-    FoldComponent = components[props.component],
     handleClasses = classnames({
       "foldable-handle": true,
       folded,
@@ -38,7 +28,7 @@ const FoldableContainer = (props) => {
     innerBox = folded === true
              ? null
              : <div className="foldable-fold">
-                 <FoldComponent {...props} />
+                 {props.children}
                </div>;
 
   return (
@@ -52,4 +42,4 @@ const FoldableContainer = (props) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FoldableContainer);
+)(FoldableBox);

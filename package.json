@@ -1,6 +1,6 @@
 {
   "name": "pixelartstudio",
-  "longname": "Pixelart Studio",
+  "longname": "Pixel Art Studio",
   "version": "0.2.16",
   "description": "A pixel art editor",
   "private": true,
@@ -27,6 +27,7 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
+    "string-replace-loader": "^1.2.0",
     "style-loader": "^0.14.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.2.1",
