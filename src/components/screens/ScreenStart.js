@@ -2,9 +2,6 @@ import React from "react";
 
 class ScreenStart extends React.Component {
   render() {
-
-    console.log(this.props);
-
     return (
       <section className="screen start">
         <div className="splash">

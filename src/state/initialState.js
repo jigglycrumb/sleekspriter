@@ -19,7 +19,7 @@ const state = {
   },
   ui: {
     app: {
-      tab: "paint",
+      tab: "start",
       modal: {
         visible: false,
         dialog: null,

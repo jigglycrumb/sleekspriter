@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { modalHide } from "../../state/actions";
+import { GridCanvas } from "../canvases";
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -13,8 +14,8 @@ class ModalNewFile extends React.Component {
     super(props);
 
     this.state = {
-      frames: { x: 1, y: 1 },
-      pixels: { x: 1, y: 1 }
+      frames: { x: 3, y: 3 },
+      pixels: { x: 64, y: 64 }
     };
   }
 
@@ -34,11 +35,11 @@ class ModalNewFile extends React.Component {
           <div className="new-file-preview">
             <div className="new-file-preview-headline">Layout preview</div>
             <div className="new-file-preview-content" style={wrapperCss}>
-              {/*<GridCanvas
+              <GridCanvas
                 width={wrapperCss.width}
                 height={wrapperCss.height}
-                columns={this.state.frames.x}
-                rows={this.state.frames.y} />*/}
+                columns={+this.state.frames.x}
+                rows={+this.state.frames.y} />
             </div>
           </div>
 
@@ -62,7 +63,7 @@ class ModalNewFile extends React.Component {
           </ul>
         </div>
         <div className="actions">
-          <button onClick={this.createFile}>Ok</button>
+          <button onClick={::this.createFile}>Ok</button>
           <button onClick={this.props.hide}>Cancel</button>
         </div>
       </div>
@@ -75,6 +76,10 @@ class ModalNewFile extends React.Component {
       pixels: { x: this.refs.pixelsX.value, y: this.refs.pixelsY.value },
     };
     this.setState(size);
+  }
+
+  createFile() {
+    console.log("createFile");
   }
 }
 

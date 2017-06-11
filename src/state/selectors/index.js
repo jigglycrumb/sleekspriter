@@ -1,7 +1,3 @@
-import getOnionFrameAbsolute from "./getOnionFrameAbsolute";
-import getTotalFrames from "./getTotalFrames";
-
-export {
-  getOnionFrameAbsolute,
-  getTotalFrames,
-};
+export getOnionFrameAbsolute from "./getOnionFrameAbsolute";
+export getSelectedPaintLayer from "./getSelectedPaintLayer";
+export getTotalFrames from "./getTotalFrames";

@@ -5,6 +5,7 @@ export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer) => ({ type: "LAYER_ADD", frame, layer });
+export const layerDelete = (layer) => ({ type: "LAYER_DELETE", layer });
 export const layerName = (layer, name) => ({ type: "LAYER_NAME", layer, name });
 export const layerSelect = (layer) => ({ type: "LAYER_SELECT", layer });
 export const layerOpacity = (layer, opacity) => ({ type: "LAYER_OPACITY", layer, opacity });
