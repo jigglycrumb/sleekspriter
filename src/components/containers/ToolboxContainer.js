@@ -5,17 +5,13 @@ import ToolboxTool from "../paint/ToolboxTool";
 import { toolSelect } from "../../state/actions";
 import { t } from "../../utils";
 
-const mapStateToProps = (state) => {
-  return {
-    tool: state.ui.paint.tool
-  };
-};
+const mapStateToProps = (state) => ({
+  tool: state.ui.paint.tool
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toolSelect: (tool) => dispatch(toolSelect(tool))
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  toolSelect: (tool) => dispatch(toolSelect(tool))
+});
 
 class ToolboxContainer extends React.Component {
   render() {

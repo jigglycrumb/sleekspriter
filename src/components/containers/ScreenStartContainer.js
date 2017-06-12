@@ -4,16 +4,13 @@ import {
   modalShow
 } from "../../state/actions";
 
-const mapStateToProps = (state) => {
-  return {
-  };
-};
+const mapStateToProps = (state) => ({
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    modalShow: (dialog) => dispatch(modalShow(dialog))
-  };
-};
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  modalShow: (dialog) => dispatch(modalShow(dialog))
+});
 
 export default connect(
   mapStateToProps,

@@ -4,7 +4,7 @@ import { t } from "../../utils";
 
 class Layerbox extends React.Component {
   render() {
-    let deleteButtonDisabled = this.props.layers.length <= 1; //this.props.layers.frame.length <= 1;
+    let deleteButtonDisabled = this.props.layers.length <= 1;
 
     return (
       <div>

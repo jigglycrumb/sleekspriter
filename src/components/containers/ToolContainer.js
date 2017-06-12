@@ -12,27 +12,23 @@ import {
   zoomFit,
 } from "../../state/actions";
 
-const mapStateToProps = (state) => {
-  return {
-    tool: state.ui.paint.tool,
-    color: state.ui.paint.color,
-    zoom: state.ui.paint.zoom,
-    fileSize: state.file.size,
-    brightnessTool: state.ui.paint.brightnessTool,
-  };
-};
+const mapStateToProps = (state) => ({
+  tool: state.ui.paint.tool,
+  color: state.ui.paint.color,
+  zoom: state.ui.paint.zoom,
+  fileSize: state.file.size,
+  brightnessTool: state.ui.paint.brightnessTool,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    brightnessToolIntensity: (intensity) => dispatch(brightnessToolIntensity(intensity)),
-    brightnessToolMode: (mode) => dispatch(brightnessToolMode(mode)),
-    brushColor: (color) => dispatch(brushColor(color)),
-    zoomFit: (fileSize) => dispatch(zoomFit(fileSize)),
-    zoomIn: () => dispatch(zoomIn()),
-    zoomOut: () => dispatch(zoomOut()),
-    zoomSelect: (zoom) => dispatch(zoomSelect(zoom)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  brightnessToolIntensity: (intensity) => dispatch(brightnessToolIntensity(intensity)),
+  brightnessToolMode: (mode) => dispatch(brightnessToolMode(mode)),
+  brushColor: (color) => dispatch(brushColor(color)),
+  zoomFit: (fileSize) => dispatch(zoomFit(fileSize)),
+  zoomIn: () => dispatch(zoomIn()),
+  zoomOut: () => dispatch(zoomOut()),
+  zoomSelect: (zoom) => dispatch(zoomSelect(zoom)),
+});
 
 const ToolContainer = (props) => {
   const ToolComponent = components[props.tool];

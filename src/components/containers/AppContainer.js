@@ -1,16 +1,13 @@
 import { connect } from "react-redux";
 import App from "../common/App";
 
-const mapStateToProps = (state) => {
-  return {
-    tab: state.ui.app.tab
-  };
-};
+const mapStateToProps = (state) => ({
+  tab: state.ui.app.tab,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+
+});
 
 export default connect(
   mapStateToProps,

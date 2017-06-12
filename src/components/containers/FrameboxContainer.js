@@ -9,24 +9,20 @@ import {
   onionToggle,
 } from "../../state/actions";
 
-const mapStateToProps = (state) => {
-  return {
-    frames: state.file.frames,
-    selected: state.ui.paint.frame,
-    onion: state.ui.paint.onion,
-    totalFrames: getTotalFrames(state),
-    onionFrameAbsolute: getOnionFrameAbsolute(state),
-  };
-};
+const mapStateToProps = (state) => ({
+  frames: state.file.frames,
+  selected: state.ui.paint.frame,
+  onion: state.ui.paint.onion,
+  totalFrames: getTotalFrames(state),
+  onionFrameAbsolute: getOnionFrameAbsolute(state),
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    frameSelect: (frame) => dispatch(frameSelect(frame)),
-    onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
-    onionMode: (mode) => dispatch(onionMode(mode)),
-    onionToggle: () => dispatch(onionToggle()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  frameSelect: (frame) => dispatch(frameSelect(frame)),
+  onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
+  onionMode: (mode) => dispatch(onionMode(mode)),
+  onionToggle: () => dispatch(onionToggle()),
+});
 
 export default connect(
   mapStateToProps,

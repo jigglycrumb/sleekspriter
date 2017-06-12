@@ -1,16 +1,13 @@
 import { connect } from "react-redux";
 import Previewbox from "../paint/Previewbox";
 
-const mapStateToProps = (state) => {
-  return {
-  };
-};
+const mapStateToProps = (state) => ({
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+});
 
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+
+});
 
 export default connect(
   mapStateToProps,

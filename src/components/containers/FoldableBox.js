@@ -6,17 +6,13 @@ import {
   boxFold
 } from "../../state/actions";
 
-const mapStateToProps = (state) => {
-  return {
-    folds: state.ui.paint.fold,
-  };
-};
+const mapStateToProps = (state) => ({
+  folds: state.ui.paint.fold,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    boxFold: (box) => dispatch(boxFold(box)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  boxFold: (box) => dispatch(boxFold(box)),
+});
 
 const FoldableBox = (props) => {
   const

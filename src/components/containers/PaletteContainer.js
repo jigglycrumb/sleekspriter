@@ -8,18 +8,14 @@ import {
   paletteSelect,
 } from "../../state/actions";
 
-const mapStateToProps = (state) => {
-  return {
-    selected: state.ui.paint.palette,
-  };
-};
+const mapStateToProps = (state) => ({
+  selected: state.ui.paint.palette,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    paletteSelect: (palette) => dispatch(paletteSelect(palette)),
-    brushColor: (color) => dispatch(brushColor(color)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  paletteSelect: (palette) => dispatch(paletteSelect(palette)),
+  brushColor: (color) => dispatch(brushColor(color)),
+});
 
 const PaletteContainer = (props) => {
   const palette = palettes[props.selected];
