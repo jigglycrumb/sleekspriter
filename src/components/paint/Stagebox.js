@@ -70,25 +70,23 @@ class Stagebox extends React.Component {
 
   mouseout() {
     this.refs.cursorCanvas.clear();
+
+    document.getElementById("StatusBarCursorX").innerHTML = "X: 0";
+    document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
   }
 
 
 
 
   updateCursor(point) {
-    console.log(point);
-
     if((point.x > 0 && point.y > 0) &&
     (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
-      console.log("updating cursor!");
-
       // update cursor position
       this.cursor = point;
       this.refs.cursorCanvas.drawPixelCursor(point.x, point.y);
 
-      document.getElementById("StatusBarCursorX").innerHTML = "X: " + point.x;
-      document.getElementById("StatusBarCursorY").innerHTML = "Y: " + point.y;
-
+      document.getElementById("StatusBarCursorX").innerHTML = `X: ${point.x}`;
+      document.getElementById("StatusBarCursorY").innerHTML = `Y: ${point.y}`;
     }
   }
 

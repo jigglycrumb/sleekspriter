@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Layerbox from "../paint/Layerbox";
+import { getFrameLayers } from "../../state/selectors";
 
 import {
   layerAdd,
@@ -13,7 +14,7 @@ import {
 const mapStateToProps = (state) => {
   return {
     selected: state.ui.paint.layer,
-    layers: state.file.layers,
+    layers: getFrameLayers(state),
   };
 };
 

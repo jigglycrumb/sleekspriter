@@ -36,7 +36,7 @@ const state = {
         frames: false,
         layers: false,
       },
-      frame: null, // this causes React warnings
+      frame: 1, // null, // this causes React warnings
       grid: true,
       layer: null,
       onion: {
