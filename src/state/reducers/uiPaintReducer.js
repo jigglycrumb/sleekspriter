@@ -1,3 +1,4 @@
+import _ from "lodash";
 import initialState from "../initialState";
 import config from "../../config";
 
@@ -6,8 +7,6 @@ const { zoom, offset } = config;
 function uiPaintReducer(state = initialState.ui.paint, action) {
 
   console.log(`uiPaintReducer#${action.type}`);
-
-  let newZoom;
 
   switch (action.type) {
   case "BRIGHTNESSTOOL_INTENSITY":
@@ -24,6 +23,10 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, grid: !state.grid };
   case "LAYER_SELECT":
     return { ...state, layer: +action.layer };
+  case "LAYER_SELECT_TOP": {
+    const layer = _.max(action.layers, function(layer) { return layer.z; });
+    return { ...state, layer: layer.id };
+  }
   case "ONION_FRAME":
     return { ...state, onion: { ...state.onion, frame: { ...state.onion.frame, [action.mode]: +action.frame }}};
   case "ONION_MODE":
@@ -34,23 +37,25 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, palette: action.palette };
   case "TOOL_SELECT":
     return { ...state, tool: action.tool };
-  case "ZOOM_IN":
-    newZoom = state.zoom + 1;
+  case "ZOOM_IN": {
+    let newZoom = state.zoom + 1;
     if(newZoom > zoom.max) newZoom = zoom.max;
     return { ...state, zoom: newZoom };
-  case "ZOOM_OUT":
-    newZoom = state.zoom - 1;
+  }
+  case "ZOOM_OUT": {
+    let newZoom = state.zoom - 1;
     if(newZoom < zoom.min) newZoom = zoom.min;
     return { ...state, zoom: newZoom };
+  }
   case "ZOOM_SELECT":
     return { ...state, zoom: +action.zoom };
-  case "ZOOM_FIT":
-    newZoom = Math.floor((window.innerHeight - offset.top - offset.bottom) / action.fileSize.height);
+  case "ZOOM_FIT": {
+    let newZoom = Math.floor((window.innerHeight - offset.top - offset.bottom) / action.fileSize.height);
     if((action.fileSize.width * newZoom) > (window.innerWidth - offset.left - offset.right)) {
       newZoom = Math.floor((window.innerWidth - offset.left - offset.right) / action.fileSize.width);
     }
     return { ...state, zoom: newZoom };
-
+  }
   default:
     return state;
   }

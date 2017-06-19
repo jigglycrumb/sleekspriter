@@ -23,7 +23,7 @@ class Layerbox extends React.Component {
         })}
         </div>
         <div className="actions">
-          <button title={t("New layer above selected layer")} className="tiny transparent" onClick={::this.props.layerAdd}>
+          <button title={t("New layer above selected layer")} className="tiny transparent" onClick={::this.layerAdd}>
             <i className="flaticon-plus25"></i>
           </button>
           <button title={t("Delete selected layer")} className="tiny transparent" disabled={deleteButtonDisabled} onClick={::this.confirmLayerDelete}>
@@ -36,6 +36,7 @@ class Layerbox extends React.Component {
 
   componentDidMount() {
     this.fitHeight();
+    this.props.layerSelectTop(this.props.layers);
   }
 
   componentDidUpdate() {
@@ -54,6 +55,11 @@ class Layerbox extends React.Component {
 
   confirmLayerDelete() {
     this.props.modalShow("ModalConfirmDeleteLayer");
+  }
+
+  layerAdd() {
+    this.props.layerAdd(this.props.frame, this.props.selected, this.props.layers);
+    // this.props.layerSelectTop(this.props.layers);
   }
 }
 
