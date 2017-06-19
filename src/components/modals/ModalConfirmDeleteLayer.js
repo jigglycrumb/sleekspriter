@@ -1,20 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
 import { t } from "../../utils";
-import { getPaintLayer } from "../../state/selectors";
-import { layerDelete, modalHide } from "../../state/actions";
+import {
+  getPaintLayer,
+  getFrameLayers,
+} from "../../state/selectors";
+import {
+  layerDelete,
+  layerSelectTop,
+  modalHide
+} from "../../state/actions";
 
 const mapStateToProps = (state) => ({
   layer: getPaintLayer(state),
+  layers: getFrameLayers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   layerDelete: (layer) => dispatch(layerDelete(layer)),
+  layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
   hide: () => dispatch(modalHide()),
 });
 
 class ModalConfirmDeleteLayer extends React.Component {
   render() {
+    if(this.props.layer === null || this.props.layer === undefined) return null;
+
     const { name } = this.props.layer;
     return (
       <div className="dialog">
@@ -30,7 +41,10 @@ class ModalConfirmDeleteLayer extends React.Component {
 
   layerDelete() {
     this.props.layerDelete(this.props.layer.id);
-    // TODO: Select top layer or layer above deleted
+    setTimeout(() => {
+      this.props.layerSelectTop(this.props.layers);
+      this.props.hide();
+    }, 100);
   }
 }
 
