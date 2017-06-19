@@ -4,7 +4,7 @@ import { t } from "../../utils";
 
 class Layerbox extends React.Component {
   render() {
-    let deleteButtonDisabled = this.props.layers.length <= 1;
+    const deleteButtonDisabled = this.props.layers.length <= 1 || this.props.selected === null;
 
     return (
       <div>
@@ -59,7 +59,7 @@ class Layerbox extends React.Component {
 
   layerAdd() {
     this.props.layerAdd(this.props.frame, this.props.selected, this.props.layers);
-    // this.props.layerSelectTop(this.props.layers);
+    // TODO: select newly added layer
   }
 }
 
