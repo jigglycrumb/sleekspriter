@@ -1,7 +1,4 @@
 const state = {
-  cache: {
-    layersByFrame: [],
-  },
   file: {
     frames: {
       x: 3,
@@ -19,7 +16,7 @@ const state = {
   },
   ui: {
     app: {
-      tab: "paint",
+      tab: "start",
       modal: {
         visible: false,
         dialog: null,

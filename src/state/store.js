@@ -1,12 +1,10 @@
 import { combineReducers, createStore } from "redux";
 import {
-  cacheReducer,
   fileReducer,
   uiReducer,
 } from "./reducers";
 
 const rootReducer = combineReducers({
-  cache: cacheReducer,
   file: fileReducer,
   ui: uiReducer,
 });
