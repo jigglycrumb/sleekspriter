@@ -49,6 +49,7 @@ const bindings = {
       action: (dispatch) => dispatch(onionToggle()),
     },
   ],
+  start: [],
 };
 
 

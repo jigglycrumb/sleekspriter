@@ -16,14 +16,14 @@ Click to rename layer: Click to rename layer
 Layer opacity: Layer opacity
 New layer above selected layer: New layer above selected layer
 Delete selected layer: Delete selected layer
-Brush Tool: Brush Tool (%s)
-Eraser Tool: Eraser Tool (%s)
-Eyedropper Tool: Eyedropper Tool (%s)
-Selection Tool: Selection Tool (%s)
-Paint Bucket Tool: Paint Bucket Tool (%s)
-Brightness Tool: Brightness Tool (%s)
-Move Tool: Move Tool (%s)
-Zoom Tool: Zoom Tool (%s)
+Brush Tool: Brush Tool (${key})
+Eraser Tool: Eraser Tool (${key})
+Eyedropper Tool: Eyedropper Tool (${key})
+Selection Tool: Selection Tool (${key})
+Paint Bucket Tool: Paint Bucket Tool (${key})
+Brightness Tool: Brightness Tool (${key})
+Move Tool: Move Tool (${key})
+Zoom Tool: Zoom Tool (${key})
 Confirmation needed: Confirmation needed
 Are you sure you want to delete the layer ${name}?: Are you sure you want to delete the layer ${name}?
 Delete layer: Delete layer

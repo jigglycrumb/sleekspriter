@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
-import App from "../common/App";
-
 import { Hotkeys } from "../../classes";
-
-// console.log(Hotkeys);
-
+import App from "../common/App";
 
 const mapStateToProps = (state) => ({
   tab: state.ui.app.tab,
