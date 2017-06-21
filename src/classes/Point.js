@@ -33,7 +33,7 @@ class Point {
 
 export default Point;
 
-// needs store, should be un-coupled
+// needs file size from store, should be un-coupled
 /**
  * Moves a point by a given distance, wrapping around if the canvas end is reached
  * @param {Object} distance - Point with distance coordinates

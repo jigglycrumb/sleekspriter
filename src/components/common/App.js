@@ -6,7 +6,11 @@ import ScreenStartContainer from "../containers/ScreenStartContainer";
 import ScreenHelper from "../screens/ScreenHelper";
 import ScreenBlocker from "../screens/ScreenBlocker";
 
+import { Hotkeys } from "../../classes";
+
 const App = (props) => {
+
+  Hotkeys.bind(props.tab);
 
   const windowClasses = classnames({
     "window": true,
