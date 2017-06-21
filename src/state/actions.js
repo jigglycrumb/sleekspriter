@@ -6,6 +6,8 @@ export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer, layers) => ({ type: "LAYER_ADD", frame, layer, layers });
 export const layerDelete = (layer) => ({ type: "LAYER_DELETE", layer });
+export const layerMoveDown = (frame, layer, z) => ({ type: "LAYER_MOVE_DOWN", frame, layer, z });
+export const layerMoveUp = (frame, layer, z) => ({ type: "LAYER_MOVE_UP", frame, layer, z });
 export const layerName = (layer, name) => ({ type: "LAYER_NAME", layer, name });
 export const layerSelect = (layer) => ({ type: "LAYER_SELECT", layer });
 export const layerSelectTop = (layers) => ({ type: "LAYER_SELECT_TOP", layers });

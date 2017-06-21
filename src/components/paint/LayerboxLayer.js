@@ -11,7 +11,7 @@ class LayerboxLayer extends React.Component {
         LayerBoxLayer: true,
         selected: this.props.selected,
         first: this.props.position === 0,
-        last: this.props.position === this.props.layerCount - 1, // this.props.position === this.props.ui.layers.frame.length - 1,
+        last: this.props.position === this.props.layerCount - 1,
       });
 
     return (
@@ -52,11 +52,11 @@ class LayerboxLayer extends React.Component {
   }
 
   moveUp() {
-    console.log('move up');
+    this.props.layerMoveUp(this.props.layer.frame, this.props.layer.id, this.props.layer.z);
   }
 
   moveDown() {
-    console.log('move down');
+    this.props.layerMoveDown(this.props.layer.frame, this.props.layer.id, this.props.layer.z);
   }
 }
 

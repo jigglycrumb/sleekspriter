@@ -35,6 +35,37 @@ function fileLayersReducer(state = initialState.file.layers, action) {
 
     return [...layersBelow, ...layersAbove, ...ignoredLayers];
   }
+
+  case "LAYER_MOVE_DOWN": {
+    const
+      layerToMove = state.find(layer => layer.id === action.layer),
+      layerBelow = state.find(layer => layer.frame === action.frame && layer.z === action.z - 1),
+      ignoredLayers = state.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerBelow.id].includes(layer.id));
+
+    if(layerBelow) {
+      layerToMove.z--;
+      layerBelow.z++;
+
+      return [...ignoredLayers, layerToMove, layerBelow];
+    }
+    else return state;
+  }
+
+  case "LAYER_MOVE_UP": {
+    const
+      layerToMove = state.find(layer => layer.id === action.layer),
+      layerAbove = state.find(layer => layer.frame === action.frame && layer.z === action.z + 1),
+      ignoredLayers = state.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerAbove.id].includes(layer.id));
+
+    if(layerAbove) {
+      layerToMove.z++;
+      layerAbove.z--;
+
+      return [...ignoredLayers, layerToMove, layerAbove];
+    }
+    else return state;
+  }
+
   case "LAYER_NAME":
     return state.map(function(layer) {
       if(layer.id === action.layer) {

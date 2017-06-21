@@ -16,6 +16,8 @@ class Layerbox extends React.Component {
             layerCount={this.props.layers.length}
             position={i}
             selected={layer.id === this.props.selected}
+            layerMoveDown={this.props.layerMoveDown}
+            layerMoveUp={this.props.layerMoveUp}
             layerName={this.props.layerName}
             layerOpacity={this.props.layerOpacity}
             layerSelect={this.props.layerSelect}

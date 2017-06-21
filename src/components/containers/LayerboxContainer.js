@@ -4,6 +4,8 @@ import { getFrameLayersZSorted } from "../../state/selectors";
 
 import {
   layerAdd,
+  layerMoveDown,
+  layerMoveUp,
   layerName,
   layerOpacity,
   layerSelect,
@@ -20,6 +22,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   layerAdd: (frame, layer, layers) => dispatch(layerAdd(frame, layer, layers)),
+  layerMoveDown: (frame, layer, z) => dispatch(layerMoveDown(frame, layer, z)),
+  layerMoveUp: (frame, layer, z) => dispatch(layerMoveUp(frame, layer, z)),
   layerName: (layer, name) => dispatch(layerName(layer, name)),
   layerOpacity: (layer, opacity) => dispatch(layerOpacity(layer, opacity)),
   layerSelect: (layer) => dispatch(layerSelect(layer)),
