@@ -1,3 +1,4 @@
+Tools: Tools
 Preview: Preview
 Frames: Frames
 Frame: Frame
@@ -30,4 +31,24 @@ Confirmation needed: Confirmation needed
 Are you sure you want to delete the layer ${name}?: Are you sure you want to delete the layer ${name}?
 Delete layer: Delete layer
 Cancel: Cancel
+pixels: pixels
 Toggle grid: Toggle grid (${key})
+Click a pixel to erase it.: Click a pixel to erase it.
+Hex: Hex
+RGB: RGB
+transparent: transparent
+Click any non-transparent pixel to pick its color.: Click any non-transparent pixel to pick its color.
+Select some pixels to work with!: Select some pixels to work with!
+Lighten pixels: Lighten pixels
+Darken pixels: Darken pixels
+Make existing pixels brighter or darker with this brush.: Make existing pixels brighter or darker with this brush.
+Darken: Darken
+Lighten: Lighten
+by: by
+Move pixels of a layer by dragging.: Move pixels of a layer by dragging.
+Zoom in: Zoom in
+Zoom out: Zoom out
+Zoom ×: Zoom ×
+Fit to screen: Fit to screen
+A pixel in your sprite is now ${size} pixels on your screen.: A pixel in your sprite is now ${size} pixels on your screen.
+${palette} (${size} colours): ${palette} (${size} colours)

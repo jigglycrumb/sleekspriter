@@ -1,5 +1,5 @@
 import React from "react";
-import { capitalizeFirstLetter } from "../../../utils";
+import { capitalizeFirstLetter, t } from "../../../utils";
 
 class BrightnessTool extends React.Component {
   render() {
@@ -19,20 +19,20 @@ class BrightnessTool extends React.Component {
     return (
       <div id="Brightness-Tool" className="ToolComponent">
         <i className="icon flaticon-sun4"></i>
-        <button className={lClass} disabled={lDisabled} title="Lighten pixels" onClick={::this.selectLightenTool}>
+        <button className={lClass} disabled={lDisabled} title={t("Lighten pixels")} onClick={::this.selectLightenTool}>
           <i className="flaticon-clear325"></i>
         </button>
-        <button className={dClass} disabled={dDisabled} title="Darken pixels" onClick={::this.selectDarkenTool}>
+        <button className={dClass} disabled={dDisabled} title={t("Darken pixels")} onClick={::this.selectDarkenTool}>
           <i className="flaticon-clear3"></i>
         </button>
 
         <input type="range" min="1" max="100" value={this.props.brightnessTool.intensity} onChange={::this.setIntensity} />
-        <span>{capitalizeFirstLetter(this.props.brightnessTool.mode)} by</span>
+        <span>{t(capitalizeFirstLetter(this.props.brightnessTool.mode))} {t("by")}</span>
         <input type="number" min="1" max="100" value={this.props.brightnessTool.intensity} onChange={::this.setIntensity} />
         <span>%</span>
 
         <span className="spacer"></span>
-        <span className="hint">Make existing pixels brighter or darker with this brush.</span>
+        <span className="hint">{t("Make existing pixels brighter or darker with this brush.")}</span>
       </div>
     );
   }

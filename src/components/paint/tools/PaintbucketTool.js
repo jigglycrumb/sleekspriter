@@ -19,7 +19,7 @@ class PaintbucketTool extends React.Component {
 
     return (
       <div id="PaintBucket-Tool" className="ToolComponent">
-        <i className="icon flaticon-paint2"></i>
+        <i className="icon flaticon-paint2" style={{position: "relative", left: "-0.2em"}}></i>
         <Colorswatch color={this.props.color} action={::this.togglePicker} />
         {picker}
         <span className="spacer"/>

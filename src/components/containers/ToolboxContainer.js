@@ -32,7 +32,7 @@ class ToolboxContainer extends React.Component {
 
     return (
       <div id="ToolBox">
-        <h4>Tools</h4>
+        <h4>{t("Tools")}</h4>
         <div>
           {tools.map(function(tool) {
             return <ToolboxTool

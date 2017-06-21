@@ -1,4 +1,5 @@
 import React from "react";
+import { t } from "../../../utils";
 import config from "../../../config";
 
 const { min, max } = config.zoom;
@@ -12,18 +13,18 @@ class ZoomTool extends React.Component {
     return (
       <div id="Zoom-Tool" className="ToolComponent">
         <i className="icon flaticon-magnifier5"></i>
-        <button className="small" title="Zoom in" onClick={::this.props.zoomIn} disabled={zoomInDisabled}>
+        <button className="small" title={t("Zoom in")} onClick={::this.props.zoomIn} disabled={zoomInDisabled}>
           <i className="flaticon-plus25"></i>
         </button>
-        <button className="small" title="Zoom out" onClick={::this.props.zoomOut} disabled={zoomOutDisabled}>
+        <button className="small" title={t("Zoom out")} onClick={::this.props.zoomOut} disabled={zoomOutDisabled}>
           <i className="flaticon-minus18"></i>
         </button>
         <input type="range" min={min} max={max} value={this.props.zoom} onChange={::this.zoomSelect} />
-        <span>Zoom &times;</span>
+        <span>{t("Zoom ×")}</span>
         <input type="number" min={min} max={max} value={this.props.zoom} onChange={::this.zoomSelect} />
-        <button className="small" onClick={::this.zoomFit}>Fit to screen</button>
+        <button className="small" onClick={::this.zoomFit}>{t("Fit to screen")}</button>
         <span className="spacer"></span>
-        <span className="hint">A pixel in your sprite is now {this.props.zoom} pixels on your screen.</span>
+        <span className="hint">{t("A pixel in your sprite is now ${size} pixels on your screen.", {size: this.props.zoom})}</span>
       </div>
     );
   }

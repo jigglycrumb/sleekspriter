@@ -1,4 +1,5 @@
 import React from "react";
+import { t } from "../../utils";
 
 class PalettePicker extends React.Component {
   render() {
@@ -11,7 +12,7 @@ class PalettePicker extends React.Component {
           {this.props.palettes.map(function(palette, i) {
             return (
               <li key={i} data-palette={i} onClick={::this.selectPalette}>
-                {palette.title} ({palette.colors.length} colours)
+                {t("${palette} (${size} colours)", {palette: palette.title, size: palette.colors.length})}
               </li>
             );
           }, this)}
