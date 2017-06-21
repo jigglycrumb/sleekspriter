@@ -1,12 +1,14 @@
 Preview: Preview
 Frames: Frames
 Frame: Frame
-Onion Skin: Onion Skin
+Toggle Onion Skinning: Toggle Onion Skinning (${key})
+Onion Skinning: Onion Skinning
 Fixed: Fixed
 Onion is always frame: Onion is always frame
 Relative: Relative
 Onion is: Onion is
 frame: frame
+frames: frames
 ahead: ahead
 behind: behind
 Layers: Layers
@@ -28,3 +30,4 @@ Confirmation needed: Confirmation needed
 Are you sure you want to delete the layer ${name}?: Are you sure you want to delete the layer ${name}?
 Delete layer: Delete layer
 Cancel: Cancel
+Toggle grid: Toggle grid (${key})

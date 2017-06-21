@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { t } from "../../utils";
 
 class FrameboxOnionPanel extends React.Component {
   render() {
@@ -25,22 +26,22 @@ class FrameboxOnionPanel extends React.Component {
         relative: true,
         hidden: this.props.onion.mode != "relative",
       }),
-      frameLabel = this.props.onion.frame.relative == 1 ? " frame " : " frames ";
+      frameLabel = " " + (this.props.onion.frame.relative == 1 ? t("frame") : t("frames")) + " ";
 
     return (
       <div className="onion-panel">
-        <h4>Onion Skin</h4>
-        <div className={fixedTabClasses} onClick={this.onionMode.bind(this, "fixed")}>Fixed</div>
-        <div className={relativeTabClasses} onClick={this.onionMode.bind(this, "relative")}>Relative</div>
+        <h4>{t("Onion Skinning")}</h4>
+        <div className={fixedTabClasses} onClick={this.onionMode.bind(this, "fixed")}>{t("Fixed")}</div>
+        <div className={relativeTabClasses} onClick={this.onionMode.bind(this, "relative")}>{t("Relative")}</div>
         <div className={fixedPanelClasses}>
-          Onion is always frame <input type="number" min="1" max={this.props.totalFrames} value={this.props.onion.frame.fixed} onChange={::this.onionFrameFixed}/>
+          {t("Onion is always frame")} <input type="number" min="1" max={this.props.totalFrames} value={this.props.onion.frame.fixed} onChange={::this.onionFrameFixed}/>
         </div>
         <div className={relativePanelClasses}>
-          Onion is <input ref="onionRelativeNumber" type="number" min="1" max={this.props.totalFrames} value={Math.abs(this.props.onion.frame.relative)} onChange={::this.onionFrameRelative} />
+          {t("Onion is")} <input ref="onionRelativeNumber" type="number" min="1" max={this.props.totalFrames} value={Math.abs(this.props.onion.frame.relative)} onChange={::this.onionFrameRelative} />
           {frameLabel}
           <select ref="onionRelativePrefix" onChange={::this.onionFrameRelative}>
-            <option value="+">ahead</option>
-            <option value="-">behind</option>
+            <option value="+">{t("ahead")}</option>
+            <option value="-">{t("behind")}</option>
           </select>
         </div>
       </div>

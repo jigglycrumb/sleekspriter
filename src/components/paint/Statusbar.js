@@ -1,6 +1,10 @@
 import React from "react";
 import classnames from "classnames";
 
+import { t } from "../../utils";
+import { Hotkeys } from "../../classes";
+const gridHotkey = Hotkeys.bindings.paint[8].key;
+
 const Statusbar = (props) => {
 
   const gridButtonClasses = classnames({
@@ -32,7 +36,7 @@ const Statusbar = (props) => {
           <i className="flaticon-arrow"></i>
         </button>
 
-        <button id="toggleGrid" className={gridButtonClasses} onClick={props.gridToggle}>
+        <button id="toggleGrid" className={gridButtonClasses} onClick={props.gridToggle} title={t("Toggle grid", {key: gridHotkey})}>
           <i className="flaticon-3x3"></i>
         </button>
       </div>

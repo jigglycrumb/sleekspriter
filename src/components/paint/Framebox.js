@@ -3,6 +3,10 @@ import classnames from "classnames";
 import FrameboxFrame from "./FrameboxFrame.js";
 import FrameboxOnionPanel from "./FrameboxOnionPanel";
 
+import { t } from "../../utils";
+import { Hotkeys } from "../../classes";
+const onionHotkey = Hotkeys.bindings.paint[9].key;
+
 class Framebox extends React.Component {
   render() {
     const
@@ -30,8 +34,6 @@ class Framebox extends React.Component {
 
     for(var i=0; i < this.props.totalFrames; i++) frames.push(i+1);
 
-    // var onionToggleTitle = 'Toggle Onion Skinning ('+hotkeys.actions.paint.toggleOnion.key+')';
-
     return (
       <div>
         <div id="FrameBoxFrames">
@@ -46,12 +48,12 @@ class Framebox extends React.Component {
         }, this)}
         </div>
         <div className="actions">
-          Frame&nbsp;
+          {t("Frame")}&nbsp;
           <input type="number" className="frame-number" min="1" max={this.props.totalFrames} value={this.props.selected} onChange={::this.frameSelect} />
           &nbsp;/&nbsp;
           {this.props.totalFrames}
 
-          <button className={onionButtonClasses} onClick={::this.toggleOnion}>
+          <button className={onionButtonClasses} onClick={::this.toggleOnion} title={t("Toggle Onion Skinning", {key: onionHotkey})}>
             <i className="flaticon-vegetable38"></i>
           </button>
         </div>
