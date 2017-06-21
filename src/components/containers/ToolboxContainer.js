@@ -21,7 +21,7 @@ class ToolboxContainer extends React.Component {
       { id: "EraserTool", icon: "flaticon-double31", title: t("Eraser Tool") },
       { id: "EyedropperTool", icon: "flaticon-eyedropper2", title: t("Eyedropper Tool") },
       { id: "RectangularSelectionTool", icon: "flaticon-selection7", title: t("Selection Tool") },
-      { id: "PaintBucketTool", icon: "flaticon-paint2", title: t("Paint Bucket Tool") },
+      { id: "PaintbucketTool", icon: "flaticon-paint2", title: t("Paint Bucket Tool") },
       { id: "BrightnessTool", icon: "flaticon-sun4", title: t("Brightness Tool") },
       { id: "MoveTool", icon: "flaticon-move11", title: t("Move Tool") },
       { id: "ZoomTool", icon: "flaticon-magnifier5", title: t("Zoom Tool") },
