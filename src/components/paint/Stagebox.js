@@ -27,7 +27,7 @@ class Stagebox extends React.Component {
     };
 
     const cssClasses = classnames({
-      checkerboard: true //this.props.image === null ? true : false,
+      checkerboard: !this.props.image
     });
 
     if( w > centerAreaWidth ) css.left = 0;

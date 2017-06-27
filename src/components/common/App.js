@@ -8,39 +8,42 @@ import ScreenBlocker from "../screens/ScreenBlocker";
 
 import { Hotkeys } from "../../classes";
 
-const App = (props) => {
+class App extends React.Component {
 
-  Hotkeys.bind(props.tab);
+  render() {
+    Hotkeys.bind(this.props.tab);
 
-  const windowClasses = classnames({
-    "window": true,
-    [props.tab]: true,
-  });
+    const windowClasses = classnames({
+      "window": true,
+      [this.props.tab]: true,
+    });
 
-  let activeScreen;
-  switch(props.tab) {
-  case "paint":
-    activeScreen = <ScreenPaintContainer />;
-    break;
+    let activeScreen;
+    switch(this.props.tab) {
+    case "paint":
+      activeScreen = <ScreenPaintContainer />;
+      break;
 
-  case "animate":
-  case "export":
-  case "start":
-  default:
-    activeScreen = <ScreenStartContainer />;
-    break;
-  }
+    case "animate":
+    case "export":
+    case "start":
+    default:
+      activeScreen = <ScreenStartContainer />;
+      break;
+    }
 
-  return (
-    <div className="app">
-      <div className={windowClasses}>
-        <ScreenHelper />
-        {activeScreen}
+    return (
+      <div className="app">
+        <nav className="menu"></nav>
+        <div className={windowClasses}>
+          <ScreenHelper />
+          {activeScreen}
+        </div>
+        <ModalContainer />
+        <ScreenBlocker />
       </div>
-      <ModalContainer />
-      <ScreenBlocker />
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default App;
