@@ -89,8 +89,7 @@ class ScreenPaint extends React.Component {
         };
 
       if(file.type in allowed) {
-        const reader = new FileReader();
-
+        let reader = new FileReader();
         reader.onload = (function() {
           return function(e) {
             self.setState({referenceImage: file, referenceImageDataURL: e.target.result});

@@ -19,6 +19,7 @@ export const onionFrame = (mode, frame) => ({ type: "ONION_FRAME", mode, frame }
 export const onionMode = (mode) => ({ type: "ONION_MODE", mode });
 export const onionToggle = () => ({ type: "ONION_TOGGLE" });
 export const paletteSelect = (palette) => ({ type: "PALETTE_SELECT", palette });
+export const pixelsAdd = (frame, layer, pixels) => ({ type: "PIXELS_ADD", frame, layer, pixels });
 export const toolSelect = (tool) => ({ type: "TOOL_SELECT", tool });
 export const zoomIn = () => ({ type: "ZOOM_IN" });
 export const zoomOut = () => ({ type: "ZOOM_OUT" });

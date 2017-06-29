@@ -9,6 +9,7 @@ const state = {
       {frame: 1, id: 1, name: "Layer 1", z: 0, opacity: 100, visible: true},
       {frame: 1, id: 3, name: "Layer 3", z: 2, opacity: 100, visible: true},
     ],
+    pixels: {},
     size: {
       height: 64,
       width: 64,

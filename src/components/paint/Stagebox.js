@@ -4,14 +4,22 @@ import config from "../../config";
 import { GridCanvas } from "../canvases";
 import { Point } from "../../classes";
 import StageBoxCursorCanvas from "./StageBoxCursorCanvas";
-
 const { offset } = config;
 
 class Stagebox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.cursor = {x: 0, y: 0};
+    this.mouse = {
+      down: false,
+    };
+
+    this.cursor = {
+      x: 0,
+      y: 0
+    };
+
+    this.pixels = {};
   }
 
   render() {
@@ -53,8 +61,10 @@ class Stagebox extends React.Component {
       <div id="StageBox"
         className={cssClasses}
         style={css}
+        onMouseDown={::this.mousedown}
         onMouseMove={::this.mousemove}
-        onMouseOut={::this.mouseout}>
+        onMouseOut={::this.mouseout}
+        onMouseUp={::this.mouseup}>
 
         <StageBoxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.zoom} />
         {grid}
@@ -62,20 +72,58 @@ class Stagebox extends React.Component {
     );
   }
 
+  mousedown() {
+    console.log("mousedown");
+    this.mouse.down = true;
+  }
+
   mousemove(e) {
-    const point = this.getClickCoordinates(e);
-    // console.log(e);
+    console.log("mousemove");
+    const point = this.getCoordinatesOnImage(e);
     this.updateCursor(point);
+
+    if(this.mouse.down) {
+      switch(this.props.tool) {
+      case "BrushTool": {
+        const p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+          r: 255,
+          g: 128,
+          b: 255,
+          a: 1,
+        };
+
+        Object.assign(this.pixels, {
+          [point.x]: {
+            [point.y]: p
+          }
+        });
+        break;
+      }
+
+      }
+    }
   }
 
   mouseout() {
+    console.log("mouseout");
     this.refs.cursorCanvas.clear();
+    this.finishToolUse();
 
     document.getElementById("StatusBarCursorX").innerHTML = "X: 0";
     document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
+
+    console.log(this.pixels);
   }
 
-
+  mouseup() {
+    console.log("mouseup");
+    console.log(this.pixels);
+    this.finishToolUse();
+  }
 
 
   updateCursor(point) {
@@ -90,11 +138,24 @@ class Stagebox extends React.Component {
     }
   }
 
-  getClickCoordinates({ nativeEvent }) {
+  getCoordinatesOnImage({ nativeEvent }) {
     return new Point(
       Math.ceil(nativeEvent.layerX / this.props.zoom),
       Math.ceil(nativeEvent.layerY / this.props.zoom)
     );
+  }
+
+  finishToolUse() {
+    if(this.mouse.down) {
+      switch(this.props.tool) {
+      case "BrushTool":
+        this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
+        this.pixels = {};
+        break;
+      }
+
+      this.mouse.down = false;
+    }
   }
 }
 
