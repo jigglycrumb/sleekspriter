@@ -12,11 +12,11 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }
 
     const newPx = Object.assign(px, action.pixels);
-    return Object.assign(state, {
+    return Object.assign({}, Object.assign(state, {
       [action.frame]: {
         [action.layer]: newPx
       }
-    });
+    }));
   }
 
   default:

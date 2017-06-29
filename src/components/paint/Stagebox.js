@@ -3,7 +3,8 @@ import classnames from "classnames";
 import config from "../../config";
 import { GridCanvas } from "../canvases";
 import { Point } from "../../classes";
-import StageBoxCursorCanvas from "./StageBoxCursorCanvas";
+import StageboxCursorCanvas from "./StageboxCursorCanvas";
+import StageboxLayer from "./StageboxLayer";
 const { offset } = config;
 
 class Stagebox extends React.Component {
@@ -66,8 +67,24 @@ class Stagebox extends React.Component {
         onMouseOut={::this.mouseout}
         onMouseUp={::this.mouseup}>
 
-        <StageBoxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.zoom} />
+        <StageboxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.zoom} />
         {grid}
+
+        {this.props.layers.map(function(layer) {
+          let pixels;
+          try { pixels = this.props.pixels[layer.id]; }
+          catch(e) { pixels = null; }
+
+          return (
+            <StageboxLayer
+              key={layer.id}
+              layer={layer}
+              pixels={pixels}
+              size={this.props.size}
+              zoom={this.props.zoom}
+              ref={`layer_${layer.id}`} />
+          );
+        }, this)}
       </div>
     );
   }
@@ -101,6 +118,9 @@ class Stagebox extends React.Component {
             [point.y]: p
           }
         });
+
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas;
+        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: "#ff66ff" /*px.toHex()*/});
         break;
       }
 
@@ -115,13 +135,10 @@ class Stagebox extends React.Component {
 
     document.getElementById("StatusBarCursorX").innerHTML = "X: 0";
     document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
-
-    console.log(this.pixels);
   }
 
   mouseup() {
     console.log("mouseup");
-    console.log(this.pixels);
     this.finishToolUse();
   }
 

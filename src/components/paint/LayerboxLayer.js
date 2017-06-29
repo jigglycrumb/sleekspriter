@@ -1,6 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 
+import { LayerCanvas } from "../canvases";
 import NameEditable from "../common/NameEditable";
 
 class LayerboxLayer extends React.Component {
@@ -23,7 +24,7 @@ class LayerboxLayer extends React.Component {
           <input type="checkbox" checked={this.props.layer.visible} onChange={::this.visibility} />
         </div>
         <div className="preview" onClick={::this.select}>
-          {/*<LayerCanvas layer={this.props.layer.id} zoom={this.props.ui.zoom.selected} file={this.props.file} pixels={this.props.pixels} maxSize={30} />*/}
+          <LayerCanvas frame={this.props.layer.frame} layer={this.props.layer.id} pixels={this.props.pixels} size={this.props.size} maxSize={30} />
         </div>
         <NameEditable name={this.props.layer.name} callback={::this.name} />
         <input type="range" className="opacity-slider" min="0" max="100" value={this.props.layer.opacity} onChange={::this.opacity} />

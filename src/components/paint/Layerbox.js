@@ -10,12 +10,18 @@ class Layerbox extends React.Component {
       <div>
         <div ref="layers" className="layers">
         {this.props.layers.map((layer, i) => {
+          let pixels;
+          try { pixels = this.props.pixels[layer.id]; }
+          catch(e) { pixels = null; }
+
           return <LayerboxLayer
             key={`layer-${i}`}
             layer={layer}
             layerCount={this.props.layers.length}
+            pixels={pixels}
             position={i}
             selected={layer.id === this.props.selected}
+            size={this.props.size}
             layerMoveDown={this.props.layerMoveDown}
             layerMoveUp={this.props.layerMoveUp}
             layerName={this.props.layerName}
