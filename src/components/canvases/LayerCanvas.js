@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Color } from "../../classes";
 
 function paintSinglePixel(canvas, size, x, y, color) {
   const
@@ -93,8 +94,10 @@ class LayerCanvas extends React.Component {
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
         yValues.map(y => {
-          const color = "#ff66ff";
-          paintSinglePixel(this.refs.canvas, this.props.size, x, y, color);
+          const
+            p = this.props.pixels[x][y],
+            hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
+          paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
         });
       });
     }
@@ -111,6 +114,5 @@ LayerCanvas.propTypes = {
   size: PropTypes.object.isRequired, // { width: x, height: y }
   zoom: PropTypes.number,
 };
-
 
 export default LayerCanvas;

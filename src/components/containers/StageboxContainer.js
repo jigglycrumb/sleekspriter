@@ -7,6 +7,7 @@ import {
 import { getFrameLayersZSorted, getFramePixels } from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
+  color: state.ui.paint.color,
   frame: state.ui.paint.frame,
   grid: state.ui.paint.grid,
   layer: state.ui.paint.layer,
