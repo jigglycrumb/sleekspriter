@@ -1,4 +1,5 @@
 import initialState from "../initialState";
+import _ from "lodash";
 
 function filePixelsReducer(state = initialState.file.pixels, action) {
   switch (action.type) {
@@ -11,12 +12,12 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
       px = {};
     }
 
-    const newPx = Object.assign(px, action.pixels);
-    return Object.assign({}, Object.assign(state, {
+    const newPx = _.merge(px, action.pixels);
+    return _.merge(state, {
       [action.frame]: {
         [action.layer]: newPx
       }
-    }));
+    });
   }
 
   default:

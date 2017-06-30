@@ -6,6 +6,7 @@ import { Color, Point } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxLayer from "./StageboxLayer";
 const { offset } = config;
+import _ from "lodash";
 
 class Stagebox extends React.Component {
   constructor(props) {
@@ -89,9 +90,17 @@ class Stagebox extends React.Component {
     );
   }
 
-  mousedown() {
+  mousedown(e) {
     console.log("mousedown");
     this.mouse.down = true;
+
+    const point = this.getCoordinatesOnImage(e);
+
+    switch(this.props.tool) {
+    case "BrushTool":
+      this.useBrushTool(point);
+      break;
+    }
   }
 
   mousemove(e) {
@@ -101,31 +110,9 @@ class Stagebox extends React.Component {
 
     if(this.mouse.down) {
       switch(this.props.tool) {
-      case "BrushTool": {
-        const
-          rgb = new Color({hex: this.props.color}),
-          p = {
-            frame: this.props.frame,
-            layer: this.props.layer,
-            x: point.x,
-            y: point.y,
-            r: rgb.r,
-            g: rgb.g,
-            b: rgb.b,
-            a: 1,
-          };
-
-        Object.assign(this.pixels, {
-          [point.x]: {
-            [point.y]: p
-          }
-        });
-
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas;
-        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color });
+      case "BrushTool":
+        this.useBrushTool(point);
         break;
-      }
-
       }
     }
   }
@@ -133,7 +120,7 @@ class Stagebox extends React.Component {
   mouseout() {
     console.log("mouseout");
     this.refs.cursorCanvas.clear();
-    this.finishToolUse();
+    this.finishTool();
 
     document.getElementById("StatusBarCursorX").innerHTML = "X: 0";
     document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
@@ -141,7 +128,7 @@ class Stagebox extends React.Component {
 
   mouseup() {
     console.log("mouseup");
-    this.finishToolUse();
+    this.finishTool();
   }
 
 
@@ -164,7 +151,7 @@ class Stagebox extends React.Component {
     );
   }
 
-  finishToolUse() {
+  finishTool() {
     if(this.mouse.down) {
       switch(this.props.tool) {
       case "BrushTool":
@@ -175,6 +162,30 @@ class Stagebox extends React.Component {
 
       this.mouse.down = false;
     }
+  }
+
+  useBrushTool(point) {
+    const
+      rgb = new Color({hex: this.props.color}),
+      p = {
+        frame: this.props.frame,
+        layer: this.props.layer,
+        x: point.x,
+        y: point.y,
+        r: rgb.r,
+        g: rgb.g,
+        b: rgb.b,
+        a: 1,
+      };
+
+    _.merge(this.pixels, {
+      [point.x]: {
+        [point.y]: p
+      }
+    });
+
+    const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas;
+    layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
   }
 }
 
