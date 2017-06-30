@@ -11,7 +11,7 @@ class Layerbox extends React.Component {
         <div ref="layers" className="layers">
         {this.props.layers.map((layer, i) => {
           let pixels;
-          try { pixels = this.props.pixels[layer.id]; }
+          try { pixels = this.props.pixels[this.props.frame][layer.id]; }
           catch(e) { pixels = null; }
 
           return <LayerboxLayer

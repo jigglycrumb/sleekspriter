@@ -1,0 +1,1 @@
+export CanvasDecorator from "./CanvasDecorator";

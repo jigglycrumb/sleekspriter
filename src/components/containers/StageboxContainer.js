@@ -4,7 +4,7 @@ import {
   pixelsAdd
 } from "../../state/actions";
 
-import { getFrameLayersZSorted, getFramePixels } from "../../state/selectors";
+import { getFrameLayersZSorted } from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
   color: state.ui.paint.color,
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
   layer: state.ui.paint.layer,
   layers: getFrameLayersZSorted(state),
   onion: state.ui.paint.onion.active,
-  pixels: getFramePixels(state),
+  pixels: state.file.pixels,
   size: state.file.size,
   tool: state.ui.paint.tool,
   zoom: state.ui.paint.zoom,

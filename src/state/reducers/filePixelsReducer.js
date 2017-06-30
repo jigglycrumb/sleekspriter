@@ -13,11 +13,11 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }
 
     const newPx = _.merge(px, action.pixels);
-    return _.merge(state, {
+    return Object.assign({}, _.merge(state, {
       [action.frame]: {
         [action.layer]: newPx
       }
-    });
+    }));
   }
 
   default:

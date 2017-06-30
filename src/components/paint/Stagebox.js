@@ -73,7 +73,7 @@ class Stagebox extends React.Component {
 
         {this.props.layers.map(function(layer) {
           let pixels;
-          try { pixels = this.props.pixels[layer.id]; }
+          try { pixels = this.props.pixels[this.props.frame][layer.id]; }
           catch(e) { pixels = null; }
 
           return (
@@ -184,7 +184,7 @@ class Stagebox extends React.Component {
       }
     });
 
-    const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas;
+    const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
     layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
   }
 }

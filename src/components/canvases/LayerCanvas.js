@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Color } from "../../classes";
+import { CanvasDecorator } from "../decorators";
 
 function paintSinglePixel(canvas, size, x, y, color) {
   const
@@ -26,7 +27,7 @@ class LayerCanvas extends React.Component {
     let width, height, style;
 
     if(this.hasMaxSize) {
-      const fitted = this.fitToSize(this.props.maxSize);
+      const fitted = this.props.fitToSize(this.props.maxSize);
       width = fitted.size.width;
       height = fitted.size.height;
       style = fitted.style;
@@ -53,43 +54,9 @@ class LayerCanvas extends React.Component {
     this.paint();
   }
 
-  clear() {
-    const canvas = this.refs.canvas;
-    canvas.width = canvas.width;
-  }
-
-  fitToSize(size, noMargin) {
-    let
-      w = this.props.size.width,
-      h = this.props.size.height,
-      style = {},
-      scale;
-
-    if(w > h) scale = size/w;
-    else scale = size/h;
-
-    if(scale > 1) scale = Math.floor(scale);
-
-    w = Math.round(w*scale);
-    h = Math.round(h*scale);
-
-    if(!noMargin) {
-      style.marginTop = Math.round((size - h)/2 || 0);
-      style.marginLeft = Math.round((size - w)/2 || 0);
-    }
-
-    return {
-      size: {
-        width: w,
-        height: h,
-      },
-      style: style
-    };
-  }
-
   paint() {
     if(undefined != this.props.pixels) {
-      this.clear();
+      this.props.clear();
       const xValues = Object.keys(this.props.pixels);
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
@@ -115,4 +82,4 @@ LayerCanvas.propTypes = {
   zoom: PropTypes.number,
 };
 
-export default LayerCanvas;
+export default CanvasDecorator(LayerCanvas);

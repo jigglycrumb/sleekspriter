@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { CanvasDecorator } from "../decorators";
 
 class GridCanvas extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class GridCanvas extends React.Component {
   }
 
   componentDidUpdate() {
-    this.clear();
+    this.props.clear();
     this.drawGrid();
   }
 
@@ -54,11 +55,6 @@ class GridCanvas extends React.Component {
       ctx.stroke();
     }
   }
-
-  clear() {
-    const canvas = this.refs.canvas;
-    canvas.width = canvas.width;
-  }
 }
 
 GridCanvas.propTypes = {
@@ -68,4 +64,4 @@ GridCanvas.propTypes = {
   rows: PropTypes.number.isRequired,
 };
 
-export default GridCanvas;
+export default CanvasDecorator(GridCanvas);
