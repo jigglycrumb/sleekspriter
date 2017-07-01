@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import config from "../../config";
-import { GridCanvas } from "../canvases";
+import { FrameCanvas, GridCanvas } from "../canvases";
 import { Color, Point } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxLayer from "./StageboxLayer";
@@ -59,6 +59,21 @@ class Stagebox extends React.Component {
                 rows={h / this.props.zoom} />;
     }
 
+    let onion = null;
+    if(this.props.onion === true) {
+      let pixels;
+      try { pixels = this.props.pixels[this.props.onionFrameAbsolute]; }
+      catch(e) { pixels = null; }
+
+      onion = <div id="StageBoxOnionCanvas" className="Layer">
+                <FrameCanvas
+                  frame={this.props.onionFrameAbsolute}
+                  size={this.props.size}
+                  zoom={this.props.zoom}
+                  pixels={pixels} />
+              </div>;
+    }
+
     return (
       <div id="StageBox"
         className={cssClasses}
@@ -86,6 +101,8 @@ class Stagebox extends React.Component {
               ref={`layer_${layer.id}`} />
           );
         }, this)}
+
+        {onion}
       </div>
     );
   }

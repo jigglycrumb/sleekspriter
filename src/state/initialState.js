@@ -9,6 +9,10 @@ const state = {
       {frame: 1, id: 1, name: "Layer 1", z: 0, opacity: 100, visible: true},
       {frame: 1, id: 3, name: "Layer 3", z: 2, opacity: 100, visible: true},
       {frame: 2, id: 4, name: "Layer 4", z: 0, opacity: 100, visible: true},
+      {frame: 3, id: 5, name: "Layer 5", z: 0, opacity: 100, visible: true},
+      {frame: 4, id: 6, name: "Layer 6", z: 0, opacity: 100, visible: true},
+      {frame: 5, id: 7, name: "Layer 7", z: 0, opacity: 100, visible: true},
+      {frame: 6, id: 8, name: "Layer 8", z: 0, opacity: 100, visible: true},
     ],
     pixels: {},
     size: {

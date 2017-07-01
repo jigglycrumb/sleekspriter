@@ -3,8 +3,10 @@ import Stagebox from "../paint/Stagebox";
 import {
   pixelsAdd
 } from "../../state/actions";
-
-import { getFrameLayersZSorted } from "../../state/selectors";
+import {
+  getFrameLayersZSorted,
+  getOnionFrameAbsolute
+} from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
   color: state.ui.paint.color,
@@ -13,6 +15,7 @@ const mapStateToProps = (state) => ({
   layer: state.ui.paint.layer,
   layers: getFrameLayersZSorted(state),
   onion: state.ui.paint.onion.active,
+  onionFrameAbsolute: getOnionFrameAbsolute(state),
   pixels: state.file.pixels,
   size: state.file.size,
   tool: state.ui.paint.tool,
