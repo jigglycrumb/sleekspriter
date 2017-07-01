@@ -9,6 +9,7 @@ import ToolboxContainer from "../containers/ToolboxContainer";
 import ToolContainer from "../containers/ToolContainer";
 import StageboxContainer from "../containers/StageboxContainer";
 import ReferenceImage from "../paint/ReferenceImage";
+import SelectionPattern from "../paint/SelectionPattern";
 import { t } from "../../utils";
 
 class ScreenPaint extends React.Component {
@@ -43,6 +44,7 @@ class ScreenPaint extends React.Component {
         </div>
         <div className="area left">
           <ToolboxContainer />
+          <SelectionPattern />
         </div>
         <div className="area center">
           <StageboxContainer image={this.state.referenceImage === null ? false : true} />

@@ -110,7 +110,6 @@ class Stagebox extends React.Component {
   }
 
   mousedown(e) {
-    console.log("mousedown");
     this.mouse.down = true;
 
     const point = this.getCoordinatesOnImage(e);
@@ -123,7 +122,6 @@ class Stagebox extends React.Component {
   }
 
   mousemove(e) {
-    console.log("mousemove");
     const point = this.getCoordinatesOnImage(e);
     this.updateCursor(point);
 
@@ -137,7 +135,6 @@ class Stagebox extends React.Component {
   }
 
   mouseout() {
-    console.log("mouseout");
     this.refs.cursorCanvas.clear();
     this.finishTool();
 
@@ -146,7 +143,6 @@ class Stagebox extends React.Component {
   }
 
   mouseup() {
-    console.log("mouseup");
     this.finishTool();
   }
 
