@@ -356,6 +356,8 @@
 
     .frame {
       border: 1px solid @medium;
+      box-sizing: border-box;
+      padding-left: 3px;
       background: @light;
       cursor: pointer;
       position: relative;
@@ -384,6 +386,15 @@
         animation-iteration-count: infinite;
         animation-direction: alternate;
         animation-timing-function: linear;
+      }
+
+      canvas {
+        position: absolute;
+      }
+
+      label {
+        float: left;
+        margin: 0 4px;
       }
     }
 

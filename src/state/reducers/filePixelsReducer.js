@@ -5,14 +5,13 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   switch (action.type) {
 
   case "PIXELS_ADD": {
-    let px;
-    try {
-      px = state[action.frame][action.layer];
-    } catch (e) {
-      px = {};
-    }
+    if(state[action.frame] == undefined) state[action.frame] = {};
+    if(state[action.frame][action.layer] == undefined) state[action.frame][action.layer] = {};
 
-    const newPx = _.merge(px, action.pixels);
+    const
+      px = state[action.frame][action.layer],
+      newPx = _.merge(px, action.pixels);
+
     return Object.assign({}, _.merge(state, {
       [action.frame]: {
         [action.layer]: newPx

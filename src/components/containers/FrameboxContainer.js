@@ -13,8 +13,10 @@ const mapStateToProps = (state) => ({
   frames: state.file.frames,
   selected: state.ui.paint.frame,
   onion: state.ui.paint.onion,
-  totalFrames: getTotalFrames(state),
   onionFrameAbsolute: getOnionFrameAbsolute(state),
+  pixels: state.file.pixels,
+  size: state.file.size,
+  totalFrames: getTotalFrames(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -25,24 +25,24 @@ class Framebox extends React.Component {
                       onionMode={this.props.onionMode}
                       totalFrames={this.props.totalFrames} />;
 
-    let
-      frameStyle = {},
-      frames = [];
-
-    frameStyle.width = frameSize;
-    frameStyle.height = frameSize;
-
+    let frames = [];
     for(var i=0; i < this.props.totalFrames; i++) frames.push(i+1);
 
     return (
       <div>
         <div id="FrameBoxFrames">
         {frames.map(function(frame) {
+          let pixels;
+          try { pixels = this.props.pixels[frame]; }
+          catch(e) { pixels = null; }
+
           return <FrameboxFrame
                   key={frame}
-                  size={frameSize}
+                  size={this.props.size}
+                  maxSize={frameSize}
                   selected={this.props.selected}
                   onionSelected={this.props.onion.active && this.props.onionFrameAbsolute === frame}
+                  pixels={pixels}
                   frame={frame}
                   frameSelect={this.props.frameSelect} />;
         }, this)}

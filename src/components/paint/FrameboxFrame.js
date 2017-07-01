@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import { FrameCanvas } from "../canvases";
 
 class FrameboxFrame extends React.Component {
   render() {
@@ -11,14 +12,18 @@ class FrameboxFrame extends React.Component {
         "onion": this.props.onionSelected,
       }),
       frameStyle = {
-        height: this.props.size,
-        width: this.props.size,
+        height: this.props.maxSize,
+        width: this.props.maxSize,
       };
 
     return (
       <div key={id} className={classes} style={frameStyle} onClick={::this.select}>
-        {/*<FrameCanvas frame={frame} file={this.props.file} pixels={this.props.pixels} maxSize={frameSize} />*/}
-        {this.props.frame}
+        <FrameCanvas
+          frame={this.props.frame}
+          size={this.props.size}
+          maxSize={this.props.maxSize}
+          pixels={this.props.pixels} />
+        <label>{this.props.frame}</label>
       </div>
     );
   }
