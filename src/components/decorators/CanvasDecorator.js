@@ -7,6 +7,7 @@ function CanvasDecorator(DecoratedComponent) {
       const extraProps = {
         clear: ::this.clear,
         fitToSize: ::this.fitToSize,
+        paintSinglePixel: ::this.paintSinglePixel,
       };
 
       return <DecoratedComponent ref="decoratoredCanvas" {...this.props} {...extraProps} />;
@@ -48,6 +49,18 @@ function CanvasDecorator(DecoratedComponent) {
         },
         style: style
       };
+    }
+
+    paintSinglePixel(canvas, size, x, y, color) {
+      const
+        alpha = 1,
+        scale = canvas.width / size.width,
+        cX = (x - 1) * scale,
+        cY = (y - 1) * scale,
+        ctx = canvas.getContext("2d");
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.fillRect(cX, cY, scale, scale);
     }
   };
 }

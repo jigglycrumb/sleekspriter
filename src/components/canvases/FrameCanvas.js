@@ -3,18 +3,6 @@ import PropTypes from "prop-types";
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
 
-function paintSinglePixel(canvas, size, x, y, color) {
-  const
-    alpha = 1,
-    scale = canvas.width / size.width,
-    cX = (x - 1) * scale,
-    cY = (y - 1) * scale,
-    ctx = canvas.getContext("2d");
-  ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
-  ctx.fillRect(cX, cY, scale, scale);
-}
-
 class FrameCanvas extends React.Component {
   constructor(props) {
     super(props);
@@ -66,7 +54,7 @@ class FrameCanvas extends React.Component {
             const
               p = this.props.pixels[layer][x][y],
               hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
-            paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
+            this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
           });
         });
       });
