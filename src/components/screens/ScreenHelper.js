@@ -1,7 +1,31 @@
 import React from "react";
 import SelectionPattern from "../helper/SelectionPattern";
+import {
+  LayerCanvas,
+  FrameCanvas
+} from "../canvases";
 
 const ScreenHelper = (props) => {
+
+  let layerPixels, framePixels;
+  try {
+    framePixels = props.pixels[props.frame];
+  }
+  catch(e) {
+    framePixels = null;
+  }
+
+  try {
+    layerPixels = props.pixels[props.frame][props.layer];
+  }
+  catch(e) {
+    layerPixels = null;
+  }
+
+  const layerHelper = props.layer === null
+                    ? null
+                    : <LayerCanvas frame={props.frame} layer={props.layer} size={props.size} zoom={1} pixels={layerPixels} />;
+
   return (
     <section className="screen helper">
       <div className="area top">
@@ -11,10 +35,15 @@ const ScreenHelper = (props) => {
       <div className="area center">
         <SelectionPattern />
         <div id="LayerHelper">
-          {/*<LayerCanvas zoom={1} layer={this.props.ui.layers.selected} file={this.props.file} pixels={this.props.pixels} />*/}
+          {layerHelper}
         </div>
         <div id="FrameHelper">
-          {/*<FrameCanvas zoom={1} frame={this.props.ui.frames.selected} file={this.props.file} pixels={this.props.pixels} noAlpha={true} />*/}
+          <FrameCanvas
+            frame={props.frame}
+            size={props.size}
+            zoom={1}
+            noAlpha={true}
+            pixels={framePixels} />
         </div>
       </div>
     </section>

@@ -1,9 +1,9 @@
 import React from "react";
 import classnames from "classnames";
 import ModalContainer from "../containers/ModalContainer";
+import ScreenHelperContainer from "../containers/ScreenHelperContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
 import ScreenStartContainer from "../containers/ScreenStartContainer";
-import ScreenHelper from "../screens/ScreenHelper";
 import ScreenBlocker from "../screens/ScreenBlocker";
 
 import { Hotkeys } from "../../classes";
@@ -36,7 +36,7 @@ class App extends React.Component {
       <div className="app">
         <nav className="menu"></nav>
         <div className={windowClasses}>
-          <ScreenHelper />
+          <ScreenHelperContainer />
           {activeScreen}
         </div>
         <ModalContainer />
