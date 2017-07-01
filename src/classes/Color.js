@@ -32,6 +32,10 @@ class Color {
   hex() {
     return `#${pad(this.r.toString(16))}${pad(this.g.toString(16))}${pad(this.b.toString(16))}`;
   }
+
+  rgbHuman() {
+    return `${this.r}, ${this.g}, ${this.b}`;
+  }
 }
 
 export default Color;

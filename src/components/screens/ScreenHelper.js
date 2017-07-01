@@ -35,15 +35,15 @@ const ScreenHelper = (props) => {
       <div className="area center">
         <SelectionPattern />
         <div id="LayerHelper">
-          {layerHelper}
+          {/*layerHelper*/}
         </div>
         <div id="FrameHelper">
-          <FrameCanvas
+          {/*<FrameCanvas
             frame={props.frame}
             size={props.size}
             zoom={1}
             noAlpha={true}
-            pixels={framePixels} />
+            pixels={framePixels} />*/}
         </div>
       </div>
     </section>

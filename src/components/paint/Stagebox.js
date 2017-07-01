@@ -21,6 +21,8 @@ class Stagebox extends React.Component {
       y: 0
     };
 
+    this.cursorColor = "transparent";
+
     this.pixels = {};
   }
 
@@ -158,6 +160,30 @@ class Stagebox extends React.Component {
 
       document.getElementById("StatusBarCursorX").innerHTML = `X: ${point.x}`;
       document.getElementById("StatusBarCursorY").innerHTML = `Y: ${point.y}`;
+
+      // update color under cursor
+      let cursorColorHex, cursorColorRGB;
+      try {
+        const
+          currentPixel = this.props.pixels[this.props.frame][this.props.layer][point.x][point.y],
+          cursorColor = new Color({ rgb: [ currentPixel.r, currentPixel.g, currentPixel.b ]});
+        cursorColorHex = cursorColor.hex();
+        cursorColorRGB = cursorColor.rgbHuman();
+      } catch(e) {
+        cursorColorHex = "transparent";
+        cursorColorRGB = "-, -, -";
+      }
+
+      this.cursorColor = cursorColorHex;
+
+      document.getElementById("StatusBarColor").style.backgroundColor = cursorColorHex;
+      document.getElementById("StatusBarColorString").innerHTML = cursorColorHex;
+
+      if(this.props.tool == "EyedropperTool") {
+        document.getElementById("EyedropperSwatch").style.backgroundColor = cursorColorHex;
+        document.getElementById("EyedropperHex").innerHTML = cursorColorHex;
+        document.getElementById("EyedropperRGB").innerHTML = cursorColorRGB;
+      }
     }
   }
 

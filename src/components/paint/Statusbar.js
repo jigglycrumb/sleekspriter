@@ -22,10 +22,9 @@ const Statusbar = (props) => {
       <span id="StatusBarCursorX">X: 0</span>
       <span id="StatusBarCursorY">Y: 0</span>
       <div id="StatusBarColor" style={{background: "transparent"}}></div>
-      <span id="StatusBarColorString">{t("transparent")}</span>
-      <span>{t("Frame")} {props.frame}, x {t("pixels")}</span>
-      &nbsp;
-      <span>{t("Zoom ×")}{props.zoom}</span>
+      <span id="StatusBarColorString" className="statusbar-info">{t("transparent")}</span>
+      <span className="statusbar-info">{t("Frame")} {props.frame}</span>
+      <span className="statusbar-info">{t("Zoom ×")}{props.zoom}</span>
       <div id="StatusBarButtons">
 
         <button id="historyUndo" className={historyButtonClasses}>
