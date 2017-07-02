@@ -52,3 +52,6 @@ Zoom ×: Zoom ×
 Fit to screen: Fit to screen
 A pixel in your sprite is now ${size} pixels on your screen.: A pixel in your sprite is now ${size} pixels on your screen.
 ${palette} (${size} colours): ${palette} (${size} colours)
+Error: Error
+Cannot change an invisible or completely transparent layer.: Cannot change an invisible or completely transparent layer.
+Ok: Ok

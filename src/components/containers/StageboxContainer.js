@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import Stagebox from "../paint/Stagebox";
 import {
   brushColor,
+  modalShow,
   pixelsAdd,
   toolSelect,
 } from "../../state/actions";
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   brushColor: (color) => dispatch(brushColor(color)),
+  modalShow: (modal) => dispatch(modalShow(modal)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
   toolSelect: (tool) => dispatch(toolSelect(tool)),
 });

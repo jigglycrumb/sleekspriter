@@ -24,6 +24,7 @@ class Stagebox extends React.Component {
     this.cursorColor = "transparent";
 
     this.pixels = {};
+    this.layerVisibilityMap = {};
   }
 
   render() {
@@ -107,6 +108,14 @@ class Stagebox extends React.Component {
         {onion}
       </div>
     );
+  }
+
+  componentDidMount() {
+    this.createLayerVisibilityMap();
+  }
+
+  componentDidUpdate() {
+    this.createLayerVisibilityMap();
   }
 
   mousedown(e) {
@@ -207,33 +216,48 @@ class Stagebox extends React.Component {
   }
 
   useBrushTool(point) {
-    const
-      rgb = new Color({hex: this.props.color}),
-      p = {
-        frame: this.props.frame,
-        layer: this.props.layer,
-        x: point.x,
-        y: point.y,
-        r: rgb.r,
-        g: rgb.g,
-        b: rgb.b,
-        a: 1,
-      };
+    if(this.layerIsVisible()) {
+      const
+        rgb = new Color({hex: this.props.color}),
+        p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+          r: rgb.r,
+          g: rgb.g,
+          b: rgb.b,
+          a: 1,
+        };
 
-    _.merge(this.pixels, {
-      [point.x]: {
-        [point.y]: p
-      }
-    });
+      _.merge(this.pixels, {
+        [point.x]: {
+          [point.y]: p
+        }
+      });
 
-    const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-    layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+      layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+    }
   }
 
   useEyedropperTool() {
     if(this.cursorColor == "transparent") return;
     this.props.toolSelect("BrushTool");
     this.props.brushColor(this.cursorColor);
+  }
+
+  createLayerVisibilityMap() {
+    this.layerVisibilityMap = {};
+    this.props.layers.map(layer => this.layerVisibilityMap[layer.id] = layer.visible && layer.opacity > 0);
+  }
+
+  layerIsVisible() {
+    if(!this.layerVisibilityMap[this.props.layer]) {
+      this.props.modalShow("ModalErrorInvisibleLayer");
+      return false;
+    }
+    return true;
   }
 }
 
