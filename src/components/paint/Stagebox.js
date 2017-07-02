@@ -118,6 +118,9 @@ class Stagebox extends React.Component {
     case "BrushTool":
       this.useBrushTool(point);
       break;
+    case "EyedropperTool":
+      this.useEyedropperTool();
+      break;
     }
   }
 
@@ -225,6 +228,12 @@ class Stagebox extends React.Component {
 
     const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
     layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+  }
+
+  useEyedropperTool() {
+    if(this.cursorColor == "transparent") return;
+    this.props.toolSelect("BrushTool");
+    this.props.brushColor(this.cursorColor);
   }
 }
 

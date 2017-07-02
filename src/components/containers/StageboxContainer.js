@@ -1,11 +1,13 @@
 import { connect } from "react-redux";
 import Stagebox from "../paint/Stagebox";
 import {
-  pixelsAdd
+  brushColor,
+  pixelsAdd,
+  toolSelect,
 } from "../../state/actions";
 import {
   getFrameLayersZSorted,
-  getOnionFrameAbsolute
+  getOnionFrameAbsolute,
 } from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
@@ -23,7 +25,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  brushColor: (color) => dispatch(brushColor(color)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
+  toolSelect: (tool) => dispatch(toolSelect(tool)),
 });
 
 export default connect(
