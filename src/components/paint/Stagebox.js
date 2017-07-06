@@ -130,6 +130,9 @@ class Stagebox extends React.Component {
     case "BrightnessTool":
       this.useBrightnessTool(point);
       break;
+    case "EraserTool":
+      this.useEraserTool(point);
+      break;
     case "EyedropperTool":
       this.useEyedropperTool();
       break;
@@ -147,6 +150,9 @@ class Stagebox extends React.Component {
         break;
       case "BrightnessTool":
         this.useBrightnessTool(point);
+        break;
+      case "EraserTool":
+        this.useEraserTool(point);
         break;
       }
     }
@@ -216,6 +222,10 @@ class Stagebox extends React.Component {
         this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
         this.pixels = {};
         break;
+      case "EraserTool":
+        this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels);
+        this.pixels = {};
+        break;
       }
 
       this.mouse.down = false;
@@ -282,6 +292,28 @@ class Stagebox extends React.Component {
 
       const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
       layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: color.hex()});
+    }
+  }
+
+  useEraserTool(point) {
+    if(this.layerIsVisible()) {
+      if(this.cursorColor == "transparent") return;
+      const
+        p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+        };
+
+      _.merge(this.pixels, {
+        [point.x]: {
+          [point.y]: p
+        }
+      });
+
+      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+      layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
     }
   }
 

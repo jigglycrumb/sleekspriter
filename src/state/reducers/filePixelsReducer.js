@@ -19,6 +19,32 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }));
   }
 
+  case "PIXELS_DELETE": {
+    const
+      stateCopy = Object.assign({}, state),
+      xValues = Object.keys(action.pixels);
+
+    xValues.map(x => {
+      const yValues = Object.keys(action.pixels[x]);
+      yValues.map(y => {
+        delete stateCopy[action.frame][action.layer][x][y];
+      });
+
+      if(Object.getOwnPropertyNames(stateCopy[action.frame][action.layer][x]).length === 0) {
+        delete stateCopy[action.frame][action.layer][x];
+      }
+    });
+
+    if(Object.getOwnPropertyNames(stateCopy[action.frame][action.layer]).length === 0) {
+      delete stateCopy[action.frame][action.layer];
+    }
+    if(Object.getOwnPropertyNames(stateCopy[action.frame]).length === 0) {
+      delete stateCopy[action.frame];
+    }
+
+    return stateCopy;
+  }
+
   default:
     return state;
   }

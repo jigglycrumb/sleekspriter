@@ -6,6 +6,7 @@ function CanvasDecorator(DecoratedComponent) {
     render() {
       const extraProps = {
         clear: ::this.clear,
+        clearSinglePixel: ::this.clearSinglePixel,
         fitToSize: ::this.fitToSize,
         paintSinglePixel: ::this.paintSinglePixel,
       };
@@ -61,6 +62,15 @@ function CanvasDecorator(DecoratedComponent) {
       ctx.globalAlpha = alpha;
       ctx.fillStyle = color;
       ctx.fillRect(cX, cY, scale, scale);
+    }
+
+    clearSinglePixel(canvas, size, x, y) {
+      const
+        scale = canvas.clientWidth / size.width,
+        cX = (x - 1) * scale,
+        cY = (y - 1) * scale,
+        ctx = canvas.getContext("2d");
+      ctx.clearRect(cX, cY, scale, scale);
     }
   };
 }
