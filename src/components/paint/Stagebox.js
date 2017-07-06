@@ -127,6 +127,9 @@ class Stagebox extends React.Component {
     case "BrushTool":
       this.useBrushTool(point);
       break;
+    case "BrightnessTool":
+      this.useBrightnessTool(point);
+      break;
     case "EyedropperTool":
       this.useEyedropperTool();
       break;
@@ -141,6 +144,9 @@ class Stagebox extends React.Component {
       switch(this.props.tool) {
       case "BrushTool":
         this.useBrushTool(point);
+        break;
+      case "BrightnessTool":
+        this.useBrightnessTool(point);
         break;
       }
     }
@@ -206,6 +212,7 @@ class Stagebox extends React.Component {
     if(this.mouse.down) {
       switch(this.props.tool) {
       case "BrushTool":
+      case "BrightnessTool":
         this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
         this.pixels = {};
         break;
@@ -218,15 +225,15 @@ class Stagebox extends React.Component {
   useBrushTool(point) {
     if(this.layerIsVisible()) {
       const
-        rgb = new Color({hex: this.props.color}),
+        color = new Color({hex: this.props.color}),
         p = {
           frame: this.props.frame,
           layer: this.props.layer,
           x: point.x,
           y: point.y,
-          r: rgb.r,
-          g: rgb.g,
-          b: rgb.b,
+          r: color.r,
+          g: color.g,
+          b: color.b,
           a: 1,
         };
 
@@ -245,6 +252,37 @@ class Stagebox extends React.Component {
     if(this.cursorColor == "transparent") return;
     this.props.toolSelect("BrushTool");
     this.props.brushColor(this.cursorColor);
+  }
+
+  useBrightnessTool(point) {
+    if(this.layerIsVisible()) {
+      if(this.cursorColor == "transparent") return;
+
+      const
+        intensity = this.props.brightnessTool.mode === "lighten"
+                  ? this.props.brightnessTool.intensity
+                  : -this.props.brightnessTool.intensity,
+        color = new Color({hex: this.cursorColor}).changeBrightness(intensity),
+        p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+          r: color.r,
+          g: color.g,
+          b: color.b,
+          a: 1,
+        };
+
+      _.merge(this.pixels, {
+        [point.x]: {
+          [point.y]: p
+        }
+      });
+
+      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+      layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: color.hex()});
+    }
   }
 
   createLayerVisibilityMap() {

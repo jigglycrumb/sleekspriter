@@ -12,6 +12,7 @@ import {
 } from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
+  brightnessTool: state.ui.paint.brightnessTool,
   color: state.ui.paint.color,
   frame: state.ui.paint.frame,
   grid: state.ui.paint.grid,

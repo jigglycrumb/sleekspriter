@@ -1,6 +1,6 @@
 	/*
   	Flaticon icon font: Flaticon
-  	Creation date: 04/08/2016 18:03
+  	Creation date: 06/07/2017 18:44
   	*/
 
 @font-face {
@@ -29,39 +29,39 @@ font-style: normal;
 margin-left: 20px;
 }
 
-.flaticon-3x3:before { content: "\f100"; }
+.flaticon-back-arrow:before { content: "\f100"; }
 .flaticon-arrow:before { content: "\f101"; }
-.flaticon-arrow85:before { content: "\f102"; }
-.flaticon-back-arrow:before { content: "\f103"; }
-.flaticon-clear3:before { content: "\f104"; }
-.flaticon-color1:before { content: "\f105"; }
-.flaticon-dark26:before { content: "\f106"; }
-.flaticon-done:before { content: "\f107"; }
-.flaticon-double31:before { content: "\f108"; }
-.flaticon-eye46:before { content: "\f109"; }
-.flaticon-eye48:before { content: "\f10a"; }
-.flaticon-eyedropper2:before { content: "\f10b"; }
-.flaticon-hand118:before { content: "\f10c"; }
-.flaticon-layer13:before { content: "\f10d"; }
-.flaticon-list67:before { content: "\f10e"; }
-.flaticon-little16:before { content: "\f10f"; }
-.flaticon-little9:before { content: "\f110"; }
-.flaticon-magnifier5:before { content: "\f111"; }
-.flaticon-man-silhouette1:before { content: "\f112"; }
-.flaticon-man13:before { content: "\f113"; }
-.flaticon-mini7:before { content: "\f114"; }
-.flaticon-minus18:before { content: "\f115"; }
-.flaticon-move11:before { content: "\f116"; }
-.flaticon-next:before { content: "\f117"; }
-.flaticon-paint2:before { content: "\f118"; }
-.flaticon-play87:before { content: "\f119"; }
-.flaticon-plus25:before { content: "\f11a"; }
-.flaticon-previous2:before { content: "\f11b"; }
-.flaticon-right3:before { content: "\f11c"; }
-.flaticon-selection7:before { content: "\f11d"; }
-.flaticon-settings21:before { content: "\f11e"; }
-.flaticon-small23:before { content: "\f11f"; }
-.flaticon-small38:before { content: "\f120"; }
-.flaticon-stamp2:before { content: "\f121"; }
-.flaticon-sun4:before { content: "\f122"; }
-.flaticon-vegetable38:before { content: "\f123"; }
+.flaticon-layer13:before { content: "\f102"; }
+.flaticon-vegetable38:before { content: "\f103"; }
+.flaticon-man13:before { content: "\f104"; }
+.flaticon-man-silhouette1:before { content: "\f105"; }
+.flaticon-little16:before { content: "\f106"; }
+.flaticon-color1:before { content: "\f107"; }
+.flaticon-3x3:before { content: "\f108"; }
+.flaticon-arrow85:before { content: "\f109"; }
+.flaticon-little9:before { content: "\f10a"; }
+.flaticon-mini7:before { content: "\f10b"; }
+.flaticon-small38:before { content: "\f10c"; }
+.flaticon-small23:before { content: "\f10d"; }
+.flaticon-sun4:before { content: "\f10e"; }
+.flaticon-paint2:before { content: "\f10f"; }
+.flaticon-right3:before { content: "\f110"; }
+.flaticon-stamp2:before { content: "\f111"; }
+.flaticon-clear3:before { content: "\f112"; }
+.flaticon-dark26:before { content: "\f113"; }
+.flaticon-move11:before { content: "\f114"; }
+.flaticon-done:before { content: "\f115"; }
+.flaticon-play87:before { content: "\f116"; }
+.flaticon-list67:before { content: "\f117"; }
+.flaticon-hand118:before { content: "\f118"; }
+.flaticon-eyedropper2:before { content: "\f119"; }
+.flaticon-selection7:before { content: "\f11a"; }
+.flaticon-double31:before { content: "\f11b"; }
+.flaticon-plus25:before { content: "\f11c"; }
+.flaticon-minus18:before { content: "\f11d"; }
+.flaticon-eye48:before { content: "\f11e"; }
+.flaticon-eye46:before { content: "\f11f"; }
+.flaticon-magnifier5:before { content: "\f120"; }
+.flaticon-settings21:before { content: "\f121"; }
+.flaticon-previous2:before { content: "\f122"; }
+.flaticon-next:before { content: "\f123"; }

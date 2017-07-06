@@ -20,7 +20,7 @@ class BrightnessTool extends React.Component {
       <div id="Brightness-Tool" className="ToolComponent">
         <i className="icon flaticon-sun4"></i>
         <button className={lClass} disabled={lDisabled} title={t("Lighten pixels")} onClick={::this.selectLightenTool}>
-          <i className="flaticon-clear325"></i>
+          <i className="flaticon-dark26"></i>
         </button>
         <button className={dClass} disabled={dDisabled} title={t("Darken pixels")} onClick={::this.selectDarkenTool}>
           <i className="flaticon-clear3"></i>
