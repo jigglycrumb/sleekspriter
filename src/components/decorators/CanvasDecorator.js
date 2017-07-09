@@ -20,7 +20,7 @@ function CanvasDecorator(DecoratedComponent) {
     }
 
     fitToSize(size, noMargin) {
-      if(undefined == this.props.size) {
+      if(undefined === this.props.size) {
         console.warn("Trying to call CanvasDecorator.fitToSize, but missing prop 'size'");
       }
 
@@ -66,7 +66,7 @@ function CanvasDecorator(DecoratedComponent) {
 
     clearSinglePixel(canvas, size, x, y) {
       const
-        scale = canvas.clientWidth / size.width,
+        scale = canvas.width / size.width,
         cX = (x - 1) * scale,
         cY = (y - 1) * scale,
         ctx = canvas.getContext("2d");

@@ -1,7 +1,3 @@
-import capitalizeFirstLetter from "./capitalizeFirstLetter";
-import t from "./translate";
-
-export {
-  capitalizeFirstLetter,
-  t,
-};
+export capitalizeFirstLetter from "./capitalizeFirstLetter";
+export selectionIsActive from "./selectionIsActive";
+export t from "./translate";

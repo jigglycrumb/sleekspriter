@@ -4,6 +4,7 @@ import config from "../../config";
 import { FrameCanvas, GridCanvas } from "../canvases";
 import { Color, Point } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
+import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 const { offset } = config;
 import _ from "lodash";
@@ -14,6 +15,7 @@ class Stagebox extends React.Component {
 
     this.mouse = {
       down: false,
+      downStart: { x: 0, y: 0 },
     };
 
     this.cursor = {
@@ -87,6 +89,7 @@ class Stagebox extends React.Component {
         onMouseUp={::this.mouseup}>
 
         <StageboxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.zoom} />
+        <StageboxSelectionCanvas ref="selectionCanvas" width={w} height={h} zoom={this.props.zoom} selection={this.props.selection} tool={this.props.tool} />
         {grid}
 
         {this.props.layers.map(function(layer) {
@@ -119,9 +122,12 @@ class Stagebox extends React.Component {
   }
 
   mousedown(e) {
-    this.mouse.down = true;
-
     const point = this.getCoordinatesOnImage(e);
+
+    this.mouse = {
+      down: true,
+      downStart: point,
+    };
 
     switch(this.props.tool) {
     case "BrushTool":
@@ -135,6 +141,9 @@ class Stagebox extends React.Component {
       break;
     case "EyedropperTool":
       this.useEyedropperTool();
+      break;
+    case "RectangularSelectionTool":
+      this.startRectangularSelection(point);
       break;
     }
   }
@@ -153,6 +162,9 @@ class Stagebox extends React.Component {
         break;
       case "EraserTool":
         this.useEraserTool(point);
+        break;
+      case "RectangularSelectionTool":
+        this.resizeRectangularSelection(point);
         break;
       }
     }
@@ -225,6 +237,9 @@ class Stagebox extends React.Component {
       case "EraserTool":
         this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels);
         this.pixels = {};
+        break;
+      case "RectangularSelectionTool":
+        this.endRectangularSelection(this.cursor); //, distance);
         break;
       }
 
@@ -314,6 +329,23 @@ class Stagebox extends React.Component {
 
       const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
       layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
+    }
+  }
+
+  startRectangularSelection(point) {
+    this.props.selectionStart(point);
+  }
+
+  resizeRectangularSelection(point) {
+    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(this.props.selection.start, this.cursor);
+  }
+
+  endRectangularSelection(point) {
+    if(_.isEqual(point, this.mouse.downStart)) {
+      this.props.selectionClear();
+    }
+    else {
+      this.props.selectionEnd(point);
     }
   }
 

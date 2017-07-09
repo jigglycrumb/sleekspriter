@@ -16,8 +16,8 @@ const state = {
     ],
     pixels: {},
     size: {
-      height: 64,
-      width: 64,
+      height: 32,
+      width: 32,
     },
   },
   ui: {
@@ -51,8 +51,13 @@ const state = {
         mode: "fixed", // fixed or relative
       },
       palette: 11,
+      selection: {
+        start: null,
+        end: null,
+        distance: null,
+      },
       tool: "BrushTool",
-      zoom: 7,
+      zoom: 10,
     },
   },
 };

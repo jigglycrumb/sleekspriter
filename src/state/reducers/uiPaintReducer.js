@@ -35,6 +35,12 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, onion: { ...state.onion, active: !state.onion.active }};
   case "PALETTE_SELECT":
     return { ...state, palette: action.palette };
+  case "SELECTION_CLEAR":
+    return { ...state, selection: { start: null, end: null, distance: null }};
+  case "SELECTION_END":
+    return { ...state, selection: { ...state.selection, end: action.point }};
+  case "SELECTION_START":
+    return { ...state, selection: { ...state.selection, start: action.point }};
   case "TOOL_SELECT":
     return { ...state, tool: action.tool };
   case "ZOOM_IN": {

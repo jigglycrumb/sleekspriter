@@ -6,6 +6,9 @@ import {
   modalShow,
   pixelsAdd,
   pixelsDelete,
+  selectionClear,
+  selectionEnd,
+  selectionStart,
   toolSelect,
 } from "../../state/actions";
 
@@ -24,6 +27,7 @@ const mapStateToProps = (state) => ({
   onion: state.ui.paint.onion.active,
   onionFrameAbsolute: getOnionFrameAbsolute(state),
   pixels: state.file.pixels,
+  selection: state.ui.paint.selection,
   size: state.file.size,
   tool: state.ui.paint.tool,
   zoom: state.ui.paint.zoom,
@@ -34,6 +38,9 @@ const mapDispatchToProps = (dispatch) => ({
   modalShow: (modal) => dispatch(modalShow(modal)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
   pixelsDelete: (frame, layer, pixels) => dispatch(pixelsDelete(frame, layer, pixels)),
+  selectionClear: () => dispatch(selectionClear()),
+  selectionEnd: (point) => dispatch(selectionEnd(point)),
+  selectionStart: (point) => dispatch(selectionStart(point)),
   toolSelect: (tool) => dispatch(toolSelect(tool)),
 });
 
