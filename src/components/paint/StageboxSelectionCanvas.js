@@ -37,9 +37,9 @@ class StageboxSelectionCanvas extends React.Component {
     //   if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
     //   else if(storeUtils.selection.isActive) this.drawLastSelection();
     //   break;
-    // default:
-    //   if(storeUtils.selection.isActive) this.drawLastSelection();
-    //   break;
+    default:
+      if(selectionIsActive(this.props.selection)) this.drawLastSelection();
+      break;
     }
   }
 
@@ -78,6 +78,10 @@ class StageboxSelectionCanvas extends React.Component {
 
     ctx.strokeStyle = pattern;
     ctx.strokeRect(sx*zoom+0.5, sy*zoom+0.5, (width*zoom)-1, (height*zoom)-1);
+  }
+
+  drawLastSelection() {
+    this.drawSelection(this.props.selection.start, this.props.selection.end);
   }
 }
 

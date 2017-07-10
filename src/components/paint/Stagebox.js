@@ -8,6 +8,10 @@ import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 const { offset } = config;
 import _ from "lodash";
+import {
+  selectionIsActive,
+  selectionContains
+} from "../../utils";
 
 class Stagebox extends React.Component {
   constructor(props) {
@@ -249,27 +253,29 @@ class Stagebox extends React.Component {
 
   useBrushTool(point) {
     if(this.layerIsVisible()) {
-      const
-        color = new Color({hex: this.props.color}),
-        p = {
-          frame: this.props.frame,
-          layer: this.props.layer,
-          x: point.x,
-          y: point.y,
-          r: color.r,
-          g: color.g,
-          b: color.b,
-          a: 1,
-        };
+      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+        const
+          color = new Color({hex: this.props.color}),
+          p = {
+            frame: this.props.frame,
+            layer: this.props.layer,
+            x: point.x,
+            y: point.y,
+            r: color.r,
+            g: color.g,
+            b: color.b,
+            a: 1,
+          };
 
-      _.merge(this.pixels, {
-        [point.x]: {
-          [point.y]: p
-        }
-      });
+        _.merge(this.pixels, {
+          [point.x]: {
+            [point.y]: p
+          }
+        });
 
-      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-      layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+      }
     }
   }
 
@@ -282,53 +288,56 @@ class Stagebox extends React.Component {
   useBrightnessTool(point) {
     if(this.layerIsVisible()) {
       if(this.cursorColor == "transparent") return;
+      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+        const
+          intensity = this.props.brightnessTool.mode === "lighten"
+                    ? this.props.brightnessTool.intensity
+                    : -this.props.brightnessTool.intensity,
+          color = new Color({hex: this.cursorColor}).changeBrightness(intensity),
+          p = {
+            frame: this.props.frame,
+            layer: this.props.layer,
+            x: point.x,
+            y: point.y,
+            r: color.r,
+            g: color.g,
+            b: color.b,
+            a: 1,
+          };
 
-      const
-        intensity = this.props.brightnessTool.mode === "lighten"
-                  ? this.props.brightnessTool.intensity
-                  : -this.props.brightnessTool.intensity,
-        color = new Color({hex: this.cursorColor}).changeBrightness(intensity),
-        p = {
-          frame: this.props.frame,
-          layer: this.props.layer,
-          x: point.x,
-          y: point.y,
-          r: color.r,
-          g: color.g,
-          b: color.b,
-          a: 1,
-        };
+        _.merge(this.pixels, {
+          [point.x]: {
+            [point.y]: p
+          }
+        });
 
-      _.merge(this.pixels, {
-        [point.x]: {
-          [point.y]: p
-        }
-      });
-
-      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-      layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: color.hex()});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: color.hex()});
+      }
     }
   }
 
   useEraserTool(point) {
     if(this.layerIsVisible()) {
       if(this.cursorColor == "transparent") return;
-      const
-        p = {
-          frame: this.props.frame,
-          layer: this.props.layer,
-          x: point.x,
-          y: point.y,
-        };
+      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+        const
+          p = {
+            frame: this.props.frame,
+            layer: this.props.layer,
+            x: point.x,
+            y: point.y,
+          };
 
-      _.merge(this.pixels, {
-        [point.x]: {
-          [point.y]: p
-        }
-      });
+        _.merge(this.pixels, {
+          [point.x]: {
+            [point.y]: p
+          }
+        });
 
-      const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-      layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
+      }
     }
   }
 
@@ -337,7 +346,7 @@ class Stagebox extends React.Component {
   }
 
   resizeRectangularSelection(point) {
-    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(this.props.selection.start, this.cursor);
+    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(this.props.selection.start, point);
   }
 
   endRectangularSelection(point) {
