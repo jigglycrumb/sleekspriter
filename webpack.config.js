@@ -94,6 +94,16 @@ const config = {
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: "src/index.html",
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        worker: {
+          output: {
+            filename: "[id].[hash].worker.js",
+            chunkFilename: "[id].[hash].worker.js"
+          }
+        }
+      }
     })
   ]
 };

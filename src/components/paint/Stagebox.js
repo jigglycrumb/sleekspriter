@@ -12,6 +12,7 @@ import {
   selectionIsActive,
   selectionContains
 } from "../../utils";
+import paintbucketWorker from "worker-loader!../../workers/paintbucket";
 
 class Stagebox extends React.Component {
   constructor(props) {
@@ -31,6 +32,21 @@ class Stagebox extends React.Component {
 
     this.pixels = {};
     this.layerVisibilityMap = {};
+  }
+
+  componentWillMount() {
+    this.worker = new paintbucketWorker();
+
+    this.worker.onmessage = (m) => {
+      // console.log("Got worker response", m);
+      document.getElementById("ScreenBlocker").style.display = "none";
+      this.props.pixelsAdd(this.props.frame, this.props.layer, m.data);
+    };
+
+    this.worker.onfail = (e) => {
+      console.error(`worker failed in line ${e.lineno} with message: ${e.message}`);
+      document.getElementById("ScreenBlocker").style.display = "none";
+    };
   }
 
   render() {
@@ -82,6 +98,17 @@ class Stagebox extends React.Component {
                   pixels={pixels} />
               </div>;
     }
+
+
+    // this.worker.onmessage = (m) => {
+    //   console.log("Got worker response", m);
+    //   document.getElementById("ScreenBlocker").style.display = "none";
+    // };
+    //
+    // this.worker.onfail = (e) => {
+    //   console.error(`worker failed in line ${e.lineno} with message: ${e.message}`);
+    //   document.getElementById("ScreenBlocker").style.display = "none";
+    // };
 
     return (
       <div id="StageBox"
@@ -145,6 +172,9 @@ class Stagebox extends React.Component {
       break;
     case "EyedropperTool":
       this.useEyedropperTool();
+      break;
+    case "PaintbucketTool":
+      this.usePaintBucketTool(point);
       break;
     case "RectangularSelectionTool":
       this.startRectangularSelection(point);
@@ -337,6 +367,56 @@ class Stagebox extends React.Component {
 
         const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
         layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
+      }
+    }
+  }
+
+  usePaintBucketTool(point) {
+    if(this.layerIsVisible()) {
+      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+
+        // document.getElementById("ScreenBlocker").style.display = "block";
+
+        let layerZ;
+        this.props.layers.map(layer => {
+          if(layer.id === this.props.layer) layerZ = layer.z;
+        });
+
+        const fillColor = new Color({hex: this.props.color});
+
+        let pixels;
+        try { pixels = this.props.pixels[this.props.frame][this.props.layer]; }
+        catch(e) { pixels = {}; }
+
+        let bounds;
+        if(selectionIsActive(this.props.selection)) {
+          bounds = {
+            top: this.props.selection.start.y,
+            right: this.props.selection.end.x,
+            bottom: this.props.selection.end.y,
+            left: this.props.selection.start.x,
+          };
+        }
+        else {
+          bounds = {
+            top: 1,
+            right: this.props.size.width,
+            bottom: this.props.size.height,
+            left: 1,
+          };
+        }
+
+        let data = {
+          point,
+          frame: this.props.frame,
+          layer: this.props.layer,
+          layerZ,
+          fillColor,
+          pixels,
+          bounds
+        };
+
+        this.worker.postMessage(data);
       }
     }
   }

@@ -36,3 +36,4 @@ globals:
   console: false
   module: false
   require: false
+  onmessage: false

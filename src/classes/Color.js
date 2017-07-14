@@ -124,6 +124,13 @@ class Color {
     return `#${pad(this.r.toString(16))}${pad(this.g.toString(16))}${pad(this.b.toString(16))}`;
   }
 
+  rgb() {
+    const { r, g, b } = this;
+    return {
+      r, g, b
+    };
+  }
+
   rgbHuman() {
     return `${this.r}, ${this.g}, ${this.b}`;
   }
