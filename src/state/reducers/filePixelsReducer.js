@@ -1,5 +1,15 @@
 import initialState from "../initialState";
 import _ from "lodash";
+import { Point } from "../../classes";
+import {
+  selectionIsActive
+} from "../../utils";
+
+const insideBounds = (bounds, point) =>
+  bounds.start.x <= point.x &&
+  bounds.start.y <= point.y &&
+  bounds.end.x >= point.x &&
+  bounds.end.y >= point.y;
 
 function filePixelsReducer(state = initialState.file.pixels, action) {
   switch (action.type) {
@@ -20,13 +30,10 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "PIXELS_DELETE": {
-    const
-      stateCopy = Object.assign({}, state),
-      xValues = Object.keys(action.pixels);
+    const stateCopy = Object.assign({}, state);
 
-    xValues.map(x => {
-      const yValues = Object.keys(action.pixels[x]);
-      yValues.map(y => {
+    Object.keys(action.pixels).map(x => {
+      Object.keys(action.pixels[x]).map(y => {
         delete stateCopy[action.frame][action.layer][x][y];
       });
 
@@ -40,6 +47,89 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }
     if(Object.getOwnPropertyNames(stateCopy[action.frame]).length === 0) {
       delete stateCopy[action.frame];
+    }
+
+    return stateCopy;
+  }
+
+  case "PIXELS_MOVE": {
+
+    const stateCopy = Object.assign({}, state);
+    const sizeBounds = {
+      start: { x: 1, y: 1 },
+      end: { x: action.size.width, y: action.size.height }
+    };
+
+    let newPixels = {};
+
+    if(selectionIsActive(action.selection)) {
+      console.log("selection active");
+
+      // iterate over x-axis
+      Object.keys(action.pixels).map(x => {
+        // iterate over y-axis
+        Object.keys(action.pixels[x]).map(y => {
+          // grab a copy of the old pixel
+          const oldPixel = action.pixels[x][y];
+          // translate pixel coordinates to new position
+          const p = new Point(x, y).translate(action.distance);
+          // check if pixel was in selection and is still inside the file
+          if(insideBounds(action.selection, oldPixel) && insideBounds(sizeBounds, p)) {
+            // create new translated pixel
+            if(!newPixels[p.x]) newPixels[p.x] = {};
+            newPixels[p.x][p.y] = {
+              frame: action.frame,
+              layer: action.layer,
+              x: p.x,
+              y: p.y,
+              r: oldPixel.r,
+              g: oldPixel.g,
+              b: oldPixel.b,
+              z: oldPixel.z,
+            };
+
+            // delete old pixel
+            delete stateCopy[action.frame][action.layer][x][y];
+          }
+        });
+      });
+
+      // merge new pixels with old ones
+      const newLayerPixels = _.merge(stateCopy[action.frame][action.layer], newPixels);
+      stateCopy[action.frame][action.layer] = newLayerPixels;
+    }
+    else {
+      console.log("selection NOT active");
+
+      // delete all pixels of the layer
+      delete stateCopy[action.frame][action.layer];
+
+      // iterate over x-axis
+      Object.keys(action.pixels).map(x => {
+        // iterate over y-axis
+        Object.keys(action.pixels[x]).map(y => {
+          // translate pixel coordinates to new position
+          const p = new Point(x, y).translate(action.distance);
+          // check if pixel is still inside the file
+          if(insideBounds(sizeBounds, p)) {
+            // create new translated pixel
+            if(!newPixels[p.x]) newPixels[p.x] = {};
+            newPixels[p.x][p.y] = {
+              frame: action.frame,
+              layer: action.layer,
+              x: p.x,
+              y: p.y,
+              r: action.pixels[x][y].r,
+              g: action.pixels[x][y].g,
+              b: action.pixels[x][y].b,
+              z: action.pixels[x][y].z,
+            };
+          }
+        });
+      });
+
+      // merge new pixels back to state copy
+      stateCopy[action.frame][action.layer] = newPixels;
     }
 
     return stateCopy;

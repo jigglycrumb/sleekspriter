@@ -6,8 +6,8 @@ class Point {
    * @param {Number} y - point y coordinate
    */
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
+    this.x = +x;
+    this.y = +y;
   }
 
   /**

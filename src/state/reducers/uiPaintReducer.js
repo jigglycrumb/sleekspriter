@@ -1,7 +1,7 @@
 import _ from "lodash";
 import initialState from "../initialState";
+import { Point } from "../../classes";
 import config from "../../config";
-
 const { zoom, offset } = config;
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
@@ -36,7 +36,12 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
   case "PALETTE_SELECT":
     return { ...state, palette: action.palette };
   case "SELECTION_CLEAR":
-    return { ...state, selection: { start: null, end: null, distance: null }};
+    return { ...state, selection: { start: null, end: null }};
+  case "SELECTION_MOVE":
+    return { ...state, selection: {
+      start: new Point(state.selection.start.x, state.selection.start.y).translate(action.distance),
+      end: new Point(state.selection.end.x, state.selection.end.y).translate(action.distance)
+    }};
   case "SELECTION_END":
     return { ...state, selection: { ...state.selection, end: action.point }};
   case "SELECTION_START":

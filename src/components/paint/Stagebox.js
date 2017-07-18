@@ -30,15 +30,15 @@ class Stagebox extends React.Component {
 
     this.cursorColor = "transparent";
 
-    this.pixels = {};
-    this.layerVisibilityMap = {};
+    this.pixels = {}; // a map of pixels filled by the tools and then batch-sent to redux
+    this.layerVisibilityMap = {}; // a helper map for easy access to layer visibilty
+    this.layerBackup = null; // a backup canvas for MoveTool
   }
 
   componentWillMount() {
     this.worker = new paintbucketWorker();
 
     this.worker.onmessage = (m) => {
-      // console.log("Got worker response", m);
       document.getElementById("ScreenBlocker").style.display = "none";
       this.props.pixelsAdd(this.props.frame, this.props.layer, m.data);
     };
@@ -99,17 +99,6 @@ class Stagebox extends React.Component {
               </div>;
     }
 
-
-    // this.worker.onmessage = (m) => {
-    //   console.log("Got worker response", m);
-    //   document.getElementById("ScreenBlocker").style.display = "none";
-    // };
-    //
-    // this.worker.onfail = (e) => {
-    //   console.error(`worker failed in line ${e.lineno} with message: ${e.message}`);
-    //   document.getElementById("ScreenBlocker").style.display = "none";
-    // };
-
     return (
       <div id="StageBox"
         className={cssClasses}
@@ -124,9 +113,7 @@ class Stagebox extends React.Component {
         {grid}
 
         {this.props.layers.map(function(layer) {
-          let pixels;
-          try { pixels = this.props.pixels[this.props.frame][layer.id]; }
-          catch(e) { pixels = null; }
+          const pixels = this.getLayerPixels(layer.id);
 
           return (
             <StageboxLayer
@@ -173,6 +160,9 @@ class Stagebox extends React.Component {
     case "EyedropperTool":
       this.useEyedropperTool();
       break;
+    case "MoveTool":
+      this.startMoveTool();
+      break;
     case "PaintbucketTool":
       this.usePaintBucketTool(point);
       break;
@@ -196,6 +186,9 @@ class Stagebox extends React.Component {
         break;
       case "EraserTool":
         this.useEraserTool(point);
+        break;
+      case "MoveTool":
+        this.previewMoveTool();
         break;
       case "RectangularSelectionTool":
         this.resizeRectangularSelection(point);
@@ -271,6 +264,9 @@ class Stagebox extends React.Component {
       case "EraserTool":
         this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels);
         this.pixels = {};
+        break;
+      case "MoveTool":
+        this.endMoveTool();
         break;
       case "RectangularSelectionTool":
         this.endRectangularSelection(this.cursor); //, distance);
@@ -371,22 +367,91 @@ class Stagebox extends React.Component {
     }
   }
 
+  startMoveTool() {
+    this.layerBackup = document.createElement("canvas");
+
+    const
+      canvas = document.getElementById(`StageBoxLayer-${this.props.layer}`).querySelector("canvas"),
+      backupCtx = this.layerBackup.getContext("2d");
+
+    this.layerBackup.width = canvas.width;
+    this.layerBackup.height = canvas.height;
+
+    // save main canvas contents
+    backupCtx.drawImage(canvas, 0,0);
+  }
+
+  previewMoveTool() {
+    if(this.layerIsVisible()) {
+      const
+        distance = this.getMouseDownDistance(),
+        offset = {
+          x: distance.x * this.props.zoom,
+          y: distance.y * this.props.zoom
+        },
+        canvas = document.getElementById(`StageBoxLayer-${this.props.layer}`).querySelector("canvas"),
+        ctx = canvas.getContext("2d");
+
+      canvas.width = canvas.width;
+
+      if(!selectionIsActive(this.props.selection)) {
+        ctx.drawImage(this.layerBackup, offset.x, offset.y);
+      }
+      else {
+        // draw the whole image
+        ctx.drawImage(this.layerBackup, 0, 0);
+        // clear out selection
+        const
+          selectionX = (this.props.selection.start.x - 1) * this.props.zoom,
+          selectionY = (this.props.selection.start.y - 1)* this.props.zoom,
+          selectionWidth = (this.props.selection.end.x - this.props.selection.start.x + 1) * this.props.zoom,
+          selectionHeight = (this.props.selection.end.y - this.props.selection.start.y + 1) * this.props.zoom;
+
+        ctx.clearRect(selectionX, selectionY, selectionWidth, selectionHeight);
+        // draw the selection
+        ctx.drawImage(this.layerBackup, selectionX, selectionY, selectionWidth, selectionHeight, selectionX + offset.x, selectionY + offset.y, selectionWidth, selectionHeight);
+
+        // move the selection canvas
+        document.querySelector("#StageBoxSelectionCanvas").style.left = `${offset.x}px`;
+        document.querySelector("#StageBoxSelectionCanvas").style.top = `${offset.y}px`;
+      }
+    }
+  }
+
+  endMoveTool() {
+    const
+      distance = this.getMouseDownDistance(),
+      pixels = this.getLayerPixels(this.props.layer);
+
+    // move pixels
+    this.props.pixelsMove(this.props.frame, this.props.layer, pixels, distance, this.props.size, this.props.selection);
+
+    // move selection
+    if(selectionIsActive(this.props.selection)) {
+      this.props.selectionMove(distance);
+    }
+
+    // reset styles set by MoveTool preview
+    document.querySelector("#StageBoxSelectionCanvas").style.left = "";
+    document.querySelector("#StageBoxSelectionCanvas").style.top = "";
+
+    this.layerBackup = null;
+  }
+
   usePaintBucketTool(point) {
     if(this.layerIsVisible()) {
       if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
 
-        // document.getElementById("ScreenBlocker").style.display = "block";
+        document.getElementById("ScreenBlocker").style.display = "block";
 
         let layerZ;
         this.props.layers.map(layer => {
           if(layer.id === this.props.layer) layerZ = layer.z;
         });
 
-        const fillColor = new Color({hex: this.props.color});
-
-        let pixels;
-        try { pixels = this.props.pixels[this.props.frame][this.props.layer]; }
-        catch(e) { pixels = {}; }
+        const
+          fillColor = new Color({hex: this.props.color}),
+          pixels = this.getLayerPixels(this.props.layer);
 
         let bounds;
         if(selectionIsActive(this.props.selection)) {
@@ -449,6 +514,20 @@ class Stagebox extends React.Component {
       return false;
     }
     return true;
+  }
+
+  getMouseDownDistance() {
+    return {
+      x: this.cursor.x - this.mouse.downStart.x,
+      y: this.cursor.y - this.mouse.downStart.y
+    };
+  }
+
+  getLayerPixels(layerId) {
+    let pixels;
+    try { pixels = this.props.pixels[this.props.frame][layerId]; }
+    catch(e) { pixels = {}; }
+    return pixels;
   }
 }
 

@@ -54,7 +54,6 @@ const state = {
       selection: {
         start: null,
         end: null,
-        distance: null,
       },
       tool: "BrushTool",
       zoom: 10,

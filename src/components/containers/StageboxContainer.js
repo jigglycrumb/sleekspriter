@@ -6,8 +6,10 @@ import {
   modalShow,
   pixelsAdd,
   pixelsDelete,
+  pixelsMove,
   selectionClear,
   selectionEnd,
+  selectionMove,
   selectionStart,
   toolSelect,
 } from "../../state/actions";
@@ -38,8 +40,10 @@ const mapDispatchToProps = (dispatch) => ({
   modalShow: (modal) => dispatch(modalShow(modal)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
   pixelsDelete: (frame, layer, pixels) => dispatch(pixelsDelete(frame, layer, pixels)),
+  pixelsMove: (frame, layer, pixels, distance, size, selection) => dispatch(pixelsMove(frame, layer, pixels, distance, size, selection)),
   selectionClear: () => dispatch(selectionClear()),
   selectionEnd: (point) => dispatch(selectionEnd(point)),
+  selectionMove: (distance) => dispatch(selectionMove(distance)),
   selectionStart: (point) => dispatch(selectionStart(point)),
   toolSelect: (tool) => dispatch(toolSelect(tool)),
 });
