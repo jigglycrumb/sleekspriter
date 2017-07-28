@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import Menu from "../common/Menu";
 import ModalContainer from "../containers/ModalContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
 import ScreenStartContainer from "../containers/ScreenStartContainer";
@@ -33,7 +34,7 @@ class App extends React.Component {
 
     return (
       <div className="app">
-        <nav className="menu"></nav>
+        <Menu />
         <div className={windowClasses}>
           {activeScreen}
         </div>
