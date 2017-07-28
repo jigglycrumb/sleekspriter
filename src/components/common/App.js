@@ -32,9 +32,13 @@ class App extends React.Component {
       break;
     }
 
+    const menu = this.props.tab === "start"
+               ? null
+               : <Menu />;
+
     return (
       <div className="app">
-        <Menu />
+        {menu}
         <div className={windowClasses}>
           {activeScreen}
         </div>

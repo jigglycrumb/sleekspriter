@@ -387,71 +387,6 @@ ul {
   }
 }
 
-.menu {
-  height: 20px;
-  width: 100%;
-  background-color: @menu-color;
-  top: 0;
-  left: 0;
-  position: fixed;
-  z-index: 1;
-
-  & > ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin: 0;
-
-    li { cursor: pointer; }
-
-    hr {
-      border: 0;
-      margin: 0;
-      height: 0;
-      border-bottom: 1px solid @dark;
-    }
-
-    & > li {
-      padding-left: 12px;
-      padding-right: 2em;
-      padding-top: 2px;
-      position: relative;
-
-      &:hover {
-        & > div {
-          display: block;
-        }
-      }
-
-      & > div { // submenus
-        display: none;
-        z-index: -1;
-        padding-top: 20px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 14em;
-
-        & > ul {
-          background-color: @menu-color;
-          border: 1px solid @dark;
-
-          & > li {
-            padding: 0.25em 1em;
-          }
-        }
-      }
-    }
-  }
-
-  .version {
-    float: right;
-    height: 20px;
-    line-height: 20px;
-    margin-right: 10px;
-  }
-}
-
 .statusbar {
   left: 0;
   right: 0;
@@ -475,50 +410,6 @@ ul {
 
 .hidden {
   display: none;
-}
-
-#AppMenu {
-  height: 19px;
-  line-height: 18px;
-  position: relative;
-  width: 60px;
-  z-index: 2;
-}
-
-#AppMenuToggle {
-  border-bottom: 1px solid @medium;
-  border-right: 1px solid @medium;
-  // font-size: 24px;
-  text-align: center;
-}
-
-#AppMenuWrapper {
-  display: block;
-  margin: 0;
-  width: 300px;
-
-  li {
-    background: @medium;
-    border: 1px solid @light;
-    box-sizing: border-box;
-    cursor: pointer;
-    padding: 10px;
-    position: relative;
-    width: 150px;
-  }
-
-  hr {
-    margin: 0;
-  }
-
-  & > li {
-
-    & > ul {
-      position: absolute;
-      top: -1px;
-      right: -150px;
-    }
-  }
 }
 
 
