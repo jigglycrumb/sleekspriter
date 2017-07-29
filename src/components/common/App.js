@@ -1,6 +1,6 @@
 import React from "react";
 import classnames from "classnames";
-import Menu from "../common/Menu";
+import MenuContainer from "../containers/MenuContainer";
 import ModalContainer from "../containers/ModalContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
 import ScreenStartContainer from "../containers/ScreenStartContainer";
@@ -37,7 +37,7 @@ class App extends React.Component {
 
     const menu = this.props.screen === "start"
                ? null
-               : <Menu />;
+               : <MenuContainer />;
 
     return (
       <div className="app">
