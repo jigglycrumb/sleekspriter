@@ -35,8 +35,11 @@ class Menu extends React.Component {
         {label: "Image size…"}
       ]},
       {label: "Select", items: [
-        {label: "All"},
-        {label: "Deselect"},
+        {label: "All", action: () => {
+          this.props.selectionStart({ x: 1, y: 1 });
+          this.props.selectionEnd({ x: this.props.size.width, y: this.props.size.height });
+        }},
+        {label: "Deselect", action: this.props.selectionClear },
       ]},
       {label: "Layer", items: [
         {label: "Merge with layer above"},
