@@ -1,28 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
-import { modalHide } from "../../state/actions";
+import { modalHide, fileCreate, screenSelect } from "../../state/actions";
 import { GridCanvas } from "../canvases";
+import initialState from "../../state/initialState";
+const { frames, size } = initialState.file;
 
 const mapDispatchToProps = (dispatch) => {
   return {
     hide: () => dispatch(modalHide()),
+    fileCreate: (frames, pixels) => dispatch(fileCreate(frames, pixels)),
+    screenSelect: (screen) => dispatch(screenSelect(screen)),
   };
 };
 
 class ModalNewFile extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      frames: { x: 3, y: 3 },
-      pixels: { x: 64, y: 64 }
-    };
+    this.state = { frames, size };
   }
 
   render() {
     var wrapperCss = {
-      width: this.state.pixels.x * this.state.frames.x,
-      height: this.state.pixels.y * this.state.frames.y
+      width: this.state.size.width * this.state.frames.x,
+      height: this.state.size.height * this.state.frames.y
     };
 
     var fileType = this.state.frames.x * this.state.frames.y === 1 ? "Image" : "Spritesheet";
@@ -31,7 +31,6 @@ class ModalNewFile extends React.Component {
       <div className="dialog">
         <div className="title">New file</div>
         <div className="text">
-
           <div className="new-file-preview">
             <div className="new-file-preview-headline">Layout preview</div>
             <div className="new-file-preview-content" style={wrapperCss}>
@@ -52,18 +51,18 @@ class ModalNewFile extends React.Component {
             </li>
             <li>
               <label>Frame size:</label>
-              <input type="number" ref="pixelsX" value={this.state.pixels.x} min="1" onChange={::this.updateState} />
+              <input type="number" ref="pixelsX" value={this.state.size.width} min="1" onChange={::this.updateState} />
               x
-              <input type="number" ref="pixelsY" value={this.state.pixels.y} min="1" onChange={::this.updateState} />
+              <input type="number" ref="pixelsY" value={this.state.size.height} min="1" onChange={::this.updateState} />
               px
             </li>
             <li>
-              <i ref="size">{fileType} size: {this.state.frames.x * this.state.pixels.x}x{this.state.frames.y * this.state.pixels.y} pixels</i>
+              <i ref="size">{fileType} size: {this.state.frames.x * this.state.size.width}x{this.state.frames.y * this.state.size.height} pixels</i>
             </li>
           </ul>
         </div>
         <div className="actions">
-          <button onClick={::this.createFile}>Ok</button>
+          <button onClick={::this.fileCreate}>Ok</button>
           <button onClick={this.props.hide}>Cancel</button>
         </div>
       </div>
@@ -72,14 +71,16 @@ class ModalNewFile extends React.Component {
 
   updateState() {
     var size = {
-      frames: { x: this.refs.framesX.value, y: this.refs.framesY.value },
-      pixels: { x: this.refs.pixelsX.value, y: this.refs.pixelsY.value },
+      frames: { x: +this.refs.framesX.value, y: +this.refs.framesY.value },
+      size: { width: +this.refs.pixelsX.value, height: +this.refs.pixelsY.value },
     };
     this.setState(size);
   }
 
-  createFile() {
-    console.log("createFile");
+  fileCreate() {
+    this.props.fileCreate(this.state.frames, this.state.size);
+    this.props.hide();
+    this.props.screenSelect("paint");
   }
 }
 

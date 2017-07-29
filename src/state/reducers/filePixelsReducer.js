@@ -14,6 +14,9 @@ const insideBounds = (bounds, point) =>
 function filePixelsReducer(state = initialState.file.pixels, action) {
   switch (action.type) {
 
+  case "FILE_CREATE":
+    return {};
+
   case "PIXELS_ADD": {
     if(state[action.frame] == undefined) state[action.frame] = {};
     if(state[action.frame][action.layer] == undefined) state[action.frame][action.layer] = {};

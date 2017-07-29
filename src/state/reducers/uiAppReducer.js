@@ -6,6 +6,8 @@ function uiAppReducer(state = initialState.ui.app, action) {
     return { ...state, modal: { visible: false, dialog: null }};
   case "MODAL_SHOW":
     return { ...state, modal: { visible: true, dialog: action.dialog  }};
+  case "SCREEN_SELECT":
+    return { ...state, screen: action.screen };
   default:
     return state;
   }

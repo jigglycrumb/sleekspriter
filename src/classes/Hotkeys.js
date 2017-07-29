@@ -65,11 +65,11 @@ class Hotkeys {
     this.dispatch = dispatch;
   }
 
-  bind(tab) {
-    console.log(`%c HOTKEYS BIND! ${tab} `, "background: blue; color: white;");
+  bind(screen) {
+    console.log(`%c HOTKEYS BIND! ${screen} `, "background: blue; color: white;");
 
-    if(this.bindings[tab]) {
-      this.bindings[tab].map(function(binding) {
+    if(this.bindings[screen]) {
+      this.bindings[screen].map(function(binding) {
         Mousetrap.bind(binding.key, () => {
           binding.action(this.dispatch);
         });
@@ -77,11 +77,11 @@ class Hotkeys {
     }
   }
 
-  unbind(tab) {
-    console.log(`%c HOTKEYS UNBIND! ${tab} `, "background: blue; color: white;");
+  unbind(screen) {
+    console.log(`%c HOTKEYS UNBIND! ${screen} `, "background: blue; color: white;");
 
-    if(this.bindings[tab]) {
-      this.bindings[tab].map(function(binding) {
+    if(this.bindings[screen]) {
+      this.bindings[screen].map(function(binding) {
         Mousetrap.unbind(binding.key);
       }, this);
     }

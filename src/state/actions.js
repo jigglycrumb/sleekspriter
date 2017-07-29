@@ -2,6 +2,7 @@ export const brightnessToolIntensity = (intensity) => ({ type: "BRIGHTNESSTOOL_I
 export const brightnessToolMode = (mode)  => ({ type: "BRIGHTNESSTOOL_MODE", mode });
 export const boxFold = (box) => ({ type: "BOX_FOLD", box });
 export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
+export const fileCreate = (frames, size) => ({ type: "FILE_CREATE", frames, size });
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer, layers) => ({ type: "LAYER_ADD", frame, layer, layers });
@@ -22,6 +23,7 @@ export const paletteSelect = (palette) => ({ type: "PALETTE_SELECT", palette });
 export const pixelsAdd = (frame, layer, pixels) => ({ type: "PIXELS_ADD", frame, layer, pixels });
 export const pixelsDelete = (frame, layer, pixels) => ({ type: "PIXELS_DELETE", frame, layer, pixels });
 export const pixelsMove = (frame, layer, pixels, distance, size, selection) => ({ type: "PIXELS_MOVE", frame, layer, pixels, distance, size, selection });
+export const screenSelect = (screen) => ({ type: "SCREEN_SELECT", screen });
 export const selectionClear = () => ({ type: "SELECTION_CLEAR" });
 export const selectionEnd = (point) => ({ type: "SELECTION_END", point });
 export const selectionMove = (distance) => ({ type: "SELECTION_MOVE", distance });

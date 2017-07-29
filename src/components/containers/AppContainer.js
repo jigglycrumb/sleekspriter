@@ -3,12 +3,13 @@ import { Hotkeys } from "../../classes";
 import App from "../common/App";
 
 const mapStateToProps = (state) => ({
-  tab: state.ui.app.tab,
+  screen: state.ui.app.screen,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  bindings: Hotkeys.init(dispatch)
-});
+const mapDispatchToProps = (dispatch) => {
+  Hotkeys.init(dispatch);
+  return {};
+};
 
 export default connect(
   mapStateToProps,

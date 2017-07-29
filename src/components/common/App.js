@@ -9,17 +9,20 @@ import ScreenBlocker from "../screens/ScreenBlocker";
 import { Hotkeys } from "../../classes";
 
 class App extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    if(this.props.screen !== nextProps.screen) Hotkeys.unbind(this.props.screen);
+  }
 
   render() {
-    Hotkeys.bind(this.props.tab);
+    Hotkeys.bind(this.props.screen);
 
     const windowClasses = classnames({
       "window": true,
-      [this.props.tab]: true,
+      [this.props.screen]: true,
     });
 
     let activeScreen;
-    switch(this.props.tab) {
+    switch(this.props.screen) {
     case "paint":
       activeScreen = <ScreenPaintContainer />;
       break;
@@ -32,7 +35,7 @@ class App extends React.Component {
       break;
     }
 
-    const menu = this.props.tab === "start"
+    const menu = this.props.screen === "start"
                ? null
                : <Menu />;
 

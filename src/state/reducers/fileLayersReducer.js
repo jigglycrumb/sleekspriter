@@ -3,6 +3,22 @@ import initialState from "../initialState";
 
 function fileLayersReducer(state = initialState.file.layers, action) {
   switch (action.type) {
+  case "FILE_CREATE": {
+    let newState = [];
+    const totalFrames = action.frames.x * action.frames.y;
+    for(let i = 1; i <= totalFrames; i++ ) {
+      newState.push({
+        frame: i,
+        id: i,
+        name: `Layer ${i}`,
+        opacity: 100,
+        visible: true,
+        z: 0
+      });
+    }
+
+    return newState;
+  }
 
   case "LAYER_ADD": {
     const
