@@ -55,9 +55,9 @@ class Menu extends React.Component {
         SEPERATOR,
         {label: "Duplicate…"},
       ]},
-      {label: "Window", items: [
-        {label: "Paint"},
-      ]},
+      // {label: "Window", items: [
+      //   {label: "Paint"},
+      // ]},
     ];
 
     return (

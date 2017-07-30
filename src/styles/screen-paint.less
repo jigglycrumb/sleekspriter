@@ -352,21 +352,21 @@
       width: 206px;
       margin: 10px;
       text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .frame {
       border: 1px solid @medium;
       box-sizing: border-box;
-      padding-left: 3px;
       background: @light;
       cursor: pointer;
-      position: relative;
-      z-index: 1;
       text-align: left;
-      border-collapse: collapse;
-      display: inline-table;
       margin-top: -1px;
       margin-left: -1px;
+      overflow: hidden;
+      z-index: 1;
 
       &.selected {
         z-index: 2;
