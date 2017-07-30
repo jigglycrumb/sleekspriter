@@ -4,6 +4,9 @@ import { t, stateToFile } from "../../../utils";
 import {
   modalHide
 } from "../../../state/actions";
+import { AES } from "crypto-js";
+import config from "../../../config";
+const { fileEncryptionSecret } = config;
 
 const mapStateToProps = (state) => ({
   file: state.file
@@ -25,7 +28,13 @@ class ModalSaveFile extends React.Component {
       <div className="dialog">
         <div className="title">{t("Save file")}</div>
         <div className="text">{t("Please copy everything below to a .txt file")}</div>
-        <textarea className="json-input" ref="jsonInput" value={JSON.stringify(stateToFile(this.props.file))}  autoFocus></textarea>
+        <textarea
+          className="json-input"
+          ref="jsonInput"
+          value={AES.encrypt(JSON.stringify(stateToFile(this.props.file)), fileEncryptionSecret)}
+          autoFocus
+        >
+        </textarea>
         <div className="actions">
           <button onClick={this.props.hide}>{t("Ok")}</button>
         </div>

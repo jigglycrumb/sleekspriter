@@ -5,6 +5,9 @@ import {
   modalHide,
   fileLoad
 } from "../../../state/actions";
+import { AES, enc } from "crypto-js";
+import config from "../../../config";
+const { fileEncryptionSecret } = config;
 
 const mapDispatchToProps = (dispatch) => ({
   hide: () => dispatch(modalHide()),
@@ -27,11 +30,12 @@ class ModalLoadFile extends React.Component {
   }
 
   loadFile() {
-    const input = this.refs.jsonInput.value;
-    let json = false;
+    const input = this.refs.jsonInput.value.toString();
+    const bytes = AES.decrypt(input, fileEncryptionSecret);
 
-    try { json = JSON.parse(input); }
-    catch(e) { console.warn("invalid JSON"); }
+    let json = false;
+    try { json = JSON.parse(bytes.toString(enc.Utf8)); }
+    catch(e) { console.warn("invalid file"); }
 
     if(json) {
       this.props.load(fileToState(json));
