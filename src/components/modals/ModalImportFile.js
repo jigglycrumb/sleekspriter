@@ -43,7 +43,7 @@ class ModalImportFile extends React.Component {
     };
 
     this.worker.onfail = (e) => {
-      console.error(`worker failed in line ${e.lineno} with message: ${e.message}`);
+      console.error(`Worker failed in line ${e.lineno} with message: ${e.message}`);
       document.getElementById("ScreenBlocker").style.display = "none";
     };
   }
@@ -52,7 +52,7 @@ class ModalImportFile extends React.Component {
 
     let
       okButtonDisabled = true,
-      imageDropZone = <h3>Drop image here</h3>,
+      imageDropZone = <h3>{t("Drop image here")}</h3>,
       frameSettings = null;
 
     if(this.state.image.data !== null) {
@@ -71,14 +71,14 @@ class ModalImportFile extends React.Component {
 
       if(validation.allValid) {
         okButtonDisabled = false;
-        frameSize = <span>{frameWidth} x {frameHeight} px</span>;
+        frameSize = <span>{t("${w} x ${h} px", {w: frameWidth, h: frameHeight})}</span>;
       }
       else {
         const
-          w = validation.widthValid ? frameWidth : <span className="error">{frameWidth.toFixed(1)}</span>,
-          h = validation.heightValid ? frameHeight : <span className="error">{frameHeight.toFixed(1)}</span>;
+          w = validation.widthValid ? frameWidth : frameWidth.toFixed(1),
+          h = validation.heightValid ? frameHeight : frameHeight.toFixed(1);
 
-        frameSize = <span>{w} x {h} px</span>;
+        frameSize = <span className="error">{t("${w} x ${h} px", {w, h})}</span>;
       }
 
       imageDropZone = <div>
@@ -94,13 +94,13 @@ class ModalImportFile extends React.Component {
 
       frameSettings =   <ul>
                           <li>
-                            <label>Frames:</label>
+                            <label>{t("Frames")}</label>
                             <input type="number" ref="framesX" value={this.state.frames.x} min="1" onChange={::this.updateFrames} />
                             x
                             <input type="number" ref="framesY" value={this.state.frames.y} min="1" onChange={::this.updateFrames} />
                           </li>
                           <li>
-                            <label>Frame size:</label> {frameSize}
+                            <label>{t("Frame size")}</label> {frameSize}
                           </li>
                         </ul>;
     }

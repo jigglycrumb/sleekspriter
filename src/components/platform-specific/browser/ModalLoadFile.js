@@ -15,7 +15,7 @@ class ModalLoadFile extends React.Component {
   render() {
     return (
       <div className="dialog">
-        <div className="title">{t("Restore file")}</div>
+        <div className="title">{t("Open file")}</div>
         <div className="text">{t("Paste the contents of your last save here")}</div>
         <textarea className="json-input" ref="jsonInput" autoFocus></textarea>
         <div className="actions">

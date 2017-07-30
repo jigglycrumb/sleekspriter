@@ -56,6 +56,9 @@ Error: Error
 Cannot change an invisible or completely transparent layer.: Cannot change an invisible or completely transparent layer.
 Ok: Ok
 Import file: Import file
-Restore file: Restore file
+Drop image here: Drop image here
+Frame size: Frame size
+${w} x ${h} px: ${w} x ${h} px
+Open file: Open file
 Paste the contents of your last save here: Paste the contents of your last save here
 Open: Open
