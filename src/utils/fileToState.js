@@ -44,15 +44,13 @@ const fileToState = (file) => {
   };
 };
 
-const layerToState = function(layer) {
-  return {
-    id: layer[0],
-    frame: layer[1],
-    name: layer[2],
-    z: layer[3],
-    opacity: layer[4],
-    visible: !!layer[5]
-  };
-};
+const layerToState = layer => ({
+  id: layer[0],
+  frame: layer[1],
+  name: layer[2],
+  z: layer[3],
+  opacity: layer[4],
+  visible: !!layer[5]
+});
 
 export default fileToState;

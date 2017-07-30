@@ -9,7 +9,7 @@ class Menu extends React.Component {
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
         {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
-        {label: "Save"},
+        {label: "Save", action: () => { this.props.modalShow("ModalSaveFile"); }}, // TODO: show modal only in browser
         {label: "Save as…"}, // Desktop only
         {label: "Import…", action: () => { this.props.modalShow("ModalImportFile"); }},
         SEPERATOR,
