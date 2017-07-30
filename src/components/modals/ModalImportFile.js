@@ -1,14 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { t } from "../../utils";
+import { t, fileToState } from "../../utils";
 import {
-  modalHide
+  modalHide,
+  fileLoad
 } from "../../state/actions";
 import { GridCanvas } from "../canvases";
 import importWorker from "worker-loader!../../workers/import";
 
 const mapDispatchToProps = (dispatch) => ({
   hide: () => dispatch(modalHide()),
+  load: (json) => dispatch(fileLoad(json))
 });
 
 class ModalImportFile extends React.Component {
@@ -33,9 +35,9 @@ class ModalImportFile extends React.Component {
     this.worker = new importWorker();
 
     this.worker.onmessage = (m) => {
-      // utils.loadFileFromJSON(self.state.image.name, self.state.image.folder, e.data);
-
-      console.log("worker done", m.data);
+      // worker returns JSON like a saved *.pixels file,
+      // so we'll treat it like a regular file load
+      this.props.load(fileToState(m.data));
       this.props.hide();
       document.getElementById("ScreenBlocker").style.display = "none";
     };
@@ -197,8 +199,6 @@ class ModalImportFile extends React.Component {
   }
 
   import() {
-    console.log("Starting import");
-
     if(this.validateFrameSize().allValid) {
       document.getElementById("ScreenBlocker").style.display = "block";
 
