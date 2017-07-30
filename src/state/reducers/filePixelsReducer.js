@@ -17,6 +17,9 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   case "FILE_CREATE":
     return {};
 
+  case "FILE_LOAD":
+    return Object.assign({}, action.json.pixels);
+
   case "PIXELS_ADD": {
     if(state[action.frame] == undefined) state[action.frame] = {};
     if(state[action.frame][action.layer] == undefined) state[action.frame][action.layer] = {};

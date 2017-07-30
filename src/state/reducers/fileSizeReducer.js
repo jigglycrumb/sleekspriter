@@ -8,6 +8,9 @@ function fileSizeReducer(state = initialState.file.size, action) {
   case "FILE_CREATE":
     return Object.assign({}, action.size);
 
+  case "FILE_LOAD":
+    return Object.assign({}, action.json.size);
+
   default:
     return state;
   }

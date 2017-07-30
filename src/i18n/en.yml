@@ -55,3 +55,7 @@ ${palette} (${size} colours): ${palette} (${size} colours)
 Error: Error
 Cannot change an invisible or completely transparent layer.: Cannot change an invisible or completely transparent layer.
 Ok: Ok
+Import file: Import file
+Restore file: Restore file
+Paste the contents of your last save here: Paste the contents of your last save here
+Open: Open

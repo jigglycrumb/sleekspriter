@@ -18,6 +18,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
   case "BRUSH_COLOR":
     return { ...state, color: action.color };
   case "FILE_CREATE":
+  case "FILE_LOAD":
     return { ...state, frame: 1, layer: null, onion: { ...state.onion, frame: { fixed: 1, relative: 1, }}, selection: { start: null, end: null }, zoom: 10 };
   case "FRAME_SELECT":
     return { ...state, frame: +action.frame };

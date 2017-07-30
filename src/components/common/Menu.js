@@ -8,10 +8,10 @@ class Menu extends React.Component {
     const MenuConfig = [
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
-        {label: "Open…"},
+        {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
         {label: "Save"},
         {label: "Save as…"}, // Desktop only
-        {label: "Import…"},
+        {label: "Import…", action: () => { this.props.modalShow("ModalImportFile"); }},
         SEPERATOR,
         {label: "Close"},
         SEPERATOR,

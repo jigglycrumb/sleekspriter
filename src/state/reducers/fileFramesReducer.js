@@ -6,6 +6,9 @@ function fileFramesReducer(state = initialState.file.frames, action) {
   case "FILE_CREATE":
     return Object.assign({}, action.frames);
 
+  case "FILE_LOAD":
+    return Object.assign({}, action.json.frames);
+
   default:
     return state;
   }
