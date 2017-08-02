@@ -37,3 +37,6 @@ globals:
   module: false
   require: false
   onmessage: false
+  test: false
+  it: false
+  expect: false

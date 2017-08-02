@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenStart renders correctly 1`] = `
+<section
+  className="screen start"
+>
+  <div
+    className="splash"
+  >
+    <div
+      className="inner"
+    >
+      <div
+        className="logo"
+      >
+        @@name
+      </div>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+          >
+            New file
+          </a>
+        </li>
+        <li>
+          <a>
+            Open file
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    className="area statusbar"
+  >
+    <div
+      className="bar"
+    >
+      @@version
+    </div>
+  </div>
+</section>
+`;

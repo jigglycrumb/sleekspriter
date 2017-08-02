@@ -9,15 +9,41 @@
   "license": "All rights reserved",
   "scripts": {
     "start": "webpack-dev-server --inline --hot",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "jest"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|less|sass|scss)$": "<rootDir>/tests/__mocks__/fileMock.js"
+    },
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app/node_modules"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
     "babel-loader": "^6.4.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-plugin-flow-runtime": "^0.11.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
     "css-loader": "^0.27.3",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.0.1",
@@ -28,6 +54,8 @@
     "json-loader": "^0.5.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
+    "react-test-renderer": "^15.6.1",
+    "react-test-utils": "^0.0.1",
     "string-replace-loader": "^1.2.0",
     "style-loader": "^0.14.1",
     "url-loader": "^0.5.8",
