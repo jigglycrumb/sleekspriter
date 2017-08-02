@@ -1,10 +1,10 @@
 import React from "react";
+import _ from "lodash";
 
 const SEPERATOR = {label: "---"};
 
 class Menu extends React.Component {
   render() {
-
     const MenuConfig = [
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
@@ -20,7 +20,7 @@ class Menu extends React.Component {
         {label: "Quit @@name"}, // Desktop only, TODO: fix text replacement, it seems to work only once per file
       ]},
       {label: "Edit", items: [
-        {label: "Cut"},
+        {label: "Cut", action: () => { console.log(this.props.pixels); }},
         {label: "Copy"},
         {label: "Paste"},
         {label: "Delete"},
@@ -42,8 +42,24 @@ class Menu extends React.Component {
         {label: "Deselect", action: this.props.selectionClear },
       ]},
       {label: "Layer", items: [
-        {label: "Merge with layer above"},
-        {label: "Merge with layer below"},
+        {label: "Merge with layer above", action: () => {
+          const index = _.findIndex(this.props.layers, {id: this.props.layer});
+          let layerAbove = null;
+          if(this.props.layers[index-1]) {
+            layerAbove = this.props.layers[index-1];
+            this.props.layerMerge(this.props.frame, layerAbove.id, this.props.layer);
+            setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
+          }
+        }},
+        {label: "Merge with layer below", action: () => {
+          const index = _.findIndex(this.props.layers, {id: this.props.layer});
+          let layerBelow = null;
+          if(this.props.layers[index+1]) {
+            layerBelow = this.props.layers[index+1];
+            this.props.layerMerge(this.props.frame, this.props.layer, layerBelow.id);
+            setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
+          }
+        }},
       ]},
       {label: "Frame", items: [
         {label: "Rotate 180°"},

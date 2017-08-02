@@ -12,12 +12,13 @@ import {
 } from "../../state/actions";
 
 const mapStateToProps = (state) => ({
+  frame: state.ui.paint.frame,
   layer: getPaintLayer(state),
   layers: getFrameLayers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  layerDelete: (layer) => dispatch(layerDelete(layer)),
+  layerDelete: (frame, layer) => dispatch(layerDelete(frame, layer)),
   layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
   hide: () => dispatch(modalHide()),
 });
@@ -40,7 +41,7 @@ class ModalConfirmDeleteLayer extends React.Component {
   }
 
   layerDelete() {
-    this.props.layerDelete(this.props.layer.id);
+    this.props.layerDelete(this.props.frame, this.props.layer.id);
     setTimeout(() => {
       this.props.layerSelectTop(this.props.layers);
       this.props.hide();

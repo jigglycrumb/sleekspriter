@@ -3,14 +3,21 @@ import { connect } from "react-redux";
 import { t, fileToState } from "../../../utils";
 import {
   modalHide,
-  fileLoad
+  fileLoad,
+  layerSelectTop,
 } from "../../../state/actions";
+import { getFrameLayersZSorted } from "../../../state/selectors";
 import { AES, enc } from "crypto-js";
 import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
+const mapStateToProps = (state) => ({
+  layers: getFrameLayersZSorted(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   hide: () => dispatch(modalHide()),
+  layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
   load: (json) => dispatch(fileLoad(json))
 });
 
@@ -40,6 +47,7 @@ class ModalLoadFile extends React.Component {
     if(json) {
       this.props.load(fileToState(json));
       this.props.hide();
+      setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
     }
     else {
       this.refs.jsonInput.focus();
@@ -48,6 +56,6 @@ class ModalLoadFile extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ModalLoadFile);

@@ -20,6 +20,33 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   case "FILE_LOAD":
     return Object.assign({}, action.json.pixels);
 
+  case "LAYER_DELETE": {
+    let stateCopy = Object.assign({}, state);
+    delete stateCopy[action.frame][action.layer];
+    if(Object.keys(stateCopy[action.frame]).length === 0) delete stateCopy[action.frame];
+    if(Object.keys(stateCopy).length === 0) stateCopy = {};
+    return stateCopy;
+  }
+
+  case "LAYER_MERGE": {
+    let stateCopy = Object.assign({}, state);
+
+    if(stateCopy[action.frame]
+    && stateCopy[action.frame][action.first]
+    && stateCopy[action.frame][action.second]) {
+      const
+        first = stateCopy[action.frame][action.first],
+        second = stateCopy[action.frame][action.second],
+        merged = _.merge(second, first);
+
+      delete stateCopy[action.frame][action.first];
+      stateCopy[action.frame][action.second] = merged;
+    }
+
+    return stateCopy;
+  }
+
+
   case "PIXELS_ADD": {
     if(state[action.frame] == undefined) state[action.frame] = {};
     if(state[action.frame][action.layer] == undefined) state[action.frame][action.layer] = {};
@@ -43,15 +70,15 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
         delete stateCopy[action.frame][action.layer][x][y];
       });
 
-      if(Object.getOwnPropertyNames(stateCopy[action.frame][action.layer][x]).length === 0) {
+      if(Object.keys(stateCopy[action.frame][action.layer][x]).length === 0) {
         delete stateCopy[action.frame][action.layer][x];
       }
     });
 
-    if(Object.getOwnPropertyNames(stateCopy[action.frame][action.layer]).length === 0) {
+    if(Object.keys(stateCopy[action.frame][action.layer]).length === 0) {
       delete stateCopy[action.frame][action.layer];
     }
-    if(Object.getOwnPropertyNames(stateCopy[action.frame]).length === 0) {
+    if(Object.keys(stateCopy[action.frame]).length === 0) {
       delete stateCopy[action.frame];
     }
 

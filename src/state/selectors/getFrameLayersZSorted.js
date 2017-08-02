@@ -10,6 +10,12 @@ const getFrameLayersZSorted = createSelector(
     .sort(zSorter)
 );
 
+// const getFrameLayersZSorted = (state) => {
+//   const
+//     frame = getPaintFrame(state),
+//     layers = getFileLayers(state);
+//   return layers.filter(layer => layer.frame === frame).sort(zSorter);
+// };
 
 const zSorter = function(a, b) {
   if(a.z > b.z) return -1;

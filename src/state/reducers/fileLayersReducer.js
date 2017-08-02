@@ -55,6 +55,11 @@ function fileLayersReducer(state = initialState.file.layers, action) {
     return [...layersBelow, ...layersAbove, ...ignoredLayers];
   }
 
+  case "LAYER_MERGE": {
+    const index = _.findIndex(state, { id: action.first });
+    return state.slice(0, index).concat(state.slice(index+1));
+  }
+
   case "LAYER_MOVE_DOWN": {
     const
       layerToMove = state.find(layer => layer.id === action.layer),
