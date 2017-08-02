@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const metadata = require("./metadata.json");
 
 const replaceConfig = Object.keys(metadata).map(function(key) {
-  return {search: key, replace: metadata[key] };
+  return {search: key, replace: metadata[key], flags: "g" };
 });
 
 const config = {
