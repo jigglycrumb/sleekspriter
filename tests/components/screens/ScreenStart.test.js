@@ -6,8 +6,7 @@ import ScreenStart from "../../../src/components/screens/ScreenStart";
 // use this to mock imports in the tested component
 // jest.mock('components/SampleComponent', () => 'SampleComponent');
 
-test("ScreenStart renders correctly", () => {
-
+it("should render correctly", () => {
   const props = {
     modalShow: () => "Showing new file modal window"
   };

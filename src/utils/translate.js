@@ -1,4 +1,4 @@
-import en from "../i18n/en";
+import en from "../i18n/en.yml";
 
 const translate = (key, replacements) => {
   let str = en[key];

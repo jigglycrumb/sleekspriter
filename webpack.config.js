@@ -16,7 +16,7 @@ const config = {
     filename: "bundle.js"
   },
   resolve: {
-    extensions: [".less", ".css", ".js", ".json", ".jsx", ".yml"]
+    extensions: [".less", ".css", ".js", ".json", ".jsx"]
   },
   module: {
     rules: [{

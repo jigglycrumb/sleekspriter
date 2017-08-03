@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`maps JSON from redux state to file format 1`] = `
+Object {
+  "frames": Array [
+    5,
+    3,
+  ],
+  "layers": Array [
+    Array [
+      2,
+      1,
+      "Layer 2",
+      1,
+      100,
+      1,
+    ],
+    Array [
+      1,
+      1,
+      "Layer 1",
+      0,
+      100,
+      1,
+    ],
+    Array [
+      3,
+      1,
+      "Layer 3",
+      2,
+      100,
+      1,
+    ],
+    Array [
+      4,
+      2,
+      "Layer 4",
+      0,
+      100,
+      1,
+    ],
+    Array [
+      5,
+      3,
+      "Layer 5",
+      0,
+      100,
+      1,
+    ],
+    Array [
+      6,
+      4,
+      "Layer 6",
+      0,
+      100,
+      1,
+    ],
+    Array [
+      7,
+      5,
+      "Layer 7",
+      0,
+      100,
+      1,
+    ],
+    Array [
+      8,
+      6,
+      "Layer 8",
+      0,
+      100,
+      1,
+    ],
+  ],
+  "pixels": Array [
+    Array [
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      1,
+    ],
+  ],
+  "size": Array [
+    32,
+    32,
+  ],
+}
+`;

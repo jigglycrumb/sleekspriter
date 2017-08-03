@@ -37,6 +37,7 @@ globals:
   module: false
   require: false
   onmessage: false
-  test: false
+  describe: false
   it: false
+  jest: false
   expect: false
