@@ -25,7 +25,9 @@
       "node_modules",
       "app/node_modules"
     ],
-    "modulePaths": ["src"],
+    "modulePaths": [
+      "src"
+    ],
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
@@ -48,6 +50,7 @@
     "babel-register": "^6.24.1",
     "css-loader": "^0.27.3",
     "eslint": "^3.19.0",
+    "eslint-plugin-jest": "^20.0.3",
     "eslint-plugin-react": "^7.0.1",
     "file-loader": "^0.10.1",
     "html-loader": "^0.4.5",

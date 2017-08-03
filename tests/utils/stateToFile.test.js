@@ -20,16 +20,7 @@ it("maps JSON from redux state to file format", () => {
       1: {
         1: {
           1: {
-            1: {
-              frame: 1,
-              layer: 1,
-              x: 1,
-              y: 1,
-              r: 0,
-              g: 0,
-              b: 0,
-              a: 1
-            }
+            1: { frame: 1, layer: 1, x: 1, y: 1, r: 0, g: 0, b: 0, a: 1 }
           }
         }
       }
