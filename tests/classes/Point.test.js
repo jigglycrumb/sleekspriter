@@ -1,4 +1,4 @@
-import Point from "classes/Point";
+import { Point } from "classes";
 
 describe("Point", () => {
   let point, distance;

@@ -1,4 +1,4 @@
-import selectionIsActive from "utils/selectionIsActive";
+import { selectionIsActive } from "utils";
 
 describe("selectionIsActive", () => {
   it("should return true with a valid selection", () => {

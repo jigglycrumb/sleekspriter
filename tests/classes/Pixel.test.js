@@ -1,4 +1,4 @@
-import Pixel from "classes/Pixel";
+import { Pixel } from "classes";
 
 describe("Pixel", () => {
   it("is a Pixel with frame, layer, x and y coordinates, rgb and alpha values", () => {

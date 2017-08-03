@@ -1,4 +1,4 @@
-import selectionContains from "utils/selectionContains";
+import { selectionContains } from "utils";
 
 jest.mock("utils/selectionIsActive", () => jest.fn(() => true));
 
