@@ -1,6 +1,6 @@
-import selectionContains from "../../src/utils/selectionContains";
+import selectionContains from "utils/selectionContains";
 
-jest.mock("../../src/utils/selectionIsActive", () => jest.fn(() => true));
+jest.mock("utils/selectionIsActive", () => jest.fn(() => true));
 
 describe("selectionContains", () => {
   it("should return true when point is inside selection", () => {

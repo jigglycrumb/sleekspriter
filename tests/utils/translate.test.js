@@ -1,6 +1,6 @@
-import translate from "../../src/utils/translate";
+import translate from "utils/translate";
 
-jest.mock("../../src/i18n/en.yml", () => ({
+jest.mock("i18n/en.yml", () => ({
   Hello: "Hello Sir!"
 }));
 

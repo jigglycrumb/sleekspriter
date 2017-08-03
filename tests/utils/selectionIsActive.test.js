@@ -1,4 +1,4 @@
-import selectionIsActive from "../../src/utils/selectionIsActive";
+import selectionIsActive from "utils/selectionIsActive";
 
 describe("selectionIsActive", () => {
   it("should return true with a valid selection", () => {

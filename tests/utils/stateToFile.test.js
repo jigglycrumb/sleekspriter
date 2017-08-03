@@ -1,4 +1,4 @@
-import stateToFile from "../../src/utils/stateToFile";
+import stateToFile from "utils/stateToFile";
 
 it("maps JSON from redux state to file format", () => {
   const state = {
