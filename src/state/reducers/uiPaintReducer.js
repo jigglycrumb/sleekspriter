@@ -4,6 +4,9 @@ import { Point } from "../../classes";
 import config from "../../config";
 const { zoom, offset } = config;
 
+
+import { getPixelsInScope } from "../../utils";
+
 function uiPaintReducer(state = initialState.ui.paint, action) {
 
   console.log(`uiPaintReducer#${action.type}`);
@@ -38,6 +41,12 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, onion: { ...state.onion, active: !state.onion.active }};
   case "PALETTE_SELECT":
     return { ...state, palette: action.palette };
+
+  case "PIXELS_CUT": {
+    const clipboard = action.pixels;
+    return { ...state, clipboard };
+  }
+
   case "SELECTION_CLEAR":
     return { ...state, selection: { start: null, end: null }};
   case "SELECTION_MOVE":
@@ -46,6 +55,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       end: new Point(state.selection.end.x, state.selection.end.y).translate(action.distance)
     }};
   case "SELECTION_END":
+
+    // TODO: switch start & end if end < start
     return { ...state, selection: { ...state.selection, end: action.point }};
   case "SELECTION_START":
     return { ...state, selection: { ...state.selection, start: action.point }};

@@ -1,23 +1,19 @@
+import _ from "lodash";
+
 import {
   selectionContains,
   selectionIsActive
-} from "../../utils";
+} from "./";
 
-const getPixelsInScope = (state) => {
-
-  return state;
-
-  console.log(state);
-
-  const { frame, layer, selection } = state.ui.paint;
-  const { pixels } = state.file;
+const getPixelsInScope = (frame, layer, pixels, selection) => {
 
   let pixelsInScope = {};
+
   if(pixels[frame] && pixels[frame][layer]) {
-    pixelsInScope = Object.assign({}, pixels[frame][layer]);
+    pixelsInScope = _.cloneDeep(pixels[frame][layer]);
   }
 
-  console.log(pixelsInScope);
+  // console.log(pixelsInScope);
 
   if(selectionIsActive(selection)) {
     console.log("selection is active");
@@ -27,8 +23,8 @@ const getPixelsInScope = (state) => {
       const yValues = Object.keys(pixelsInScope[x]);
       yValues.map(y => {
         const p = pixelsInScope[x][y];
-        if(p.x < selection.start.x || p.x > selection.end.x
-        || p.y < selection.start.y || p.y > selection.end.y ) {
+
+        if(!selectionContains(selection, p)) {
           delete pixelsInScope[x][y];
         }
       });
@@ -38,7 +34,7 @@ const getPixelsInScope = (state) => {
     if(Object.keys(pixelsInScope).length === 0) pixelsInScope = {};
   }
 
-  console.log(pixelsInScope);
+  // console.log(pixelsInScope);
   return pixelsInScope;
 };
 

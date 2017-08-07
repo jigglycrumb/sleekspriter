@@ -1,10 +1,13 @@
 import React from "react";
 import _ from "lodash";
 
+import { getPixelsInScope } from "../../utils";
+
 const SEPERATOR = {label: "---"};
 
 class Menu extends React.Component {
   render() {
+    const { frame, layer, layers, pixels, selection, size } = this.props;
     const MenuConfig = [
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
@@ -20,7 +23,10 @@ class Menu extends React.Component {
         {label: "Quit @@name"}, // Desktop only, TODO: fix text replacement, it seems to work only once per file
       ]},
       {label: "Edit", items: [
-        {label: "Cut", action: () => { console.log(this.props.pixels); }},
+        {label: "Cut", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          this.props.pixelsCut(frame, layer, scopedPixels);
+        }},
         {label: "Copy"},
         {label: "Paste"},
         {label: "Delete"},
@@ -37,27 +43,27 @@ class Menu extends React.Component {
       {label: "Select", items: [
         {label: "All", action: () => {
           this.props.selectionStart({ x: 1, y: 1 });
-          this.props.selectionEnd({ x: this.props.size.width, y: this.props.size.height });
+          this.props.selectionEnd({ x: size.width, y: size.height });
         }},
         {label: "Deselect", action: this.props.selectionClear },
       ]},
       {label: "Layer", items: [
         {label: "Merge with layer above", action: () => {
-          const index = _.findIndex(this.props.layers, {id: this.props.layer});
+          const index = _.findIndex(layers, {id: layer});
           let layerAbove = null;
-          if(this.props.layers[index-1]) {
-            layerAbove = this.props.layers[index-1];
-            this.props.layerMerge(this.props.frame, layerAbove.id, this.props.layer);
-            setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
+          if(layers[index-1]) {
+            layerAbove = layers[index-1].id;
+            this.props.layerMerge(frame, layerAbove, layer);
+            setTimeout(() => this.props.layerSelectTop(layers), 0);
           }
         }},
         {label: "Merge with layer below", action: () => {
-          const index = _.findIndex(this.props.layers, {id: this.props.layer});
+          const index = _.findIndex(layers, {id: this.props.layer});
           let layerBelow = null;
-          if(this.props.layers[index+1]) {
-            layerBelow = this.props.layers[index+1];
-            this.props.layerMerge(this.props.frame, this.props.layer, layerBelow.id);
-            setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
+          if(layers[index+1]) {
+            layerBelow = layers[index+1].id;
+            this.props.layerMerge(frame, layer, layerBelow);
+            setTimeout(() => this.props.layerSelectTop(layers), 0);
           }
         }},
       ]},

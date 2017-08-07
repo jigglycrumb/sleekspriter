@@ -4,6 +4,7 @@ import {
   layerMerge,
   layerSelectTop,
   modalShow,
+  pixelsCut,
   selectionClear,
   selectionEnd,
   selectionStart,
@@ -16,7 +17,8 @@ const mapStateToProps = (state) => {
     layer: state.ui.paint.layer,
     layers: getFrameLayersZSorted(state),
     size: state.file.size,
-    pixels: getPixelsInScope(state),
+    pixels: state.file.pixels, //getPixelsInScope(state),
+    selection: state.ui.paint.selection,
   };
 };
 
@@ -25,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     layerMerge: (frame, first, second) => dispatch(layerMerge(frame, first, second)),
     layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
     modalShow: (modal) => dispatch(modalShow(modal)),
+    pixelsCut: (frame, layer, pixels, selection) => dispatch(pixelsCut(frame, layer, pixels, selection)),
     selectionClear: () => dispatch(selectionClear()),
     selectionEnd: (point) => dispatch(selectionEnd(point)),
     selectionStart: (point) => dispatch(selectionStart(point)),

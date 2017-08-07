@@ -34,6 +34,7 @@ const state = {
         intensity: 10,
       },
       color: "#000000",
+      clipboard: {},
       fold: {
         preview: false,
         frames: false,

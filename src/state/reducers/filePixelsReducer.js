@@ -62,32 +62,17 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }));
   }
 
+  case "PIXELS_CUT":
   case "PIXELS_DELETE": {
-    const stateCopy = Object.assign({}, state);
-
-    Object.keys(action.pixels).map(x => {
-      Object.keys(action.pixels[x]).map(y => {
-        delete stateCopy[action.frame][action.layer][x][y];
-      });
-
-      if(Object.keys(stateCopy[action.frame][action.layer][x]).length === 0) {
-        delete stateCopy[action.frame][action.layer][x];
-      }
-    });
-
-    if(Object.keys(stateCopy[action.frame][action.layer]).length === 0) {
-      delete stateCopy[action.frame][action.layer];
-    }
-    if(Object.keys(stateCopy[action.frame]).length === 0) {
-      delete stateCopy[action.frame];
-    }
-
+    const { frame, layer, pixels } = action;
+    let stateCopy = _.cloneDeep(state);
+    stateCopy = deletePixels(stateCopy, frame, layer, pixels);
     return stateCopy;
   }
 
   case "PIXELS_MOVE": {
 
-    const stateCopy = Object.assign({}, state);
+    let stateCopy = Object.assign({}, state);
     const sizeBounds = {
       start: { x: 1, y: 1 },
       end: { x: action.size.width, y: action.size.height }
@@ -174,3 +159,33 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
 }
 
 export default filePixelsReducer;
+
+
+
+// helper functions
+
+function deletePixels(state, frame, layer, pixels) {
+
+  Object.keys(pixels).map(x => {
+    Object.keys(pixels[x]).map(y => {
+      // console.log("delete! ", frame, layer, x, y);
+      delete state[frame][layer][x][y];
+    });
+
+    if(Object.keys(state[frame][layer][x]).length === 0) {
+      // console.log("delete! ", frame, layer, x);
+      delete state[frame][layer][x];
+    }
+  });
+
+  if(Object.keys(state[frame][layer]).length === 0) {
+    // console.log("delete! ", frame, layer);
+    delete state[frame][layer];
+  }
+  if(Object.keys(state[frame]).length === 0) {
+    // console.log("delete! ", frame);
+    delete state[frame];
+  }
+
+  return state;
+}
