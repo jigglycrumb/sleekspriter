@@ -42,6 +42,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
   case "PALETTE_SELECT":
     return { ...state, palette: action.palette };
 
+  case "PIXELS_COPY":
   case "PIXELS_CUT": {
     const clipboard = action.pixels;
     return { ...state, clipboard };

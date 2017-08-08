@@ -51,7 +51,7 @@ const state = {
         },
         mode: "fixed", // fixed or relative
       },
-      palette: 11,
+      palette: 10,
       selection: {
         start: null,
         end: null,

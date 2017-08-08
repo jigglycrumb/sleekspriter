@@ -27,7 +27,10 @@ class Menu extends React.Component {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
           this.props.pixelsCut(frame, layer, scopedPixels);
         }},
-        {label: "Copy"},
+        {label: "Copy", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          this.props.pixelsCopy(frame, layer, scopedPixels);
+        }},
         {label: "Paste"},
         {label: "Delete"},
         SEPERATOR,
