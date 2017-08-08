@@ -7,7 +7,7 @@ const SEPERATOR = {label: "---"};
 
 class Menu extends React.Component {
   render() {
-    const { frame, layer, layers, pixels, selection, size } = this.props;
+    const { clipboard, frame, layer, layers, pixels, selection, size } = this.props;
     const MenuConfig = [
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
@@ -31,7 +31,9 @@ class Menu extends React.Component {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
           this.props.pixelsCopy(frame, layer, scopedPixels);
         }},
-        {label: "Paste"},
+        {label: "Paste", action: () => {
+          this.props.pixelsPaste(frame, layer, clipboard);
+        }},
         {label: "Delete", action: () => {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
           this.props.pixelsDelete(frame, layer, scopedPixels);

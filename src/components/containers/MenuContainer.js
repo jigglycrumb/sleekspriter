@@ -7,6 +7,7 @@ import {
   pixelsCopy,
   pixelsCut,
   pixelsDelete,
+  pixelsPaste,
   selectionClear,
   selectionEnd,
   selectionStart,
@@ -15,6 +16,7 @@ import { getFrameLayersZSorted } from "../../state/selectors";
 
 const mapStateToProps = (state) => {
   return {
+    clipboard: state.ui.paint.clipboard,
     frame: state.ui.paint.frame,
     layer: state.ui.paint.layer,
     layers: getFrameLayersZSorted(state),
@@ -32,6 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     pixelsCopy: (frame, layer, pixels) => dispatch(pixelsCopy(frame, layer, pixels)),
     pixelsCut: (frame, layer, pixels) => dispatch(pixelsCut(frame, layer, pixels)),
     pixelsDelete: (frame, layer, pixels) => dispatch(pixelsDelete(frame, layer, pixels)),
+    pixelsPaste: (frame, layer, pixels) => dispatch(pixelsPaste(frame, layer, pixels)),
     selectionClear: () => dispatch(selectionClear()),
     selectionEnd: (point) => dispatch(selectionEnd(point)),
     selectionStart: (point) => dispatch(selectionStart(point)),

@@ -46,8 +46,8 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     return stateCopy;
   }
 
-
-  case "PIXELS_ADD": {
+  case "PIXELS_ADD":
+  case "PIXELS_PASTE": {
     if(state[action.frame] == undefined) state[action.frame] = {};
     if(state[action.frame][action.layer] == undefined) state[action.frame][action.layer] = {};
 
@@ -71,7 +71,6 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "PIXELS_MOVE": {
-
     let stateCopy = Object.assign({}, state);
     const sizeBounds = {
       start: { x: 1, y: 1 },
