@@ -11,7 +11,7 @@ class Point {
   }
 
   /**
-   * Moves a point by a given distance
+   * Moves the point by a given distance
    * @param {Object} distance - Point with distance coordinates
    * @param {Bool} dryRun - Do not modify the original point, default: false
    * @return {Object} the updated Point
@@ -27,6 +27,24 @@ class Point {
 
     this.x = targetX;
     this.y = targetY;
+    return this;
+  }
+
+  /**
+   * Rotates the point by an angle around another point
+   * @param {Number} angle - rotation angle
+   * @param {Number} pivot - pivot point
+   * @return {Object} the updated Point
+   */
+  rotate(angle, pivot) {
+    angle = angle*(Math.PI/180); // Convert to radians
+
+    const
+      rotatedX = Math.round(Math.cos(angle) * (this.x - pivot.x) - Math.sin(angle) * (this.y - pivot.y) + pivot.x),
+      rotatedY = Math.round(Math.sin(angle) * (this.x - pivot.x) + Math.cos(angle) * (this.y - pivot.y) + pivot.y);
+
+    this.x = rotatedX;
+    this.y = rotatedY;
     return this;
   }
 }

@@ -20,6 +20,8 @@ class Pixel {
     this.g = g;
     this.b = b;
     this.a = a;
+
+    return this;
   }
 }
 
