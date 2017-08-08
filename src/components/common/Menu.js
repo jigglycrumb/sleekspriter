@@ -13,14 +13,14 @@ class Menu extends React.Component {
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
         {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
         {label: "Save", action: () => { this.props.modalShow("ModalSaveFile"); }}, // TODO: show modal only in browser
-        {label: "Save as…"}, // Desktop only
+        {label: "Save as…"}, // TODO: Desktop only
         {label: "Import…", action: () => { this.props.modalShow("ModalImportFile"); }},
         SEPERATOR,
         {label: "Close"},
         SEPERATOR,
-        {label: "About @@name"}, // Desktop only
+        {label: "About @@name"}, // TODO: Desktop only
         SEPERATOR,
-        {label: "Quit @@name"}, // Desktop only, TODO: fix text replacement, it seems to work only once per file
+        {label: "Quit @@name"}, // TODO: Desktop only
       ]},
       {label: "Edit", items: [
         {label: "Cut", action: () => {
@@ -32,7 +32,10 @@ class Menu extends React.Component {
           this.props.pixelsCopy(frame, layer, scopedPixels);
         }},
         {label: "Paste"},
-        {label: "Delete"},
+        {label: "Delete", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          this.props.pixelsDelete(frame, layer, scopedPixels);
+        }},
         SEPERATOR,
         {label: "Rotate 180°"},
         {label: "Rotate 90° CW"},
@@ -57,7 +60,7 @@ class Menu extends React.Component {
           if(layers[index-1]) {
             layerAbove = layers[index-1].id;
             this.props.layerMerge(frame, layerAbove, layer);
-            setTimeout(() => this.props.layerSelectTop(layers), 0);
+            setTimeout(() => this.props.layerSelectTop(layers), 0); // TODO: find a more reliable solution
           }
         }},
         {label: "Merge with layer below", action: () => {
@@ -66,7 +69,7 @@ class Menu extends React.Component {
           if(layers[index+1]) {
             layerBelow = layers[index+1].id;
             this.props.layerMerge(frame, layer, layerBelow);
-            setTimeout(() => this.props.layerSelectTop(layers), 0);
+            setTimeout(() => this.props.layerSelectTop(layers), 0); // TODO: find a more reliable solution
           }
         }},
       ]},

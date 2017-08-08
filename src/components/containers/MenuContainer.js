@@ -6,11 +6,12 @@ import {
   modalShow,
   pixelsCopy,
   pixelsCut,
+  pixelsDelete,
   selectionClear,
   selectionEnd,
   selectionStart,
 } from "../../state/actions";
-import { getFrameLayersZSorted, getPixelsInScope } from "../../state/selectors";
+import { getFrameLayersZSorted } from "../../state/selectors";
 
 const mapStateToProps = (state) => {
   return {
@@ -18,7 +19,7 @@ const mapStateToProps = (state) => {
     layer: state.ui.paint.layer,
     layers: getFrameLayersZSorted(state),
     size: state.file.size,
-    pixels: state.file.pixels, //getPixelsInScope(state),
+    pixels: state.file.pixels,
     selection: state.ui.paint.selection,
   };
 };
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     modalShow: (modal) => dispatch(modalShow(modal)),
     pixelsCopy: (frame, layer, pixels) => dispatch(pixelsCopy(frame, layer, pixels)),
     pixelsCut: (frame, layer, pixels) => dispatch(pixelsCut(frame, layer, pixels)),
+    pixelsDelete: (frame, layer, pixels) => dispatch(pixelsDelete(frame, layer, pixels)),
     selectionClear: () => dispatch(selectionClear()),
     selectionEnd: (point) => dispatch(selectionEnd(point)),
     selectionStart: (point) => dispatch(selectionStart(point)),
