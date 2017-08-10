@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import {
-  selectionContains,
+  insideBounds,
   selectionIsActive
 } from "./";
 
@@ -13,18 +13,14 @@ const getPixelsInScope = (frame, layer, pixels, selection) => {
     pixelsInScope = _.cloneDeep(pixels[frame][layer]);
   }
 
-  // console.log(pixelsInScope);
-
   if(selectionIsActive(selection)) {
-    console.log("selection is active");
-
     const xValues = Object.keys(pixelsInScope);
     xValues.map(x => {
       const yValues = Object.keys(pixelsInScope[x]);
       yValues.map(y => {
         const p = pixelsInScope[x][y];
 
-        if(!selectionContains(selection, p)) {
+        if(!insideBounds(selection, p)) {
           delete pixelsInScope[x][y];
         }
       });
@@ -34,7 +30,6 @@ const getPixelsInScope = (frame, layer, pixels, selection) => {
     if(Object.keys(pixelsInScope).length === 0) pixelsInScope = {};
   }
 
-  // console.log(pixelsInScope);
   return pixelsInScope;
 };
 

@@ -1,15 +1,11 @@
 import initialState from "../initialState";
 import _ from "lodash";
-import { Point } from "../../classes";
+import { Point, Pixel } from "../../classes";
 import {
+  createBounds,
+  insideBounds,
   selectionIsActive
 } from "../../utils";
-
-const insideBounds = (bounds, point) =>
-  bounds.start.x <= point.x &&
-  bounds.start.y <= point.y &&
-  bounds.end.x >= point.x &&
-  bounds.end.y >= point.y;
 
 function filePixelsReducer(state = initialState.file.pixels, action) {
   switch (action.type) {
@@ -80,8 +76,6 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     let newPixels = {};
 
     if(selectionIsActive(action.selection)) {
-      console.log("selection active");
-
       // iterate over x-axis
       Object.keys(action.pixels).map(x => {
         // iterate over y-axis
@@ -116,8 +110,6 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
       stateCopy[action.frame][action.layer] = newLayerPixels;
     }
     else {
-      console.log("selection NOT active");
-
       // delete all pixels of the layer
       delete stateCopy[action.frame][action.layer];
 
@@ -150,6 +142,21 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     }
 
     return stateCopy;
+  }
+
+  case "PIXELS_ROTATE": {
+
+    let stateCopy = _.cloneDeep(state);
+    const { frame, layer, pixels, angle, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulatePixels(pixels, rotatePixel.bind(this, angle, pivot, bounds));
+
+    deletePixels(stateCopy, frame, layer, pixels);
+    return _.merge(stateCopy, {
+      [frame]: {
+        [layer]: newPixels
+      }
+    });
   }
 
   default:
@@ -187,4 +194,37 @@ function deletePixels(state, frame, layer, pixels) {
   }
 
   return state;
+}
+
+function rotatePixel(angle, pivot, bounds, pixel) {
+  pixel.rotate(angle, pivot);
+  if(insideBounds(bounds, pixel)) return pixel;
+  else return false;
+}
+
+function flattenPixels(pixels) {
+  let pixelArray = [];
+  Object.keys(pixels).map(x => {
+    Object.keys(pixels[x]).map(y => {
+      const { frame, layer, r, g, b, a } = pixels[x][y];
+      pixelArray.push(new Pixel(frame, layer, x, y, r, g, b, a));
+    });
+  });
+  return pixelArray;
+}
+
+function inflatePixels(pixels) {
+  let pixelMap = {};
+  pixels.forEach(pixel => {
+    if(!pixelMap[pixel.x]) pixelMap[pixel.x] = {};
+    pixelMap[pixel.x][pixel.y] = pixel;
+  });
+  return pixelMap;
+}
+
+function manipulatePixels(pixels, callback) {
+  pixels = flattenPixels(pixels);
+  pixels.forEach(callback, this);
+  pixels = inflatePixels(pixels);
+  return pixels;
 }

@@ -1,4 +1,6 @@
-class Pixel {
+import Point from "./Point";
+
+class Pixel extends Point {
   /**
    * Creates a new Pixel
    * @constructor
@@ -12,6 +14,9 @@ class Pixel {
    * @param {Number} a - pixel alpha value (0-1)
    */
   constructor(frame, layer, x, y, r, g, b, a) {
+
+    super(x, y);
+
     this.frame = frame;
     this.layer = layer;
     this.x = x;

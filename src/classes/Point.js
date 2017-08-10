@@ -37,6 +37,8 @@ class Point {
    * @return {Object} the updated Point
    */
   rotate(angle, pivot) {
+    // sanitize & convert angle
+    if(angle < 0) angle = 360 + angle;
     angle = angle*(Math.PI/180); // Convert to radians
 
     const

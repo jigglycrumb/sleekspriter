@@ -28,6 +28,7 @@ export const pixelsCut = (frame, layer, pixels) => ({ type: "PIXELS_CUT", frame,
 export const pixelsDelete = (frame, layer, pixels) => ({ type: "PIXELS_DELETE", frame, layer, pixels });
 export const pixelsMove = (frame, layer, pixels, distance, size, selection) => ({ type: "PIXELS_MOVE", frame, layer, pixels, distance, size, selection });
 export const pixelsPaste = (frame, layer, pixels) => ({ type: "PIXELS_PASTE", frame, layer, pixels });
+export const pixelsRotate = (frame, layer, pixels, angle, pivot, size) => ({ type: "PIXELS_ROTATE", frame, layer, pixels, angle, pivot, size });
 export const screenSelect = (screen) => ({ type: "SCREEN_SELECT", screen });
 export const selectionClear = () => ({ type: "SELECTION_CLEAR" });
 export const selectionEnd = (point) => ({ type: "SELECTION_END", point });

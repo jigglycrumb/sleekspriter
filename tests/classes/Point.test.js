@@ -27,11 +27,18 @@ describe("Point", () => {
     expect(translatedPoint.y).toBe(6);
   });
 
-  it("rotates its coordinates 90° around a pivot point", () => {
+  it("rotates its coordinates 90° CW around a pivot point", () => {
     const angle = 90;
     point.rotate(angle, pivot);
     expect(point.x).toBe(7);
     expect(point.y).toBe(2);
+  });
+
+  it("rotates its coordinates 90° CCW around a pivot point", () => {
+    const angle = -90;
+    point.rotate(angle, pivot);
+    expect(point.x).toBe(3);
+    expect(point.y).toBe(8);
   });
 
   it("rotates its coordinates 180° around a pivot point", () => {

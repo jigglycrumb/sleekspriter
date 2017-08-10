@@ -10,7 +10,7 @@ const { offset } = config;
 import _ from "lodash";
 import {
   selectionIsActive,
-  selectionContains
+  insideBounds
 } from "../../utils";
 import paintbucketWorker from "worker-loader!../../workers/paintbucket";
 
@@ -279,7 +279,7 @@ class Stagebox extends React.Component {
 
   useBrushTool(point) {
     if(this.layerIsVisible()) {
-      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
         const
           color = new Color({hex: this.props.color}),
           p = {
@@ -314,7 +314,7 @@ class Stagebox extends React.Component {
   useBrightnessTool(point) {
     if(this.layerIsVisible()) {
       if(this.cursorColor == "transparent") return;
-      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
         const
           intensity = this.props.brightnessTool.mode === "lighten"
                     ? this.props.brightnessTool.intensity
@@ -346,7 +346,7 @@ class Stagebox extends React.Component {
   useEraserTool(point) {
     if(this.layerIsVisible()) {
       if(this.cursorColor == "transparent") return;
-      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
         const
           p = {
             frame: this.props.frame,
@@ -440,7 +440,7 @@ class Stagebox extends React.Component {
 
   usePaintBucketTool(point) {
     if(this.layerIsVisible()) {
-      if(!selectionIsActive(this.props.selection) || selectionContains(this.props.selection, this.cursor)) {
+      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
 
         document.getElementById("ScreenBlocker").style.display = "block";
 

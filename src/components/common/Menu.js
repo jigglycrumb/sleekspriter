@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 
-import { getPixelsInScope } from "../../utils";
+import { getPixelsInScope, getPivot } from "../../utils";
 
 const SEPERATOR = {label: "---"};
 
@@ -39,9 +39,21 @@ class Menu extends React.Component {
           this.props.pixelsDelete(frame, layer, scopedPixels);
         }},
         SEPERATOR,
-        {label: "Rotate 180°"},
-        {label: "Rotate 90° CW"},
-        {label: "Rotate 90° CCW"},
+        {label: "Rotate 180°", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          const pivot = getPivot(size, selection);
+          this.props.pixelsRotate(frame, layer, scopedPixels, 180, pivot, size);
+        }},
+        {label: "Rotate 90° CW", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          const pivot = getPivot(size, selection);
+          this.props.pixelsRotate(frame, layer, scopedPixels, 90, pivot, size);
+        }},
+        {label: "Rotate 90° CCW", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          const pivot = getPivot(size, selection);
+          this.props.pixelsRotate(frame, layer, scopedPixels, -90, pivot, size);
+        }},
         SEPERATOR,
         {label: "Flip Horizontal"},
         {label: "Flip Vertical"},
