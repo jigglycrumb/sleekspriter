@@ -26,6 +26,8 @@ export const pixelsAdd = (frame, layer, pixels) => ({ type: "PIXELS_ADD", frame,
 export const pixelsCopy = (frame, layer, pixels) => ({ type: "PIXELS_COPY", frame, layer, pixels });
 export const pixelsCut = (frame, layer, pixels) => ({ type: "PIXELS_CUT", frame, layer, pixels });
 export const pixelsDelete = (frame, layer, pixels) => ({ type: "PIXELS_DELETE", frame, layer, pixels });
+export const pixelsFlipHorizontal = (frame, layer, pixels, pivot, size) => ({ type: "PIXELS_FLIP_HORIZONTAL", frame, layer, pixels, pivot, size });
+export const pixelsFlipVertical = (frame, layer, pixels, pivot, size) => ({ type: "PIXELS_FLIP_VERTICAL", frame, layer, pixels, pivot, size });
 export const pixelsMove = (frame, layer, pixels, distance, size, selection) => ({ type: "PIXELS_MOVE", frame, layer, pixels, distance, size, selection });
 export const pixelsPaste = (frame, layer, pixels) => ({ type: "PIXELS_PASTE", frame, layer, pixels });
 export const pixelsRotate = (frame, layer, pixels, angle, pivot, size) => ({ type: "PIXELS_ROTATE", frame, layer, pixels, angle, pivot, size });

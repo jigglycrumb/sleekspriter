@@ -10,7 +10,8 @@
   "scripts": {
     "start": "webpack-dev-server --inline --hot",
     "build": "webpack -p",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "jest": {
     "verbose": true,

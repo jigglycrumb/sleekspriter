@@ -47,4 +47,16 @@ describe("Point", () => {
     expect(point.x).toBe(8);
     expect(point.y).toBe(7);
   });
+
+  it("flips its coordinates vertically around a pivot point", () => {
+    point.flipVertical(pivot);
+    expect(point.x).toBe(2);
+    expect(point.y).toBe(7);
+  });
+
+  it("flips its coordinates horizontally around a pivot point", () => {
+    point.flipHorizontal(pivot);
+    expect(point.x).toBe(8);
+    expect(point.y).toBe(3);
+  });
 });

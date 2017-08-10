@@ -55,8 +55,16 @@ class Menu extends React.Component {
           this.props.pixelsRotate(frame, layer, scopedPixels, -90, pivot, size);
         }},
         SEPERATOR,
-        {label: "Flip Horizontal"},
-        {label: "Flip Vertical"},
+        {label: "Flip Horizontal", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          const pivot = getPivot(size, selection);
+          this.props.pixelsFlipHorizontal(frame, layer, scopedPixels, pivot, size);
+        }},
+        {label: "Flip Vertical", action: () => {
+          const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+          const pivot = getPivot(size, selection);
+          this.props.pixelsFlipVertical(frame, layer, scopedPixels, pivot, size);
+        }},
         SEPERATOR,
         {label: "Image size…"}
       ]},

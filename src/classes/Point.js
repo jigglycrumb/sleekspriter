@@ -33,7 +33,7 @@ class Point {
   /**
    * Rotates the point by an angle around another point
    * @param {Number} angle - rotation angle
-   * @param {Number} pivot - pivot point
+   * @param {Object} pivot - pivot point
    * @return {Object} the updated Point
    */
   rotate(angle, pivot) {
@@ -47,6 +47,28 @@ class Point {
 
     this.x = rotatedX;
     this.y = rotatedY;
+    return this;
+  }
+
+  /**
+  * Flips the point vertically around another point
+  * @param {Object} pivot - pivot point
+  * @return {Object} the updated Point
+  */
+  flipVertical(pivot) {
+    const targetY = (pivot.y * 2) - this.y;
+    this.y = targetY;
+    return this;
+  }
+
+  /**
+  * Flips the point horizontally around another point
+  * @param {Object} pivot - pivot point
+  * @return {Object} the updated Point
+  */
+  flipHorizontal(pivot) {
+    const targetX = (pivot.x * 2) - this.x;
+    this.x = targetX;
     return this;
   }
 }

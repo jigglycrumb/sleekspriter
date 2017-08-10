@@ -66,6 +66,34 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     return stateCopy;
   }
 
+  case "PIXELS_FLIP_HORIZONTAL": {
+    let stateCopy = _.cloneDeep(state);
+    const { frame, layer, pixels, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulatePixels(pixels, flipPixelHorizontal.bind(this, pivot, bounds));
+
+    deletePixels(stateCopy, frame, layer, pixels);
+    return _.merge(stateCopy, {
+      [frame]: {
+        [layer]: newPixels
+      }
+    });
+  }
+
+  case "PIXELS_FLIP_VERTICAL": {
+    let stateCopy = _.cloneDeep(state);
+    const { frame, layer, pixels, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulatePixels(pixels, flipPixelVertical.bind(this, pivot, bounds));
+
+    deletePixels(stateCopy, frame, layer, pixels);
+    return _.merge(stateCopy, {
+      [frame]: {
+        [layer]: newPixels
+      }
+    });
+  }
+
   case "PIXELS_MOVE": {
     let stateCopy = Object.assign({}, state);
     const sizeBounds = {
@@ -145,7 +173,6 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "PIXELS_ROTATE": {
-
     let stateCopy = _.cloneDeep(state);
     const { frame, layer, pixels, angle, pivot, size } = action;
     const bounds = createBounds(size);
@@ -198,6 +225,18 @@ function deletePixels(state, frame, layer, pixels) {
 
 function rotatePixel(angle, pivot, bounds, pixel) {
   pixel.rotate(angle, pivot);
+  if(insideBounds(bounds, pixel)) return pixel;
+  else return false;
+}
+
+function flipPixelVertical(pivot, bounds, pixel) {
+  pixel.flipVertical(pivot);
+  if(insideBounds(bounds, pixel)) return pixel;
+  else return false;
+}
+
+function flipPixelHorizontal(pivot, bounds, pixel) {
+  pixel.flipHorizontal(pivot);
   if(insideBounds(bounds, pixel)) return pixel;
   else return false;
 }
