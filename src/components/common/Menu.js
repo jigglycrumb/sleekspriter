@@ -123,7 +123,7 @@ class Menu extends React.Component {
           this.props.frameFlipVertical(frame, framePixels, pivot, size);
         }},
         SEPERATOR,
-        {label: "Duplicate…"},
+        {label: "Duplicate…", action: () => { this.props.modalShow("ModalDuplicateFrame"); }},
       ]},
       // {label: "Window", items: [
       //   {label: "Paint"},

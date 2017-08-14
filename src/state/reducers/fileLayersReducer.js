@@ -29,6 +29,11 @@ function fileLayersReducer(state = initialState.file.layers, action) {
     return state;
   }
 
+  case "FRAME_DUPLICATE": {
+    // TODO implement this
+    return state;
+  }
+
   case "LAYER_ADD": {
     const
       newZIndex = action.layers.find(layer => layer.id === action.layer).z + 1,

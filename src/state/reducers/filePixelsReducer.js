@@ -21,6 +21,11 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     return state;
   }
 
+  case "FRAME_DUPLICATE": {
+    // TODO implement this
+    return state;
+  }
+
   case "FRAME_FLIP_HORIZONTAL": {
     let stateCopy = _.cloneDeep(state);
     const { frame, pixels, pivot, size } = action;
