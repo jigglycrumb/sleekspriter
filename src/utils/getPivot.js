@@ -2,6 +2,8 @@ import { selectionIsActive } from "./";
 
 const getPivot = (size, selection) => {
 
+  if(!selection) selection = { start: null, end: null };
+
   if(selectionIsActive(selection)) {
     return {
       x: (selection.start.x + selection.end.x + 1) / 2,

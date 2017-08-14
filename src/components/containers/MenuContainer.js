@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import Menu from "../common/Menu";
 import {
+  frameRotate,
   layerMerge,
   layerSelectTop,
   modalShow,
@@ -31,6 +32,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    frameRotate: (frame, pixels, angle, pivot, size) => dispatch(frameRotate(frame, pixels, angle, pivot, size)),
     layerMerge: (frame, first, second) => dispatch(layerMerge(frame, first, second)),
     layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
     modalShow: (modal) => dispatch(modalShow(modal)),

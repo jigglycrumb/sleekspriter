@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 
-import { getPixelsInScope, getPivot } from "../../utils";
+import { getPixelsInFrame, getPixelsInScope, getPivot } from "../../utils";
 
 const SEPERATOR = {label: "---"};
 
@@ -66,7 +66,7 @@ class Menu extends React.Component {
           this.props.pixelsFlipVertical(frame, layer, scopedPixels, pivot, size);
         }},
         SEPERATOR,
-        {label: "Image size…"}
+        {label: "Image size…", action: () => { this.props.modalShow("ModalEditImageSize"); }}
       ]},
       {label: "Select", items: [
         {label: "All", action: () => {
@@ -96,9 +96,21 @@ class Menu extends React.Component {
         }},
       ]},
       {label: "Frame", items: [
-        {label: "Rotate 180°"},
-        {label: "Rotate 90° CW"},
-        {label: "Rotate 90° CCW"},
+        {label: "Rotate 180°", action: () => {
+          const framePixels = getPixelsInFrame(frame, pixels);
+          const pivot = getPivot(size);
+          this.props.frameRotate(frame, framePixels, 180, pivot, size);
+        }},
+        {label: "Rotate 90° CW", action: () => {
+          const framePixels = getPixelsInFrame(frame, pixels);
+          const pivot = getPivot(size);
+          this.props.frameRotate(frame, framePixels, 90, pivot, size);
+        }},
+        {label: "Rotate 90° CCW", action: () => {
+          const framePixels = getPixelsInFrame(frame, pixels);
+          const pivot = getPivot(size);
+          this.props.frameRotate(frame, framePixels, -90, pivot, size);
+        }},
         SEPERATOR,
         {label: "Flip Horizontal"},
         {label: "Flip Vertical"},

@@ -4,6 +4,8 @@ export const boxFold = (box) => ({ type: "BOX_FOLD", box });
 export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
 export const fileCreate = (frames, size) => ({ type: "FILE_CREATE", frames, size });
 export const fileLoad = (json) => ({ type: "FILE_LOAD", json });
+export const fileSize = (frames, size) => ({ type: "FILE_SIZE", frames, size });
+export const frameRotate = (frame, pixels, angle, pivot, size) => ({ type: "FRAME_ROTATE", frame, pixels, angle, pivot, size});
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
 export const layerAdd = (frame, layer, layers) => ({ type: "LAYER_ADD", frame, layer, layers });

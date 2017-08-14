@@ -1,15 +1,15 @@
 import initialState from "../initialState";
 
 function fileSizeReducer(state = initialState.file.size, action) {
-
-  // console.log(`fileSizeReducer#${action.type}`);
-
   switch (action.type) {
   case "FILE_CREATE":
-    return Object.assign({}, action.size);
+    return action.size;
 
   case "FILE_LOAD":
-    return Object.assign({}, action.json.size);
+    return action.json.size;
+
+  case "FILE_SIZE":
+    return action.size;
 
   default:
     return state;

@@ -1,4 +1,5 @@
 export ModalConfirmDeleteLayer from "./ModalConfirmDeleteLayer";
+export ModalEditImageSize from "./ModalEditImageSize";
 export ModalErrorInvisibleLayer from "./ModalErrorInvisibleLayer";
 export ModalImportFile from "./ModalImportFile";
 export ModalNewFile from "./ModalNewFile";

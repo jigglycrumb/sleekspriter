@@ -1,6 +1,7 @@
 export capitalizeFirstLetter from "./capitalizeFirstLetter";
 export createBounds from "./createBounds";
 export getPivot from "./getPivot";
+export getPixelsInFrame from "./getPixelsInFrame";
 export getPixelsInScope from "./getPixelsInScope";
 export fileToState from "./fileToState";
 export insideBounds from "./insideBounds";

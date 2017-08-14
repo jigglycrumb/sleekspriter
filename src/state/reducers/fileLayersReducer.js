@@ -23,6 +23,12 @@ function fileLayersReducer(state = initialState.file.layers, action) {
   case "FILE_LOAD":
     return [].concat(action.json.layers);
 
+  case "FILE_SIZE": {
+    // TODO implement this
+
+    return state;
+  }
+
   case "LAYER_ADD": {
     const
       newZIndex = action.layers.find(layer => layer.id === action.layer).z + 1,

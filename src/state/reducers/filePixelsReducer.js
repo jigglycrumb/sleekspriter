@@ -16,6 +16,23 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   case "FILE_LOAD":
     return Object.assign({}, action.json.pixels);
 
+  case "FILE_SIZE": {
+    // TODO implement this
+    return state;
+  }
+
+  case "FRAME_ROTATE": {
+    let stateCopy = _.cloneDeep(state);
+    const { frame, pixels, angle, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulateFramePixels(pixels, rotatePixel.bind(this, angle, pivot, bounds));
+
+    delete stateCopy[frame];
+    return _.merge(stateCopy, {
+      [frame]: newPixels
+    });
+  }
+
   case "LAYER_DELETE": {
     let stateCopy = Object.assign({}, state);
     delete stateCopy[action.frame][action.layer];
@@ -252,6 +269,20 @@ function flattenPixels(pixels) {
   return pixelArray;
 }
 
+function flattenFramePixels(pixels) {
+  let pixelArray = [];
+  Object.keys(pixels).map(layer => {
+    console.log("flattening layer ", layer);
+    Object.keys(pixels[layer]).map(x => {
+      Object.keys(pixels[layer][x]).map(y => {
+        const { frame, r, g, b, a } = pixels[layer][x][y];
+        pixelArray.push(new Pixel(frame, layer, x, y, r, g, b, a));
+      });
+    });
+  });
+  return pixelArray;
+}
+
 function inflatePixels(pixels) {
   let pixelMap = {};
   pixels.forEach(pixel => {
@@ -261,9 +292,26 @@ function inflatePixels(pixels) {
   return pixelMap;
 }
 
+function inflateFramePixels(pixels) {
+  let pixelMap = {};
+  pixels.forEach(pixel => {
+    if(!pixelMap[pixel.layer]) pixelMap[pixel.layer] = {};
+    if(!pixelMap[pixel.layer][pixel.x]) pixelMap[pixel.layer][pixel.x] = {};
+    pixelMap[pixel.layer][pixel.x][pixel.y] = pixel;
+  });
+  return pixelMap;
+}
+
 function manipulatePixels(pixels, callback) {
   pixels = flattenPixels(pixels);
   pixels.forEach(callback, this);
   pixels = inflatePixels(pixels);
+  return pixels;
+}
+
+function manipulateFramePixels(pixels, callback) {
+  pixels = flattenFramePixels(pixels);
+  pixels.forEach(callback, this);
+  pixels = inflateFramePixels(pixels);
   return pixels;
 }
