@@ -5,6 +5,8 @@ export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
 export const fileCreate = (frames, size) => ({ type: "FILE_CREATE", frames, size });
 export const fileLoad = (json) => ({ type: "FILE_LOAD", json });
 export const fileSize = (frames, size) => ({ type: "FILE_SIZE", frames, size });
+export const frameFlipHorizontal = (frame, pixels, pivot, size) => ({ type: "FRAME_FLIP_HORIZONTAL", frame, pixels, pivot, size });
+export const frameFlipVertical = (frame, pixels, pivot, size) => ({ type: "FRAME_FLIP_VERTICAL", frame, pixels, pivot, size });
 export const frameRotate = (frame, pixels, angle, pivot, size) => ({ type: "FRAME_ROTATE", frame, pixels, angle, pivot, size});
 export const frameSelect = (frame) => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });

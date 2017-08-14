@@ -1,6 +1,8 @@
 import { connect } from "react-redux";
 import Menu from "../common/Menu";
 import {
+  frameFlipHorizontal,
+  frameFlipVertical,
   frameRotate,
   layerMerge,
   layerSelectTop,
@@ -32,6 +34,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    frameFlipHorizontal: (frame, pixels, pivot, size) => dispatch(frameFlipHorizontal(frame, pixels, pivot, size)),
+    frameFlipVertical: (frame, pixels, pivot, size) => dispatch(frameFlipVertical(frame, pixels, pivot, size)),
     frameRotate: (frame, pixels, angle, pivot, size) => dispatch(frameRotate(frame, pixels, angle, pivot, size)),
     layerMerge: (frame, first, second) => dispatch(layerMerge(frame, first, second)),
     layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),

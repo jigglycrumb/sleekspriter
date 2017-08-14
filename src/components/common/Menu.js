@@ -112,8 +112,16 @@ class Menu extends React.Component {
           this.props.frameRotate(frame, framePixels, -90, pivot, size);
         }},
         SEPERATOR,
-        {label: "Flip Horizontal"},
-        {label: "Flip Vertical"},
+        {label: "Flip Horizontal", action: () => {
+          const framePixels = getPixelsInFrame(frame, pixels);
+          const pivot = getPivot(size);
+          this.props.frameFlipHorizontal(frame, framePixels, pivot, size);
+        }},
+        {label: "Flip Vertical", action: () => {
+          const framePixels = getPixelsInFrame(frame, pixels);
+          const pivot = getPivot(size);
+          this.props.frameFlipVertical(frame, framePixels, pivot, size);
+        }},
         SEPERATOR,
         {label: "Duplicate…"},
       ]},

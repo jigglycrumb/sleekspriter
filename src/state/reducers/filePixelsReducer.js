@@ -21,6 +21,30 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
     return state;
   }
 
+  case "FRAME_FLIP_HORIZONTAL": {
+    let stateCopy = _.cloneDeep(state);
+    const { frame, pixels, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulateFramePixels(pixels, flipPixelHorizontal.bind(this, pivot, bounds));
+
+    delete stateCopy[frame];
+    return _.merge(stateCopy, {
+      [frame]: newPixels
+    });
+  }
+
+  case "FRAME_FLIP_VERTICAL": {
+    let stateCopy = _.cloneDeep(state);
+    const { frame, pixels, pivot, size } = action;
+    const bounds = createBounds(size);
+    const newPixels = manipulateFramePixels(pixels, flipPixelVertical.bind(this, pivot, bounds));
+
+    delete stateCopy[frame];
+    return _.merge(stateCopy, {
+      [frame]: newPixels
+    });
+  }
+
   case "FRAME_ROTATE": {
     let stateCopy = _.cloneDeep(state);
     const { frame, pixels, angle, pivot, size } = action;
@@ -272,7 +296,6 @@ function flattenPixels(pixels) {
 function flattenFramePixels(pixels) {
   let pixelArray = [];
   Object.keys(pixels).map(layer => {
-    console.log("flattening layer ", layer);
     Object.keys(pixels[layer]).map(x => {
       Object.keys(pixels[layer][x]).map(y => {
         const { frame, r, g, b, a } = pixels[layer][x][y];
