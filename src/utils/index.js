@@ -1,5 +1,7 @@
 export capitalizeFirstLetter from "./capitalizeFirstLetter";
 export createBounds from "./createBounds";
+export createNewLayerId from "./createNewLayerId";
+export duplicateLayers from "./duplicateLayers";
 export getPivot from "./getPivot";
 export getPixelsInFrame from "./getPixelsInFrame";
 export getPixelsInScope from "./getPixelsInScope";

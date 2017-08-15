@@ -3,8 +3,9 @@ import _ from "lodash";
 import { Point, Pixel } from "../../classes";
 import {
   createBounds,
+  duplicateLayers,
   insideBounds,
-  selectionIsActive
+  selectionIsActive,
 } from "../../utils";
 
 function filePixelsReducer(state = initialState.file.pixels, action) {
@@ -22,8 +23,27 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "FRAME_DUPLICATE": {
-    // TODO implement this
-    return state;
+    const { layers, source, target, nextLayerId } = action;
+
+    let stateCopy = _.cloneDeep(state);
+    let pixelsToDuplicate = {};
+    if(stateCopy[source]) {
+      pixelsToDuplicate = stateCopy[source];
+    }
+
+    const newLayers = duplicateLayers(layers, target, nextLayerId);
+
+    let layerMap = {};
+    layers.map((layer, index) => {
+      layerMap[layer.id] = newLayers[index].id;
+    });
+
+    const newPixels = manipulateFramePixels(pixelsToDuplicate, copyPixelToFrame.bind(this, target, layerMap));
+
+    delete stateCopy[target];
+    return _.merge(stateCopy, {
+      [target]: newPixels
+    });
   }
 
   case "FRAME_FLIP_HORIZONTAL": {
@@ -285,6 +305,12 @@ function flipPixelHorizontal(pivot, bounds, pixel) {
   pixel.flipHorizontal(pivot);
   if(insideBounds(bounds, pixel)) return pixel;
   else return false;
+}
+
+function copyPixelToFrame(frame, layerMap, pixel) {
+  pixel.frame = frame;
+  pixel.layer = layerMap[pixel.layer];
+  return pixel;
 }
 
 function flattenPixels(pixels) {

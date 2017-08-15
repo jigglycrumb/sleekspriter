@@ -1,5 +1,6 @@
 import _ from "lodash";
 import initialState from "../initialState";
+import { duplicateLayers } from "../../utils";
 
 function fileLayersReducer(state = initialState.file.layers, action) {
   switch (action.type) {
@@ -30,8 +31,10 @@ function fileLayersReducer(state = initialState.file.layers, action) {
   }
 
   case "FRAME_DUPLICATE": {
-    // TODO implement this
-    return state;
+    const { layers, target, nextLayerId } = action;
+    let stateCopy = [].concat(state).filter((layer) => layer.frame !== target);
+    const newLayers = duplicateLayers(layers, target, nextLayerId);
+    return stateCopy.concat(newLayers);
   }
 
   case "LAYER_ADD": {

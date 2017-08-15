@@ -5,7 +5,7 @@ export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
 export const fileCreate = (frames, size) => ({ type: "FILE_CREATE", frames, size });
 export const fileLoad = (json) => ({ type: "FILE_LOAD", json });
 export const fileSize = (frames, size) => ({ type: "FILE_SIZE", frames, size });
-export const frameDuplicate = (source, target) => ({ type: "FRAME_DUPLICATE", source, target });
+export const frameDuplicate = (layers, source, target, nextLayerId) => ({ type: "FRAME_DUPLICATE", layers, source, target, nextLayerId });
 export const frameFlipHorizontal = (frame, pixels, pivot, size) => ({ type: "FRAME_FLIP_HORIZONTAL", frame, pixels, pivot, size });
 export const frameFlipVertical = (frame, pixels, pivot, size) => ({ type: "FRAME_FLIP_VERTICAL", frame, pixels, pivot, size });
 export const frameRotate = (frame, pixels, angle, pivot, size) => ({ type: "FRAME_ROTATE", frame, pixels, angle, pivot, size});
