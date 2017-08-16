@@ -18,10 +18,13 @@ class Menu extends React.Component {
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
         {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
         {label: "Save", action: () => { this.props.modalShow("ModalSaveFile"); }}, // TODO: show modal only in browser
-        {label: "Save as…"}, // TODO: Desktop only
+        // {label: "Save as…"}, // TODO: Desktop only
         {label: "Import…", action: () => { this.props.modalShow("ModalImportFile"); }},
         SEPERATOR,
-        {label: "Close"},
+        {label: "Close", action: () => {
+          this.props.modalShow("ModalSaveFile"); // TODO: show modal only in browser
+          this.props.screenSelect("start");
+        }},
       ]},
       {label: "Edit", items: [
         {label: "Cut", action: () => {
@@ -83,7 +86,7 @@ class Menu extends React.Component {
           if(layers[index-1]) {
             layerAbove = layers[index-1].id;
             this.props.layerMerge(frame, layerAbove, layer);
-            setTimeout(() => this.props.layerSelectTop(layers), 0); // TODO: find a more reliable solution
+            setTimeout(() => this.props.layerSelectTop(layers), 50); // TODO: find a more reliable solution
           }
         }},
         {label: "Merge with layer below", action: () => {
@@ -92,7 +95,7 @@ class Menu extends React.Component {
           if(layers[index+1]) {
             layerBelow = layers[index+1].id;
             this.props.layerMerge(frame, layer, layerBelow);
-            setTimeout(() => this.props.layerSelectTop(layers), 0); // TODO: find a more reliable solution
+            setTimeout(() => this.props.layerSelectTop(layers), 50); // TODO: find a more reliable solution
           }
         }},
       ]},
