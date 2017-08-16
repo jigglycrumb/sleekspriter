@@ -17,6 +17,7 @@ function ModalAbout(props) {
         <div className="about-window">
           <div className="credits">
             <h1>@@name</h1>
+            <div>@@version</div>
             <br />
 
             <h2>{t("Created by")} <a target="_blank" href="http://hpcodecraft.me">@@author</a></h2>
