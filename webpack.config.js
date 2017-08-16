@@ -20,12 +20,6 @@ const config = {
   },
   module: {
     rules: [{
-      test: /\.(html|js)$/,
-      use: [{
-        loader: "string-replace-loader",
-        query: { multiple: replaceConfig }
-      }]
-    },{
       test: /\.(css|less)$/,
       use: [{
         loader: "style-loader"
@@ -87,6 +81,13 @@ const config = {
     {
       test: /\.ya?ml$/,
       use: ["json-loader", "yaml-loader"]
+    },
+    {
+      test: /\.(html|js|yml)$/,
+      use: [{
+        loader: "string-replace-loader",
+        query: { multiple: replaceConfig }
+      }]
     }
     ]
   },

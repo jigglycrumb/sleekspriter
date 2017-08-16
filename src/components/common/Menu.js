@@ -9,6 +9,11 @@ class Menu extends React.Component {
   render() {
     const { clipboard, frame, layer, layers, pixels, selection, size } = this.props;
     const MenuConfig = [
+      {label: "@@name", items: [
+        {label: "About @@name", action: () => { this.props.modalShow("ModalAbout"); }},
+        // SEPERATOR,
+        // {label: "Quit @@name"}, // TODO: Desktop only
+      ]},
       {label: "File", items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
         {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
@@ -17,10 +22,6 @@ class Menu extends React.Component {
         {label: "Import…", action: () => { this.props.modalShow("ModalImportFile"); }},
         SEPERATOR,
         {label: "Close"},
-        SEPERATOR,
-        {label: "About @@name"}, // TODO: Desktop only
-        SEPERATOR,
-        {label: "Quit @@name"}, // TODO: Desktop only
       ]},
       {label: "Edit", items: [
         {label: "Cut", action: () => {

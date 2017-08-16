@@ -1,3 +1,4 @@
+export ModalAbout from "./ModalAbout";
 export ModalConfirmDeleteLayer from "./ModalConfirmDeleteLayer";
 export ModalDuplicateFrame from "./ModalDuplicateFrame";
 export ModalEditImageSize from "./ModalEditImageSize";

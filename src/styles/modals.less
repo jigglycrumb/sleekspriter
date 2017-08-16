@@ -130,6 +130,33 @@
     margin: 5px 10px;
     border: 1px solid @dark;
   }
+
+  .about-window {
+    background: radial-gradient(circle at top center, #333 0%, #111 100%);
+    font-size: 130%;
+    height: 200px;
+    overflow: hidden;
+    text-align: center;
+
+    .credits {
+      animation: 40s credits linear infinite;
+      position: relative;
+    }
+
+    .heart {
+      color: tomato;
+    }
+
+    li {
+      font-size: 120%;
+    }
+
+    a {
+      color: @font-color;
+      text-decoration: none;
+      border-bottom: 1px dotted @font-color;
+    }
+  }
 } // #Modal
 
 
@@ -150,4 +177,9 @@
     top: 50%;
     transform: translateY(-50%);
   }
+}
+
+@keyframes credits {
+    0% { top:  100%; }
+  100% { top: -500%; }
 }
