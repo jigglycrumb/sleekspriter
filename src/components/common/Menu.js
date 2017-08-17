@@ -69,8 +69,8 @@ class Menu extends React.Component {
           const pivot = getPivot(size, selection);
           this.props.pixelsFlipVertical(frame, layer, scopedPixels, pivot, size);
         }},
-        SEPERATOR,
-        {label: "Image size…", action: () => { this.props.modalShow("ModalEditImageSize"); }}
+        // SEPERATOR,
+        // {label: "Image size…", action: () => { this.props.modalShow("ModalEditImageSize"); }}
       ]},
       {label: "Select", items: [
         {label: "All", action: () => {

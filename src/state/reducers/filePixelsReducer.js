@@ -1,6 +1,6 @@
 import initialState from "../initialState";
 import _ from "lodash";
-import { Point, Pixel } from "../../classes";
+import { Point } from "../../classes";
 import {
   createBounds,
   deletePixels,

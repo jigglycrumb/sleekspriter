@@ -1,8 +1,8 @@
 const state = {
   file: {
     frames: {
-      x: 5,
-      y: 3
+      x: 3,
+      y: 2
     },
     layers: [
       {frame: 1, id: 2, name: "Layer 2", z: 1, opacity: 100, visible: true},
@@ -51,7 +51,7 @@ const state = {
         },
         mode: "fixed", // fixed or relative
       },
-      palette: 10,
+      palette: 0,
       selection: {
         start: null,
         end: null,
