@@ -3,8 +3,11 @@ import _ from "lodash";
 import { Point, Pixel } from "../../classes";
 import {
   createBounds,
+  deletePixels,
   duplicateLayers,
+  flattenPixels,
   insideBounds,
+  mergeLayerPixels,
   selectionIsActive,
 } from "../../utils";
 
@@ -83,7 +86,7 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "LAYER_DELETE": {
-    let stateCopy = Object.assign({}, state);
+    let stateCopy = _.cloneDeep(state);
     delete stateCopy[action.frame][action.layer];
     if(Object.keys(stateCopy[action.frame]).length === 0) delete stateCopy[action.frame];
     if(Object.keys(stateCopy).length === 0) stateCopy = {};
@@ -91,20 +94,9 @@ function filePixelsReducer(state = initialState.file.pixels, action) {
   }
 
   case "LAYER_MERGE": {
-    let stateCopy = Object.assign({}, state);
-
-    if(stateCopy[action.frame]
-    && stateCopy[action.frame][action.first]
-    && stateCopy[action.frame][action.second]) {
-      const
-        first = stateCopy[action.frame][action.first],
-        second = stateCopy[action.frame][action.second],
-        merged = _.merge(second, first);
-
-      delete stateCopy[action.frame][action.first];
-      stateCopy[action.frame][action.second] = merged;
-    }
-
+    const { frame, first, second } = action;
+    let stateCopy = _.cloneDeep(state);
+    stateCopy = mergeLayerPixels(frame, first, second, stateCopy);
     return stateCopy;
   }
 
@@ -263,32 +255,6 @@ export default filePixelsReducer;
 
 // helper functions
 
-function deletePixels(state, frame, layer, pixels) {
-
-  Object.keys(pixels).map(x => {
-    Object.keys(pixels[x]).map(y => {
-      // console.log("delete! ", frame, layer, x, y);
-      delete state[frame][layer][x][y];
-    });
-
-    if(Object.keys(state[frame][layer][x]).length === 0) {
-      // console.log("delete! ", frame, layer, x);
-      delete state[frame][layer][x];
-    }
-  });
-
-  if(Object.keys(state[frame][layer]).length === 0) {
-    // console.log("delete! ", frame, layer);
-    delete state[frame][layer];
-  }
-  if(Object.keys(state[frame]).length === 0) {
-    // console.log("delete! ", frame);
-    delete state[frame];
-  }
-
-  return state;
-}
-
 function rotatePixel(angle, pivot, bounds, pixel) {
   pixel.rotate(angle, pivot);
   if(insideBounds(bounds, pixel)) return pixel;
@@ -311,30 +277,6 @@ function copyPixelToFrame(frame, layerMap, pixel) {
   pixel.frame = frame;
   pixel.layer = layerMap[pixel.layer];
   return pixel;
-}
-
-function flattenPixels(pixels) {
-  let pixelArray = [];
-  Object.keys(pixels).map(x => {
-    Object.keys(pixels[x]).map(y => {
-      const { frame, layer, r, g, b, a } = pixels[x][y];
-      pixelArray.push(new Pixel(frame, layer, x, y, r, g, b, a));
-    });
-  });
-  return pixelArray;
-}
-
-function flattenFramePixels(pixels) {
-  let pixelArray = [];
-  Object.keys(pixels).map(layer => {
-    Object.keys(pixels[layer]).map(x => {
-      Object.keys(pixels[layer][x]).map(y => {
-        const { frame, r, g, b, a } = pixels[layer][x][y];
-        pixelArray.push(new Pixel(frame, layer, x, y, r, g, b, a));
-      });
-    });
-  });
-  return pixelArray;
 }
 
 function inflatePixels(pixels) {
@@ -364,7 +306,7 @@ function manipulatePixels(pixels, callback) {
 }
 
 function manipulateFramePixels(pixels, callback) {
-  pixels = flattenFramePixels(pixels);
+  pixels = flattenPixels(pixels);
   pixels.forEach(callback, this);
   pixels = inflateFramePixels(pixels);
   return pixels;

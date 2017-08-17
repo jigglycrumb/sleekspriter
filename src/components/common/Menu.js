@@ -29,7 +29,7 @@ class Menu extends React.Component {
       {label: "Edit", items: [
         {label: "Cut", action: () => {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
-          this.props.pixelsCut(frame, layer, scopedPixels);
+          this.props.pixelsCut(frame, layer, scopedPixels, pixels);
         }},
         {label: "Copy", action: () => {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
@@ -40,7 +40,7 @@ class Menu extends React.Component {
         }},
         {label: "Delete", action: () => {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
-          this.props.pixelsDelete(frame, layer, scopedPixels);
+          this.props.pixelsDelete(frame, layer, scopedPixels, pixels);
         }},
         SEPERATOR,
         {label: "Rotate 180°", action: () => {
@@ -85,8 +85,8 @@ class Menu extends React.Component {
           let layerAbove = null;
           if(layers[index-1]) {
             layerAbove = layers[index-1].id;
-            this.props.layerMerge(frame, layerAbove, layer);
-            setTimeout(() => this.props.layerSelectTop(layers), 50); // TODO: find a more reliable solution
+            this.props.layerMerge(frame, layerAbove, layer, pixels);
+            setTimeout(() => this.props.layerSelectTop(layers), 100); // TODO: find a more reliable solution
           }
         }},
         {label: "Merge with layer below", action: () => {
@@ -94,8 +94,8 @@ class Menu extends React.Component {
           let layerBelow = null;
           if(layers[index+1]) {
             layerBelow = layers[index+1].id;
-            this.props.layerMerge(frame, layer, layerBelow);
-            setTimeout(() => this.props.layerSelectTop(layers), 50); // TODO: find a more reliable solution
+            this.props.layerMerge(frame, layer, layerBelow, pixels);
+            setTimeout(() => this.props.layerSelectTop(layers), 100); // TODO: find a more reliable solution
           }
         }},
       ]},

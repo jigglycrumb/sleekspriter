@@ -1,11 +1,11 @@
 import _ from "lodash";
 import initialState from "../initialState";
-import { Point } from "../../classes";
+import { Pixel, Point } from "../../classes";
 import config from "../../config";
 const { zoom, offset } = config;
 
 
-import { getPixelsInScope } from "../../utils";
+import { deletePixels, flattenPixels, mergeLayerPixels } from "../../utils";
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
 
@@ -27,6 +27,24 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     return { ...state, frame: +action.frame };
   case "GRID_TOGGLE":
     return { ...state, grid: !state.grid };
+
+  case "LAYER_DELETE": {
+    let pixels = _.cloneDeep(action.allPixels);
+    delete pixels[action.frame][action.layer];
+    const spritePalette = _.uniq(flattenPixels(pixels).map((p) => p.toHex()));
+    return { ...state, spritePalette };
+  }
+
+  case "LAYER_MERGE": {
+    const { frame, first, second, allPixels } = action;
+
+    let pixels = _.cloneDeep(allPixels);
+    pixels = mergeLayerPixels(frame, first, second, pixels);
+
+    const spritePalette = _.uniq(flattenPixels(pixels).map((p) => p.toHex()));
+    return { ...state, spritePalette };
+  }
+
   case "LAYER_SELECT":
     return { ...state, layer: +action.layer };
   case "LAYER_SELECT_TOP": {
@@ -40,16 +58,41 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
   case "ONION_TOGGLE":
     return { ...state, onion: { ...state.onion, active: !state.onion.active }};
   case "PALETTE_SELECT":
-    return { ...state, palette: action.palette };
+    return { ...state, palette: +action.palette };
 
-  case "PIXELS_COPY":
-  case "PIXELS_CUT": {
+  case "PIXELS_ADD":
+  case "PIXELS_PASTE": {
+    const
+      colors = _.uniq(flattenPixels(action.pixels).map((p) => p.toHex())),
+      spritePalette = _.uniq([...state.spritePalette, ...colors]);
+    return { ...state, spritePalette };
+  }
+
+  case "PIXELS_COPY": {
     const clipboard = action.pixels;
     return { ...state, clipboard };
   }
 
+  case "PIXELS_CUT": {
+    const
+      { allPixels, frame, layer, pixels } = action,
+      pixelMap = deletePixels(allPixels, frame, layer, pixels),
+      clipboard = action.pixels,
+      spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+    return { ...state, clipboard, spritePalette };
+  }
+
+  case "PIXELS_DELETE": {
+    const
+      { allPixels, frame, layer, pixels } = action,
+      pixelMap = deletePixels(allPixels, frame, layer, pixels),
+      spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+    return { ...state, spritePalette };
+  }
+
   case "SELECTION_CLEAR":
     return { ...state, selection: { start: null, end: null }};
+
   case "SELECTION_MOVE":
     return { ...state, selection: {
       start: new Point(state.selection.start.x, state.selection.start.y).translate(action.distance),

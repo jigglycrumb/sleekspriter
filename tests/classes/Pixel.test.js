@@ -12,4 +12,25 @@ describe("Pixel", () => {
     expect(pixel.b).toBe(128);
     expect(pixel.a).toBe(1);
   });
+
+  describe("#toHex", () => {
+    it("returns the CSS hex string for the pixels' color", () => {
+      let pixel;
+
+      pixel = new Pixel(23, 42, 2, 3, 255, 0, 0, 1);
+      expect(pixel.toHex()).toBe("#FF0000");
+
+      pixel = new Pixel(23, 42, 2, 3, 0, 255, 0, 1);
+      expect(pixel.toHex()).toBe("#00FF00");
+
+      pixel = new Pixel(23, 42, 2, 3, 0, 0, 255, 1);
+      expect(pixel.toHex()).toBe("#0000FF");
+
+      pixel = new Pixel(23, 42, 2, 3, 0, 0, 0, 1);
+      expect(pixel.toHex()).toBe("#000000");
+
+      pixel = new Pixel(23, 42, 2, 3, 255, 255, 255, 1);
+      expect(pixel.toHex()).toBe("#FFFFFF");
+    });
+  });
 });

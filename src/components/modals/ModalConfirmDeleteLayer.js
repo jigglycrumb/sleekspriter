@@ -15,10 +15,11 @@ const mapStateToProps = (state) => ({
   frame: state.ui.paint.frame,
   layer: getPaintLayer(state),
   layers: getFrameLayers(state),
+  pixels: state.file.pixels,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  layerDelete: (frame, layer) => dispatch(layerDelete(frame, layer)),
+  layerDelete: (frame, layer, allPixels) => dispatch(layerDelete(frame, layer, allPixels)),
   layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
   hide: () => dispatch(modalHide()),
 });
@@ -41,7 +42,7 @@ class ModalConfirmDeleteLayer extends React.Component {
   }
 
   layerDelete() {
-    this.props.layerDelete(this.props.frame, this.props.layer.id);
+    this.props.layerDelete(this.props.frame, this.props.layer.id, this.props.pixels);
     setTimeout(() => {
       this.props.layerSelectTop(this.props.layers);
       this.props.hide();

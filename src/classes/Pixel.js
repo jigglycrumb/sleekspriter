@@ -28,6 +28,18 @@ class Pixel extends Point {
 
     return this;
   }
+
+  /**
+   * Creates a hex string from pixel color values
+   * @return {String} The hex string
+   */
+  toHex() {
+    const pad = (s) => {
+      return (s.length === 1 ? `0${s}` : s).toUpperCase();
+    };
+
+    return `#${pad(this.r.toString(16))}${pad(this.g.toString(16))}${pad(this.b.toString(16))}`;
+  }
 }
 
 export default Pixel;

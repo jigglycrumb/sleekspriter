@@ -56,6 +56,7 @@ const state = {
         start: null,
         end: null,
       },
+      spritePalette: [],
       tool: "BrushTool",
       zoom: 10,
     },

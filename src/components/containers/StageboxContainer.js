@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) => ({
   brushColor: (color) => dispatch(brushColor(color)),
   modalShow: (modal) => dispatch(modalShow(modal)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
-  pixelsDelete: (frame, layer, pixels) => dispatch(pixelsDelete(frame, layer, pixels)),
+  pixelsDelete: (frame, layer, pixels, allPixels) => dispatch(pixelsDelete(frame, layer, pixels, allPixels)),
   pixelsMove: (frame, layer, pixels, distance, size, selection) => dispatch(pixelsMove(frame, layer, pixels, distance, size, selection)),
   selectionClear: () => dispatch(selectionClear()),
   selectionEnd: (point) => dispatch(selectionEnd(point)),

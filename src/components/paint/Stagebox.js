@@ -262,7 +262,7 @@ class Stagebox extends React.Component {
         this.pixels = {};
         break;
       case "EraserTool":
-        this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels);
+        this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels, this.props.pixels);
         this.pixels = {};
         break;
       case "MoveTool":

@@ -9,6 +9,7 @@ import {
 } from "../../state/actions";
 
 const mapStateToProps = (state) => ({
+  spritePalette: state.ui.paint.spritePalette,
   selected: state.ui.paint.palette,
 });
 
@@ -18,11 +19,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PaletteContainer = (props) => {
-  const palette = palettes[props.selected];
+  const
+    { selected, spritePalette, brushColor, paletteSelect } = props,
+    palette = palettes[selected];
+
+  if(selected === 0) palette.colors = spritePalette;
+
   return (
     <div className="palette">
-      <PalettePicker palettes={palettes} palette={palette} paletteSelect={props.paletteSelect} />
-      <Palette colors={palette.colors} brushColor={props.brushColor} />
+      <PalettePicker palettes={palettes} palette={palette} paletteSelect={paletteSelect} />
+      <Palette colors={palette.colors} brushColor={brushColor} />
     </div>
   );
 };
