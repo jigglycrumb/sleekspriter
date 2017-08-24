@@ -1,5 +1,4 @@
 import en from "../i18n/en.yml";
-import os from "os";
 
 const translate = (key, replacements) => {
   let str = en[key];
