@@ -4,8 +4,6 @@ import os from "os";
 const translate = (key, replacements) => {
   let str = en[key];
 
-  console.log(os);
-
   if(replacements) {
     Object.keys(replacements).map((search) => {
       if(search === "key") {
