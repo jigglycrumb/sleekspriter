@@ -12,11 +12,13 @@ import {
   zoomFit,
 } from "../../state/actions";
 
+import { getFileSize } from "../../state/selectors";
+
 const mapStateToProps = (state) => ({
   tool: state.ui.paint.tool,
   color: state.ui.paint.color,
   zoom: state.ui.paint.zoom,
-  fileSize: state.file.size,
+  fileSize: getFileSize(state),
   brightnessTool: state.ui.paint.brightnessTool,
 });
 

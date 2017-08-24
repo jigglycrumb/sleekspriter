@@ -1,10 +1,14 @@
 import { connect } from "react-redux";
 import Previewbox from "../paint/Previewbox";
+import {
+  getFilePixels,
+  getFileSize
+} from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
   frame: state.ui.paint.frame,
-  pixels: state.file.pixels,
-  size: state.file.size,
+  pixels: getFilePixels(state),
+  size: getFileSize(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

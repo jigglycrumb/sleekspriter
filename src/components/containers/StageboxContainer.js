@@ -15,6 +15,8 @@ import {
 } from "../../state/actions";
 
 import {
+  getFilePixels,
+  getFileSize,
   getFrameLayersZSorted,
   getOnionFrameAbsolute,
 } from "../../state/selectors";
@@ -28,9 +30,9 @@ const mapStateToProps = (state) => ({
   layers: getFrameLayersZSorted(state),
   onion: state.ui.paint.onion.active,
   onionFrameAbsolute: getOnionFrameAbsolute(state),
-  pixels: state.file.pixels,
+  pixels: getFilePixels(state),
   selection: state.ui.paint.selection,
-  size: state.file.size,
+  size: getFileSize(state),
   tool: state.ui.paint.tool,
   zoom: state.ui.paint.zoom,
 });
@@ -40,7 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
   modalShow: (modal) => dispatch(modalShow(modal)),
   pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
   pixelsDelete: (frame, layer, pixels, allPixels) => dispatch(pixelsDelete(frame, layer, pixels, allPixels)),
-  pixelsMove: (frame, layer, pixels, distance, size, selection) => dispatch(pixelsMove(frame, layer, pixels, distance, size, selection)),
+  pixelsMove: (frame, layer, pixels, distance, size) => dispatch(pixelsMove(frame, layer, pixels, distance, size)),
   selectionClear: () => dispatch(selectionClear()),
   selectionEnd: (point) => dispatch(selectionEnd(point)),
   selectionMove: (distance) => dispatch(selectionMove(distance)),

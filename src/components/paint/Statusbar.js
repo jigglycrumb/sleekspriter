@@ -3,11 +3,16 @@ import classnames from "classnames";
 
 import { t } from "../../utils";
 import { Hotkeys } from "../../classes";
-const gridHotkey = Hotkeys.bindings.paint[8].key;
+
+const
+  gridHotkey = Hotkeys.bindings.paint[8].key,
+  undoHotkey = Hotkeys.bindings.paint[10].key,
+  redoHotkey = Hotkeys.bindings.paint[11].key;
 
 const Statusbar = (props) => {
 
-  const gridButtonClasses = classnames({
+  const
+    gridButtonClasses = classnames({
       tiny: true,
       transparent: true,
       active: props.grid,
@@ -23,15 +28,15 @@ const Statusbar = (props) => {
       <span id="StatusBarCursorY">Y: 0</span>
       <div id="StatusBarColor" style={{background: "transparent"}}></div>
       <span id="StatusBarColorString" className="statusbar-info">{t("transparent")}</span>
-      <span className="statusbar-info">{t("Frame")} {props.frame}</span>
+      <span className="statusbar-info">{t("Frame")} {props.frame}, {props.pixelCount} {t("pixels")}</span>
       <span className="statusbar-info">{t("Zoom ×")}{props.zoom}</span>
       <div id="StatusBarButtons">
 
-        <button id="historyUndo" className={historyButtonClasses}>
+        <button id="historyUndo" className={historyButtonClasses} onClick={props.undo} disabled={!props.canUndo} title={t("Undo", {key: undoHotkey})}>
           <i className="flaticon-back-arrow"></i>
         </button>
 
-        <button id="historyRedo" className={historyButtonClasses}>
+        <button id="historyRedo" className={historyButtonClasses} onClick={props.redo} disabled={!props.canRedo} title={t("Redo", {key: redoHotkey})}>
           <i className="flaticon-arrow"></i>
         </button>
 

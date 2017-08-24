@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { t, createNewLayerId } from "../../utils";
-import { getFrameLayersZSorted, getTotalFrames } from "../../state/selectors";
+import { getFileLayers, getFrameLayersZSorted, getTotalFrames } from "../../state/selectors";
 import {
   frameDuplicate,
   modalHide
@@ -10,7 +10,7 @@ import {
 
 const mapStateToProps = (state) => ({
   frame: state.ui.paint.frame,
-  nextLayerId: createNewLayerId(state.file.layers),
+  nextLayerId: createNewLayerId(getFileLayers(state)),
   layers: getFrameLayersZSorted(state),
   totalFrames: getTotalFrames(state),
 });

@@ -32,15 +32,16 @@ function fileLayersReducer(state = initialState.file.layers, action) {
 
   case "FRAME_DUPLICATE": {
     const { layers, target, nextLayerId } = action;
-    let stateCopy = [].concat(state).filter((layer) => layer.frame !== target);
+    let stateCopy = copyState(state).filter((layer) => layer.frame !== target);
     const newLayers = duplicateLayers(layers, target, nextLayerId);
     return stateCopy.concat(newLayers);
   }
 
   case "LAYER_ADD": {
     const
+      stateCopy = copyState(state),
       newZIndex = action.layers.find(layer => layer.id === action.layer).z + 1,
-      newId = (_.max(state, function(layer) { return layer.id; })).id + 1,
+      newId = (_.max(stateCopy, layer => layer.id)).id + 1,
       newLayer = {
         frame: action.frame,
         id: newId,
@@ -51,34 +52,38 @@ function fileLayersReducer(state = initialState.file.layers, action) {
       };
 
     const
-      ignoredLayers = state.filter(layer => layer.frame !== action.frame),
-      layersBelow = state.filter(layer => layer.frame === action.frame && layer.z < newZIndex),
-      layersAbove = state.filter(layer => layer.frame === action.frame && layer.z >= newZIndex);
+      ignoredLayers = stateCopy.filter(layer => layer.frame !== action.frame),
+      layersBelow = stateCopy.filter(layer => layer.frame === action.frame && layer.z < newZIndex),
+      layersAbove = stateCopy.filter(layer => layer.frame === action.frame && layer.z >= newZIndex);
     layersAbove.forEach(layer => layer.z++);
 
     return [...layersBelow, newLayer, ...layersAbove, ...ignoredLayers];
   }
   case "LAYER_DELETE": {
     const
-      layerToDelete = state.find(layer => layer.id === action.layer),
-      ignoredLayers = state.filter(layer => layer.frame !== layerToDelete.frame),
-      layersBelow = state.filter(layer => layer.frame === layerToDelete.frame && layer.z < layerToDelete.z),
-      layersAbove = state.filter(layer => layer.frame === layerToDelete.frame && layer.z > layerToDelete.z);
+      stateCopy = copyState(state),
+      layerToDelete = stateCopy.find(layer => layer.id === action.layer),
+      ignoredLayers = stateCopy.filter(layer => layer.frame !== layerToDelete.frame),
+      layersBelow = stateCopy.filter(layer => layer.frame === layerToDelete.frame && layer.z < layerToDelete.z),
+      layersAbove = stateCopy.filter(layer => layer.frame === layerToDelete.frame && layer.z > layerToDelete.z);
     layersAbove.forEach(layer => layer.z++);
 
     return [...layersBelow, ...layersAbove, ...ignoredLayers];
   }
 
   case "LAYER_MERGE": {
-    const index = _.findIndex(state, { id: action.first });
-    return state.slice(0, index).concat(state.slice(index+1));
+    const
+      stateCopy = copyState(state),
+      index = _.findIndex(stateCopy, { id: action.first });
+    return stateCopy.slice(0, index).concat(stateCopy.slice(index+1));
   }
 
   case "LAYER_MOVE_DOWN": {
     const
-      layerToMove = state.find(layer => layer.id === action.layer),
-      layerBelow = state.find(layer => layer.frame === action.frame && layer.z === action.z - 1),
-      ignoredLayers = state.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerBelow.id].includes(layer.id));
+      stateCopy = copyState(state),
+      layerToMove = stateCopy.find(layer => layer.id === action.layer),
+      layerBelow = stateCopy.find(layer => layer.frame === action.frame && layer.z === action.z - 1),
+      ignoredLayers = stateCopy.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerBelow.id].includes(layer.id));
 
     if(layerBelow) {
       layerToMove.z--;
@@ -86,14 +91,15 @@ function fileLayersReducer(state = initialState.file.layers, action) {
 
       return [...ignoredLayers, layerToMove, layerBelow];
     }
-    else return state;
+    else return stateCopy;
   }
 
   case "LAYER_MOVE_UP": {
     const
-      layerToMove = state.find(layer => layer.id === action.layer),
-      layerAbove = state.find(layer => layer.frame === action.frame && layer.z === action.z + 1),
-      ignoredLayers = state.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerAbove.id].includes(layer.id));
+      stateCopy = copyState(state),
+      layerToMove = stateCopy.find(layer => layer.id === action.layer),
+      layerAbove = stateCopy.find(layer => layer.frame === action.frame && layer.z === action.z + 1),
+      ignoredLayers = stateCopy.filter(layer => layer.frame !== action.frame || ![layerToMove.id, layerAbove.id].includes(layer.id));
 
     if(layerAbove) {
       layerToMove.z++;
@@ -101,31 +107,34 @@ function fileLayersReducer(state = initialState.file.layers, action) {
 
       return [...ignoredLayers, layerToMove, layerAbove];
     }
-    else return state;
+    else return stateCopy;
   }
 
   case "LAYER_NAME":
-    return state.map(function(layer) {
-      if(layer.id === action.layer) {
-        layer.name = action.name;
+    return state.map(layer => {
+      const l = Object.assign({}, layer);
+      if(l.id === action.layer) {
+        l.name = action.name;
       }
-      return layer;
+      return l;
     });
 
   case "LAYER_OPACITY":
-    return state.map(function(layer) {
-      if(layer.id === action.layer) {
-        layer.opacity = +action.opacity;
+    return state.map(layer => {
+      const l = Object.assign({}, layer);
+      if(l.id === action.layer) {
+        l.opacity = +action.opacity;
       }
-      return layer;
+      return l;
     });
 
   case "LAYER_VISIBILITY":
-    return state.map(function(layer) {
-      if(layer.id === action.layer) {
-        layer.visible = !layer.visible;
+    return state.map(layer => {
+      const l = Object.assign({}, layer);
+      if(l.id === action.layer) {
+        l.visible = !l.visible;
       }
-      return layer;
+      return l;
     });
 
   default:
@@ -134,3 +143,6 @@ function fileLayersReducer(state = initialState.file.layers, action) {
 }
 
 export default fileLayersReducer;
+
+// helper functions
+const copyState = (state) => state.map(layer => Object.assign({}, layer));

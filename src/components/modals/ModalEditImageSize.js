@@ -6,10 +6,14 @@ import {
   fileSize,
   modalHide
 } from "../../state/actions";
+import {
+  getFileFrames,
+  getFileSize,
+} from "../../state/selectors";
 
 const mapStateToProps = (state) => ({
-  frames: state.file.frames,
-  size: state.file.size
+  frames: getFileFrames(state),
+  size: getFileSize(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

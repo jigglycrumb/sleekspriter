@@ -1,7 +1,2 @@
-import fileReducer from "./fileReducer";
-import uiReducer from "./uiReducer";
-
-export {
-  fileReducer,
-  uiReducer,
-};
+export fileReducer from "./fileReducer";
+export uiReducer from "./uiReducer";

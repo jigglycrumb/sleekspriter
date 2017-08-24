@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
 import Framebox from "../paint/Framebox";
-import { getOnionFrameAbsolute, getTotalFrames } from "../../state/selectors";
+import {
+  getFileFrames,
+  getFilePixels,
+  getFileSize,
+  getOnionFrameAbsolute,
+  getTotalFrames
+} from "../../state/selectors";
 
 import {
   frameSelect,
@@ -10,12 +16,12 @@ import {
 } from "../../state/actions";
 
 const mapStateToProps = (state) => ({
-  frames: state.file.frames,
+  frames: getFileFrames(state),
   selected: state.ui.paint.frame,
   onion: state.ui.paint.onion,
   onionFrameAbsolute: getOnionFrameAbsolute(state),
-  pixels: state.file.pixels,
-  size: state.file.size,
+  pixels: getFilePixels(state),
+  size: getFileSize(state),
   totalFrames: getTotalFrames(state),
 });
 

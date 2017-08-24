@@ -9,6 +9,7 @@ import StageboxLayer from "./StageboxLayer";
 const { offset } = config;
 import _ from "lodash";
 import {
+  getPixelsInScope,
   selectionIsActive,
   insideBounds
 } from "../../utils";
@@ -420,14 +421,16 @@ class Stagebox extends React.Component {
 
   endMoveTool() {
     const
+      { frame, layer, pixels, selection, size } = this.props,
       distance = this.getMouseDownDistance(),
-      pixels = this.getLayerPixels(this.props.layer);
+      // pixels = this.getLayerPixels(this.props.layer);
+      scopedPixels =  getPixelsInScope(frame, layer, pixels, selection);
 
     // move pixels
-    this.props.pixelsMove(this.props.frame, this.props.layer, pixels, distance, this.props.size, this.props.selection);
+    this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
 
     // move selection
-    if(selectionIsActive(this.props.selection)) {
+    if(selectionIsActive(selection)) {
       this.props.selectionMove(distance);
     }
 

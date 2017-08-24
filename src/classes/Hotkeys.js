@@ -1,4 +1,5 @@
 import Mousetrap from "mousetrap";
+import { ActionCreators } from "redux-undo";
 import {
   gridToggle,
   onionToggle,
@@ -47,6 +48,14 @@ const bindings = {
     {
       key: "o",
       action: (dispatch) => dispatch(onionToggle()),
+    },
+    {
+      key: "meta+z",
+      action: (dispatch) => dispatch(ActionCreators.undo()),
+    },
+    {
+      key: "meta+y",
+      action: (dispatch) => dispatch(ActionCreators.redo()),
     },
   ],
   start: [],

@@ -19,7 +19,11 @@ import {
   selectionEnd,
   selectionStart,
 } from "../../state/actions";
-import { getFrameLayersZSorted } from "../../state/selectors";
+import {
+  getFilePixels,
+  getFileSize,
+  getFrameLayersZSorted
+} from "../../state/selectors";
 
 const mapStateToProps = (state) => {
   return {
@@ -27,8 +31,8 @@ const mapStateToProps = (state) => {
     frame: state.ui.paint.frame,
     layer: state.ui.paint.layer,
     layers: getFrameLayersZSorted(state),
-    size: state.file.size,
-    pixels: state.file.pixels,
+    size: getFileSize(state),
+    pixels: getFilePixels(state),
     selection: state.ui.paint.selection,
   };
 };

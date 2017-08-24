@@ -33,6 +33,8 @@ Delete layer: Delete layer
 Cancel: Cancel
 pixels: pixels
 Toggle grid: Toggle grid (${key})
+Undo: Undo (${key})
+Redo: Redo (${key})
 Click a pixel to erase it.: Click a pixel to erase it.
 Hex: Hex
 RGB: RGB

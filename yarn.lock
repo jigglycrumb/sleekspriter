@@ -4669,7 +4669,13 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux@^3.6.0:
+redux-undo@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/redux-undo/-/redux-undo-0.6.1.tgz#ff407749b8f468bead636e413819e92c0982eeca"
+  dependencies:
+    redux "^3.0.2"
+
+redux@^3.0.2, redux@^3.6.0:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
@@ -5084,6 +5090,10 @@ spdy@^3.4.1:
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+
+sprout-data@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/sprout-data/-/sprout-data-0.2.3.tgz#c7ac8edea2b81b6f575cd72a2df84a95e803a87e"
 
 sshpk@^1.7.0:
   version "1.13.1"

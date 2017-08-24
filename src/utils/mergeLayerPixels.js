@@ -1,17 +1,16 @@
 import { merge } from "lodash";
+import sprout from "sprout-data";
 
-const mergeLayerPixels = (frame, first, second, pixels) => {
-  if(pixels[frame]
-  && pixels[frame][first]
-  && pixels[frame][second]) {
-    const
-      firstLayerPixels = pixels[frame][first],
-      secondLayerPixels = pixels[frame][second],
-      merged = merge(secondLayerPixels, firstLayerPixels);
+// TODO this is buggy on undo
 
-    delete pixels[frame][first];
-    pixels[frame][second] = merged;
-  }
+const mergeLayerPixels = (frame, first, second, pixels = {}) => {
+  const
+    firstLayerPixels = sprout.get(pixels, [frame, first], {}),
+    secondLayerPixels = sprout.get(pixels, [frame, second], {}),
+    merged = merge(secondLayerPixels, firstLayerPixels);
+
+  pixels = sprout.dissoc(pixels, [frame, first]);
+  pixels = sprout.assoc(pixels, [frame, second], merged);
 
   return pixels;
 };

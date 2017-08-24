@@ -1,6 +1,10 @@
 import { connect } from "react-redux";
 import Layerbox from "../paint/Layerbox";
-import { getFrameLayersZSorted } from "../../state/selectors";
+import {
+  getFilePixels,
+  getFileSize,
+  getFrameLayersZSorted
+} from "../../state/selectors";
 
 import {
   layerAdd,
@@ -18,8 +22,8 @@ const mapStateToProps = (state) => ({
   frame: state.ui.paint.frame,
   selected: state.ui.paint.layer,
   layers: getFrameLayersZSorted(state),
-  pixels: state.file.pixels,
-  size: state.file.size,
+  pixels: getFilePixels(state),
+  size: getFileSize(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

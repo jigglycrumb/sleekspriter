@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   frame: state.ui.paint.frame,
   layer: getPaintLayer(state),
   layers: getFrameLayers(state),
-  pixels: state.file.pixels,
+  pixels: state.file.present.pixels,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -9,7 +9,7 @@ import { deletePixels, flattenPixels, mergeLayerPixels } from "../../utils";
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
 
-  console.log(`uiPaintReducer#${action.type}`);
+  // console.log(`uiPaintReducer#${action.type}`);
 
   switch (action.type) {
   case "BRIGHTNESSTOOL_INTENSITY":
