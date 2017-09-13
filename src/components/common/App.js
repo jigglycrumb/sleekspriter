@@ -4,6 +4,7 @@ import MenuContainer from "../containers/MenuContainer";
 import ModalContainer from "../containers/ModalContainer";
 import ScreenPaintContainer from "../containers/ScreenPaintContainer";
 import ScreenStartContainer from "../containers/ScreenStartContainer";
+import ScreenExportContainer from "../containers/ScreenExportContainer";
 import ScreenBlocker from "../screens/ScreenBlocker";
 
 import { Hotkeys } from "../../classes";
@@ -27,8 +28,11 @@ class App extends React.Component {
       activeScreen = <ScreenPaintContainer />;
       break;
 
-    case "animate":
     case "export":
+      activeScreen = <ScreenExportContainer />;
+      break;
+
+    case "animate":
     case "start":
     default:
       activeScreen = <ScreenStartContainer />;

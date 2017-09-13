@@ -22,7 +22,7 @@ const state = {
   },
   ui: {
     app: {
-      screen: "paint",
+      screen: "export",
       modal: {
         visible: false,
         dialog: null,
@@ -60,6 +60,14 @@ const state = {
       tool: "BrushTool",
       zoom: 10,
     },
+    export: {
+      part: "spritesheet",
+      frame: 1,
+      animation: null,
+      zoom: 1,
+      format: "png",
+      status: "",
+    }
   },
 };
 
