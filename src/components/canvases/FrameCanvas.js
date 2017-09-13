@@ -43,8 +43,17 @@ class FrameCanvas extends React.Component {
   }
 
   paint() {
+    this.props.clear();
+
+    if(this.props.background) {
+      const
+        canvas = this.refs.canvas,
+        ctx = canvas.getContext("2d");
+      ctx.fillStyle = this.props.background;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     if(undefined != this.props.pixels) {
-      this.props.clear();
       const layers = Object.keys(this.props.pixels);
       layers.map(layer => {
         const xValues = Object.keys(this.props.pixels[layer]);
@@ -63,8 +72,10 @@ class FrameCanvas extends React.Component {
 }
 
 FrameCanvas.propTypes = {
+  background: PropTypes.string,
   frame: PropTypes.number.isRequired,
   maxSize: PropTypes.number,
+  noMargin: PropTypes.bool,
   size: PropTypes.object.isRequired, // { width: x, height: y }
   zoom: PropTypes.number,
 };

@@ -1,39 +1,56 @@
 import React from "react";
-
 import { t } from "../../utils";
 
-const ExportPartSelection = () => <div>ExportPartSelection</div>;
-const ExportZoomSelection = () => <div>ExportZoomSelection</div>;
-const ExportOutputSelection = () => <div>ExportOutputSelection</div>;
-const ExportButton = () => <div>ExportButton</div>;
-const ExportPreviewBox = () => <div>ExportPreviewBox</div>;
-const ExportStatus = () => <div>ExportStatus</div>;
+import ExportButton from "../export/ExportButton";
+import ExportFormatSelection from "../export/ExportFormatSelection";
+import ExportPartSelection from "../export/ExportPartSelection";
+import ExportPreviewbox from "../export/ExportPreviewbox";
+import ExportZoomSelection from "../export/ExportZoomSelection";
+import ExportStatus from "../export/ExportStatus";
 
 class ScreenExport extends React.Component {
   render() {
-    const partSelection = this.props.totalFrames === 1
+    const { frame, frames, format, part, pixels, size, status, zoom, totalFrames } = this.props;
+    const partSelection = totalFrames === 1
                         ? null
-                        : <ExportPartSelection />;
+                        : <ExportPartSelection frame={frame} part={part} totalFrames={totalFrames} setFrame={this.props.setFrame} setPart={this.props.setPart} />;
 
     return (
       <section className="screen export">
         <div className="area left">
           <h5>{t("Settings")}</h5>
           {partSelection}
-          <ExportZoomSelection />
-          <ExportOutputSelection />
-          <ExportButton />
+          <ExportZoomSelection frames={frames} part={part} zoom={zoom} size={size} setZoom={this.props.setZoom} />
+          <ExportFormatSelection format={format} part={part} setFormat={this.props.setFormat} />
+          <ExportButton export={() => this.export()} />
         </div>
 
         <div className="area right">
-          <ExportPreviewBox />
+          <ExportPreviewbox frame={frame} format={format} part={part} size={size} pixels={pixels} zoom={zoom} />
         </div>
 
         <div className="area statusbar">
-          <ExportStatus />
+          <ExportStatus status={status} setStatus={this.props.setStatus} />
         </div>
       </section>
     );
+  }
+
+  export() { // TODO this is currently browser-only
+    const
+      { format } = this.props,
+      canvas = document.getElementById("ExportPreview").querySelectorAll("canvas")[0],
+      img = canvas.toDataURL(`image/${format}`),
+      downloadLink = document.createElement("a");
+
+    downloadLink.href = img;
+    downloadLink.download = `my-pixels.${format === "jpeg" ? "jpg" : format}`; // TODO name file?
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    this.props.setStatus(t("Export finished"));
   }
 }
 

@@ -129,9 +129,10 @@ class Menu extends React.Component {
         SEPERATOR,
         {label: "Duplicate…", action: () => { this.props.modalShow("ModalDuplicateFrame"); }},
       ]},
-      // {label: "Window", items: [
-      //   {label: "Paint"},
-      // ]},
+      {label: "Window", items: [
+        {label: "Paint", action: () => { this.props.screenSelect("paint"); }},
+        {label: "Export", action: () => { this.props.screenSelect("export"); }},
+      ]},
     ];
 
     return (

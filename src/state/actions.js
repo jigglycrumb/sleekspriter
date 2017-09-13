@@ -2,6 +2,11 @@ export const brightnessToolIntensity = (intensity) => ({ type: "BRIGHTNESSTOOL_I
 export const brightnessToolMode = (mode)  => ({ type: "BRIGHTNESSTOOL_MODE", mode });
 export const boxFold = (box) => ({ type: "BOX_FOLD", box });
 export const brushColor = (color) => ({ type: "BRUSH_COLOR", color });
+export const exportFormat = (format) => ({ type: "EXPORT_FORMAT", format });
+export const exportFrame = (frame) => ({ type: "EXPORT_FRAME", frame });
+export const exportPart = (part) => ({type: "EXPORT_PART", part });
+export const exportStatus = (status) => ({ type: "EXPORT_STATUS", status });
+export const exportZoom = (zoom) => ({ type: "EXPORT_ZOOM", zoom });
 export const fileCreate = (frames, size) => ({ type: "FILE_CREATE", frames, size });
 export const fileLoad = (json) => ({ type: "FILE_LOAD", json });
 export const fileSize = (frames, size) => ({ type: "FILE_SIZE", frames, size });

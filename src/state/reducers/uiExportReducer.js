@@ -1,12 +1,17 @@
 import initialState from "../initialState";
 
 function uiExportReducer(state = initialState.ui.export, action) {
-
-  console.log("uiExportReducer", state);
-
   switch(action.type) {
-  // case "SCREEN_SELECT":
-  //   return { ...state, screen: action.screen };
+  case "EXPORT_FORMAT":
+    return { ...state, format: action.format };
+  case "EXPORT_FRAME":
+    return { ...state, frame: action.frame };
+  case "EXPORT_PART":
+    return { ...state, part: action.part };
+  case "EXPORT_STATUS":
+    return { ...state, status: action.status };
+  case "EXPORT_ZOOM":
+    return { ...state, zoom: action.zoom };
   default:
     return state;
   }

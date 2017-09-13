@@ -79,3 +79,11 @@ Icons made by: Icons made by
 Icons from: Icons from
 licensed by: licensed by
 Settings: Settings
+Export: Export
+Output: Output
+Zoom: Zoom
+"Image size: ${w}x${h} pixels": "Image size: ${w}x${h} pixels"
+"Frame size: ${w}x${h} pixels": "Frame size: ${w}x${h} pixels"
+"Spritesheet size: ${w}x${h} pixels": "Spritesheet size: ${w}x${h} pixels"
+Spritesheet as single image: Spritesheet as single image
+Export finished: Export finished
