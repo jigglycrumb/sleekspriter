@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 const ModalContainer = (props) => {
   const
     style = {
-      display: props.visible === true ? "table" : "none",
+      display: props.visible === true ? "flex" : "none",
     },
     Dialog = props.dialog === null
           ? null
@@ -21,9 +21,7 @@ const ModalContainer = (props) => {
     composedModal = props.visible === false
           ? null
           : <div id="Modal" style={style}>
-              <div className="inner">
-                {modalDialog}
-              </div>
+              {modalDialog}
             </div>;
 
   return composedModal;

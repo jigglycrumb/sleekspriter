@@ -9,7 +9,7 @@ import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
 const mapStateToProps = (state) => ({
-  file: state.file
+  file: state.file.present
 });
 
 const mapDispatchToProps = (dispatch) => ({

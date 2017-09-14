@@ -31,6 +31,14 @@
       padding-top: 2px;
       position: relative;
 
+      &.disabled {
+        color: @font-color-disabled;
+        pointer-events: none;
+        position: relative;
+        text-shadow: none;
+        top: 1px;
+      }
+
       &:hover {
         background-color: @light;
 

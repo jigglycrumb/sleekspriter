@@ -1,7 +1,8 @@
 import React from "react";
+import classnames from "classnames";
 import _ from "lodash";
 
-import { getPixelsInFrame, getPixelsInScope, getPivot } from "../../utils";
+import { getPixelsInFrame, getPixelsInScope, getPivot, inArray } from "../../utils";
 
 const SEPERATOR = {label: "---"};
 
@@ -9,12 +10,12 @@ class Menu extends React.Component {
   render() {
     const { clipboard, frame, layer, layers, pixels, selection, size } = this.props;
     const MenuConfig = [
-      {label: "@@name", items: [
+      {label: "@@name", screen: ["start", "paint", "export"], items: [
         {label: "About @@name", action: () => { this.props.modalShow("ModalAbout"); }},
         // SEPERATOR,
         // {label: "Quit @@name"}, // TODO: Desktop only
       ]},
-      {label: "File", items: [
+      {label: "File", screen: ["paint", "export"], items: [
         {label: "New…", action: () => { this.props.modalShow("ModalNewFile"); }},
         {label: "Open…", action: () => { this.props.modalShow("ModalLoadFile"); }}, // TODO: show modal only in browser
         {label: "Save", action: () => { this.props.modalShow("ModalSaveFile"); }}, // TODO: show modal only in browser
@@ -26,7 +27,7 @@ class Menu extends React.Component {
           this.props.screenSelect("start");
         }},
       ]},
-      {label: "Edit", items: [
+      {label: "Edit", screen: ["paint"], items: [
         {label: "Cut", action: () => {
           const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
           this.props.pixelsCut(frame, layer, scopedPixels, pixels);
@@ -72,14 +73,14 @@ class Menu extends React.Component {
         // SEPERATOR,
         // {label: "Image size…", action: () => { this.props.modalShow("ModalEditImageSize"); }}
       ]},
-      {label: "Select", items: [
+      {label: "Select", screen: ["paint"], items: [
         {label: "All", action: () => {
           this.props.selectionStart({ x: 1, y: 1 });
           this.props.selectionEnd({ x: size.width, y: size.height });
         }},
         {label: "Deselect", action: this.props.selectionClear },
       ]},
-      {label: "Layer", items: [
+      {label: "Layer", screen: ["paint"], items: [
         {label: "Merge with layer above", action: () => {
           const index = _.findIndex(layers, {id: layer});
           let layerAbove = null;
@@ -99,7 +100,7 @@ class Menu extends React.Component {
           }
         }},
       ]},
-      {label: "Frame", items: [
+      {label: "Frame", screen: ["paint"], items: [
         {label: "Rotate 180°", action: () => {
           const framePixels = getPixelsInFrame(frame, pixels);
           const pivot = getPivot(size);
@@ -129,7 +130,7 @@ class Menu extends React.Component {
         SEPERATOR,
         {label: "Duplicate…", action: () => { this.props.modalShow("ModalDuplicateFrame"); }},
       ]},
-      {label: "Window", items: [
+      {label: "Window", screen: ["paint", "export"], items: [
         {label: "Paint", action: () => { this.props.screenSelect("paint"); }},
         {label: "Export", action: () => { this.props.screenSelect("export"); }},
       ]},
@@ -139,8 +140,13 @@ class Menu extends React.Component {
       <nav className="menu">
         <ul>
           {MenuConfig.map((item, index) => {
+
+            const cssClasses = {
+              disabled: !inArray(item.screen, this.props.screen)
+            };
+
             return (
-              <li key={index}>
+              <li key={index} className={classnames(cssClasses)}>
                 <span>{item.label}</span>
                 <div>
                   <ul>

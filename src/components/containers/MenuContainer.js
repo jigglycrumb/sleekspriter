@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
     layers: getFrameLayersZSorted(state),
     size: getFileSize(state),
     pixels: getFilePixels(state),
+    screen: state.ui.app.screen,
     selection: state.ui.paint.selection,
   };
 };

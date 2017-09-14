@@ -1,4 +1,5 @@
 import React from "react";
+import { t } from "../../utils";
 
 class ScreenStart extends React.Component {
   render() {
@@ -8,8 +9,8 @@ class ScreenStart extends React.Component {
           <div className="inner">
             <div className="logo">@@name</div>
             <ul>
-              <li><a onClick={::this.newFile}>New file</a></li>
-              <li><a>Open file</a></li>
+              <li><a onClick={::this.newFile}>{t("New file")}</a></li>
+              <li><a onClick={::this.openFile}>{t("Open file")}</a></li>
             </ul>
           </div>
         </div>
@@ -22,6 +23,10 @@ class ScreenStart extends React.Component {
 
   newFile() {
     this.props.modalShow("ModalNewFile");
+  }
+
+  openFile() {
+    this.props.modalShow("ModalLoadFile");
   }
 }
 

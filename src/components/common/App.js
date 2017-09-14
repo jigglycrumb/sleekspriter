@@ -39,13 +39,9 @@ class App extends React.Component {
       break;
     }
 
-    const menu = this.props.screen === "start"
-               ? null
-               : <MenuContainer />;
-
     return (
       <div className="app">
-        {menu}
+        <MenuContainer />
         <div className={windowClasses}>
           {activeScreen}
         </div>

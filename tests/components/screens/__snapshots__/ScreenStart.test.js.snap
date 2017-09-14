@@ -19,14 +19,12 @@ exports[`should render correctly 1`] = `
         <li>
           <a
             onClick={[Function]}
-          >
-            New file
-          </a>
+          />
         </li>
         <li>
-          <a>
-            Open file
-          </a>
+          <a
+            onClick={[Function]}
+          />
         </li>
       </ul>
     </div>
