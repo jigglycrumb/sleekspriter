@@ -7,7 +7,7 @@ class LayerCanvas extends React.Component {
   constructor(props) {
     super(props);
 
-    this.hasMaxSize = this.props.maxSize != undefined,
+    this.hasMaxSize = this.props.maxSize != undefined;
     this.hasZoom = this.props.zoom != undefined;
   }
 

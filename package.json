@@ -1,6 +1,6 @@
 {
-  "name": "pixelartstudio",
-  "longname": "Pixel Art Studio",
+  "name": "sleekspriter",
+  "longname": "SleekSpriter II",
   "version": "0.2.16",
   "description": "A pixel art editor",
   "private": true,

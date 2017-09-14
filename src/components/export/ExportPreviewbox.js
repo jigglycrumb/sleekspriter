@@ -2,16 +2,16 @@ import React from "react";
 import { t } from "../../utils";
 
 import ExportPreviewSingleFrame from "./ExportPreviewSingleFrame";
+import ExportPreviewSpritesheet from "./ExportPreviewSpritesheet";
 
-const ExportPreviewSpritesheet = () => <div>ExportPreviewSpritesheet</div>;
 const ExportPreviewAllFrames = () => <div>ExportPreviewAllFrames</div>;
 const ExportPreviewAnimation = () => <div>ExportPreviewAnimation</div>;
 
-const ExportPreviewbox = ({ format, frame, part, pixels, size, zoom }) => {
+const ExportPreviewbox = ({ format, frame, frames, layers, part, pixels, size, zoom }) => {
   let preview = null;
   switch(part) {
   case "spritesheet":
-    preview = <ExportPreviewSpritesheet />;
+    preview = <ExportPreviewSpritesheet format={format} frames={frames} layers={layers} size={size} pixels={pixels} zoom={zoom} />;
     break;
 
   case "allframes":

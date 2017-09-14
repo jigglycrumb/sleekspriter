@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import {
   getFileFrames,
+  getFileLayers,
   getFilePixels,
   getFileSize,
   getTotalFrames
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => ({
   format: state.ui.export.format,
   frame: state.ui.export.frame,
   frames: getFileFrames(state),
+  layers: getFileLayers(state),
   part: state.ui.export.part,
   pixels: getFilePixels(state),
   size: getFileSize(state),

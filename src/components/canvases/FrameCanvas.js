@@ -7,7 +7,7 @@ class FrameCanvas extends React.Component {
   constructor(props) {
     super(props);
 
-    this.hasMaxSize = this.props.maxSize != undefined,
+    this.hasMaxSize = this.props.maxSize != undefined;
     this.hasNoMargin = this.props.noMargin != undefined;
   }
 

@@ -10,7 +10,7 @@ import ExportStatus from "../export/ExportStatus";
 
 class ScreenExport extends React.Component {
   render() {
-    const { frame, frames, format, part, pixels, size, status, zoom, totalFrames } = this.props;
+    const { frame, frames, format, layers, part, pixels, size, status, zoom, totalFrames } = this.props;
     const partSelection = totalFrames === 1
                         ? null
                         : <ExportPartSelection frame={frame} part={part} totalFrames={totalFrames} setFrame={this.props.setFrame} setPart={this.props.setPart} />;
@@ -26,7 +26,7 @@ class ScreenExport extends React.Component {
         </div>
 
         <div className="area right">
-          <ExportPreviewbox frame={frame} format={format} part={part} size={size} pixels={pixels} zoom={zoom} />
+          <ExportPreviewbox frame={frame} frames={frames} format={format} layers={layers} part={part} size={size} pixels={pixels} zoom={zoom} />
         </div>
 
         <div className="area statusbar">
