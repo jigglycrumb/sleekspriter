@@ -18,11 +18,13 @@ class ScreenExport extends React.Component {
     return (
       <section className="screen export">
         <div className="area left">
-          <h5>{t("Settings")}</h5>
-          {partSelection}
-          <ExportZoomSelection frames={frames} part={part} zoom={zoom} size={size} setZoom={this.props.setZoom} />
-          <ExportFormatSelection format={format} part={part} setFormat={this.props.setFormat} />
-          <ExportButton export={() => this.export()} />
+          <div>
+            <h5>{t("Settings")}</h5>
+            {partSelection}
+            <ExportZoomSelection frames={frames} part={part} zoom={zoom} size={size} setZoom={this.props.setZoom} />
+            <ExportFormatSelection format={format} part={part} setFormat={this.props.setFormat} />
+            <ExportButton export={() => this.export()} />
+          </div>
         </div>
 
         <div className="area right">
