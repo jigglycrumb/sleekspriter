@@ -6,7 +6,6 @@ import { Color, Point } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
-const { offset } = config;
 import _ from "lodash";
 import {
   getPixelsInScope,
@@ -52,12 +51,11 @@ class Stagebox extends React.Component {
 
   render() {
     const
-      w = this.props.size.width * this.props.zoom,
-      h = this.props.size.height * this.props.zoom,
-      centerAreaWidth = window.innerWidth - offset.left - offset.right,
-      centerAreaHeight = window.innerHeight - offset.top - offset.bottom;
+      { onionFrameAbsolute, size, tool, zoom } = this.props,
+      w = size.width * zoom,
+      h = size.height * zoom;
 
-    let css = {
+    const style = {
       width: w,
       height: h,
     };
@@ -66,36 +64,26 @@ class Stagebox extends React.Component {
       checkerboard: !this.props.image
     });
 
-    if( w > centerAreaWidth ) css.left = 0;
-    else css.left = (centerAreaWidth - w)/2;
-
-    if(css.left < 5) css.left = 5;
-
-    if( h > centerAreaHeight ) css.top = 0;
-    else css.top = (centerAreaHeight - h)/2;
-
-    if(css.top < 5) css.top = 5;
-
     let grid = null;
     if(this.props.grid === true) {
       grid =  <GridCanvas
                 width={w}
                 height={h}
-                columns={w / this.props.zoom}
-                rows={h / this.props.zoom} />;
+                columns={w / zoom}
+                rows={h / zoom} />;
     }
 
     let onion = null;
     if(this.props.onion === true) {
       let pixels;
-      try { pixels = this.props.pixels[this.props.onionFrameAbsolute]; }
+      try { pixels = this.props.pixels[onionFrameAbsolute]; }
       catch(e) { pixels = null; }
 
       onion = <div id="StageBoxOnionCanvas" className="Layer">
                 <FrameCanvas
-                  frame={this.props.onionFrameAbsolute}
-                  size={this.props.size}
-                  zoom={this.props.zoom}
+                  frame={onionFrameAbsolute}
+                  size={size}
+                  zoom={zoom}
                   pixels={pixels} />
               </div>;
     }
@@ -103,14 +91,14 @@ class Stagebox extends React.Component {
     return (
       <div id="StageBox"
         className={cssClasses}
-        style={css}
+        style={style}
         onMouseDown={::this.mousedown}
         onMouseMove={::this.mousemove}
         onMouseOut={::this.mouseout}
         onMouseUp={::this.mouseup}>
 
-        <StageboxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={this.props.zoom} />
-        <StageboxSelectionCanvas ref="selectionCanvas" width={w} height={h} zoom={this.props.zoom} selection={this.props.selection} tool={this.props.tool} />
+        <StageboxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={zoom} />
+        <StageboxSelectionCanvas ref="selectionCanvas" width={w} height={h} zoom={zoom} selection={this.props.selection} tool={tool} />
         {grid}
 
         {this.props.layers.map(function(layer) {
@@ -121,8 +109,8 @@ class Stagebox extends React.Component {
               key={layer.id}
               layer={layer}
               pixels={pixels}
-              size={this.props.size}
-              zoom={this.props.zoom}
+              size={size}
+              zoom={zoom}
               ref={`layer_${layer.id}`} />
           );
         }, this)}

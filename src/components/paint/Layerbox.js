@@ -43,22 +43,7 @@ class Layerbox extends React.Component {
   }
 
   componentDidMount() {
-    this.fitHeight();
     this.props.layerSelectTop(this.props.layers);
-  }
-
-  componentDidUpdate() {
-    this.fitHeight();
-  }
-
-  fitHeight() {
-    // fit height to available space
-    const
-      areaRightHeight = document.querySelector(".area.right").clientHeight,
-      otherBoxesHeight = document.getElementById("layerboxhelper").clientHeight,
-      height = areaRightHeight - otherBoxesHeight - 47;
-
-    this.refs.layers.style.height = `${height}px`;
   }
 
   confirmLayerDelete() {

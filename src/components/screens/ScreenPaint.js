@@ -51,12 +51,10 @@ class ScreenPaint extends React.Component {
           {referenceImage}
         </div>
         <div className="area right">
-          <div id="layerboxhelper">
-            <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">
-              <PreviewboxContainer />
-            </FoldableBox>
-            {framebox}
-          </div>
+          <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">
+            <PreviewboxContainer />
+          </FoldableBox>
+          {framebox}
           <FoldableBox fold="layers" title={t("Layers")} id="LayerBox">
             <LayerboxContainer />
           </FoldableBox>
