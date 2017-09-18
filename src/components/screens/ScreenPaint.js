@@ -47,8 +47,10 @@ class ScreenPaint extends React.Component {
           <SelectionPattern />
         </div>
         <div className="area center">
-          <StageboxContainer image={this.state.referenceImage === null ? false : true} />
-          {referenceImage}
+          <div>
+            <StageboxContainer image={this.state.referenceImage === null ? false : true} />
+            {referenceImage}
+          </div>
         </div>
         <div className="area right">
           <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">
