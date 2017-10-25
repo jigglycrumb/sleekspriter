@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { modalHide, fileCreate, screenSelect } from "../../state/actions";
+import { modalHide, fileCreate, screenSelect, zoomFit } from "../../state/actions";
 import { GridCanvas } from "../canvases";
 import initialState from "../../state/initialState";
 const { frames, size } = initialState.file;
@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
     hide: () => dispatch(modalHide()),
     fileCreate: (frames, pixels) => dispatch(fileCreate(frames, pixels)),
     screenSelect: (screen) => dispatch(screenSelect(screen)),
+    zoomFit: (size) => dispatch(zoomFit(size)),
   };
 };
 
@@ -81,6 +82,7 @@ class ModalNewFile extends React.Component {
     this.props.fileCreate(this.state.frames, this.state.size);
     this.props.hide();
     this.props.screenSelect("paint");
+    this.props.zoomFit(this.state.size);
   }
 }
 

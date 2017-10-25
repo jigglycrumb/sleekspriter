@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { t, fileToState } from "../../../utils";
 import {
-  modalHide,
   fileLoad,
   layerSelectTop,
+  modalHide,
+  zoomFit
 } from "../../../state/actions";
 import { getFrameLayersZSorted } from "../../../state/selectors";
 import { AES, enc } from "crypto-js";
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   hide: () => dispatch(modalHide()),
   layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
-  load: (json) => dispatch(fileLoad(json))
+  load: (json) => dispatch(fileLoad(json)),
+  zoomFit: (size) => dispatch(zoomFit(size)),
 });
 
 class ModalLoadFile extends React.Component {
@@ -45,8 +47,10 @@ class ModalLoadFile extends React.Component {
     catch(e) { console.warn("invalid file"); }
 
     if(json) {
-      this.props.load(fileToState(json));
+      const state = fileToState(json);
+      this.props.load(state);
       this.props.hide();
+      this.props.zoomFit(state.size);
       setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
     }
     else {
