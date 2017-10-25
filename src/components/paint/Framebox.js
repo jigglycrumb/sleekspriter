@@ -36,6 +36,8 @@ class Framebox extends React.Component {
           try { pixels = this.props.pixels[frame]; }
           catch(e) { pixels = null; }
 
+          const layers = this.props.layers.filter(layer => layer.frame === frame);
+
           return <FrameboxFrame
                   key={frame}
                   size={this.props.size}
@@ -44,7 +46,8 @@ class Framebox extends React.Component {
                   onionSelected={this.props.onion.active && this.props.onionFrameAbsolute === frame}
                   pixels={pixels}
                   frame={frame}
-                  frameSelect={this.props.frameSelect} />;
+                  frameSelect={this.props.frameSelect}
+                  layers={layers} />;
         }, this)}
         </div>
         <div className="actions">

@@ -20,6 +20,7 @@ class FrameboxFrame extends React.Component {
       <div key={id} className={classes} style={frameStyle} onClick={::this.select}>
         <FrameCanvas
           frame={this.props.frame}
+          layers={this.props.layers}
           size={this.props.size}
           maxSize={this.props.maxSize}
           pixels={this.props.pixels} />

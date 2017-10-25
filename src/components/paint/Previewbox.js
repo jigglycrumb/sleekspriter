@@ -21,6 +21,7 @@ const Previewbox = (props) => {
   return (
     <FrameCanvas
       frame={props.frame}
+      layers={props.layers}
       size={props.size}
       maxSize={maxSize}
       noMargin={true}

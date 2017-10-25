@@ -56,16 +56,19 @@ class FrameCanvas extends React.Component {
     if(undefined != this.props.pixels) {
       const layers = Object.keys(this.props.pixels);
       layers.map(layer => {
-        const xValues = Object.keys(this.props.pixels[layer]);
-        xValues.map(x => {
-          const yValues = Object.keys(this.props.pixels[layer][x]);
-          yValues.map(y => {
-            const
-              p = this.props.pixels[layer][x][y],
-              hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
-            this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
+        const l = this.props.layers.find(fl => fl.id === +layer);
+        if(l.visible === true && l.opacity > 0) {
+          const xValues = Object.keys(this.props.pixels[layer]);
+          xValues.map(x => {
+            const yValues = Object.keys(this.props.pixels[layer][x]);
+            yValues.map(y => {
+              const
+                p = this.props.pixels[layer][x][y],
+                hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
+              this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
+            });
           });
-        });
+        }
       });
     }
   }
@@ -74,6 +77,7 @@ class FrameCanvas extends React.Component {
 FrameCanvas.propTypes = {
   background: PropTypes.string,
   frame: PropTypes.number.isRequired,
+  layers: PropTypes.array.isRequired,
   maxSize: PropTypes.number,
   noMargin: PropTypes.bool,
   size: PropTypes.object.isRequired, // { width: x, height: y }
