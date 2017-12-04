@@ -7,8 +7,19 @@ import { getPixelsInFrame, getPixelsInScope, getPivot, inArray } from "../../uti
 const SEPERATOR = {label: "---"};
 
 class Menu extends React.Component {
+
+  state = {
+    fullscreen: false
+  };
+
   render() {
     const { clipboard, frame, layer, layers, pixels, selection, size } = this.props;
+
+    let fullscreenLabel = "Enter fullscreen mode";
+    if(this.state.fullscreen) {
+      fullscreenLabel = "Exit fullscreen mode";
+    }
+
     const MenuConfig = [
       {label: "@@name", screen: ["start", "paint", "export"], items: [
         {label: "About @@name", action: () => { this.props.modalShow("ModalAbout"); }},
@@ -133,6 +144,17 @@ class Menu extends React.Component {
       {label: "Window", screen: ["paint", "export"], items: [
         {label: "Paint", action: () => { this.props.screenSelect("paint"); }},
         {label: "Export", action: () => { this.props.screenSelect("export"); }},
+        {label: fullscreenLabel, action: () => {
+          if(!this.state.fullscreen) {
+            const app = document.getElementById("app");
+            app.webkitRequestFullscreen();
+            this.setState({ fullscreen: true });
+          }
+          else {
+            document.webkitExitFullscreen();
+            this.setState({ fullscreen: false });
+          }
+        }},
       ]},
     ];
 

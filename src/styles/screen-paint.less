@@ -1,5 +1,4 @@
 .screen.paint {
-
   .area.top {
     top: 0;
     left: 0;
@@ -9,8 +8,7 @@
     border-top: 1px solid @dark;
   }
 
-   .ToolComponent {
-
+  .ToolComponent {
     height: 40px;
     line-height: 40px;
 
@@ -25,7 +23,7 @@
       margin-right: 5px;
     }
 
-    &>span {
+    & > span {
       float: left;
       height: 20px;
       margin: 9px 10px 0 0;
@@ -37,16 +35,16 @@
       margin: 8px 2px 0 0;
     }
 
-    input[type=color] {
+    input[type="color"] {
       float: left;
     }
 
-    input[type=range] {
+    input[type="range"] {
       margin: 15px 10px 0 10px;
       float: left;
     }
 
-    input[type=number] {
+    input[type="number"] {
       height: 20px;
       width: 3.1em;
       margin: 8px 5px 0 0;
@@ -120,7 +118,7 @@
 
         i {
           position: relative;
-          left: -.5em;
+          left: -0.5em;
         }
 
         &.right {
@@ -177,7 +175,7 @@
     background: @light;
     height: 100%;
 
-    &>div {
+    & > div {
       border-top: 1px solid #6a6a6a;
     }
   }
@@ -194,28 +192,25 @@
   #RectangularSelectionTool > i,
   #PaintbucketTool > i {
     position: relative;
-    left: -.2em;
+    left: -0.2em;
   }
 
   .area.center {
-    top: 40px;
-    right: 228px;
+    background: @dark;
     bottom: 27px;
     left: 45px;
-    background: @dark;
-    z-index: 0;
+    right: 228px;
     overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 40px;
+    z-index: 0;
   }
 
   #StageBox {
-    // position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
     position: relative;
-    // margin: auto;
     z-index: 1;
 
     .Layer {
@@ -236,7 +231,7 @@
 
     #StageBoxOnionCanvas {
       z-index: -1;
-      opacity: .5;
+      opacity: 0.5;
     }
 
     #StageBoxBackground {
@@ -344,7 +339,6 @@
   }
 
   #FrameBox {
-
     #FrameBoxFrames {
       width: 206px;
       margin: 10px;
@@ -436,9 +430,8 @@
   }
 
   #LayerBox {
-
     display: flex;
-    // flex: 1;
+    flex: 1;
     flex-direction: column;
 
     .layers {
@@ -532,8 +525,10 @@
         height: 40px;
       }
 
-      &.first:hover .order.up, // do not display up arrow on first layer
-      &.last:hover .order.down { // do not display down arrow on last layer
+      &.first:hover .order.up,
+      &.last:hover .order.down {
+        // do not display up arrow on first layer
+        // do not display down arrow on last layer
         height: 0;
       }
 
@@ -543,7 +538,7 @@
         float: left;
         position: relative;
 
-        input[type=checkbox] {
+        input[type="checkbox"] {
           -webkit-appearance: none;
           outline: none;
           cursor: pointer;
@@ -554,17 +549,17 @@
           margin: 0;
           text-align: center;
           color: @font-color;
-          font-family: 'Flaticon';
-          font-size: .8rem;
+          font-family: "Flaticon";
+          font-size: 0.8rem;
           .letterpress;
         }
 
-        input[type=checkbox]:before {
+        input[type="checkbox"]:before {
           .icon-eye-slashed;
           color: darken(@font-color, 20%);
         }
 
-        input[type=checkbox]:checked:before {
+        input[type="checkbox"]:checked:before {
           .icon-eye;
           color: @font-color;
         }
@@ -593,7 +588,7 @@
           margin-left: 1px;
         }
 
-        input[type=text] {
+        input[type="text"] {
           height: 13px;
           margin-top: 3px;
           width: 85px;
@@ -615,13 +610,12 @@
     } // .LayerBoxLayer
 
     .dropzone {
-
       width: 100%;
       height: 10px;
       float: left;
       position: relative;
 
-      &>div {
+      & > div {
         height: 100%;
         pointer-events: none;
       }
@@ -652,9 +646,7 @@
           height: 5px;
         }
       } // .dropzone-inner
-
     } // .dropzone
-
   } // #LayerBox
 
   .statusbar {
@@ -724,5 +716,4 @@
     top: 64px;
     left: 48px;
   }
-
 } // .screen.paint

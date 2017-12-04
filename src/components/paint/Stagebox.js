@@ -7,11 +7,7 @@ import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 import _ from "lodash";
-import {
-  getPixelsInScope,
-  selectionIsActive,
-  insideBounds
-} from "../../utils";
+import { getPixelsInScope, selectionIsActive, insideBounds } from "../../utils";
 import paintbucketWorker from "worker-loader!../../workers/paintbucket";
 
 class Stagebox extends React.Component {
@@ -20,7 +16,7 @@ class Stagebox extends React.Component {
 
     this.mouse = {
       down: false,
-      downStart: { x: 0, y: 0 },
+      downStart: { x: 0, y: 0 }
     };
 
     this.cursor = {
@@ -38,67 +34,99 @@ class Stagebox extends React.Component {
   componentWillMount() {
     this.worker = new paintbucketWorker();
 
-    this.worker.onmessage = (m) => {
+    this.worker.onmessage = m => {
       document.getElementById("ScreenBlocker").style.display = "none";
       this.props.pixelsAdd(this.props.frame, this.props.layer, m.data);
     };
 
-    this.worker.onfail = (e) => {
-      console.error(`worker failed in line ${e.lineno} with message: ${e.message}`);
+    this.worker.onfail = e => {
+      console.error(
+        `worker failed in line ${e.lineno} with message: ${e.message}`
+      );
       document.getElementById("ScreenBlocker").style.display = "none";
     };
   }
 
   render() {
-    const
-      { onionFrameAbsolute, size, tool, zoom } = this.props,
+    const { onionFrameAbsolute, size, tool, zoom } = this.props,
       w = size.width * zoom,
-      h = size.height * zoom;
+      h = size.height * zoom,
+      centerAreaWidth =
+        window.innerWidth - config.offset.left - config.offset.right,
+      centerAreaHeight =
+        window.innerHeight - config.offset.top - config.offset.bottom;
 
-    const style = {
+    let style = {
       width: w,
-      height: h,
+      height: h
     };
+
+    if (w > centerAreaWidth) style.left = 0;
+    else style.left = (centerAreaWidth - w) / 2;
+
+    // if (style.left < 5) style.left = 5;
+
+    if (h > centerAreaHeight) style.top = 0;
+    else style.top = (centerAreaHeight - h) / 2;
+
+    // if (style.top < 5) style.top = 5;
 
     const cssClasses = classnames({
       checkerboard: !this.props.image
     });
 
     let grid = null;
-    if(this.props.grid === true) {
-      grid =  <GridCanvas
-                width={w}
-                height={h}
-                columns={w / zoom}
-                rows={h / zoom} />;
+    if (this.props.grid === true) {
+      grid = (
+        <GridCanvas width={w} height={h} columns={w / zoom} rows={h / zoom} />
+      );
     }
 
     let onion = null;
-    if(this.props.onion === true) {
+    if (this.props.onion === true) {
       let pixels;
-      try { pixels = this.props.pixels[onionFrameAbsolute]; }
-      catch(e) { pixels = null; }
+      try {
+        pixels = this.props.pixels[onionFrameAbsolute];
+      } catch (e) {
+        pixels = null;
+      }
 
-      onion = <div id="StageBoxOnionCanvas" className="Layer">
-                <FrameCanvas
-                  frame={onionFrameAbsolute}
-                  size={size}
-                  zoom={zoom}
-                  pixels={pixels} />
-              </div>;
+      onion = (
+        <div id="StageBoxOnionCanvas" className="Layer">
+          <FrameCanvas
+            frame={onionFrameAbsolute}
+            size={size}
+            zoom={zoom}
+            pixels={pixels}
+          />
+        </div>
+      );
     }
 
     return (
-      <div id="StageBox"
+      <div
+        id="StageBox"
         className={cssClasses}
         style={style}
         onMouseDown={::this.mousedown}
         onMouseMove={::this.mousemove}
         onMouseOut={::this.mouseout}
-        onMouseUp={::this.mouseup}>
-
-        <StageboxCursorCanvas ref="cursorCanvas" width={w} height={h} zoom={zoom} />
-        <StageboxSelectionCanvas ref="selectionCanvas" width={w} height={h} zoom={zoom} selection={this.props.selection} tool={tool} />
+        onMouseUp={::this.mouseup}
+      >
+        <StageboxCursorCanvas
+          ref="cursorCanvas"
+          width={w}
+          height={h}
+          zoom={zoom}
+        />
+        <StageboxSelectionCanvas
+          ref="selectionCanvas"
+          width={w}
+          height={h}
+          zoom={zoom}
+          selection={this.props.selection}
+          tool={tool}
+        />
         {grid}
 
         {this.props.layers.map(function(layer) {
@@ -111,7 +139,8 @@ class Stagebox extends React.Component {
               pixels={pixels}
               size={size}
               zoom={zoom}
-              ref={`layer_${layer.id}`} />
+              ref={`layer_${layer.id}`}
+            />
           );
         }, this)}
 
@@ -133,10 +162,10 @@ class Stagebox extends React.Component {
 
     this.mouse = {
       down: true,
-      downStart: point,
+      downStart: point
     };
 
-    switch(this.props.tool) {
+    switch (this.props.tool) {
     case "BrushTool":
       this.useBrushTool(point);
       break;
@@ -165,8 +194,8 @@ class Stagebox extends React.Component {
     const point = this.getCoordinatesOnImage(e);
     this.updateCursor(point);
 
-    if(this.mouse.down) {
-      switch(this.props.tool) {
+    if (this.mouse.down) {
+      switch (this.props.tool) {
       case "BrushTool":
         this.useBrushTool(point);
         break;
@@ -198,10 +227,12 @@ class Stagebox extends React.Component {
     this.finishTool();
   }
 
-
   updateCursor(point) {
-    if((point.x > 0 && point.y > 0) &&
-    (point.x !== this.cursor.x || point.y !== this.cursor.y)) {
+    if (
+      point.x > 0 &&
+      point.y > 0 &&
+      (point.x !== this.cursor.x || point.y !== this.cursor.y)
+    ) {
       // update cursor position
       this.cursor = point;
       this.refs.cursorCanvas.drawPixelCursor(point.x, point.y);
@@ -212,23 +243,32 @@ class Stagebox extends React.Component {
       // update color under cursor
       let cursorColorHex, cursorColorRGB;
       try {
-        const
-          currentPixel = this.props.pixels[this.props.frame][this.props.layer][point.x][point.y],
-          cursorColor = new Color({ rgb: [ currentPixel.r, currentPixel.g, currentPixel.b ]});
+        const currentPixel = this.props.pixels[this.props.frame][
+            this.props.layer
+          ][point.x][point.y],
+          cursorColor = new Color({
+            rgb: [currentPixel.r, currentPixel.g, currentPixel.b]
+          });
         cursorColorHex = cursorColor.hex();
         cursorColorRGB = cursorColor.rgbHuman();
-      } catch(e) {
+      } catch (e) {
         cursorColorHex = "transparent";
         cursorColorRGB = "-, -, -";
       }
 
       this.cursorColor = cursorColorHex;
 
-      document.getElementById("StatusBarColor").style.backgroundColor = cursorColorHex;
-      document.getElementById("StatusBarColorString").innerHTML = cursorColorHex;
+      document.getElementById(
+        "StatusBarColor"
+      ).style.backgroundColor = cursorColorHex;
+      document.getElementById(
+        "StatusBarColorString"
+      ).innerHTML = cursorColorHex;
 
-      if(this.props.tool == "EyedropperTool") {
-        document.getElementById("EyedropperSwatch").style.backgroundColor = cursorColorHex;
+      if (this.props.tool == "EyedropperTool") {
+        document.getElementById(
+          "EyedropperSwatch"
+        ).style.backgroundColor = cursorColorHex;
         document.getElementById("EyedropperHex").innerHTML = cursorColorHex;
         document.getElementById("EyedropperRGB").innerHTML = cursorColorRGB;
       }
@@ -243,15 +283,20 @@ class Stagebox extends React.Component {
   }
 
   finishTool() {
-    if(this.mouse.down) {
-      switch(this.props.tool) {
+    if (this.mouse.down) {
+      switch (this.props.tool) {
       case "BrushTool":
       case "BrightnessTool":
         this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
         this.pixels = {};
         break;
       case "EraserTool":
-        this.props.pixelsDelete(this.props.frame, this.props.layer, this.pixels, this.props.pixels);
+        this.props.pixelsDelete(
+            this.props.frame,
+            this.props.layer,
+            this.pixels,
+            this.props.pixels
+          );
         this.pixels = {};
         break;
       case "MoveTool":
@@ -267,10 +312,12 @@ class Stagebox extends React.Component {
   }
 
   useBrushTool(point) {
-    if(this.layerIsVisible()) {
-      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
-        const
-          color = new Color({hex: this.props.color}),
+    if (this.layerIsVisible()) {
+      if (
+        !selectionIsActive(this.props.selection) ||
+        insideBounds(this.props.selection, this.cursor)
+      ) {
+        const color = new Color({ hex: this.props.color }),
           p = {
             frame: this.props.frame,
             layer: this.props.layer,
@@ -279,7 +326,7 @@ class Stagebox extends React.Component {
             r: color.r,
             g: color.g,
             b: color.b,
-            a: 1,
+            a: 1
           };
 
         _.merge(this.pixels, {
@@ -288,27 +335,38 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: this.props.color});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
+          .layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.paintPixel({
+          x: p.x,
+          y: p.y,
+          layer: this.props.layer,
+          color: this.props.color
+        });
       }
     }
   }
 
   useEyedropperTool() {
-    if(this.cursorColor == "transparent") return;
+    if (this.cursorColor == "transparent") return;
     this.props.toolSelect("BrushTool");
     this.props.brushColor(this.cursorColor);
   }
 
   useBrightnessTool(point) {
-    if(this.layerIsVisible()) {
-      if(this.cursorColor == "transparent") return;
-      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
-        const
-          intensity = this.props.brightnessTool.mode === "lighten"
-                    ? this.props.brightnessTool.intensity
-                    : -this.props.brightnessTool.intensity,
-          color = new Color({hex: this.cursorColor}).changeBrightness(intensity),
+    if (this.layerIsVisible()) {
+      if (this.cursorColor == "transparent") return;
+      if (
+        !selectionIsActive(this.props.selection) ||
+        insideBounds(this.props.selection, this.cursor)
+      ) {
+        const intensity =
+            this.props.brightnessTool.mode === "lighten"
+              ? this.props.brightnessTool.intensity
+              : -this.props.brightnessTool.intensity,
+          color = new Color({ hex: this.cursorColor }).changeBrightness(
+            intensity
+          ),
           p = {
             frame: this.props.frame,
             layer: this.props.layer,
@@ -317,7 +375,7 @@ class Stagebox extends React.Component {
             r: color.r,
             g: color.g,
             b: color.b,
-            a: 1,
+            a: 1
           };
 
         _.merge(this.pixels, {
@@ -326,23 +384,31 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-        layerCanvas.paintPixel({x: p.x, y: p.y, layer: this.props.layer, color: color.hex()});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
+          .layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.paintPixel({
+          x: p.x,
+          y: p.y,
+          layer: this.props.layer,
+          color: color.hex()
+        });
       }
     }
   }
 
   useEraserTool(point) {
-    if(this.layerIsVisible()) {
-      if(this.cursorColor == "transparent") return;
-      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
-        const
-          p = {
-            frame: this.props.frame,
-            layer: this.props.layer,
-            x: point.x,
-            y: point.y,
-          };
+    if (this.layerIsVisible()) {
+      if (this.cursorColor == "transparent") return;
+      if (
+        !selectionIsActive(this.props.selection) ||
+        insideBounds(this.props.selection, this.cursor)
+      ) {
+        const p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y
+        };
 
         _.merge(this.pixels, {
           [point.x]: {
@@ -350,8 +416,9 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs.layerCanvas.refs.decoratoredCanvas;
-        layerCanvas.clearPixel({x: p.x, y: p.y, layer: this.props.layer});
+        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
+          .layerCanvas.refs.decoratoredCanvas;
+        layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
       }
     }
   }
@@ -359,66 +426,83 @@ class Stagebox extends React.Component {
   startMoveTool() {
     this.layerBackup = document.createElement("canvas");
 
-    const
-      canvas = document.getElementById(`StageBoxLayer-${this.props.layer}`).querySelector("canvas"),
+    const canvas = document
+        .getElementById(`StageBoxLayer-${this.props.layer}`)
+        .querySelector("canvas"),
       backupCtx = this.layerBackup.getContext("2d");
 
     this.layerBackup.width = canvas.width;
     this.layerBackup.height = canvas.height;
 
     // save main canvas contents
-    backupCtx.drawImage(canvas, 0,0);
+    backupCtx.drawImage(canvas, 0, 0);
   }
 
   previewMoveTool() {
-    if(this.layerIsVisible()) {
-      const
-        distance = this.getMouseDownDistance(),
+    if (this.layerIsVisible()) {
+      const distance = this.getMouseDownDistance(),
         offset = {
           x: distance.x * this.props.zoom,
           y: distance.y * this.props.zoom
         },
-        canvas = document.getElementById(`StageBoxLayer-${this.props.layer}`).querySelector("canvas"),
+        canvas = document
+          .getElementById(`StageBoxLayer-${this.props.layer}`)
+          .querySelector("canvas"),
         ctx = canvas.getContext("2d");
 
       canvas.width = canvas.width;
 
-      if(!selectionIsActive(this.props.selection)) {
+      if (!selectionIsActive(this.props.selection)) {
         ctx.drawImage(this.layerBackup, offset.x, offset.y);
-      }
-      else {
+      } else {
         // draw the whole image
         ctx.drawImage(this.layerBackup, 0, 0);
         // clear out selection
-        const
-          selectionX = (this.props.selection.start.x - 1) * this.props.zoom,
-          selectionY = (this.props.selection.start.y - 1)* this.props.zoom,
-          selectionWidth = (this.props.selection.end.x - this.props.selection.start.x + 1) * this.props.zoom,
-          selectionHeight = (this.props.selection.end.y - this.props.selection.start.y + 1) * this.props.zoom;
+        const selectionX = (this.props.selection.start.x - 1) * this.props.zoom,
+          selectionY = (this.props.selection.start.y - 1) * this.props.zoom,
+          selectionWidth =
+            (this.props.selection.end.x - this.props.selection.start.x + 1) *
+            this.props.zoom,
+          selectionHeight =
+            (this.props.selection.end.y - this.props.selection.start.y + 1) *
+            this.props.zoom;
 
         ctx.clearRect(selectionX, selectionY, selectionWidth, selectionHeight);
         // draw the selection
-        ctx.drawImage(this.layerBackup, selectionX, selectionY, selectionWidth, selectionHeight, selectionX + offset.x, selectionY + offset.y, selectionWidth, selectionHeight);
+        ctx.drawImage(
+          this.layerBackup,
+          selectionX,
+          selectionY,
+          selectionWidth,
+          selectionHeight,
+          selectionX + offset.x,
+          selectionY + offset.y,
+          selectionWidth,
+          selectionHeight
+        );
 
         // move the selection canvas
-        document.querySelector("#StageBoxSelectionCanvas").style.left = `${offset.x}px`;
-        document.querySelector("#StageBoxSelectionCanvas").style.top = `${offset.y}px`;
+        document.querySelector("#StageBoxSelectionCanvas").style.left = `${
+          offset.x
+        }px`;
+        document.querySelector("#StageBoxSelectionCanvas").style.top = `${
+          offset.y
+        }px`;
       }
     }
   }
 
   endMoveTool() {
-    const
-      { frame, layer, pixels, selection, size } = this.props,
+    const { frame, layer, pixels, selection, size } = this.props,
       distance = this.getMouseDownDistance(),
       // pixels = this.getLayerPixels(this.props.layer);
-      scopedPixels =  getPixelsInScope(frame, layer, pixels, selection);
+      scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
 
     // move pixels
     this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
 
     // move selection
-    if(selectionIsActive(selection)) {
+    if (selectionIsActive(selection)) {
       this.props.selectionMove(distance);
     }
 
@@ -430,35 +514,35 @@ class Stagebox extends React.Component {
   }
 
   usePaintBucketTool(point) {
-    if(this.layerIsVisible()) {
-      if(!selectionIsActive(this.props.selection) || insideBounds(this.props.selection, this.cursor)) {
-
+    if (this.layerIsVisible()) {
+      if (
+        !selectionIsActive(this.props.selection) ||
+        insideBounds(this.props.selection, this.cursor)
+      ) {
         document.getElementById("ScreenBlocker").style.display = "block";
 
         let layerZ;
         this.props.layers.map(layer => {
-          if(layer.id === this.props.layer) layerZ = layer.z;
+          if (layer.id === this.props.layer) layerZ = layer.z;
         });
 
-        const
-          fillColor = new Color({hex: this.props.color}),
+        const fillColor = new Color({ hex: this.props.color }),
           pixels = this.getLayerPixels(this.props.layer);
 
         let bounds;
-        if(selectionIsActive(this.props.selection)) {
+        if (selectionIsActive(this.props.selection)) {
           bounds = {
             top: this.props.selection.start.y,
             right: this.props.selection.end.x,
             bottom: this.props.selection.end.y,
-            left: this.props.selection.start.x,
+            left: this.props.selection.start.x
           };
-        }
-        else {
+        } else {
           bounds = {
             top: 1,
             right: this.props.size.width,
             bottom: this.props.size.height,
-            left: 1,
+            left: 1
           };
         }
 
@@ -482,25 +566,30 @@ class Stagebox extends React.Component {
   }
 
   resizeRectangularSelection(point) {
-    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(this.props.selection.start, point);
+    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(
+      this.props.selection.start,
+      point
+    );
   }
 
   endRectangularSelection(point) {
-    if(_.isEqual(point, this.mouse.downStart)) {
+    if (_.isEqual(point, this.mouse.downStart)) {
       this.props.selectionClear();
-    }
-    else {
+    } else {
       this.props.selectionEnd(point);
     }
   }
 
   createLayerVisibilityMap() {
     this.layerVisibilityMap = {};
-    this.props.layers.map(layer => this.layerVisibilityMap[layer.id] = layer.visible && layer.opacity > 0);
+    this.props.layers.map(
+      layer =>
+        (this.layerVisibilityMap[layer.id] = layer.visible && layer.opacity > 0)
+    );
   }
 
   layerIsVisible() {
-    if(!this.layerVisibilityMap[this.props.layer]) {
+    if (!this.layerVisibilityMap[this.props.layer]) {
       this.props.modalShow("ModalErrorInvisibleLayer");
       return false;
     }
@@ -516,8 +605,11 @@ class Stagebox extends React.Component {
 
   getLayerPixels(layerId) {
     let pixels;
-    try { pixels = this.props.pixels[this.props.frame][layerId]; }
-    catch(e) { pixels = {}; }
+    try {
+      pixels = this.props.pixels[this.props.frame][layerId];
+    } catch (e) {
+      pixels = {};
+    }
     return pixels;
   }
 }
