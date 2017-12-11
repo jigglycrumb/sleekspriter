@@ -12,16 +12,17 @@ import {
   selectionMove,
   selectionStart,
   toolSelect,
+  zoomIn
 } from "../../state/actions";
 
 import {
   getFilePixels,
   getFileSize,
   getFrameLayersZSorted,
-  getOnionFrameAbsolute,
+  getOnionFrameAbsolute
 } from "../../state/selectors";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   brightnessTool: state.ui.paint.brightnessTool,
   color: state.ui.paint.color,
   frame: state.ui.paint.frame,
@@ -34,23 +35,24 @@ const mapStateToProps = (state) => ({
   selection: state.ui.paint.selection,
   size: getFileSize(state),
   tool: state.ui.paint.tool,
-  zoom: state.ui.paint.zoom,
+  zoom: state.ui.paint.zoom
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  brushColor: (color) => dispatch(brushColor(color)),
-  modalShow: (modal) => dispatch(modalShow(modal)),
-  pixelsAdd: (frame, layer, pixels) => dispatch(pixelsAdd(frame, layer, pixels)),
-  pixelsDelete: (frame, layer, pixels, allPixels) => dispatch(pixelsDelete(frame, layer, pixels, allPixels)),
-  pixelsMove: (frame, layer, pixels, distance, size) => dispatch(pixelsMove(frame, layer, pixels, distance, size)),
+const mapDispatchToProps = dispatch => ({
+  brushColor: color => dispatch(brushColor(color)),
+  modalShow: modal => dispatch(modalShow(modal)),
+  pixelsAdd: (frame, layer, pixels) =>
+    dispatch(pixelsAdd(frame, layer, pixels)),
+  pixelsDelete: (frame, layer, pixels, allPixels) =>
+    dispatch(pixelsDelete(frame, layer, pixels, allPixels)),
+  pixelsMove: (frame, layer, pixels, distance, size) =>
+    dispatch(pixelsMove(frame, layer, pixels, distance, size)),
   selectionClear: () => dispatch(selectionClear()),
-  selectionEnd: (point) => dispatch(selectionEnd(point)),
-  selectionMove: (distance) => dispatch(selectionMove(distance)),
-  selectionStart: (point) => dispatch(selectionStart(point)),
-  toolSelect: (tool) => dispatch(toolSelect(tool)),
+  selectionEnd: point => dispatch(selectionEnd(point)),
+  selectionMove: distance => dispatch(selectionMove(distance)),
+  selectionStart: point => dispatch(selectionStart(point)),
+  toolSelect: tool => dispatch(toolSelect(tool)),
+  zoomIn: () => dispatch(zoomIn())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Stagebox);
+export default connect(mapStateToProps, mapDispatchToProps)(Stagebox);

@@ -187,6 +187,8 @@ class Stagebox extends React.Component {
     case "RectangularSelectionTool":
       this.startRectangularSelection(point);
       break;
+    case "ZoomTool":
+      this.useZoomTool();
     }
   }
 
@@ -421,6 +423,10 @@ class Stagebox extends React.Component {
         layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
       }
     }
+  }
+
+  useZoomTool() {
+    this.props.zoomIn();
   }
 
   startMoveTool() {
