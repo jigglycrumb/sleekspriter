@@ -9,7 +9,7 @@ class Layerbox extends React.Component {
 
     return (
       <div>
-        <div className="layers">
+        <div className="layers" ref={n => (this.layerList = n)}>
           {this.props.layers.map((layer, i) => {
             let pixels;
             try {
@@ -62,6 +62,10 @@ class Layerbox extends React.Component {
     this.props.layerSelectTop(this.props.layers);
   }
 
+  componentDidUpdate() {
+    this.fitHeight();
+  }
+
   confirmLayerDelete() {
     this.props.modalShow("ModalConfirmDeleteLayer");
   }
@@ -73,6 +77,16 @@ class Layerbox extends React.Component {
       this.props.layers
     );
     // TODO: select newly added layer
+  }
+
+  fitHeight() {
+    const height =
+      document.querySelector(".area.right").clientHeight -
+      document.getElementById("PreviewBox").clientHeight -
+      document.getElementById("FrameBox").clientHeight -
+      46;
+
+    this.layerList.style.height = height + "px";
   }
 }
 
