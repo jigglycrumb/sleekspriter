@@ -14,15 +14,14 @@ class FrameCanvas extends React.Component {
   render() {
     let width, height, style;
 
-    if(!this.hasMaxSize) {
+    if (!this.hasMaxSize) {
       width = this.props.size.width * this.props.zoom;
       height = this.props.size.height * this.props.zoom;
       style = {
         width: width,
-        height: height,
+        height: height
       };
-    }
-    else {
+    } else {
       const fitted = this.props.fitToSize(this.props.maxSize, this.hasNoMargin);
       width = fitted.size.width;
       height = fitted.size.height;
@@ -30,7 +29,12 @@ class FrameCanvas extends React.Component {
     }
 
     return (
-      <canvas ref="canvas" width={width} height={height} style={style}></canvas>
+      <canvas
+        ref={n => (this.canvas = n)}
+        width={width}
+        height={height}
+        style={style}
+      />
     );
   }
 
@@ -45,27 +49,31 @@ class FrameCanvas extends React.Component {
   paint() {
     this.props.clear();
 
-    if(this.props.background) {
-      const
-        canvas = this.refs.canvas,
+    if (this.props.background) {
+      const canvas = this.canvas,
         ctx = canvas.getContext("2d");
       ctx.fillStyle = this.props.background;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    if(undefined != this.props.pixels) {
+    if (undefined != this.props.pixels) {
       const layers = Object.keys(this.props.pixels);
       layers.map(layer => {
         const l = this.props.layers.find(fl => fl.id === +layer);
-        if(l.visible === true && l.opacity > 0) {
+        if (l.visible === true && l.opacity > 0) {
           const xValues = Object.keys(this.props.pixels[layer]);
           xValues.map(x => {
             const yValues = Object.keys(this.props.pixels[layer][x]);
             yValues.map(y => {
-              const
-                p = this.props.pixels[layer][x][y],
-                hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
-              this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
+              const p = this.props.pixels[layer][x][y],
+                hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
+              this.props.paintSinglePixel(
+                this.canvas,
+                this.props.size,
+                x,
+                y,
+                hex
+              );
             });
           });
         }
@@ -81,7 +89,7 @@ FrameCanvas.propTypes = {
   maxSize: PropTypes.number,
   noMargin: PropTypes.bool,
   size: PropTypes.object.isRequired, // { width: x, height: y }
-  zoom: PropTypes.number,
+  zoom: PropTypes.number
 };
 
 export default CanvasDecorator(FrameCanvas);

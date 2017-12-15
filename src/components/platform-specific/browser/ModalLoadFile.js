@@ -12,15 +12,15 @@ import { AES, enc } from "crypto-js";
 import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
-const mapStateToProps = (state) => ({
-  layers: getFrameLayersZSorted(state),
+const mapStateToProps = state => ({
+  layers: getFrameLayersZSorted(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
-  layerSelectTop: (layers) => dispatch(layerSelectTop(layers)),
-  load: (json) => dispatch(fileLoad(json)),
-  zoomFit: (size) => dispatch(zoomFit(size)),
+  layerSelectTop: layers => dispatch(layerSelectTop(layers)),
+  load: json => dispatch(fileLoad(json)),
+  zoomFit: size => dispatch(zoomFit(size))
 });
 
 class ModalLoadFile extends React.Component {
@@ -28,8 +28,14 @@ class ModalLoadFile extends React.Component {
     return (
       <div className="dialog">
         <div className="title">{t("Open file")}</div>
-        <div className="text">{t("Paste the contents of your last save here")}</div>
-        <textarea className="json-input" ref="jsonInput" autoFocus></textarea>
+        <div className="text">
+          {t("Paste the contents of your last save here")}
+        </div>
+        <textarea
+          className="json-input"
+          ref={n => (this.jsonInput = n)}
+          autoFocus
+        />
         <div className="actions">
           <button onClick={::this.loadFile}>{t("Open")}</button>
           <button onClick={this.props.hide}>{t("Cancel")}</button>
@@ -39,27 +45,26 @@ class ModalLoadFile extends React.Component {
   }
 
   loadFile() {
-    const input = this.refs.jsonInput.value.toString();
+    const input = this.jsonInput.value.toString();
     const bytes = AES.decrypt(input, fileEncryptionSecret);
 
     let json = false;
-    try { json = JSON.parse(bytes.toString(enc.Utf8)); }
-    catch(e) { console.warn("invalid file"); }
+    try {
+      json = JSON.parse(bytes.toString(enc.Utf8));
+    } catch (e) {
+      console.warn("invalid file");
+    }
 
-    if(json) {
+    if (json) {
       const state = fileToState(json);
       this.props.load(state);
       this.props.hide();
       this.props.zoomFit(state.size);
       setTimeout(() => this.props.layerSelectTop(this.props.layers), 0);
-    }
-    else {
-      this.refs.jsonInput.focus();
+    } else {
+      this.jsonInput.focus();
     }
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalLoadFile);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalLoadFile);

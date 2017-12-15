@@ -1,25 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { t, stateToFile } from "../../../utils";
-import {
-  modalHide
-} from "../../../state/actions";
+import { modalHide } from "../../../state/actions";
 import { AES } from "crypto-js";
 import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   file: state.file.present
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  hide: () => dispatch(modalHide()),
+const mapDispatchToProps = dispatch => ({
+  hide: () => dispatch(modalHide())
 });
 
 class ModalSaveFile extends React.Component {
   componentDidMount() {
-    this.refs.jsonInput.focus();
-    this.refs.jsonInput.select();
+    this.jsonInput.focus();
+    this.jsonInput.select();
   }
 
   render() {
@@ -27,14 +25,18 @@ class ModalSaveFile extends React.Component {
     return (
       <div className="dialog">
         <div className="title">{t("Save file")}</div>
-        <div className="text">{t("Please copy everything below to a .txt file")}</div>
+        <div className="text">
+          {t("Please copy everything below to a .txt file")}
+        </div>
         <textarea
           className="json-input"
-          ref="jsonInput"
-          value={AES.encrypt(JSON.stringify(stateToFile(this.props.file)), fileEncryptionSecret)}
+          ref={n => (this.jsonInput = n)}
+          value={AES.encrypt(
+            JSON.stringify(stateToFile(this.props.file)),
+            fileEncryptionSecret
+          )}
           autoFocus
-        >
-        </textarea>
+        />
         <div className="actions">
           <button onClick={this.props.hide}>{t("Ok")}</button>
         </div>
@@ -43,7 +45,4 @@ class ModalSaveFile extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalSaveFile);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSaveFile);

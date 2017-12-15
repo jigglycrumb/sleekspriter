@@ -6,11 +6,17 @@ class GridCanvas extends React.Component {
   render() {
     const css = {
       width: this.props.width,
-      height: this.props.height,
+      height: this.props.height
     };
 
     return (
-      <canvas ref="canvas" className="GridCanvas" style={css} width={this.props.width} height={this.props.height}></canvas>
+      <canvas
+        ref={n => (this.canvas = n)}
+        className="GridCanvas"
+        style={css}
+        width={this.props.width}
+        height={this.props.height}
+      />
     );
   }
 
@@ -24,29 +30,32 @@ class GridCanvas extends React.Component {
   }
 
   drawGrid() {
-    const
-      canvas = this.refs.canvas,
+    const canvas = this.canvas,
       ctx = canvas.getContext("2d"),
       cell = {
         width: this.props.width / this.props.columns,
         height: this.props.height / this.props.rows
       };
 
-    if(cell.width >= 2 && cell.height >= 2) {
+    if (cell.width >= 2 && cell.height >= 2) {
       ctx.strokeStyle = "#828282";
       ctx.beginPath();
 
-      if(this.props.columns > 1) {
+      if (this.props.columns > 1) {
         // vertical lines
-        for(let x = cell.width + 0.5; x < this.props.width; x+= cell.width) {
+        for (let x = cell.width + 0.5; x < this.props.width; x += cell.width) {
           ctx.moveTo(x, 0);
           ctx.lineTo(x, canvas.height);
         }
       }
 
-      if(this.props.rows > 1) {
+      if (this.props.rows > 1) {
         // horizontal lines
-        for(let y = cell.height + 0.5; y < this.props.height; y+= cell.height) {
+        for (
+          let y = cell.height + 0.5;
+          y < this.props.height;
+          y += cell.height
+        ) {
           ctx.moveTo(0, y);
           ctx.lineTo(canvas.width, y);
         }
@@ -61,7 +70,7 @@ GridCanvas.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   columns: PropTypes.number.isRequired,
-  rows: PropTypes.number.isRequired,
+  rows: PropTypes.number.isRequired
 };
 
 export default CanvasDecorator(GridCanvas);

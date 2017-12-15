@@ -5,14 +5,17 @@ class PalettePicker extends React.Component {
   render() {
     return (
       <div className="switch" onClick={::this.showPalettes}>
-        <i className="icon flaticon-color1"/>
-        <i className="switch-arrow flaticon-little9"/>
+        <i className="icon flaticon-color1" />
+        <i className="switch-arrow flaticon-little9" />
         <div className="name">{this.props.palette.short}</div>
-        <ul ref="paletteList" className="list">
+        <ul ref={n => (this.paletteList = n)} className="list">
           {this.props.palettes.map(function(palette, i) {
             return (
               <li key={i} data-palette={i} onClick={::this.selectPalette}>
-                {t("${palette} (${size} colours)", {palette: palette.title, size: palette.colors.length})}
+                {t("${palette} (${size} colours)", {
+                  palette: palette.title,
+                  size: palette.colors.length
+                })}
               </li>
             );
           }, this)}
@@ -22,11 +25,11 @@ class PalettePicker extends React.Component {
   }
 
   showPalettes() {
-    this.refs.paletteList.style.display = "block";
+    this.paletteList.style.display = "block";
   }
 
   hidePalettes() {
-    this.refs.paletteList.style.display = "none";
+    this.paletteList.style.display = "none";
   }
 
   selectPalette(e) {

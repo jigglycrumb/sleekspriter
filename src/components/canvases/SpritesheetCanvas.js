@@ -14,22 +14,28 @@ class SpritesheetCanvas extends React.Component {
     let width, height, style;
     const { frames, size, zoom, maxSize, fitToSize } = this.props;
 
-    if(!this.hasMaxSize) {
+    if (!this.hasMaxSize) {
       width = frames.x * size.width * zoom;
       height = frames.y * size.height * zoom;
       style = {
         width: width,
-        height: height,
+        height: height
       };
-    }
-    else {
+    } else {
       const fitted = fitToSize(maxSize);
       width = fitted.size.width;
       height = fitted.size.height;
       style = fitted.style;
     }
 
-    return <canvas ref="canvas" width={width} height={height} style={style}></canvas>;
+    return (
+      <canvas
+        ref={n => (this.canvas = n)}
+        width={width}
+        height={height}
+        style={style}
+      />
+    );
   }
 
   componentDidMount() {
@@ -43,42 +49,56 @@ class SpritesheetCanvas extends React.Component {
   paint() {
     this.props.clear();
 
-    const
-      { background } = this.props,
-      canvas = this.refs.canvas,
+    const { background } = this.props,
+      canvas = this.canvas,
       pixels = [],
       layerDict = [];
 
-    if(background) {
+    if (background) {
       const ctx = canvas.getContext("2d");
       ctx.fillStyle = background;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     this.props.layers.forEach(function(layer) {
-      layerDict[layer.id] = { visible: layer.visible, opacity: layer.opacity, z: layer.z };
+      layerDict[layer.id] = {
+        visible: layer.visible,
+        opacity: layer.opacity,
+        z: layer.z
+      };
     }, this);
 
     // sort pixels via z value
-    let
-      dict = this.props.pixels,
-      flen, llen, xlen, ylen,
-      frames, f, frame,
-      layers, l, layer,
-      xValues, x, xValue,
-      yValues, y, yValue,
-      zValue, pixel;
+    let dict = this.props.pixels,
+      flen,
+      llen,
+      xlen,
+      ylen,
+      frames,
+      f,
+      frame,
+      layers,
+      l,
+      layer,
+      xValues,
+      x,
+      xValue,
+      yValues,
+      y,
+      yValue,
+      zValue,
+      pixel;
 
     frames = Object.keys(dict);
     flen = frames.length;
 
-    for(f = 0; f < flen; f++) {
+    for (f = 0; f < flen; f++) {
       frame = frames[f];
 
       layers = Object.keys(dict[frame]);
       llen = layers.length;
 
-      for(l = 0; l < llen; l++) {
+      for (l = 0; l < llen; l++) {
         layer = layers[l];
 
         zValue = layerDict[layer].z;
@@ -86,17 +106,17 @@ class SpritesheetCanvas extends React.Component {
         xValues = Object.keys(dict[frame][layer]);
         xlen = xValues.length;
 
-        for(x = 0; x < xlen; x++) {
+        for (x = 0; x < xlen; x++) {
           xValue = xValues[x];
 
           yValues = Object.keys(dict[frame][layer][xValue]);
           ylen = yValues.length;
 
-          for(y = 0; y < ylen; y++) {
+          for (y = 0; y < ylen; y++) {
             yValue = yValues[y];
             pixel = Object.assign({}, dict[frame][layer][xValue][yValue]);
 
-            if(!pixels[zValue]) pixels[zValue] = [];
+            if (!pixels[zValue]) pixels[zValue] = [];
             pixels[zValue].push(pixel);
           }
         }
@@ -106,14 +126,22 @@ class SpritesheetCanvas extends React.Component {
     // paint
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
-        if(layerDict[px.layer].visible === true) {
-          const
-            targetPos = this.getPixelSpritesheetPosition(px),
+        if (layerDict[px.layer].visible === true) {
+          const targetPos = this.getPixelSpritesheetPosition(px),
             // alpha = px.a * (layerDict[px.layer].opacity / 100), // TODO integrate layer alpha support
-            hex = new Color({rgb: [px.r, px.g, px.b]}).hex(),
-            sheetSize = this.getSpriteSheetSize(this.props.size, this.props.frames);
+            hex = new Color({ rgb: [px.r, px.g, px.b] }).hex(),
+            sheetSize = this.getSpriteSheetSize(
+              this.props.size,
+              this.props.frames
+            );
 
-          this.props.paintSinglePixel(canvas, sheetSize, targetPos.x, targetPos.y, hex);
+          this.props.paintSinglePixel(
+            canvas,
+            sheetSize,
+            targetPos.x,
+            targetPos.y,
+            hex
+          );
 
           // Pixel.paint(canvas, targetPos.x, targetPos.y, px.toHex(), alpha, zoom);
         }
@@ -127,12 +155,12 @@ class SpritesheetCanvas extends React.Component {
     const x = pixel.frame % frames.x;
     const framePos = {
       x: x === 0 ? frames.x : x,
-      y: Math.ceil(pixel.frame / frames.x),
+      y: Math.ceil(pixel.frame / frames.x)
     };
 
     const targetPos = {
-      x: ((framePos.x-1) * size.width) + pixel.x,
-      y: ((framePos.y-1) * size.height) + pixel.y,
+      x: (framePos.x - 1) * size.width + pixel.x,
+      y: (framePos.y - 1) * size.height + pixel.y
     };
 
     return targetPos;
@@ -152,7 +180,7 @@ SpritesheetCanvas.propTypes = {
   layers: PropTypes.array.isRequired, // array of file layers
   maxSize: PropTypes.number,
   size: PropTypes.object.isRequired, // { width, height }
-  zoom: PropTypes.number,
+  zoom: PropTypes.number
 };
 
 export default CanvasDecorator(SpritesheetCanvas);

@@ -3,34 +3,37 @@ import React from "react";
 class StageBoxCursorCanvas extends React.Component {
   render() {
     return (
-      <canvas ref="canvas" id="StageBoxCursorCanvas" className="Layer" width={this.props.width} height={this.props.height} />
+      <canvas
+        ref={n => (this.canvas = n)}
+        id="StageBoxCursorCanvas"
+        className="Layer"
+        width={this.props.width}
+        height={this.props.height}
+      />
     );
   }
 
   clear() {
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas;
     canvas.width = canvas.width;
   }
 
   drawPixelCursor(x, y) {
-
     this.clear();
 
     const { zoom } = this.props;
 
-    if(x === 0 && y === 0) return;
+    if (x === 0 && y === 0) return;
 
-    const
-      canvas = this.refs.canvas,
+    const canvas = this.canvas,
       ctx = canvas.getContext("2d"),
-      left = (x * zoom) - zoom + 0.5,
-      top = (y * zoom) - zoom + 0.5;
+      left = x * zoom - zoom + 0.5,
+      top = y * zoom - zoom + 0.5;
 
-    let
-      right = (x * zoom) + 0.5,
-      bottom = (y * zoom) + 0.5;
+    let right = x * zoom + 0.5,
+      bottom = y * zoom + 0.5;
 
-    if(zoom < 3) {
+    if (zoom < 3) {
       right++;
       bottom++;
     }
@@ -44,22 +47,22 @@ class StageBoxCursorCanvas extends React.Component {
 
     ctx.beginPath();
 
-    if(x > 1) {
+    if (x > 1) {
       ctx.moveTo(left, 0);
       ctx.lineTo(left, canvas.height);
     }
 
-    if(x < (canvas.width/zoom)) {
+    if (x < canvas.width / zoom) {
       ctx.moveTo(right, 0);
       ctx.lineTo(right, canvas.height);
     }
 
-    if(y > 1) {
+    if (y > 1) {
       ctx.moveTo(0, top);
       ctx.lineTo(canvas.width, top);
     }
 
-    if(y < (canvas.height/zoom)) {
+    if (y < canvas.height / zoom) {
       ctx.moveTo(0, bottom);
       ctx.lineTo(canvas.width, bottom);
     }

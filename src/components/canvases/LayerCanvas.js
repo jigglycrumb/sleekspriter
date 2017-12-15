@@ -14,23 +14,27 @@ class LayerCanvas extends React.Component {
   render() {
     let width, height, style;
 
-    if(this.hasMaxSize) {
+    if (this.hasMaxSize) {
       const fitted = this.props.fitToSize(this.props.maxSize);
       width = fitted.size.width;
       height = fitted.size.height;
       style = fitted.style;
-    }
-    else if(this.hasZoom) {
+    } else if (this.hasZoom) {
       width = this.props.size.width * this.props.zoom;
       height = this.props.size.height * this.props.zoom;
       style = {
         width: width,
-        height: height,
+        height: height
       };
     }
 
     return (
-      <canvas ref="canvas" width={width} height={height} style={style}></canvas>
+      <canvas
+        ref={n => (this.canvas = n)}
+        width={width}
+        height={height}
+        style={style}
+      />
     );
   }
 
@@ -43,27 +47,26 @@ class LayerCanvas extends React.Component {
   }
 
   paint() {
-    if(undefined != this.props.pixels) {
+    if (undefined != this.props.pixels) {
       this.props.clear();
       const xValues = Object.keys(this.props.pixels);
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
         yValues.map(y => {
-          const
-            p = this.props.pixels[x][y],
-            hex = new Color({rgb: [p.r, p.g, p.b]}).hex();
-          this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, hex);
+          const p = this.props.pixels[x][y],
+            hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
+          this.props.paintSinglePixel(this.canvas, this.props.size, x, y, hex);
         });
       });
     }
   }
 
   paintPixel({ x, y, color }) {
-    this.props.paintSinglePixel(this.refs.canvas, this.props.size, x, y, color);
+    this.props.paintSinglePixel(this.canvas, this.props.size, x, y, color);
   }
 
   clearPixel({ x, y }) {
-    this.props.clearSinglePixel(this.refs.canvas, this.props.size, x, y);
+    this.props.clearSinglePixel(this.canvas, this.props.size, x, y);
   }
 }
 
@@ -71,7 +74,7 @@ LayerCanvas.propTypes = {
   layer: PropTypes.number.isRequired,
   maxSize: PropTypes.number,
   size: PropTypes.object.isRequired, // { width: x, height: y }
-  zoom: PropTypes.number,
+  zoom: PropTypes.number
 };
 
 export default CanvasDecorator(LayerCanvas);

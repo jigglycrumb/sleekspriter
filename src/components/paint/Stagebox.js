@@ -29,6 +29,7 @@ class Stagebox extends React.Component {
     this.pixels = {}; // a map of pixels filled by the tools and then batch-sent to redux
     this.layerVisibilityMap = {}; // a helper map for easy access to layer visibilty
     this.layerBackup = null; // a backup canvas for MoveTool
+    this.layers = {}; // layer refs
   }
 
   componentWillMount() {
@@ -114,13 +115,13 @@ class Stagebox extends React.Component {
         onMouseUp={::this.mouseup}
       >
         <StageboxCursorCanvas
-          ref="cursorCanvas"
+          ref={n => (this.cursorCanvas = n)}
           width={w}
           height={h}
           zoom={zoom}
         />
         <StageboxSelectionCanvas
-          ref="selectionCanvas"
+          ref={n => (this.selectionCanvas = n)}
           width={w}
           height={h}
           zoom={zoom}
@@ -131,7 +132,6 @@ class Stagebox extends React.Component {
 
         {this.props.layers.map(function(layer) {
           const pixels = this.getLayerPixels(layer.id);
-
           return (
             <StageboxLayer
               key={layer.id}
@@ -139,7 +139,7 @@ class Stagebox extends React.Component {
               pixels={pixels}
               size={size}
               zoom={zoom}
-              ref={`layer_${layer.id}`}
+              ref={n => (this.layers[layer.id] = n)}
             />
           );
         }, this)}
@@ -218,7 +218,7 @@ class Stagebox extends React.Component {
   }
 
   mouseout() {
-    this.refs.cursorCanvas.clear();
+    this.cursorCanvas.clear();
     this.finishTool();
 
     document.getElementById("StatusBarCursorX").innerHTML = "X: 0";
@@ -237,7 +237,7 @@ class Stagebox extends React.Component {
     ) {
       // update cursor position
       this.cursor = point;
-      this.refs.cursorCanvas.drawPixelCursor(point.x, point.y);
+      this.cursorCanvas.drawPixelCursor(point.x, point.y);
 
       document.getElementById("StatusBarCursorX").innerHTML = `X: ${point.x}`;
       document.getElementById("StatusBarCursorY").innerHTML = `Y: ${point.y}`;
@@ -337,8 +337,8 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
-          .layerCanvas.refs.decoratoredCanvas;
+        const layerCanvas = this.layers[this.props.layer].layerCanvas
+          .decoratoredCanvas;
         layerCanvas.paintPixel({
           x: p.x,
           y: p.y,
@@ -386,8 +386,8 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
-          .layerCanvas.refs.decoratoredCanvas;
+        const layerCanvas = this.layers[this.props.layer].layerCanvas
+          .decoratoredCanvas;
         layerCanvas.paintPixel({
           x: p.x,
           y: p.y,
@@ -418,8 +418,8 @@ class Stagebox extends React.Component {
           }
         });
 
-        const layerCanvas = this.refs[`layer_${this.props.layer}`].refs
-          .layerCanvas.refs.decoratoredCanvas;
+        const layerCanvas = this.layers[this.props.layer].layerCanvas
+          .decoratoredCanvas;
         layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
       }
     }
@@ -572,7 +572,7 @@ class Stagebox extends React.Component {
   }
 
   resizeRectangularSelection(point) {
-    this.refs.selectionCanvas.refs.decoratoredCanvas.drawSelection(
+    this.selectionCanvas.decoratoredCanvas.drawSelection(
       this.props.selection.start,
       point
     );

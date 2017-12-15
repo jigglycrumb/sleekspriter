@@ -12,18 +12,32 @@ class Palette extends React.Component {
   render() {
     return (
       <div>
-        <button ref="buttonScrollLeft" className="scroll left" onClick={::this.scrollLeft}>
-          <i className="flaticon-arrow85"/>
+        <button
+          ref={n => (this.buttonScrollLeft = n)}
+          className="scroll left"
+          onClick={::this.scrollLeft}
+        >
+          <i className="flaticon-arrow85" />
         </button>
-        <div ref="outer" className="outer">
-          <div ref="inner" className="inner">
+        <div ref={n => (this.outer = n)} className="outer">
+          <div ref={n => (this.inner = n)} className="inner">
             {this.props.colors.map(function(color) {
-              return <Colorswatch key={color} color={color} action={::this.props.brushColor} />;
+              return (
+                <Colorswatch
+                  key={color}
+                  color={color}
+                  action={::this.props.brushColor}
+                />
+              );
             }, this)}
           </div>
         </div>
-        <button ref="buttonScrollRight" className="scroll right" onClick={::this.scrollRight}>
-          <i className="flaticon-mini7"/>
+        <button
+          ref={n => (this.buttonScrollRight = n)}
+          className="scroll right"
+          onClick={::this.scrollRight}
+        >
+          <i className="flaticon-mini7" />
         </button>
       </div>
     );
@@ -41,18 +55,17 @@ class Palette extends React.Component {
   }
 
   setInnerWidth() {
-    const
-      ow = this.getOuterWidth(),
+    const ow = this.getOuterWidth(),
       swatchesVisible = Math.floor(ow / this.swatchWidth),
       pages = Math.ceil(this.swatchCount / swatchesVisible),
-      diff = ow - (swatchesVisible * this.swatchWidth),
-      newWidth = (swatchesVisible * this.swatchWidth * pages) + diff;
+      diff = ow - swatchesVisible * this.swatchWidth,
+      newWidth = swatchesVisible * this.swatchWidth * pages + diff;
 
-    this.refs.inner.style.width = `${newWidth}px`;
+    this.inner.style.width = `${newWidth}px`;
   }
 
   getOuterWidth() {
-    return this.refs.outer.clientWidth;
+    return this.outer.clientWidth;
   }
 
   getInnerWidth() {
@@ -60,30 +73,28 @@ class Palette extends React.Component {
   }
 
   getScrollPosition() {
-    return this.refs.outer.scrollLeft;
+    return this.outer.scrollLeft;
   }
 
   setScrollPosition(x) {
-    this.refs.outer.scrollLeft = x;
+    if (this.outer) this.outer.scrollLeft = x;
   }
 
   scrollLeft() {
-    const
-      ow = this.getOuterWidth(),
+    const ow = this.getOuterWidth(),
       scroll = this.getScrollPosition(),
       swatchesVisible = Math.floor(ow / this.swatchWidth);
 
-    let target = scroll - (this.swatchWidth * swatchesVisible);
-    if(target < 0) target = 0;
+    let target = scroll - this.swatchWidth * swatchesVisible;
+    if (target < 0) target = 0;
     this.scrollTo(target);
   }
 
   scrollRight() {
-    const
-      ow = this.getOuterWidth(),
+    const ow = this.getOuterWidth(),
       scroll = this.getScrollPosition(),
       swatchesVisible = Math.floor(ow / this.swatchWidth),
-      target = scroll + (this.swatchWidth * swatchesVisible);
+      target = scroll + this.swatchWidth * swatchesVisible;
 
     this.scrollTo(target);
   }
@@ -91,8 +102,7 @@ class Palette extends React.Component {
   scrollTo(x) {
     let tweenComplete = false;
 
-    const
-      self = this,
+    const self = this,
       start = this.getScrollPosition(),
       distance = x - start,
       from = { position: start },
@@ -112,7 +122,7 @@ class Palette extends React.Component {
     this.setScrollButtons(x);
 
     (function animate() {
-      if(!tweenComplete) {
+      if (!tweenComplete) {
         TWEEN.update();
         setTimeout(animate, 1);
       }
@@ -120,24 +130,23 @@ class Palette extends React.Component {
   }
 
   setScrollButtons(pos) {
-    const
-      iw = this.getInnerWidth(),
+    const iw = this.getInnerWidth(),
       ow = this.getOuterWidth(),
       w = iw - ow,
       swatchesVisible = Math.floor(ow / this.swatchWidth),
       pages = Math.ceil(this.swatchCount / swatchesVisible),
       scrollButtonStyle = {
         left: "hidden",
-        right: "hidden",
+        right: "hidden"
       };
 
-    if(pages > 1) {
-      if(pos > 0) scrollButtonStyle.left = "visible";
-      if(pos < w) scrollButtonStyle.right = "visible";
+    if (pages > 1) {
+      if (pos > 0) scrollButtonStyle.left = "visible";
+      if (pos < w) scrollButtonStyle.right = "visible";
     }
 
-    this.refs.buttonScrollLeft.style.visibility = scrollButtonStyle.left;
-    this.refs.buttonScrollRight.style.visibility = scrollButtonStyle.right;
+    this.buttonScrollLeft.style.visibility = scrollButtonStyle.left;
+    this.buttonScrollRight.style.visibility = scrollButtonStyle.right;
   }
 }
 
