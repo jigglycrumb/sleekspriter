@@ -1,4 +1,3 @@
-import React from "react";
 import EraserTool from "components/paint/tools/EraserTool";
 
 describe("EraserTool", () => {

@@ -1,16 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 import { FrameCanvas } from "../canvases";
 
 const ExportPreviewSingleFrame = ({ format, frame, size, pixels, zoom }) => {
-  const
-    classes = {
+  const classes = {
       preview: true,
-      checkerboard: (format === "png" || format === "gif") ? true : false,
+      checkerboard: format === "png" || format === "gif" ? true : false
     },
     style = {
       width: size.width * zoom,
-      height: size.height * zoom,
+      height: size.height * zoom
     },
     background = format === "jpeg" ? "#ffffff" : null;
 
@@ -21,9 +21,18 @@ const ExportPreviewSingleFrame = ({ format, frame, size, pixels, zoom }) => {
         size={size}
         zoom={zoom}
         pixels={pixels[frame] || null}
-        background={background} />
+        background={background}
+      />
     </div>
   );
+};
+
+ExportPreviewSingleFrame.propTypes = {
+  format: PropTypes.string.isRequired,
+  frame: PropTypes.number.isRequired,
+  size: PropTypes.object.isRequired,
+  pixels: PropTypes.object.isRequired,
+  zoom: PropTypes.number.isRequired
 };
 
 export default ExportPreviewSingleFrame;

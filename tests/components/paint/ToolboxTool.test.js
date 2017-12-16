@@ -1,4 +1,3 @@
-import React from "react";
 import ToolboxTool from "components/paint/ToolboxTool";
 
 describe("ToolboxTool", () => {

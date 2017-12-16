@@ -1,4 +1,3 @@
-import React from "react";
 import { FrameCanvas } from "components/canvases/FrameCanvas";
 
 describe("FrameCanvas", () => {

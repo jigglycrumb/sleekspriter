@@ -1,4 +1,3 @@
-import React from "react";
 import { SpritesheetCanvas } from "components/canvases/SpritesheetCanvas";
 
 describe("SpritesheetCanvas", () => {

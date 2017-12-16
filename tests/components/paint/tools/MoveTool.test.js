@@ -1,4 +1,3 @@
-import React from "react";
 import MoveTool from "components/paint/tools/MoveTool";
 
 describe("MoveTool", () => {

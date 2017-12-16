@@ -1,4 +1,3 @@
-import React from "react";
 import { GridCanvas } from "components/canvases/GridCanvas";
 
 describe("GridCanvas", () => {

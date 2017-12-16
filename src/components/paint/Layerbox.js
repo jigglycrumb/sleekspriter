@@ -18,8 +18,6 @@ class Layerbox extends React.Component {
               pixels = null;
             }
 
-            console.log(layer, pixels);
-
             return (
               <LayerboxLayer
                 key={`layer-${i}`}

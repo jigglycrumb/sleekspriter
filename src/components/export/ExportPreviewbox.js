@@ -7,23 +7,49 @@ import ExportPreviewSpritesheet from "./ExportPreviewSpritesheet";
 const ExportPreviewAllFrames = () => <div>ExportPreviewAllFrames</div>;
 const ExportPreviewAnimation = () => <div>ExportPreviewAnimation</div>;
 
-const ExportPreviewbox = ({ format, frame, frames, layers, part, pixels, size, zoom }) => {
+const ExportPreviewbox = ({
+  format,
+  frame,
+  frames,
+  layers,
+  part,
+  pixels,
+  size,
+  zoom
+}) => {
   let preview = null;
-  switch(part) {
+  switch (part) {
   case "spritesheet":
-    preview = <ExportPreviewSpritesheet format={format} frames={frames} layers={layers} size={size} pixels={pixels} zoom={zoom} />;
+    preview = (
+        <ExportPreviewSpritesheet
+          format={format}
+          frames={frames}
+          layers={layers}
+          size={size}
+          pixels={pixels}
+          zoom={zoom}
+        />
+      );
     break;
 
   case "allframes":
-    preview = <ExportPreviewAllFrames />;
+    preview = <ExportPreviewAllFrames />; // TODO
     break;
 
-  case "oneframe":
-    preview = <ExportPreviewSingleFrame format={format} frame={frame} size={size} pixels={pixels} zoom={zoom} />;
+  case "frame":
+    preview = (
+        <ExportPreviewSingleFrame
+          format={format}
+          frame={frame}
+          size={size}
+          pixels={pixels}
+          zoom={zoom}
+        />
+      );
     break;
 
   case "animation":
-    preview = <ExportPreviewAnimation />;
+    preview = <ExportPreviewAnimation />; // TODO
     break;
   }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import ColorSwatch from "components/paint/ColorSwatch";
 
 describe("ColorSwatch", () => {

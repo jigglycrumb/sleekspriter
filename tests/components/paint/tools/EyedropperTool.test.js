@@ -1,4 +1,3 @@
-import React from "react";
 import EyedropperTool from "components/paint/tools/EyedropperTool";
 
 describe("EyedropperTool", () => {

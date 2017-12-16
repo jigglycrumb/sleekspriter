@@ -1,4 +1,3 @@
-import React from "react";
 import ScreenStart from "components/screens/ScreenStart";
 
 describe("ScreenStart", () => {

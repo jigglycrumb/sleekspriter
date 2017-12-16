@@ -1,4 +1,3 @@
-import React from "react";
 import RectangularSelectionTool from "components/paint/tools/RectangularSelectionTool";
 
 describe("RectangularSelectionTool", () => {

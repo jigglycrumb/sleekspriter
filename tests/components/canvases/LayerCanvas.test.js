@@ -1,4 +1,3 @@
-import React from "react";
 import { LayerCanvas } from "components/canvases/LayerCanvas";
 
 describe("LayerCanvas", () => {

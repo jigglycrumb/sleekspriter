@@ -1,4 +1,3 @@
-import React from "react";
 import LayerboxDrophelper from "components/paint/LayerboxDrophelper";
 
 describe("LayerboxDrophelper", () => {

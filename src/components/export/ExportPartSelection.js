@@ -1,16 +1,34 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { clamp } from "lodash";
 import { t } from "../../utils";
 
-const ExportPartSelection = ({ frame, part, totalFrames, setFrame, setPart }) => {
+const ExportPartSelection = ({
+  frame,
+  part,
+  totalFrames,
+  setFrame,
+  setPart
+}) => {
   const parts = [
-    { name: "spritesheet", el: t("Spritesheet as single image") },
-    { name: "oneframe", el:  <span>
-                              Frame&nbsp;
-                              <input type="number" value={frame} min={1} max={totalFrames} onChange={(e) => setFrame(clamp(+e.target.value, 1, totalFrames))} />
-                              &nbsp;/&nbsp;
-                              {totalFrames} as image
-                            </span> }
+    { part: "spritesheet", label: t("Spritesheet as single image") },
+    {
+      part: "frame",
+      label: (
+        <span>
+          {t("Frame")}&nbsp;
+          <input
+            type="number"
+            value={frame}
+            min={1}
+            max={totalFrames}
+            onChange={e => setFrame(clamp(+e.target.value, 1, totalFrames))}
+          />
+          &nbsp;/&nbsp;
+          {totalFrames} {t("as image")}
+        </span>
+      )
+    }
   ];
 
   return (
@@ -18,12 +36,17 @@ const ExportPartSelection = ({ frame, part, totalFrames, setFrame, setPart }) =>
       <h6>{t("Export")}</h6>
       <ul>
         {parts.map(function(p) {
-          var checked = p.name === part ? true : false;
           return (
-            <li key={p.name}>
+            <li key={p.part}>
               <label>
-                <input type="radio" name="export-part" value={p.name} checked={checked} onChange={(e) => setPart(e.target.value)} />
-                {p.el}
+                <input
+                  type="radio"
+                  name="export-part"
+                  value={p.part}
+                  checked={p.part === part}
+                  onChange={e => setPart(e.target.value)}
+                />
+                {p.label}
               </label>
             </li>
           );
@@ -31,6 +54,14 @@ const ExportPartSelection = ({ frame, part, totalFrames, setFrame, setPart }) =>
       </ul>
     </div>
   );
+};
+
+ExportPartSelection.propTypes = {
+  frame: PropTypes.number.isRequired,
+  part: PropTypes.string.isRequired,
+  totalFrames: PropTypes.number.isRequired,
+  setFrame: PropTypes.func.isRequired,
+  setPart: PropTypes.func.isRequired
 };
 
 export default ExportPartSelection;
