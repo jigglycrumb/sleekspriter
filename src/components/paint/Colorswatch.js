@@ -5,9 +5,10 @@ class Colorswatch extends React.Component {
     return (
       <div
         className="colorswatch"
-        style={{background: this.props.color}}
+        style={{ background: this.props.color }}
         title={this.props.color}
-        onClick={::this.handleClick} />
+        onClick={::this.handleClick}
+      />
     );
   }
 

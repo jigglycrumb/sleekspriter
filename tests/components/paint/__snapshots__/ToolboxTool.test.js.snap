@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToolboxTool should render correctly 1`] = `"<button id=\\"BrushTool\\" class=\\"ToolBoxTool transparent\\" title=\\"Brush Tool (b)\\"><i class=\\"flaticon-small23\\"></i></button>"`;
+
+exports[`ToolboxTool should render correctly when selected 1`] = `"<button id=\\"BrushTool\\" class=\\"ToolBoxTool transparent active\\" disabled=\\"\\" title=\\"Brush Tool (b)\\"><i class=\\"flaticon-small23\\"></i></button>"`;
