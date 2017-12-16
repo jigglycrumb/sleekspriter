@@ -1,3 +1,5 @@
+jest.unmock("utils");
+
 import { inArray } from "utils";
 
 describe("inArray", () => {

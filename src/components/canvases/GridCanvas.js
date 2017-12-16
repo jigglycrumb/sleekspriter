@@ -73,4 +73,5 @@ GridCanvas.propTypes = {
   rows: PropTypes.number.isRequired
 };
 
+export { GridCanvas };
 export default CanvasDecorator(GridCanvas);

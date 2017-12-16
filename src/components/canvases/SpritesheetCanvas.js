@@ -183,4 +183,5 @@ SpritesheetCanvas.propTypes = {
   zoom: PropTypes.number
 };
 
+export { SpritesheetCanvas };
 export default CanvasDecorator(SpritesheetCanvas);

@@ -47,3 +47,6 @@ globals:
   module: false
   require: false
   onmessage: false
+  shallow: false
+  render: false
+  mount: false

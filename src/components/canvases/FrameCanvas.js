@@ -43,6 +43,7 @@ class FrameCanvas extends React.Component {
   }
 
   componentDidUpdate() {
+    // console.log("FrameCanvas update!");
     this.paint();
   }
 
@@ -92,4 +93,5 @@ FrameCanvas.propTypes = {
   zoom: PropTypes.number
 };
 
+export { FrameCanvas };
 export default CanvasDecorator(FrameCanvas);

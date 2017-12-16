@@ -1,3 +1,5 @@
+jest.unmock("utils");
+
 import { insideBounds } from "utils";
 
 jest.mock("utils/selectionIsActive", () => jest.fn(() => true));
@@ -7,8 +9,8 @@ describe("insideBounds", () => {
     const point = { x: 3, y: 3 };
 
     const bounds = {
-      start: { x: 1, y: 1},
-      end: { x: 5, y: 5}
+      start: { x: 1, y: 1 },
+      end: { x: 5, y: 5 }
     };
 
     expect(insideBounds(bounds, point)).toBe(true);
@@ -18,8 +20,8 @@ describe("insideBounds", () => {
     const point = { x: 42, y: 23 };
 
     const bounds = {
-      start: { x: 1, y: 1},
-      end: { x: 5, y: 5}
+      start: { x: 1, y: 1 },
+      end: { x: 5, y: 5 }
     };
 
     expect(insideBounds(bounds, point)).toBe(false);

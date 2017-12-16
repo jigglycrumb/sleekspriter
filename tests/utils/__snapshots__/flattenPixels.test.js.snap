@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`creates an array of pixels from a layer JSON map 1`] = `
+exports[`flattenPixels creates an array of pixels from a layer JSON map 1`] = `
 Array [
   Pixel {
     "a": 1,

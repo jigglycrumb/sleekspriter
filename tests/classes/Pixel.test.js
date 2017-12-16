@@ -13,7 +13,7 @@ describe("Pixel", () => {
     expect(pixel.a).toBe(1);
   });
 
-  describe("#toHex", () => {
+  describe("toHex", () => {
     it("returns the CSS hex string for the pixels' color", () => {
       let pixel;
 

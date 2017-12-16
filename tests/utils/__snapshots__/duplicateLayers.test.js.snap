@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`duplicates given layers to a new frame 1`] = `
+exports[`duplicateLayers duplicates given layers to a new frame 1`] = `
 Array [
   Object {
     "frame": 2,

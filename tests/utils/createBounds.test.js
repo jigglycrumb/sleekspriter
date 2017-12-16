@@ -1,3 +1,5 @@
+jest.unmock("utils");
+
 import { createBounds } from "utils";
 
 describe("createBounds", () => {
@@ -18,10 +20,10 @@ describe("createBounds", () => {
   });
 
   it("should return the selection bounds a selection is active", () => {
-    const selection = { start: {x: 2, y: 2}, end: {x: 5, y: 6} };
+    const selection = { start: { x: 2, y: 2 }, end: { x: 5, y: 6 } };
     expect(createBounds(size, selection)).toEqual({
-      start: {x: 2, y: 2},
-      end: {x: 5, y: 6}
+      start: { x: 2, y: 2 },
+      end: { x: 5, y: 6 }
     });
   });
 

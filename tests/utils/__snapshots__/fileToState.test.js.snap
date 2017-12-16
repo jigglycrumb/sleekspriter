@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`maps JSON from file format to redux state 1`] = `
+exports[`fileToState maps JSON from file format to redux state 1`] = `
 Object {
   "frames": Object {
     "x": 7,

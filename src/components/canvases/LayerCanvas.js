@@ -47,8 +47,9 @@ class LayerCanvas extends React.Component {
   }
 
   paint() {
+    this.props.clear();
+
     if (undefined != this.props.pixels) {
-      this.props.clear();
       const xValues = Object.keys(this.props.pixels);
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
@@ -77,4 +78,5 @@ LayerCanvas.propTypes = {
   zoom: PropTypes.number
 };
 
+export { LayerCanvas };
 export default CanvasDecorator(LayerCanvas);

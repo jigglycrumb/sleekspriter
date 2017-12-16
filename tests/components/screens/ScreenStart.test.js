@@ -1,19 +1,37 @@
 import React from "react";
-import renderer from "react-test-renderer";
-
 import ScreenStart from "components/screens/ScreenStart";
 
-// use this to mock imports in the tested component
-// jest.mock('components/SampleComponent', () => 'SampleComponent');
+describe("ScreenStart", () => {
+  let props, wrapper;
+  beforeEach(() => {
+    props = {
+      modalShow: jest.fn()
+    };
 
-it("should render correctly", () => {
-  const props = {
-    modalShow: () => "Showing new file modal window"
-  };
+    wrapper = shallow(<ScreenStart {...props} />);
+  });
 
-  const component = renderer.create(
-    <ScreenStart {...props} />
-  );
+  it("should render correctly", () => {
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 
-  expect(component).toMatchSnapshot();
+  describe("newFile", () => {
+    it("shows new file modal window", () => {
+      wrapper
+        .find("a")
+        .at(0)
+        .simulate("click");
+      expect(props.modalShow).toBeCalledWith("ModalNewFile");
+    });
+  });
+
+  describe("openFile", () => {
+    it("shows load file modal window", () => {
+      wrapper
+        .find("a")
+        .at(1)
+        .simulate("click");
+      expect(props.modalShow).toBeCalledWith("ModalLoadFile");
+    });
+  });
 });

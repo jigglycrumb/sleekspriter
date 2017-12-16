@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`returns the pixels of a given frame 1`] = `
+exports[`getPixelsInFrame returns the pixels of a given frame 1`] = `
 Object {
   "1": Object {
     "1": Object {
