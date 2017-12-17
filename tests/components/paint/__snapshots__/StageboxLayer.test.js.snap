@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StageboxLayer should render correctly 1`] = `"<div id=\\"StageBoxLayer-1\\" class=\\"Layer\\" style=\\"z-index:1;opacity:1;display:block;\\"><canvas width=\\"320\\" height=\\"320\\" style=\\"width:320px;height:320px;\\"></canvas></div>"`;

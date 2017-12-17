@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { LayerCanvas } from "../canvases";
 
 class StageboxLayer extends React.Component {
@@ -25,5 +26,12 @@ class StageboxLayer extends React.Component {
     );
   }
 }
+
+StageboxLayer.propTypes = {
+  layer: PropTypes.object.isRequired,
+  size: PropTypes.object.isRequired,
+  zoom: PropTypes.number.isRequired,
+  pixels: PropTypes.object
+};
 
 export default StageboxLayer;

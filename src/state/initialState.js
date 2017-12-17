@@ -22,7 +22,7 @@ const state = {
   },
   ui: {
     app: {
-      screen: "export",
+      screen: "paint",
       modal: {
         visible: false,
         dialog: null
