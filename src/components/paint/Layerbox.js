@@ -80,11 +80,14 @@ class Layerbox extends React.Component {
   }
 
   fitHeight() {
-    const height =
+    let height =
       document.querySelector(".area.right").clientHeight -
       document.getElementById("PreviewBox").clientHeight -
-      document.getElementById("FrameBox").clientHeight -
       46;
+
+    if (document.getElementById("FrameBox")) {
+      height -= document.getElementById("FrameBox").clientHeight;
+    }
 
     this.layerList.style.height = height + "px";
   }
