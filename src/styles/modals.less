@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   z-index: 3;
-  background: rgba(0,0,0,.25);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,7 +65,7 @@
       display: inline-block;
     }
 
-    input[type=number] {
+    input[type="number"] {
       position: relative;
       top: 1px;
       margin: 0 5px;
@@ -160,20 +160,19 @@
   }
 } // #Modal
 
-
 #ScreenBlocker {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .75);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 4;
   text-align: center;
   transform-style: preserve-3d;
   display: none;
 
-  &>div {
+  & > div {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -181,6 +180,10 @@
 }
 
 @keyframes credits {
-    0% { top:  100%; }
-  100% { top: -500%; }
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: -600%;
+  }
 }
