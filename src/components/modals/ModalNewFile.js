@@ -22,7 +22,16 @@ const mapDispatchToProps = dispatch => {
 class ModalNewFile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { frames, size };
+    this.state = {
+      frames: {
+        x: 1,
+        y: 1,
+      },
+      size: {
+        width: 16,
+        height: 16,
+      },
+    };
 
     this.updateState = this.updateState.bind(this);
     this.fileCreate = this.fileCreate.bind(this);
