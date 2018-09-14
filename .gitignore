@@ -1,6 +1,7 @@
 build
 dist
-docs/app
+docs/app/*
+!docs/app/*.gitkeep
 node_modules
 npm-debug.log
 release
