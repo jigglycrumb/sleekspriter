@@ -45,13 +45,17 @@ class ModalLoadFile extends React.Component {
 
   loadFile() {
     const input = this.jsonInput.value.toString();
-    const bytes = AES.decrypt(input, fileEncryptionSecret);
 
     let json = false;
     try {
-      json = JSON.parse(bytes.toString(enc.Utf8));
+      json = JSON.parse(input);
     } catch (e) {
-      console.warn("invalid file");
+      try {
+        const bytes = AES.decrypt(input, fileEncryptionSecret);
+        json = JSON.parse(bytes.toString(enc.Utf8));
+      } catch (e) {
+        console.error("Invalid file");
+      }
     }
 
     if (json) {
