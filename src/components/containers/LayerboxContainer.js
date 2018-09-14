@@ -5,6 +5,7 @@ import {
   getFileSize,
   getFold,
   getFrameLayersZSorted,
+  getNewLayerId,
   getPaintFrame,
   getPaintLayerId,
 } from "../../state/selectors";
@@ -26,12 +27,14 @@ const mapStateToProps = state => ({
   frame: getPaintFrame(state),
   selected: getPaintLayerId(state),
   layers: getFrameLayersZSorted(state),
+  newLayerId: getNewLayerId(state),
   pixels: getFilePixels(state),
   size: getFileSize(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  layerAdd: (frame, layer, layers) => dispatch(layerAdd(frame, layer, layers)),
+  layerAdd: (newLayerId, frame, layer, layers) =>
+    dispatch(layerAdd(newLayerId, frame, layer, layers)),
   layerMoveDown: (frame, layer, z) => dispatch(layerMoveDown(frame, layer, z)),
   layerMoveUp: (frame, layer, z) => dispatch(layerMoveUp(frame, layer, z)),
   layerName: (layer, name) => dispatch(layerName(layer, name)),

@@ -69,6 +69,10 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "GRID_TOGGLE":
       return { ...state, grid: !state.grid };
 
+    case "LAYER_ADD": {
+      return { ...state, layer: action.newLayerId };
+    }
+
     case "LAYER_DELETE": {
       const { allPixels, frame, layer } = action;
       let pixels = _.cloneDeep(allPixels);

@@ -78,12 +78,8 @@ class Layerbox extends React.Component {
   }
 
   layerAdd() {
-    this.props.layerAdd(
-      this.props.frame,
-      this.props.selected,
-      this.props.layers
-    );
-    // TODO: select newly added layer
+    const { layerAdd, newLayerId, frame, selected, layers } = this.props;
+    layerAdd(newLayerId, frame, selected, layers);
   }
 
   fitHeight() {

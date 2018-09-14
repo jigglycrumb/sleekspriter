@@ -41,11 +41,10 @@ function fileLayersReducer(state = initialState.file.present.layers, action) {
       const stateCopy = copyState(state),
         newZIndex =
           action.layers.find(layer => layer.id === action.layer).z + 1,
-        newId = _.maxBy(stateCopy, layer => layer.id).id + 1,
         newLayer = {
           frame: action.frame,
-          id: newId,
-          name: `Layer ${newId}`,
+          id: action.newLayerId,
+          name: `Layer ${action.newLayerId}`,
           z: newZIndex,
           opacity: 100,
           visible: true,

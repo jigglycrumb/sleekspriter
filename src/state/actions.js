@@ -71,8 +71,9 @@ export const frameRotate = (frame, pixels, angle, pivot, size) => ({
 });
 export const frameSelect = frame => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
-export const layerAdd = (frame, layer, layers) => ({
+export const layerAdd = (newLayerId, frame, layer, layers) => ({
   type: "LAYER_ADD",
+  newLayerId,
   frame,
   layer,
   layers,
