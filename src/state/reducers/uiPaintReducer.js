@@ -84,7 +84,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       pixels = mergeLayerPixels(frame, first, second, pixels);
 
       const spritePalette = _.uniq(flattenPixels(pixels).map(p => p.toHex()));
-      return { ...state, spritePalette };
+      return { ...state, spritePalette, layer: null };
     }
 
     case "LAYER_SELECT":

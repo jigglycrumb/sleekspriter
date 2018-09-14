@@ -95,7 +95,6 @@ class Framebox extends React.Component {
 
   frameSelect(e) {
     this.props.frameSelect(e.target.value);
-    // TODO: Select top layer after frame change
   }
 
   toggleOnion() {

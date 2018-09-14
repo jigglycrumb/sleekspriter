@@ -6,14 +6,14 @@ import {
   getPixelsInFrame,
   getPixelsInScope,
   getPivot,
-  inArray
+  inArray,
 } from "../../utils";
 
 const SEPERATOR = { label: "---" };
 
 class Menu extends React.Component {
   state = {
-    fullscreen: false
+    fullscreen: false,
   };
 
   render() {
@@ -24,7 +24,7 @@ class Menu extends React.Component {
       layers,
       pixels,
       selection,
-      size
+      size,
     } = this.props;
 
     let fullscreenLabel = "Enter fullscreen mode";
@@ -41,11 +41,11 @@ class Menu extends React.Component {
             label: "About @@name",
             action: () => {
               this.props.modalShow("ModalAbout");
-            }
-          }
+            },
+          },
           // SEPERATOR,
           // {label: "Quit @@name"}, // TODO: Desktop only
-        ]
+        ],
       },
       {
         label: "File",
@@ -55,26 +55,26 @@ class Menu extends React.Component {
             label: "New…",
             action: () => {
               this.props.modalShow("ModalNewFile");
-            }
+            },
           },
           {
             label: "Open…",
             action: () => {
               this.props.modalShow("ModalLoadFile");
-            }
+            },
           }, // TODO: show modal only in browser
           {
             label: "Save",
             action: () => {
               this.props.modalShow("ModalSaveFile");
-            }
+            },
           }, // TODO: show modal only in browser
           // {label: "Save as…"}, // TODO: Desktop only
           {
             label: "Import…",
             action: () => {
               this.props.modalShow("ModalImportFile");
-            }
+            },
           },
           SEPERATOR,
           {
@@ -82,9 +82,9 @@ class Menu extends React.Component {
             action: () => {
               this.props.modalShow("ModalSaveFile"); // TODO: show modal only in browser
               this.props.screenSelect("start");
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         label: "Edit",
@@ -100,7 +100,7 @@ class Menu extends React.Component {
                 selection
               );
               this.props.pixelsCut(frame, layer, scopedPixels, pixels);
-            }
+            },
           },
           {
             label: "Copy",
@@ -112,13 +112,13 @@ class Menu extends React.Component {
                 selection
               );
               this.props.pixelsCopy(frame, layer, scopedPixels);
-            }
+            },
           },
           {
             label: "Paste",
             action: () => {
               this.props.pixelsPaste(frame, layer, clipboard);
-            }
+            },
           },
           {
             label: "Delete",
@@ -130,7 +130,7 @@ class Menu extends React.Component {
                 selection
               );
               this.props.pixelsDelete(frame, layer, scopedPixels, pixels);
-            }
+            },
           },
           SEPERATOR,
           {
@@ -151,7 +151,7 @@ class Menu extends React.Component {
                 pivot,
                 size
               );
-            }
+            },
           },
           {
             label: "Rotate 90° CW",
@@ -171,7 +171,7 @@ class Menu extends React.Component {
                 pivot,
                 size
               );
-            }
+            },
           },
           {
             label: "Rotate 90° CCW",
@@ -191,7 +191,7 @@ class Menu extends React.Component {
                 pivot,
                 size
               );
-            }
+            },
           },
           SEPERATOR,
           {
@@ -211,7 +211,7 @@ class Menu extends React.Component {
                 pivot,
                 size
               );
-            }
+            },
           },
           {
             label: "Flip Vertical",
@@ -230,17 +230,17 @@ class Menu extends React.Component {
                 pivot,
                 size
               );
-            }
+            },
           },
           SEPERATOR,
           {
             label: "Replace color…",
             action: () => {
               this.props.modalShow("ModalReplaceColor");
-            }
-          }
+            },
+          },
           // {label: "Image size…", action: () => { this.props.modalShow("ModalEditImageSize"); }}
-        ]
+        ],
       },
       {
         label: "Select",
@@ -251,10 +251,10 @@ class Menu extends React.Component {
             action: () => {
               this.props.selectionStart({ x: 1, y: 1 });
               this.props.selectionEnd({ x: size.width, y: size.height });
-            }
+            },
           },
-          { label: "Deselect", action: this.props.selectionClear }
-        ]
+          { label: "Deselect", action: this.props.selectionClear },
+        ],
       },
       {
         label: "Layer",
@@ -268,9 +268,8 @@ class Menu extends React.Component {
               if (layers[index - 1]) {
                 layerAbove = layers[index - 1].id;
                 this.props.layerMerge(frame, layerAbove, layer, pixels);
-                setTimeout(() => this.props.layerSelectTop(layers), 100); // TODO: find a more reliable solution
               }
-            }
+            },
           },
           {
             label: "Merge with layer below",
@@ -280,11 +279,10 @@ class Menu extends React.Component {
               if (layers[index + 1]) {
                 layerBelow = layers[index + 1].id;
                 this.props.layerMerge(frame, layer, layerBelow, pixels);
-                setTimeout(() => this.props.layerSelectTop(layers), 100); // TODO: find a more reliable solution
               }
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         label: "Frame",
@@ -296,7 +294,7 @@ class Menu extends React.Component {
               const framePixels = getPixelsInFrame(frame, pixels);
               const pivot = getPivot(size);
               this.props.frameRotate(frame, framePixels, 180, pivot, size);
-            }
+            },
           },
           {
             label: "Rotate 90° CW",
@@ -304,7 +302,7 @@ class Menu extends React.Component {
               const framePixels = getPixelsInFrame(frame, pixels);
               const pivot = getPivot(size);
               this.props.frameRotate(frame, framePixels, 90, pivot, size);
-            }
+            },
           },
           {
             label: "Rotate 90° CCW",
@@ -312,7 +310,7 @@ class Menu extends React.Component {
               const framePixels = getPixelsInFrame(frame, pixels);
               const pivot = getPivot(size);
               this.props.frameRotate(frame, framePixels, -90, pivot, size);
-            }
+            },
           },
           SEPERATOR,
           {
@@ -321,7 +319,7 @@ class Menu extends React.Component {
               const framePixels = getPixelsInFrame(frame, pixels);
               const pivot = getPivot(size);
               this.props.frameFlipHorizontal(frame, framePixels, pivot, size);
-            }
+            },
           },
           {
             label: "Flip Vertical",
@@ -329,16 +327,16 @@ class Menu extends React.Component {
               const framePixels = getPixelsInFrame(frame, pixels);
               const pivot = getPivot(size);
               this.props.frameFlipVertical(frame, framePixels, pivot, size);
-            }
+            },
           },
           SEPERATOR,
           {
             label: "Duplicate…",
             action: () => {
               this.props.modalShow("ModalDuplicateFrame");
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         label: "Window",
@@ -348,13 +346,13 @@ class Menu extends React.Component {
             label: "Paint",
             action: () => {
               this.props.screenSelect("paint");
-            }
+            },
           },
           {
             label: "Export",
             action: () => {
               this.props.screenSelect("export");
-            }
+            },
           },
           {
             label: fullscreenLabel,
@@ -367,10 +365,10 @@ class Menu extends React.Component {
                 document.webkitExitFullscreen();
                 this.setState({ fullscreen: false });
               }
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ];
 
     return (
@@ -378,7 +376,7 @@ class Menu extends React.Component {
         <ul>
           {MenuConfig.map((item, index) => {
             const cssClasses = {
-              disabled: !inArray(item.screen, this.props.screen)
+              disabled: !inArray(item.screen, this.props.screen),
             };
 
             return (
