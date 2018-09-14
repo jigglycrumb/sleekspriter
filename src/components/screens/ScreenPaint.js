@@ -20,25 +20,33 @@ class ScreenPaint extends React.Component {
       referenceImage: null,
       referenceImageDataURL: null,
     };
+
+    this.handleDrop = this.handleDrop.bind(this);
+    this.removeReferenceImage = this.removeReferenceImage.bind(this);
   }
 
   render() {
-    const framebox = this.props.totalFrames == 1
-                   ? null
-                   : <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
-                       <FrameboxContainer />
-                     </FoldableBox>;
+    const framebox =
+      this.props.totalFrames == 1 ? null : (
+        <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
+          <FrameboxContainer />
+        </FoldableBox>
+      );
 
-    const referenceImage = this.state.referenceImageDataURL === null
-                         ? null
-                         : <ReferenceImage
-                              image={this.state.referenceImage}
-                              imageData={this.state.referenceImageDataURL}
-                              removeHandler={::this.removeReferenceImage}
-                            />;
+    const referenceImage =
+      this.state.referenceImageDataURL === null ? null : (
+        <ReferenceImage
+          image={this.state.referenceImage}
+          imageData={this.state.referenceImageDataURL}
+          removeHandler={this.removeReferenceImage}
+        />
+      );
 
     return (
-      <section className="screen paint" onDragOver={this.cancel} onDrop={::this.handleDrop}>
+      <section
+        className="screen paint"
+        onDragOver={this.cancel}
+        onDrop={this.handleDrop}>
         <div className="area top">
           <ToolContainer />
         </div>
@@ -48,7 +56,9 @@ class ScreenPaint extends React.Component {
         </div>
         <div className="area center">
           <div>
-            <StageboxContainer image={this.state.referenceImage === null ? false : true} />
+            <StageboxContainer
+              image={this.state.referenceImage === null ? false : true}
+            />
             {referenceImage}
           </div>
         </div>
@@ -69,7 +79,7 @@ class ScreenPaint extends React.Component {
   }
 
   removeReferenceImage() {
-    this.setState({referenceImage: null, referenceImageDataURL: null});
+    this.setState({ referenceImage: null, referenceImageDataURL: null });
   }
 
   cancel(e) {
@@ -80,9 +90,8 @@ class ScreenPaint extends React.Component {
   handleDrop(e) {
     this.cancel(e);
 
-    if(e.dataTransfer.files.length >= 1) {
-      const
-        self = this,
+    if (e.dataTransfer.files.length >= 1) {
+      const self = this,
         file = e.dataTransfer.files[0],
         allowed = {
           "image/jpeg": true,
@@ -90,11 +99,14 @@ class ScreenPaint extends React.Component {
           "image/png": true,
         };
 
-      if(file.type in allowed) {
+      if (file.type in allowed) {
         let reader = new FileReader();
         reader.onload = (function() {
           return function(e) {
-            self.setState({referenceImage: file, referenceImageDataURL: e.target.result});
+            self.setState({
+              referenceImage: file,
+              referenceImageDataURL: e.target.result,
+            });
           };
         })(file);
 

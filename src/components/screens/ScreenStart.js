@@ -2,6 +2,13 @@ import React from "react";
 import { t } from "../../utils";
 
 class ScreenStart extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.newFile = this.newFile.bind(this);
+    this.openFile = this.openFile.bind(this);
+  }
+
   render() {
     return (
       <section className="screen start">
@@ -9,8 +16,8 @@ class ScreenStart extends React.Component {
           <div className="inner">
             <div className="logo">@@name</div>
             <ul>
-              <li><a onClick={::this.newFile}>{t("New file")}</a></li>
-              <li><a onClick={::this.openFile}>{t("Open file")}</a></li>
+              <li><a onClick={this.newFile}>{t("New file")}</a></li>
+              <li><a onClick={this.openFile}>{t("Open file")}</a></li>
             </ul>
           </div>
         </div>

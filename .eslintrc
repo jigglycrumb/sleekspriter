@@ -4,7 +4,7 @@
     "es6": true,
     "jest/globals": true
   },
-  "extends": "eslint:recommended",
+  "extends": "semistandard",
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -25,8 +25,29 @@
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
     "jest/valid-expect": "error",
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-no-undef": 2,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-danger": 2,
+    "react/no-deprecated": 2,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-direct-mutation-state": 2,
+    "react/no-is-mounted": 2,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/react-in-jsx-scope": 2,
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "never"
+      }
+    ]
   },
   "globals": {
     "__dirname": false,

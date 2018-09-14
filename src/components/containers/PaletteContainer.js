@@ -3,37 +3,34 @@ import { connect } from "react-redux";
 import palettes from "../../json/palettes";
 import PalettePicker from "../paint/PalettePicker";
 import Palette from "../paint/Palette";
-import {
-  brushColor,
-  paletteSelect,
-} from "../../state/actions";
+import { brushColor, paletteSelect } from "../../state/actions";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   spritePalette: state.ui.paint.spritePalette,
-  selected: state.ui.paint.palette,
+  selected: state.ui.paint.palette
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  paletteSelect: (palette) => dispatch(paletteSelect(palette)),
-  brushColor: (color) => dispatch(brushColor(color)),
+const mapDispatchToProps = dispatch => ({
+  paletteSelect: palette => dispatch(paletteSelect(palette)),
+  brushColor: color => dispatch(brushColor(color))
 });
 
-const PaletteContainer = (props) => {
-  const
-    { selected, spritePalette, brushColor, paletteSelect } = props,
+const PaletteContainer = props => {
+  const { selected, spritePalette, brushColor, paletteSelect } = props,
     palette = palettes[selected];
 
-  if(selected === 0) palette.colors = spritePalette;
+  if (selected === 0) palette.colors = spritePalette;
 
   return (
     <div className="palette">
-      <PalettePicker palettes={palettes} palette={palette} paletteSelect={paletteSelect} />
-      <Palette colors={palette.colors} brushColor={brushColor} />
+      <PalettePicker
+        palettes={palettes}
+        palette={palette}
+        paletteSelect={paletteSelect}
+      />
+      <Palette colors={palette.colors} action={brushColor} />
     </div>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaletteContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PaletteContainer);

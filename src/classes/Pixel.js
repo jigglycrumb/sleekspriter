@@ -14,7 +14,6 @@ class Pixel extends Point {
    * @param {Number} a - pixel alpha value (0-1)
    */
   constructor(frame, layer, x, y, r, g, b, a) {
-
     super(x, y);
 
     this.frame = frame;
@@ -34,11 +33,27 @@ class Pixel extends Point {
    * @return {String} The hex string
    */
   toHex() {
-    const pad = (s) => {
+    const pad = s => {
       return (s.length === 1 ? `0${s}` : s).toUpperCase();
     };
 
-    return `#${pad(this.r.toString(16))}${pad(this.g.toString(16))}${pad(this.b.toString(16))}`;
+    return `#${pad(this.r.toString(16))}${pad(this.g.toString(16))}${pad(
+      this.b.toString(16)
+    )}`;
+  }
+
+  /**
+   * Sets the pixels color
+   * @param {String} color The new color in hex format
+   * @return {Pixel} The updated pixel
+   */
+  setColor(color) {
+    if (color.startsWith("#")) {
+      this.r = parseInt(color.substr(1, 2), 16);
+      this.g = parseInt(color.substr(3, 2), 16);
+      this.b = parseInt(color.substr(5, 2), 16);
+    }
+    return this;
   }
 }
 

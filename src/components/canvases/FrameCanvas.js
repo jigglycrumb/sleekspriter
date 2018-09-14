@@ -19,7 +19,7 @@ class FrameCanvas extends React.Component {
       height = this.props.size.height * this.props.zoom;
       style = {
         width: width,
-        height: height
+        height: height,
       };
     } else {
       const fitted = this.props.fitToSize(this.props.maxSize, this.hasNoMargin);
@@ -86,11 +86,11 @@ class FrameCanvas extends React.Component {
 FrameCanvas.propTypes = {
   background: PropTypes.string,
   frame: PropTypes.number.isRequired,
-  layers: PropTypes.array.isRequired,
+  layers: PropTypes.array,
   maxSize: PropTypes.number,
   noMargin: PropTypes.bool,
   size: PropTypes.object.isRequired, // { width: x, height: y }
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
 };
 
 export { FrameCanvas };

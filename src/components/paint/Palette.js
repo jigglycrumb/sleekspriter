@@ -26,7 +26,8 @@ class Palette extends React.Component {
                 <Colorswatch
                   key={color}
                   color={color}
-                  action={::this.props.brushColor}
+                  action={::this.props.action}
+                  selected={color === this.props.selected}
                 />
               );
             }, this)}

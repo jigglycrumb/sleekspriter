@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FrameCanvas should render correctly 1`] = `"<canvas width=\\"640\\" height=\\"640\\" style=\\"width:640px;height:640px;\\"></canvas>"`;
+exports[`FrameCanvas should render correctly 1`] = `"<canvas width=\\"640\\" height=\\"640\\" style=\\"width:640px;height:640px\\"></canvas>"`;

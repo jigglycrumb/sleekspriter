@@ -5,6 +5,7 @@ export ModalEditImageSize from "./ModalEditImageSize";
 export ModalErrorInvisibleLayer from "./ModalErrorInvisibleLayer";
 export ModalImportFile from "./ModalImportFile";
 export ModalNewFile from "./ModalNewFile";
+export ModalReplaceColor from "./ModalReplaceColor";
 
 // Temporary
 // TODO: Put this only into browser bundle

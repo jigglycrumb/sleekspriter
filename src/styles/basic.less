@@ -1,5 +1,6 @@
 // tame flaticon
-[class^="flaticon-"], [class*=" flaticon-"] {
+[class^="flaticon-"],
+[class*=" flaticon-"] {
   font-family: Flaticon;
   font-style: normal;
   display: inline-block;
@@ -7,8 +8,10 @@
   width: 1em;
 }
 
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+[class^="flaticon-"]:before,
+[class*=" flaticon-"]:before,
+[class^="flaticon-"]:after,
+[class*=" flaticon-"]:after {
   font-size: inherit;
   font-style: normal;
   margin-left: inherit;
@@ -16,18 +19,18 @@
 
 .flaticon-little9:before,
 .flaticon-hand118:before {
-  font-size: .6em;
+  font-size: 0.6em;
 }
 
 .flaticon-paint2:before,
 .flaticon-selection7:before {
   position: relative;
-  left: .25em;
+  left: 0.25em;
 }
 
 .flaticon-plus25:before,
 .flaticon-minus18:before {
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .icon-checkmark {
@@ -87,7 +90,8 @@ h4 {
   .gradient;
 }
 
-h5, h6 {
+h5,
+h6 {
   margin: 0;
   padding: 12px 10px;
   font-size: 1em;
@@ -173,8 +177,8 @@ input {
   -webkit-user-select: text;
 }
 
-input[type=text],
-input[type=number] {
+input[type="text"],
+input[type="number"] {
   background: #3a3a3a;
   .inset-shadow;
   border-top: none;
@@ -187,18 +191,18 @@ input[type=number] {
   outline: none;
 }
 
-input[type=text][disabled],
-input[type=number][disabled] {
+input[type="text"][disabled],
+input[type="number"][disabled] {
   color: @light;
   -webkit-user-select: none;
 }
 
-input[type=number] {
+input[type="number"] {
   text-align: right;
   width: 3.2em;
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
   outline: none;
   height: 8px;
@@ -208,7 +212,7 @@ input[type=range] {
   .gradient;
 }
 
-input[type=range]::-webkit-slider-thumb{
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none !important;
   width: 11px;
   height: 11px;
@@ -219,7 +223,7 @@ input[type=range]::-webkit-slider-thumb{
   background: lighten(@light, 10%);
 }
 
-input[type=color] {
+input[type="color"] {
   border: none;
   outline: none;
   cursor: pointer;
@@ -280,7 +284,8 @@ ul {
   height: 100%;
   overflow: hidden;
 
-  &.debug, &.helper {
+  &.debug,
+  &.helper {
     display: none;
   }
 }
@@ -315,6 +320,7 @@ ul {
   width: 24px;
   height: 24px;
   border: 1px solid #777777;
+  display: inline-block;
 }
 
 .hint {
@@ -333,7 +339,7 @@ ul {
     left: 4px;
     color: darken(@font-color, 20%);
     .icon-arrow-down;
-    font-size: .6em;
+    font-size: 0.6em;
   }
 
   &.folded:before {
@@ -411,7 +417,6 @@ ul {
 .hidden {
   display: none;
 }
-
 
 .GridCanvas {
   position: absolute;

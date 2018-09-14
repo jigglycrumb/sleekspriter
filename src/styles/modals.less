@@ -55,6 +55,20 @@
   .text {
     margin: 10px;
 
+    ul.horizontal {
+      display: flex;
+      flex-direction: row;
+
+      label {
+        width: auto;
+        margin-right: 15px;
+      }
+
+      input[type="radio"] {
+        margin-right: 5px;
+      }
+    }
+
     li {
       line-height: 200%;
     }
@@ -156,6 +170,33 @@
       color: @font-color;
       text-decoration: none;
       border-bottom: 1px dotted @font-color;
+    }
+  }
+
+  .modal-replace-color {
+    .from,
+    .to {
+      position: relative;
+
+      .color-picker {
+        left: 32px;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+      }
+
+      .colorswatch {
+        margin-right: 2px;
+
+        &.selected {
+          border: 2px solid @selected-frame;
+          box-shadow: 0 0 1px 0 @selected-frame;
+          position: relative;
+          top: 1px;
+          left: -1px;
+          margin-right: 0px;
+        }
+      }
     }
   }
 } // #Modal

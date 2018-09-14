@@ -1,22 +1,24 @@
 import ColorSwatch from "components/paint/ColorSwatch";
 
 describe("ColorSwatch", () => {
+  const props = {
+    color: "#ff0000",
+    action: jest.fn(),
+  };
+
   it("should render correctly", () => {
-    const wrapper = shallow(<ColorSwatch />);
+    const wrapper = shallow(<ColorSwatch {...props} />);
     expect(wrapper.html()).toMatchSnapshot();
   });
 
   it("should render with a background color", () => {
-    const wrapper = shallow(<ColorSwatch color="#ff0000" />);
+    const wrapper = shallow(<ColorSwatch {...props} />);
     expect(wrapper.html()).toMatchSnapshot();
   });
 
   it("should call an action handler with its color on click", () => {
-    const clickHandler = jest.fn();
-    const wrapper = shallow(
-      <ColorSwatch color="#ff0000" action={clickHandler} />
-    );
+    const wrapper = shallow(<ColorSwatch {...props} />);
     wrapper.find(".colorswatch").simulate("click");
-    expect(clickHandler).toBeCalledWith("#ff0000");
+    expect(props.action).toBeCalledWith(props.color);
   });
 });
