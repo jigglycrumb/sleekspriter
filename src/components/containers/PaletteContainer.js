@@ -4,15 +4,16 @@ import palettes from "../../json/palettes";
 import PalettePicker from "../paint/PalettePicker";
 import Palette from "../paint/Palette";
 import { brushColor, paletteSelect } from "../../state/actions";
+import { getPalette, getSpritePalette } from "../../state/selectors";
 
 const mapStateToProps = state => ({
-  spritePalette: state.ui.paint.spritePalette,
-  selected: state.ui.paint.palette
+  spritePalette: getSpritePalette(state),
+  selected: getPalette(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   paletteSelect: palette => dispatch(paletteSelect(palette)),
-  brushColor: color => dispatch(brushColor(color))
+  brushColor: color => dispatch(brushColor(color)),
 });
 
 const PaletteContainer = props => {
@@ -33,4 +34,7 @@ const PaletteContainer = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaletteContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaletteContainer);

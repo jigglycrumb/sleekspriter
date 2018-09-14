@@ -2,11 +2,13 @@ import { connect } from "react-redux";
 import { Hotkeys } from "../../classes";
 import App from "../common/App";
 
-const mapStateToProps = (state) => ({
-  screen: state.ui.app.screen,
+import { getScreen } from "../../state/selectors";
+
+const mapStateToProps = state => ({
+  screen: getScreen(state),
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   Hotkeys.init(dispatch);
   return {};
 };

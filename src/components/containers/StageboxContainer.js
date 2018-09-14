@@ -12,30 +12,39 @@ import {
   selectionMove,
   selectionStart,
   toolSelect,
-  zoomIn
+  zoomIn,
 } from "../../state/actions";
 
 import {
+  getBrightnessTool,
+  getBrushColor,
   getFilePixels,
   getFileSize,
   getFrameLayersZSorted,
-  getOnionFrameAbsolute
+  getGrid,
+  getOnion,
+  getOnionFrameAbsolute,
+  getPaintFrame,
+  getPaintLayerId,
+  getSelection,
+  getTool,
+  getZoom,
 } from "../../state/selectors";
 
 const mapStateToProps = state => ({
-  brightnessTool: state.ui.paint.brightnessTool,
-  color: state.ui.paint.color,
-  frame: state.ui.paint.frame,
-  grid: state.ui.paint.grid,
-  layer: state.ui.paint.layer,
+  brightnessTool: getBrightnessTool(state),
+  color: getBrushColor(state),
+  frame: getPaintFrame(state),
+  grid: getGrid(state),
+  layer: getPaintLayerId(state),
   layers: getFrameLayersZSorted(state),
-  onion: state.ui.paint.onion.active,
+  onion: getOnion(state).active,
   onionFrameAbsolute: getOnionFrameAbsolute(state),
   pixels: getFilePixels(state),
-  selection: state.ui.paint.selection,
+  selection: getSelection(state),
   size: getFileSize(state),
-  tool: state.ui.paint.tool,
-  zoom: state.ui.paint.zoom
+  tool: getTool(state),
+  zoom: getZoom(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -52,7 +61,10 @@ const mapDispatchToProps = dispatch => ({
   selectionMove: distance => dispatch(selectionMove(distance)),
   selectionStart: point => dispatch(selectionStart(point)),
   toolSelect: tool => dispatch(toolSelect(tool)),
-  zoomIn: () => dispatch(zoomIn())
+  zoomIn: () => dispatch(zoomIn()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stagebox);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Stagebox);

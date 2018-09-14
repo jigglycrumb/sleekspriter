@@ -5,8 +5,10 @@ import {
   getFileLayers,
   getFilePixels,
   getFileSize,
+  getOnion,
   getOnionFrameAbsolute,
-  getTotalFrames
+  getPaintFrame,
+  getTotalFrames,
 } from "../../state/selectors";
 
 import {
@@ -16,21 +18,21 @@ import {
   onionToggle,
 } from "../../state/actions";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   frames: getFileFrames(state),
   layers: getFileLayers(state),
-  selected: state.ui.paint.frame,
-  onion: state.ui.paint.onion,
+  selected: getPaintFrame(state),
+  onion: getOnion(state),
   onionFrameAbsolute: getOnionFrameAbsolute(state),
   pixels: getFilePixels(state),
   size: getFileSize(state),
   totalFrames: getTotalFrames(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  frameSelect: (frame) => dispatch(frameSelect(frame)),
+const mapDispatchToProps = dispatch => ({
+  frameSelect: frame => dispatch(frameSelect(frame)),
   onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
-  onionMode: (mode) => dispatch(onionMode(mode)),
+  onionMode: mode => dispatch(onionMode(mode)),
   onionToggle: () => dispatch(onionToggle()),
 });
 

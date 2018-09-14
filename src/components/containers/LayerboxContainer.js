@@ -4,7 +4,9 @@ import {
   getFilePixels,
   getFileSize,
   getFold,
-  getFrameLayersZSorted
+  getFrameLayersZSorted,
+  getPaintFrame,
+  getPaintLayerId,
 } from "../../state/selectors";
 
 import {
@@ -16,16 +18,16 @@ import {
   layerSelect,
   layerSelectTop,
   layerVisibility,
-  modalShow
+  modalShow,
 } from "../../state/actions";
 
 const mapStateToProps = state => ({
   fold: getFold(state),
-  frame: state.ui.paint.frame,
-  selected: state.ui.paint.layer,
+  frame: getPaintFrame(state),
+  selected: getPaintLayerId(state),
   layers: getFrameLayersZSorted(state),
   pixels: getFilePixels(state),
-  size: getFileSize(state)
+  size: getFileSize(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -38,7 +40,10 @@ const mapDispatchToProps = dispatch => ({
   layerSelectTop: layers => dispatch(layerSelectTop(layers)),
   layerVisibility: (layer, visible) =>
     dispatch(layerVisibility(layer, visible)),
-  modalShow: modal => dispatch(modalShow(modal))
+  modalShow: modal => dispatch(modalShow(modal)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layerbox);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layerbox);
