@@ -1,4 +1,4 @@
-// state input selectors for the memoized reselect selectors
+// state input selectors
 export const getFileFrames = state => state.file.present.frames;
 export const getFileLayers = state => state.file.present.layers;
 export const getFilePixels = state => state.file.present.pixels;
