@@ -170,7 +170,4 @@ class ModalReplaceColor extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalReplaceColor);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalReplaceColor);

@@ -6,7 +6,7 @@ import uiPaintReducer from "./uiPaintReducer";
 const uiReducer = combineReducers({
   app: uiAppReducer,
   export: uiExportReducer,
-  paint: uiPaintReducer
+  paint: uiPaintReducer,
 });
 
 export default uiReducer;

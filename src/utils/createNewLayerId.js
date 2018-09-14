@@ -1,6 +1,6 @@
 import { maxBy } from "lodash";
 
-const createNewLayerId = (layers) => {
+const createNewLayerId = layers => {
   return maxBy(layers, "id").id + 1;
 };
 

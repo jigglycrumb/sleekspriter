@@ -12,12 +12,12 @@ const ExportZoomSelection = ({ frames, part, size, zoom, setZoom }) => {
       <i>
         {t("Frame size: ${w}x${h} pixels", {
           w: size.width * zoom,
-          h: size.height * zoom
+          h: size.height * zoom,
         })}
         <br />
         {t("Spritesheet size: ${w}x${h} pixels", {
           w: size.width * frames.x * zoom,
-          h: size.height * frames.y * zoom
+          h: size.height * frames.y * zoom,
         })}
         <br />
       </i>
@@ -27,7 +27,7 @@ const ExportZoomSelection = ({ frames, part, size, zoom, setZoom }) => {
       <i>
         {t("Image size: ${w}x${h} pixels", {
           w: size.width * zoom,
-          h: size.height * zoom
+          h: size.height * zoom,
         })}
       </i>
     );
@@ -63,7 +63,7 @@ ExportZoomSelection.propTypes = {
   part: PropTypes.string.isRequired,
   size: PropTypes.object.isRequired,
   zoom: PropTypes.number.isRequired,
-  setZoom: PropTypes.func.isRequired
+  setZoom: PropTypes.func.isRequired,
 };
 
 export default ExportZoomSelection;

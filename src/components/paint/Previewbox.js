@@ -36,7 +36,7 @@ Previewbox.propTypes = {
   size: PropTypes.object.isRequired,
   pixels: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,
-  frame: PropTypes.number.isRequired
+  frame: PropTypes.number.isRequired,
 };
 
 export default Previewbox;

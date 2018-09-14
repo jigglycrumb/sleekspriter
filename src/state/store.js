@@ -1,12 +1,6 @@
-import {
-  combineReducers,
-  createStore
-} from "redux";
+import { combineReducers, createStore } from "redux";
 
-import {
-  fileReducer,
-  uiReducer,
-} from "./reducers";
+import { fileReducer, uiReducer } from "./reducers";
 
 const rootReducer = combineReducers({
   file: fileReducer,

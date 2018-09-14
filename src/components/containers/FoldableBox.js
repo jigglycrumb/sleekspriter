@@ -37,7 +37,4 @@ const FoldableBox = props => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FoldableBox);
+export default connect(mapStateToProps, mapDispatchToProps)(FoldableBox);

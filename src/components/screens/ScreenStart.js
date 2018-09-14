@@ -16,8 +16,12 @@ class ScreenStart extends React.Component {
           <div className="inner">
             <div className="logo">@@name</div>
             <ul>
-              <li><a onClick={this.newFile}>{t("New file")}</a></li>
-              <li><a onClick={this.openFile}>{t("Open file")}</a></li>
+              <li>
+                <a onClick={this.newFile}>{t("New file")}</a>
+              </li>
+              <li>
+                <a onClick={this.openFile}>{t("Open file")}</a>
+              </li>
             </ul>
           </div>
         </div>

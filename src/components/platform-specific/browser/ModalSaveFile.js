@@ -7,11 +7,11 @@ import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
 const mapStateToProps = state => ({
-  file: state.file.present
+  file: state.file.present,
 });
 
 const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide())
+  hide: () => dispatch(modalHide()),
 });
 
 class ModalSaveFile extends React.Component {

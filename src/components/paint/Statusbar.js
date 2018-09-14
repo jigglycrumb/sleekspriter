@@ -13,10 +13,10 @@ const Statusbar = props => {
   const gridButtonClasses = classnames({
       tiny: true,
       transparent: true,
-      active: props.grid
+      active: props.grid,
     }),
     historyButtonClasses = classnames({
-      tiny: true
+      tiny: true,
     });
 
   return (
@@ -40,8 +40,7 @@ const Statusbar = props => {
           className={historyButtonClasses}
           onClick={props.undo}
           disabled={!props.canUndo}
-          title={t("Undo", { key: undoHotkey })}
-        >
+          title={t("Undo", { key: undoHotkey })}>
           <i className="flaticon-back-arrow" />
         </button>
 
@@ -50,8 +49,7 @@ const Statusbar = props => {
           className={historyButtonClasses}
           onClick={props.redo}
           disabled={!props.canRedo}
-          title={t("Redo", { key: redoHotkey })}
-        >
+          title={t("Redo", { key: redoHotkey })}>
           <i className="flaticon-arrow" />
         </button>
 
@@ -59,8 +57,7 @@ const Statusbar = props => {
           id="toggleGrid"
           className={gridButtonClasses}
           onClick={props.gridToggle}
-          title={t("Toggle grid", { key: gridHotkey })}
-        >
+          title={t("Toggle grid", { key: gridHotkey })}>
           <i className="flaticon-3x3" />
         </button>
       </div>
@@ -77,7 +74,7 @@ Statusbar.propTypes = {
   undo: PropTypes.func.isRequired,
   canUndo: PropTypes.bool.isRequired,
   redo: PropTypes.func.isRequired,
-  canRedo: PropTypes.bool.isRequired
+  canRedo: PropTypes.bool.isRequired,
 };
 
 export default Statusbar;

@@ -4,8 +4,7 @@ import sprout from "sprout-data";
 // TODO this is buggy on undo
 
 const mergeLayerPixels = (frame, first, second, pixels = {}) => {
-  const
-    firstLayerPixels = sprout.get(pixels, [frame, first], {}),
+  const firstLayerPixels = sprout.get(pixels, [frame, first], {}),
     secondLayerPixels = sprout.get(pixels, [frame, second], {}),
     merged = merge(secondLayerPixels, firstLayerPixels);
 

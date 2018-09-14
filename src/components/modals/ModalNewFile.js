@@ -132,7 +132,4 @@ class ModalNewFile extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ModalNewFile);
+export default connect(null, mapDispatchToProps)(ModalNewFile);

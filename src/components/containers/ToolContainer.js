@@ -44,7 +44,4 @@ const ToolContainer = props => {
   return <ToolComponent {...props} />;
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToolContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolContainer);

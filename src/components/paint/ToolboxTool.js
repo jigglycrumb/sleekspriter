@@ -11,8 +11,7 @@ const ToolboxTool = props => {
       className={cssClasses}
       disabled={props.selected}
       title={props.title}
-      onClick={props.toolSelect.bind(this, props.id)}
-    >
+      onClick={props.toolSelect.bind(this, props.id)}>
       <i className={props.icon} />
     </button>
   );
@@ -23,7 +22,7 @@ ToolboxTool.propTypes = {
   id: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  toolSelect: PropTypes.func.isRequired
+  toolSelect: PropTypes.func.isRequired,
 };
 
 export default ToolboxTool;

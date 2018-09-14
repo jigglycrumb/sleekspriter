@@ -15,7 +15,7 @@ const fileReducer = undoable(
   }),
   {
     filter: distinctState(),
-    limit: 10 // set a limit for the history
+    limit: 10, // set a limit for the history
   }
 );
 

@@ -1,6 +1,6 @@
 const duplicateLayers = (layers, targetFrame, nextLayerId) => {
   let newLayers = [];
-  for(let i = 0; i < layers.length; i++) {
+  for (let i = 0; i < layers.length; i++) {
     const newId = nextLayerId + i;
     let newLayer = Object.assign({}, layers[i]);
     newLayer.id = newId;

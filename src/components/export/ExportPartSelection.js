@@ -8,7 +8,7 @@ const ExportPartSelection = ({
   part,
   totalFrames,
   setFrame,
-  setPart
+  setPart,
 }) => {
   const parts = [
     { part: "spritesheet", label: t("Spritesheet as single image") },
@@ -27,8 +27,8 @@ const ExportPartSelection = ({
           &nbsp;/&nbsp;
           {totalFrames} {t("as image")}
         </span>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -61,7 +61,7 @@ ExportPartSelection.propTypes = {
   part: PropTypes.string.isRequired,
   totalFrames: PropTypes.number.isRequired,
   setFrame: PropTypes.func.isRequired,
-  setPart: PropTypes.func.isRequired
+  setPart: PropTypes.func.isRequired,
 };
 
 export default ExportPartSelection;

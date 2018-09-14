@@ -24,7 +24,7 @@ class LayerCanvas extends React.Component {
       height = this.props.size.height * this.props.zoom;
       style = {
         width: width,
-        height: height
+        height: height,
       };
     }
 
@@ -75,7 +75,7 @@ LayerCanvas.propTypes = {
   layer: PropTypes.number.isRequired,
   maxSize: PropTypes.number,
   size: PropTypes.object.isRequired, // { width: x, height: y }
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
 };
 
 export { LayerCanvas };

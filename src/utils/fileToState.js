@@ -1,18 +1,18 @@
 // converts JSON from file format to state-ready JSON
 // TODO: add animations
 
-const fileToState = (file) => {
+const fileToState = file => {
   let { frames, layers, pixels, size } = file;
 
   layers = layers.map(layerToState);
 
   let frameDict = {};
-  layers.forEach((layer) => {
+  layers.forEach(layer => {
     frameDict[layer.id] = layer.frame;
   });
 
   let mappedPixels = {};
-  pixels.forEach((p) => {
+  pixels.forEach(p => {
     const pixel = {
       frame: frameDict[p[0]],
       layer: p[0],
@@ -24,9 +24,11 @@ const fileToState = (file) => {
       a: p[6],
     };
 
-    if(!mappedPixels[pixel.frame]) mappedPixels[pixel.frame] = {};
-    if(!mappedPixels[pixel.frame][pixel.layer]) mappedPixels[pixel.frame][pixel.layer] = {};
-    if(!mappedPixels[pixel.frame][pixel.layer][pixel.x]) mappedPixels[pixel.frame][pixel.layer][pixel.x] = {};
+    if (!mappedPixels[pixel.frame]) mappedPixels[pixel.frame] = {};
+    if (!mappedPixels[pixel.frame][pixel.layer])
+      mappedPixels[pixel.frame][pixel.layer] = {};
+    if (!mappedPixels[pixel.frame][pixel.layer][pixel.x])
+      mappedPixels[pixel.frame][pixel.layer][pixel.x] = {};
     mappedPixels[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
   });
 
@@ -40,7 +42,7 @@ const fileToState = (file) => {
     size: {
       width: size[0],
       height: size[1],
-    }
+    },
   };
 };
 
@@ -50,7 +52,7 @@ const layerToState = layer => ({
   name: layer[2],
   z: layer[3],
   opacity: layer[4],
-  visible: !!layer[5]
+  visible: !!layer[5],
 });
 
 export default fileToState;

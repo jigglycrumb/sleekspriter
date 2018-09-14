@@ -258,7 +258,4 @@ class ModalImportFile extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ModalImportFile);
+export default connect(null, mapDispatchToProps)(ModalImportFile);

@@ -9,15 +9,15 @@ const ExportPreviewSpritesheet = ({
   layers,
   size,
   pixels,
-  zoom
+  zoom,
 }) => {
   const classes = {
       preview: true,
-      checkerboard: format === "png" || format === "gif" ? true : false
+      checkerboard: format === "png" || format === "gif" ? true : false,
     },
     style = {
       width: frames.x * size.width * zoom,
-      height: frames.y * size.height * zoom
+      height: frames.y * size.height * zoom,
     },
     background = format === "jpeg" ? "#ffffff" : null;
 
@@ -41,7 +41,7 @@ ExportPreviewSpritesheet.propTypes = {
   layers: PropTypes.array.isRequired,
   size: PropTypes.object.isRequired,
   pixels: PropTypes.object.isRequired,
-  zoom: PropTypes.number.isRequired
+  zoom: PropTypes.number.isRequired,
 };
 
 export default ExportPreviewSpritesheet;

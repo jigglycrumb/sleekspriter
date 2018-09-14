@@ -48,19 +48,12 @@ class ModalConfirmDeleteLayer extends React.Component {
   }
 
   layerDelete() {
-    const {
-      layerDelete,
-      frame,
-      layer: { id },
-      pixels,
-      hide,
-    } = this.props;
+    const { layerDelete, frame, layer: { id }, pixels, hide } = this.props;
     layerDelete(frame, id, pixels);
     hide();
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalConfirmDeleteLayer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ModalConfirmDeleteLayer
+);

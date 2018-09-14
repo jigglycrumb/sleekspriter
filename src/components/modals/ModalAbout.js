@@ -5,7 +5,7 @@ import { modalHide } from "../../state/actions";
 import logo from "../../assets/logo@x2.png";
 
 const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide())
+  hide: () => dispatch(modalHide()),
 });
 
 function ModalAbout(props) {
@@ -62,8 +62,7 @@ function ModalAbout(props) {
               <li>
                 <a
                   target="_blank"
-                  href="https://github.com/ccampbell/mousetrap"
-                >
+                  href="https://github.com/ccampbell/mousetrap">
                   mousetrap
                 </a>
               </li>
@@ -83,8 +82,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/freepik"
-                  title="Freepik"
-                >
+                  title="Freepik">
                   Freepik
                 </a>
               </li>
@@ -92,8 +90,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/daniel-bruce"
-                  title="Daniel Bruce"
-                >
+                  title="Daniel Bruce">
                   Daniel Bruce
                 </a>
               </li>
@@ -101,8 +98,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/elegant-themes"
-                  title="Elegant Themes"
-                >
+                  title="Elegant Themes">
                   Elegant Themes
                 </a>
               </li>
@@ -110,8 +106,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/scott-de-jonge"
-                  title="Scott de Jonge"
-                >
+                  title="Scott de Jonge">
                   Scott de Jonge
                 </a>
               </li>
@@ -119,8 +114,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/yannick"
-                  title="Yannick"
-                >
+                  title="Yannick">
                   Yannick
                 </a>
               </li>
@@ -128,8 +122,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/tutsplus"
-                  title="TutsPlus"
-                >
+                  title="TutsPlus">
                   TutsPlus
                 </a>
               </li>
@@ -137,8 +130,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/icomoon"
-                  title="Icomoon"
-                >
+                  title="Icomoon">
                   Icomoon
                 </a>
               </li>
@@ -146,8 +138,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/dave-gandy"
-                  title="Dave Gandy"
-                >
+                  title="Dave Gandy">
                   Dave Gandy
                 </a>
               </li>
@@ -155,8 +146,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/icons8"
-                  title="Icons8"
-                >
+                  title="Icons8">
                   Icons8
                 </a>
               </li>
@@ -164,8 +154,7 @@ function ModalAbout(props) {
                 <a
                   target="_blank"
                   href="http://www.flaticon.com/authors/catalin-fertu"
-                  title="Catalin Fertu"
-                >
+                  title="Catalin Fertu">
                   Catalin Fertu
                 </a>
               </li>
@@ -176,16 +165,14 @@ function ModalAbout(props) {
               <a
                 target="_blank"
                 href="http://www.flaticon.com"
-                title="Flaticon"
-              >
+                title="Flaticon">
                 www.flaticon.com
               </a>{" "}
               {t("licensed by")}{" "}
               <a
                 target="_blank"
                 href="http://creativecommons.org/licenses/by/3.0/"
-                title="Creative Commons BY 3.0"
-              >
+                title="Creative Commons BY 3.0">
                 CC BY 3.0
               </a>
             </p>

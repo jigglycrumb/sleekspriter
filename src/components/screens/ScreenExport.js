@@ -20,7 +20,7 @@ class ScreenExport extends React.Component {
       size,
       status,
       zoom,
-      totalFrames
+      totalFrames,
     } = this.props;
     const partSelection =
       totalFrames === 1 ? null : (

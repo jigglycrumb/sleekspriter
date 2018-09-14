@@ -19,7 +19,7 @@ class SpritesheetCanvas extends React.Component {
       height = frames.y * size.height * zoom;
       style = {
         width: width,
-        height: height
+        height: height,
       };
     } else {
       const fitted = fitToSize(maxSize);
@@ -64,7 +64,7 @@ class SpritesheetCanvas extends React.Component {
       layerDict[layer.id] = {
         visible: layer.visible,
         opacity: layer.opacity,
-        z: layer.z
+        z: layer.z,
       };
     }, this);
 
@@ -155,12 +155,12 @@ class SpritesheetCanvas extends React.Component {
     const x = pixel.frame % frames.x;
     const framePos = {
       x: x === 0 ? frames.x : x,
-      y: Math.ceil(pixel.frame / frames.x)
+      y: Math.ceil(pixel.frame / frames.x),
     };
 
     const targetPos = {
       x: (framePos.x - 1) * size.width + pixel.x,
-      y: (framePos.y - 1) * size.height + pixel.y
+      y: (framePos.y - 1) * size.height + pixel.y,
     };
 
     return targetPos;
@@ -169,7 +169,7 @@ class SpritesheetCanvas extends React.Component {
   getSpriteSheetSize(size, frames) {
     return {
       width: size.width * frames.x,
-      height: size.height * frames.y
+      height: size.height * frames.y,
     };
   }
 }
@@ -180,7 +180,7 @@ SpritesheetCanvas.propTypes = {
   layers: PropTypes.array.isRequired, // array of file layers
   maxSize: PropTypes.number,
   size: PropTypes.object.isRequired, // { width, height }
-  zoom: PropTypes.number
+  zoom: PropTypes.number,
 };
 
 export { SpritesheetCanvas };

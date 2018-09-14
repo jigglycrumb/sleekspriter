@@ -31,7 +31,7 @@ const ExportOutputSelection = ({ format, part, setFormat }) => {
 ExportOutputSelection.propTypes = {
   format: PropTypes.string.isRequired,
   part: PropTypes.string.isRequired,
-  setFormat: PropTypes.func.isRequired
+  setFormat: PropTypes.func.isRequired,
 };
 
 export default ExportOutputSelection;

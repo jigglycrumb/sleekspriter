@@ -9,7 +9,7 @@ class StageboxLayer extends React.Component {
       style = {
         zIndex: this.props.layer.z,
         opacity: this.props.layer.opacity / 100,
-        display
+        display,
       };
 
     return (
@@ -31,7 +31,7 @@ StageboxLayer.propTypes = {
   layer: PropTypes.object.isRequired,
   size: PropTypes.object.isRequired,
   zoom: PropTypes.number.isRequired,
-  pixels: PropTypes.object
+  pixels: PropTypes.object,
 };
 
 export default StageboxLayer;

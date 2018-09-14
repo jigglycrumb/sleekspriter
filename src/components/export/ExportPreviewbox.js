@@ -15,12 +15,12 @@ const ExportPreviewbox = ({
   part,
   pixels,
   size,
-  zoom
+  zoom,
 }) => {
   let preview = null;
   switch (part) {
-  case "spritesheet":
-    preview = (
+    case "spritesheet":
+      preview = (
         <ExportPreviewSpritesheet
           format={format}
           frames={frames}
@@ -30,14 +30,14 @@ const ExportPreviewbox = ({
           zoom={zoom}
         />
       );
-    break;
+      break;
 
-  case "allframes":
-    preview = <ExportPreviewAllFrames />; // TODO
-    break;
+    case "allframes":
+      preview = <ExportPreviewAllFrames />; // TODO
+      break;
 
-  case "frame":
-    preview = (
+    case "frame":
+      preview = (
         <ExportPreviewSingleFrame
           format={format}
           frame={frame}
@@ -46,11 +46,11 @@ const ExportPreviewbox = ({
           zoom={zoom}
         />
       );
-    break;
+      break;
 
-  case "animation":
-    preview = <ExportPreviewAnimation />; // TODO
-    break;
+    case "animation":
+      preview = <ExportPreviewAnimation />; // TODO
+      break;
   }
 
   return (

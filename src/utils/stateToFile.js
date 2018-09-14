@@ -1,7 +1,7 @@
 // converts state JSON to *.pixels file format JSON
 // TODO: add animations
 
-const stateToFile = (state) => {
+const stateToFile = state => {
   let { frames, layers, pixels, size } = state;
 
   layers = layers.map(layerToFile);
@@ -12,7 +12,7 @@ const stateToFile = (state) => {
       Object.keys(pixels[frame][layer]).map(x => {
         Object.keys(pixels[frame][layer][x]).map(y => {
           const { r, g, b, a } = pixels[frame][layer][x][y];
-          mappedPixels.push([ +layer, +x, +y, r, g, b, a ]);
+          mappedPixels.push([+layer, +x, +y, r, g, b, a]);
         });
       });
     });
@@ -26,13 +26,13 @@ const stateToFile = (state) => {
   };
 };
 
-const layerToFile = (layer) => [
+const layerToFile = layer => [
   layer.id,
   layer.frame,
   layer.name,
   layer.z,
   layer.opacity,
-  +layer.visible
+  +layer.visible,
 ];
 
 export default stateToFile;

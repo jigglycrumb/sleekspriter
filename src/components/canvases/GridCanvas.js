@@ -6,7 +6,7 @@ class GridCanvas extends React.Component {
   render() {
     const css = {
       width: this.props.width,
-      height: this.props.height
+      height: this.props.height,
     };
 
     return (
@@ -34,7 +34,7 @@ class GridCanvas extends React.Component {
       ctx = canvas.getContext("2d"),
       cell = {
         width: this.props.width / this.props.columns,
-        height: this.props.height / this.props.rows
+        height: this.props.height / this.props.rows,
       };
 
     if (cell.width >= 2 && cell.height >= 2) {
@@ -70,7 +70,7 @@ GridCanvas.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   columns: PropTypes.number.isRequired,
-  rows: PropTypes.number.isRequired
+  rows: PropTypes.number.isRequired,
 };
 
 export { GridCanvas };

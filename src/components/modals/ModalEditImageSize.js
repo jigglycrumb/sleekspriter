@@ -7,18 +7,18 @@ import { getFileFrames, getFileSize } from "../../state/selectors";
 
 const mapStateToProps = state => ({
   frames: getFileFrames(state),
-  size: getFileSize(state)
+  size: getFileSize(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
-  fileSize: (frames, size) => dispatch(fileSize(frames, size))
+  fileSize: (frames, size) => dispatch(fileSize(frames, size)),
 });
 
 class ModalEditImageSize extends React.Component {
   state = {
     frames: this.props.frames,
-    size: this.props.size
+    size: this.props.size,
   };
 
   render() {
@@ -28,7 +28,7 @@ class ModalEditImageSize extends React.Component {
           : "Spritesheet",
       wrapperCss = {
         width: this.state.size.width * this.state.frames.x,
-        height: this.state.size.height * this.state.frames.y
+        height: this.state.size.height * this.state.frames.y,
       };
 
     return (
@@ -104,12 +104,12 @@ class ModalEditImageSize extends React.Component {
     const state = {
       frames: {
         x: +this.framesX.value,
-        y: +this.framesY.value
+        y: +this.framesY.value,
       },
       size: {
         width: +this.pixelsX.value,
-        height: +this.pixelsY.value
-      }
+        height: +this.pixelsY.value,
+      },
     };
     this.setState(state);
   }

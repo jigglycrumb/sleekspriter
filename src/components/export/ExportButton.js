@@ -11,7 +11,7 @@ const ExportButton = props => {
 };
 
 ExportButton.propTypes = {
-  export: PropTypes.func.isRequired
+  export: PropTypes.func.isRequired,
 };
 
 export default ExportButton;

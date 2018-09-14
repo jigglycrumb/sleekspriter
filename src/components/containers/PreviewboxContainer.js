@@ -4,21 +4,16 @@ import {
   getFilePixels,
   getFileSize,
   getFrameLayers,
-  getPaintFrame
+  getPaintFrame,
 } from "../../state/selectors";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   frame: getPaintFrame(state),
   layers: getFrameLayers(state),
   pixels: getFilePixels(state),
   size: getFileSize(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({});
 
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Previewbox);
+export default connect(mapStateToProps, mapDispatchToProps)(Previewbox);

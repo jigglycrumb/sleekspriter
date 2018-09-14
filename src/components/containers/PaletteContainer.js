@@ -34,7 +34,4 @@ const PaletteContainer = props => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaletteContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PaletteContainer);

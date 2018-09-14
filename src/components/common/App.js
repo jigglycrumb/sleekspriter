@@ -11,40 +11,39 @@ import { Hotkeys } from "../../classes";
 
 class App extends React.Component {
   componentWillReceiveProps(nextProps) {
-    if(this.props.screen !== nextProps.screen) Hotkeys.unbind(this.props.screen);
+    if (this.props.screen !== nextProps.screen)
+      Hotkeys.unbind(this.props.screen);
   }
 
   render() {
     Hotkeys.bind(this.props.screen);
 
     const windowClasses = classnames({
-      "window": true,
+      window: true,
       [this.props.screen]: true,
     });
 
     let activeScreen;
-    switch(this.props.screen) {
-    case "paint":
-      activeScreen = <ScreenPaintContainer />;
-      break;
+    switch (this.props.screen) {
+      case "paint":
+        activeScreen = <ScreenPaintContainer />;
+        break;
 
-    case "export":
-      activeScreen = <ScreenExportContainer />;
-      break;
+      case "export":
+        activeScreen = <ScreenExportContainer />;
+        break;
 
-    case "animate":
-    case "start":
-    default:
-      activeScreen = <ScreenStartContainer />;
-      break;
+      case "animate":
+      case "start":
+      default:
+        activeScreen = <ScreenStartContainer />;
+        break;
     }
 
     return (
       <div className="app">
         <MenuContainer />
-        <div className={windowClasses}>
-          {activeScreen}
-        </div>
+        <div className={windowClasses}>{activeScreen}</div>
         <ModalContainer />
         <ScreenBlocker />
       </div>

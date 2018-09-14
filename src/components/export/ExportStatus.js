@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 class ExportStatus extends React.Component {
   state = {
-    timer: null
+    timer: null,
   };
 
   render() {
@@ -25,7 +25,7 @@ class ExportStatus extends React.Component {
 
 ExportStatus.propTypes = {
   status: PropTypes.string.isRequired,
-  setStatus: PropTypes.func.isRequired
+  setStatus: PropTypes.func.isRequired,
 };
 
 export default ExportStatus;

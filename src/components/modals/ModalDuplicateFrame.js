@@ -2,26 +2,27 @@ import React from "react";
 import { connect } from "react-redux";
 import classnames from "classnames";
 import { t, createNewLayerId } from "../../utils";
-import { getFileLayers, getFrameLayersZSorted, getTotalFrames } from "../../state/selectors";
 import {
-  frameDuplicate,
-  modalHide
-} from "../../state/actions";
+  getFileLayers,
+  getFrameLayersZSorted,
+  getTotalFrames,
+} from "../../state/selectors";
+import { frameDuplicate, modalHide } from "../../state/actions";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   frame: state.ui.paint.frame,
   nextLayerId: createNewLayerId(getFileLayers(state)),
   layers: getFrameLayersZSorted(state),
   totalFrames: getTotalFrames(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  frameDuplicate: (layers, source, target, nextLayerId) => dispatch(frameDuplicate(layers, source, target, nextLayerId)),
+const mapDispatchToProps = dispatch => ({
+  frameDuplicate: (layers, source, target, nextLayerId) =>
+    dispatch(frameDuplicate(layers, source, target, nextLayerId)),
   hide: () => dispatch(modalHide()),
 });
 
 class ModalDuplicateFrame extends React.Component {
-
   state = {
     source: this.props.frame,
     target: 1,
@@ -36,21 +37,42 @@ class ModalDuplicateFrame extends React.Component {
       <div className="dialog">
         <div className="title">{t("Duplicate frame")}</div>
         <div className="text">
-          {t("Copy a frame with its layers to another frame.")}<br />
+          {t("Copy a frame with its layers to another frame.")}
+          <br />
           {t("The target frame will be replaced.")}
           <ul>
             <li>
               <label>{t("Source")}</label>
-              <input type="number" className={inputClasses} ref={(node) => this.source = node} value={this.state.source} min="1" max={this.props.totalFrames} onChange={() => this.updateForm()} />
+              <input
+                type="number"
+                className={inputClasses}
+                ref={node => (this.source = node)}
+                value={this.state.source}
+                min="1"
+                max={this.props.totalFrames}
+                onChange={() => this.updateForm()}
+              />
             </li>
             <li>
               <label>{t("Target")}</label>
-              <input type="number" className={inputClasses} ref={(node) => this.target = node} value={this.state.target} min="1" max={this.props.totalFrames} onChange={() => this.updateForm()} />
+              <input
+                type="number"
+                className={inputClasses}
+                ref={node => (this.target = node)}
+                value={this.state.target}
+                min="1"
+                max={this.props.totalFrames}
+                onChange={() => this.updateForm()}
+              />
             </li>
           </ul>
         </div>
         <div className="actions">
-          <button onClick={() => this.duplicateFrame()} disabled={this.state.error}>{t("Ok")}</button>
+          <button
+            onClick={() => this.duplicateFrame()}
+            disabled={this.state.error}>
+            {t("Ok")}
+          </button>
           <button onClick={this.props.hide}>{t("Cancel")}</button>
         </div>
       </div>
@@ -58,8 +80,7 @@ class ModalDuplicateFrame extends React.Component {
   }
 
   updateForm() {
-    const
-      source = +this.source.value,
+    const source = +this.source.value,
       target = +this.target.value,
       error = source === target;
 
@@ -67,14 +88,18 @@ class ModalDuplicateFrame extends React.Component {
   }
 
   duplicateFrame() {
-    if(this.state.source !== this.state.target) {
-      this.props.frameDuplicate(this.props.layers, this.state.source, this.state.target, this.props.nextLayerId);
+    if (this.state.source !== this.state.target) {
+      this.props.frameDuplicate(
+        this.props.layers,
+        this.state.source,
+        this.state.target,
+        this.props.nextLayerId
+      );
     }
     this.props.hide();
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalDuplicateFrame);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ModalDuplicateFrame
+);
