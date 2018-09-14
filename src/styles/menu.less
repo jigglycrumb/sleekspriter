@@ -1,4 +1,4 @@
-@menu-height: 20px;
+@menu-height: 30px;
 
 .menu {
   height: @menu-height;
@@ -15,7 +15,14 @@
     justify-content: flex-start;
     margin: 0;
 
-    li { cursor: pointer; }
+    li {
+      cursor: pointer;
+
+      & > span {
+        position: relative;
+        top: 4px;
+      }
+    }
 
     hr {
       border: 0;
@@ -47,7 +54,8 @@
         }
       }
 
-      & > div { // submenus
+      & > div {
+        // submenus
         display: none;
         z-index: -1;
         padding-top: @menu-height;
@@ -70,12 +78,5 @@
         }
       }
     }
-  }
-
-  .version {
-    float: right;
-    height: @menu-height;
-    line-height: 20px;
-    margin-right: 10px;
   }
 }

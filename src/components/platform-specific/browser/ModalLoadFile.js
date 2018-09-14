@@ -45,8 +45,8 @@ class ModalLoadFile extends React.Component {
 
   loadFile() {
     const input = this.jsonInput.value.toString();
-
     let json = false;
+
     try {
       json = JSON.parse(input);
     } catch (e) {
