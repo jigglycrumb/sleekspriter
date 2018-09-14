@@ -1,6 +1,6 @@
-export getFrameLayers from "./getFrameLayers";
-export getFrameLayersZSorted from "./getFrameLayersZSorted";
-export getOnionFrameAbsolute from "./getOnionFrameAbsolute";
-export getPaintLayer from "./getPaintLayer";
-export getTotalFrames from "./getTotalFrames";
-export * from "./inputSelectors";
+export { default as getFrameLayers } from "./getFrameLayers";
+export { default as getFrameLayersZSorted } from "./getFrameLayersZSorted";
+export { default as getOnionFrameAbsolute } from "./getOnionFrameAbsolute";
+export { default as getPaintLayer } from "./getPaintLayer";
+export { default as getTotalFrames } from "./getTotalFrames";
+export * from "./stateSelectors";

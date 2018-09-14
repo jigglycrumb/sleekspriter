@@ -1,6 +1,5 @@
 // returns the current onion frame in absolute number (i.e. frame number in the file)
-import getTotalFrames from "./getTotalFrames";
-import { getOnion, getPaintFrame } from "./inputSelectors";
+import { getOnion, getPaintFrame, getTotalFrames } from ".";
 
 const getOnionFrameAbsolute = state => {
   const totalFrames = getTotalFrames(state);

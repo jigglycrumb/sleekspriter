@@ -1,6 +1,6 @@
 // returns an array containing the layers of selected painting frame,
 // sorted by z-index. (0 = lowest, higher values stack on top)
-import { getPaintFrame, getFileLayers } from "./inputSelectors";
+import { getPaintFrame, getFileLayers } from ".";
 
 const getFrameLayersZSorted = state => {
   const frame = getPaintFrame(state);

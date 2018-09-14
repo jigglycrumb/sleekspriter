@@ -1,5 +1,5 @@
 // returns an object containing the data of the currently selected painting layer
-import { getPaintLayerId, getFileLayers } from "./inputSelectors";
+import { getPaintLayerId, getFileLayers } from ".";
 
 const getPaintLayer = state => {
   const id = getPaintLayerId(state);

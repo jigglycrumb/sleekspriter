@@ -1,5 +1,5 @@
 // returns an array containing the layers of selected painting frame
-import { getPaintFrame, getFileLayers } from "./inputSelectors";
+import { getPaintFrame, getFileLayers } from ".";
 
 const getFrameLayers = state => {
   const frame = getPaintFrame(state);

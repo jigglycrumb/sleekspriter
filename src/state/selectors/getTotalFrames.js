@@ -1,5 +1,5 @@
 // returns the total number of frames in the file
-import { getFileFrames } from "./inputSelectors";
+import { getFileFrames } from ".";
 
 const getTotalFrames = state => {
   const frames = getFileFrames(state);
