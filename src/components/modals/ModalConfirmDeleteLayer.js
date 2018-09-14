@@ -1,20 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import { t } from "../../utils";
-import { getPaintLayer, getFrameLayers } from "../../state/selectors";
+import {
+  getPaintFrame,
+  getPaintLayer,
+  getFilePixels,
+  getFrameLayers,
+} from "../../state/selectors";
 import { layerDelete, layerSelectTop, modalHide } from "../../state/actions";
 
 const mapStateToProps = state => ({
-  frame: state.ui.paint.frame,
+  frame: getPaintFrame(state),
   layer: getPaintLayer(state),
   layers: getFrameLayers(state),
-  pixels: state.file.present.pixels,
+  pixels: getFilePixels(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   layerDelete: (frame, layer, allPixels) =>
     dispatch(layerDelete(frame, layer, allPixels)),
-  layerSelectTop: layers => dispatch(layerSelectTop(layers)),
   hide: () => dispatch(modalHide()),
 });
 
@@ -44,15 +48,15 @@ class ModalConfirmDeleteLayer extends React.Component {
   }
 
   layerDelete() {
-    this.props.layerDelete(
-      this.props.frame,
-      this.props.layer.id,
-      this.props.pixels
-    );
-    setTimeout(() => {
-      this.props.layerSelectTop(this.props.layers);
-      this.props.hide();
-    }, 100);
+    const {
+      layerDelete,
+      frame,
+      layer: { id },
+      pixels,
+      hide,
+    } = this.props;
+    layerDelete(frame, id, pixels);
+    hide();
   }
 }
 

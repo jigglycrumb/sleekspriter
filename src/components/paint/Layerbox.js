@@ -68,6 +68,9 @@ class Layerbox extends React.Component {
 
   componentDidUpdate() {
     this.fitHeight();
+    if (this.props.selected === null) {
+      this.props.layerSelectTop(this.props.layers);
+    }
   }
 
   confirmLayerDelete() {

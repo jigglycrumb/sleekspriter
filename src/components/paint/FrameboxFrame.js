@@ -40,7 +40,6 @@ class FrameboxFrame extends React.Component {
 
   select() {
     this.props.frameSelect(this.props.frame);
-    // TODO: Select top layer after frame change
   }
 }
 

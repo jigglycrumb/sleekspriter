@@ -65,7 +65,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       };
     }
     case "FRAME_SELECT":
-      return { ...state, frame: +action.frame };
+      return { ...state, frame: +action.frame, layer: null };
     case "GRID_TOGGLE":
       return { ...state, grid: !state.grid };
 
@@ -74,7 +74,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       let pixels = _.cloneDeep(allPixels);
       pixels = sprout.dissoc(pixels, [frame, layer]);
       const spritePalette = _.uniq(flattenPixels(pixels).map(p => p.toHex()));
-      return { ...state, spritePalette };
+      return { ...state, spritePalette, layer: null };
     }
 
     case "LAYER_MERGE": {
