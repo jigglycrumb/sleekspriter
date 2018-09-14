@@ -8,7 +8,7 @@ const replaceConfig = Object.keys(metadata).map(function(key) {
 });
 
 const config = {
-  mode: "development", // 'production',
+  mode: "none",
   context: path.resolve(__dirname, "."),
   entry: "./src/index.js",
   output: {
