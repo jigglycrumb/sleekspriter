@@ -8,15 +8,16 @@ const replaceConfig = Object.keys(metadata).map(function(key) {
 });
 
 const config = {
+  mode: "development", // 'production',
   context: path.resolve(__dirname, "."),
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     // publicPath: "dist/",
-    filename: "bundle.js"
+    filename: "bundle.js",
   },
   resolve: {
-    extensions: [".less", ".css", ".js", ".json", ".jsx"]
+    extensions: [".less", ".css", ".js", ".json", ".jsx"],
   },
   module: {
     rules: [
@@ -24,21 +25,21 @@ const config = {
         test: /\.(css|less)$/,
         use: [
           {
-            loader: "style-loader"
+            loader: "style-loader",
           },
           {
             loader: "css-loader",
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
           {
             loader: "less-loader",
             options: {
-              sourceMap: true
-            }
-          }
-        ]
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: /\.jsx?$/,
@@ -47,14 +48,14 @@ const config = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["es2017", "react", "stage-0"]
-            }
-          }
-        ]
+              presets: ["es2017", "react", "stage-0"],
+            },
+          },
+        ],
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: ["file-loader"]
+        use: ["file-loader"],
       },
       {
         test: /\.(woff|woff2)$/,
@@ -64,10 +65,10 @@ const config = {
             options: {
               prefix: "font",
               mimetype: "application/font-woff",
-              limit: 10000
-            }
-          }
-        ]
+              limit: 10000,
+            },
+          },
+        ],
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
@@ -76,10 +77,10 @@ const config = {
             loader: "url-loader",
             options: {
               mimetype: "application/octet-stream",
-              limit: 10000
-            }
-          }
-        ]
+              limit: 10000,
+            },
+          },
+        ],
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -88,10 +89,10 @@ const config = {
             loader: "url-loader",
             options: {
               mimetype: "image/svg+xml",
-              limit: 10000
-            }
-          }
-        ]
+              limit: 10000,
+            },
+          },
+        ],
       },
       {
         test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
@@ -100,46 +101,45 @@ const config = {
             loader: "url-loader",
             options: {
               mimetype: "image/png",
-              limit: 10000
-            }
-          }
-        ]
+              limit: 10000,
+            },
+          },
+        ],
       },
       {
         test: /\.html$/,
-        use: ["html-loader"]
+        use: ["html-loader"],
       },
       {
         test: /\.ya?ml$/,
-        use: ["json-loader", "yaml-loader"]
+        use: ["json-loader", "yaml-loader"],
       },
       {
         test: /\.(html|js|yml)$/,
         use: [
           {
             loader: "string-replace-loader",
-            query: { multiple: replaceConfig }
-          }
-        ]
-      }
-    ]
+            query: { multiple: replaceConfig },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
-      template: "src/index.html"
+      template: "src/index.html",
     }),
     new webpack.LoaderOptionsPlugin({
       options: {
         worker: {
           output: {
             filename: "[id].[hash].worker.js",
-            chunkFilename: "[id].[hash].worker.js"
-          }
-        }
-      }
-    })
-  ]
+            chunkFilename: "[id].[hash].worker.js",
+          },
+        },
+      },
+    }),
+  ],
 };
 
 module.exports = config;
