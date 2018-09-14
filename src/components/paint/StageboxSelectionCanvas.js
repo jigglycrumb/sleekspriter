@@ -3,6 +3,11 @@ import { CanvasDecorator } from "../decorators";
 import { selectionIsActive } from "../../utils";
 
 class StageboxSelectionCanvas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.tick = this.tick.bind(this);
+  }
+
   render() {
     return (
       <canvas
@@ -17,7 +22,7 @@ class StageboxSelectionCanvas extends React.Component {
 
   componentDidMount() {
     // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
-    this.interval = setInterval(::this.tick, 200);
+    this.interval = setInterval(this.tick, 200);
   }
 
   componentWillUnmount() {
@@ -28,27 +33,27 @@ class StageboxSelectionCanvas extends React.Component {
     this.props.clear();
 
     switch (this.props.tool) {
-    case "RectangularSelectionTool":
+      case "RectangularSelectionTool":
         //   if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
         //   else if(storeUtils.selection.isResizing) {
         //     this.drawSelection(this.props.ui.selection.start, this.props.ui.selection.cursor);
         //   }
         //   else if(storeUtils.selection.isActive) this.drawLastSelection();
 
-      if (selectionIsActive(this.props.selection)) {
-        this.drawSelection(
+        if (selectionIsActive(this.props.selection)) {
+          this.drawSelection(
             this.props.selection.start,
             this.props.selection.end
           );
-      }
-      break;
+        }
+        break;
       // case "MoveTool":
       //   if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
       //   else if(storeUtils.selection.isActive) this.drawLastSelection();
       //   break;
-    default:
-      if (selectionIsActive(this.props.selection)) this.drawLastSelection();
-      break;
+      default:
+        if (selectionIsActive(this.props.selection)) this.drawLastSelection();
+        break;
     }
   }
 

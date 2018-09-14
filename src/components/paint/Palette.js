@@ -7,6 +7,9 @@ class Palette extends React.Component {
     super(props);
     this.swatchWidth = 28;
     this.swatchCount = props.colors.length;
+
+    this.scrollLeft = this.scrollLeft.bind(this);
+    this.scrollRight = this.scrollRight.bind(this);
   }
 
   render() {
@@ -15,8 +18,7 @@ class Palette extends React.Component {
         <button
           ref={n => (this.buttonScrollLeft = n)}
           className="scroll left"
-          onClick={::this.scrollLeft}
-        >
+          onClick={this.scrollLeft}>
           <i className="flaticon-arrow85" />
         </button>
         <div ref={n => (this.outer = n)} className="outer">
@@ -26,7 +28,7 @@ class Palette extends React.Component {
                 <Colorswatch
                   key={color}
                   color={color}
-                  action={::this.props.action}
+                  action={e => this.props.action(e)}
                   selected={color === this.props.selected}
                 />
               );
@@ -36,8 +38,7 @@ class Palette extends React.Component {
         <button
           ref={n => (this.buttonScrollRight = n)}
           className="scroll right"
-          onClick={::this.scrollRight}
-        >
+          onClick={this.scrollRight}>
           <i className="flaticon-mini7" />
         </button>
       </div>
@@ -138,7 +139,7 @@ class Palette extends React.Component {
       pages = Math.ceil(this.swatchCount / swatchesVisible),
       scrollButtonStyle = {
         left: "hidden",
-        right: "hidden"
+        right: "hidden",
       };
 
     if (pages > 1) {

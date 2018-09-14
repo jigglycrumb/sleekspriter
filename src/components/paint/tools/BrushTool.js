@@ -8,21 +8,26 @@ class BrushTool extends React.Component {
     super(props);
 
     this.state = {
-      pickerVisible: false
+      pickerVisible: false,
     };
+
+    this.togglePicker = this.togglePicker.bind(this);
   }
 
   render() {
-    const picker = !this.state.pickerVisible
-                 ? null
-                 : <BrushColorpicker color={this.props.color} action={this.props.brushColor} />;
+    const picker = !this.state.pickerVisible ? null : (
+      <BrushColorpicker
+        color={this.props.color}
+        action={this.props.brushColor}
+      />
+    );
 
     return (
       <div id="Brush-Tool" className="ToolComponent">
-        <i className="icon flaticon-small23"></i>
-        <Colorswatch color={this.props.color} action={::this.togglePicker} />
+        <i className="icon flaticon-small23" />
+        <Colorswatch color={this.props.color} action={this.togglePicker} />
         {picker}
-        <span className="spacer"/>
+        <span className="spacer" />
         <div className="palette">
           <PaletteContainer />
         </div>
@@ -31,7 +36,7 @@ class BrushTool extends React.Component {
   }
 
   togglePicker() {
-    this.setState({pickerVisible: !this.state.pickerVisible});
+    this.setState({ pickerVisible: !this.state.pickerVisible });
   }
 }
 

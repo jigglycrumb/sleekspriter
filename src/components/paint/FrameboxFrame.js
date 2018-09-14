@@ -3,13 +3,17 @@ import classnames from "classnames";
 import { FrameCanvas } from "../canvases";
 
 class FrameboxFrame extends React.Component {
+  constructor(props) {
+    super(props);
+    this.select = this.select.bind(this);
+  }
+
   render() {
-    const
-      id = `FrameBoxFrame-${this.props.frame}`,
+    const id = `FrameBoxFrame-${this.props.frame}`,
       classes = classnames({
-        "frame": true,
-        "selected": this.props.frame == this.props.selected,
-        "onion": this.props.onionSelected,
+        frame: true,
+        selected: this.props.frame == this.props.selected,
+        onion: this.props.onionSelected,
       }),
       frameStyle = {
         height: this.props.maxSize,
@@ -17,13 +21,18 @@ class FrameboxFrame extends React.Component {
       };
 
     return (
-      <div key={id} className={classes} style={frameStyle} onClick={::this.select}>
+      <div
+        key={id}
+        className={classes}
+        style={frameStyle}
+        onClick={this.select}>
         <FrameCanvas
           frame={this.props.frame}
           layers={this.props.layers}
           size={this.props.size}
           maxSize={this.props.maxSize}
-          pixels={this.props.pixels} />
+          pixels={this.props.pixels}
+        />
         <label>{this.props.frame}</label>
       </div>
     );

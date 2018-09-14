@@ -7,8 +7,10 @@ class SelectionPattern extends React.Component {
     this.state = {
       size: 10,
       frame: 1,
-      frameCountUp: true
+      frameCountUp: true,
     };
+
+    this.tick = this.tick.bind(this);
   }
 
   render() {
@@ -24,7 +26,7 @@ class SelectionPattern extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(::this.tick, 200);
+    this.interval = setInterval(this.tick, 200);
     this.drawPattern();
   }
 

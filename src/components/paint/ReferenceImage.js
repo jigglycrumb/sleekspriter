@@ -6,7 +6,7 @@ class ReferenceImage extends React.Component {
 
     this.dragOffset = {
       x: 0,
-      y: 0
+      y: 0,
     };
 
     this.state = {
@@ -14,12 +14,15 @@ class ReferenceImage extends React.Component {
       position: {
         x: 10,
         y: 10,
-      }
+      },
     };
+
+    this.dragStart = this.dragStart.bind(this);
+    this.dragEnd = this.dragEnd.bind(this);
   }
 
   render() {
-    if(this.props.image === null) return null;
+    if (this.props.image === null) return null;
     else {
       const style = {
         position: "absolute",
@@ -29,12 +32,15 @@ class ReferenceImage extends React.Component {
       };
 
       return (
-        <div id="ReferenceImage"
-            style={style}
-            onDragStart={::this.dragStart}
-            onDragEnd={::this.dragEnd}>
+        <div
+          id="ReferenceImage"
+          style={style}
+          onDragStart={this.dragStart}
+          onDragEnd={this.dragEnd}>
           <img src={this.props.imageData} title={this.props.image.name} />
-          <button className="remove" onClick={::this.props.removeHandler}>✖</button>
+          <button className="remove" onClick={e => this.props.removeHandler(e)}>
+            ✖
+          </button>
         </div>
       );
     }
@@ -42,26 +48,35 @@ class ReferenceImage extends React.Component {
 
   dragStart(e) {
     let img = document.createElement("img");
-    img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+    img.src =
+      "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
     e.dataTransfer.setDragImage(img, 0, 0);
 
     this.dragOffset.x = e.nativeEvent.layerX;
     this.dragOffset.y = e.nativeEvent.layerY;
-    this.setState({dragging: true});
+    this.setState({ dragging: true });
   }
 
   dragEnd(e) {
     let pos = {
-      x: e.pageX - document.querySelector(".screen.paint .area.left").clientWidth - 3 - this.dragOffset.x,
-      y: e.pageY - document.querySelector(".screen.paint .area.top").clientHeight - 3 - this.dragOffset.y
-                 - document.querySelector("nav.menu").clientHeight,
+      x:
+        e.pageX -
+        document.querySelector(".screen.paint .area.left").clientWidth -
+        3 -
+        this.dragOffset.x,
+      y:
+        e.pageY -
+        document.querySelector(".screen.paint .area.top").clientHeight -
+        3 -
+        this.dragOffset.y -
+        document.querySelector("nav.menu").clientHeight,
     };
 
-    if(pos.x < 0) pos.x = 0;
-    if(pos.y < 0) pos.y = 0;
+    if (pos.x < 0) pos.x = 0;
+    if (pos.y < 0) pos.y = 0;
     this.dragOffset.x = 0;
     this.dragOffset.y = 0;
-    this.setState({position: pos, dragging: false});
+    this.setState({ position: pos, dragging: false });
   }
 }
 

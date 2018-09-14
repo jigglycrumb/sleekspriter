@@ -5,14 +5,20 @@ class ScreenBlocker extends React.Component {
     super();
 
     this.state = {
-      pac: 0
+      pac: 0,
     };
+
+    this.tick = this.tick.bind(this);
   }
 
   render() {
     var pac = [
-      <circle stroke="#979797" fill="#FFEE00" cx="201" cy="201" r="200"></circle>,
-      <path stroke="#979797" fill="#FFEE00" d="M344.748485,340.055534 C308.387197,377.636196 257.422053,401 201,401 C90.54305,401 1,311.45695 1,201 C1,90.54305 90.54305,1 201,1 C255.963615,1 305.748783,23.1715656 341.899692,59.0588845 L202.825764,198.132812 L344.748485,340.055534 Z"></path>
+      <circle stroke="#979797" fill="#FFEE00" cx="201" cy="201" r="200" />,
+      <path
+        stroke="#979797"
+        fill="#FFEE00"
+        d="M344.748485,340.055534 C308.387197,377.636196 257.422053,401 201,401 C90.54305,401 1,311.45695 1,201 C1,90.54305 90.54305,1 201,1 C255.963615,1 305.748783,23.1715656 341.899692,59.0588845 L202.825764,198.132812 L344.748485,340.055534 Z"
+      />,
     ];
 
     var pacman = pac[this.state.pac];
@@ -32,7 +38,7 @@ class ScreenBlocker extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(::this.tick, 150);
+    this.interval = setInterval(this.tick, 150);
   }
 
   componentWillUnmount() {
@@ -40,8 +46,8 @@ class ScreenBlocker extends React.Component {
   }
 
   tick() {
-    if(this.state.pac === 0) this.setState({pac: 1});
-    else this.setState({pac: 0});
+    if (this.state.pac === 0) this.setState({ pac: 1 });
+    else this.setState({ pac: 0 });
   }
 }
 

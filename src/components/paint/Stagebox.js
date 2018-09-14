@@ -16,12 +16,12 @@ class Stagebox extends React.Component {
 
     this.mouse = {
       down: false,
-      downStart: { x: 0, y: 0 }
+      downStart: { x: 0, y: 0 },
     };
 
     this.cursor = {
       x: 0,
-      y: 0
+      y: 0,
     };
 
     this.cursorColor = "transparent";
@@ -30,6 +30,11 @@ class Stagebox extends React.Component {
     this.layerVisibilityMap = {}; // a helper map for easy access to layer visibilty
     this.layerBackup = null; // a backup canvas for MoveTool
     this.layers = {}; // layer refs
+
+    this.mousedown = this.mousedown.bind(this);
+    this.mouseup = this.mouseup.bind(this);
+    this.mousemove = this.mousemove.bind(this);
+    this.mouseout = this.mouseout.bind(this);
   }
 
   componentWillMount() {
@@ -59,7 +64,7 @@ class Stagebox extends React.Component {
 
     let style = {
       width: w,
-      height: h
+      height: h,
     };
 
     if (w > centerAreaWidth) style.left = 0;
@@ -73,7 +78,7 @@ class Stagebox extends React.Component {
     // if (style.top < 5) style.top = 5;
 
     const cssClasses = classnames({
-      checkerboard: !this.props.image
+      checkerboard: !this.props.image,
     });
 
     let grid = null;
@@ -109,11 +114,10 @@ class Stagebox extends React.Component {
         id="StageBox"
         className={cssClasses}
         style={style}
-        onMouseDown={::this.mousedown}
-        onMouseMove={::this.mousemove}
-        onMouseOut={::this.mouseout}
-        onMouseUp={::this.mouseup}
-      >
+        onMouseDown={this.mousedown}
+        onMouseMove={this.mousemove}
+        onMouseOut={this.mouseout}
+        onMouseUp={this.mouseup}>
         <StageboxCursorCanvas
           ref={n => (this.cursorCanvas = n)}
           width={w}
@@ -162,42 +166,10 @@ class Stagebox extends React.Component {
 
     this.mouse = {
       down: true,
-      downStart: point
+      downStart: point,
     };
 
     switch (this.props.tool) {
-    case "BrushTool":
-      this.useBrushTool(point);
-      break;
-    case "BrightnessTool":
-      this.useBrightnessTool(point);
-      break;
-    case "EraserTool":
-      this.useEraserTool(point);
-      break;
-    case "EyedropperTool":
-      this.useEyedropperTool();
-      break;
-    case "MoveTool":
-      this.startMoveTool();
-      break;
-    case "PaintbucketTool":
-      this.usePaintBucketTool(point);
-      break;
-    case "RectangularSelectionTool":
-      this.startRectangularSelection(point);
-      break;
-    case "ZoomTool":
-      this.useZoomTool();
-    }
-  }
-
-  mousemove(e) {
-    const point = this.getCoordinatesOnImage(e);
-    this.updateCursor(point);
-
-    if (this.mouse.down) {
-      switch (this.props.tool) {
       case "BrushTool":
         this.useBrushTool(point);
         break;
@@ -207,12 +179,44 @@ class Stagebox extends React.Component {
       case "EraserTool":
         this.useEraserTool(point);
         break;
+      case "EyedropperTool":
+        this.useEyedropperTool();
+        break;
       case "MoveTool":
-        this.previewMoveTool();
+        this.startMoveTool();
+        break;
+      case "PaintbucketTool":
+        this.usePaintBucketTool(point);
         break;
       case "RectangularSelectionTool":
-        this.resizeRectangularSelection(point);
+        this.startRectangularSelection(point);
         break;
+      case "ZoomTool":
+        this.useZoomTool();
+    }
+  }
+
+  mousemove(e) {
+    const point = this.getCoordinatesOnImage(e);
+    this.updateCursor(point);
+
+    if (this.mouse.down) {
+      switch (this.props.tool) {
+        case "BrushTool":
+          this.useBrushTool(point);
+          break;
+        case "BrightnessTool":
+          this.useBrightnessTool(point);
+          break;
+        case "EraserTool":
+          this.useEraserTool(point);
+          break;
+        case "MoveTool":
+          this.previewMoveTool();
+          break;
+        case "RectangularSelectionTool":
+          this.resizeRectangularSelection(point);
+          break;
       }
     }
   }
@@ -249,7 +253,7 @@ class Stagebox extends React.Component {
             this.props.layer
           ][point.x][point.y],
           cursorColor = new Color({
-            rgb: [currentPixel.r, currentPixel.g, currentPixel.b]
+            rgb: [currentPixel.r, currentPixel.g, currentPixel.b],
           });
         cursorColorHex = cursorColor.hex();
         cursorColorRGB = cursorColor.rgbHuman();
@@ -287,26 +291,26 @@ class Stagebox extends React.Component {
   finishTool() {
     if (this.mouse.down) {
       switch (this.props.tool) {
-      case "BrushTool":
-      case "BrightnessTool":
-        this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
-        this.pixels = {};
-        break;
-      case "EraserTool":
-        this.props.pixelsDelete(
+        case "BrushTool":
+        case "BrightnessTool":
+          this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
+          this.pixels = {};
+          break;
+        case "EraserTool":
+          this.props.pixelsDelete(
             this.props.frame,
             this.props.layer,
             this.pixels,
             this.props.pixels
           );
-        this.pixels = {};
-        break;
-      case "MoveTool":
-        this.endMoveTool();
-        break;
-      case "RectangularSelectionTool":
-        this.endRectangularSelection(this.cursor); //, distance);
-        break;
+          this.pixels = {};
+          break;
+        case "MoveTool":
+          this.endMoveTool();
+          break;
+        case "RectangularSelectionTool":
+          this.endRectangularSelection(this.cursor); //, distance);
+          break;
       }
 
       this.mouse.down = false;
@@ -328,13 +332,13 @@ class Stagebox extends React.Component {
             r: color.r,
             g: color.g,
             b: color.b,
-            a: 1
+            a: 1,
           };
 
         _.merge(this.pixels, {
           [point.x]: {
-            [point.y]: p
-          }
+            [point.y]: p,
+          },
         });
 
         const layerCanvas = this.layers[this.props.layer].layerCanvas
@@ -343,7 +347,7 @@ class Stagebox extends React.Component {
           x: p.x,
           y: p.y,
           layer: this.props.layer,
-          color: this.props.color
+          color: this.props.color,
         });
       }
     }
@@ -377,13 +381,13 @@ class Stagebox extends React.Component {
             r: color.r,
             g: color.g,
             b: color.b,
-            a: 1
+            a: 1,
           };
 
         _.merge(this.pixels, {
           [point.x]: {
-            [point.y]: p
-          }
+            [point.y]: p,
+          },
         });
 
         const layerCanvas = this.layers[this.props.layer].layerCanvas
@@ -392,7 +396,7 @@ class Stagebox extends React.Component {
           x: p.x,
           y: p.y,
           layer: this.props.layer,
-          color: color.hex()
+          color: color.hex(),
         });
       }
     }
@@ -409,13 +413,13 @@ class Stagebox extends React.Component {
           frame: this.props.frame,
           layer: this.props.layer,
           x: point.x,
-          y: point.y
+          y: point.y,
         };
 
         _.merge(this.pixels, {
           [point.x]: {
-            [point.y]: p
-          }
+            [point.y]: p,
+          },
         });
 
         const layerCanvas = this.layers[this.props.layer].layerCanvas
@@ -449,7 +453,7 @@ class Stagebox extends React.Component {
       const distance = this.getMouseDownDistance(),
         offset = {
           x: distance.x * this.props.zoom,
-          y: distance.y * this.props.zoom
+          y: distance.y * this.props.zoom,
         },
         canvas = document
           .getElementById(`StageBoxLayer-${this.props.layer}`)
@@ -541,14 +545,14 @@ class Stagebox extends React.Component {
             top: this.props.selection.start.y,
             right: this.props.selection.end.x,
             bottom: this.props.selection.end.y,
-            left: this.props.selection.start.x
+            left: this.props.selection.start.x,
           };
         } else {
           bounds = {
             top: 1,
             right: this.props.size.width,
             bottom: this.props.size.height,
-            left: 1
+            left: 1,
           };
         }
 
@@ -559,7 +563,7 @@ class Stagebox extends React.Component {
           layerZ,
           fillColor,
           pixels,
-          bounds
+          bounds,
         };
 
         this.worker.postMessage(data);
@@ -605,7 +609,7 @@ class Stagebox extends React.Component {
   getMouseDownDistance() {
     return {
       x: this.cursor.x - this.mouse.downStart.x,
-      y: this.cursor.y - this.mouse.downStart.y
+      y: this.cursor.y - this.mouse.downStart.y,
     };
   }
 

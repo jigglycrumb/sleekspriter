@@ -4,7 +4,7 @@ import {
   modalHide,
   fileCreate,
   screenSelect,
-  zoomFit
+  zoomFit,
 } from "../../state/actions";
 import { GridCanvas } from "../canvases";
 import initialState from "../../state/initialState";
@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => {
     hide: () => dispatch(modalHide()),
     fileCreate: (frames, pixels) => dispatch(fileCreate(frames, pixels)),
     screenSelect: screen => dispatch(screenSelect(screen)),
-    zoomFit: size => dispatch(zoomFit(size))
+    zoomFit: size => dispatch(zoomFit(size)),
   };
 };
 
@@ -23,12 +23,15 @@ class ModalNewFile extends React.Component {
   constructor(props) {
     super(props);
     this.state = { frames, size };
+
+    this.updateState = this.updateState.bind(this);
+    this.fileCreate = this.fileCreate.bind(this);
   }
 
   render() {
     var wrapperCss = {
       width: this.state.size.width * this.state.frames.x,
-      height: this.state.size.height * this.state.frames.y
+      height: this.state.size.height * this.state.frames.y,
     };
 
     var fileType =
@@ -58,7 +61,7 @@ class ModalNewFile extends React.Component {
                 ref={n => (this.framesX = n)}
                 value={this.state.frames.x}
                 min="1"
-                onChange={::this.updateState}
+                onChange={this.updateState}
               />
               x
               <input
@@ -66,7 +69,7 @@ class ModalNewFile extends React.Component {
                 ref={n => (this.framesY = n)}
                 value={this.state.frames.y}
                 min="1"
-                onChange={::this.updateState}
+                onChange={this.updateState}
               />
             </li>
             <li>
@@ -76,7 +79,7 @@ class ModalNewFile extends React.Component {
                 ref={n => (this.pixelsX = n)}
                 value={this.state.size.width}
                 min="1"
-                onChange={::this.updateState}
+                onChange={this.updateState}
               />
               x
               <input
@@ -84,21 +87,20 @@ class ModalNewFile extends React.Component {
                 ref={n => (this.pixelsY = n)}
                 value={this.state.size.height}
                 min="1"
-                onChange={::this.updateState}
+                onChange={this.updateState}
               />
               px
             </li>
             <li>
               <i>
-                {fileType} size: {this.state.frames.x * this.state.size.width}x{this
-                  .state.frames.y * this.state.size.height}{" "}
-                pixels
+                {fileType} size: {this.state.frames.x * this.state.size.width}x
+                {this.state.frames.y * this.state.size.height} pixels
               </i>
             </li>
           </ul>
         </div>
         <div className="actions">
-          <button onClick={::this.fileCreate}>Ok</button>
+          <button onClick={this.fileCreate}>Ok</button>
           <button onClick={this.props.hide}>Cancel</button>
         </div>
       </div>
@@ -108,7 +110,7 @@ class ModalNewFile extends React.Component {
   updateState() {
     var size = {
       frames: { x: +this.framesX.value, y: +this.framesY.value },
-      size: { width: +this.pixelsX.value, height: +this.pixelsY.value }
+      size: { width: +this.pixelsX.value, height: +this.pixelsY.value },
     };
     this.setState(size);
   }
@@ -121,4 +123,7 @@ class ModalNewFile extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ModalNewFile);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalNewFile);

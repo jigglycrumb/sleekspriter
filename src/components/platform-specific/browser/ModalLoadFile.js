@@ -5,7 +5,7 @@ import {
   fileLoad,
   layerSelectTop,
   modalHide,
-  zoomFit
+  zoomFit,
 } from "../../../state/actions";
 import { getFrameLayersZSorted } from "../../../state/selectors";
 import { AES, enc } from "crypto-js";
@@ -13,17 +13,22 @@ import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
 const mapStateToProps = state => ({
-  layers: getFrameLayersZSorted(state)
+  layers: getFrameLayersZSorted(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
   layerSelectTop: layers => dispatch(layerSelectTop(layers)),
   load: json => dispatch(fileLoad(json)),
-  zoomFit: size => dispatch(zoomFit(size))
+  zoomFit: size => dispatch(zoomFit(size)),
 });
 
 class ModalLoadFile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.loadFile = this.loadFile.bind(this);
+  }
+
   render() {
     return (
       <div className="dialog">
@@ -37,7 +42,7 @@ class ModalLoadFile extends React.Component {
           autoFocus
         />
         <div className="actions">
-          <button onClick={::this.loadFile}>{t("Open")}</button>
+          <button onClick={this.loadFile}>{t("Open")}</button>
           <button onClick={this.props.hide}>{t("Cancel")}</button>
         </div>
       </div>
@@ -67,4 +72,7 @@ class ModalLoadFile extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalLoadFile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalLoadFile);

@@ -7,8 +7,11 @@ class NameEditable extends React.Component {
     super(props);
 
     this.state = {
-      inputVisible: false
+      inputVisible: false,
     };
+
+    this.showNameInput = this.showNameInput.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
   }
 
   render() {
@@ -25,8 +28,7 @@ class NameEditable extends React.Component {
         <label
           ref={n => (this.nameLabel = n)}
           style={labelStyle}
-          onClick={::this.showNameInput}
-        >
+          onClick={this.showNameInput}>
           {this.props.name}
         </label>
 
@@ -34,8 +36,8 @@ class NameEditable extends React.Component {
           ref={n => (this.nameText = n)}
           type="text"
           defaultValue={this.props.name}
-          onKeyDown={::this.handleNameChange}
-          onBlur={::this.handleNameChange}
+          onKeyDown={this.handleNameChange}
+          onBlur={this.handleNameChange}
           style={inputStyle}
         />
       </div>
@@ -75,7 +77,7 @@ class NameEditable extends React.Component {
 
 NameEditable.propTypes = {
   name: PropTypes.string.isRequired,
-  callback: PropTypes.func.isRequired
+  callback: PropTypes.func.isRequired,
 };
 
 export default NameEditable;

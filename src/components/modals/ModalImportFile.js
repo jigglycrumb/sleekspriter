@@ -7,7 +7,7 @@ import importWorker from "worker-loader!../../workers/import";
 
 const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
-  load: json => dispatch(fileLoad(json))
+  load: json => dispatch(fileLoad(json)),
 });
 
 class ModalImportFile extends React.Component {
@@ -19,13 +19,18 @@ class ModalImportFile extends React.Component {
         width: 0,
         height: 0,
         name: null,
-        data: null
+        data: null,
       },
       frames: {
         x: 1,
-        y: 1
-      }
+        y: 1,
+      },
     };
+
+    this.updateFrames = this.updateFrames.bind(this);
+    this.cancel = this.cancel.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.import = this.import.bind(this);
   }
 
   componentWillMount() {
@@ -55,7 +60,7 @@ class ModalImportFile extends React.Component {
     if (this.state.image.data !== null) {
       const wrapperCss = {
         width: this.state.image.width,
-        height: this.state.image.height
+        height: this.state.image.height,
       };
 
       const s = this.calculateFrameSize(),
@@ -106,7 +111,7 @@ class ModalImportFile extends React.Component {
               ref={n => (this.framesX = n)}
               value={this.state.frames.x}
               min="1"
-              onChange={::this.updateFrames}
+              onChange={this.updateFrames}
             />
             x
             <input
@@ -114,7 +119,7 @@ class ModalImportFile extends React.Component {
               ref={n => (this.framesY = n)}
               value={this.state.frames.y}
               min="1"
-              onChange={::this.updateFrames}
+              onChange={this.updateFrames}
             />
           </li>
           <li>
@@ -130,15 +135,14 @@ class ModalImportFile extends React.Component {
         <div className="text">
           <div
             className="new-file-preview"
-            onDragOver={::this.cancel}
-            onDrop={::this.handleDrop}
-          >
+            onDragOver={this.cancel}
+            onDrop={this.handleDrop}>
             {imageDropZone}
           </div>
           {frameSettings}
         </div>
         <div className="actions">
-          <button onClick={::this.import} disabled={okButtonDisabled}>
+          <button onClick={this.import} disabled={okButtonDisabled}>
             {t("Ok")}
           </button>
           <button onClick={this.props.hide}>{t("Cancel")}</button>
@@ -161,7 +165,7 @@ class ModalImportFile extends React.Component {
         allowed = {
           "image/jpeg": true,
           "image/gif": true,
-          "image/png": true
+          "image/png": true,
         };
 
       if (file.type in allowed) {
@@ -182,8 +186,8 @@ class ModalImportFile extends React.Component {
                   width: dummy.naturalWidth,
                   height: dummy.naturalHeight,
                   name: fileName,
-                  data: data
-                }
+                  data: data,
+                },
               });
             };
           };
@@ -196,7 +200,7 @@ class ModalImportFile extends React.Component {
   calculateFrameSize() {
     return {
       width: this.state.image.width / this.state.frames.x,
-      height: this.state.image.height / this.state.frames.y
+      height: this.state.image.height / this.state.frames.y,
     };
   }
 
@@ -208,7 +212,7 @@ class ModalImportFile extends React.Component {
     return {
       widthValid: widthValid,
       heightValid: heightValid,
-      allValid: widthValid && heightValid
+      allValid: widthValid && heightValid,
     };
   }
 
@@ -216,8 +220,8 @@ class ModalImportFile extends React.Component {
     this.setState({
       frames: {
         x: +this.framesX.value,
-        y: +this.framesY.value
-      }
+        y: +this.framesY.value,
+      },
     });
   }
 
@@ -245,8 +249,8 @@ class ModalImportFile extends React.Component {
           state: this.state,
           imageDimensions: {
             width: image.width,
-            height: image.height
-          }
+            height: image.height,
+          },
         };
 
       this.worker.postMessage(data);
@@ -254,4 +258,7 @@ class ModalImportFile extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ModalImportFile);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalImportFile);

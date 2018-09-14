@@ -3,12 +3,21 @@ import ReactDOM from "react-dom";
 
 function CanvasDecorator(DecoratedComponent) {
   return class CanvasDecorated extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.clear = this.clear.bind(this);
+      this.clearSinglePixel = this.clearSinglePixel.bind(this);
+      this.fitToSize = this.fitToSize.bind(this);
+      this.paintSinglePixel = this.paintSinglePixel.bind(this);
+    }
+
     render() {
       const extraProps = {
-        clear: ::this.clear,
-        clearSinglePixel: ::this.clearSinglePixel,
-        fitToSize: ::this.fitToSize,
-        paintSinglePixel: ::this.paintSinglePixel
+        clear: this.clear,
+        clearSinglePixel: this.clearSinglePixel,
+        fitToSize: this.fitToSize,
+        paintSinglePixel: this.paintSinglePixel,
       };
 
       return (
@@ -53,9 +62,9 @@ function CanvasDecorator(DecoratedComponent) {
       return {
         size: {
           width: w,
-          height: h
+          height: h,
         },
-        style: style
+        style: style,
       };
     }
 

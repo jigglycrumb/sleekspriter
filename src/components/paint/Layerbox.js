@@ -3,6 +3,12 @@ import LayerboxLayer from "./LayerboxLayer";
 import { t } from "../../utils";
 
 class Layerbox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.layerAdd = this.layerAdd.bind(this);
+    this.confirmLayerDelete = this.confirmLayerDelete.bind(this);
+  }
+
   render() {
     const deleteButtonDisabled =
       this.props.layers.length <= 1 || this.props.selected === null;
@@ -41,16 +47,14 @@ class Layerbox extends React.Component {
           <button
             title={t("New layer above selected layer")}
             className="tiny transparent"
-            onClick={::this.layerAdd}
-          >
+            onClick={this.layerAdd}>
             <i className="flaticon-plus25" />
           </button>
           <button
             title={t("Delete selected layer")}
             className="tiny transparent"
             disabled={deleteButtonDisabled}
-            onClick={::this.confirmLayerDelete}
-          >
+            onClick={this.confirmLayerDelete}>
             <i className="flaticon-minus18" />
           </button>
         </div>
