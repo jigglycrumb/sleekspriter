@@ -4,27 +4,60 @@
 <head>
   <meta charset="UTF-8">
   <title>SleekSpriter</title>
-  <link rel="stylesheet" type="text/css" href="homepage.css">
+  <link rel="stylesheet" type="text/css" href="assets/homepage.css">
+  <link rel="stylesheet" type="text/css" href="assets/ribbons.css">
+  <link rel="stylesheet" type="text/css" href="assets/gallery.css">
 </head>
 
 <body>
-  <div>
+  <header>
     <img src="assets/logo@x4.png" alt="SleekSpriter" />
     <h1>A cross-platform pixel art editor</h1>
-  </div>
-  <ul>
-    <li>
-      <label>web</label>
-      <div class="appframe">
-        <div class="appframe-inner">
-          <iframe src="app/index.html"></iframe>
-        </div>
-      </div>
-    </li>
+  </header>
 
-  </ul>
+  <main>
+    <div class="gallery items-3 autoplay">
+      <div id="item-1" class="control-operator"></div>
+      <div id="item-2" class="control-operator"></div>
+      <div id="item-3" class="control-operator"></div>
+
+      <figure class="item">
+        <div class="browser-frame">
+          <div class="ribbon ribbon-top-right"><span>try me</span></div>
+          <div class="browser-frame-inner">
+            <iframe src="app/index.html"></iframe>
+          </div>
+        </div>
+      </figure>
+      <figure class="item">
+        <div class="generic-frame">
+          <div class="ribbon ribbon-top-right"><span>soon</span></div>
+          <div class="generic-frame-inner">
+            <iframe src="app/index.html"></iframe>
+          </div>
+        </div>
+      </figure>
+      <figure class="item">
+        <div class="generic-frame">
+          <div class="ribbon ribbon-top-right"><span>later</span></div>
+          <div class="generic-frame-inner">
+            <img src="assets/logo@x4.png" alt="dummy">
+          </div>
+        </div>
+      </figure>
+
+      <div class="controls">
+        <a href="#item-1" class="control-button">web</a>
+        <a href="#item-2" class="control-button">desktop</a>
+        <a href="#item-3" class="control-button">tablet</a>
+      </div>
+    </div>
+  </main>
+
   <footer>
-    &copy; <a href="http://hpcodecraft.me">hpcodecraft</a>
+    &copy;
+    &nbsp;<a href="http://hpcodecraft.me" target="_blank">hpcodecraft</a>
+    &nbsp;<script>document.write(new Date().getFullYear())</script>
   </footer>
 </body>
 
