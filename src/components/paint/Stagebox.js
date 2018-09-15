@@ -8,7 +8,7 @@ import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 import _ from "lodash";
 import { getPixelsInScope, selectionIsActive, insideBounds } from "../../utils";
-import paintbucketWorker from "worker-loader!../../workers/paintbucket";
+import paintbucketWorker from "../../workers/paintbucket";
 
 class Stagebox extends React.Component {
   constructor(props) {

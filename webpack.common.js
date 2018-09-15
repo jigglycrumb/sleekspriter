@@ -15,14 +15,16 @@ const config = {
     path: path.resolve(__dirname, "dist"),
     // publicPath: "dist/",
     filename: "bundle.js",
+    globalObject: `typeof self !== 'undefined' ? self : this`, // fix for "window not defined"
   },
   resolve: {
-    extensions: [".less", ".css", ".js", ".json", ".jsx"],
+    extensions: [".less", ".css", ".worker.js", ".js", ".json", ".jsx"],
   },
   module: {
     rules: [
       {
         test: /\.(css|less)$/,
+        include: path.resolve(__dirname, "src"),
         use: [
           {
             loader: "style-loader",
@@ -37,6 +39,18 @@ const config = {
             loader: "less-loader",
             options: {
               sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.worker\.js$/,
+        include: path.resolve(__dirname, "src/workers"),
+        use: [
+          {
+            loader: "worker-loader",
+            options: {
+              name: "[hash].app-worker.js",
             },
           },
         ],
@@ -128,16 +142,6 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "src/index.html",
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        worker: {
-          output: {
-            filename: "[id].[hash].worker.js",
-            chunkFilename: "[id].[hash].worker.js",
-          },
-        },
-      },
     }),
   ],
 };

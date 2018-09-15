@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { t, fileToState } from "../../utils";
 import { modalHide, fileLoad } from "../../state/actions";
 import { GridCanvas } from "../canvases";
-import importWorker from "worker-loader!../../workers/import";
+import importWorker from "../../workers/import";
 
 const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
@@ -258,4 +258,7 @@ class ModalImportFile extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ModalImportFile);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalImportFile);
