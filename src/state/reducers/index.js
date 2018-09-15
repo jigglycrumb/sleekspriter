@@ -1,2 +1,2 @@
-export fileReducer from "./fileReducer";
-export uiReducer from "./uiReducer";
+export { default as fileReducer } from "./fileReducer";
+export { default as uiReducer } from "./uiReducer";

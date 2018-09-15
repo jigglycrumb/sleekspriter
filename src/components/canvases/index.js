@@ -1,4 +1,4 @@
-export FrameCanvas from "./FrameCanvas";
-export GridCanvas from "./GridCanvas";
-export LayerCanvas from "./LayerCanvas";
-export SpritesheetCanvas from "./SpritesheetCanvas";
+export { default as FrameCanvas } from "./FrameCanvas";
+export { default as GridCanvas } from "./GridCanvas";
+export { default as LayerCanvas } from "./LayerCanvas";
+export { default as SpritesheetCanvas } from "./SpritesheetCanvas";

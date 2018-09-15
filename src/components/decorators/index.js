@@ -1,1 +1,1 @@
-export CanvasDecorator from "./CanvasDecorator";
+export { default as CanvasDecorator } from "./CanvasDecorator";
