@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:700);
 
 body {
-  color: #dd4408;
+  color: #fcc71b;
   font-family: "Lato", Helvetica, Arial, sans-serif;
   margin: 0;
   text-align: center;
@@ -29,7 +29,7 @@ a,
 a:hover,
 a:active,
 a:visited {
-  color: #dd4408;
+  color: #fcc71b;
 }
 
 .browser-frame {
