@@ -1,5 +1,5 @@
 import iconfont from "./fonts/flaticon";
-import styles from "./styles/common";
+import styles from "./styles";
 
 import React from "react";
 import ReactDOM from "react-dom";
