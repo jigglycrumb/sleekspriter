@@ -1,6 +1,6 @@
 import React from "react";
 import TWEEN from "tween.js";
-import Colorswatch from "./Colorswatch";
+import { Colorswatch } from "../common";
 
 class Palette extends React.Component {
   constructor(props) {

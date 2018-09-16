@@ -1,7 +1,7 @@
 // worker for image import
 // return JSON like the raw *.pixels file format
 
-onmessage = function(e) {
+self.onmessage = function(e) {
   const { frameSize, imageData, state, imageDimensions } = e.data;
 
   let json = {
@@ -75,5 +75,5 @@ onmessage = function(e) {
     }
   }
 
-  postMessage(json);
+  self.postMessage(json);
 };

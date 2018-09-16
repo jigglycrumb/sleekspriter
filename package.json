@@ -22,7 +22,9 @@
       "\\.(css|less|sass|scss)$": "<rootDir>/tests/__mocks__/styleMock.js"
     },
     "moduleFileExtensions": [
-      "js"
+      "worker.js",
+      "js",
+      "json"
     ],
     "moduleDirectories": [
       "node_modules",

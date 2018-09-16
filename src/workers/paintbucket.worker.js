@@ -35,7 +35,7 @@ function getAdjacentPixels(point, bounds) {
   return arr;
 }
 
-onmessage = function(e) {
+self.onmessage = function(e) {
   let newPixels = {}; // the worker will return this
 
   const { point, pixels, fillColor, layer, layerZ, frame, bounds } = e.data;
@@ -114,5 +114,5 @@ onmessage = function(e) {
   }
 
   // post back the new pixels
-  postMessage(newPixels);
+  self.postMessage(newPixels);
 };

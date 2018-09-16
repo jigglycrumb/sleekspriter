@@ -1,3 +1,4 @@
+// const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const metadata = require("./metadata.json");
@@ -142,6 +143,9 @@ const config = {
     new HtmlWebpackPlugin({
       template: "src/index.html",
     }),
+    // new webpack.HotModuleReplacementPlugin({
+    //   multiStep: true,
+    // }),
   ],
 };
 

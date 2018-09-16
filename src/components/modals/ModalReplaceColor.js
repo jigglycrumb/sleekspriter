@@ -10,8 +10,7 @@ import {
   getSelection,
   getSpritePalette,
 } from "../../state/selectors";
-import ColorSwatch from "../paint/ColorSwatch";
-import BrushColorPicker from "../paint/BrushColorpicker";
+import { ColorswatchPicker } from "../common";
 import Palette from "../paint/Palette";
 
 const mapStateToProps = state => ({
@@ -58,7 +57,6 @@ class ModalReplaceColor extends React.Component {
     this.state = {
       color,
       newColor: "#ffffff",
-      pickerVisible: false,
       scope: "layer",
     };
   }
@@ -78,16 +76,10 @@ class ModalReplaceColor extends React.Component {
           </div>
           <label style={{ margin: "5px 0" }}>with</label>
           <div className="to">
-            <ColorSwatch
+            <ColorswatchPicker
               color={this.state.newColor}
-              action={() => this.togglePicker()}
+              action={color => this.setState({ newColor: color })}
             />
-            {this.state.pickerVisible === true ? (
-              <BrushColorPicker
-                color={this.state.newColor}
-                action={color => this.setState({ newColor: color })}
-              />
-            ) : null}
           </div>
           <ul className="horizontal">
             <li>
@@ -139,13 +131,6 @@ class ModalReplaceColor extends React.Component {
     );
   }
 
-  togglePicker() {
-    const isVisible = !this.state.pickerVisible;
-    this.setState({
-      pickerVisible: isVisible,
-    });
-  }
-
   setScope(e) {
     this.setState({ scope: e.target.value });
   }
@@ -170,4 +155,7 @@ class ModalReplaceColor extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalReplaceColor);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalReplaceColor);

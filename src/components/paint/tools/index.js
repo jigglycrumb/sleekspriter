@@ -1,8 +1,10 @@
-export BrightnessTool from "./BrightnessTool";
-export BrushTool from "./BrushTool";
-export EraserTool from "./EraserTool";
-export EyedropperTool from "./EyedropperTool";
-export MoveTool from "./MoveTool";
-export PaintbucketTool from "./PaintbucketTool";
-export RectangularSelectionTool from "./RectangularSelectionTool";
-export ZoomTool from "./ZoomTool";
+export { default as BrightnessTool } from "./BrightnessTool";
+export { default as BrushTool } from "./BrushTool";
+export { default as EraserTool } from "./EraserTool";
+export { default as EyedropperTool } from "./EyedropperTool";
+export { default as MoveTool } from "./MoveTool";
+export { default as PaintbucketTool } from "./PaintbucketTool";
+export {
+  default as RectangularSelectionTool,
+} from "./RectangularSelectionTool";
+export { default as ZoomTool } from "./ZoomTool";

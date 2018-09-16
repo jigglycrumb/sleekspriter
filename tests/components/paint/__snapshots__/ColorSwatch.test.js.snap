@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ColorSwatch should render correctly 1`] = `"<div class=\\"colorswatch\\" style=\\"background:#ff0000\\" title=\\"#ff0000\\"></div>"`;
-
-exports[`ColorSwatch should render with a background color 1`] = `"<div class=\\"colorswatch\\" style=\\"background:#ff0000\\" title=\\"#ff0000\\"></div>"`;

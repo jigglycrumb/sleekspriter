@@ -178,7 +178,8 @@ input {
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[spellcheck="false"] {
   background: #3a3a3a;
   .inset-shadow;
   border-top: none;
@@ -428,4 +429,44 @@ ul {
 
 .error {
   color: red !important;
+}
+
+.color-picker {
+  background: @medium;
+  border: 1px solid @dark;
+  width: 170px;
+
+  & > div {
+    margin: 5px 10px;
+    position: relative;
+  }
+
+  .title {
+    border-bottom: 1px solid @dark;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 0 10px 0;
+    padding-left: 10px;
+    .gradient;
+  }
+
+  .hue {
+    height: 10px;
+    margin-bottom: 10px;
+  }
+
+  .saturation {
+    height: 150px;
+  }
+
+  .input {
+    height: 20px;
+    margin-top: 10px;
+
+    input {
+      box-sizing: border-box;
+      float: left;
+      width: 100%;
+    }
+  }
 }
