@@ -13,8 +13,25 @@ const SEPERATOR = { label: "---" };
 
 class Menu extends React.Component {
   state = {
+    active: false,
     fullscreen: false,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.activate = this.activate.bind(this);
+    this.deactivate = this.deactivate.bind(this);
+    this.onOutsideClick = this.onOutsideClick.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener("mousedown", this.onOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onOutsideClick, false);
+  }
 
   render() {
     const {
@@ -371,33 +388,63 @@ class Menu extends React.Component {
       },
     ];
 
+    const cssClasses = {
+      menu: true,
+      active: this.state.active,
+      activeItem: null,
+    };
+
     return (
-      <nav className="menu">
+      <nav className={classnames(cssClasses)} ref={node => (this.node = node)}>
         <ul>
           {MenuConfig.map((item, index) => {
             const cssClasses = {
               disabled: !inArray(item.screen, this.props.screen),
+              active: index === this.state.activeItem,
             };
 
             return (
-              <li key={index} className={classnames(cssClasses)}>
+              <li
+                key={index}
+                className={classnames(cssClasses)}
+                onClick={e => this.activate(e, index)}
+                onMouseOver={() => {
+                  if (this.state.active) {
+                    this.setState({ activeItem: index });
+                  }
+                }}>
                 <span>{item.label}</span>
-                <div>
+                <div
+                  className="submenu"
+                  style={{
+                    display: index === this.state.activeItem ? "block" : "none",
+                  }}>
                   <ul>
                     {item.items.map((i, index2) => {
                       if (i === SEPERATOR) {
                         return <hr key={index2} />;
                       }
 
-                      if (i.action) {
-                        return (
-                          <li key={index2} onClick={i.action}>
-                            {i.label}
-                          </li>
-                        );
-                      }
+                      const action = e => {
+                        if (i.action) {
+                          i.action();
+                        }
+                        this.deactivate(e);
+                      };
 
-                      return <li key={index2}>{i.label}</li>;
+                      // if (i.action) {
+                      //   return (
+                      //     <li key={index2} onClick={i.action}>
+                      //       {i.label}
+                      //     </li>
+                      //   );
+                      // }
+
+                      return (
+                        <li key={index2} onClick={action}>
+                          {i.label}
+                        </li>
+                      );
                     })}
                   </ul>
                 </div>
@@ -407,6 +454,28 @@ class Menu extends React.Component {
         </ul>
       </nav>
     );
+  }
+
+  activate(e, index) {
+    e.stopPropagation();
+    this.setState({
+      active: true,
+      activeItem: index,
+    });
+  }
+
+  deactivate(e) {
+    e.stopPropagation();
+    this.setState({
+      active: false,
+      activeItem: null,
+    });
+  }
+
+  onOutsideClick(e) {
+    if (!this.node.contains(e.target)) {
+      this.deactivate(e);
+    }
   }
 }
 
