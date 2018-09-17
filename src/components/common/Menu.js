@@ -397,32 +397,35 @@ class Menu extends React.Component {
     return (
       <nav className={classnames(cssClasses)} ref={node => (this.node = node)}>
         <ul>
-          {MenuConfig.map((item, index) => {
+          {MenuConfig.map((item, menuItemIndex) => {
             const cssClasses = {
               disabled: !inArray(item.screen, this.props.screen),
-              active: index === this.state.activeItem,
+              active: menuItemIndex === this.state.activeItem,
             };
 
             return (
               <li
-                key={index}
+                key={menuItemIndex}
                 className={classnames(cssClasses)}
-                onClick={e => this.activate(e, index)}
+                onClick={e => this.activate(e, menuItemIndex)}
                 onMouseOver={() => {
                   if (this.state.active) {
-                    this.setState({ activeItem: index });
+                    this.setState({ activeItem: menuItemIndex });
                   }
                 }}>
                 <span>{item.label}</span>
                 <div
                   className="submenu"
                   style={{
-                    display: index === this.state.activeItem ? "block" : "none",
+                    display:
+                      menuItemIndex === this.state.activeItem
+                        ? "block"
+                        : "none",
                   }}>
                   <ul>
-                    {item.items.map((i, index2) => {
+                    {item.items.map((i, subMenuItemIndex) => {
                       if (i === SEPERATOR) {
-                        return <hr key={index2} />;
+                        return <hr key={subMenuItemIndex} />;
                       }
 
                       const action = e => {
@@ -432,16 +435,8 @@ class Menu extends React.Component {
                         this.deactivate(e);
                       };
 
-                      // if (i.action) {
-                      //   return (
-                      //     <li key={index2} onClick={i.action}>
-                      //       {i.label}
-                      //     </li>
-                      //   );
-                      // }
-
                       return (
-                        <li key={index2} onClick={action}>
+                        <li key={subMenuItemIndex} onClick={action}>
                           {i.label}
                         </li>
                       );
