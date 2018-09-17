@@ -22,6 +22,15 @@ class ColorswatchPicker extends React.Component {
   constructor(props) {
     super(props);
     this.togglePicker = this.togglePicker.bind(this);
+    this.onOutsideClick = this.onOutsideClick.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener("mousedown", this.onOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onOutsideClick, false);
   }
 
   render() {
@@ -33,7 +42,7 @@ class ColorswatchPicker extends React.Component {
         <Colorswatch color={hex} action={this.togglePicker} />
 
         {pickerVisible && (
-          <div className="color-picker" onMouseLeave={this.togglePicker}>
+          <div className="color-picker" ref={node => (this.node = node)}>
             <div className="title">Pick a color</div>
             <div className="hue">
               <Hue {...this.props} onChange={this.props.onChange} />
@@ -59,6 +68,12 @@ class ColorswatchPicker extends React.Component {
     if (!pickerVisible) {
       const { action, hex } = this.props;
       action(hex);
+    }
+  }
+
+  onOutsideClick(e) {
+    if (this.node && !this.node.contains(e.target)) {
+      this.togglePicker();
     }
   }
 }
