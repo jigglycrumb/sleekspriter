@@ -166,7 +166,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         case "spritesheet":
           newPixels = manipulateSpritePixels(
             pixels,
-            replaceColor.bind(this, color, newColor, bounds)
+            replaceColor.bind(this, color, newColor, null)
           );
 
           return newPixels;
@@ -174,7 +174,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         case "frame":
           newPixels = manipulateFramePixels(
             pixels,
-            replaceColor.bind(this, color, newColor)
+            replaceColor.bind(this, color, newColor, null)
           );
 
           state = sprout.dissoc(state, [frame]);
