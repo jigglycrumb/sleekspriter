@@ -62,7 +62,7 @@ const config = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["es2017", "react", "stage-0"],
+              presets: ["@babel/preset-env", "@babel/preset-react"],
             },
           },
         ],
