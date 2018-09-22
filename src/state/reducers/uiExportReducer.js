@@ -2,6 +2,8 @@ import initialState from "../initialState";
 
 function uiExportReducer(state = initialState.ui.export, action) {
   switch (action.type) {
+    case "EXPORT_BACKGROUND":
+      return { ...state, background: action.background };
     case "EXPORT_FORMAT":
       return { ...state, format: action.format };
     case "EXPORT_FRAME":

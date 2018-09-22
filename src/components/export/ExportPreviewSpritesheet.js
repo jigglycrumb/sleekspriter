@@ -4,6 +4,7 @@ import classnames from "classnames";
 import { SpritesheetCanvas } from "../canvases";
 
 const ExportPreviewSpritesheet = ({
+  background,
   format,
   frames,
   layers,
@@ -18,8 +19,9 @@ const ExportPreviewSpritesheet = ({
     style = {
       width: frames.x * size.width * zoom,
       height: frames.y * size.height * zoom,
-    },
-    background = format === "jpeg" ? "#ffffff" : null;
+    };
+
+  background = format === "jpeg" ? background : null;
 
   return (
     <div className={classnames(classes)} style={style}>

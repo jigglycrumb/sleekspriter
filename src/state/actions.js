@@ -28,6 +28,10 @@ export const colorReplace = (
   size,
   pixels,
 });
+export const exportBackground = background => ({
+  type: "EXPORT_BACKGROUND",
+  background,
+});
 export const exportFormat = format => ({ type: "EXPORT_FORMAT", format });
 export const exportFrame = frame => ({ type: "EXPORT_FRAME", frame });
 export const exportPart = part => ({ type: "EXPORT_PART", part });

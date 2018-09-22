@@ -1,5 +1,11 @@
 import { connect } from "react-redux";
 import {
+  getExportBackground,
+  getExportFormat,
+  getExportFrame,
+  getExportPart,
+  getExportStatus,
+  getExportZoom,
   getFileFrames,
   getFileLayers,
   getFilePixels,
@@ -8,6 +14,7 @@ import {
 } from "../../state/selectors";
 
 import {
+  exportBackground,
   exportFormat,
   exportFrame,
   exportPart,
@@ -15,22 +22,24 @@ import {
   exportZoom,
 } from "../../state/actions";
 
-import ScreenExport from "../screens/ScreenExport";
+import { ScreenExport } from "../screens";
 
 const mapStateToProps = state => ({
-  format: state.ui.export.format,
-  frame: state.ui.export.frame,
+  background: getExportBackground(state),
+  format: getExportFormat(state),
+  frame: getExportFrame(state),
   frames: getFileFrames(state),
   layers: getFileLayers(state),
-  part: state.ui.export.part,
+  part: getExportPart(state),
   pixels: getFilePixels(state),
   size: getFileSize(state),
-  status: state.ui.export.status,
+  status: getExportStatus(state),
   totalFrames: getTotalFrames(state),
-  zoom: state.ui.export.zoom,
+  zoom: getExportZoom(state),
 });
 
 const mapDispatchToProps = dispatch => ({
+  setBackground: background => dispatch(exportBackground(background)),
   setFormat: format => dispatch(exportFormat(format)),
   setFrame: frame => dispatch(exportFrame(frame)),
   setPart: part => dispatch(exportPart(part)),
@@ -38,4 +47,7 @@ const mapDispatchToProps = dispatch => ({
   setZoom: zoom => dispatch(exportZoom(zoom)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenExport);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ScreenExport);

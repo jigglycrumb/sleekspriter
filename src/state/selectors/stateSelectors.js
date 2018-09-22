@@ -1,4 +1,11 @@
 // state input selectors
+export const getExportBackground = state => state.ui.export.background;
+export const getExportFormat = state => state.ui.export.format;
+export const getExportFrame = state => state.ui.export.frame;
+export const getExportPart = state => state.ui.export.part;
+export const getExportStatus = state => state.ui.export.status;
+export const getExportZoom = state => state.ui.export.zoom;
+
 export const getFileFrames = state => state.file.present.frames;
 export const getFileLayers = state => state.file.present.layers;
 export const getFilePixels = state => state.file.present.pixels;

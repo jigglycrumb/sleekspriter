@@ -1,11 +1,20 @@
 import React from "react";
 import classnames from "classnames";
-import MenuContainer from "../containers/MenuContainer";
-import ModalContainer from "../containers/ModalContainer";
-import ScreenPaintContainer from "../containers/ScreenPaintContainer";
-import ScreenStartContainer from "../containers/ScreenStartContainer";
-import ScreenExportContainer from "../containers/ScreenExportContainer";
-import ScreenBlocker from "../screens/ScreenBlocker";
+
+import {
+  MenuContainer,
+  ModalContainer,
+  ScreenPaintContainer,
+  ScreenStartContainer,
+  ScreenExportContainer,
+} from "../containers";
+
+// import MenuContainer from "../containers/MenuContainer";
+// import ModalContainer from "../containers/ModalContainer";
+// import ScreenPaintContainer from "../containers/ScreenPaintContainer";
+// import ScreenStartContainer from "../containers/ScreenStartContainer";
+// import ScreenExportContainer from "../containers/ScreenExportContainer";
+import { ScreenBlocker } from "../screens";
 
 import { Hotkeys } from "../../classes";
 

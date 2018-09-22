@@ -1,13 +1,13 @@
 import React from "react";
 import { t } from "../../utils";
 
-import ExportPreviewSingleFrame from "./ExportPreviewSingleFrame";
-import ExportPreviewSpritesheet from "./ExportPreviewSpritesheet";
+import { ExportPreviewSingleFrame, ExportPreviewSpritesheet } from ".";
 
 const ExportPreviewAllFrames = () => <div>ExportPreviewAllFrames</div>;
 const ExportPreviewAnimation = () => <div>ExportPreviewAnimation</div>;
 
 const ExportPreviewbox = ({
+  background,
   format,
   frame,
   frames,
@@ -22,6 +22,7 @@ const ExportPreviewbox = ({
     case "spritesheet":
       preview = (
         <ExportPreviewSpritesheet
+          background={background}
           format={format}
           frames={frames}
           layers={layers}
@@ -39,6 +40,7 @@ const ExportPreviewbox = ({
     case "frame":
       preview = (
         <ExportPreviewSingleFrame
+          background={background}
           format={format}
           frame={frame}
           size={size}

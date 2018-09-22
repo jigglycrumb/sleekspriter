@@ -1,16 +1,26 @@
 import React from "react";
 import { t } from "../../utils";
 
-import ExportButton from "../export/ExportButton";
-import ExportOutputSelection from "../export/ExportOutputSelection";
-import ExportPartSelection from "../export/ExportPartSelection";
-import ExportPreviewbox from "../export/ExportPreviewbox";
-import ExportZoomSelection from "../export/ExportZoomSelection";
-import ExportStatus from "../export/ExportStatus";
+import {
+  ExportBackgroundSelection,
+  ExportButton,
+  ExportFormatSelection,
+  ExportPartSelection,
+  ExportPreviewbox,
+  ExportStatus,
+  ExportZoomSelection,
+} from "../export";
 
 class ScreenExport extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.export = this.export.bind(this);
+  }
+
   render() {
     const {
+      background,
       frame,
       frames,
       format,
@@ -22,6 +32,15 @@ class ScreenExport extends React.Component {
       zoom,
       totalFrames,
     } = this.props;
+
+    const backgroundSelection =
+      format !== "jpeg" ? null : (
+        <ExportBackgroundSelection
+          background={background}
+          setBackground={this.props.setBackground}
+        />
+      );
+
     const partSelection =
       totalFrames === 1 ? null : (
         <ExportPartSelection
@@ -46,17 +65,19 @@ class ScreenExport extends React.Component {
               size={size}
               setZoom={this.props.setZoom}
             />
-            <ExportOutputSelection
+            <ExportFormatSelection
               format={format}
               part={part}
               setFormat={this.props.setFormat}
             />
-            <ExportButton export={() => this.export()} />
+            {backgroundSelection}
+            <ExportButton export={this.export} />
           </div>
         </div>
 
         <div className="area right">
           <ExportPreviewbox
+            background={background}
             frame={frame}
             frames={frames}
             format={format}
