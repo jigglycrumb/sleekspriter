@@ -31,6 +31,7 @@ class ModalSaveFile extends React.Component {
         <textarea
           className="json-input"
           ref={n => (this.jsonInput = n)}
+          onChange={() => {}}
           value={AES.encrypt(
             JSON.stringify(stateToFile(this.props.file)),
             fileEncryptionSecret
@@ -45,4 +46,7 @@ class ModalSaveFile extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalSaveFile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalSaveFile);
