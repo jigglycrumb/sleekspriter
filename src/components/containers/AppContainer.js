@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Hotkeys } from "../../classes";
-import App from "../common/App";
+import { App } from "../common";
 
 import { getScreen } from "../../state/selectors";
 
@@ -13,4 +13,7 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
