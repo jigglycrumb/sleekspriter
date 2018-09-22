@@ -80,7 +80,7 @@ Icons from: Icons from
 licensed by: licensed by
 Settings: Settings
 Export: Export
-Output: Output
+Save as: Save as
 Zoom: Zoom
 "Image size: ${w}x${h} pixels": "Image size: ${w}x${h} pixels"
 "Frame size: ${w}x${h} pixels": "Frame size: ${w}x${h} pixels"
@@ -90,3 +90,4 @@ Export finished: Export finished
 New file: New file
 as image: as image
 Replace color: Replace color
+Background: Background

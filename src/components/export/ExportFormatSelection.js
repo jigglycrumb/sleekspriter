@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { t } from "../../utils";
 
-const ExportOutputSelection = ({ format, part, setFormat }) => {
+const ExportFormatSelection = ({ format, part, setFormat }) => {
   let formats = ["png", "jpg"];
   if (part === "animation") {
     formats = ["gif"]; //, "mov"];
@@ -10,7 +10,7 @@ const ExportOutputSelection = ({ format, part, setFormat }) => {
 
   return (
     <div>
-      <h6>{t("Output")}</h6>
+      <h6>{t("Save as")}</h6>
       <ul>
         <li>
           <select onChange={e => setFormat(e.target.value)} value={format}>
@@ -28,10 +28,10 @@ const ExportOutputSelection = ({ format, part, setFormat }) => {
   );
 };
 
-ExportOutputSelection.propTypes = {
+ExportFormatSelection.propTypes = {
   format: PropTypes.string.isRequired,
   part: PropTypes.string.isRequired,
   setFormat: PropTypes.func.isRequired,
 };
 
-export default ExportOutputSelection;
+export default ExportFormatSelection;
