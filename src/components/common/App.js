@@ -9,13 +9,7 @@ import {
   ScreenExportContainer,
 } from "../containers";
 
-// import MenuContainer from "../containers/MenuContainer";
-// import ModalContainer from "../containers/ModalContainer";
-// import ScreenPaintContainer from "../containers/ScreenPaintContainer";
-// import ScreenStartContainer from "../containers/ScreenStartContainer";
-// import ScreenExportContainer from "../containers/ScreenExportContainer";
 import { ScreenBlocker } from "../screens";
-
 import { Hotkeys } from "../../classes";
 
 class App extends React.Component {
