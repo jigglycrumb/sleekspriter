@@ -1,4 +1,4 @@
-import { Colorswatch } from "components/common";
+import Colorswatch from "components/common/Colorswatch";
 
 describe("Colorswatch", () => {
   const props = {
