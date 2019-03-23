@@ -16,10 +16,10 @@
   </header>
 
   <main>
-    <div class="gallery items-3 autoplay">
-      <div id="item-1" class="control-operator"></div>
-      <div id="item-2" class="control-operator"></div>
-      <div id="item-3" class="control-operator"></div>
+    <div class="gallery items-3">
+      <div id="web" class="control-operator"></div>
+      <div id="desktop" class="control-operator"></div>
+      <div id="tablet" class="control-operator"></div>
 
       <figure class="item">
         <div class="browser-frame">
@@ -47,9 +47,9 @@
       </figure>
 
       <div class="controls">
-        <a href="#item-1" class="control-button">web</a>
-        <a href="#item-2" class="control-button">desktop</a>
-        <a href="#item-3" class="control-button">tablet</a>
+        <a href="#web" class="control-button">web</a>
+        <a href="#desktop" class="control-button">desktop</a>
+        <a href="#tablet" class="control-button">tablet</a>
       </div>
     </div>
   </main>
@@ -59,6 +59,10 @@
     &nbsp;<a href="http://hpcodecraft.me" target="_blank">hpcodecraft</a>
     &nbsp;<script>document.write(new Date().getFullYear())</script>
   </footer>
+
+  <script>
+    document.location.hash = "web";
+  </script>
 </body>
 
 </html>

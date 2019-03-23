@@ -12,9 +12,6 @@ const config = {
   context: path.resolve(__dirname, "."),
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
-    // publicPath: "dist/",
-    filename: "bundle.js",
     globalObject: `typeof self !== 'undefined' ? self : this`, // fix for "window not defined"
   },
   resolve: {

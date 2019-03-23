@@ -1,9 +1,13 @@
-const ENV = "dev"
+const ENV = "browser"
 
 const path = require("path");
 const baseConfig = require("./webpack.common.js");
 const overrides = {
-  mode: "development",
+  mode: "production",
+  output: {
+    path: path.resolve(__dirname, "build/browser"),
+    filename: "bundle.js",
+  }
 };
 
 const config = Object.assign({}, baseConfig, overrides);
@@ -18,4 +22,4 @@ console.info("--- Webpack config ---------------------");
 console.info(config);
 console.info("----------------------------------------");
 
-module.exports = config
+module.exports = config;

@@ -9,7 +9,8 @@
   "license": "All rights reserved",
   "scripts": {
     "start": "webpack-dev-server --inline --hot --config ./webpack.dev.js",
-    "build": "webpack --config ./webpack.prod.js -p; ./scripts/update_homepage.sh",
+    "build": "npm run build:browser",
+    "build:browser": "webpack --config ./webpack.browser.js -p; ./scripts/update_homepage.sh",
     "test": "jest",
     "test:watch": "jest --watch",
     "format:check": "prettier-eslint --list-different \"src/**/*.js\"",
