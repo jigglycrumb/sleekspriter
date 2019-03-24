@@ -3,6 +3,7 @@ import { Hotkeys } from "../../classes";
 import { App } from "../common";
 
 import { getScreen } from "../../state/selectors";
+import { windowResize } from "../../state/actions";
 
 const mapStateToProps = state => ({
   screen: getScreen(state),
@@ -10,7 +11,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   Hotkeys.init(dispatch);
-  return {};
+  return {
+    windowResize: () => dispatch(windowResize()),
+  };
 };
 
 export default connect(

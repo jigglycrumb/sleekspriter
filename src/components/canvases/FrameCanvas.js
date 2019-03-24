@@ -28,6 +28,8 @@ class FrameCanvas extends React.Component {
       style = fitted.style;
     }
 
+    // setTimeout(() => this.paint, 50);
+
     return (
       <canvas
         ref={n => (this.canvas = n)}
@@ -43,11 +45,12 @@ class FrameCanvas extends React.Component {
   }
 
   componentDidUpdate() {
-    // console.log("FrameCanvas update!");
+    console.log("FrameCanvas update!");
     this.paint();
   }
 
   paint() {
+    console.log("FrameCanvas paint!");
     this.props.clear();
 
     if (this.props.background) {

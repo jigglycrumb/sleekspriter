@@ -201,6 +201,7 @@ export const selectionEnd = point => ({ type: "SELECTION_END", point });
 export const selectionMove = distance => ({ type: "SELECTION_MOVE", distance });
 export const selectionStart = point => ({ type: "SELECTION_START", point });
 export const toolSelect = tool => ({ type: "TOOL_SELECT", tool });
+export const windowResize = () => ({ type: "WINDOW_RESIZE" });
 export const zoomIn = () => ({ type: "ZOOM_IN" });
 export const zoomOut = () => ({ type: "ZOOM_OUT" });
 export const zoomSelect = zoom => ({ type: "ZOOM_SELECT", zoom });

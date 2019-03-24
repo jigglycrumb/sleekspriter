@@ -38,17 +38,12 @@ class Framebox extends React.Component {
     return (
       <div>
         <div id="FrameBoxFrames">
-          {frames.map(function(frame) {
-            let pixels;
-            try {
-              pixels = this.props.pixels[frame];
-            } catch (e) {
-              pixels = null;
-            }
-
+          {frames.map(frame => {
             const layers = this.props.layers.filter(
               layer => layer.frame === frame
             );
+
+            // const pixels = Object.assign({}, this.props.pixels[frame]);
 
             return (
               <FrameboxFrame
@@ -60,7 +55,8 @@ class Framebox extends React.Component {
                   this.props.onion.active &&
                   this.props.onionFrameAbsolute === frame
                 }
-                pixels={pixels}
+                pixels={this.props.pixels[frame] || null}
+                // pixels={pixels}
                 frame={frame}
                 frameSelect={this.props.frameSelect}
                 layers={layers}

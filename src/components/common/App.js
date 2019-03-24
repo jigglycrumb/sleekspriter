@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
+import { throttle } from "lodash";
 
 import {
   MenuContainer,
@@ -16,6 +18,14 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.screen !== nextProps.screen)
       Hotkeys.unbind(this.props.screen);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.resize, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resize, false);
   }
 
   render() {
@@ -52,6 +62,14 @@ class App extends React.Component {
       </div>
     );
   }
+
+  resize = throttle(() => {
+    this.props.windowResize();
+  }, 200);
 }
+
+App.propTypes = {
+  windowResize: PropTypes.func.isRequired,
+};
 
 export default App;
