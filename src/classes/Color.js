@@ -1,3 +1,7 @@
+const clamp = (min, max, val) => {
+  return val < min ? min : val > max ? max : val;
+};
+
 const pad = function(s) {
   return (s.length === 1 ? "0" + s : s).toUpperCase();
 };
@@ -59,7 +63,7 @@ const hsl2rgb = function(hsl) {
 
   rgb = [0, 0, 0];
   for (var i = 0; i < 3; i++) {
-    t3 = h + 1 / 3 * -(i - 1);
+    t3 = h + (1 / 3) * -(i - 1);
     t3 < 0 && t3++;
     t3 > 1 && t3--;
 
@@ -80,7 +84,7 @@ const changeColorLightness = function({ r, g, b }, delta) {
 
   l += delta;
 
-  const newHsl = [hsl[0], hsl[1], l],
+  const newHsl = [hsl[0], hsl[1], clamp(0, 100, l)],
     newRgb = hsl2rgb(newHsl).map(val => Math.round(val));
 
   return newRgb;
