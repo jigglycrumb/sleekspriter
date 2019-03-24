@@ -43,8 +43,6 @@ class Framebox extends React.Component {
               layer => layer.frame === frame
             );
 
-            // const pixels = Object.assign({}, this.props.pixels[frame]);
-
             return (
               <FrameboxFrame
                 key={frame}
@@ -55,8 +53,7 @@ class Framebox extends React.Component {
                   this.props.onion.active &&
                   this.props.onionFrameAbsolute === frame
                 }
-                pixels={this.props.pixels[frame] || null}
-                // pixels={pixels}
+                pixels={this.props.pixels[frame] || null}
                 frame={frame}
                 frameSelect={this.props.frameSelect}
                 layers={layers}

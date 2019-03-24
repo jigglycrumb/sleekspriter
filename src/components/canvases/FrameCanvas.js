@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import sprout from "sprout-data";
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
+import { flattenPixels } from "../../utils";
 
 class FrameCanvas extends React.Component {
   constructor(props) {
@@ -9,6 +11,9 @@ class FrameCanvas extends React.Component {
 
     this.hasMaxSize = this.props.maxSize != undefined;
     this.hasNoMargin = this.props.noMargin != undefined;
+
+    this.mapPixels = this.mapPixels.bind(this);
+    this.paint = this.paint.bind(this);
   }
 
   render() {
@@ -41,12 +46,41 @@ class FrameCanvas extends React.Component {
   }
 
   componentDidMount() {
+    // console.log("FrameCanvas mount!", this.props);
     this.paint();
   }
 
   componentDidUpdate() {
     // console.log("FrameCanvas update!");
+
     this.paint();
+  }
+
+  mapPixels() {
+    // cache all layer z values by layer id
+    let zMap = {};
+
+    // cache all layer visible values
+    let vMap = {};
+
+    this.props.layers.forEach(layer => {
+      zMap[layer.id] = layer.z;
+      vMap[layer.id] = layer.visible;
+    });
+
+    // loop over all flattened pixels and create a map
+    // containing the topmost pixel of each coordinate
+    let pMap = {};
+    flattenPixels(this.props.pixels || {}).forEach(pixel => {
+      const oldPixel = sprout.get(pMap, [pixel.x, pixel.y], undefined);
+      if (!oldPixel || zMap[oldPixel.layer] < zMap[pixel.layer]) {
+        if (vMap[pixel.layer] === true) {
+          pMap = sprout.assoc(pMap, [pixel.x, pixel.y], pixel);
+        }
+      }
+    });
+
+    return pMap;
   }
 
   paint() {
@@ -60,27 +94,16 @@ class FrameCanvas extends React.Component {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    if (undefined != this.props.pixels) {
-      const layers = Object.keys(this.props.pixels);
-      layers.map(layer => {
-        const l = this.props.layers.find(fl => fl.id === +layer);
-        if (l.visible === true && l.opacity > 0) {
-          const xValues = Object.keys(this.props.pixels[layer]);
-          xValues.map(x => {
-            const yValues = Object.keys(this.props.pixels[layer][x]);
-            yValues.map(y => {
-              const p = this.props.pixels[layer][x][y],
-                hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
-              this.props.paintSinglePixel(
-                this.canvas,
-                this.props.size,
-                x,
-                y,
-                hex
-              );
-            });
-          });
-        }
+    if (undefined !== this.props.pixels) {
+      const pixels = this.mapPixels(this.props.pixels);
+      const xValues = Object.keys(pixels);
+      xValues.map(x => {
+        const yValues = Object.keys(pixels[x]);
+        yValues.map(y => {
+          const p = pixels[x][y],
+            hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
+          this.props.paintSinglePixel(this.canvas, this.props.size, x, y, hex);
+        });
       });
     }
   }
