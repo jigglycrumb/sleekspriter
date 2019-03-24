@@ -1,4 +1,6 @@
 import React from "react";
+import sprout from "sprout-data";
+
 import classnames from "classnames";
 import config from "../../config";
 import { FrameCanvas, GridCanvas } from "../canvases";
@@ -229,35 +231,48 @@ class Stagebox extends React.Component {
     document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
   }
 
-  mouseup() {
+  mouseup(e) {
+    const point = this.getCoordinatesOnImage(e);
+
+    this.updateCursor(point, true);
     this.finishTool();
   }
 
-  updateCursor(point) {
+  updateCursor(point, force = false) {
+    const { x, y } = point;
+
     if (
-      point.x > 0 &&
-      point.y > 0 &&
-      (point.x !== this.cursor.x || point.y !== this.cursor.y)
+      x > 0 &&
+      y > 0 &&
+      (force || (x !== this.cursor.x || y !== this.cursor.y))
     ) {
       // update cursor position
       this.cursor = point;
-      this.cursorCanvas.drawPixelCursor(point.x, point.y);
+      this.cursorCanvas.drawPixelCursor(x, y);
 
-      document.getElementById("StatusBarCursorX").innerHTML = `X: ${point.x}`;
-      document.getElementById("StatusBarCursorY").innerHTML = `Y: ${point.y}`;
+      document.getElementById("StatusBarCursorX").innerHTML = `X: ${x}`;
+      document.getElementById("StatusBarCursorY").innerHTML = `Y: ${y}`;
 
       // update color under cursor
       let cursorColorHex, cursorColorRGB;
-      try {
-        const currentPixel = this.props.pixels[this.props.frame][
-            this.props.layer
-          ][point.x][point.y],
-          cursorColor = new Color({
-            rgb: [currentPixel.r, currentPixel.g, currentPixel.b],
-          });
+
+      const currentPixel = sprout.get(
+        this.pixels,
+        [x, y],
+        sprout.get(
+          this.props.pixels,
+          [this.props.frame, this.props.layer, x, y],
+          undefined
+        )
+      );
+
+      if (currentPixel) {
+        const cursorColor = new Color({
+          rgb: [currentPixel.r, currentPixel.g, currentPixel.b],
+        });
         cursorColorHex = cursorColor.hex();
         cursorColorRGB = cursorColor.rgbHuman();
-      } catch (e) {
+      } else {
         cursorColorHex = "transparent";
         cursorColorRGB = "-, -, -";
       }
@@ -398,6 +413,8 @@ class Stagebox extends React.Component {
           layer: this.props.layer,
           color: color.hex(),
         });
+
+        // TODO implement frameCanvas.paintPixel and do the same there
       }
     }
   }
@@ -409,22 +426,23 @@ class Stagebox extends React.Component {
         !selectionIsActive(this.props.selection) ||
         insideBounds(this.props.selection, this.cursor)
       ) {
-        const p = {
-          frame: this.props.frame,
-          layer: this.props.layer,
-          x: point.x,
-          y: point.y,
-        };
+        const p = sprout.get(
+          this.props.pixels,
+          [this.props.frame, this.props.layer, point.x, point.y],
+          undefined
+        );
 
-        _.merge(this.pixels, {
-          [point.x]: {
-            [point.y]: p,
-          },
-        });
+        if (p) {
+          _.merge(this.pixels, {
+            [point.x]: {
+              [point.y]: p,
+            },
+          });
 
-        const layerCanvas = this.layers[this.props.layer].layerCanvas
-          .decoratoredCanvas;
-        layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
+          const layerCanvas = this.layers[this.props.layer].layerCanvas
+            .decoratoredCanvas;
+          layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
+        }
       }
     }
   }

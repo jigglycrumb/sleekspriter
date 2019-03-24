@@ -45,12 +45,12 @@ class FrameCanvas extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log("FrameCanvas update!");
+    // console.log("FrameCanvas update!");
     this.paint();
   }
 
   paint() {
-    console.log("FrameCanvas paint!");
+    // console.log("FrameCanvas paint!");
     this.props.clear();
 
     if (this.props.background) {
