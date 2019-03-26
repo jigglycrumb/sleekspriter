@@ -9,6 +9,8 @@ import {
 
 import { Colorswatch } from ".";
 
+const TICK_INTERVAL = 250;
+
 class ColorswatchPicker extends React.Component {
   static propTypes = {
     action: PropTypes.func.isRequired,
@@ -21,16 +23,15 @@ class ColorswatchPicker extends React.Component {
 
   constructor(props) {
     super(props);
+    this.ticker = null;
+
     this.togglePicker = this.togglePicker.bind(this);
     this.onOutsideClick = this.onOutsideClick.bind(this);
-  }
-
-  componentWillMount() {
-    document.addEventListener("mousedown", this.onOutsideClick, false);
+    this.tick = this.tick.bind(this);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.onOutsideClick, false);
+    document.removeEventListener("click", this.onOutsideClick, true);
   }
 
   render() {
@@ -39,16 +40,20 @@ class ColorswatchPicker extends React.Component {
 
     return (
       <div>
-        <Colorswatch color={hex} action={this.togglePicker} />
+        <Colorswatch
+          color={hex}
+          action={this.togglePicker}
+          className="from-color-picker"
+        />
 
         {pickerVisible && (
-          <div className="color-picker" ref={node => (this.node = node)}>
+          <div className="color-picker" ref={node => (this.picker = node)}>
             <div className="title">Pick a color</div>
             <div className="hue">
-              <Hue {...this.props} onChange={this.props.onChange} />
+              <Hue {...this.props} />
             </div>
             <div className="saturation">
-              <Saturation {...this.props} onChange={this.props.onChange} />
+              <Saturation {...this.props} />
             </div>
             <div className="input">
               <EditableInput value={hex} onChange={this.props.onChange} />
@@ -65,16 +70,39 @@ class ColorswatchPicker extends React.Component {
       pickerVisible,
     });
 
+    this.startTicking(pickerVisible);
+
+    if (pickerVisible) {
+      document.addEventListener("click", this.onOutsideClick, true);
+    }
+
     if (!pickerVisible) {
       const { action, hex } = this.props;
       action(hex);
+      document.removeEventListener("click", this.onOutsideClick, true);
     }
   }
 
   onOutsideClick(e) {
-    if (this.node && !this.node.contains(e.target)) {
+    e.stopPropagation();
+
+    if (this.picker && !this.picker.contains(e.target)) {
       this.togglePicker();
     }
+  }
+
+  startTicking(startTicking = true) {
+    if (startTicking === true) {
+      this.ticker = setInterval(this.tick, TICK_INTERVAL);
+    } else {
+      clearInterval(this.ticker);
+      this.ticker = null;
+    }
+  }
+
+  tick() {
+    const { action, hex } = this.props;
+    action(hex);
   }
 }
 
