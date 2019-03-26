@@ -39,6 +39,7 @@ class Layerbox extends React.Component {
                 layerOpacity={this.props.layerOpacity}
                 layerSelect={this.props.layerSelect}
                 layerVisibility={this.props.layerVisibility}
+                registerLayerCanvas={this.props.registerLayerCanvas}
               />
             );
           })}

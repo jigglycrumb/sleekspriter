@@ -356,14 +356,7 @@ class Stagebox extends React.Component {
           },
         });
 
-        const layerCanvas = this.layers[this.props.layer].layerCanvas
-          .decoratoredCanvas;
-        layerCanvas.paintPixel({
-          x: p.x,
-          y: p.y,
-          layer: this.props.layer,
-          color: this.props.color,
-        });
+        this.instantPaintPixel(this.props.layer, p.x, p.y, this.props.color);
       }
     }
   }
@@ -405,16 +398,7 @@ class Stagebox extends React.Component {
           },
         });
 
-        const layerCanvas = this.layers[this.props.layer].layerCanvas
-          .decoratoredCanvas;
-        layerCanvas.paintPixel({
-          x: p.x,
-          y: p.y,
-          layer: this.props.layer,
-          color: color.hex(),
-        });
-
-        // TODO implement frameCanvas.paintPixel and do the same there
+        this.instantPaintPixel(this.props.layer, p.x, p.y, color.hex());
       }
     }
   }
@@ -439,9 +423,7 @@ class Stagebox extends React.Component {
             },
           });
 
-          const layerCanvas = this.layers[this.props.layer].layerCanvas
-            .decoratoredCanvas;
-          layerCanvas.clearPixel({ x: p.x, y: p.y, layer: this.props.layer });
+          this.instantClearPixel(this.props.layer, p.x, p.y);
         }
       }
     }
@@ -594,7 +576,7 @@ class Stagebox extends React.Component {
   }
 
   resizeRectangularSelection(point) {
-    this.selectionCanvas.decoratoredCanvas.drawSelection(
+    this.selectionCanvas.decoratedCanvas.drawSelection(
       this.props.selection.start,
       point
     );
@@ -639,6 +621,43 @@ class Stagebox extends React.Component {
       pixels = {};
     }
     return pixels;
+  }
+
+  instantPaintPixel(layer, x, y, color) {
+    // paint pixel live
+    const paintParams = {
+      x,
+      y,
+      layer,
+      color,
+    };
+
+    const stageLayerCanvas = this.layers[this.props.layer].layerCanvas
+      .decoratedCanvas;
+    stageLayerCanvas.paintPixel(paintParams);
+
+    const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
+      .decoratedCanvas;
+
+    layerBoxCanvas.paintPixel(paintParams);
+
+    // TODO implement frameCanvas.paintPixel and do the same there
+  }
+
+  instantClearPixel(layer, x, y) {
+    // clear pixel live
+    const clearParams = { x, y, layer };
+
+    const layerCanvas = this.layers[this.props.layer].layerCanvas
+      .decoratedCanvas;
+    layerCanvas.clearPixel(clearParams);
+
+    const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
+      .decoratedCanvas;
+
+    layerBoxCanvas.clearPixel(clearParams);
+
+    // TODO implement frameCanvas.clearPixel and do the same there
   }
 }
 

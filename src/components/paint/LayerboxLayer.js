@@ -13,6 +13,11 @@ class LayerboxLayer extends React.Component {
     this.name = this.name.bind(this);
     this.opacity = this.opacity.bind(this);
     this.select = this.select.bind(this);
+    this.layerCanvas = null;
+  }
+
+  componentDidUpdate() {
+    this.props.registerLayerCanvas(this.props.layer.id, this.layerCanvas);
   }
 
   render() {
@@ -38,6 +43,7 @@ class LayerboxLayer extends React.Component {
         </div>
         <div className="preview" onClick={this.select}>
           <LayerCanvas
+            ref={n => (this.layerCanvas = n)}
             frame={this.props.layer.frame}
             layer={this.props.layer.id}
             pixels={this.props.pixels}

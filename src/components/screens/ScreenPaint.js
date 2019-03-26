@@ -23,6 +23,9 @@ class ScreenPaint extends React.Component {
 
     this.handleDrop = this.handleDrop.bind(this);
     this.removeReferenceImage = this.removeReferenceImage.bind(this);
+    this.registerLayerCanvas = this.registerLayerCanvas.bind(this);
+
+    this.layerCanvases = {};
   }
 
   render() {
@@ -58,6 +61,7 @@ class ScreenPaint extends React.Component {
           <div>
             <StageboxContainer
               image={this.state.referenceImage === null ? false : true}
+              externalLayerCanvases={this.layerCanvases}
             />
             {referenceImage}
           </div>
@@ -68,7 +72,7 @@ class ScreenPaint extends React.Component {
           </FoldableBox>
           {framebox}
           <FoldableBox fold="layers" title={t("Layers")} id="LayerBox">
-            <LayerboxContainer />
+            <LayerboxContainer registerLayerCanvas={this.registerLayerCanvas} />
           </FoldableBox>
         </div>
         <div className="area statusbar">
@@ -113,6 +117,10 @@ class ScreenPaint extends React.Component {
         reader.readAsDataURL(file);
       }
     }
+  }
+
+  registerLayerCanvas(layerId, canvas) {
+    this.layerCanvases[layerId] = canvas;
   }
 }
 

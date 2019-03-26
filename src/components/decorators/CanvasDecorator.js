@@ -22,7 +22,7 @@ function CanvasDecorator(DecoratedComponent) {
 
       return (
         <DecoratedComponent
-          ref={n => (this.decoratoredCanvas = n)}
+          ref={n => (this.decoratedCanvas = n)}
           {...this.props}
           {...extraProps}
         />
