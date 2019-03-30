@@ -16,6 +16,10 @@ class LayerboxLayer extends React.Component {
     this.layerCanvas = null;
   }
 
+  componentDidMount() {
+    this.props.registerLayerCanvas(this.props.layer.id, this.layerCanvas);
+  }
+
   componentDidUpdate() {
     this.props.registerLayerCanvas(this.props.layer.id, this.layerCanvas);
   }

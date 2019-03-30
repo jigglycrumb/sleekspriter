@@ -11,9 +11,6 @@ class FrameCanvas extends React.Component {
 
     this.hasMaxSize = this.props.maxSize != undefined;
     this.hasNoMargin = this.props.noMargin != undefined;
-
-    this.mapPixels = this.mapPixels.bind(this);
-    this.paint = this.paint.bind(this);
   }
 
   render() {
@@ -50,35 +47,27 @@ class FrameCanvas extends React.Component {
 
   componentDidUpdate() {
     // console.log("FrameCanvas update!");
-
     this.paint();
   }
 
-  mapPixels() {
+  mapLayers() {
     // cache all layer z values by layer id
     let zMap = {};
 
     // cache all layer visible values
     let vMap = {};
 
-    this.props.layers.forEach(layer => {
-      zMap[layer.id] = layer.z;
-      vMap[layer.id] = layer.visible;
-    });
+    if (this.props.layers) {
+      this.props.layers.forEach(layer => {
+        zMap[layer.id] = layer.z;
+        vMap[layer.id] = layer.visible;
+      });
+    }
 
-    // loop over all flattened pixels and create a map
-    // containing the topmost pixel of each coordinate
-    let pMap = {};
-    flattenPixels(this.props.pixels || {}).forEach(pixel => {
-      const oldPixel = sprout.get(pMap, [pixel.x, pixel.y], undefined);
-      if (!oldPixel || zMap[oldPixel.layer] < zMap[pixel.layer]) {
-        if (vMap[pixel.layer] === true) {
-          pMap = sprout.assoc(pMap, [pixel.x, pixel.y], pixel);
-        }
-      }
-    });
-
-    return pMap;
+    return {
+      zMap,
+      vMap,
+    };
   }
 
   paint() {
@@ -93,16 +82,124 @@ class FrameCanvas extends React.Component {
     }
 
     if (undefined !== this.props.pixels) {
-      const pixels = this.mapPixels(this.props.pixels);
+      const pixels = this.mapPixels();
       const xValues = Object.keys(pixels);
       xValues.map(x => {
         const yValues = Object.keys(pixels[x]);
         yValues.map(y => {
-          const p = pixels[x][y],
+          const p = pixels[x][y][0],
             hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
           this.props.paintSinglePixel(this.canvas, this.props.size, x, y, hex);
         });
       });
+    }
+  }
+
+  insertPixelInZOrder(zMap, pixels, pixel) {
+    // find index to put pixel
+    const findNextHigherZ = p => zMap[p.layer] > zMap[pixel.layer];
+    const index = pixels.findIndex(findNextHigherZ);
+
+    // insert pixel
+    if (index === -1) {
+      pixels.unshift(pixel);
+    } else {
+      pixels.splice(index + 1, 0, pixel);
+    }
+
+    return pixels;
+  }
+
+  mapPixels() {
+    const { zMap, vMap } = this.mapLayers();
+
+    // loop over all flattened pixels and create a map
+    // containing the an array of pixels for each x/y-coordinate
+    // the array contains all pixels z-sorted, by highest z first
+    let pMap = {};
+    flattenPixels(this.props.pixels || {}).forEach(pixel => {
+      // if layer is visible
+      if (vMap[pixel.layer] === true) {
+        let pixels = sprout.get(pMap, [pixel.x, pixel.y], []);
+
+        if (pixels.length === 0) pixels = [pixel];
+        else {
+          pixels = this.insertPixelInZOrder(zMap, pixels, pixel);
+        }
+
+        pMap = sprout.assoc(pMap, [pixel.x, pixel.y], pixels);
+      }
+    });
+
+    return pMap;
+  }
+
+  paintPixel(pixel) {
+    // console.log("paint", x, y, color);
+
+    const { zMap, vMap } = this.mapLayers();
+
+    const { x, y } = pixel;
+    const pMap = this.mapPixels();
+
+    // if layer is visible
+    if (vMap[pixel.layer] === true) {
+      let pixels = sprout.get(pMap, [x, y], []);
+
+      if (pixels.length === 0)
+        this.props.paintSinglePixel(
+          this.canvas,
+          this.props.size,
+          x,
+          y,
+          pixel.toHex()
+        );
+      else {
+        pixels = this.insertPixelInZOrder(zMap, pixels, pixel);
+        const p = pixels[0];
+
+        this.props.paintSinglePixel(
+          this.canvas,
+          this.props.size,
+          p.x,
+          p.y,
+          p.toHex()
+        );
+      }
+    }
+  }
+
+  clearPixel(pixel) {
+    // console.log("clear", pixel);
+    const { vMap } = this.mapLayers();
+
+    const { x, y } = pixel;
+    const pMap = this.mapPixels();
+
+    // if layer is visible
+    if (vMap[pixel.layer] === true) {
+      let pixels = sprout.get(pMap, [x, y], []);
+
+      if (pixels.length > 0) {
+        const findPixel = p => p.layer === pixel.layer;
+        const index = pixels.findIndex(findPixel);
+
+        pixels.splice(index, 1);
+
+        if (pixels.length === 0) {
+          this.props.clearSinglePixel(this.canvas, this.props.size, x, y);
+        } else {
+          const p = pixels[0];
+
+          this.props.paintSinglePixel(
+            this.canvas,
+            this.props.size,
+            p.x,
+            p.y,
+            p.toHex()
+          );
+        }
+      }
     }
   }
 }

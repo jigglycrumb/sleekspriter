@@ -62,8 +62,14 @@ class LayerCanvas extends React.Component {
     }
   }
 
-  paintPixel({ x, y, color }) {
-    this.props.paintSinglePixel(this.canvas, this.props.size, x, y, color);
+  paintPixel(pixel) {
+    this.props.paintSinglePixel(
+      this.canvas,
+      this.props.size,
+      pixel.x,
+      pixel.y,
+      pixel.toHex()
+    );
   }
 
   clearPixel({ x, y }) {

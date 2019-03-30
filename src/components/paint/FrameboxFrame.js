@@ -6,6 +6,15 @@ class FrameboxFrame extends React.Component {
   constructor(props) {
     super(props);
     this.select = this.select.bind(this);
+    this.frameCanvas = null;
+  }
+
+  componentDidMount() {
+    this.props.registerFrameCanvas(this.props.frame, this.frameCanvas);
+  }
+
+  componentDidUpdate() {
+    this.props.registerFrameCanvas(this.props.frame, this.frameCanvas);
   }
 
   render() {
@@ -27,6 +36,7 @@ class FrameboxFrame extends React.Component {
         style={frameStyle}
         onClick={this.select}>
         <FrameCanvas
+          ref={n => (this.frameCanvas = n)}
           frame={this.props.frame}
           layers={this.props.layers}
           size={this.props.size}

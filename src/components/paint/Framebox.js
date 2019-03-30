@@ -57,6 +57,7 @@ class Framebox extends React.Component {
                 frame={frame}
                 frameSelect={this.props.frameSelect}
                 layers={layers}
+                registerFrameCanvas={this.props.registerFrameCanvas}
               />
             );
           }, this)}

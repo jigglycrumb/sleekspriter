@@ -19,32 +19,22 @@ class ScreenPaint extends React.Component {
     this.state = {
       referenceImage: null,
       referenceImageDataURL: null,
+      layerCanvases: {},
+      previewCanvas: null,
     };
 
     this.handleDrop = this.handleDrop.bind(this);
     this.removeReferenceImage = this.removeReferenceImage.bind(this);
     this.registerLayerCanvas = this.registerLayerCanvas.bind(this);
+    this.registerPreviewCanvas = this.registerPreviewCanvas.bind(this);
+    this.registerFrameCanvas = this.registerFrameCanvas.bind(this);
 
     this.layerCanvases = {};
+    this.frameCanvases = {};
+    // this.previewCanvas = null;
   }
 
   render() {
-    const framebox =
-      this.props.totalFrames == 1 ? null : (
-        <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
-          <FrameboxContainer />
-        </FoldableBox>
-      );
-
-    const referenceImage =
-      this.state.referenceImageDataURL === null ? null : (
-        <ReferenceImage
-          image={this.state.referenceImage}
-          imageData={this.state.referenceImageDataURL}
-          removeHandler={this.removeReferenceImage}
-        />
-      );
-
     return (
       <section
         className="screen paint"
@@ -62,15 +52,31 @@ class ScreenPaint extends React.Component {
             <StageboxContainer
               image={this.state.referenceImage === null ? false : true}
               externalLayerCanvases={this.layerCanvases}
+              externalPreviewCanvas={this.state.previewCanvas}
+              externalFrameCanvases={this.frameCanvases}
             />
-            {referenceImage}
+            {this.state.referenceImageDataURL && (
+              <ReferenceImage
+                image={this.state.referenceImage}
+                imageData={this.state.referenceImageDataURL}
+                removeHandler={this.removeReferenceImage}
+              />
+            )}
           </div>
         </div>
         <div className="area right">
           <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">
-            <PreviewboxContainer />
+            <PreviewboxContainer
+              registerPreviewCanvas={this.registerPreviewCanvas}
+            />
           </FoldableBox>
-          {framebox}
+          {this.props.totalFrames > 1 && (
+            <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
+              <FrameboxContainer
+                registerFrameCanvas={this.registerFrameCanvas}
+              />
+            </FoldableBox>
+          )}
           <FoldableBox fold="layers" title={t("Layers")} id="LayerBox">
             <LayerboxContainer registerLayerCanvas={this.registerLayerCanvas} />
           </FoldableBox>
@@ -83,7 +89,10 @@ class ScreenPaint extends React.Component {
   }
 
   removeReferenceImage() {
-    this.setState({ referenceImage: null, referenceImageDataURL: null });
+    this.setState({
+      referenceImage: undefined,
+      referenceImageDataURL: undefined,
+    });
   }
 
   cancel(e) {
@@ -120,7 +129,21 @@ class ScreenPaint extends React.Component {
   }
 
   registerLayerCanvas(layerId, canvas) {
+    // console.log("layer reg", layerId, canvas);
     this.layerCanvases[layerId] = canvas;
+  }
+
+  registerFrameCanvas(frame, canvas) {
+    // console.log("frame reg", frame, canvas);
+    this.frameCanvases[frame] = canvas;
+  }
+
+  registerPreviewCanvas(canvas) {
+    // console.log("preview reg", canvas);
+    this.setState({
+      previewCanvas: canvas,
+    });
+    // this.previewCanvas = canvas;
   }
 }
 

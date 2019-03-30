@@ -4,7 +4,7 @@ import sprout from "sprout-data";
 import classnames from "classnames";
 import config from "../../config";
 import { FrameCanvas, GridCanvas } from "../canvases";
-import { Color, Point } from "../../classes";
+import { Color, Point, Pixel } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
@@ -356,7 +356,9 @@ class Stagebox extends React.Component {
           },
         });
 
-        this.instantPaintPixel(this.props.layer, p.x, p.y, this.props.color);
+        const px = new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a);
+
+        this.instantPaintPixel(px);
       }
     }
   }
@@ -398,7 +400,9 @@ class Stagebox extends React.Component {
           },
         });
 
-        this.instantPaintPixel(this.props.layer, p.x, p.y, color.hex());
+        const px = new Pixel(p.frame, p.layer, p.x, p.y, p.r, p.g, p.b, p.a);
+
+        this.instantPaintPixel(px);
       }
     }
   }
@@ -423,7 +427,7 @@ class Stagebox extends React.Component {
             },
           });
 
-          this.instantClearPixel(this.props.layer, p.x, p.y);
+          this.instantClearPixel(p);
         }
       }
     }
@@ -614,50 +618,43 @@ class Stagebox extends React.Component {
   }
 
   getLayerPixels(layerId) {
-    let pixels;
-    try {
-      pixels = this.props.pixels[this.props.frame][layerId];
-    } catch (e) {
-      pixels = {};
-    }
-    return pixels;
+    return sprout.get(this.props.pixels, [this.props.frame, layerId], {});
   }
 
-  instantPaintPixel(layer, x, y, color) {
+  instantPaintPixel(pixel) {
     // paint pixel live
-    const paintParams = {
-      x,
-      y,
-      layer,
-      color,
-    };
-
     const stageLayerCanvas = this.layers[this.props.layer].layerCanvas
       .decoratedCanvas;
-    stageLayerCanvas.paintPixel(paintParams);
+    stageLayerCanvas.paintPixel(pixel);
 
     const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
       .decoratedCanvas;
+    layerBoxCanvas.paintPixel(pixel);
 
-    layerBoxCanvas.paintPixel(paintParams);
+    const previewCanvas = this.props.externalPreviewCanvas.decoratedCanvas;
+    previewCanvas.paintPixel(pixel);
 
-    // TODO implement frameCanvas.paintPixel and do the same there
+    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame]
+      .decoratedCanvas;
+    frameboxCanvas.paintPixel(pixel);
   }
 
-  instantClearPixel(layer, x, y) {
+  instantClearPixel(pixel) {
     // clear pixel live
-    const clearParams = { x, y, layer };
-
     const layerCanvas = this.layers[this.props.layer].layerCanvas
       .decoratedCanvas;
-    layerCanvas.clearPixel(clearParams);
+    layerCanvas.clearPixel(pixel);
 
     const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
       .decoratedCanvas;
+    layerBoxCanvas.clearPixel(pixel);
 
-    layerBoxCanvas.clearPixel(clearParams);
+    const previewCanvas = this.props.externalPreviewCanvas.decoratedCanvas;
+    previewCanvas.clearPixel(pixel);
 
-    // TODO implement frameCanvas.clearPixel and do the same there
+    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame]
+      .decoratedCanvas;
+    frameboxCanvas.clearPixel(pixel);
   }
 }
 
