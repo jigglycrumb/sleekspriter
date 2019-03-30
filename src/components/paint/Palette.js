@@ -50,10 +50,13 @@ class Palette extends React.Component {
     this.scrollTo(0);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.swatchCount = this.props.colors.length;
-    this.setInnerWidth();
-    this.scrollTo(0);
+
+    if (prevProps.colors.length !== this.swatchCount) {
+      this.setInnerWidth();
+      this.scrollTo(0);
+    }
   }
 
   setInnerWidth() {
