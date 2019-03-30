@@ -87,9 +87,14 @@ class FrameCanvas extends React.Component {
       xValues.map(x => {
         const yValues = Object.keys(pixels[x]);
         yValues.map(y => {
-          const p = pixels[x][y][0],
-            hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
-          this.props.paintSinglePixel(this.canvas, this.props.size, x, y, hex);
+          const p = pixels[x][y][0];
+          this.props.paintSinglePixel(
+            this.canvas,
+            this.props.size,
+            x,
+            y,
+            p.toHex()
+          );
         });
       });
     }
