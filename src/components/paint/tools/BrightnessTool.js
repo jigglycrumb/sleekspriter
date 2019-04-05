@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { capitalizeFirstLetter, t } from "../../../utils";
 
 class BrightnessTool extends React.Component {
@@ -15,7 +16,7 @@ class BrightnessTool extends React.Component {
     let dClass = "small";
     let dDisabled = false;
 
-    if (this.props.brightnessTool.mode == "darken") {
+    if (this.props.brightnessTool.mode === "darken") {
       lClass = "small";
       lDisabled = false;
       dClass = "small transparent active";
@@ -79,5 +80,14 @@ class BrightnessTool extends React.Component {
     this.props.brightnessToolIntensity(e.target.value);
   }
 }
+
+BrightnessTool.propTypes = {
+  brightnessTool: PropTypes.shape({
+    mode: PropTypes.string.isRequired,
+    intensity: PropTypes.number.isRequired,
+  }),
+  brightnessToolMode: PropTypes.func.isRequired,
+  brightnessToolIntensity: PropTypes.func.isRequired,
+};
 
 export default BrightnessTool;

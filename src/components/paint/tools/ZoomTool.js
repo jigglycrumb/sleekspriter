@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { t } from "../../../utils";
 import config from "../../../config";
 
@@ -68,5 +69,17 @@ class ZoomTool extends React.Component {
     this.props.zoomFit(this.props.fileSize);
   }
 }
+
+ZoomTool.propTypes = {
+  fileSize: PropTypes.shape({
+    height: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+  }).isRequired,
+  zoom: PropTypes.number.isRequired,
+  zoomIn: PropTypes.func.isRequired,
+  zoomOut: PropTypes.func.isRequired,
+  zoomSelect: PropTypes.func.isRequired,
+  zoomFit: PropTypes.func.isRequired,
+};
 
 export default ZoomTool;

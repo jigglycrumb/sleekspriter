@@ -24,6 +24,7 @@
   },
   "plugins": ["react", "jest"],
   "rules": {
+    "no-template-curly-in-string": "warn",
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],

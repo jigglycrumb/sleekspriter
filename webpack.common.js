@@ -1,6 +1,5 @@
-// const webpack = require("webpack");
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 const metadata = require("./metadata.json");
 
 const replaceConfig = Object.keys(metadata).map(function(key) {
@@ -8,11 +7,14 @@ const replaceConfig = Object.keys(metadata).map(function(key) {
 });
 
 const config = {
-  mode: "none",
+  mode: "production",
   context: path.resolve(__dirname, "."),
-  entry: "./src/index.js",
+  entry: {
+    app: "./src/index.js",
+  },
   output: {
-    globalObject: `typeof self !== 'undefined' ? self : this`, // fix for "window not defined"
+    filename: "[name].[hash].js",
+    globalObject: "typeof self !== 'undefined' ? self : this", // fix for "window not defined" in workers
   },
   resolve: {
     extensions: [".less", ".css", ".worker.js", ".js", ".json", ".jsx"],
@@ -138,12 +140,14 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      favicon: "src/assets/logo@x1.png",
       template: "src/index.html",
     }),
-    // new webpack.HotModuleReplacementPlugin({
-    //   multiStep: true,
-    // }),
   ],
+  target: "web",
+  devServer: {
+    historyApiFallback: true,
+  },
 };
 
 module.exports = config;

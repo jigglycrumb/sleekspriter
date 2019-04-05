@@ -1,23 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
 import PaletteContainer from "../../containers/PaletteContainer";
 import { ColorswatchPicker } from "../../common";
 
-class BrushTool extends React.Component {
-  render() {
-    return (
-      <div id="Brush-Tool" className="ToolComponent">
-        <i className="icon flaticon-small23" />
-        <ColorswatchPicker
-          color={this.props.color}
-          action={this.props.brushColor}
-        />
-        <span className="spacer" />
-        <div className="palette">
-          <PaletteContainer />
-        </div>
+const BrushTool = props => {
+  return (
+    <div id="Brush-Tool" className="ToolComponent">
+      <i className="icon flaticon-small23" />
+      <ColorswatchPicker color={props.color} action={props.brushColor} />
+      <span className="spacer" />
+      <div className="palette">
+        <PaletteContainer />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+BrushTool.propTypes = {
+  color: PropTypes.string.isRequired,
+  brushColor: PropTypes.func.isRequired,
+};
 
 export default BrushTool;

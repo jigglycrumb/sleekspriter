@@ -1,6 +1,7 @@
 import React from "react";
 import TWEEN from "@tweenjs/tween.js";
 import { Colorswatch } from "../common";
+import PropTypes from "prop-types";
 
 class Palette extends React.Component {
   constructor(props) {
@@ -154,5 +155,11 @@ class Palette extends React.Component {
     this.buttonScrollRight.style.visibility = scrollButtonStyle.right;
   }
 }
+
+Palette.propTypes = {
+  colors: PropTypes.array,
+  action: PropTypes.func,
+  selected: PropTypes.string, // hex color string
+};
 
 export default Palette;
