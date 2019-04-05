@@ -25,13 +25,13 @@ class StageBoxCursorCanvas extends React.Component {
 
     if (x === 0 && y === 0) return;
 
-    const canvas = this.canvas,
-      ctx = canvas.getContext("2d"),
-      left = x * zoom - zoom + 0.5,
-      top = y * zoom - zoom + 0.5;
+    const canvas = this.canvas;
+    const ctx = canvas.getContext("2d");
+    const left = x * zoom - zoom + 0.5;
+    const top = y * zoom - zoom + 0.5;
 
-    let right = x * zoom + 0.5,
-      bottom = y * zoom + 0.5;
+    let right = x * zoom + 0.5;
+    let bottom = y * zoom + 0.5;
 
     if (zoom < 3) {
       right++;

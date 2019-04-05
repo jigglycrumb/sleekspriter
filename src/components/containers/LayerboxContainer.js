@@ -46,4 +46,7 @@ const mapDispatchToProps = dispatch => ({
   modalShow: modal => dispatch(modalShow(modal)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layerbox);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layerbox);

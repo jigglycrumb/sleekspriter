@@ -23,13 +23,11 @@ class ModalEditImageSize extends React.Component {
 
   render() {
     const fileType =
-        this.state.frames.x * this.state.frames.y === 1
-          ? "Image"
-          : "Spritesheet",
-      wrapperCss = {
-        width: this.state.size.width * this.state.frames.x,
-        height: this.state.size.height * this.state.frames.y,
-      };
+      this.state.frames.x * this.state.frames.y === 1 ? "Image" : "Spritesheet";
+    const wrapperCss = {
+      width: this.state.size.width * this.state.frames.x,
+      height: this.state.size.height * this.state.frames.y,
+    };
 
     return (
       <div className="dialog">
@@ -121,4 +119,7 @@ class ModalEditImageSize extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalEditImageSize);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalEditImageSize);

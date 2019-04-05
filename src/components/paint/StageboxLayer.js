@@ -4,13 +4,13 @@ import { LayerCanvas } from "../canvases";
 
 class StageboxLayer extends React.Component {
   render() {
-    const htmlId = `StageBoxLayer-${this.props.layer.id}`,
-      display = this.props.layer.visible === true ? "block" : "none",
-      style = {
-        zIndex: this.props.layer.z,
-        opacity: this.props.layer.opacity / 100,
-        display,
-      };
+    const htmlId = `StageBoxLayer-${this.props.layer.id}`;
+    const display = this.props.layer.visible === true ? "block" : "none";
+    const style = {
+      zIndex: this.props.layer.z,
+      opacity: this.props.layer.opacity / 100,
+      display,
+    };
 
     return (
       <div id={htmlId} className="Layer" style={style}>

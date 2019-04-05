@@ -10,10 +10,10 @@ class BrightnessTool extends React.Component {
   }
 
   render() {
-    let lClass = "small transparent active",
-      lDisabled = true,
-      dClass = "small",
-      dDisabled = false;
+    let lClass = "small transparent active";
+    let lDisabled = true;
+    let dClass = "small";
+    let dDisabled = false;
 
     if (this.props.brightnessTool.mode == "darken") {
       lClass = "small";

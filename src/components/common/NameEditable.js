@@ -20,8 +20,8 @@ class NameEditable extends React.Component {
   }
 
   render() {
-    let labelStyle = { display: "block" },
-      inputStyle = { display: "none" };
+    let labelStyle = { display: "block" };
+    let inputStyle = { display: "none" };
 
     if (this.state.inputVisible === true) {
       labelStyle.display = "none";
@@ -56,8 +56,8 @@ class NameEditable extends React.Component {
   }
 
   handleNameChange(event) {
-    const oldName = this.props.name,
-      newName = event.target.value.trim();
+    const oldName = this.props.name;
+    const newName = event.target.value.trim();
 
     // user pressed ESC, reset
     if (event.type === "keydown" && event.keyCode === 27) {

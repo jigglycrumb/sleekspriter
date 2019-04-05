@@ -53,9 +53,9 @@ class ModalImportFile extends React.Component {
   }
 
   render() {
-    let okButtonDisabled = true,
-      imageDropZone = <h3>{t("Drop image here")}</h3>,
-      frameSettings = null;
+    let okButtonDisabled = true;
+    let imageDropZone = <h3>{t("Drop image here")}</h3>;
+    let frameSettings = null;
 
     if (this.state.image.data !== null) {
       const wrapperCss = {
@@ -63,10 +63,10 @@ class ModalImportFile extends React.Component {
         height: this.state.image.height,
       };
 
-      const s = this.calculateFrameSize(),
-        frameWidth = s.width,
-        frameHeight = s.height,
-        validation = this.validateFrameSize();
+      const s = this.calculateFrameSize();
+      const frameWidth = s.width;
+      const frameHeight = s.height;
+      const validation = this.validateFrameSize();
 
       let frameSize;
 
@@ -76,8 +76,8 @@ class ModalImportFile extends React.Component {
           <span>{t("${w} x ${h} px", { w: frameWidth, h: frameHeight })}</span>
         );
       } else {
-        const w = validation.widthValid ? frameWidth : frameWidth.toFixed(1),
-          h = validation.heightValid ? frameHeight : frameHeight.toFixed(1);
+        const w = validation.widthValid ? frameWidth : frameWidth.toFixed(1);
+        const h = validation.heightValid ? frameHeight : frameHeight.toFixed(1);
 
         frameSize = (
           <span className="error">{t("${w} x ${h} px", { w, h })}</span>
@@ -160,13 +160,13 @@ class ModalImportFile extends React.Component {
     this.cancel(e);
 
     if (e.dataTransfer.files.length >= 1) {
-      const file = e.dataTransfer.files[0],
-        self = this,
-        allowed = {
-          "image/jpeg": true,
-          "image/gif": true,
-          "image/png": true,
-        };
+      const file = e.dataTransfer.files[0];
+      const self = this;
+      const allowed = {
+        "image/jpeg": true,
+        "image/gif": true,
+        "image/png": true,
+      };
 
       if (file.type in allowed) {
         const reader = new FileReader();
@@ -205,9 +205,9 @@ class ModalImportFile extends React.Component {
   }
 
   validateFrameSize() {
-    const s = this.calculateFrameSize(),
-      widthValid = s.width === parseInt(s.width, 10),
-      heightValid = s.height === parseInt(s.height, 10);
+    const s = this.calculateFrameSize();
+    const widthValid = s.width === parseInt(s.width, 10);
+    const heightValid = s.height === parseInt(s.height, 10);
 
     return {
       widthValid: widthValid,
@@ -230,9 +230,9 @@ class ModalImportFile extends React.Component {
       document.getElementById("ScreenBlocker").style.display = "block";
 
       // create canvas element
-      const canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d"),
-        image = this.importImage;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const image = this.importImage;
 
       canvas.width = image.width;
       canvas.height = image.height;
@@ -241,17 +241,17 @@ class ModalImportFile extends React.Component {
       ctx.drawImage(image, 0, 0);
 
       // get pixel data
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height),
-        frameSize = this.calculateFrameSize(),
-        data = {
-          frameSize: frameSize,
-          imageData: imageData,
-          state: this.state,
-          imageDimensions: {
-            width: image.width,
-            height: image.height,
-          },
-        };
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const frameSize = this.calculateFrameSize();
+      const data = {
+        frameSize: frameSize,
+        imageData: imageData,
+        state: this.state,
+        imageDimensions: {
+          width: image.width,
+          height: image.height,
+        },
+      };
 
       this.worker.postMessage(data);
     }

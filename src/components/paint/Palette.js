@@ -1,5 +1,5 @@
 import React from "react";
-import TWEEN from "tween.js";
+import TWEEN from "@tweenjs/tween.js";
 import { Colorswatch } from "../common";
 
 class Palette extends React.Component {
@@ -60,11 +60,11 @@ class Palette extends React.Component {
   }
 
   setInnerWidth() {
-    const ow = this.getOuterWidth(),
-      swatchesVisible = Math.floor(ow / this.swatchWidth),
-      pages = Math.ceil(this.swatchCount / swatchesVisible),
-      diff = ow - swatchesVisible * this.swatchWidth,
-      newWidth = swatchesVisible * this.swatchWidth * pages + diff;
+    const ow = this.getOuterWidth();
+    const swatchesVisible = Math.floor(ow / this.swatchWidth);
+    const pages = Math.ceil(this.swatchCount / swatchesVisible);
+    const diff = ow - swatchesVisible * this.swatchWidth;
+    const newWidth = swatchesVisible * this.swatchWidth * pages + diff;
 
     this.inner.style.width = `${newWidth}px`;
   }
@@ -86,9 +86,9 @@ class Palette extends React.Component {
   }
 
   scrollLeft() {
-    const ow = this.getOuterWidth(),
-      scroll = this.getScrollPosition(),
-      swatchesVisible = Math.floor(ow / this.swatchWidth);
+    const ow = this.getOuterWidth();
+    const scroll = this.getScrollPosition();
+    const swatchesVisible = Math.floor(ow / this.swatchWidth);
 
     let target = scroll - this.swatchWidth * swatchesVisible;
     if (target < 0) target = 0;
@@ -96,10 +96,10 @@ class Palette extends React.Component {
   }
 
   scrollRight() {
-    const ow = this.getOuterWidth(),
-      scroll = this.getScrollPosition(),
-      swatchesVisible = Math.floor(ow / this.swatchWidth),
-      target = scroll + this.swatchWidth * swatchesVisible;
+    const ow = this.getOuterWidth();
+    const scroll = this.getScrollPosition();
+    const swatchesVisible = Math.floor(ow / this.swatchWidth);
+    const target = scroll + this.swatchWidth * swatchesVisible;
 
     this.scrollTo(target);
   }
@@ -107,11 +107,11 @@ class Palette extends React.Component {
   scrollTo(x) {
     let tweenComplete = false;
 
-    const self = this,
-      start = this.getScrollPosition(),
-      distance = x - start,
-      from = { position: start },
-      to = { position: start + distance };
+    const self = this;
+    const start = this.getScrollPosition();
+    const distance = x - start;
+    const from = { position: start };
+    const to = { position: start + distance };
 
     new TWEEN.Tween(from)
       .to(to, 200)
@@ -135,15 +135,15 @@ class Palette extends React.Component {
   }
 
   setScrollButtons(pos) {
-    const iw = this.getInnerWidth(),
-      ow = this.getOuterWidth(),
-      w = iw - ow,
-      swatchesVisible = Math.floor(ow / this.swatchWidth),
-      pages = Math.ceil(this.swatchCount / swatchesVisible),
-      scrollButtonStyle = {
-        left: "hidden",
-        right: "hidden",
-      };
+    const iw = this.getInnerWidth();
+    const ow = this.getOuterWidth();
+    const w = iw - ow;
+    const swatchesVisible = Math.floor(ow / this.swatchWidth);
+    const pages = Math.ceil(this.swatchCount / swatchesVisible);
+    const scrollButtonStyle = {
+      left: "hidden",
+      right: "hidden",
+    };
 
     if (pages > 1) {
       if (pos > 0) scrollButtonStyle.left = "visible";

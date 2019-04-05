@@ -41,10 +41,10 @@ function CanvasDecorator(DecoratedComponent) {
         );
       }
 
-      let w = this.props.size.width,
-        h = this.props.size.height,
-        style = {},
-        scale;
+      let w = this.props.size.width;
+      let h = this.props.size.height;
+      let style = {};
+      let scale;
 
       if (w > h) scale = size / w;
       else scale = size / h;
@@ -69,21 +69,21 @@ function CanvasDecorator(DecoratedComponent) {
     }
 
     paintSinglePixel(canvas, size, x, y, color) {
-      const alpha = 1,
-        scale = canvas.width / size.width,
-        cX = (x - 1) * scale,
-        cY = (y - 1) * scale,
-        ctx = canvas.getContext("2d");
+      const alpha = 1;
+      const scale = canvas.width / size.width;
+      const cX = (x - 1) * scale;
+      const cY = (y - 1) * scale;
+      const ctx = canvas.getContext("2d");
       ctx.globalAlpha = alpha;
       ctx.fillStyle = color;
       ctx.fillRect(cX, cY, scale, scale);
     }
 
     clearSinglePixel(canvas, size, x, y) {
-      const scale = canvas.width / size.width,
-        cX = (x - 1) * scale,
-        cY = (y - 1) * scale,
-        ctx = canvas.getContext("2d");
+      const scale = canvas.width / size.width;
+      const cX = (x - 1) * scale;
+      const cY = (y - 1) * scale;
+      const ctx = canvas.getContext("2d");
       ctx.clearRect(cX, cY, scale, scale);
     }
   };

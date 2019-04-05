@@ -75,8 +75,8 @@ class FrameCanvas extends React.Component {
     this.props.clear();
 
     if (this.props.background) {
-      const canvas = this.canvas,
-        ctx = canvas.getContext("2d");
+      const canvas = this.canvas;
+      const ctx = canvas.getContext("2d");
       ctx.fillStyle = this.props.background;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }

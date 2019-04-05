@@ -17,8 +17,8 @@ class Point {
    * @return {Object} the updated Point
    */
   translate(distance, dryRun = false) {
-    const targetX = this.x + distance.x,
-      targetY = this.y + distance.y;
+    const targetX = this.x + distance.x;
+    const targetY = this.y + distance.y;
 
     if (dryRun === true) {
       return new Point(targetX, targetY);
@@ -41,15 +41,15 @@ class Point {
     angle = angle * (Math.PI / 180); // Convert to radians
 
     const rotatedX = Math.round(
-        Math.cos(angle) * (this.x - pivot.x) -
-          Math.sin(angle) * (this.y - pivot.y) +
-          pivot.x
-      ),
-      rotatedY = Math.round(
-        Math.sin(angle) * (this.x - pivot.x) +
-          Math.cos(angle) * (this.y - pivot.y) +
-          pivot.y
-      );
+      Math.cos(angle) * (this.x - pivot.x) -
+        Math.sin(angle) * (this.y - pivot.y) +
+        pivot.x
+    );
+    const rotatedY = Math.round(
+      Math.sin(angle) * (this.x - pivot.x) +
+        Math.cos(angle) * (this.y - pivot.y) +
+        pivot.y
+    );
 
     this.x = rotatedX;
     this.y = rotatedY;

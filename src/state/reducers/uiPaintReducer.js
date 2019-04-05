@@ -4,9 +4,9 @@ import sprout from "sprout-data";
 import initialState from "../initialState";
 import { Point } from "../../classes";
 import config from "../../config";
-const { zoom, offset } = config;
 
 import { deletePixels, flattenPixels, mergeLayerPixels } from "../../utils";
+const { zoom, offset } = config;
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
   // console.log(`uiPaintReducer#${action.type}`);
@@ -119,8 +119,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
 
     case "PIXELS_ADD":
     case "PIXELS_PASTE": {
-      const colors = _.uniq(flattenPixels(action.pixels).map(p => p.toHex())),
-        spritePalette = _.uniq([...state.spritePalette, ...colors]);
+      const colors = _.uniq(flattenPixels(action.pixels).map(p => p.toHex()));
+    const spritePalette = _.uniq([...state.spritePalette, ...colors]);
       return { ...state, spritePalette };
     }
 
@@ -130,17 +130,17 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     }
 
     case "PIXELS_CUT": {
-      const { allPixels, frame, layer, pixels } = action,
-        pixelMap = deletePixels(allPixels, frame, layer, pixels),
-        clipboard = action.pixels,
-        spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+      const { allPixels, frame, layer, pixels } = action;
+      const pixelMap = deletePixels(allPixels, frame, layer, pixels);
+      const clipboard = action.pixels;
+    const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
       return { ...state, clipboard, spritePalette };
     }
 
     case "PIXELS_DELETE": {
-      const { allPixels, frame, layer, pixels } = action,
-        pixelMap = deletePixels(allPixels, frame, layer, pixels),
-        spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+      const { allPixels, frame, layer, pixels } = action;
+      const pixelMap = deletePixels(allPixels, frame, layer, pixels);
+      const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
       return { ...state, spritePalette };
     }
 

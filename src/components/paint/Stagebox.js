@@ -56,13 +56,13 @@ class Stagebox extends React.Component {
   }
 
   render() {
-    const { onionFrameAbsolute, size, tool, zoom } = this.props,
-      w = size.width * zoom,
-      h = size.height * zoom,
-      centerAreaWidth =
-        window.innerWidth - config.offset.left - config.offset.right,
-      centerAreaHeight =
-        window.innerHeight - config.offset.top - config.offset.bottom;
+    const { onionFrameAbsolute, size, tool, zoom } = this.props;
+    const w = size.width * zoom;
+    const h = size.height * zoom;
+    const centerAreaWidth =
+      window.innerWidth - config.offset.left - config.offset.right;
+    const centerAreaHeight =
+      window.innerHeight - config.offset.top - config.offset.bottom;
 
     let style = {
       width: w,
@@ -339,17 +339,17 @@ class Stagebox extends React.Component {
         !selectionIsActive(this.props.selection) ||
         insideBounds(this.props.selection, this.cursor)
       ) {
-        const color = new Color({ hex: this.props.color }),
-          p = {
-            frame: this.props.frame,
-            layer: this.props.layer,
-            x: point.x,
-            y: point.y,
-            r: color.r,
-            g: color.g,
-            b: color.b,
-            a: 1,
-          };
+        const color = new Color({ hex: this.props.color });
+        const p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+          r: color.r,
+          g: color.g,
+          b: color.b,
+          a: 1,
+        };
 
         _.merge(this.pixels, {
           [point.x]: {
@@ -378,22 +378,22 @@ class Stagebox extends React.Component {
         insideBounds(this.props.selection, this.cursor)
       ) {
         const intensity =
-            this.props.brightnessTool.mode === "lighten"
-              ? this.props.brightnessTool.intensity
-              : -this.props.brightnessTool.intensity,
-          color = new Color({ hex: this.cursorColor }).changeBrightness(
-            intensity
-          ),
-          p = {
-            frame: this.props.frame,
-            layer: this.props.layer,
-            x: point.x,
-            y: point.y,
-            r: color.r,
-            g: color.g,
-            b: color.b,
-            a: 1,
-          };
+          this.props.brightnessTool.mode === "lighten"
+            ? this.props.brightnessTool.intensity
+            : -this.props.brightnessTool.intensity;
+        const color = new Color({ hex: this.cursorColor }).changeBrightness(
+          intensity
+        );
+        const p = {
+          frame: this.props.frame,
+          layer: this.props.layer,
+          x: point.x,
+          y: point.y,
+          r: color.r,
+          g: color.g,
+          b: color.b,
+          a: 1,
+        };
 
         _.merge(this.pixels, {
           [point.x]: {
@@ -442,9 +442,9 @@ class Stagebox extends React.Component {
     this.layerBackup = document.createElement("canvas");
 
     const canvas = document
-        .getElementById(`StageBoxLayer-${this.props.layer}`)
-        .querySelector("canvas"),
-      backupCtx = this.layerBackup.getContext("2d");
+      .getElementById(`StageBoxLayer-${this.props.layer}`)
+      .querySelector("canvas");
+    const backupCtx = this.layerBackup.getContext("2d");
 
     this.layerBackup.width = canvas.width;
     this.layerBackup.height = canvas.height;
@@ -455,15 +455,15 @@ class Stagebox extends React.Component {
 
   previewMoveTool() {
     if (this.layerIsVisible()) {
-      const distance = this.getMouseDownDistance(),
-        offset = {
-          x: distance.x * this.props.zoom,
-          y: distance.y * this.props.zoom,
-        },
-        canvas = document
-          .getElementById(`StageBoxLayer-${this.props.layer}`)
-          .querySelector("canvas"),
-        ctx = canvas.getContext("2d");
+      const distance = this.getMouseDownDistance();
+      const offset = {
+        x: distance.x * this.props.zoom,
+        y: distance.y * this.props.zoom,
+      };
+      const canvas = document
+        .getElementById(`StageBoxLayer-${this.props.layer}`)
+        .querySelector("canvas");
+      const ctx = canvas.getContext("2d");
 
       canvas.width = canvas.width;
 
@@ -473,14 +473,14 @@ class Stagebox extends React.Component {
         // draw the whole image
         ctx.drawImage(this.layerBackup, 0, 0);
         // clear out selection
-        const selectionX = (this.props.selection.start.x - 1) * this.props.zoom,
-          selectionY = (this.props.selection.start.y - 1) * this.props.zoom,
-          selectionWidth =
-            (this.props.selection.end.x - this.props.selection.start.x + 1) *
-            this.props.zoom,
-          selectionHeight =
-            (this.props.selection.end.y - this.props.selection.start.y + 1) *
-            this.props.zoom;
+        const selectionX = (this.props.selection.start.x - 1) * this.props.zoom;
+        const selectionY = (this.props.selection.start.y - 1) * this.props.zoom;
+        const selectionWidth =
+          (this.props.selection.end.x - this.props.selection.start.x + 1) *
+          this.props.zoom;
+        const selectionHeight =
+          (this.props.selection.end.y - this.props.selection.start.y + 1) *
+          this.props.zoom;
 
         ctx.clearRect(selectionX, selectionY, selectionWidth, selectionHeight);
         // draw the selection
@@ -508,10 +508,10 @@ class Stagebox extends React.Component {
   }
 
   endMoveTool() {
-    const { frame, layer, pixels, selection, size } = this.props,
-      distance = this.getMouseDownDistance(),
-      // pixels = this.getLayerPixels(this.props.layer);
-      scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+    const { frame, layer, pixels, selection, size } = this.props;
+    const distance = this.getMouseDownDistance();
+    // pixels = this.getLayerPixels(this.props.layer);
+    const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
 
     // move pixels
     this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
@@ -541,8 +541,8 @@ class Stagebox extends React.Component {
           if (layer.id === this.props.layer) layerZ = layer.z;
         });
 
-        const fillColor = new Color({ hex: this.props.color }),
-          pixels = this.getLayerPixels(this.props.layer);
+        const fillColor = new Color({ hex: this.props.color });
+        const pixels = this.getLayerPixels(this.props.layer);
 
         let bounds;
         if (selectionIsActive(this.props.selection)) {

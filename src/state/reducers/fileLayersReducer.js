@@ -38,67 +38,67 @@ function fileLayersReducer(state = initialState.file.present.layers, action) {
     }
 
     case "LAYER_ADD": {
-      const stateCopy = copyState(state),
-        newZIndex =
-          action.layers.find(layer => layer.id === action.layer).z + 1,
-        newLayer = {
-          frame: action.frame,
-          id: action.newLayerId,
-          name: `Layer ${action.newLayerId}`,
-          z: newZIndex,
-          opacity: 100,
-          visible: true,
-        };
+      const stateCopy = copyState(state);
+    const newZIndex =
+        action.layers.find(layer => layer.id === action.layer).z + 1;
+      const newLayer = {
+      frame: action.frame,
+      id: action.newLayerId,
+      name: `Layer ${action.newLayerId}`,
+      z: newZIndex,
+      opacity: 100,
+      visible: true,
+    };
 
       const ignoredLayers = stateCopy.filter(
-          layer => layer.frame !== action.frame
-        ),
-        layersBelow = stateCopy.filter(
-          layer => layer.frame === action.frame && layer.z < newZIndex
-        ),
-        layersAbove = stateCopy.filter(
-          layer => layer.frame === action.frame && layer.z >= newZIndex
-        );
+      layer => layer.frame !== action.frame
+    );
+      const layersBelow = stateCopy.filter(
+      layer => layer.frame === action.frame && layer.z < newZIndex
+      );
+      const layersAbove = stateCopy.filter(
+      layer => layer.frame === action.frame && layer.z >= newZIndex
+    );
       layersAbove.forEach(layer => layer.z++);
 
       return [...layersBelow, newLayer, ...layersAbove, ...ignoredLayers];
     }
     case "LAYER_DELETE": {
-      const stateCopy = copyState(state),
-        layerToDelete = stateCopy.find(layer => layer.id === action.layer),
-        ignoredLayers = stateCopy.filter(
-          layer => layer.frame !== layerToDelete.frame
-        ),
-        layersBelow = stateCopy.filter(
-          layer =>
-            layer.frame === layerToDelete.frame && layer.z < layerToDelete.z
-        ),
-        layersAbove = stateCopy.filter(
-          layer =>
-            layer.frame === layerToDelete.frame && layer.z > layerToDelete.z
-        );
+      const stateCopy = copyState(state);
+      const layerToDelete = stateCopy.find(layer => layer.id === action.layer);
+    const ignoredLayers = stateCopy.filter(
+        layer => layer.frame !== layerToDelete.frame
+      );
+    const layersBelow = stateCopy.filter(
+      layer =>
+          layer.frame === layerToDelete.frame && layer.z < layerToDelete.z
+      );
+      const layersAbove = stateCopy.filter(
+      layer =>
+        layer.frame === layerToDelete.frame && layer.z > layerToDelete.z
+    );
       layersAbove.forEach(layer => layer.z++);
 
       return [...layersBelow, ...layersAbove, ...ignoredLayers];
     }
 
     case "LAYER_MERGE": {
-      const stateCopy = copyState(state),
-        index = _.findIndex(stateCopy, { id: action.first });
+      const stateCopy = copyState(state);
+      const index = _.findIndex(stateCopy, { id: action.first });
       return stateCopy.slice(0, index).concat(stateCopy.slice(index + 1));
     }
 
     case "LAYER_MOVE_DOWN": {
-      const stateCopy = copyState(state),
-        layerToMove = stateCopy.find(layer => layer.id === action.layer),
-        layerBelow = stateCopy.find(
-          layer => layer.frame === action.frame && layer.z === action.z - 1
-        ),
-        ignoredLayers = stateCopy.filter(
-          layer =>
-            layer.frame !== action.frame ||
-            ![layerToMove.id, layerBelow.id].includes(layer.id)
-        );
+      const stateCopy = copyState(state);
+      const layerToMove = stateCopy.find(layer => layer.id === action.layer);
+    const layerBelow = stateCopy.find(
+        layer => layer.frame === action.frame && layer.z === action.z - 1
+    );
+      const ignoredLayers = stateCopy.filter(
+      layer =>
+        layer.frame !== action.frame ||
+          ![layerToMove.id, layerBelow.id].includes(layer.id)
+    );
 
       if (layerBelow) {
         layerToMove.z--;
@@ -109,16 +109,16 @@ function fileLayersReducer(state = initialState.file.present.layers, action) {
     }
 
     case "LAYER_MOVE_UP": {
-      const stateCopy = copyState(state),
-        layerToMove = stateCopy.find(layer => layer.id === action.layer),
-        layerAbove = stateCopy.find(
-          layer => layer.frame === action.frame && layer.z === action.z + 1
-        ),
-        ignoredLayers = stateCopy.filter(
-          layer =>
-            layer.frame !== action.frame ||
-            ![layerToMove.id, layerAbove.id].includes(layer.id)
-        );
+      const stateCopy = copyState(state);
+      const layerToMove = stateCopy.find(layer => layer.id === action.layer);
+    const layerAbove = stateCopy.find(
+        layer => layer.frame === action.frame && layer.z === action.z + 1
+    );
+      const ignoredLayers = stateCopy.filter(
+      layer =>
+        layer.frame !== action.frame ||
+          ![layerToMove.id, layerAbove.id].includes(layer.id)
+    );
 
       if (layerAbove) {
         layerToMove.z++;

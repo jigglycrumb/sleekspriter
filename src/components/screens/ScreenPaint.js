@@ -50,7 +50,7 @@ class ScreenPaint extends React.Component {
         <div className="area center">
           <div>
             <StageboxContainer
-              image={this.state.referenceImage === null ? false : true}
+              image={this.state.referenceImage !== null}
               externalLayerCanvases={this.layerCanvases}
               externalPreviewCanvas={this.state.previewCanvas}
               externalFrameCanvases={this.frameCanvases}
@@ -104,13 +104,13 @@ class ScreenPaint extends React.Component {
     this.cancel(e);
 
     if (e.dataTransfer.files.length >= 1) {
-      const self = this,
-        file = e.dataTransfer.files[0],
-        allowed = {
-          "image/jpeg": true,
-          "image/gif": true,
-          "image/png": true,
-        };
+      const self = this;
+      const file = e.dataTransfer.files[0];
+      const allowed = {
+        "image/jpeg": true,
+        "image/gif": true,
+        "image/png": true,
+      };
 
       if (file.type in allowed) {
         let reader = new FileReader();

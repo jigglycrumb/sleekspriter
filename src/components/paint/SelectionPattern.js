@@ -39,8 +39,8 @@ class SelectionPattern extends React.Component {
   }
 
   tick() {
-    let frame = this.state.frame,
-      countUp = this.state.frameCountUp;
+    let frame = this.state.frame;
+    let countUp = this.state.frameCountUp;
 
     if (countUp) {
       frame++;
@@ -53,8 +53,8 @@ class SelectionPattern extends React.Component {
   }
 
   drawPattern() {
-    const frame = this.state.frame,
-      ctx = this.canvas.getContext("2d");
+    const frame = this.state.frame;
+    const ctx = this.canvas.getContext("2d");
 
     ctx.imageSmoothingEnabled = false;
     ctx.fillStyle = "#fff";

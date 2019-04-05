@@ -98,12 +98,12 @@ class ScreenExport extends React.Component {
 
   export() {
     // TODO this is currently browser-only
-    const { format } = this.props,
-      canvas = document
-        .getElementById("ExportPreview")
-        .querySelectorAll("canvas")[0],
-      img = canvas.toDataURL(`image/${format}`),
-      downloadLink = document.createElement("a");
+    const { format } = this.props;
+    const canvas = document
+      .getElementById("ExportPreview")
+      .querySelectorAll("canvas")[0];
+    const img = canvas.toDataURL(`image/${format}`);
+    const downloadLink = document.createElement("a");
 
     downloadLink.href = img;
     downloadLink.download = `my-pixels.${format === "jpeg" ? "jpg" : format}`; // TODO name file?

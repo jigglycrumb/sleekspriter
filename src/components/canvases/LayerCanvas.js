@@ -54,8 +54,8 @@ class LayerCanvas extends React.Component {
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
         yValues.map(y => {
-          const p = this.props.pixels[x][y],
-            hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
+          const p = this.props.pixels[x][y];
+          const hex = new Color({ rgb: [p.r, p.g, p.b] }).hex();
           this.props.paintSinglePixel(this.canvas, this.props.size, x, y, hex);
         });
       });

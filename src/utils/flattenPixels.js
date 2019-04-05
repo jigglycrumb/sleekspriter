@@ -1,8 +1,8 @@
 import { Pixel } from "../classes";
 
 const flattenPixels = (pixels = {}, flattenedPixels = []) => {
-  const keys = Object.keys(pixels),
-    values = Object.values(pixels);
+  const keys = Object.keys(pixels);
+  const values = Object.values(pixels);
 
   if (keys.length > 0) {
     if (keys.every(key => !isNaN(key))) {

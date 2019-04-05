@@ -18,16 +18,16 @@ class FrameboxFrame extends React.Component {
   }
 
   render() {
-    const id = `FrameBoxFrame-${this.props.frame}`,
-      classes = classnames({
-        frame: true,
-        selected: this.props.frame == this.props.selected,
-        onion: this.props.onionSelected,
-      }),
-      frameStyle = {
-        height: this.props.maxSize,
-        width: this.props.maxSize,
-      };
+    const id = `FrameBoxFrame-${this.props.frame}`;
+    const classes = classnames({
+      frame: true,
+      selected: this.props.frame == this.props.selected,
+      onion: this.props.onionSelected,
+    });
+    const frameStyle = {
+      height: this.props.maxSize,
+      width: this.props.maxSize,
+    };
 
     return (
       <div

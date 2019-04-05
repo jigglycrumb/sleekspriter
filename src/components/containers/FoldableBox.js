@@ -15,15 +15,15 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const FoldableBox = props => {
-  const folded = props.folds[props.fold],
-    handleClasses = classnames({
-      "foldable-handle": true,
-      folded,
-    }),
-    innerBox =
-      folded === true ? null : (
-        <div className="foldable-fold">{props.children}</div>
-      );
+  const folded = props.folds[props.fold];
+  const handleClasses = classnames({
+    "foldable-handle": true,
+    folded,
+  });
+  const innerBox =
+    folded === true ? null : (
+      <div className="foldable-fold">{props.children}</div>
+    );
 
   return (
     <div id={props.id} className="box">
@@ -37,4 +37,7 @@ const FoldableBox = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoldableBox);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FoldableBox);

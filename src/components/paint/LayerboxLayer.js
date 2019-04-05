@@ -25,13 +25,13 @@ class LayerboxLayer extends React.Component {
   }
 
   render() {
-    const htmlId = "LayerBoxLayer-" + this.props.layer.id,
-      cssClass = classnames({
-        LayerBoxLayer: true,
-        selected: this.props.selected,
-        first: this.props.position === 0,
-        last: this.props.position === this.props.layerCount - 1,
-      });
+    const htmlId = "LayerBoxLayer-" + this.props.layer.id;
+    const cssClass = classnames({
+      LayerBoxLayer: true,
+      selected: this.props.selected,
+      first: this.props.position === 0,
+      last: this.props.position === this.props.layerCount - 1,
+    });
 
     return (
       <div id={htmlId} className={cssClass}>

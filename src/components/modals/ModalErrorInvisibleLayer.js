@@ -21,4 +21,7 @@ function ModalErrorInvisibleLayer(props) {
   );
 }
 
-export default connect(null, mapDispatchToProps)(ModalErrorInvisibleLayer);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalErrorInvisibleLayer);

@@ -7,22 +7,22 @@ const pad = function(s) {
 };
 
 const hex2rgb = function(hex) {
-  const r = parseInt(hex.substr(1, 2), 16),
-    g = parseInt(hex.substr(3, 2), 16),
-    b = parseInt(hex.substr(5, 2), 16);
+  const r = parseInt(hex.substr(1, 2), 16);
+  const g = parseInt(hex.substr(3, 2), 16);
+  const b = parseInt(hex.substr(5, 2), 16);
   return { r, g, b };
 };
 
 const rgb2hsl = function(rgb) {
-  let r = rgb[0] / 255,
-    g = rgb[1] / 255,
-    b = rgb[2] / 255,
-    min = Math.min(r, g, b),
-    max = Math.max(r, g, b),
-    delta = max - min,
-    h,
-    s,
-    l;
+  let r = rgb[0] / 255;
+  let g = rgb[1] / 255;
+  let b = rgb[2] / 255;
+  let min = Math.min(r, g, b);
+  let max = Math.max(r, g, b);
+  let delta = max - min;
+  let h;
+  let s;
+  let l;
 
   if (max == min) h = 0;
   else if (r == max) h = (g - b) / delta;
@@ -43,14 +43,14 @@ const rgb2hsl = function(rgb) {
 };
 
 const hsl2rgb = function(hsl) {
-  let h = hsl[0] / 360,
-    s = hsl[1] / 100,
-    l = hsl[2] / 100,
-    t1,
-    t2,
-    t3,
-    rgb,
-    val;
+  let h = hsl[0] / 360;
+  let s = hsl[1] / 100;
+  let l = hsl[2] / 100;
+  let t1;
+  let t2;
+  let t3;
+  let rgb;
+  let val;
 
   if (s === 0) {
     val = l * 255;
@@ -79,13 +79,13 @@ const hsl2rgb = function(hsl) {
 };
 
 const changeColorLightness = function({ r, g, b }, delta) {
-  let hsl = rgb2hsl([r, g, b]),
-    l = hsl[2];
+  let hsl = rgb2hsl([r, g, b]);
+  let l = hsl[2];
 
   l += delta;
 
-  const newHsl = [hsl[0], hsl[1], clamp(0, 100, l)],
-    newRgb = hsl2rgb(newHsl).map(val => Math.round(val));
+  const newHsl = [hsl[0], hsl[1], clamp(0, 100, l)];
+  const newRgb = hsl2rgb(newHsl).map(val => Math.round(val));
 
   return newRgb;
 };

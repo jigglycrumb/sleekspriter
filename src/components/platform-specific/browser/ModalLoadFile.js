@@ -69,4 +69,7 @@ class ModalLoadFile extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalLoadFile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalLoadFile);

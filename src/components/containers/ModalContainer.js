@@ -9,16 +9,16 @@ const mapStateToProps = state => ({
 
 const ModalContainer = props => {
   const style = {
-      display: props.visible === true ? "flex" : "none",
-    },
-    Dialog = props.dialog === null ? null : dialogs[props.dialog],
-    modalDialog = props.dialog === null ? null : <Dialog />,
-    composedModal =
-      props.visible === false ? null : (
-        <div id="Modal" style={style}>
-          {modalDialog}
-        </div>
-      );
+    display: props.visible === true ? "flex" : "none",
+  };
+  const Dialog = props.dialog === null ? null : dialogs[props.dialog];
+  const modalDialog = props.dialog === null ? null : <Dialog />;
+  const composedModal =
+    props.visible === false ? null : (
+      <div id="Modal" style={style}>
+        {modalDialog}
+      </div>
+    );
 
   return composedModal;
 };

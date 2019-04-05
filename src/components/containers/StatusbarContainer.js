@@ -29,4 +29,7 @@ const mapDispatchToProps = dispatch => ({
   redo: () => dispatch(ActionCreators.redo()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Statusbar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Statusbar);

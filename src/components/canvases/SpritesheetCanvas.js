@@ -49,10 +49,10 @@ class SpritesheetCanvas extends React.Component {
   paint() {
     this.props.clear();
 
-    const { background } = this.props,
-      canvas = this.canvas,
-      pixels = [],
-      layerDict = [];
+    const { background } = this.props;
+    const canvas = this.canvas;
+    const pixels = [];
+    const layerDict = [];
 
     if (background) {
       const ctx = canvas.getContext("2d");
@@ -69,25 +69,25 @@ class SpritesheetCanvas extends React.Component {
     }, this);
 
     // sort pixels via z value
-    let dict = this.props.pixels,
-      flen,
-      llen,
-      xlen,
-      ylen,
-      frames,
-      f,
-      frame,
-      layers,
-      l,
-      layer,
-      xValues,
-      x,
-      xValue,
-      yValues,
-      y,
-      yValue,
-      zValue,
-      pixel;
+    let dict = this.props.pixels;
+    let flen;
+    let llen;
+    let xlen;
+    let ylen;
+    let frames;
+    let f;
+    let frame;
+    let layers;
+    let l;
+    let layer;
+    let xValues;
+    let x;
+    let xValue;
+    let yValues;
+    let y;
+    let yValue;
+    let zValue;
+    let pixel;
 
     frames = Object.keys(dict);
     flen = frames.length;
@@ -127,13 +127,13 @@ class SpritesheetCanvas extends React.Component {
     pixels.forEach(function(zLayer) {
       zLayer.forEach(function(px) {
         if (layerDict[px.layer].visible === true) {
-          const targetPos = this.getPixelSpritesheetPosition(px),
-            // alpha = px.a * (layerDict[px.layer].opacity / 100), // TODO integrate layer alpha support
-            hex = new Color({ rgb: [px.r, px.g, px.b] }).hex(),
-            sheetSize = this.getSpriteSheetSize(
-              this.props.size,
-              this.props.frames
-            );
+          const targetPos = this.getPixelSpritesheetPosition(px);
+          // alpha = px.a * (layerDict[px.layer].opacity / 100), // TODO integrate layer alpha support
+          const hex = new Color({ rgb: [px.r, px.g, px.b] }).hex();
+          const sheetSize = this.getSpriteSheetSize(
+            this.props.size,
+            this.props.frames
+          );
 
           this.props.paintSinglePixel(
             canvas,

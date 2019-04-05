@@ -60,18 +60,18 @@ class StageboxSelectionCanvas extends React.Component {
   drawSelection(start, end) {
     this.props.clear();
 
-    const canvas = this.canvas,
-      zoom = this.props.zoom,
-      ctx = canvas.getContext("2d"),
-      pattern = ctx.createPattern(
-        document.getElementById("SelectionPattern"),
-        "repeat"
-      );
+    const canvas = this.canvas;
+    const zoom = this.props.zoom;
+    const ctx = canvas.getContext("2d");
+    const pattern = ctx.createPattern(
+      document.getElementById("SelectionPattern"),
+      "repeat"
+    );
 
-    let width = end.x - start.x,
-      height = end.y - start.y,
-      sx,
-      sy;
+    let width = end.x - start.x;
+    let height = end.y - start.y;
+    let sx;
+    let sy;
 
     if (width >= 0) {
       width++;

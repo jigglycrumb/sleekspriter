@@ -80,9 +80,9 @@ class ModalDuplicateFrame extends React.Component {
   }
 
   updateForm() {
-    const source = +this.source.value,
-      target = +this.target.value,
-      error = source === target;
+    const source = +this.source.value;
+    const target = +this.target.value;
+    const error = source === target;
 
     this.setState({ source, target, error });
   }
@@ -100,6 +100,7 @@ class ModalDuplicateFrame extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  ModalDuplicateFrame
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalDuplicateFrame);

@@ -11,29 +11,29 @@ class FrameboxOnionPanel extends React.Component {
 
   render() {
     const fixedTabClasses = classnames({
-        tab: true,
-        fixed: true,
-        active: this.props.onion.mode == "fixed",
-      }),
-      fixedPanelClasses = classnames({
-        "onion-settings": true,
-        fixed: true,
-        hidden: this.props.onion.mode != "fixed",
-      }),
-      relativeTabClasses = classnames({
-        tab: true,
-        relative: true,
-        active: this.props.onion.mode == "relative",
-      }),
-      relativePanelClasses = classnames({
-        "onion-settings": true,
-        relative: true,
-        hidden: this.props.onion.mode != "relative",
-      }),
-      frameLabel =
-        " " +
-        (this.props.onion.frame.relative == 1 ? t("frame") : t("frames")) +
-        " ";
+      tab: true,
+      fixed: true,
+      active: this.props.onion.mode == "fixed",
+    });
+    const fixedPanelClasses = classnames({
+      "onion-settings": true,
+      fixed: true,
+      hidden: this.props.onion.mode != "fixed",
+    });
+    const relativeTabClasses = classnames({
+      tab: true,
+      relative: true,
+      active: this.props.onion.mode == "relative",
+    });
+    const relativePanelClasses = classnames({
+      "onion-settings": true,
+      relative: true,
+      hidden: this.props.onion.mode != "relative",
+    });
+    const frameLabel =
+      " " +
+      (this.props.onion.frame.relative == 1 ? t("frame") : t("frames")) +
+      " ";
 
     return (
       <div className="onion-panel">
@@ -89,9 +89,9 @@ class FrameboxOnionPanel extends React.Component {
   }
 
   onionFrameRelative() {
-    const prefix = this.onionRelativePrefix.value,
-      number = this.onionRelativeNumber.value,
-      val = prefix.toString() + number.toString();
+    const prefix = this.onionRelativePrefix.value;
+    const number = this.onionRelativeNumber.value;
+    const val = prefix.toString() + number.toString();
 
     this.props.onionFrame("relative", val);
   }

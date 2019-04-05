@@ -30,12 +30,12 @@ class GridCanvas extends React.Component {
   }
 
   drawGrid() {
-    const canvas = this.canvas,
-      ctx = canvas.getContext("2d"),
-      cell = {
-        width: this.props.width / this.props.columns,
-        height: this.props.height / this.props.rows,
-      };
+    const canvas = this.canvas;
+    const ctx = canvas.getContext("2d");
+    const cell = {
+      width: this.props.width / this.props.columns,
+      height: this.props.height / this.props.rows,
+    };
 
     if (cell.width >= 2 && cell.height >= 2) {
       ctx.strokeStyle = "#828282";

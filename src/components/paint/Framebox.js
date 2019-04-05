@@ -15,22 +15,22 @@ class Framebox extends React.Component {
   }
 
   render() {
-    const maxWidth = 206,
-      frameSize = Math.floor(maxWidth / this.props.frames.x) - 1,
-      onionButtonClasses = classnames({
-        "toggle-onion": true,
-        transparent: true,
-        active: this.props.onion.active,
-      }),
-      onionPanel =
-        this.props.onion.active !== true ? null : (
-          <FrameboxOnionPanel
-            onion={this.props.onion}
-            onionFrame={this.props.onionFrame}
-            onionMode={this.props.onionMode}
-            totalFrames={this.props.totalFrames}
-          />
-        );
+    const maxWidth = 206;
+    const frameSize = Math.floor(maxWidth / this.props.frames.x) - 1;
+    const onionButtonClasses = classnames({
+      "toggle-onion": true,
+      transparent: true,
+      active: this.props.onion.active,
+    });
+    const onionPanel =
+      this.props.onion.active !== true ? null : (
+        <FrameboxOnionPanel
+          onion={this.props.onion}
+          onionFrame={this.props.onionFrame}
+          onionMode={this.props.onionMode}
+          totalFrames={this.props.totalFrames}
+        />
+      );
 
     let frames = [];
     for (var i = 0; i < this.props.totalFrames; i++) frames.push(i + 1);

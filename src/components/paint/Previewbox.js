@@ -12,8 +12,8 @@ class Previewbox extends React.Component {
   }
 
   render() {
-    const maxWidth = 206,
-      maxHeight = 120;
+    const maxWidth = 206;
+    const maxHeight = 120;
 
     let maxSize;
     if (this.props.size.width >= this.props.size.height) {
@@ -36,7 +36,7 @@ class Previewbox extends React.Component {
         layers={this.props.layers}
         size={this.props.size}
         maxSize={maxSize}
-        noMargin={true}
+        noMargin
         pixels={pixels}
       />
     );

@@ -13,13 +13,13 @@ const ExportPreviewSpritesheet = ({
   zoom,
 }) => {
   const classes = {
-      preview: true,
-      checkerboard: format === "png" || format === "gif" ? true : false,
-    },
-    style = {
-      width: frames.x * size.width * zoom,
-      height: frames.y * size.height * zoom,
-    };
+    preview: true,
+    checkerboard: !!(format === "png" || format === "gif"),
+  };
+  const style = {
+    width: frames.x * size.width * zoom,
+    height: frames.y * size.height * zoom,
+  };
 
   background = format === "jpeg" ? background : null;
 

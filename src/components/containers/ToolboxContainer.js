@@ -94,4 +94,7 @@ class ToolboxContainer extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolboxContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolboxContainer);

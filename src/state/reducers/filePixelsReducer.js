@@ -88,9 +88,9 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
 
     case "PIXELS_ADD":
     case "PIXELS_PASTE": {
-      const { frame, layer, pixels } = action,
-        px = sprout.get(state, [frame, layer], {}),
-        newPx = _.merge(px, pixels);
+      const { frame, layer, pixels } = action;
+      const px = sprout.get(state, [frame, layer], {});
+      const newPx = _.merge(px, pixels);
       return sprout.assoc(state, [frame, layer], newPx);
     }
 

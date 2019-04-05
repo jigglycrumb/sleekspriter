@@ -20,18 +20,18 @@ self.onmessage = function(e) {
     json.layers.push([i, i, `Layer ${i}`, 0, 100, 1]);
   }
 
-  let frame = 1, // will also serve as layer id
-    position = {
-      canvas: { x: 1, y: 1 },
-      frame: { x: 1, y: 1 },
-    };
+  let frame = 1; // will also serve as layer id
+  let position = {
+    canvas: { x: 1, y: 1 },
+    frame: { x: 1, y: 1 },
+  };
 
   // loop over image data and create pixels
   for (i = 0; i < imageData.data.length; i += 4) {
-    const red = imageData.data[i],
-      green = imageData.data[i + 1],
-      blue = imageData.data[i + 2],
-      alpha = (imageData.data[i + 3] / 255).toFixed(2);
+    const red = imageData.data[i];
+    const green = imageData.data[i + 1];
+    const blue = imageData.data[i + 2];
+    const alpha = (imageData.data[i + 3] / 255).toFixed(2);
 
     if (alpha > 0) {
       var pixel = [

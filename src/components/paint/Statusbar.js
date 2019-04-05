@@ -5,19 +5,19 @@ import classnames from "classnames";
 import { t } from "../../utils";
 import { Hotkeys } from "../../classes";
 
-const gridHotkey = Hotkeys.bindings.paint[8].key,
-  undoHotkey = Hotkeys.bindings.paint[10].key,
-  redoHotkey = Hotkeys.bindings.paint[11].key;
+const gridHotkey = Hotkeys.bindings.paint[8].key;
+const undoHotkey = Hotkeys.bindings.paint[10].key;
+const redoHotkey = Hotkeys.bindings.paint[11].key;
 
 const Statusbar = props => {
   const gridButtonClasses = classnames({
-      tiny: true,
-      transparent: true,
-      active: props.grid,
-    }),
-    historyButtonClasses = classnames({
-      tiny: true,
-    });
+    tiny: true,
+    transparent: true,
+    active: props.grid,
+  });
+  const historyButtonClasses = classnames({
+    tiny: true,
+  });
 
   return (
     <div className="bar">

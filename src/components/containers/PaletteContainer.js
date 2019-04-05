@@ -17,8 +17,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const PaletteContainer = props => {
-  const { selected, spritePalette, brushColor, paletteSelect } = props,
-    palette = palettes[selected];
+  const { selected, spritePalette, brushColor, paletteSelect } = props;
+  const palette = palettes[selected];
 
   if (selected === 0) palette.colors = spritePalette;
 
@@ -34,4 +34,7 @@ const PaletteContainer = props => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaletteContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaletteContainer);

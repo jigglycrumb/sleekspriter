@@ -12,13 +12,13 @@ const ExportPreviewSingleFrame = ({
   zoom,
 }) => {
   const classes = {
-      preview: true,
-      checkerboard: format === "png" || format === "gif" ? true : false,
-    },
-    style = {
-      width: size.width * zoom,
-      height: size.height * zoom,
-    };
+    preview: true,
+    checkerboard: !!(format === "png" || format === "gif"),
+  };
+  const style = {
+    width: size.width * zoom,
+    height: size.height * zoom,
+  };
 
   background = format === "jpeg" ? background : null;
 
