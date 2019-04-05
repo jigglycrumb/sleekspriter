@@ -7,7 +7,8 @@ describe("Previewbox", () => {
       size: { width: 32, height: 32 },
       pixels: {},
       layers: [],
-      frame: 1
+      frame: 1,
+      registerPreviewCanvas: jest.fn(),
     };
     wrapper = shallow(<Previewbox {...props} />);
   });

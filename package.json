@@ -76,8 +76,16 @@
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "eslint": "^5.4.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jest": "^21.21.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
@@ -97,6 +105,7 @@
     "yaml-loader": "^0.5.0"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^16.6.0",
     "classnames": "^2.2.6",
     "crypto-js": "^3.1.9-1",
     "gif.js": "^0.2.0",
@@ -109,7 +118,22 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-undo": "^0.6.1",
-    "sprout-data": "^0.2.3",
-    "@tweenjs/tween.js": "^16.6.0"
+    "sprout-data": "^0.2.3"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "expect"
+    ],
+    "ignore": [
+      "/build/",
+      "/docs/",
+      "/node_modules/"
+    ],
+    "parser": "babel-eslint",
+    "plugins": [
+      "jest"
+    ]
   }
 }

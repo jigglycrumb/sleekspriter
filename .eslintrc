@@ -2,9 +2,18 @@
   "env": {
     "browser": true,
     "es6": true,
-    "jest/globals": true
+    "jest": true
   },
-  "extends": "semistandard",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "standard",
+    "standard-react",
+    "prettier",
+    "plugin:prettier/recommended",
+    "prettier/react",
+    "prettier/standard"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -36,7 +45,7 @@
     "react/no-direct-mutation-state": 2,
     "react/no-is-mounted": 2,
     "react/no-unknown-property": 2,
-    "react/prop-types": 2,
+    "react/prop-types": "error",
     "react/react-in-jsx-scope": 2,
     "comma-dangle": [
       "error",
