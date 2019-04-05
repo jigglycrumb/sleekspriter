@@ -103,6 +103,7 @@ class Stagebox extends React.Component {
         <div id="StageBoxOnionCanvas" className="Layer">
           <FrameCanvas
             frame={onionFrameAbsolute}
+            layers={this.props.onionFrameLayers}
             size={size}
             zoom={zoom}
             pixels={pixels}

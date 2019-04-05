@@ -14,3 +14,4 @@ export { default as mergeLayerPixels } from "./mergeLayerPixels";
 export { default as selectionIsActive } from "./selectionIsActive";
 export { default as stateToFile } from "./stateToFile";
 export { default as t } from "./translate";
+export { default as zSorter } from "./zSorter";

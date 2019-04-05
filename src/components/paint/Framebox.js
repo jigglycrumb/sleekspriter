@@ -53,7 +53,7 @@ class Framebox extends React.Component {
                   this.props.onion.active &&
                   this.props.onionFrameAbsolute === frame
                 }
-                pixels={this.props.pixels[frame] || null}
+                pixels={this.props.pixels[frame] || undefined}
                 frame={frame}
                 frameSelect={this.props.frameSelect}
                 layers={layers}

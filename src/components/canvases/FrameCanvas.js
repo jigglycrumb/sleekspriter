@@ -71,7 +71,7 @@ class FrameCanvas extends React.Component {
   }
 
   paint() {
-    // console.log("FrameCanvas paint!");
+    // console.log("FrameCanvas paint!", this.canvas, this.props.pixels);
     this.props.clear();
 
     if (this.props.background) {
@@ -122,6 +122,7 @@ class FrameCanvas extends React.Component {
     // containing the an array of pixels for each x/y-coordinate
     // the array contains all pixels z-sorted, by highest z first
     let pMap = {};
+
     flattenPixels(this.props.pixels || {}).forEach(pixel => {
       // if layer is visible
       if (vMap[pixel.layer] === true) {
@@ -140,8 +141,6 @@ class FrameCanvas extends React.Component {
   }
 
   paintPixel(pixel) {
-    // console.log("paint", x, y, color);
-
     const { zMap, vMap } = this.mapLayers();
 
     const { x, y } = pixel;
