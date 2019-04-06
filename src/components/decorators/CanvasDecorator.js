@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 
 function CanvasDecorator(DecoratedComponent) {
-  return class CanvasDecorated extends React.Component {
+  class CanvasDecorated extends React.Component {
     constructor(props) {
       super(props);
 
@@ -86,7 +87,16 @@ function CanvasDecorator(DecoratedComponent) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(cX, cY, scale, scale);
     }
+  }
+
+  CanvasDecorated.propTypes = {
+    size: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
+    }),
   };
+
+  return CanvasDecorated;
 }
 
 export default CanvasDecorator;

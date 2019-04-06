@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t } from "../../utils";
 import { colorReplace, modalHide } from "../../state/actions";
 import {
@@ -154,6 +156,16 @@ class ModalReplaceColor extends React.Component {
     hide();
   }
 }
+
+ModalReplaceColor.propTypes = {
+  colorReplace: PropTypes.func.isRequired,
+  hide: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
+  frame: PropTypes.number.isRequired,
+  layer: PropTypes.number.isRequired,
+  selection: PropTypes.object.isRequired,
+  size: PropTypes.object.isRequired,
+};
 
 export default connect(
   mapStateToProps,

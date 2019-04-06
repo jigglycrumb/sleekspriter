@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t } from "../../utils";
 import {
   getPaintFrame,
@@ -59,6 +61,14 @@ class ModalConfirmDeleteLayer extends React.Component {
     hide();
   }
 }
+
+ModalConfirmDeleteLayer.propTypes = {
+  layerDelete: PropTypes.func.isRequired,
+  frame: PropTypes.number.isRequired,
+  layer: PropTypes.object.isRequired,
+  pixels: PropTypes.object,
+  hide: PropTypes.func.isRequired,
+};
 
 export default connect(
   mapStateToProps,

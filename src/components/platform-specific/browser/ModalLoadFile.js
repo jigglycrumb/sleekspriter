@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t, fileToState } from "../../../utils";
 import { fileLoad, modalHide, zoomFit } from "../../../state/actions";
 import { getFrameLayersZSorted } from "../../../state/selectors";
@@ -68,6 +70,12 @@ class ModalLoadFile extends React.Component {
     }
   }
 }
+
+ModalLoadFile.propTypes = {
+  hide: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired,
+  zoomFit: PropTypes.func.isRequired,
+};
 
 export default connect(
   mapStateToProps,

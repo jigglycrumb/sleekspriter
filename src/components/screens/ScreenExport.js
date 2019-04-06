@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { t } from "../../utils";
 
 import {
@@ -115,5 +116,25 @@ class ScreenExport extends React.Component {
     this.props.setStatus(t("Export finished"));
   }
 }
+
+ScreenExport.propTypes = {
+  background: PropTypes.string.isRequired,
+  frame: PropTypes.number.isRequired,
+  frames: PropTypes.object.isRequired,
+  format: PropTypes.string.isRequired,
+  layers: PropTypes.array.isRequired,
+  part: PropTypes.string.isRequired,
+  pixels: PropTypes.object.isRequired,
+  setBackground: PropTypes.func.isRequired,
+  setFormat: PropTypes.func.isRequired,
+  setFrame: PropTypes.func.isRequired,
+  setPart: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired,
+  size: PropTypes.object.isRequired,
+  status: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired,
+  totalFrames: PropTypes.number.isRequired,
+};
 
 export default ScreenExport;

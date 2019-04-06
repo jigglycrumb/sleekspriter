@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t } from "../../utils";
 import { GridCanvas } from "../canvases";
 import { fileSize, modalHide } from "../../state/actions";
@@ -118,6 +120,13 @@ class ModalEditImageSize extends React.Component {
     this.props.hide();
   }
 }
+
+ModalEditImageSize.propTypes = {
+  fileSize: PropTypes.func.isRequired,
+  frames: PropTypes.object.isRequired,
+  hide: PropTypes.func.isRequired,
+  size: PropTypes.object.isRequired,
+};
 
 export default connect(
   mapStateToProps,

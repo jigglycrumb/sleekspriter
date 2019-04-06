@@ -1,10 +1,12 @@
-import { connect } from "react-redux";
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 import * as dialogs from "../modals";
 
 const mapStateToProps = state => ({
-  visible: state.ui.app.modal.visible,
-  dialog: state.ui.app.modal.dialog,
+  visible: state.ui.app.modal.visible, // TODO add selector
+  dialog: state.ui.app.modal.dialog, // TODO add selector
 });
 
 const ModalContainer = props => {
@@ -21,6 +23,11 @@ const ModalContainer = props => {
     );
 
   return composedModal;
+};
+
+ModalContainer.propTypes = {
+  dialog: PropTypes.string,
+  visible: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps)(ModalContainer);

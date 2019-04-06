@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 
@@ -35,6 +36,15 @@ const FoldableBox = props => {
       {innerBox}
     </div>
   );
+};
+
+FoldableBox.propTypes = {
+  boxFold: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  fold: PropTypes.string.isRequired,
+  folds: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default connect(

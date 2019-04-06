@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import palettes from "../../json/palettes";
 import PalettePicker from "../paint/PalettePicker";
 import Palette from "../paint/Palette";
@@ -32,6 +34,13 @@ const PaletteContainer = props => {
       <Palette colors={palette.colors} action={brushColor} />
     </div>
   );
+};
+
+PaletteContainer.propTypes = {
+  brushColor: PropTypes.func.isRequired,
+  paletteSelect: PropTypes.func.isRequired,
+  selected: PropTypes.number.isRequired,
+  spritePalette: PropTypes.array.isRequired,
 };
 
 export default connect(

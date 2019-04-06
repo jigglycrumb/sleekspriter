@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import ToolboxTool from "../paint/ToolboxTool";
 
 import { toolSelect } from "../../state/actions";
@@ -7,6 +9,7 @@ import { getTool } from "../../state/selectors";
 import { t } from "../../utils";
 
 import { Hotkeys } from "../../classes";
+
 const bindings = Hotkeys.bindings.paint;
 const [
   brush,
@@ -93,6 +96,11 @@ class ToolboxContainer extends React.Component {
     );
   }
 }
+
+ToolboxContainer.propTypes = {
+  tool: PropTypes.string.isRequired,
+  toolSelect: PropTypes.func.isRequired,
+};
 
 export default connect(
   mapStateToProps,

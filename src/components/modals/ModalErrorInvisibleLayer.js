@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t } from "../../utils";
 import { modalHide } from "../../state/actions";
 
@@ -7,7 +9,7 @@ const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
 });
 
-function ModalErrorInvisibleLayer(props) {
+const ModalErrorInvisibleLayer = props => {
   return (
     <div className="dialog">
       <div className="title">{t("Error")}</div>
@@ -19,7 +21,11 @@ function ModalErrorInvisibleLayer(props) {
       </div>
     </div>
   );
-}
+};
+
+ModalErrorInvisibleLayer.propTypes = {
+  hide: PropTypes.func.isRequired,
+};
 
 export default connect(
   null,

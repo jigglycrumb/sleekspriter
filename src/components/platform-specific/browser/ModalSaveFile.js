@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t, stateToFile } from "../../../utils";
 import { modalHide } from "../../../state/actions";
 import { AES } from "crypto-js";
@@ -45,6 +47,11 @@ class ModalSaveFile extends React.Component {
     );
   }
 }
+
+ModalSaveFile.propTypes = {
+  file: PropTypes.object.isRequired,
+  hide: PropTypes.func.isRequired,
+};
 
 export default connect(
   mapStateToProps,

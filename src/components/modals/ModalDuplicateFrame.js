@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+
 import { t, createNewLayerId } from "../../utils";
 import {
   getFileLayers,
@@ -99,6 +101,15 @@ class ModalDuplicateFrame extends React.Component {
     this.props.hide();
   }
 }
+
+ModalDuplicateFrame.propTypes = {
+  frame: PropTypes.number.isRequired,
+  frameDuplicate: PropTypes.func.isRequired,
+  hide: PropTypes.func.isRequired,
+  layers: PropTypes.array.isRequired,
+  nextLayerId: PropTypes.number.isRequired,
+  totalFrames: PropTypes.number.isRequired,
+};
 
 export default connect(
   mapStateToProps,

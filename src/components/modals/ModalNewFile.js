@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import {
   modalHide,
   fileCreate,
@@ -131,6 +133,13 @@ class ModalNewFile extends React.Component {
     this.props.zoomFit(this.state.size);
   }
 }
+
+ModalNewFile.propTypes = {
+  fileCreate: PropTypes.func.isRequired,
+  hide: PropTypes.func.isRequired,
+  screenSelect: PropTypes.func.isRequired,
+  zoomFit: PropTypes.func.isRequired,
+};
 
 export default connect(
   null,

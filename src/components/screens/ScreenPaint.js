@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import FoldableBox from "../containers/FoldableBox";
 import PreviewboxContainer from "../containers/PreviewboxContainer";
@@ -146,5 +147,9 @@ class ScreenPaint extends React.Component {
     // this.previewCanvas = canvas;
   }
 }
+
+ScreenPaint.propTypes = {
+  totalFrames: PropTypes.number.isRequired,
+};
 
 export default ScreenPaint;

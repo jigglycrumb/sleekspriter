@@ -8,7 +8,7 @@ const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
 });
 
-function ModalAbout(props) {
+const ModalAbout = (props) => {
   return (
     <div className="dialog">
       <div className="title">{t("About @@name")}</div>

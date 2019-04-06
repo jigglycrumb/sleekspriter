@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { t, fileToState } from "../../utils";
 import { modalHide, fileLoad } from "../../state/actions";
 import { GridCanvas } from "../canvases";
@@ -257,6 +259,11 @@ class ModalImportFile extends React.Component {
     }
   }
 }
+
+ModalImportFile.propTypes = {
+  hide: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired,
+};
 
 export default connect(
   null,
