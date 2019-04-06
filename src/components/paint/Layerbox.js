@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import LayerboxLayer from "./LayerboxLayer";
 import { t } from "../../utils";
 
@@ -96,5 +98,24 @@ class Layerbox extends React.Component {
     this.layerList.style.height = height + "px";
   }
 }
+
+Layerbox.propTypes = {
+  frame: PropTypes.number.isRequired,
+  layers: PropTypes.array.isRequired,
+  layerAdd: PropTypes.func.isRequired,
+  layerMoveDown: PropTypes.func.isRequired,
+  layerMoveUp: PropTypes.func.isRequired,
+  layerName: PropTypes.func.isRequired,
+  layerOpacity: PropTypes.func.isRequired,
+  layerSelect: PropTypes.func.isRequired,
+  layerSelectTop: PropTypes.func.isRequired,
+  layerVisibility: PropTypes.func.isRequired,
+  modalShow: PropTypes.func.isRequired,
+  newLayerId: PropTypes.number.isRequired,
+  pixels: PropTypes.object,
+  registerLayerCanvas: PropTypes.func.isRequired,
+  selected: PropTypes.number,
+  size: PropTypes.object.isRequired,
+};
 
 export default Layerbox;

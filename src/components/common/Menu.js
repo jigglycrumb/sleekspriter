@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 import _ from "lodash";
 
@@ -473,5 +474,32 @@ class Menu extends React.Component {
     }
   }
 }
+
+Menu.propTypes = {
+  clipboard: PropTypes.object,
+  frame: PropTypes.number.isRequired,
+  layer: PropTypes.number,
+  layers: PropTypes.array.isRequired,
+  pixels: PropTypes.object,
+  selection: PropTypes.object,
+  size: PropTypes.object.isRequired,
+  frameFlipHorizontal: PropTypes.func.isRequired,
+  frameFlipVertical: PropTypes.func.isRequired,
+  frameRotate: PropTypes.func.isRequired,
+  layerMerge: PropTypes.func.isRequired,
+  modalShow: PropTypes.func.isRequired,
+  pixelsCopy: PropTypes.func.isRequired,
+  pixelsCut: PropTypes.func.isRequired,
+  pixelsDelete: PropTypes.func.isRequired,
+  pixelsFlipHorizontal: PropTypes.func.isRequired,
+  pixelsFlipVertical: PropTypes.func.isRequired,
+  pixelsPaste: PropTypes.func.isRequired,
+  pixelsRotate: PropTypes.func.isRequired,
+  screen: PropTypes.string.isRequired,
+  screenSelect: PropTypes.func.isRequired,
+  selectionClear: PropTypes.func.isRequired,
+  selectionEnd: PropTypes.func.isRequired,
+  selectionStart: PropTypes.func.isRequired,
+};
 
 export default Menu;

@@ -12,11 +12,6 @@ import { Colorswatch } from ".";
 const TICK_INTERVAL = 250;
 
 class ColorswatchPicker extends React.Component {
-  static propTypes = {
-    action: PropTypes.func.isRequired,
-    color: PropTypes.string.isRequired,
-  };
-
   state = {
     pickerVisible: false,
   };
@@ -105,5 +100,12 @@ class ColorswatchPicker extends React.Component {
     action(hex);
   }
 }
+
+ColorswatchPicker.propTypes = {
+  action: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  hex: PropTypes.string,
+  onChange: PropTypes.func,
+};
 
 export default CustomPicker(ColorswatchPicker);

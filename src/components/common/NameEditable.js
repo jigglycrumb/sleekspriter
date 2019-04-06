@@ -3,11 +3,6 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 class NameEditable extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    callback: PropTypes.func.isRequired,
-  };
-
   constructor(props) {
     super(props);
 
@@ -79,5 +74,10 @@ class NameEditable extends React.Component {
     }
   }
 }
+
+NameEditable.propTypes = {
+  name: PropTypes.string.isRequired,
+  callback: PropTypes.func.isRequired,
+};
 
 export default NameEditable;

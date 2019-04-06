@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class StageBoxCursorCanvas extends React.Component {
   render() {
@@ -70,5 +71,11 @@ class StageBoxCursorCanvas extends React.Component {
     ctx.stroke();
   }
 }
+
+StageBoxCursorCanvas.propTypes = {
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired,
+};
 
 export default StageBoxCursorCanvas;

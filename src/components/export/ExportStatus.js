@@ -13,7 +13,7 @@ class ExportStatus extends React.Component {
   componentDidUpdate() {
     if (this.state.timer === null && this.props.status.length > 0) {
       var timer = setTimeout(() => this.clearStatus(), 5000);
-      this.setState({ timer: timer });
+      this.setState({ timer: timer }); // TODO refactor
     }
   }
 

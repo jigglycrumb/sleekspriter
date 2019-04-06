@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { t } from "../../utils";
 
 class PalettePicker extends React.Component {
@@ -45,5 +47,11 @@ class PalettePicker extends React.Component {
     this.props.paletteSelect(palette);
   }
 }
+
+PalettePicker.propTypes = {
+  palette: PropTypes.object.isRequired,
+  palettes: PropTypes.array.isRequired,
+  paletteSelect: PropTypes.func.isRequired,
+};
 
 export default PalettePicker;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class ReferenceImage extends React.Component {
   constructor(props) {
@@ -79,5 +80,13 @@ class ReferenceImage extends React.Component {
     this.setState({ position: pos, dragging: false });
   }
 }
+
+ReferenceImage.propTypes = {
+  image: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+  imageData: PropTypes.string.isRequired,
+  removeHandler: PropTypes.func.isRequired,
+};
 
 export default ReferenceImage;

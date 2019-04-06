@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import sprout from "sprout-data";
 
 import classnames from "classnames";
@@ -365,14 +366,14 @@ class Stagebox extends React.Component {
   }
 
   useEyedropperTool() {
-    if (this.cursorColor == "transparent") return;
+    if (this.cursorColor === "transparent") return;
     this.props.toolSelect("BrushTool");
     this.props.brushColor(this.cursorColor);
   }
 
   useBrightnessTool(point) {
     if (this.layerIsVisible()) {
-      if (this.cursorColor == "transparent") return;
+      if (this.cursorColor === "transparent") return;
       if (
         !selectionIsActive(this.props.selection) ||
         insideBounds(this.props.selection, this.cursor)
@@ -410,7 +411,7 @@ class Stagebox extends React.Component {
 
   useEraserTool(point) {
     if (this.layerIsVisible()) {
-      if (this.cursorColor == "transparent") return;
+      if (this.cursorColor === "transparent") return;
       if (
         !selectionIsActive(this.props.selection) ||
         insideBounds(this.props.selection, this.cursor)
@@ -658,5 +659,37 @@ class Stagebox extends React.Component {
     frameboxCanvas.clearPixel(pixel);
   }
 }
+
+Stagebox.propTypes = {
+  brightnessTool: PropTypes.object.isRequired,
+  brushColor: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  externalFrameCanvases: PropTypes.object,
+  externalPreviewCanvas: PropTypes.object,
+  externalLayerCanvases: PropTypes.object.isRequired,
+  frame: PropTypes.number.isRequired,
+  grid: PropTypes.bool.isRequired,
+  image: PropTypes.bool.isRequired,
+  layer: PropTypes.number,
+  layers: PropTypes.array.isRequired,
+  modalShow: PropTypes.func.isRequired,
+  onion: PropTypes.bool.isRequired,
+  onionFrameAbsolute: PropTypes.number.isRequired,
+  onionFrameLayers: PropTypes.array.isRequired,
+  pixels: PropTypes.object,
+  pixelsAdd: PropTypes.func.isRequired,
+  pixelsDelete: PropTypes.func.isRequired,
+  pixelsMove: PropTypes.func.isRequired,
+  selection: PropTypes.object,
+  selectionClear: PropTypes.func.isRequired,
+  selectionEnd: PropTypes.func.isRequired,
+  selectionMove: PropTypes.func.isRequired,
+  selectionStart: PropTypes.func.isRequired,
+  size: PropTypes.object.isRequired,
+  tool: PropTypes.string.isRequired,
+  toolSelect: PropTypes.func.isRequired,
+  zoom: PropTypes.number.isRequired,
+  zoomIn: PropTypes.func.isRequired,
+};
 
 export default Stagebox;

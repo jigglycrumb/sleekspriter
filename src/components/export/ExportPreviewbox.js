@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { t } from "../../utils";
 
 import { ExportPreviewSingleFrame, ExportPreviewSpritesheet } from ".";
@@ -63,6 +64,18 @@ const ExportPreviewbox = ({
       </div>
     </div>
   );
+};
+
+ExportPreviewbox.propTypes = {
+  background: PropTypes.string,
+  format: PropTypes.string.isRequired,
+  frame: PropTypes.number.isRequired,
+  frames: PropTypes.object.isRequired,
+  layers: PropTypes.array.isRequired,
+  part: PropTypes.string.isRequired,
+  pixels: PropTypes.object,
+  size: PropTypes.object.isRequired,
+  zoom: PropTypes.number.isRequired,
 };
 
 export default ExportPreviewbox;

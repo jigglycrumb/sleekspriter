@@ -44,10 +44,11 @@ class Previewbox extends React.Component {
 }
 
 Previewbox.propTypes = {
-  size: PropTypes.object.isRequired,
-  pixels: PropTypes.object.isRequired,
-  layers: PropTypes.array.isRequired,
   frame: PropTypes.number.isRequired,
+  layers: PropTypes.array.isRequired,
+  pixels: PropTypes.object.isRequired,
+  registerPreviewCanvas: PropTypes.func.isRequired,
+  size: PropTypes.object.isRequired,
 };
 
 export default Previewbox;

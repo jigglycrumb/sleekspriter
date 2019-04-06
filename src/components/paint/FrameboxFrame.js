@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
+
 import { FrameCanvas } from "../canvases";
 
 class FrameboxFrame extends React.Component {
@@ -21,7 +23,7 @@ class FrameboxFrame extends React.Component {
     const id = `FrameBoxFrame-${this.props.frame}`;
     const classes = classnames({
       frame: true,
-      selected: this.props.frame == this.props.selected,
+      selected: this.props.frame === this.props.selected,
       onion: this.props.onionSelected,
     });
     const frameStyle = {
@@ -52,5 +54,17 @@ class FrameboxFrame extends React.Component {
     this.props.frameSelect(this.props.frame);
   }
 }
+
+FrameboxFrame.propTypes = {
+  frame: PropTypes.number.isRequired,
+  frameSelect: PropTypes.func.isRequired,
+  layers: PropTypes.array.isRequired,
+  maxSize: PropTypes.number.isRequired,
+  onionSelected: PropTypes.bool.isRequired,
+  pixels: PropTypes.object,
+  registerFrameCanvas: PropTypes.func.isRequired,
+  selected: PropTypes.number.isRequired,
+  size: PropTypes.object.isRequired,
+};
 
 export default FrameboxFrame;

@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
+
 import FrameboxFrame from "./FrameboxFrame.js";
 import FrameboxOnionPanel from "./FrameboxOnionPanel";
 
@@ -95,5 +97,21 @@ class Framebox extends React.Component {
     this.props.onionToggle();
   }
 }
+
+Framebox.propTypes = {
+  frames: PropTypes.object.isRequired,
+  frameSelect: PropTypes.func.isRequired,
+  layers: PropTypes.array.isRequired,
+  onion: PropTypes.object.isRequired,
+  onionFrame: PropTypes.func.isRequired,
+  onionFrameAbsolute: PropTypes.number.isRequired,
+  onionMode: PropTypes.func.isRequired,
+  onionToggle: PropTypes.func.isRequired,
+  registerFrameCanvas: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
+  selected: PropTypes.number.isRequired,
+  size: PropTypes.object.isRequired,
+  totalFrames: PropTypes.number.isRequired,
+};
 
 export default Framebox;

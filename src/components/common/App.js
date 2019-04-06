@@ -69,6 +69,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  screen: PropTypes.string.isRequired,
   windowResize: PropTypes.func.isRequired,
 };
 

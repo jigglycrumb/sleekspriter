@@ -38,6 +38,7 @@ const ExportPreviewSpritesheet = ({
 };
 
 ExportPreviewSpritesheet.propTypes = {
+  background: PropTypes.string,
   format: PropTypes.string.isRequired,
   frames: PropTypes.object.isRequired,
   layers: PropTypes.array.isRequired,

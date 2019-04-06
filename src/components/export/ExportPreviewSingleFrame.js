@@ -36,10 +36,11 @@ const ExportPreviewSingleFrame = ({
 };
 
 ExportPreviewSingleFrame.propTypes = {
+  background: PropTypes.string,
   format: PropTypes.string.isRequired,
   frame: PropTypes.number.isRequired,
-  size: PropTypes.object.isRequired,
   pixels: PropTypes.object.isRequired,
+  size: PropTypes.object.isRequired,
   zoom: PropTypes.number.isRequired,
 };
 

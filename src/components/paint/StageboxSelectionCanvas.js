@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { CanvasDecorator } from "../decorators";
 import { selectionIsActive } from "../../utils";
 
@@ -102,5 +104,17 @@ class StageboxSelectionCanvas extends React.Component {
     this.drawSelection(this.props.selection.start, this.props.selection.end);
   }
 }
+
+StageboxSelectionCanvas.propTypes = {
+  clear: PropTypes.func.isRequired,
+  height: PropTypes.number.isRequired,
+  selection: PropTypes.shape({
+    start: PropTypes.object,
+    end: PropTypes.object,
+  }),
+  tool: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired,
+};
 
 export default CanvasDecorator(StageboxSelectionCanvas);

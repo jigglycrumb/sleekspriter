@@ -3,12 +3,6 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 class Colorswatch extends React.Component {
-  static propTypes = {
-    selected: PropTypes.bool,
-    color: PropTypes.string.isRequired,
-    action: PropTypes.func.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -32,5 +26,11 @@ class Colorswatch extends React.Component {
     this.props.action(this.props.color);
   }
 }
+
+Colorswatch.propTypes = {
+  selected: PropTypes.bool,
+  color: PropTypes.string.isRequired,
+  action: PropTypes.func.isRequired,
+};
 
 export default Colorswatch;

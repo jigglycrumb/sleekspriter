@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { LayerCanvas } from "../canvases";
@@ -111,5 +112,28 @@ class LayerboxLayer extends React.Component {
     );
   }
 }
+
+LayerboxLayer.propTypes = {
+  layer: PropTypes.shape({
+    frame: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    opacity: PropTypes.number.isRequired,
+    visible: PropTypes.bool.isRequired,
+    z: PropTypes.number.isRequired,
+  }).isRequired,
+  layerCount: PropTypes.number.isRequired,
+  layerMoveUp: PropTypes.func.isRequired,
+  layerMoveDown: PropTypes.func.isRequired,
+  layerName: PropTypes.func.isRequired,
+  layerOpacity: PropTypes.func.isRequired,
+  layerSelect: PropTypes.func.isRequired,
+  layerVisibility: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
+  position: PropTypes.number.isRequired,
+  registerLayerCanvas: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
+  size: PropTypes.object,
+};
 
 export default LayerboxLayer;

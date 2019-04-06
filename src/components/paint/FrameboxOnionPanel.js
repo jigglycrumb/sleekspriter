@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
+
 import { t } from "../../utils";
 
 class FrameboxOnionPanel extends React.Component {
@@ -13,26 +15,26 @@ class FrameboxOnionPanel extends React.Component {
     const fixedTabClasses = classnames({
       tab: true,
       fixed: true,
-      active: this.props.onion.mode == "fixed",
+      active: this.props.onion.mode === "fixed",
     });
     const fixedPanelClasses = classnames({
       "onion-settings": true,
       fixed: true,
-      hidden: this.props.onion.mode != "fixed",
+      hidden: this.props.onion.mode !== "fixed",
     });
     const relativeTabClasses = classnames({
       tab: true,
       relative: true,
-      active: this.props.onion.mode == "relative",
+      active: this.props.onion.mode === "relative",
     });
     const relativePanelClasses = classnames({
       "onion-settings": true,
       relative: true,
-      hidden: this.props.onion.mode != "relative",
+      hidden: this.props.onion.mode !== "relative",
     });
     const frameLabel =
       " " +
-      (this.props.onion.frame.relative == 1 ? t("frame") : t("frames")) +
+      (this.props.onion.frame.relative === 1 ? t("frame") : t("frames")) +
       " ";
 
     return (
@@ -96,5 +98,12 @@ class FrameboxOnionPanel extends React.Component {
     this.props.onionFrame("relative", val);
   }
 }
+
+FrameboxOnionPanel.propTypes = {
+  onion: PropTypes.object.isRequired,
+  onionFrame: PropTypes.func.isRequired,
+  onionMode: PropTypes.func.isRequired,
+  totalFrames: PropTypes.number.isRequired,
+};
 
 export default FrameboxOnionPanel;
