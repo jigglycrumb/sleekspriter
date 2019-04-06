@@ -12,6 +12,7 @@ import StageboxLayer from "./StageboxLayer";
 import _ from "lodash";
 import { getPixelsInScope, selectionIsActive, insideBounds } from "../../utils";
 import paintbucketWorker from "../../workers/paintbucket";
+import { sizeShape, selectionShape } from "../../shapes";
 
 class Stagebox extends React.Component {
   constructor(props) {
@@ -680,12 +681,12 @@ Stagebox.propTypes = {
   pixelsAdd: PropTypes.func.isRequired,
   pixelsDelete: PropTypes.func.isRequired,
   pixelsMove: PropTypes.func.isRequired,
-  selection: PropTypes.object,
+  selection: selectionShape.isRequired,
   selectionClear: PropTypes.func.isRequired,
   selectionEnd: PropTypes.func.isRequired,
   selectionMove: PropTypes.func.isRequired,
   selectionStart: PropTypes.func.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   tool: PropTypes.string.isRequired,
   toolSelect: PropTypes.func.isRequired,
   zoom: PropTypes.number.isRequired,

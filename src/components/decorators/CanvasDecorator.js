@@ -1,6 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
+
+import { sizeShape } from "../../shapes";
 
 function CanvasDecorator(DecoratedComponent) {
   class CanvasDecorated extends React.Component {
@@ -31,7 +32,7 @@ function CanvasDecorator(DecoratedComponent) {
     }
 
     clear() {
-      const canvas = ReactDOM.findDOMNode(this);
+      const canvas = ReactDOM.findDOMNode(this); // TODO try to replace with ref
       canvas.width = canvas.width;
     }
 
@@ -90,10 +91,7 @@ function CanvasDecorator(DecoratedComponent) {
   }
 
   CanvasDecorated.propTypes = {
-    size: PropTypes.shape({
-      height: PropTypes.number.isRequired,
-      width: PropTypes.number.isRequired,
-    }),
+    size: sizeShape,
   };
 
   return CanvasDecorated;

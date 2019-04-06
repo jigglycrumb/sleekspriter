@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { sizeShape, framesShape } from "../../shapes";
 import { t } from "../../utils";
 
 import { ExportPreviewSingleFrame, ExportPreviewSpritesheet } from ".";
@@ -70,11 +72,11 @@ ExportPreviewbox.propTypes = {
   background: PropTypes.string,
   format: PropTypes.string.isRequired,
   frame: PropTypes.number.isRequired,
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   layers: PropTypes.array.isRequired,
   part: PropTypes.string.isRequired,
   pixels: PropTypes.object,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   zoom: PropTypes.number.isRequired,
 };
 

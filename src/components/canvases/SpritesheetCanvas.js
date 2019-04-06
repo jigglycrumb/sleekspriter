@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
+import { sizeShape, framesShape } from "../../shapes";
 
 class SpritesheetCanvas extends React.Component {
   constructor(props) {
@@ -179,12 +180,12 @@ SpritesheetCanvas.propTypes = {
   background: PropTypes.string,
   clear: PropTypes.func.isRequired,
   fitToSize: PropTypes.func.isRequired,
-  frames: PropTypes.object.isRequired, // { x, y }
+  frames: framesShape.isRequired,
   layers: PropTypes.array.isRequired, // array of file layers
   maxSize: PropTypes.number,
   paintSinglePixel: PropTypes.func.isRequired,
   pixels: PropTypes.object,
-  size: PropTypes.object.isRequired, // { width, height }
+  size: sizeShape.isRequired,
   zoom: PropTypes.number,
 };
 

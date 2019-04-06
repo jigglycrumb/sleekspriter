@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { clamp } from "lodash";
+
 import { t } from "../../utils";
 import config from "../../config";
+import { sizeShape, framesShape } from "../../shapes";
+
 const { max, min } = config.zoom;
 
 const ExportZoomSelection = ({ frames, part, size, zoom, setZoom }) => {
@@ -59,9 +62,9 @@ const ExportZoomSelection = ({ frames, part, size, zoom, setZoom }) => {
 };
 
 ExportZoomSelection.propTypes = {
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   part: PropTypes.string.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   zoom: PropTypes.number.isRequired,
   setZoom: PropTypes.func.isRequired,
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { FrameCanvas } from "../canvases";
+import { sizeShape } from "../../shapes";
 
 class Previewbox extends React.Component {
   componentDidMount() {
@@ -48,7 +50,7 @@ Previewbox.propTypes = {
   layers: PropTypes.array.isRequired,
   pixels: PropTypes.object.isRequired,
   registerPreviewCanvas: PropTypes.func.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
 };
 
 export default Previewbox;

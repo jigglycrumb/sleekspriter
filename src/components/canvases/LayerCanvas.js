@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
+import { sizeShape } from "../../shapes";
 
 class LayerCanvas extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class LayerCanvas extends React.Component {
     this.props.clear();
 
     if (undefined !== this.props.pixels) {
-      const xValues = Object.keys(this.props.pixels);
+      const xValues = Object.keys(this.props.pixels || {}); // TODO: pixels shouldn't be null here
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
         yValues.map(y => {
@@ -85,7 +86,7 @@ LayerCanvas.propTypes = {
   maxSize: PropTypes.number,
   paintSinglePixel: PropTypes.func.isRequired,
   pixels: PropTypes.object,
-  size: PropTypes.object.isRequired, // { width: x, height: y }
+  size: sizeShape.isRequired,
   zoom: PropTypes.number,
 };
 

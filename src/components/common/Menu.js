@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import _ from "lodash";
 
+import { sizeShape, selectionShape } from "../../shapes";
+
 import {
   getPixelsInFrame,
   getPixelsInScope,
@@ -481,8 +483,8 @@ Menu.propTypes = {
   layer: PropTypes.number,
   layers: PropTypes.array.isRequired,
   pixels: PropTypes.object,
-  selection: PropTypes.object,
-  size: PropTypes.object.isRequired,
+  selection: selectionShape.isRequired,
+  size: sizeShape.isRequired,
   frameFlipHorizontal: PropTypes.func.isRequired,
   frameFlipVertical: PropTypes.func.isRequired,
   frameRotate: PropTypes.func.isRequired,

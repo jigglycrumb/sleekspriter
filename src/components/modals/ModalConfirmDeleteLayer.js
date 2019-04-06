@@ -10,6 +10,7 @@ import {
   getFrameLayers,
 } from "../../state/selectors";
 import { layerDelete, modalHide } from "../../state/actions";
+import { layerShape } from "../../shapes";
 
 const mapStateToProps = state => ({
   frame: getPaintFrame(state),
@@ -65,7 +66,7 @@ class ModalConfirmDeleteLayer extends React.Component {
 ModalConfirmDeleteLayer.propTypes = {
   layerDelete: PropTypes.func.isRequired,
   frame: PropTypes.number.isRequired,
-  layer: PropTypes.object.isRequired,
+  layer: layerShape.isRequired,
   pixels: PropTypes.object,
   hide: PropTypes.func.isRequired,
 };

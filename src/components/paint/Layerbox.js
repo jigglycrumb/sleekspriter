@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import LayerboxLayer from "./LayerboxLayer";
+import { sizeShape } from "../../shapes";
 import { t } from "../../utils";
 
 class Layerbox extends React.Component {
@@ -115,7 +116,7 @@ Layerbox.propTypes = {
   pixels: PropTypes.object,
   registerLayerCanvas: PropTypes.func.isRequired,
   selected: PropTypes.number,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
 };
 
 export default Layerbox;

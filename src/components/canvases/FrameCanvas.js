@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import sprout from "sprout-data";
 import { CanvasDecorator } from "../decorators";
 import { flattenPixels } from "../../utils";
+import { sizeShape } from "../../shapes";
 
 class FrameCanvas extends React.Component {
   constructor(props) {
@@ -217,7 +218,7 @@ FrameCanvas.propTypes = {
   noMargin: PropTypes.bool,
   paintSinglePixel: PropTypes.func.isRequired,
   pixels: PropTypes.object,
-  size: PropTypes.object.isRequired, // { width: x, height: y }
+  size: sizeShape.isRequired,
   zoom: PropTypes.number,
 };
 

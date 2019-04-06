@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+
 import { FrameCanvas } from "../canvases";
+import { sizeShape } from "../../shapes";
 
 const ExportPreviewSingleFrame = ({
   background,
@@ -40,7 +42,7 @@ ExportPreviewSingleFrame.propTypes = {
   format: PropTypes.string.isRequired,
   frame: PropTypes.number.isRequired,
   pixels: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   zoom: PropTypes.number.isRequired,
 };
 

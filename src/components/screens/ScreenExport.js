@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { sizeShape, framesShape } from "../../shapes";
 import { t } from "../../utils";
 
 import {
@@ -120,7 +122,7 @@ class ScreenExport extends React.Component {
 ScreenExport.propTypes = {
   background: PropTypes.string.isRequired,
   frame: PropTypes.number.isRequired,
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   format: PropTypes.string.isRequired,
   layers: PropTypes.array.isRequired,
   part: PropTypes.string.isRequired,
@@ -131,7 +133,7 @@ ScreenExport.propTypes = {
   setPart: PropTypes.func.isRequired,
   setStatus: PropTypes.func.isRequired,
   setZoom: PropTypes.func.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   status: PropTypes.string.isRequired,
   zoom: PropTypes.number.isRequired,
   totalFrames: PropTypes.number.isRequired,

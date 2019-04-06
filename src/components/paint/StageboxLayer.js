@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { LayerCanvas } from "../canvases";
+import { sizeShape, layerShape } from "../../shapes";
 
 class StageboxLayer extends React.Component {
   render() {
@@ -28,8 +30,8 @@ class StageboxLayer extends React.Component {
 }
 
 StageboxLayer.propTypes = {
-  layer: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired,
+  layer: layerShape.isRequired,
+  size: sizeShape.isRequired,
   zoom: PropTypes.number.isRequired,
   pixels: PropTypes.object,
 };

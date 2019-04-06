@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
+
 import { SpritesheetCanvas } from "../canvases";
+import { sizeShape, framesShape } from "../../shapes";
 
 const ExportPreviewSpritesheet = ({
   background,
@@ -40,9 +42,9 @@ const ExportPreviewSpritesheet = ({
 ExportPreviewSpritesheet.propTypes = {
   background: PropTypes.string,
   format: PropTypes.string.isRequired,
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   layers: PropTypes.array.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   pixels: PropTypes.object.isRequired,
   zoom: PropTypes.number.isRequired,
 };

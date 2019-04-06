@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { GridCanvas } from "../canvases";
 import { fileSize, modalHide } from "../../state/actions";
 import { getFileFrames, getFileSize } from "../../state/selectors";
+import { sizeShape, framesShape } from "../../shapes";
 
 const mapStateToProps = state => ({
   frames: getFileFrames(state),
@@ -122,9 +123,9 @@ class ModalEditImageSize extends React.Component {
 
 ModalEditImageSize.propTypes = {
   fileSize: PropTypes.func.isRequired,
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   hide: PropTypes.func.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
 };
 
 export default connect(

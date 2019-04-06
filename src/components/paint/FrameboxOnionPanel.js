@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { t } from "../../utils";
+import { onionShape } from "../../shapes";
 
 class FrameboxOnionPanel extends React.Component {
   constructor(props) {
@@ -100,7 +101,7 @@ class FrameboxOnionPanel extends React.Component {
 }
 
 FrameboxOnionPanel.propTypes = {
-  onion: PropTypes.object.isRequired,
+  onion: onionShape.isRequired,
   onionFrame: PropTypes.func.isRequired,
   onionMode: PropTypes.func.isRequired,
   totalFrames: PropTypes.number.isRequired,

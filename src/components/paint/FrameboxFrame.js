@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { FrameCanvas } from "../canvases";
+import { sizeShape } from "../../shapes";
 
 class FrameboxFrame extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ FrameboxFrame.propTypes = {
   pixels: PropTypes.object,
   registerFrameCanvas: PropTypes.func.isRequired,
   selected: PropTypes.number.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
 };
 
 export default FrameboxFrame;

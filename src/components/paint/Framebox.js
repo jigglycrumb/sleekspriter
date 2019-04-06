@@ -7,6 +7,8 @@ import FrameboxOnionPanel from "./FrameboxOnionPanel";
 
 import { t } from "../../utils";
 import { Hotkeys } from "../../classes";
+import { sizeShape, framesShape, onionShape } from "../../shapes";
+
 const onionHotkey = Hotkeys.bindings.paint[9].key;
 
 class Framebox extends React.Component {
@@ -99,10 +101,10 @@ class Framebox extends React.Component {
 }
 
 Framebox.propTypes = {
-  frames: PropTypes.object.isRequired,
+  frames: framesShape.isRequired,
   frameSelect: PropTypes.func.isRequired,
   layers: PropTypes.array.isRequired,
-  onion: PropTypes.object.isRequired,
+  onion: onionShape.isRequired,
   onionFrame: PropTypes.func.isRequired,
   onionFrameAbsolute: PropTypes.number.isRequired,
   onionMode: PropTypes.func.isRequired,
@@ -110,7 +112,7 @@ Framebox.propTypes = {
   registerFrameCanvas: PropTypes.func.isRequired,
   pixels: PropTypes.object,
   selected: PropTypes.number.isRequired,
-  size: PropTypes.object.isRequired,
+  size: sizeShape.isRequired,
   totalFrames: PropTypes.number.isRequired,
 };
 

@@ -14,6 +14,7 @@ import {
 } from "../../state/selectors";
 import { ColorswatchPicker } from "../common";
 import Palette from "../paint/Palette";
+import { sizeShape, selectionShape } from "../../shapes";
 
 const mapStateToProps = state => ({
   frame: getPaintFrame(state),
@@ -164,8 +165,8 @@ ModalReplaceColor.propTypes = {
   pixels: PropTypes.object,
   frame: PropTypes.number.isRequired,
   layer: PropTypes.number.isRequired,
-  selection: PropTypes.object.isRequired,
-  size: PropTypes.object.isRequired,
+  selection: selectionShape.isRequired,
+  size: sizeShape.isRequired,
 };
 
 export default connect(

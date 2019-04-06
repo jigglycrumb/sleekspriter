@@ -4,6 +4,7 @@ import classnames from "classnames";
 
 import { LayerCanvas } from "../canvases";
 import NameEditable from "../common/NameEditable";
+import { sizeShape } from "../../shapes";
 
 class LayerboxLayer extends React.Component {
   constructor(props) {
@@ -133,7 +134,7 @@ LayerboxLayer.propTypes = {
   position: PropTypes.number.isRequired,
   registerLayerCanvas: PropTypes.func.isRequired,
   selected: PropTypes.bool,
-  size: PropTypes.object,
+  size: sizeShape.isRequired,
 };
 
 export default LayerboxLayer;
