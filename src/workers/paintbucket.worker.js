@@ -7,7 +7,7 @@ function getByPosition(map, position) {
 }
 
 function colorIsSame(a, b) {
-  return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+  return a.r === b.r && a.g === b.g && a.b === b.b && a.a === b.a;
 }
 
 function hash(point) {

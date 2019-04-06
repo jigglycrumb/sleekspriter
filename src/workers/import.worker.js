@@ -46,14 +46,14 @@ self.onmessage = function(e) {
       json.pixels.push(pixel);
     }
 
-    if (position.frame.x == frameSize.width) {
+    if (position.frame.x === frameSize.width) {
       frame++;
       position.frame.x = 1;
     } else {
       position.frame.x++;
     }
 
-    if (position.canvas.x == imageDimensions.width) {
+    if (position.canvas.x === imageDimensions.width) {
       var row = Math.floor(
         position.canvas.y / (imageDimensions.height / state.frames.y)
       );

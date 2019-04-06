@@ -67,10 +67,11 @@ class GridCanvas extends React.Component {
 }
 
 GridCanvas.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  clear: PropTypes.func.isRequired,
   columns: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
   rows: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export { GridCanvas };

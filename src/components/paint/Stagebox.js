@@ -288,7 +288,7 @@ class Stagebox extends React.Component {
         "StatusBarColorString"
       ).innerHTML = cursorColorHex;
 
-      if (this.props.tool == "EyedropperTool") {
+      if (this.props.tool === "EyedropperTool") {
         document.getElementById(
           "EyedropperSwatch"
         ).style.backgroundColor = cursorColorHex;

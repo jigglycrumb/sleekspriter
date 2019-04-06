@@ -9,7 +9,7 @@ import {
   getFilePixels,
   getFrameLayers,
 } from "../../state/selectors";
-import { layerDelete, layerSelectTop, modalHide } from "../../state/actions";
+import { layerDelete, modalHide } from "../../state/actions";
 
 const mapStateToProps = state => ({
   frame: getPaintFrame(state),

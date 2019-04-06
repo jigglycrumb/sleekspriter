@@ -180,7 +180,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
           state = sprout.dissoc(state, [frame]);
           return sprout.assoc(state, [frame], newPixels);
 
-        case "layer":
+        case "layer": {
           const bounds = createBounds(size, selection);
           newPixels = manipulatePixels(
             pixels,
@@ -189,6 +189,10 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
 
           state = deletePixels(state, frame, layer, pixels);
           return sprout.assoc(state, [frame, layer], newPixels);
+        }
+
+        default:
+          return state;
       }
     }
 

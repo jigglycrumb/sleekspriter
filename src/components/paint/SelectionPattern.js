@@ -44,10 +44,10 @@ class SelectionPattern extends React.Component {
 
     if (countUp) {
       frame++;
-      if (frame == 4) countUp = false;
+      if (frame === 4) countUp = false;
     } else {
       frame--;
-      if (frame == 1) countUp = true;
+      if (frame === 1) countUp = true;
     }
     this.setState({ frame: frame, frameCountUp: countUp });
   }

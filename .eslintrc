@@ -25,11 +25,17 @@
   "plugins": ["react", "jest"],
   "rules": {
     "no-template-curly-in-string": "warn",
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
     "no-console": ["error", { "allow": ["error", "warn", "log"] }],
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",

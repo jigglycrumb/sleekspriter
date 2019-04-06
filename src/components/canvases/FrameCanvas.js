@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import sprout from "sprout-data";
-import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
 import { flattenPixels } from "../../utils";
 
@@ -9,8 +8,8 @@ class FrameCanvas extends React.Component {
   constructor(props) {
     super(props);
 
-    this.hasMaxSize = this.props.maxSize != undefined;
-    this.hasNoMargin = this.props.noMargin != undefined;
+    this.hasMaxSize = this.props.maxSize !== undefined;
+    this.hasNoMargin = this.props.noMargin !== undefined;
   }
 
   render() {
@@ -210,10 +209,14 @@ class FrameCanvas extends React.Component {
 
 FrameCanvas.propTypes = {
   background: PropTypes.string,
-  frame: PropTypes.number.isRequired,
+  clear: PropTypes.func.isRequired,
+  clearSinglePixel: PropTypes.func.isRequired,
+  fitToSize: PropTypes.func.isRequired,
   layers: PropTypes.array,
   maxSize: PropTypes.number,
   noMargin: PropTypes.bool,
+  paintSinglePixel: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
   size: PropTypes.object.isRequired, // { width: x, height: y }
   zoom: PropTypes.number,
 };

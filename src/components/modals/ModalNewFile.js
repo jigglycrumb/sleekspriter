@@ -9,8 +9,6 @@ import {
   zoomFit,
 } from "../../state/actions";
 import { GridCanvas } from "../canvases";
-import initialState from "../../state/initialState";
-const { frames, size } = initialState.file;
 
 const mapDispatchToProps = dispatch => {
   return {

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { t } from "../../utils";
 import { GridCanvas } from "../canvases";
 import { fileSize, modalHide } from "../../state/actions";
 import { getFileFrames, getFileSize } from "../../state/selectors";

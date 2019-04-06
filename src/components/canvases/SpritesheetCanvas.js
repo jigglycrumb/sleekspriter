@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
 
@@ -7,7 +8,7 @@ class SpritesheetCanvas extends React.Component {
   constructor(props) {
     super(props);
 
-    this.hasMaxSize = this.props.maxSize != undefined;
+    this.hasMaxSize = this.props.maxSize !== undefined;
   }
 
   render() {
@@ -176,9 +177,13 @@ class SpritesheetCanvas extends React.Component {
 
 SpritesheetCanvas.propTypes = {
   background: PropTypes.string,
+  clear: PropTypes.func.isRequired,
+  fitToSize: PropTypes.func.isRequired,
   frames: PropTypes.object.isRequired, // { x, y }
   layers: PropTypes.array.isRequired, // array of file layers
   maxSize: PropTypes.number,
+  paintSinglePixel: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
   size: PropTypes.object.isRequired, // { width, height }
   zoom: PropTypes.number,
 };

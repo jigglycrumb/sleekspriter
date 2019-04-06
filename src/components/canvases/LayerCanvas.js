@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { Color } from "../../classes";
 import { CanvasDecorator } from "../decorators";
 
@@ -7,8 +8,8 @@ class LayerCanvas extends React.Component {
   constructor(props) {
     super(props);
 
-    this.hasMaxSize = this.props.maxSize != undefined;
-    this.hasZoom = this.props.zoom != undefined;
+    this.hasMaxSize = this.props.maxSize !== undefined;
+    this.hasZoom = this.props.zoom !== undefined;
   }
 
   render() {
@@ -49,7 +50,7 @@ class LayerCanvas extends React.Component {
   paint() {
     this.props.clear();
 
-    if (undefined != this.props.pixels) {
+    if (undefined !== this.props.pixels) {
       const xValues = Object.keys(this.props.pixels);
       xValues.map(x => {
         const yValues = Object.keys(this.props.pixels[x]);
@@ -78,8 +79,12 @@ class LayerCanvas extends React.Component {
 }
 
 LayerCanvas.propTypes = {
-  layer: PropTypes.number.isRequired,
+  clear: PropTypes.func.isRequired,
+  clearSinglePixel: PropTypes.func.isRequired,
+  fitToSize: PropTypes.func.isRequired,
   maxSize: PropTypes.number,
+  paintSinglePixel: PropTypes.func.isRequired,
+  pixels: PropTypes.object,
   size: PropTypes.object.isRequired, // { width: x, height: y }
   zoom: PropTypes.number,
 };

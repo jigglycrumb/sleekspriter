@@ -160,6 +160,7 @@ class ModalReplaceColor extends React.Component {
 ModalReplaceColor.propTypes = {
   colorReplace: PropTypes.func.isRequired,
   hide: PropTypes.func.isRequired,
+  palette: PropTypes.array.isRequired,
   pixels: PropTypes.object,
   frame: PropTypes.number.isRequired,
   layer: PropTypes.number.isRequired,

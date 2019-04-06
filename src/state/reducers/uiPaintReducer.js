@@ -120,7 +120,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "PIXELS_ADD":
     case "PIXELS_PASTE": {
       const colors = _.uniq(flattenPixels(action.pixels).map(p => p.toHex()));
-    const spritePalette = _.uniq([...state.spritePalette, ...colors]);
+      const spritePalette = _.uniq([...state.spritePalette, ...colors]);
       return { ...state, spritePalette };
     }
 
@@ -133,7 +133,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       const { allPixels, frame, layer, pixels } = action;
       const pixelMap = deletePixels(allPixels, frame, layer, pixels);
       const clipboard = action.pixels;
-    const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+      const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
       return { ...state, clipboard, spritePalette };
     }
 

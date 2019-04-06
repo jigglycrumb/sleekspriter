@@ -24,10 +24,10 @@ const rgb2hsl = function(rgb) {
   let s;
   let l;
 
-  if (max == min) h = 0;
-  else if (r == max) h = (g - b) / delta;
-  else if (g == max) h = 2 + (b - r) / delta;
-  else if (b == max) h = 4 + (r - g) / delta;
+  if (max === min) h = 0;
+  else if (r === max) h = (g - b) / delta;
+  else if (g === max) h = 2 + (b - r) / delta;
+  else if (b === max) h = 4 + (r - g) / delta;
 
   h = Math.min(h * 60, 360);
 
@@ -35,7 +35,7 @@ const rgb2hsl = function(rgb) {
 
   l = (min + max) / 2;
 
-  if (max == min) s = 0;
+  if (max === min) s = 0;
   else if (l <= 0.5) s = delta / (max + min);
   else s = delta / (2 - max - min);
 
