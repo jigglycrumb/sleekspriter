@@ -2,10 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const metadata = require("./metadata.json");
 
-const replaceConfig = Object.keys(metadata).map(function(key) {
-  return { search: key, replace: metadata[key], flags: "g" };
-});
-
 const config = {
   mode: "production",
   context: path.resolve(__dirname, "."),
@@ -18,6 +14,20 @@ const config = {
   },
   resolve: {
     extensions: [".less", ".css", ".worker.js", ".js", ".json", ".jsx"],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      favicon: "src/assets/logo@x1.png",
+      meta: {
+        author: metadata.author,
+      },
+      template: "src/index.ejs",
+      title: metadata.name,
+    }),
+  ],
+  target: "web",
+  devServer: {
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -127,26 +137,7 @@ const config = {
         test: /\.ya?ml$/,
         use: ["json-loader", "yaml-loader"],
       },
-      {
-        test: /\.(html|js|yml)$/,
-        use: [
-          {
-            loader: "string-replace-loader",
-            query: { multiple: replaceConfig },
-          },
-        ],
-      },
     ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      favicon: "src/assets/logo@x1.png",
-      template: "src/index.html",
-    }),
-  ],
-  target: "web",
-  devServer: {
-    historyApiFallback: true,
   },
 };
 
