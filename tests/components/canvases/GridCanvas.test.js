@@ -9,13 +9,13 @@ describe("GridCanvas", () => {
       height: 128,
       columns: 4,
       rows: 4,
-      clear: jest.fn()
+      clear: jest.fn(),
     };
 
     drawGrid = jest.fn();
 
     wrapper = shallow(<GridCanvas {...props} />, {
-      disableLifecycleMethods: true
+      disableLifecycleMethods: true,
     });
 
     component = wrapper.instance();

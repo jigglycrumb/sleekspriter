@@ -4,7 +4,7 @@ describe("ExportButton", () => {
   let props, wrapper;
   beforeEach(() => {
     props = {
-      export: jest.fn()
+      export: jest.fn(),
     };
     wrapper = shallow(<ExportButton {...props} />);
   });

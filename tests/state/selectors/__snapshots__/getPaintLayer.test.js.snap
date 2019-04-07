@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getPaintLayer returns an object of the currently selected  layer 1`] = `
+Object {
+  "frame": 1,
+  "id": 3,
+  "name": "Layer 3",
+  "opacity": 100,
+  "visible": true,
+  "z": 2,
+}
+`;

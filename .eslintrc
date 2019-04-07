@@ -34,7 +34,14 @@
       }
     ],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "double"],
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
     "semi": ["error", "always"],
     "no-unused-vars": "warn",
     "no-console": ["error", { "allow": ["error", "warn", "log"] }],
@@ -42,19 +49,19 @@
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
     "jest/valid-expect": "error",
-    "react/jsx-no-duplicate-props": 2,
-    "react/jsx-no-undef": 2,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/no-danger": 2,
-    "react/no-deprecated": 2,
-    "react/no-did-mount-set-state": 2,
-    "react/no-did-update-set-state": 2,
-    "react/no-direct-mutation-state": 2,
-    "react/no-is-mounted": 2,
-    "react/no-unknown-property": 2,
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/no-danger": "error",
+    "react/no-deprecated": "error",
+    "react/no-did-mount-set-state": "error",
+    "react/no-did-update-set-state": "error",
+    "react/no-direct-mutation-state": "error",
+    "react/no-is-mounted": "error",
+    "react/no-unknown-property": "error",
     "react/prop-types": "error",
-    "react/react-in-jsx-scope": 2,
+    "react/react-in-jsx-scope": "error",
     "comma-dangle": [
       "error",
       {
@@ -71,9 +78,6 @@
     "console": false,
     "module": false,
     "require": false,
-    "onmessage": false,
-    "shallow": false,
-    "render": false,
-    "mount": false
+    "onmessage": false
   }
 }

@@ -7,12 +7,12 @@ describe("ExportPreviewSpritesheet", () => {
       format: "png",
       frames: {
         x: 2,
-        y: 2
+        y: 2,
       },
       layers: [],
       size: { width: 16, height: 16 },
       pixels: {},
-      zoom: 1
+      zoom: 1,
     };
     wrapper = shallow(<ExportPreviewSpritesheet {...props} />);
   });

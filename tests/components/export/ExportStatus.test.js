@@ -5,7 +5,7 @@ describe("ExportStatus", () => {
   beforeEach(() => {
     props = {
       status: "Export finished",
-      setStatus: jest.fn()
+      setStatus: jest.fn(),
     };
     wrapper = shallow(<ExportStatus {...props} />);
   });
@@ -15,11 +15,10 @@ describe("ExportStatus", () => {
   });
 
   describe("clearStatus", () => {
-    it.skip("clears the timer state", () => {
-      wrapper.setState({ timer: "some timer" }, () => {
-        wrapper.instance().clearStatus(); // TODO: clearStatus uses async setState
-        expect(wrapper.state("timer")).toEqual(null);
-      });
+    it("clears the timer state", () => {
+      wrapper.instance().timer = 1;
+      wrapper.instance().clearStatus();
+      expect(wrapper.instance().timer).toBe(undefined);
     });
 
     it("calls setStatus handler with empty status", () => {

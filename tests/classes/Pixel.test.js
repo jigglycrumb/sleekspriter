@@ -1,7 +1,7 @@
 import { Pixel } from "classes";
 
 describe("Pixel", () => {
-  it("is a Pixel with frame, layer, x and y coordinates, rgb and alpha values", () => {
+  it("has a frame, layer, x and y coordinates, rgb and alpha values", () => {
     const pixel = new Pixel(23, 42, 2, 3, 255, 200, 128, 1); // frame, layer, x, y, r, g, b, a
     expect(pixel.frame).toBe(23);
     expect(pixel.layer).toBe(42);
@@ -14,7 +14,7 @@ describe("Pixel", () => {
   });
 
   describe("toHex", () => {
-    it("returns the CSS hex string for the pixels' color", () => {
+    it("returns the color as the CSS hex string", () => {
       let pixel;
 
       pixel = new Pixel(23, 42, 2, 3, 255, 0, 0, 1);
@@ -31,6 +31,17 @@ describe("Pixel", () => {
 
       pixel = new Pixel(23, 42, 2, 3, 255, 255, 255, 1);
       expect(pixel.toHex()).toBe("#FFFFFF");
+    });
+  });
+
+  describe("setColor", () => {
+    it("updates the color from a given hex string", () => {
+      const newColor = "#6666FF";
+
+      let pixel;
+      pixel = new Pixel(23, 42, 2, 3, 0, 0, 0, 1);
+      pixel.setColor(newColor);
+      expect(pixel.toHex()).toBe(newColor);
     });
   });
 });

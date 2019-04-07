@@ -1,6 +1,6 @@
-jest.unmock("utils");
-
 import { inArray } from "utils";
+
+jest.unmock("utils");
 
 describe("inArray", () => {
   let array;

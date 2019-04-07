@@ -9,14 +9,14 @@
   "license": "All rights reserved",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.dev.js",
-    "build": "npm run build:browser",
+    "build": "yarn build:browser",
     "build:browser": "webpack --config ./webpack.browser.js -p; ./scripts/update_homepage.sh",
-    "lint": "eslint './src/**/*.js'",
-    "lint:fix": "eslint './src/**/*.js' --fix",
+    "lint": "eslint \"./{src,tests}/**/*.js\"",
+    "lint:fix": "eslint \"./{src,tests}/**/*.js\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "format:check": "prettier-eslint --list-different \"src/**/*.js\"",
-    "format:all": "prettier-eslint --write \"src/**/*.js\""
+    "prettier:check": "prettier-eslint --list-different \"{src,tests}/**/*.js\"",
+    "prettier:format": "prettier-eslint --write \"{src,tests}/**/*.js\""
   },
   "jest": {
     "verbose": true,
@@ -120,21 +120,5 @@
     "redux": "^4.0.0",
     "redux-undo": "^0.6.1",
     "sprout-data": "^0.2.3"
-  },
-  "standard": {
-    "globals": [
-      "describe",
-      "it",
-      "expect"
-    ],
-    "ignore": [
-      "/build/",
-      "/docs/",
-      "/node_modules/"
-    ],
-    "parser": "babel-eslint",
-    "plugins": [
-      "jest"
-    ]
   }
 }

@@ -12,7 +12,7 @@ describe("Statusbar", () => {
       undo: jest.fn(),
       canUndo: true,
       redo: jest.fn(),
-      canRedo: false
+      canRedo: false,
     };
     wrapper = shallow(<Statusbar {...props} />);
   });

@@ -4,7 +4,7 @@ describe("ScreenStart", () => {
   let props, wrapper;
   beforeEach(() => {
     props = {
-      modalShow: jest.fn()
+      modalShow: jest.fn(),
     };
 
     wrapper = shallow(<ScreenStart {...props} />);

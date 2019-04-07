@@ -8,7 +8,7 @@ describe("ToolboxTool", () => {
       icon: "flaticon-small23",
       selected: false,
       title: "Brush Tool (b)",
-      toolSelect: jest.fn()
+      toolSelect: jest.fn(),
     };
 
     wrapper = shallow(<ToolboxTool {...props} />);

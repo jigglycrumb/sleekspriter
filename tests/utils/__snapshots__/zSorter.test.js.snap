@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zSorter should sort an array of objects by their z value in descending order 1`] = `
+Array [
+  Object {
+    "z": 5,
+  },
+  Object {
+    "z": 4,
+  },
+  Object {
+    "z": 3,
+  },
+  Object {
+    "z": 2,
+  },
+  Object {
+    "z": 1,
+  },
+  Object {
+    "z": 0,
+  },
+]
+`;

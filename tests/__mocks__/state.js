@@ -4,7 +4,7 @@ export default {
       {
         frames: {
           x: 3,
-          y: 2
+          y: 2,
         },
         layers: [
           {
@@ -13,7 +13,7 @@ export default {
             name: "Layer 2",
             z: 1,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 1,
@@ -21,7 +21,7 @@ export default {
             name: "Layer 1",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 1,
@@ -29,7 +29,7 @@ export default {
             name: "Layer 3",
             z: 2,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 2,
@@ -37,7 +37,7 @@ export default {
             name: "Layer 4",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 3,
@@ -45,7 +45,7 @@ export default {
             name: "Layer 5",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 4,
@@ -53,7 +53,7 @@ export default {
             name: "Layer 6",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 5,
@@ -61,7 +61,7 @@ export default {
             name: "Layer 7",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             frame: 6,
@@ -69,20 +69,20 @@ export default {
             name: "Layer 8",
             z: 0,
             opacity: 100,
-            visible: true
-          }
+            visible: true,
+          },
         ],
         pixels: {},
         size: {
           height: 32,
-          width: 32
-        }
-      }
+          width: 32,
+        },
+      },
     ],
     present: {
       frames: {
         x: 3,
-        y: 2
+        y: 2,
       },
       layers: [
         {
@@ -91,7 +91,7 @@ export default {
           name: "Layer 2",
           z: 1,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 1,
@@ -99,7 +99,7 @@ export default {
           name: "Layer 1",
           z: 0,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 3,
@@ -107,7 +107,7 @@ export default {
           name: "Layer 3",
           z: 2,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 4,
@@ -115,7 +115,7 @@ export default {
           name: "Layer 4",
           z: 0,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 5,
@@ -123,7 +123,7 @@ export default {
           name: "Layer 5",
           z: 0,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 6,
@@ -131,7 +131,7 @@ export default {
           name: "Layer 6",
           z: 0,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 7,
@@ -139,7 +139,7 @@ export default {
           name: "Layer 7",
           z: 0,
           opacity: 100,
-          visible: true
+          visible: true,
         },
         {
           id: 8,
@@ -147,8 +147,8 @@ export default {
           name: "Layer 8",
           z: 0,
           opacity: 100,
-          visible: true
-        }
+          visible: true,
+        },
       ],
       pixels: {
         "1": {
@@ -162,7 +162,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -172,7 +172,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -182,8 +182,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "4": {
               "16": {
@@ -194,7 +194,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -204,7 +204,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -214,7 +214,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -224,7 +224,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "20": {
                 frame: 1,
@@ -234,7 +234,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -244,8 +244,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "5": {
               "15": {
@@ -256,7 +256,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "16": {
                 frame: 1,
@@ -266,7 +266,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -276,7 +276,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -286,7 +286,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -296,7 +296,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -306,7 +306,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -316,7 +316,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "22": {
                 frame: 1,
@@ -326,7 +326,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "23": {
                 frame: 1,
@@ -336,8 +336,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "6": {
               "14": {
@@ -348,7 +348,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "15": {
                 frame: 1,
@@ -358,7 +358,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -368,7 +368,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -378,7 +378,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -388,7 +388,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -398,7 +398,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -408,7 +408,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -418,7 +418,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -428,7 +428,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -438,8 +438,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "7": {
               "13": {
@@ -450,7 +450,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -460,7 +460,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -470,7 +470,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -480,7 +480,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -490,7 +490,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -500,7 +500,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -510,7 +510,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -520,7 +520,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -530,7 +530,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -540,7 +540,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -550,7 +550,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -560,7 +560,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "25": {
                 frame: 1,
@@ -570,8 +570,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "8": {
               "12": {
@@ -582,7 +582,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "13": {
                 frame: 1,
@@ -592,7 +592,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -602,7 +602,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -612,7 +612,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -622,7 +622,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -632,7 +632,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -642,7 +642,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -652,7 +652,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -662,7 +662,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -672,7 +672,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -682,7 +682,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -692,7 +692,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -702,7 +702,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -712,7 +712,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "26": {
                 frame: 1,
@@ -722,8 +722,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "9": {
               "10": {
@@ -734,7 +734,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "11": {
                 frame: 1,
@@ -744,7 +744,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "12": {
                 frame: 1,
@@ -754,7 +754,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -764,7 +764,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -774,7 +774,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -784,7 +784,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -794,7 +794,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -804,7 +804,7 @@ export default {
                 r: 247,
                 g: 245,
                 b: 189,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -814,7 +814,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -824,7 +824,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -834,7 +834,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -844,7 +844,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -854,7 +854,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -864,7 +864,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -874,7 +874,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -884,7 +884,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -894,8 +894,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "10": {
               "9": {
@@ -906,7 +906,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "10": {
                 frame: 1,
@@ -916,7 +916,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -926,7 +926,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -936,7 +936,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -946,7 +946,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -956,7 +956,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -966,7 +966,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -976,7 +976,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -986,7 +986,7 @@ export default {
                 r: 247,
                 g: 245,
                 b: 189,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -996,7 +996,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -1006,7 +1006,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1016,7 +1016,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -1026,7 +1026,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1036,7 +1036,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1046,7 +1046,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1056,7 +1056,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -1066,7 +1066,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1076,8 +1076,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "11": {
               "8": {
@@ -1088,7 +1088,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "9": {
                 frame: 1,
@@ -1098,7 +1098,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "10": {
                 frame: 1,
@@ -1108,7 +1108,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -1118,7 +1118,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -1128,7 +1128,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -1138,7 +1138,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -1148,7 +1148,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1158,7 +1158,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -1168,7 +1168,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -1178,7 +1178,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -1188,7 +1188,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -1198,7 +1198,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1208,7 +1208,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -1218,7 +1218,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1228,7 +1228,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1238,7 +1238,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1248,7 +1248,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -1258,7 +1258,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1268,8 +1268,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "12": {
               "8": {
@@ -1280,7 +1280,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "9": {
                 frame: 1,
@@ -1290,7 +1290,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "10": {
                 frame: 1,
@@ -1300,7 +1300,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -1310,7 +1310,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -1320,7 +1320,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -1330,7 +1330,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -1340,7 +1340,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1350,7 +1350,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -1360,7 +1360,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -1370,7 +1370,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -1380,7 +1380,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -1390,7 +1390,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1400,7 +1400,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -1410,7 +1410,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1420,7 +1420,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1430,7 +1430,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1440,7 +1440,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -1450,7 +1450,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1460,7 +1460,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "27": {
                 frame: 1,
@@ -1470,8 +1470,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "13": {
               "9": {
@@ -1482,7 +1482,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "10": {
                 frame: 1,
@@ -1492,7 +1492,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "11": {
                 frame: 1,
@@ -1502,7 +1502,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "12": {
                 frame: 1,
@@ -1512,7 +1512,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "13": {
                 frame: 1,
@@ -1522,7 +1522,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -1532,7 +1532,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1542,7 +1542,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -1552,7 +1552,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -1562,7 +1562,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -1572,7 +1572,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -1582,7 +1582,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1592,7 +1592,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -1602,7 +1602,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1612,7 +1612,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1622,7 +1622,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1632,7 +1632,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -1642,7 +1642,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1652,7 +1652,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "27": {
                 frame: 1,
@@ -1662,8 +1662,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "14": {
               "13": {
@@ -1674,7 +1674,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -1684,7 +1684,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1694,7 +1694,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -1704,7 +1704,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -1714,7 +1714,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -1724,7 +1724,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -1734,7 +1734,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1744,7 +1744,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -1754,7 +1754,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1764,7 +1764,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1774,7 +1774,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1784,7 +1784,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "25": {
                 frame: 1,
@@ -1794,7 +1794,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1804,7 +1804,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "27": {
                 frame: 1,
@@ -1814,8 +1814,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "15": {
               "13": {
@@ -1826,7 +1826,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -1836,7 +1836,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1846,7 +1846,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -1856,7 +1856,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -1866,7 +1866,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -1876,7 +1876,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -1886,7 +1886,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -1896,7 +1896,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -1906,7 +1906,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -1916,7 +1916,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -1926,7 +1926,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -1936,7 +1936,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "25": {
                 frame: 1,
@@ -1946,7 +1946,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -1956,7 +1956,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "27": {
                 frame: 1,
@@ -1966,8 +1966,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "16": {
               "13": {
@@ -1978,7 +1978,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -1988,7 +1988,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -1998,7 +1998,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -2008,7 +2008,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -2018,7 +2018,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -2028,7 +2028,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -2038,7 +2038,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2048,7 +2048,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2058,7 +2058,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2068,7 +2068,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "23": {
                 frame: 1,
@@ -2078,7 +2078,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "24": {
                 frame: 1,
@@ -2088,7 +2088,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "25": {
                 frame: 1,
@@ -2098,7 +2098,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -2108,7 +2108,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "27": {
                 frame: 1,
@@ -2118,8 +2118,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "17": {
               "13": {
@@ -2130,7 +2130,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -2140,7 +2140,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2150,7 +2150,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "16": {
                 frame: 1,
@@ -2160,7 +2160,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -2170,7 +2170,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -2180,7 +2180,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -2190,7 +2190,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2200,7 +2200,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2210,7 +2210,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2220,7 +2220,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2230,7 +2230,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2240,7 +2240,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -2250,7 +2250,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -2260,8 +2260,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "18": {
               "13": {
@@ -2272,7 +2272,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -2282,7 +2282,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2292,7 +2292,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "16": {
                 frame: 1,
@@ -2302,7 +2302,7 @@ export default {
                 r: 247,
                 g: 245,
                 b: 189,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -2312,7 +2312,7 @@ export default {
                 r: 247,
                 g: 245,
                 b: 189,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -2322,7 +2322,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -2332,7 +2332,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2342,7 +2342,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2352,7 +2352,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2362,7 +2362,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2372,7 +2372,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2382,7 +2382,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -2392,7 +2392,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -2402,8 +2402,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "19": {
               "13": {
@@ -2414,7 +2414,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -2424,7 +2424,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2434,7 +2434,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "16": {
                 frame: 1,
@@ -2444,7 +2444,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -2454,7 +2454,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -2464,7 +2464,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -2474,7 +2474,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2484,7 +2484,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2494,7 +2494,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2504,7 +2504,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2514,7 +2514,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2524,7 +2524,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -2534,7 +2534,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "26": {
                 frame: 1,
@@ -2544,8 +2544,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "20": {
               "12": {
@@ -2556,7 +2556,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "13": {
                 frame: 1,
@@ -2566,7 +2566,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -2576,7 +2576,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2586,7 +2586,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -2596,7 +2596,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -2606,7 +2606,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -2616,7 +2616,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -2626,7 +2626,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2636,7 +2636,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2646,7 +2646,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2656,7 +2656,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2666,7 +2666,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2676,7 +2676,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -2686,8 +2686,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "21": {
               "12": {
@@ -2698,7 +2698,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "13": {
                 frame: 1,
@@ -2708,7 +2708,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -2718,7 +2718,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2728,7 +2728,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -2738,7 +2738,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -2748,7 +2748,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -2758,7 +2758,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -2768,7 +2768,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2778,7 +2778,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2788,7 +2788,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2798,7 +2798,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2808,7 +2808,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2818,7 +2818,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "25": {
                 frame: 1,
@@ -2828,8 +2828,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "22": {
               "10": {
@@ -2840,7 +2840,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "11": {
                 frame: 1,
@@ -2850,7 +2850,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "12": {
                 frame: 1,
@@ -2860,7 +2860,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -2870,7 +2870,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -2880,7 +2880,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -2890,7 +2890,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -2900,7 +2900,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -2910,7 +2910,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -2920,7 +2920,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -2930,7 +2930,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -2940,7 +2940,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -2950,7 +2950,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -2960,7 +2960,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -2970,7 +2970,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -2980,8 +2980,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "23": {
               "9": {
@@ -2992,7 +2992,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "10": {
                 frame: 1,
@@ -3002,7 +3002,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: 1
+                a: 1,
               },
               "11": {
                 frame: 1,
@@ -3012,7 +3012,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3022,7 +3022,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3032,7 +3032,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3042,7 +3042,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -3052,7 +3052,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -3062,7 +3062,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -3072,7 +3072,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -3082,7 +3082,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -3092,7 +3092,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -3102,7 +3102,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -3112,7 +3112,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -3122,7 +3122,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -3132,7 +3132,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "24": {
                 frame: 1,
@@ -3142,8 +3142,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "24": {
               "8": {
@@ -3154,7 +3154,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "9": {
                 frame: 1,
@@ -3164,7 +3164,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "10": {
                 frame: 1,
@@ -3174,7 +3174,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -3184,7 +3184,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3194,7 +3194,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3204,7 +3204,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3214,7 +3214,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -3224,7 +3224,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -3234,7 +3234,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -3244,7 +3244,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -3254,7 +3254,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -3264,7 +3264,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -3274,7 +3274,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -3284,7 +3284,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -3294,7 +3294,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -3304,8 +3304,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "25": {
               "7": {
@@ -3316,7 +3316,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "8": {
                 frame: 1,
@@ -3326,7 +3326,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "9": {
                 frame: 1,
@@ -3336,7 +3336,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "10": {
                 frame: 1,
@@ -3346,7 +3346,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -3356,7 +3356,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3366,7 +3366,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3376,7 +3376,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3386,7 +3386,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -3396,7 +3396,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -3406,7 +3406,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -3416,7 +3416,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -3426,7 +3426,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -3436,7 +3436,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -3446,7 +3446,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -3456,7 +3456,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "22": {
                 frame: 1,
@@ -3466,7 +3466,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "23": {
                 frame: 1,
@@ -3476,8 +3476,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "26": {
               "7": {
@@ -3488,7 +3488,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "8": {
                 frame: 1,
@@ -3498,7 +3498,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "9": {
                 frame: 1,
@@ -3508,7 +3508,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "10": {
                 frame: 1,
@@ -3518,7 +3518,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -3528,7 +3528,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3538,7 +3538,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3548,7 +3548,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3558,7 +3558,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -3568,7 +3568,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "16": {
                 frame: 1,
@@ -3578,7 +3578,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "17": {
                 frame: 1,
@@ -3588,7 +3588,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "18": {
                 frame: 1,
@@ -3598,7 +3598,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "19": {
                 frame: 1,
@@ -3608,7 +3608,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "20": {
                 frame: 1,
@@ -3618,7 +3618,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "21": {
                 frame: 1,
@@ -3628,7 +3628,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "22": {
                 frame: 1,
@@ -3638,8 +3638,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "27": {
               "7": {
@@ -3650,7 +3650,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "8": {
                 frame: 1,
@@ -3660,7 +3660,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "9": {
                 frame: 1,
@@ -3670,7 +3670,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "10": {
                 frame: 1,
@@ -3680,7 +3680,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "11": {
                 frame: 1,
@@ -3690,7 +3690,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3700,7 +3700,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3710,7 +3710,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3720,7 +3720,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "15": {
                 frame: 1,
@@ -3730,7 +3730,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "16": {
                 frame: 1,
@@ -3740,7 +3740,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "17": {
                 frame: 1,
@@ -3750,7 +3750,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "18": {
                 frame: 1,
@@ -3760,7 +3760,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "19": {
                 frame: 1,
@@ -3770,7 +3770,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "20": {
                 frame: 1,
@@ -3780,7 +3780,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "21": {
                 frame: 1,
@@ -3790,8 +3790,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "28": {
               "8": {
@@ -3802,7 +3802,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "9": {
                 frame: 1,
@@ -3812,7 +3812,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "10": {
                 frame: 1,
@@ -3822,7 +3822,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "11": {
                 frame: 1,
@@ -3832,7 +3832,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "12": {
                 frame: 1,
@@ -3842,7 +3842,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "13": {
                 frame: 1,
@@ -3852,7 +3852,7 @@ export default {
                 r: 202,
                 g: 112,
                 b: 33,
-                a: null
+                a: null,
               },
               "14": {
                 frame: 1,
@@ -3862,7 +3862,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "15": {
                 frame: 1,
@@ -3872,8 +3872,8 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
+                a: 1,
+              },
             },
             "29": {
               "11": {
@@ -3884,7 +3884,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "12": {
                 frame: 1,
@@ -3894,7 +3894,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "13": {
                 frame: 1,
@@ -3904,7 +3904,7 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
+                a: 1,
               },
               "14": {
                 frame: 1,
@@ -3914,16 +3914,16 @@ export default {
                 r: 0,
                 g: 0,
                 b: 0,
-                a: 1
-              }
-            }
-          }
-        }
+                a: 1,
+              },
+            },
+          },
+        },
       },
       size: {
         width: 32,
-        height: 32
-      }
+        height: 32,
+      },
     },
     future: [],
     history: {
@@ -3931,7 +3931,7 @@ export default {
         {
           frames: {
             x: 3,
-            y: 2
+            y: 2,
           },
           layers: [
             {
@@ -3940,7 +3940,7 @@ export default {
               name: "Layer 2",
               z: 1,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 1,
@@ -3948,7 +3948,7 @@ export default {
               name: "Layer 1",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 1,
@@ -3956,7 +3956,7 @@ export default {
               name: "Layer 3",
               z: 2,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 2,
@@ -3964,7 +3964,7 @@ export default {
               name: "Layer 4",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 3,
@@ -3972,7 +3972,7 @@ export default {
               name: "Layer 5",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 4,
@@ -3980,7 +3980,7 @@ export default {
               name: "Layer 6",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 5,
@@ -3988,7 +3988,7 @@ export default {
               name: "Layer 7",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               frame: 6,
@@ -3996,20 +3996,20 @@ export default {
               name: "Layer 8",
               z: 0,
               opacity: 100,
-              visible: true
-            }
+              visible: true,
+            },
           ],
           pixels: {},
           size: {
             height: 32,
-            width: 32
-          }
-        }
+            width: 32,
+          },
+        },
       ],
       present: {
         frames: {
           x: 3,
-          y: 2
+          y: 2,
         },
         layers: [
           {
@@ -4018,7 +4018,7 @@ export default {
             name: "Layer 2",
             z: 1,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 1,
@@ -4026,7 +4026,7 @@ export default {
             name: "Layer 1",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 3,
@@ -4034,7 +4034,7 @@ export default {
             name: "Layer 3",
             z: 2,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 4,
@@ -4042,7 +4042,7 @@ export default {
             name: "Layer 4",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 5,
@@ -4050,7 +4050,7 @@ export default {
             name: "Layer 5",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 6,
@@ -4058,7 +4058,7 @@ export default {
             name: "Layer 6",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 7,
@@ -4066,7 +4066,7 @@ export default {
             name: "Layer 7",
             z: 0,
             opacity: 100,
-            visible: true
+            visible: true,
           },
           {
             id: 8,
@@ -4074,8 +4074,8 @@ export default {
             name: "Layer 8",
             z: 0,
             opacity: 100,
-            visible: true
-          }
+            visible: true,
+          },
         ],
         pixels: {
           "1": {
@@ -4089,7 +4089,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -4099,7 +4099,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -4109,8 +4109,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "4": {
                 "16": {
@@ -4121,7 +4121,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -4131,7 +4131,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -4141,7 +4141,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -4151,7 +4151,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "20": {
                   frame: 1,
@@ -4161,7 +4161,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -4171,8 +4171,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "5": {
                 "15": {
@@ -4183,7 +4183,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "16": {
                   frame: 1,
@@ -4193,7 +4193,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -4203,7 +4203,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -4213,7 +4213,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -4223,7 +4223,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4233,7 +4233,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4243,7 +4243,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "22": {
                   frame: 1,
@@ -4253,7 +4253,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "23": {
                   frame: 1,
@@ -4263,8 +4263,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "6": {
                 "14": {
@@ -4275,7 +4275,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "15": {
                   frame: 1,
@@ -4285,7 +4285,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -4295,7 +4295,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -4305,7 +4305,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -4315,7 +4315,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -4325,7 +4325,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4335,7 +4335,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4345,7 +4345,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -4355,7 +4355,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -4365,8 +4365,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "7": {
                 "13": {
@@ -4377,7 +4377,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -4387,7 +4387,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -4397,7 +4397,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -4407,7 +4407,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -4417,7 +4417,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -4427,7 +4427,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -4437,7 +4437,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4447,7 +4447,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4457,7 +4457,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -4467,7 +4467,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -4477,7 +4477,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -4487,7 +4487,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "25": {
                   frame: 1,
@@ -4497,8 +4497,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "8": {
                 "12": {
@@ -4509,7 +4509,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "13": {
                   frame: 1,
@@ -4519,7 +4519,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -4529,7 +4529,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -4539,7 +4539,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -4549,7 +4549,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -4559,7 +4559,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -4569,7 +4569,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -4579,7 +4579,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4589,7 +4589,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4599,7 +4599,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -4609,7 +4609,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -4619,7 +4619,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -4629,7 +4629,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -4639,7 +4639,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "26": {
                   frame: 1,
@@ -4649,8 +4649,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "9": {
                 "10": {
@@ -4661,7 +4661,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "11": {
                   frame: 1,
@@ -4671,7 +4671,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "12": {
                   frame: 1,
@@ -4681,7 +4681,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -4691,7 +4691,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -4701,7 +4701,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -4711,7 +4711,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -4721,7 +4721,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -4731,7 +4731,7 @@ export default {
                   r: 247,
                   g: 245,
                   b: 189,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -4741,7 +4741,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -4751,7 +4751,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4761,7 +4761,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4771,7 +4771,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -4781,7 +4781,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -4791,7 +4791,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -4801,7 +4801,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -4811,7 +4811,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -4821,8 +4821,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "10": {
                 "9": {
@@ -4833,7 +4833,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "10": {
                   frame: 1,
@@ -4843,7 +4843,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -4853,7 +4853,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -4863,7 +4863,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -4873,7 +4873,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -4883,7 +4883,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -4893,7 +4893,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -4903,7 +4903,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -4913,7 +4913,7 @@ export default {
                   r: 247,
                   g: 245,
                   b: 189,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -4923,7 +4923,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -4933,7 +4933,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -4943,7 +4943,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -4953,7 +4953,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -4963,7 +4963,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -4973,7 +4973,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -4983,7 +4983,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -4993,7 +4993,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5003,8 +5003,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "11": {
                 "8": {
@@ -5015,7 +5015,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "9": {
                   frame: 1,
@@ -5025,7 +5025,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "10": {
                   frame: 1,
@@ -5035,7 +5035,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -5045,7 +5045,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -5055,7 +5055,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -5065,7 +5065,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -5075,7 +5075,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5085,7 +5085,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5095,7 +5095,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -5105,7 +5105,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -5115,7 +5115,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5125,7 +5125,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5135,7 +5135,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -5145,7 +5145,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5155,7 +5155,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -5165,7 +5165,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -5175,7 +5175,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -5185,7 +5185,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5195,8 +5195,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "12": {
                 "8": {
@@ -5207,7 +5207,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "9": {
                   frame: 1,
@@ -5217,7 +5217,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "10": {
                   frame: 1,
@@ -5227,7 +5227,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -5237,7 +5237,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -5247,7 +5247,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -5257,7 +5257,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -5267,7 +5267,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5277,7 +5277,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5287,7 +5287,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -5297,7 +5297,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -5307,7 +5307,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5317,7 +5317,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5327,7 +5327,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -5337,7 +5337,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5347,7 +5347,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -5357,7 +5357,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -5367,7 +5367,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -5377,7 +5377,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5387,7 +5387,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "27": {
                   frame: 1,
@@ -5397,8 +5397,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "13": {
                 "9": {
@@ -5409,7 +5409,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "10": {
                   frame: 1,
@@ -5419,7 +5419,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "11": {
                   frame: 1,
@@ -5429,7 +5429,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "12": {
                   frame: 1,
@@ -5439,7 +5439,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "13": {
                   frame: 1,
@@ -5449,7 +5449,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -5459,7 +5459,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5469,7 +5469,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5479,7 +5479,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -5489,7 +5489,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -5499,7 +5499,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5509,7 +5509,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5519,7 +5519,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -5529,7 +5529,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5539,7 +5539,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -5549,7 +5549,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -5559,7 +5559,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -5569,7 +5569,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5579,7 +5579,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "27": {
                   frame: 1,
@@ -5589,8 +5589,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "14": {
                 "13": {
@@ -5601,7 +5601,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -5611,7 +5611,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5621,7 +5621,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5631,7 +5631,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -5641,7 +5641,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -5651,7 +5651,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5661,7 +5661,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5671,7 +5671,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -5681,7 +5681,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5691,7 +5691,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -5701,7 +5701,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -5711,7 +5711,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "25": {
                   frame: 1,
@@ -5721,7 +5721,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5731,7 +5731,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "27": {
                   frame: 1,
@@ -5741,8 +5741,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "15": {
                 "13": {
@@ -5753,7 +5753,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -5763,7 +5763,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5773,7 +5773,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5783,7 +5783,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -5793,7 +5793,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -5803,7 +5803,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5813,7 +5813,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5823,7 +5823,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -5833,7 +5833,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5843,7 +5843,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -5853,7 +5853,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -5863,7 +5863,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "25": {
                   frame: 1,
@@ -5873,7 +5873,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -5883,7 +5883,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "27": {
                   frame: 1,
@@ -5893,8 +5893,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "16": {
                 "13": {
@@ -5905,7 +5905,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -5915,7 +5915,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -5925,7 +5925,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -5935,7 +5935,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -5945,7 +5945,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -5955,7 +5955,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -5965,7 +5965,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -5975,7 +5975,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -5985,7 +5985,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -5995,7 +5995,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "23": {
                   frame: 1,
@@ -6005,7 +6005,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "24": {
                   frame: 1,
@@ -6015,7 +6015,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "25": {
                   frame: 1,
@@ -6025,7 +6025,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -6035,7 +6035,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "27": {
                   frame: 1,
@@ -6045,8 +6045,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "17": {
                 "13": {
@@ -6057,7 +6057,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -6067,7 +6067,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6077,7 +6077,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "16": {
                   frame: 1,
@@ -6087,7 +6087,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -6097,7 +6097,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -6107,7 +6107,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -6117,7 +6117,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6127,7 +6127,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6137,7 +6137,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6147,7 +6147,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6157,7 +6157,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6167,7 +6167,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -6177,7 +6177,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -6187,8 +6187,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "18": {
                 "13": {
@@ -6199,7 +6199,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -6209,7 +6209,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6219,7 +6219,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "16": {
                   frame: 1,
@@ -6229,7 +6229,7 @@ export default {
                   r: 247,
                   g: 245,
                   b: 189,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -6239,7 +6239,7 @@ export default {
                   r: 247,
                   g: 245,
                   b: 189,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -6249,7 +6249,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -6259,7 +6259,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6269,7 +6269,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6279,7 +6279,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6289,7 +6289,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6299,7 +6299,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6309,7 +6309,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -6319,7 +6319,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -6329,8 +6329,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "19": {
                 "13": {
@@ -6341,7 +6341,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -6351,7 +6351,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6361,7 +6361,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "16": {
                   frame: 1,
@@ -6371,7 +6371,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -6381,7 +6381,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -6391,7 +6391,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -6401,7 +6401,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6411,7 +6411,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6421,7 +6421,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6431,7 +6431,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6441,7 +6441,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6451,7 +6451,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -6461,7 +6461,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "26": {
                   frame: 1,
@@ -6471,8 +6471,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "20": {
                 "12": {
@@ -6483,7 +6483,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "13": {
                   frame: 1,
@@ -6493,7 +6493,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -6503,7 +6503,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6513,7 +6513,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -6523,7 +6523,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -6533,7 +6533,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -6543,7 +6543,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -6553,7 +6553,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6563,7 +6563,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6573,7 +6573,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6583,7 +6583,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6593,7 +6593,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6603,7 +6603,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -6613,8 +6613,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "21": {
                 "12": {
@@ -6625,7 +6625,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "13": {
                   frame: 1,
@@ -6635,7 +6635,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -6645,7 +6645,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6655,7 +6655,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -6665,7 +6665,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -6675,7 +6675,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -6685,7 +6685,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -6695,7 +6695,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6705,7 +6705,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6715,7 +6715,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6725,7 +6725,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6735,7 +6735,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6745,7 +6745,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "25": {
                   frame: 1,
@@ -6755,8 +6755,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "22": {
                 "10": {
@@ -6767,7 +6767,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "11": {
                   frame: 1,
@@ -6777,7 +6777,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "12": {
                   frame: 1,
@@ -6787,7 +6787,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -6797,7 +6797,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -6807,7 +6807,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6817,7 +6817,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -6827,7 +6827,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -6837,7 +6837,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -6847,7 +6847,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -6857,7 +6857,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -6867,7 +6867,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -6877,7 +6877,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -6887,7 +6887,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -6897,7 +6897,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -6907,8 +6907,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "23": {
                 "9": {
@@ -6919,7 +6919,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "10": {
                   frame: 1,
@@ -6929,7 +6929,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: 1
+                  a: 1,
                 },
                 "11": {
                   frame: 1,
@@ -6939,7 +6939,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -6949,7 +6949,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -6959,7 +6959,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -6969,7 +6969,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -6979,7 +6979,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -6989,7 +6989,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -6999,7 +6999,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -7009,7 +7009,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -7019,7 +7019,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -7029,7 +7029,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -7039,7 +7039,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -7049,7 +7049,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -7059,7 +7059,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "24": {
                   frame: 1,
@@ -7069,8 +7069,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "24": {
                 "8": {
@@ -7081,7 +7081,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "9": {
                   frame: 1,
@@ -7091,7 +7091,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "10": {
                   frame: 1,
@@ -7101,7 +7101,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -7111,7 +7111,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -7121,7 +7121,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -7131,7 +7131,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -7141,7 +7141,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -7151,7 +7151,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -7161,7 +7161,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -7171,7 +7171,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -7181,7 +7181,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -7191,7 +7191,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -7201,7 +7201,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -7211,7 +7211,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -7221,7 +7221,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -7231,8 +7231,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "25": {
                 "7": {
@@ -7243,7 +7243,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "8": {
                   frame: 1,
@@ -7253,7 +7253,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "9": {
                   frame: 1,
@@ -7263,7 +7263,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "10": {
                   frame: 1,
@@ -7273,7 +7273,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -7283,7 +7283,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -7293,7 +7293,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -7303,7 +7303,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -7313,7 +7313,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -7323,7 +7323,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -7333,7 +7333,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -7343,7 +7343,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -7353,7 +7353,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -7363,7 +7363,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -7373,7 +7373,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -7383,7 +7383,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "22": {
                   frame: 1,
@@ -7393,7 +7393,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "23": {
                   frame: 1,
@@ -7403,8 +7403,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "26": {
                 "7": {
@@ -7415,7 +7415,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "8": {
                   frame: 1,
@@ -7425,7 +7425,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "9": {
                   frame: 1,
@@ -7435,7 +7435,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "10": {
                   frame: 1,
@@ -7445,7 +7445,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -7455,7 +7455,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -7465,7 +7465,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -7475,7 +7475,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -7485,7 +7485,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -7495,7 +7495,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "16": {
                   frame: 1,
@@ -7505,7 +7505,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "17": {
                   frame: 1,
@@ -7515,7 +7515,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "18": {
                   frame: 1,
@@ -7525,7 +7525,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "19": {
                   frame: 1,
@@ -7535,7 +7535,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "20": {
                   frame: 1,
@@ -7545,7 +7545,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "21": {
                   frame: 1,
@@ -7555,7 +7555,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "22": {
                   frame: 1,
@@ -7565,8 +7565,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "27": {
                 "7": {
@@ -7577,7 +7577,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "8": {
                   frame: 1,
@@ -7587,7 +7587,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "9": {
                   frame: 1,
@@ -7597,7 +7597,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "10": {
                   frame: 1,
@@ -7607,7 +7607,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "11": {
                   frame: 1,
@@ -7617,7 +7617,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -7627,7 +7627,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -7637,7 +7637,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -7647,7 +7647,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "15": {
                   frame: 1,
@@ -7657,7 +7657,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "16": {
                   frame: 1,
@@ -7667,7 +7667,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "17": {
                   frame: 1,
@@ -7677,7 +7677,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "18": {
                   frame: 1,
@@ -7687,7 +7687,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "19": {
                   frame: 1,
@@ -7697,7 +7697,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "20": {
                   frame: 1,
@@ -7707,7 +7707,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "21": {
                   frame: 1,
@@ -7717,8 +7717,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "28": {
                 "8": {
@@ -7729,7 +7729,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "9": {
                   frame: 1,
@@ -7739,7 +7739,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "10": {
                   frame: 1,
@@ -7749,7 +7749,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "11": {
                   frame: 1,
@@ -7759,7 +7759,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "12": {
                   frame: 1,
@@ -7769,7 +7769,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "13": {
                   frame: 1,
@@ -7779,7 +7779,7 @@ export default {
                   r: 202,
                   g: 112,
                   b: 33,
-                  a: null
+                  a: null,
                 },
                 "14": {
                   frame: 1,
@@ -7789,7 +7789,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "15": {
                   frame: 1,
@@ -7799,8 +7799,8 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
+                  a: 1,
+                },
               },
               "29": {
                 "11": {
@@ -7811,7 +7811,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "12": {
                   frame: 1,
@@ -7821,7 +7821,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "13": {
                   frame: 1,
@@ -7831,7 +7831,7 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
+                  a: 1,
                 },
                 "14": {
                   frame: 1,
@@ -7841,16 +7841,16 @@ export default {
                   r: 0,
                   g: 0,
                   b: 0,
-                  a: 1
-                }
-              }
-            }
-          }
+                  a: 1,
+                },
+              },
+            },
+          },
         },
         size: {
           width: 32,
-          height: 32
-        }
+          height: 32,
+        },
       },
       future: [],
       history: {
@@ -7858,7 +7858,7 @@ export default {
           {
             frames: {
               x: 3,
-              y: 2
+              y: 2,
             },
             layers: [
               {
@@ -7867,7 +7867,7 @@ export default {
                 name: "Layer 2",
                 z: 1,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 1,
@@ -7875,7 +7875,7 @@ export default {
                 name: "Layer 1",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 1,
@@ -7883,7 +7883,7 @@ export default {
                 name: "Layer 3",
                 z: 2,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 2,
@@ -7891,7 +7891,7 @@ export default {
                 name: "Layer 4",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 3,
@@ -7899,7 +7899,7 @@ export default {
                 name: "Layer 5",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 4,
@@ -7907,7 +7907,7 @@ export default {
                 name: "Layer 6",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 5,
@@ -7915,7 +7915,7 @@ export default {
                 name: "Layer 7",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 frame: 6,
@@ -7923,20 +7923,20 @@ export default {
                 name: "Layer 8",
                 z: 0,
                 opacity: 100,
-                visible: true
-              }
+                visible: true,
+              },
             ],
             pixels: {},
             size: {
               height: 32,
-              width: 32
-            }
-          }
+              width: 32,
+            },
+          },
         ],
         present: {
           frames: {
             x: 3,
-            y: 2
+            y: 2,
           },
           layers: [
             {
@@ -7945,7 +7945,7 @@ export default {
               name: "Layer 2",
               z: 1,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 1,
@@ -7953,7 +7953,7 @@ export default {
               name: "Layer 1",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 3,
@@ -7961,7 +7961,7 @@ export default {
               name: "Layer 3",
               z: 2,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 4,
@@ -7969,7 +7969,7 @@ export default {
               name: "Layer 4",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 5,
@@ -7977,7 +7977,7 @@ export default {
               name: "Layer 5",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 6,
@@ -7985,7 +7985,7 @@ export default {
               name: "Layer 6",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 7,
@@ -7993,7 +7993,7 @@ export default {
               name: "Layer 7",
               z: 0,
               opacity: 100,
-              visible: true
+              visible: true,
             },
             {
               id: 8,
@@ -8001,8 +8001,8 @@ export default {
               name: "Layer 8",
               z: 0,
               opacity: 100,
-              visible: true
-            }
+              visible: true,
+            },
           ],
           pixels: {
             "1": {
@@ -8016,7 +8016,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -8026,7 +8026,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -8036,8 +8036,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "4": {
                   "16": {
@@ -8048,7 +8048,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -8058,7 +8058,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -8068,7 +8068,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -8078,7 +8078,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "20": {
                     frame: 1,
@@ -8088,7 +8088,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -8098,8 +8098,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "5": {
                   "15": {
@@ -8110,7 +8110,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "16": {
                     frame: 1,
@@ -8120,7 +8120,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -8130,7 +8130,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -8140,7 +8140,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -8150,7 +8150,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8160,7 +8160,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8170,7 +8170,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "22": {
                     frame: 1,
@@ -8180,7 +8180,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "23": {
                     frame: 1,
@@ -8190,8 +8190,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "6": {
                   "14": {
@@ -8202,7 +8202,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "15": {
                     frame: 1,
@@ -8212,7 +8212,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -8222,7 +8222,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -8232,7 +8232,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -8242,7 +8242,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -8252,7 +8252,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8262,7 +8262,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8272,7 +8272,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -8282,7 +8282,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -8292,8 +8292,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "7": {
                   "13": {
@@ -8304,7 +8304,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -8314,7 +8314,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -8324,7 +8324,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -8334,7 +8334,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -8344,7 +8344,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -8354,7 +8354,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -8364,7 +8364,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8374,7 +8374,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8384,7 +8384,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -8394,7 +8394,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -8404,7 +8404,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -8414,7 +8414,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "25": {
                     frame: 1,
@@ -8424,8 +8424,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "8": {
                   "12": {
@@ -8436,7 +8436,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "13": {
                     frame: 1,
@@ -8446,7 +8446,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -8456,7 +8456,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -8466,7 +8466,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -8476,7 +8476,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -8486,7 +8486,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -8496,7 +8496,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -8506,7 +8506,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8516,7 +8516,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8526,7 +8526,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -8536,7 +8536,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -8546,7 +8546,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -8556,7 +8556,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -8566,7 +8566,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "26": {
                     frame: 1,
@@ -8576,8 +8576,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "9": {
                   "10": {
@@ -8588,7 +8588,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "11": {
                     frame: 1,
@@ -8598,7 +8598,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "12": {
                     frame: 1,
@@ -8608,7 +8608,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -8618,7 +8618,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -8628,7 +8628,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -8638,7 +8638,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -8648,7 +8648,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -8658,7 +8658,7 @@ export default {
                     r: 247,
                     g: 245,
                     b: 189,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -8668,7 +8668,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -8678,7 +8678,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8688,7 +8688,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8698,7 +8698,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -8708,7 +8708,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -8718,7 +8718,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -8728,7 +8728,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -8738,7 +8738,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -8748,8 +8748,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "10": {
                   "9": {
@@ -8760,7 +8760,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "10": {
                     frame: 1,
@@ -8770,7 +8770,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -8780,7 +8780,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -8790,7 +8790,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -8800,7 +8800,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -8810,7 +8810,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -8820,7 +8820,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -8830,7 +8830,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -8840,7 +8840,7 @@ export default {
                     r: 247,
                     g: 245,
                     b: 189,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -8850,7 +8850,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -8860,7 +8860,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -8870,7 +8870,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -8880,7 +8880,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -8890,7 +8890,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -8900,7 +8900,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -8910,7 +8910,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -8920,7 +8920,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -8930,8 +8930,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "11": {
                   "8": {
@@ -8942,7 +8942,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "9": {
                     frame: 1,
@@ -8952,7 +8952,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "10": {
                     frame: 1,
@@ -8962,7 +8962,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -8972,7 +8972,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -8982,7 +8982,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -8992,7 +8992,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -9002,7 +9002,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9012,7 +9012,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9022,7 +9022,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -9032,7 +9032,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -9042,7 +9042,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9052,7 +9052,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9062,7 +9062,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -9072,7 +9072,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9082,7 +9082,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -9092,7 +9092,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -9102,7 +9102,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -9112,7 +9112,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9122,8 +9122,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "12": {
                   "8": {
@@ -9134,7 +9134,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "9": {
                     frame: 1,
@@ -9144,7 +9144,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "10": {
                     frame: 1,
@@ -9154,7 +9154,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -9164,7 +9164,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -9174,7 +9174,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -9184,7 +9184,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9194,7 +9194,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9204,7 +9204,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9214,7 +9214,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -9224,7 +9224,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -9234,7 +9234,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9244,7 +9244,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9254,7 +9254,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -9264,7 +9264,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9274,7 +9274,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -9284,7 +9284,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -9294,7 +9294,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -9304,7 +9304,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9314,7 +9314,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "27": {
                     frame: 1,
@@ -9324,8 +9324,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "13": {
                   "9": {
@@ -9336,7 +9336,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "10": {
                     frame: 1,
@@ -9346,7 +9346,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "11": {
                     frame: 1,
@@ -9356,7 +9356,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "12": {
                     frame: 1,
@@ -9366,7 +9366,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "13": {
                     frame: 1,
@@ -9376,7 +9376,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9386,7 +9386,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9396,7 +9396,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9406,7 +9406,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -9416,7 +9416,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -9426,7 +9426,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9436,7 +9436,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9446,7 +9446,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -9456,7 +9456,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9466,7 +9466,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -9476,7 +9476,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -9486,7 +9486,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -9496,7 +9496,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9506,7 +9506,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "27": {
                     frame: 1,
@@ -9516,8 +9516,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "14": {
                   "13": {
@@ -9528,7 +9528,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9538,7 +9538,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9548,7 +9548,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9558,7 +9558,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -9568,7 +9568,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -9578,7 +9578,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9588,7 +9588,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9598,7 +9598,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -9608,7 +9608,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9618,7 +9618,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -9628,7 +9628,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -9638,7 +9638,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "25": {
                     frame: 1,
@@ -9648,7 +9648,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9658,7 +9658,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "27": {
                     frame: 1,
@@ -9668,8 +9668,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "15": {
                   "13": {
@@ -9680,7 +9680,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9690,7 +9690,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9700,7 +9700,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9710,7 +9710,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -9720,7 +9720,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -9730,7 +9730,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9740,7 +9740,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9750,7 +9750,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -9760,7 +9760,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9770,7 +9770,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -9780,7 +9780,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -9790,7 +9790,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "25": {
                     frame: 1,
@@ -9800,7 +9800,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9810,7 +9810,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "27": {
                     frame: 1,
@@ -9820,8 +9820,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "16": {
                   "13": {
@@ -9832,7 +9832,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9842,7 +9842,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -9852,7 +9852,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -9862,7 +9862,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -9872,7 +9872,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -9882,7 +9882,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -9892,7 +9892,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -9902,7 +9902,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -9912,7 +9912,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -9922,7 +9922,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "23": {
                     frame: 1,
@@ -9932,7 +9932,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "24": {
                     frame: 1,
@@ -9942,7 +9942,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "25": {
                     frame: 1,
@@ -9952,7 +9952,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -9962,7 +9962,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "27": {
                     frame: 1,
@@ -9972,8 +9972,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "17": {
                   "13": {
@@ -9984,7 +9984,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -9994,7 +9994,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10004,7 +10004,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "16": {
                     frame: 1,
@@ -10014,7 +10014,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -10024,7 +10024,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -10034,7 +10034,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -10044,7 +10044,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10054,7 +10054,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10064,7 +10064,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10074,7 +10074,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10084,7 +10084,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10094,7 +10094,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -10104,7 +10104,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -10114,8 +10114,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "18": {
                   "13": {
@@ -10126,7 +10126,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -10136,7 +10136,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10146,7 +10146,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "16": {
                     frame: 1,
@@ -10156,7 +10156,7 @@ export default {
                     r: 247,
                     g: 245,
                     b: 189,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -10166,7 +10166,7 @@ export default {
                     r: 247,
                     g: 245,
                     b: 189,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -10176,7 +10176,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -10186,7 +10186,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10196,7 +10196,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10206,7 +10206,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10216,7 +10216,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10226,7 +10226,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10236,7 +10236,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -10246,7 +10246,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -10256,8 +10256,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "19": {
                   "13": {
@@ -10268,7 +10268,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -10278,7 +10278,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10288,7 +10288,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "16": {
                     frame: 1,
@@ -10298,7 +10298,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -10308,7 +10308,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -10318,7 +10318,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -10328,7 +10328,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10338,7 +10338,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10348,7 +10348,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10358,7 +10358,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10368,7 +10368,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10378,7 +10378,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -10388,7 +10388,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "26": {
                     frame: 1,
@@ -10398,8 +10398,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "20": {
                   "12": {
@@ -10410,7 +10410,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "13": {
                     frame: 1,
@@ -10420,7 +10420,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -10430,7 +10430,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10440,7 +10440,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -10450,7 +10450,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -10460,7 +10460,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -10470,7 +10470,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -10480,7 +10480,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10490,7 +10490,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10500,7 +10500,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10510,7 +10510,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10520,7 +10520,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10530,7 +10530,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -10540,8 +10540,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "21": {
                   "12": {
@@ -10552,7 +10552,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "13": {
                     frame: 1,
@@ -10562,7 +10562,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -10572,7 +10572,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10582,7 +10582,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -10592,7 +10592,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -10602,7 +10602,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -10612,7 +10612,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -10622,7 +10622,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10632,7 +10632,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10642,7 +10642,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10652,7 +10652,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10662,7 +10662,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10672,7 +10672,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "25": {
                     frame: 1,
@@ -10682,8 +10682,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "22": {
                   "10": {
@@ -10694,7 +10694,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "11": {
                     frame: 1,
@@ -10704,7 +10704,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "12": {
                     frame: 1,
@@ -10714,7 +10714,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -10724,7 +10724,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -10734,7 +10734,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10744,7 +10744,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -10754,7 +10754,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -10764,7 +10764,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -10774,7 +10774,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -10784,7 +10784,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10794,7 +10794,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10804,7 +10804,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10814,7 +10814,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10824,7 +10824,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10834,8 +10834,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "23": {
                   "9": {
@@ -10846,7 +10846,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "10": {
                     frame: 1,
@@ -10856,7 +10856,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: 1
+                    a: 1,
                   },
                   "11": {
                     frame: 1,
@@ -10866,7 +10866,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -10876,7 +10876,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -10886,7 +10886,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -10896,7 +10896,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -10906,7 +10906,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -10916,7 +10916,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -10926,7 +10926,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -10936,7 +10936,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -10946,7 +10946,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -10956,7 +10956,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -10966,7 +10966,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -10976,7 +10976,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -10986,7 +10986,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "24": {
                     frame: 1,
@@ -10996,8 +10996,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "24": {
                   "8": {
@@ -11008,7 +11008,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "9": {
                     frame: 1,
@@ -11018,7 +11018,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "10": {
                     frame: 1,
@@ -11028,7 +11028,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -11038,7 +11038,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -11048,7 +11048,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -11058,7 +11058,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -11068,7 +11068,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -11078,7 +11078,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -11088,7 +11088,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -11098,7 +11098,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -11108,7 +11108,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -11118,7 +11118,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -11128,7 +11128,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -11138,7 +11138,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -11148,7 +11148,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -11158,8 +11158,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "25": {
                   "7": {
@@ -11170,7 +11170,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "8": {
                     frame: 1,
@@ -11180,7 +11180,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "9": {
                     frame: 1,
@@ -11190,7 +11190,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "10": {
                     frame: 1,
@@ -11200,7 +11200,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -11210,7 +11210,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -11220,7 +11220,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -11230,7 +11230,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -11240,7 +11240,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -11250,7 +11250,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -11260,7 +11260,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -11270,7 +11270,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -11280,7 +11280,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -11290,7 +11290,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -11300,7 +11300,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -11310,7 +11310,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "22": {
                     frame: 1,
@@ -11320,7 +11320,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "23": {
                     frame: 1,
@@ -11330,8 +11330,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "26": {
                   "7": {
@@ -11342,7 +11342,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "8": {
                     frame: 1,
@@ -11352,7 +11352,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "9": {
                     frame: 1,
@@ -11362,7 +11362,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "10": {
                     frame: 1,
@@ -11372,7 +11372,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -11382,7 +11382,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -11392,7 +11392,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -11402,7 +11402,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -11412,7 +11412,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -11422,7 +11422,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "16": {
                     frame: 1,
@@ -11432,7 +11432,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "17": {
                     frame: 1,
@@ -11442,7 +11442,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "18": {
                     frame: 1,
@@ -11452,7 +11452,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "19": {
                     frame: 1,
@@ -11462,7 +11462,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "20": {
                     frame: 1,
@@ -11472,7 +11472,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "21": {
                     frame: 1,
@@ -11482,7 +11482,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "22": {
                     frame: 1,
@@ -11492,8 +11492,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "27": {
                   "7": {
@@ -11504,7 +11504,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "8": {
                     frame: 1,
@@ -11514,7 +11514,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "9": {
                     frame: 1,
@@ -11524,7 +11524,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "10": {
                     frame: 1,
@@ -11534,7 +11534,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "11": {
                     frame: 1,
@@ -11544,7 +11544,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -11554,7 +11554,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -11564,7 +11564,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -11574,7 +11574,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "15": {
                     frame: 1,
@@ -11584,7 +11584,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "16": {
                     frame: 1,
@@ -11594,7 +11594,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "17": {
                     frame: 1,
@@ -11604,7 +11604,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "18": {
                     frame: 1,
@@ -11614,7 +11614,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "19": {
                     frame: 1,
@@ -11624,7 +11624,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "20": {
                     frame: 1,
@@ -11634,7 +11634,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "21": {
                     frame: 1,
@@ -11644,8 +11644,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "28": {
                   "8": {
@@ -11656,7 +11656,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "9": {
                     frame: 1,
@@ -11666,7 +11666,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "10": {
                     frame: 1,
@@ -11676,7 +11676,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "11": {
                     frame: 1,
@@ -11686,7 +11686,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "12": {
                     frame: 1,
@@ -11696,7 +11696,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "13": {
                     frame: 1,
@@ -11706,7 +11706,7 @@ export default {
                     r: 202,
                     g: 112,
                     b: 33,
-                    a: null
+                    a: null,
                   },
                   "14": {
                     frame: 1,
@@ -11716,7 +11716,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "15": {
                     frame: 1,
@@ -11726,8 +11726,8 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
+                    a: 1,
+                  },
                 },
                 "29": {
                   "11": {
@@ -11738,7 +11738,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "12": {
                     frame: 1,
@@ -11748,7 +11748,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "13": {
                     frame: 1,
@@ -11758,7 +11758,7 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
+                    a: 1,
                   },
                   "14": {
                     frame: 1,
@@ -11768,16 +11768,16 @@ export default {
                     r: 0,
                     g: 0,
                     b: 0,
-                    a: 1
-                  }
-                }
-              }
-            }
+                    a: 1,
+                  },
+                },
+              },
+            },
           },
           size: {
             width: 32,
-            height: 32
-          }
+            height: 32,
+          },
         },
         future: [],
         history: {
@@ -11785,7 +11785,7 @@ export default {
             {
               frames: {
                 x: 3,
-                y: 2
+                y: 2,
               },
               layers: [
                 {
@@ -11794,7 +11794,7 @@ export default {
                   name: "Layer 2",
                   z: 1,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 1,
@@ -11802,7 +11802,7 @@ export default {
                   name: "Layer 1",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 1,
@@ -11810,7 +11810,7 @@ export default {
                   name: "Layer 3",
                   z: 2,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 2,
@@ -11818,7 +11818,7 @@ export default {
                   name: "Layer 4",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 3,
@@ -11826,7 +11826,7 @@ export default {
                   name: "Layer 5",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 4,
@@ -11834,7 +11834,7 @@ export default {
                   name: "Layer 6",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 5,
@@ -11842,7 +11842,7 @@ export default {
                   name: "Layer 7",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   frame: 6,
@@ -11850,20 +11850,20 @@ export default {
                   name: "Layer 8",
                   z: 0,
                   opacity: 100,
-                  visible: true
-                }
+                  visible: true,
+                },
               ],
               pixels: {},
               size: {
                 height: 32,
-                width: 32
-              }
-            }
+                width: 32,
+              },
+            },
           ],
           present: {
             frames: {
               x: 3,
-              y: 2
+              y: 2,
             },
             layers: [
               {
@@ -11872,7 +11872,7 @@ export default {
                 name: "Layer 2",
                 z: 1,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 1,
@@ -11880,7 +11880,7 @@ export default {
                 name: "Layer 1",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 3,
@@ -11888,7 +11888,7 @@ export default {
                 name: "Layer 3",
                 z: 2,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 4,
@@ -11896,7 +11896,7 @@ export default {
                 name: "Layer 4",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 5,
@@ -11904,7 +11904,7 @@ export default {
                 name: "Layer 5",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 6,
@@ -11912,7 +11912,7 @@ export default {
                 name: "Layer 6",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 7,
@@ -11920,7 +11920,7 @@ export default {
                 name: "Layer 7",
                 z: 0,
                 opacity: 100,
-                visible: true
+                visible: true,
               },
               {
                 id: 8,
@@ -11928,8 +11928,8 @@ export default {
                 name: "Layer 8",
                 z: 0,
                 opacity: 100,
-                visible: true
-              }
+                visible: true,
+              },
             ],
             pixels: {
               "1": {
@@ -11943,7 +11943,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -11953,7 +11953,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -11963,8 +11963,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "4": {
                     "16": {
@@ -11975,7 +11975,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -11985,7 +11985,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -11995,7 +11995,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12005,7 +12005,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "20": {
                       frame: 1,
@@ -12015,7 +12015,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -12025,8 +12025,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "5": {
                     "15": {
@@ -12037,7 +12037,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "16": {
                       frame: 1,
@@ -12047,7 +12047,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -12057,7 +12057,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -12067,7 +12067,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12077,7 +12077,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12087,7 +12087,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12097,7 +12097,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "22": {
                       frame: 1,
@@ -12107,7 +12107,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "23": {
                       frame: 1,
@@ -12117,8 +12117,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "6": {
                     "14": {
@@ -12129,7 +12129,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "15": {
                       frame: 1,
@@ -12139,7 +12139,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12149,7 +12149,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -12159,7 +12159,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -12169,7 +12169,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12179,7 +12179,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12189,7 +12189,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12199,7 +12199,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -12209,7 +12209,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -12219,8 +12219,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "7": {
                     "13": {
@@ -12231,7 +12231,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -12241,7 +12241,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -12251,7 +12251,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12261,7 +12261,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -12271,7 +12271,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -12281,7 +12281,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12291,7 +12291,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12301,7 +12301,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12311,7 +12311,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -12321,7 +12321,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -12331,7 +12331,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -12341,7 +12341,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "25": {
                       frame: 1,
@@ -12351,8 +12351,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "8": {
                     "12": {
@@ -12363,7 +12363,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "13": {
                       frame: 1,
@@ -12373,7 +12373,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -12383,7 +12383,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -12393,7 +12393,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12403,7 +12403,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -12413,7 +12413,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -12423,7 +12423,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12433,7 +12433,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12443,7 +12443,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12453,7 +12453,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -12463,7 +12463,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -12473,7 +12473,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -12483,7 +12483,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -12493,7 +12493,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "26": {
                       frame: 1,
@@ -12503,8 +12503,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "9": {
                     "10": {
@@ -12515,7 +12515,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "11": {
                       frame: 1,
@@ -12525,7 +12525,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "12": {
                       frame: 1,
@@ -12535,7 +12535,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -12545,7 +12545,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -12555,7 +12555,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -12565,7 +12565,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12575,7 +12575,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -12585,7 +12585,7 @@ export default {
                       r: 247,
                       g: 245,
                       b: 189,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -12595,7 +12595,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -12605,7 +12605,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12615,7 +12615,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12625,7 +12625,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -12635,7 +12635,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -12645,7 +12645,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -12655,7 +12655,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -12665,7 +12665,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -12675,8 +12675,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "10": {
                     "9": {
@@ -12687,7 +12687,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "10": {
                       frame: 1,
@@ -12697,7 +12697,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -12707,7 +12707,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -12717,7 +12717,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -12727,7 +12727,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -12737,7 +12737,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -12747,7 +12747,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12757,7 +12757,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -12767,7 +12767,7 @@ export default {
                       r: 247,
                       g: 245,
                       b: 189,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -12777,7 +12777,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -12787,7 +12787,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12797,7 +12797,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -12807,7 +12807,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -12817,7 +12817,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -12827,7 +12827,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -12837,7 +12837,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -12847,7 +12847,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -12857,8 +12857,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "11": {
                     "8": {
@@ -12869,7 +12869,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "9": {
                       frame: 1,
@@ -12879,7 +12879,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "10": {
                       frame: 1,
@@ -12889,7 +12889,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -12899,7 +12899,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -12909,7 +12909,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -12919,7 +12919,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -12929,7 +12929,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -12939,7 +12939,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -12949,7 +12949,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -12959,7 +12959,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -12969,7 +12969,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -12979,7 +12979,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -12989,7 +12989,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -12999,7 +12999,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13009,7 +13009,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -13019,7 +13019,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -13029,7 +13029,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -13039,7 +13039,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13049,8 +13049,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "12": {
                     "8": {
@@ -13061,7 +13061,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "9": {
                       frame: 1,
@@ -13071,7 +13071,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "10": {
                       frame: 1,
@@ -13081,7 +13081,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -13091,7 +13091,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -13101,7 +13101,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -13111,7 +13111,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13121,7 +13121,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13131,7 +13131,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -13141,7 +13141,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -13151,7 +13151,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -13161,7 +13161,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -13171,7 +13171,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13181,7 +13181,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -13191,7 +13191,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13201,7 +13201,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -13211,7 +13211,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -13221,7 +13221,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -13231,7 +13231,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13241,7 +13241,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "27": {
                       frame: 1,
@@ -13251,8 +13251,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "13": {
                     "9": {
@@ -13263,7 +13263,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "10": {
                       frame: 1,
@@ -13273,7 +13273,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "11": {
                       frame: 1,
@@ -13283,7 +13283,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "12": {
                       frame: 1,
@@ -13293,7 +13293,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "13": {
                       frame: 1,
@@ -13303,7 +13303,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13313,7 +13313,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13323,7 +13323,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -13333,7 +13333,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -13343,7 +13343,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -13353,7 +13353,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -13363,7 +13363,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13373,7 +13373,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -13383,7 +13383,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13393,7 +13393,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -13403,7 +13403,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -13413,7 +13413,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -13423,7 +13423,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13433,7 +13433,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "27": {
                       frame: 1,
@@ -13443,8 +13443,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "14": {
                     "13": {
@@ -13455,7 +13455,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13465,7 +13465,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13475,7 +13475,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -13485,7 +13485,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -13495,7 +13495,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -13505,7 +13505,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -13515,7 +13515,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13525,7 +13525,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -13535,7 +13535,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13545,7 +13545,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -13555,7 +13555,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -13565,7 +13565,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "25": {
                       frame: 1,
@@ -13575,7 +13575,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13585,7 +13585,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "27": {
                       frame: 1,
@@ -13595,8 +13595,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "15": {
                     "13": {
@@ -13607,7 +13607,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13617,7 +13617,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13627,7 +13627,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -13637,7 +13637,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -13647,7 +13647,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -13657,7 +13657,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -13667,7 +13667,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13677,7 +13677,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -13687,7 +13687,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13697,7 +13697,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -13707,7 +13707,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -13717,7 +13717,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "25": {
                       frame: 1,
@@ -13727,7 +13727,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13737,7 +13737,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "27": {
                       frame: 1,
@@ -13747,8 +13747,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "16": {
                     "13": {
@@ -13759,7 +13759,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13769,7 +13769,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13779,7 +13779,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -13789,7 +13789,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -13799,7 +13799,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -13809,7 +13809,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -13819,7 +13819,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13829,7 +13829,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -13839,7 +13839,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -13849,7 +13849,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "23": {
                       frame: 1,
@@ -13859,7 +13859,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "24": {
                       frame: 1,
@@ -13869,7 +13869,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "25": {
                       frame: 1,
@@ -13879,7 +13879,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -13889,7 +13889,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "27": {
                       frame: 1,
@@ -13899,8 +13899,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "17": {
                     "13": {
@@ -13911,7 +13911,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -13921,7 +13921,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -13931,7 +13931,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "16": {
                       frame: 1,
@@ -13941,7 +13941,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -13951,7 +13951,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -13961,7 +13961,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -13971,7 +13971,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -13981,7 +13981,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -13991,7 +13991,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14001,7 +14001,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14011,7 +14011,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14021,7 +14021,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -14031,7 +14031,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -14041,8 +14041,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "18": {
                     "13": {
@@ -14053,7 +14053,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -14063,7 +14063,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14073,7 +14073,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "16": {
                       frame: 1,
@@ -14083,7 +14083,7 @@ export default {
                       r: 247,
                       g: 245,
                       b: 189,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -14093,7 +14093,7 @@ export default {
                       r: 247,
                       g: 245,
                       b: 189,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -14103,7 +14103,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -14113,7 +14113,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14123,7 +14123,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14133,7 +14133,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14143,7 +14143,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14153,7 +14153,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14163,7 +14163,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -14173,7 +14173,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -14183,8 +14183,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "19": {
                     "13": {
@@ -14195,7 +14195,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -14205,7 +14205,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14215,7 +14215,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "16": {
                       frame: 1,
@@ -14225,7 +14225,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -14235,7 +14235,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -14245,7 +14245,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -14255,7 +14255,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14265,7 +14265,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14275,7 +14275,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14285,7 +14285,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14295,7 +14295,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14305,7 +14305,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -14315,7 +14315,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "26": {
                       frame: 1,
@@ -14325,8 +14325,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "20": {
                     "12": {
@@ -14337,7 +14337,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "13": {
                       frame: 1,
@@ -14347,7 +14347,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -14357,7 +14357,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14367,7 +14367,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -14377,7 +14377,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -14387,7 +14387,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -14397,7 +14397,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -14407,7 +14407,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14417,7 +14417,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14427,7 +14427,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14437,7 +14437,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14447,7 +14447,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14457,7 +14457,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -14467,8 +14467,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "21": {
                     "12": {
@@ -14479,7 +14479,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "13": {
                       frame: 1,
@@ -14489,7 +14489,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -14499,7 +14499,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14509,7 +14509,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -14519,7 +14519,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -14529,7 +14529,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -14539,7 +14539,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -14549,7 +14549,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14559,7 +14559,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14569,7 +14569,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14579,7 +14579,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14589,7 +14589,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14599,7 +14599,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "25": {
                       frame: 1,
@@ -14609,8 +14609,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "22": {
                     "10": {
@@ -14621,7 +14621,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "11": {
                       frame: 1,
@@ -14631,7 +14631,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "12": {
                       frame: 1,
@@ -14641,7 +14641,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -14651,7 +14651,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -14661,7 +14661,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14671,7 +14671,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -14681,7 +14681,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -14691,7 +14691,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -14701,7 +14701,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -14711,7 +14711,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14721,7 +14721,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14731,7 +14731,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14741,7 +14741,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14751,7 +14751,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14761,8 +14761,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "23": {
                     "9": {
@@ -14773,7 +14773,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "10": {
                       frame: 1,
@@ -14783,7 +14783,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: 1
+                      a: 1,
                     },
                     "11": {
                       frame: 1,
@@ -14793,7 +14793,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -14803,7 +14803,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -14813,7 +14813,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -14823,7 +14823,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -14833,7 +14833,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -14843,7 +14843,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -14853,7 +14853,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -14863,7 +14863,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -14873,7 +14873,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -14883,7 +14883,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -14893,7 +14893,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -14903,7 +14903,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -14913,7 +14913,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "24": {
                       frame: 1,
@@ -14923,8 +14923,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "24": {
                     "8": {
@@ -14935,7 +14935,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "9": {
                       frame: 1,
@@ -14945,7 +14945,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "10": {
                       frame: 1,
@@ -14955,7 +14955,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -14965,7 +14965,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -14975,7 +14975,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -14985,7 +14985,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -14995,7 +14995,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -15005,7 +15005,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -15015,7 +15015,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -15025,7 +15025,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -15035,7 +15035,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -15045,7 +15045,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -15055,7 +15055,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -15065,7 +15065,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -15075,7 +15075,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -15085,8 +15085,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "25": {
                     "7": {
@@ -15097,7 +15097,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "8": {
                       frame: 1,
@@ -15107,7 +15107,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "9": {
                       frame: 1,
@@ -15117,7 +15117,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "10": {
                       frame: 1,
@@ -15127,7 +15127,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -15137,7 +15137,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -15147,7 +15147,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -15157,7 +15157,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -15167,7 +15167,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -15177,7 +15177,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -15187,7 +15187,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -15197,7 +15197,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -15207,7 +15207,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -15217,7 +15217,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -15227,7 +15227,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -15237,7 +15237,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "22": {
                       frame: 1,
@@ -15247,7 +15247,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "23": {
                       frame: 1,
@@ -15257,8 +15257,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "26": {
                     "7": {
@@ -15269,7 +15269,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "8": {
                       frame: 1,
@@ -15279,7 +15279,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "9": {
                       frame: 1,
@@ -15289,7 +15289,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "10": {
                       frame: 1,
@@ -15299,7 +15299,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -15309,7 +15309,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -15319,7 +15319,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -15329,7 +15329,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -15339,7 +15339,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -15349,7 +15349,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "16": {
                       frame: 1,
@@ -15359,7 +15359,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "17": {
                       frame: 1,
@@ -15369,7 +15369,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "18": {
                       frame: 1,
@@ -15379,7 +15379,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "19": {
                       frame: 1,
@@ -15389,7 +15389,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "20": {
                       frame: 1,
@@ -15399,7 +15399,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "21": {
                       frame: 1,
@@ -15409,7 +15409,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "22": {
                       frame: 1,
@@ -15419,8 +15419,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "27": {
                     "7": {
@@ -15431,7 +15431,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "8": {
                       frame: 1,
@@ -15441,7 +15441,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "9": {
                       frame: 1,
@@ -15451,7 +15451,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "10": {
                       frame: 1,
@@ -15461,7 +15461,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "11": {
                       frame: 1,
@@ -15471,7 +15471,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -15481,7 +15481,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -15491,7 +15491,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -15501,7 +15501,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "15": {
                       frame: 1,
@@ -15511,7 +15511,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "16": {
                       frame: 1,
@@ -15521,7 +15521,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "17": {
                       frame: 1,
@@ -15531,7 +15531,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "18": {
                       frame: 1,
@@ -15541,7 +15541,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "19": {
                       frame: 1,
@@ -15551,7 +15551,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "20": {
                       frame: 1,
@@ -15561,7 +15561,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "21": {
                       frame: 1,
@@ -15571,8 +15571,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "28": {
                     "8": {
@@ -15583,7 +15583,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "9": {
                       frame: 1,
@@ -15593,7 +15593,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "10": {
                       frame: 1,
@@ -15603,7 +15603,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "11": {
                       frame: 1,
@@ -15613,7 +15613,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "12": {
                       frame: 1,
@@ -15623,7 +15623,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "13": {
                       frame: 1,
@@ -15633,7 +15633,7 @@ export default {
                       r: 202,
                       g: 112,
                       b: 33,
-                      a: null
+                      a: null,
                     },
                     "14": {
                       frame: 1,
@@ -15643,7 +15643,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "15": {
                       frame: 1,
@@ -15653,8 +15653,8 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
+                      a: 1,
+                    },
                   },
                   "29": {
                     "11": {
@@ -15665,7 +15665,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "12": {
                       frame: 1,
@@ -15675,7 +15675,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "13": {
                       frame: 1,
@@ -15685,7 +15685,7 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
+                      a: 1,
                     },
                     "14": {
                       frame: 1,
@@ -15695,16 +15695,16 @@ export default {
                       r: 0,
                       g: 0,
                       b: 0,
-                      a: 1
-                    }
-                  }
-                }
-              }
+                      a: 1,
+                    },
+                  },
+                },
+              },
             },
             size: {
               width: 32,
-              height: 32
-            }
+              height: 32,
+            },
           },
           future: [],
           history: {
@@ -15712,7 +15712,7 @@ export default {
               {
                 frames: {
                   x: 3,
-                  y: 2
+                  y: 2,
                 },
                 layers: [
                   {
@@ -15721,7 +15721,7 @@ export default {
                     name: "Layer 2",
                     z: 1,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 1,
@@ -15729,7 +15729,7 @@ export default {
                     name: "Layer 1",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 1,
@@ -15737,7 +15737,7 @@ export default {
                     name: "Layer 3",
                     z: 2,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 2,
@@ -15745,7 +15745,7 @@ export default {
                     name: "Layer 4",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 3,
@@ -15753,7 +15753,7 @@ export default {
                     name: "Layer 5",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 4,
@@ -15761,7 +15761,7 @@ export default {
                     name: "Layer 6",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 5,
@@ -15769,7 +15769,7 @@ export default {
                     name: "Layer 7",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 6,
@@ -15777,20 +15777,20 @@ export default {
                     name: "Layer 8",
                     z: 0,
                     opacity: 100,
-                    visible: true
-                  }
+                    visible: true,
+                  },
                 ],
                 pixels: {},
                 size: {
                   height: 32,
-                  width: 32
-                }
-              }
+                  width: 32,
+                },
+              },
             ],
             present: {
               frames: {
                 x: 3,
-                y: 2
+                y: 2,
               },
               layers: [
                 {
@@ -15799,7 +15799,7 @@ export default {
                   name: "Layer 2",
                   z: 1,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 1,
@@ -15807,7 +15807,7 @@ export default {
                   name: "Layer 1",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 3,
@@ -15815,7 +15815,7 @@ export default {
                   name: "Layer 3",
                   z: 2,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 4,
@@ -15823,7 +15823,7 @@ export default {
                   name: "Layer 4",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 5,
@@ -15831,7 +15831,7 @@ export default {
                   name: "Layer 5",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 6,
@@ -15839,7 +15839,7 @@ export default {
                   name: "Layer 6",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 7,
@@ -15847,7 +15847,7 @@ export default {
                   name: "Layer 7",
                   z: 0,
                   opacity: 100,
-                  visible: true
+                  visible: true,
                 },
                 {
                   id: 8,
@@ -15855,8 +15855,8 @@ export default {
                   name: "Layer 8",
                   z: 0,
                   opacity: 100,
-                  visible: true
-                }
+                  visible: true,
+                },
               ],
               pixels: {
                 "1": {
@@ -15870,7 +15870,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -15880,7 +15880,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -15890,8 +15890,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "4": {
                       "16": {
@@ -15902,7 +15902,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -15912,7 +15912,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -15922,7 +15922,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -15932,7 +15932,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "20": {
                         frame: 1,
@@ -15942,7 +15942,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -15952,8 +15952,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "5": {
                       "15": {
@@ -15964,7 +15964,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "16": {
                         frame: 1,
@@ -15974,7 +15974,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -15984,7 +15984,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -15994,7 +15994,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -16004,7 +16004,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16014,7 +16014,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16024,7 +16024,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "22": {
                         frame: 1,
@@ -16034,7 +16034,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "23": {
                         frame: 1,
@@ -16044,8 +16044,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "6": {
                       "14": {
@@ -16056,7 +16056,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "15": {
                         frame: 1,
@@ -16066,7 +16066,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16076,7 +16076,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -16086,7 +16086,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -16096,7 +16096,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -16106,7 +16106,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16116,7 +16116,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16126,7 +16126,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16136,7 +16136,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16146,8 +16146,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "7": {
                       "13": {
@@ -16158,7 +16158,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -16168,7 +16168,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -16178,7 +16178,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16188,7 +16188,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -16198,7 +16198,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -16208,7 +16208,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -16218,7 +16218,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16228,7 +16228,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16238,7 +16238,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16248,7 +16248,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16258,7 +16258,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -16268,7 +16268,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "25": {
                         frame: 1,
@@ -16278,8 +16278,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "8": {
                       "12": {
@@ -16290,7 +16290,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "13": {
                         frame: 1,
@@ -16300,7 +16300,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -16310,7 +16310,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -16320,7 +16320,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16330,7 +16330,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -16340,7 +16340,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -16350,7 +16350,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -16360,7 +16360,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16370,7 +16370,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16380,7 +16380,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16390,7 +16390,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16400,7 +16400,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -16410,7 +16410,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -16420,7 +16420,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "26": {
                         frame: 1,
@@ -16430,8 +16430,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "9": {
                       "10": {
@@ -16442,7 +16442,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "11": {
                         frame: 1,
@@ -16452,7 +16452,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "12": {
                         frame: 1,
@@ -16462,7 +16462,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -16472,7 +16472,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -16482,7 +16482,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -16492,7 +16492,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16502,7 +16502,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -16512,7 +16512,7 @@ export default {
                         r: 247,
                         g: 245,
                         b: 189,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -16522,7 +16522,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -16532,7 +16532,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16542,7 +16542,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16552,7 +16552,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16562,7 +16562,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16572,7 +16572,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -16582,7 +16582,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -16592,7 +16592,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -16602,8 +16602,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "10": {
                       "9": {
@@ -16614,7 +16614,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "10": {
                         frame: 1,
@@ -16624,7 +16624,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -16634,7 +16634,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -16644,7 +16644,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -16654,7 +16654,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -16664,7 +16664,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -16674,7 +16674,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16684,7 +16684,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -16694,7 +16694,7 @@ export default {
                         r: 247,
                         g: 245,
                         b: 189,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -16704,7 +16704,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -16714,7 +16714,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16724,7 +16724,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -16734,7 +16734,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16744,7 +16744,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16754,7 +16754,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -16764,7 +16764,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -16774,7 +16774,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -16784,8 +16784,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "11": {
                       "8": {
@@ -16796,7 +16796,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "9": {
                         frame: 1,
@@ -16806,7 +16806,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "10": {
                         frame: 1,
@@ -16816,7 +16816,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -16826,7 +16826,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -16836,7 +16836,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -16846,7 +16846,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -16856,7 +16856,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -16866,7 +16866,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -16876,7 +16876,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -16886,7 +16886,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -16896,7 +16896,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -16906,7 +16906,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -16916,7 +16916,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -16926,7 +16926,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -16936,7 +16936,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -16946,7 +16946,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -16956,7 +16956,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -16966,7 +16966,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -16976,8 +16976,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "12": {
                       "8": {
@@ -16988,7 +16988,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "9": {
                         frame: 1,
@@ -16998,7 +16998,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "10": {
                         frame: 1,
@@ -17008,7 +17008,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -17018,7 +17018,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -17028,7 +17028,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -17038,7 +17038,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17048,7 +17048,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17058,7 +17058,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -17068,7 +17068,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -17078,7 +17078,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -17088,7 +17088,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -17098,7 +17098,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17108,7 +17108,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -17118,7 +17118,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17128,7 +17128,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -17138,7 +17138,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -17148,7 +17148,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -17158,7 +17158,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17168,7 +17168,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "27": {
                         frame: 1,
@@ -17178,8 +17178,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "13": {
                       "9": {
@@ -17190,7 +17190,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "10": {
                         frame: 1,
@@ -17200,7 +17200,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "11": {
                         frame: 1,
@@ -17210,7 +17210,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "12": {
                         frame: 1,
@@ -17220,7 +17220,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "13": {
                         frame: 1,
@@ -17230,7 +17230,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17240,7 +17240,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17250,7 +17250,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -17260,7 +17260,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -17270,7 +17270,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -17280,7 +17280,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -17290,7 +17290,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17300,7 +17300,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -17310,7 +17310,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17320,7 +17320,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -17330,7 +17330,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -17340,7 +17340,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -17350,7 +17350,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17360,7 +17360,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "27": {
                         frame: 1,
@@ -17370,8 +17370,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "14": {
                       "13": {
@@ -17382,7 +17382,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17392,7 +17392,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17402,7 +17402,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -17412,7 +17412,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -17422,7 +17422,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -17432,7 +17432,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -17442,7 +17442,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17452,7 +17452,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -17462,7 +17462,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17472,7 +17472,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -17482,7 +17482,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -17492,7 +17492,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "25": {
                         frame: 1,
@@ -17502,7 +17502,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17512,7 +17512,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "27": {
                         frame: 1,
@@ -17522,8 +17522,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "15": {
                       "13": {
@@ -17534,7 +17534,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17544,7 +17544,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17554,7 +17554,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -17564,7 +17564,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -17574,7 +17574,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -17584,7 +17584,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -17594,7 +17594,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17604,7 +17604,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -17614,7 +17614,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17624,7 +17624,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -17634,7 +17634,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -17644,7 +17644,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "25": {
                         frame: 1,
@@ -17654,7 +17654,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17664,7 +17664,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "27": {
                         frame: 1,
@@ -17674,8 +17674,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "16": {
                       "13": {
@@ -17686,7 +17686,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17696,7 +17696,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17706,7 +17706,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -17716,7 +17716,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -17726,7 +17726,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -17736,7 +17736,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -17746,7 +17746,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17756,7 +17756,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -17766,7 +17766,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17776,7 +17776,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "23": {
                         frame: 1,
@@ -17786,7 +17786,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "24": {
                         frame: 1,
@@ -17796,7 +17796,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "25": {
                         frame: 1,
@@ -17806,7 +17806,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17816,7 +17816,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "27": {
                         frame: 1,
@@ -17826,8 +17826,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "17": {
                       "13": {
@@ -17838,7 +17838,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17848,7 +17848,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -17858,7 +17858,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "16": {
                         frame: 1,
@@ -17868,7 +17868,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -17878,7 +17878,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -17888,7 +17888,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -17898,7 +17898,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -17908,7 +17908,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -17918,7 +17918,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -17928,7 +17928,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -17938,7 +17938,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -17948,7 +17948,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -17958,7 +17958,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -17968,8 +17968,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "18": {
                       "13": {
@@ -17980,7 +17980,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -17990,7 +17990,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18000,7 +18000,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "16": {
                         frame: 1,
@@ -18010,7 +18010,7 @@ export default {
                         r: 247,
                         g: 245,
                         b: 189,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -18020,7 +18020,7 @@ export default {
                         r: 247,
                         g: 245,
                         b: 189,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -18030,7 +18030,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -18040,7 +18040,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18050,7 +18050,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18060,7 +18060,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18070,7 +18070,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18080,7 +18080,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18090,7 +18090,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -18100,7 +18100,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -18110,8 +18110,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "19": {
                       "13": {
@@ -18122,7 +18122,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -18132,7 +18132,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18142,7 +18142,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "16": {
                         frame: 1,
@@ -18152,7 +18152,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -18162,7 +18162,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -18172,7 +18172,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -18182,7 +18182,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18192,7 +18192,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18202,7 +18202,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18212,7 +18212,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18222,7 +18222,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18232,7 +18232,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -18242,7 +18242,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "26": {
                         frame: 1,
@@ -18252,8 +18252,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "20": {
                       "12": {
@@ -18264,7 +18264,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "13": {
                         frame: 1,
@@ -18274,7 +18274,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -18284,7 +18284,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18294,7 +18294,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -18304,7 +18304,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -18314,7 +18314,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -18324,7 +18324,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -18334,7 +18334,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18344,7 +18344,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18354,7 +18354,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18364,7 +18364,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18374,7 +18374,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18384,7 +18384,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -18394,8 +18394,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "21": {
                       "12": {
@@ -18406,7 +18406,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "13": {
                         frame: 1,
@@ -18416,7 +18416,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -18426,7 +18426,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18436,7 +18436,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -18446,7 +18446,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -18456,7 +18456,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -18466,7 +18466,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -18476,7 +18476,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18486,7 +18486,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18496,7 +18496,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18506,7 +18506,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18516,7 +18516,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18526,7 +18526,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "25": {
                         frame: 1,
@@ -18536,8 +18536,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "22": {
                       "10": {
@@ -18548,7 +18548,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "11": {
                         frame: 1,
@@ -18558,7 +18558,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "12": {
                         frame: 1,
@@ -18568,7 +18568,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -18578,7 +18578,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -18588,7 +18588,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18598,7 +18598,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -18608,7 +18608,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -18618,7 +18618,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -18628,7 +18628,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -18638,7 +18638,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18648,7 +18648,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18658,7 +18658,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18668,7 +18668,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18678,7 +18678,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18688,8 +18688,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "23": {
                       "9": {
@@ -18700,7 +18700,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "10": {
                         frame: 1,
@@ -18710,7 +18710,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: 1
+                        a: 1,
                       },
                       "11": {
                         frame: 1,
@@ -18720,7 +18720,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -18730,7 +18730,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -18740,7 +18740,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -18750,7 +18750,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18760,7 +18760,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -18770,7 +18770,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -18780,7 +18780,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -18790,7 +18790,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -18800,7 +18800,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18810,7 +18810,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18820,7 +18820,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -18830,7 +18830,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -18840,7 +18840,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "24": {
                         frame: 1,
@@ -18850,8 +18850,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "24": {
                       "8": {
@@ -18862,7 +18862,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "9": {
                         frame: 1,
@@ -18872,7 +18872,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "10": {
                         frame: 1,
@@ -18882,7 +18882,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -18892,7 +18892,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -18902,7 +18902,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -18912,7 +18912,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -18922,7 +18922,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -18932,7 +18932,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -18942,7 +18942,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -18952,7 +18952,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -18962,7 +18962,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -18972,7 +18972,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -18982,7 +18982,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -18992,7 +18992,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -19002,7 +19002,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -19012,8 +19012,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "25": {
                       "7": {
@@ -19024,7 +19024,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "8": {
                         frame: 1,
@@ -19034,7 +19034,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "9": {
                         frame: 1,
@@ -19044,7 +19044,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "10": {
                         frame: 1,
@@ -19054,7 +19054,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -19064,7 +19064,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -19074,7 +19074,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -19084,7 +19084,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -19094,7 +19094,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -19104,7 +19104,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -19114,7 +19114,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -19124,7 +19124,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -19134,7 +19134,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -19144,7 +19144,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -19154,7 +19154,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -19164,7 +19164,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "22": {
                         frame: 1,
@@ -19174,7 +19174,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "23": {
                         frame: 1,
@@ -19184,8 +19184,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "26": {
                       "7": {
@@ -19196,7 +19196,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "8": {
                         frame: 1,
@@ -19206,7 +19206,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "9": {
                         frame: 1,
@@ -19216,7 +19216,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "10": {
                         frame: 1,
@@ -19226,7 +19226,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -19236,7 +19236,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -19246,7 +19246,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -19256,7 +19256,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -19266,7 +19266,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -19276,7 +19276,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "16": {
                         frame: 1,
@@ -19286,7 +19286,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "17": {
                         frame: 1,
@@ -19296,7 +19296,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "18": {
                         frame: 1,
@@ -19306,7 +19306,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "19": {
                         frame: 1,
@@ -19316,7 +19316,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "20": {
                         frame: 1,
@@ -19326,7 +19326,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "21": {
                         frame: 1,
@@ -19336,7 +19336,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "22": {
                         frame: 1,
@@ -19346,8 +19346,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "27": {
                       "7": {
@@ -19358,7 +19358,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "8": {
                         frame: 1,
@@ -19368,7 +19368,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "9": {
                         frame: 1,
@@ -19378,7 +19378,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "10": {
                         frame: 1,
@@ -19388,7 +19388,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "11": {
                         frame: 1,
@@ -19398,7 +19398,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -19408,7 +19408,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -19418,7 +19418,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -19428,7 +19428,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "15": {
                         frame: 1,
@@ -19438,7 +19438,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "16": {
                         frame: 1,
@@ -19448,7 +19448,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "17": {
                         frame: 1,
@@ -19458,7 +19458,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "18": {
                         frame: 1,
@@ -19468,7 +19468,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "19": {
                         frame: 1,
@@ -19478,7 +19478,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "20": {
                         frame: 1,
@@ -19488,7 +19488,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "21": {
                         frame: 1,
@@ -19498,8 +19498,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "28": {
                       "8": {
@@ -19510,7 +19510,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "9": {
                         frame: 1,
@@ -19520,7 +19520,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "10": {
                         frame: 1,
@@ -19530,7 +19530,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "11": {
                         frame: 1,
@@ -19540,7 +19540,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "12": {
                         frame: 1,
@@ -19550,7 +19550,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "13": {
                         frame: 1,
@@ -19560,7 +19560,7 @@ export default {
                         r: 202,
                         g: 112,
                         b: 33,
-                        a: null
+                        a: null,
                       },
                       "14": {
                         frame: 1,
@@ -19570,7 +19570,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "15": {
                         frame: 1,
@@ -19580,8 +19580,8 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
+                        a: 1,
+                      },
                     },
                     "29": {
                       "11": {
@@ -19592,7 +19592,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "12": {
                         frame: 1,
@@ -19602,7 +19602,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "13": {
                         frame: 1,
@@ -19612,7 +19612,7 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
+                        a: 1,
                       },
                       "14": {
                         frame: 1,
@@ -19622,16 +19622,16 @@ export default {
                         r: 0,
                         g: 0,
                         b: 0,
-                        a: 1
-                      }
-                    }
-                  }
-                }
+                        a: 1,
+                      },
+                    },
+                  },
+                },
               },
               size: {
                 width: 32,
-                height: 32
-              }
+                height: 32,
+              },
             },
             future: [],
             history: {
@@ -19639,7 +19639,7 @@ export default {
               present: {
                 frames: {
                   x: 3,
-                  y: 2
+                  y: 2,
                 },
                 layers: [
                   {
@@ -19648,7 +19648,7 @@ export default {
                     name: "Layer 2",
                     z: 1,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 1,
@@ -19656,7 +19656,7 @@ export default {
                     name: "Layer 1",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 1,
@@ -19664,7 +19664,7 @@ export default {
                     name: "Layer 3",
                     z: 2,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 2,
@@ -19672,7 +19672,7 @@ export default {
                     name: "Layer 4",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 3,
@@ -19680,7 +19680,7 @@ export default {
                     name: "Layer 5",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 4,
@@ -19688,7 +19688,7 @@ export default {
                     name: "Layer 6",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 5,
@@ -19696,7 +19696,7 @@ export default {
                     name: "Layer 7",
                     z: 0,
                     opacity: 100,
-                    visible: true
+                    visible: true,
                   },
                   {
                     frame: 6,
@@ -19704,14 +19704,14 @@ export default {
                     name: "Layer 8",
                     z: 0,
                     opacity: 100,
-                    visible: true
-                  }
+                    visible: true,
+                  },
                 ],
                 pixels: {},
                 size: {
                   height: 32,
-                  width: 32
-                }
+                  width: 32,
+                },
               },
               future: [],
               history: {
@@ -19719,7 +19719,7 @@ export default {
                 present: {
                   frames: {
                     x: 3,
-                    y: 2
+                    y: 2,
                   },
                   layers: [
                     {
@@ -19728,7 +19728,7 @@ export default {
                       name: "Layer 2",
                       z: 1,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 1,
@@ -19736,7 +19736,7 @@ export default {
                       name: "Layer 1",
                       z: 0,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 1,
@@ -19744,7 +19744,7 @@ export default {
                       name: "Layer 3",
                       z: 2,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 2,
@@ -19752,7 +19752,7 @@ export default {
                       name: "Layer 4",
                       z: 0,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 3,
@@ -19760,7 +19760,7 @@ export default {
                       name: "Layer 5",
                       z: 0,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 4,
@@ -19768,7 +19768,7 @@ export default {
                       name: "Layer 6",
                       z: 0,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 5,
@@ -19776,7 +19776,7 @@ export default {
                       name: "Layer 7",
                       z: 0,
                       opacity: 100,
-                      visible: true
+                      visible: true,
                     },
                     {
                       frame: 6,
@@ -19784,14 +19784,14 @@ export default {
                       name: "Layer 8",
                       z: 0,
                       opacity: 100,
-                      visible: true
-                    }
+                      visible: true,
+                    },
                   ],
                   pixels: {},
                   size: {
                     height: 32,
-                    width: 32
-                  }
+                    width: 32,
+                  },
                 },
                 future: [],
                 history: {
@@ -19799,7 +19799,7 @@ export default {
                   present: {
                     frames: {
                       x: 3,
-                      y: 2
+                      y: 2,
                     },
                     layers: [
                       {
@@ -19808,7 +19808,7 @@ export default {
                         name: "Layer 2",
                         z: 1,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 1,
@@ -19816,7 +19816,7 @@ export default {
                         name: "Layer 1",
                         z: 0,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 1,
@@ -19824,7 +19824,7 @@ export default {
                         name: "Layer 3",
                         z: 2,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 2,
@@ -19832,7 +19832,7 @@ export default {
                         name: "Layer 4",
                         z: 0,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 3,
@@ -19840,7 +19840,7 @@ export default {
                         name: "Layer 5",
                         z: 0,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 4,
@@ -19848,7 +19848,7 @@ export default {
                         name: "Layer 6",
                         z: 0,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 5,
@@ -19856,7 +19856,7 @@ export default {
                         name: "Layer 7",
                         z: 0,
                         opacity: 100,
-                        visible: true
+                        visible: true,
                       },
                       {
                         frame: 6,
@@ -19864,31 +19864,31 @@ export default {
                         name: "Layer 8",
                         z: 0,
                         opacity: 100,
-                        visible: true
-                      }
+                        visible: true,
+                      },
                     ],
                     pixels: {},
                     size: {
                       height: 32,
-                      width: 32
-                    }
+                      width: 32,
+                    },
                   },
-                  future: []
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                  future: [],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   ui: {
     app: {
       screen: "paint",
       modal: {
         visible: false,
-        dialog: null
-      }
+        dialog: null,
+      },
     },
     export: {
       part: "spritesheet",
@@ -19896,19 +19896,19 @@ export default {
       animation: null,
       zoom: 1,
       format: "png",
-      status: ""
+      status: "",
     },
     paint: {
       brightnessTool: {
         mode: "darken",
-        intensity: 10
+        intensity: 10,
       },
       color: "#000000",
       clipboard: {},
       fold: {
         preview: false,
         frames: false,
-        layers: false
+        layers: false,
       },
       frame: 1,
       grid: true,
@@ -19917,18 +19917,18 @@ export default {
         active: false,
         frame: {
           fixed: 1,
-          relative: 1
+          relative: 1,
         },
-        mode: "fixed"
+        mode: "fixed",
       },
       palette: 0,
       selection: {
         start: null,
-        end: null
+        end: null,
       },
       spritePalette: ["#000000", "#CA7021", "#F7F5BD"],
       tool: "BrushTool",
-      zoom: 19
-    }
-  }
+      zoom: 19,
+    },
+  },
 };

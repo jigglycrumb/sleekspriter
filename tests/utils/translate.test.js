@@ -1,9 +1,9 @@
-jest.unmock("utils");
-
 import { t } from "utils";
 
+jest.unmock("utils");
+
 jest.mock("i18n/en.yml", () => ({
-  Hello: "Hello Sir!"
+  Hello: "Hello Sir!",
 }));
 
 describe("translate", () => {

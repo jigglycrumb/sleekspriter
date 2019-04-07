@@ -1,13 +1,13 @@
-jest.unmock("utils");
-
 import { createBounds } from "utils";
+
+jest.unmock("utils");
 
 describe("createBounds", () => {
   let size;
   beforeEach(() => {
     size = {
       width: 32,
-      height: 32
+      height: 32,
     };
   });
 
@@ -15,7 +15,7 @@ describe("createBounds", () => {
     const selection = { start: null, end: null };
     expect(createBounds(size, selection)).toEqual({
       start: { x: 1, y: 1 },
-      end: { x: size.width, y: size.height }
+      end: { x: size.width, y: size.height },
     });
   });
 
@@ -23,14 +23,14 @@ describe("createBounds", () => {
     const selection = { start: { x: 2, y: 2 }, end: { x: 5, y: 6 } };
     expect(createBounds(size, selection)).toEqual({
       start: { x: 2, y: 2 },
-      end: { x: 5, y: 6 }
+      end: { x: 5, y: 6 },
     });
   });
 
   it("should return the file bounds when no selection is passed", () => {
     expect(createBounds(size)).toEqual({
       start: { x: 1, y: 1 },
-      end: { x: size.width, y: size.height }
+      end: { x: size.width, y: size.height },
     });
   });
 });

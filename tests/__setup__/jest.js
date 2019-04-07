@@ -1,8 +1,7 @@
 import React from "react";
 
 jest.mock("utils", () => ({
-  t: text => text
+  t: text => text,
 }));
 
 global.React = React;
-

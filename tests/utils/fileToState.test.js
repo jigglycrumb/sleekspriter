@@ -1,6 +1,6 @@
-jest.unmock("utils");
-
 import { fileToState } from "utils";
+
+jest.unmock("utils");
 
 describe("fileToState", () => {
   it("maps JSON from file format to redux state", () => {
@@ -32,17 +32,17 @@ describe("fileToState", () => {
         [24, 7, "Layer 24", 0, 100, 1],
         [25, 14, "Layer 25", 0, 100, 1],
         [26, 21, "Layer 26", 0, 100, 1],
-        [27, 12, "layer 11", 0, 100, 1]
+        [27, 12, "layer 11", 0, 100, 1],
       ],
       animations: [
         [2, "Animation 2", 10, [1, 7]],
-        [1, "rotate", 10, [8, 9, 10, 11, 10, 9]]
+        [1, "rotate", 10, [8, 9, 10, 11, 10, 9]],
       ],
       pixels: [
         [4, 13, 5, 254, 242, 128, 1],
         [4, 12, 5, 254, 242, 128, 1],
-        [4, 11, 5, 254, 242, 128, 1]
-      ]
+        [4, 11, 5, 254, 242, 128, 1],
+      ],
     };
 
     expect(fileToState(file)).toMatchSnapshot();

@@ -4,6 +4,6 @@ export const canvas = {
     moveTo: jest.fn(),
     lineTo: jest.fn(),
     stroke: jest.fn(),
-    strokeStyle: null
-  })
+    strokeStyle: null,
+  }),
 };

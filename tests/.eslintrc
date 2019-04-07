@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  },
+  "globals": {
+    "shallow": false,
+    "render": false,
+    "mount": false
+  }
+}

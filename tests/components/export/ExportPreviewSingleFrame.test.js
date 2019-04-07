@@ -8,7 +8,7 @@ describe("ExportPreviewSingleFrame", () => {
       frame: 1,
       size: { width: 16, height: 16 },
       pixels: {},
-      zoom: 1
+      zoom: 1,
     };
     wrapper = shallow(<ExportPreviewSingleFrame {...props} />);
   });
