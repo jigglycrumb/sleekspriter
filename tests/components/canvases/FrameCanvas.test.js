@@ -5,17 +5,20 @@ describe("FrameCanvas", () => {
 
   beforeEach(() => {
     props = {
+      clear: jest.fn(),
+      clearSinglePixel: jest.fn(),
+      fitToSize: jest.fn(),
       frame: 1,
       layers: [],
+      paintSinglePixel: jest.fn(),
       size: { width: 64, height: 64 },
       zoom: 10,
-      clear: jest.fn()
     };
 
     paint = jest.fn();
 
     wrapper = shallow(<FrameCanvas {...props} />, {
-      disableLifecycleMethods: true
+      disableLifecycleMethods: true,
     });
 
     component = wrapper.instance();

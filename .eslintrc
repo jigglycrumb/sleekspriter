@@ -24,7 +24,8 @@
   },
   "plugins": ["react", "jest"],
   "rules": {
-    "no-template-curly-in-string": "warn",
+    "no-template-curly-in-string": "off",
+    "no-self-assign": "off",
     "indent": [
       "error",
       2,
@@ -35,7 +36,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
-    "no-unused-vars": "error",
+    "no-unused-vars": "warn",
     "no-console": ["error", { "allow": ["error", "warn", "log"] }],
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",

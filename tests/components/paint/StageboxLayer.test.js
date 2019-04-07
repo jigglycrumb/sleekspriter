@@ -9,13 +9,14 @@ describe("StageboxLayer", () => {
         frame: 1,
         visible: true,
         opacity: 100,
-        z: 1
+        z: 1,
+        name: "Layer 1",
       },
       size: {
         height: 32,
-        width: 32
+        width: 32,
       },
-      zoom: 10
+      zoom: 10,
     };
     wrapper = shallow(<StageboxLayer {...props} />);
   });

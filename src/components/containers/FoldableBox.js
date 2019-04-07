@@ -28,9 +28,7 @@ const FoldableBox = props => {
 
   return (
     <div id={props.id} className="box">
-      <h4
-        className={handleClasses}
-        onClick={props.boxFold.bind(this, props.fold)}>
+      <h4 className={handleClasses} onClick={() => props.boxFold(props.fold)}>
         {props.title}
       </h4>
       {innerBox}

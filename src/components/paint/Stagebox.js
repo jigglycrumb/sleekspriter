@@ -11,7 +11,7 @@ import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 import _ from "lodash";
 import { getPixelsInScope, selectionIsActive, insideBounds } from "../../utils";
-import paintbucketWorker from "../../workers/paintbucket";
+import PaintbucketWorker from "../../workers/paintbucket";
 import { sizeShape, selectionShape } from "../../shapes";
 
 class Stagebox extends React.Component {
@@ -42,7 +42,7 @@ class Stagebox extends React.Component {
   }
 
   componentWillMount() {
-    this.worker = new paintbucketWorker();
+    this.worker = new PaintbucketWorker();
 
     this.worker.onmessage = m => {
       document.getElementById("ScreenBlocker").style.display = "none";

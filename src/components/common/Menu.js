@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import _ from "lodash";
 
+import meta from "../../../metadata";
+
 import { sizeShape, selectionShape } from "../../shapes";
 
 import {
@@ -54,17 +56,17 @@ class Menu extends React.Component {
 
     const MenuConfig = [
       {
-        label: "@@name",
+        label: meta.name,
         screen: ["start", "paint", "export"],
         items: [
           {
-            label: "About @@name",
+            label: `About ${meta.name}`,
             action: () => {
               this.props.modalShow("ModalAbout");
             },
           },
           // SEPERATOR,
-          // {label: "Quit @@name"}, // TODO: Desktop only
+          // {label: `Quit ${meta.name}`, // TODO: Desktop only
         ],
       },
       {

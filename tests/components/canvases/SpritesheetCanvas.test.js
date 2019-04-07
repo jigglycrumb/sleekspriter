@@ -4,16 +4,19 @@ describe("SpritesheetCanvas", () => {
   let props, wrapper, component, paint;
   beforeEach(() => {
     props = {
+      clear: jest.fn(),
+      fitToSize: jest.fn(),
       frames: { x: 2, y: 2 },
       layers: [],
+      paintSinglePixel: jest.fn(),
       size: { width: 16, height: 16 },
-      zoom: 10
+      zoom: 10,
     };
 
     paint = jest.fn();
 
     wrapper = shallow(<SpritesheetCanvas {...props} />, {
-      disableLifecycleMethods: true
+      disableLifecycleMethods: true,
     });
 
     component = wrapper.instance();
@@ -39,7 +42,7 @@ describe("SpritesheetCanvas", () => {
       const pos = component.getPixelSpritesheetPosition({
         frame: 4,
         x: 3,
-        y: 3
+        y: 3,
       });
 
       expect(pos).toEqual({ x: 19, y: 19 });

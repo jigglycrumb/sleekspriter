@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { t, fileToState } from "../../utils";
 import { modalHide, fileLoad } from "../../state/actions";
 import { GridCanvas } from "../canvases";
-import importWorker from "../../workers/import";
+import ImportWorker from "../../workers/import";
 
 const mapDispatchToProps = dispatch => ({
   hide: () => dispatch(modalHide()),
@@ -36,7 +36,7 @@ class ModalImportFile extends React.Component {
   }
 
   componentWillMount() {
-    this.worker = new importWorker();
+    this.worker = new ImportWorker();
 
     this.worker.onmessage = m => {
       // worker returns JSON like a saved *.pixels file,

@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import { sizeShape } from "../../shapes";
 
@@ -32,8 +31,10 @@ function CanvasDecorator(DecoratedComponent) {
     }
 
     clear() {
-      const canvas = ReactDOM.findDOMNode(this); // TODO try to replace with ref
-      canvas.width = canvas.width;
+      if (this.decoratedCanvas) {
+        const canvas = this.decoratedCanvas.canvas;
+        canvas.width = canvas.width;
+      }
     }
 
     fitToSize(size, noMargin) {

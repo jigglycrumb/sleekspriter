@@ -5,16 +5,19 @@ describe("LayerCanvas", () => {
 
   beforeEach(() => {
     props = {
+      clear: jest.fn(),
+      clearSinglePixel: jest.fn(),
+      fitToSize: jest.fn(),
       layer: 1,
+      paintSinglePixel: jest.fn(),
       size: { width: 64, height: 64 },
       zoom: 10,
-      clear: jest.fn()
     };
 
     jsx = <LayerCanvas {...props} />;
 
     wrapper = shallow(jsx, {
-      disableLifecycleMethods: true
+      disableLifecycleMethods: true,
     });
 
     component = wrapper.instance();

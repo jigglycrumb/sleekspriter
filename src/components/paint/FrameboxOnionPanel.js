@@ -43,12 +43,12 @@ class FrameboxOnionPanel extends React.Component {
         <h4>{t("Onion Skinning")}</h4>
         <div
           className={fixedTabClasses}
-          onClick={this.onionMode.bind(this, "fixed")}>
+          onClick={() => this.onionMode("fixed")}>
           {t("Fixed")}
         </div>
         <div
           className={relativeTabClasses}
-          onClick={this.onionMode.bind(this, "relative")}>
+          onClick={() => this.onionMode("relative")}>
           {t("Relative")}
         </div>
         <div className={fixedPanelClasses}>

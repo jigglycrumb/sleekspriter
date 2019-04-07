@@ -1,5 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { t } from "../../utils";
+import meta from "../../../metadata";
 
 class ScreenStart extends React.Component {
   constructor(props) {
@@ -14,7 +17,7 @@ class ScreenStart extends React.Component {
       <section className="screen start">
         <div className="splash">
           <div className="inner">
-            <div className="logo">@@name</div>
+            <div className="logo">{meta.name}</div>
             <ul>
               <li>
                 <a onClick={this.newFile}>{t("New file")}</a>
@@ -26,7 +29,7 @@ class ScreenStart extends React.Component {
           </div>
         </div>
         <div className="area statusbar">
-          <div className="bar">@@version</div>
+          <div className="bar">{meta.version}</div>
         </div>
       </section>
     );
@@ -40,5 +43,9 @@ class ScreenStart extends React.Component {
     this.props.modalShow("ModalLoadFile");
   }
 }
+
+ScreenStart.propTypes = {
+  modalShow: PropTypes.func.isRequired,
+};
 
 export default ScreenStart;
