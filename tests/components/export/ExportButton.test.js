@@ -1,16 +1,17 @@
 import ExportButton from "components/export/ExportButton";
 
 describe("ExportButton", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       export: jest.fn(),
     };
-    wrapper = shallow(<ExportButton {...props} />);
+    jsx = <ExportButton {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   it("fires export handler on click", () => {

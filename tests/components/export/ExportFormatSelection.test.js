@@ -1,19 +1,19 @@
 import ExportFormatSelection from "components/export/ExportFormatSelection";
 
 describe("ExportFormatSelection", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       format: "png",
       part: "spritesheet",
       setFormat: jest.fn(),
     };
-
-    wrapper = shallow(<ExportFormatSelection {...props} />);
+    jsx = <ExportFormatSelection {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("select field", () => {

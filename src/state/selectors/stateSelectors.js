@@ -25,4 +25,5 @@ export const getSpritePalette = state => state.ui.paint.spritePalette;
 export const getTool = state => state.ui.paint.tool;
 export const getZoom = state => state.ui.paint.zoom;
 
+export const getModal = state => state.ui.app.modal;
 export const getScreen = state => state.ui.app.screen;

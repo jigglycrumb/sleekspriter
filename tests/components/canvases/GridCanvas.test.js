@@ -23,7 +23,7 @@ describe("GridCanvas", () => {
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(<GridCanvas {...props} />)).toMatchSnapshot();
   });
 
   it("should draw the grid after mounting", () => {

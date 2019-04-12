@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RectangularSelectionTool should render correctly 1`] = `"<div id=\\"RectangularSelection-Tool\\" class=\\"ToolComponent\\"><i class=\\"icon flaticon-selection7\\"></i><span class=\\"hint\\">Select some pixels to work with!</span></div>"`;
+exports[`RectangularSelectionTool should render correctly 1`] = `
+<div
+  class="ToolComponent"
+  id="RectangularSelection-Tool"
+>
+  <i
+    class="icon flaticon-selection7"
+  />
+  <span
+    class="hint"
+  >
+    Select some pixels to work with!
+  </span>
+</div>
+`;

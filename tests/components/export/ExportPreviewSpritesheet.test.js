@@ -1,7 +1,7 @@
 import ExportPreviewSpritesheet from "components/export/ExportPreviewSpritesheet";
 
 describe("ExportPreviewSpritesheet", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       format: "png",
@@ -14,11 +14,12 @@ describe("ExportPreviewSpritesheet", () => {
       pixels: {},
       zoom: 1,
     };
-    wrapper = shallow(<ExportPreviewSpritesheet {...props} />);
+    jsx = <ExportPreviewSpritesheet {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("PNG preview", () => {

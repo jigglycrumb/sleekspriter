@@ -1,7 +1,7 @@
 import ToolboxTool from "components/paint/ToolboxTool";
 
 describe("ToolboxTool", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       id: "BrushTool",
@@ -10,18 +10,18 @@ describe("ToolboxTool", () => {
       title: "Brush Tool (b)",
       toolSelect: jest.fn(),
     };
-
-    wrapper = shallow(<ToolboxTool {...props} />);
+    jsx = <ToolboxTool {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   it("should render correctly when selected", () => {
     props.selected = true;
-    wrapper = shallow(<ToolboxTool {...props} />);
-    expect(wrapper.html()).toMatchSnapshot();
+    jsx = <ToolboxTool {...props} />;
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   it("is disabled when selected", () => {

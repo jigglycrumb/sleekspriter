@@ -24,7 +24,7 @@ describe("SpritesheetCanvas", () => {
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(<SpritesheetCanvas {...props} />)).toMatchSnapshot();
   });
 
   it("should paint itself after mounting", () => {

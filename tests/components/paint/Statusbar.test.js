@@ -1,7 +1,7 @@
 import Statusbar from "components/paint/Statusbar";
 
 describe("Statusbar", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       grid: true,
@@ -14,11 +14,12 @@ describe("Statusbar", () => {
       redo: jest.fn(),
       canRedo: false,
     };
-    wrapper = shallow(<Statusbar {...props} />);
+    jsx = <Statusbar {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   it("fires gridToggle handler on grid button click", () => {

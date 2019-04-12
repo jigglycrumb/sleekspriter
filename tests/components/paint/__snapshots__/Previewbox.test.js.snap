@@ -1,3 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Previewbox should render correctly 1`] = `"<canvas width=\\"192\\" height=\\"192\\"></canvas>"`;
+exports[`Previewbox should render correctly 1`] = `
+<canvas
+  height="192"
+  width="192"
+/>
+`;

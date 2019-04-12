@@ -26,7 +26,7 @@ describe("FrameCanvas", () => {
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(<FrameCanvas {...props} />)).toMatchSnapshot();
   });
 
   it("should paint itself after mounting", () => {

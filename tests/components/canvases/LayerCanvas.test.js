@@ -27,7 +27,7 @@ describe("LayerCanvas", () => {
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   it("should paint itself after mounting", () => {

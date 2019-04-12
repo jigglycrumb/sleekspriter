@@ -1,3 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Statusbar should render correctly 1`] = `"<div class=\\"bar\\"><span id=\\"StatusBarCursorX\\">X: 0</span><span id=\\"StatusBarCursorY\\">Y: 0</span><div id=\\"StatusBarColor\\" style=\\"background:transparent\\"></div><span id=\\"StatusBarColorString\\" class=\\"statusbar-info\\">transparent</span><span class=\\"statusbar-info\\">Frame 1, 0 pixels</span><span class=\\"statusbar-info\\">Zoom ×10</span><div id=\\"StatusBarButtons\\"><button id=\\"historyUndo\\" class=\\"tiny\\" title=\\"Undo\\"><i class=\\"flaticon-back-arrow\\"></i></button><button id=\\"historyRedo\\" class=\\"tiny\\" disabled=\\"\\" title=\\"Redo\\"><i class=\\"flaticon-arrow\\"></i></button><button id=\\"toggleGrid\\" class=\\"tiny transparent active\\" title=\\"Toggle grid\\"><i class=\\"flaticon-3x3\\"></i></button></div></div>"`;
+exports[`Statusbar should render correctly 1`] = `
+<div
+  class="bar"
+>
+  <span
+    id="StatusBarCursorX"
+  >
+    X: 0
+  </span>
+  <span
+    id="StatusBarCursorY"
+  >
+    Y: 0
+  </span>
+  <div
+    id="StatusBarColor"
+    style="background:transparent"
+  />
+  <span
+    class="statusbar-info"
+    id="StatusBarColorString"
+  >
+    transparent
+  </span>
+  <span
+    class="statusbar-info"
+  >
+    Frame 1, 0 pixels
+  </span>
+  <span
+    class="statusbar-info"
+  >
+    Zoom ×10
+  </span>
+  <div
+    id="StatusBarButtons"
+  >
+    <button
+      class="tiny"
+      id="historyUndo"
+      title="Undo"
+    >
+      <i
+        class="flaticon-back-arrow"
+      />
+    </button>
+    <button
+      class="tiny"
+      disabled=""
+      id="historyRedo"
+      title="Redo"
+    >
+      <i
+        class="flaticon-arrow"
+      />
+    </button>
+    <button
+      class="tiny transparent active"
+      id="toggleGrid"
+      title="Toggle grid"
+    >
+      <i
+        class="flaticon-3x3"
+      />
+    </button>
+  </div>
+</div>
+`;

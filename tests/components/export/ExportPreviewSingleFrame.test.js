@@ -1,7 +1,7 @@
 import ExportPreviewSingleFrame from "components/export/ExportPreviewSingleFrame";
 
 describe("ExportPreviewSingleFrame", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       format: "png",
@@ -10,11 +10,12 @@ describe("ExportPreviewSingleFrame", () => {
       pixels: {},
       zoom: 1,
     };
-    wrapper = shallow(<ExportPreviewSingleFrame {...props} />);
+    jsx = <ExportPreviewSingleFrame {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("PNG preview", () => {

@@ -2,7 +2,7 @@ import MoveTool from "components/paint/tools/MoveTool";
 
 describe("MoveTool", () => {
   it("should render correctly", () => {
-    const component = shallow(<MoveTool />);
-    expect(component.html()).toMatchSnapshot();
+    const component = render(<MoveTool />);
+    expect(component).toMatchSnapshot();
   });
 });

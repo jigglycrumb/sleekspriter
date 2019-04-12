@@ -1,7 +1,7 @@
 import ExportPartSelection from "components/export/ExportPartSelection";
 
 describe("ExportPartSelection", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       frame: 1,
@@ -10,11 +10,12 @@ describe("ExportPartSelection", () => {
       setPart: jest.fn(),
       setFrame: jest.fn(),
     };
-    wrapper = shallow(<ExportPartSelection {...props} />);
+    jsx = <ExportPartSelection {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("radio buttons", () => {

@@ -1,17 +1,18 @@
 import ExportStatus from "components/export/ExportStatus";
 
 describe("ExportStatus", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       status: "Export finished",
       setStatus: jest.fn(),
     };
-    wrapper = shallow(<ExportStatus {...props} />);
+    jsx = <ExportStatus {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("clearStatus", () => {

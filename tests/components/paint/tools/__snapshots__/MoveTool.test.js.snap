@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MoveTool should render correctly 1`] = `"<div id=\\"Move-Tool\\" class=\\"ToolComponent\\"><i class=\\"icon flaticon-move11\\"></i><span class=\\"hint\\">Move pixels of a layer by dragging.</span></div>"`;
+exports[`MoveTool should render correctly 1`] = `
+<div
+  class="ToolComponent"
+  id="Move-Tool"
+>
+  <i
+    class="icon flaticon-move11"
+  />
+  <span
+    class="hint"
+  >
+    Move pixels of a layer by dragging.
+  </span>
+</div>
+`;

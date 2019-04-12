@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayerCanvas should render correctly 1`] = `"<canvas width=\\"640\\" height=\\"640\\" style=\\"width:640px;height:640px\\"></canvas>"`;
+exports[`LayerCanvas should render correctly 1`] = `
+<canvas
+  height="640"
+  style="width:640px;height:640px"
+  width="640"
+/>
+`;

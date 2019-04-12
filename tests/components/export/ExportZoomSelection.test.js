@@ -2,7 +2,7 @@ import config from "config";
 import ExportZoomSelection from "components/export/ExportZoomSelection";
 
 describe("ExportZoomSelection", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       frames: {
@@ -17,11 +17,12 @@ describe("ExportZoomSelection", () => {
       zoom: 1,
       setZoom: jest.fn(),
     };
-    wrapper = shallow(<ExportZoomSelection {...props} />);
+    jsx = <ExportZoomSelection {...props} />;
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("range input", () => {

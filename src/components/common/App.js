@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { throttle } from "lodash";
 
-import {
-  MenuContainer,
-  ModalContainer,
-  ScreenPaintContainer,
-  ScreenStartContainer,
-  ScreenExportContainer,
-} from "../containers";
+import MenuContainer from "../containers/MenuContainer";
+import ModalContainer from "../containers/ModalContainer";
+import ScreenPaintContainer from "../containers/ScreenPaintContainer";
+import ScreenStartContainer from "../containers/ScreenStartContainer";
+import ScreenExportContainer from "../containers/ScreenExportContainer";
 
 import { ScreenBlocker } from "../screens";
 import { Hotkeys } from "../../classes";
@@ -29,7 +27,7 @@ class App extends React.Component {
   }
 
   render() {
-    Hotkeys.bind(this.props.screen);
+    Hotkeys.bind(this.props.screen); // TODO move this to componentDidUpdate
 
     const windowClasses = classnames({
       window: true,

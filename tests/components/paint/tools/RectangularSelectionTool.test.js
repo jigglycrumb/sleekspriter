@@ -2,7 +2,7 @@ import RectangularSelectionTool from "components/paint/tools/RectangularSelectio
 
 describe("RectangularSelectionTool", () => {
   it("should render correctly", () => {
-    const component = shallow(<RectangularSelectionTool />);
-    expect(component.html()).toMatchSnapshot();
+    const component = render(<RectangularSelectionTool />);
+    expect(component).toMatchSnapshot();
   });
 });

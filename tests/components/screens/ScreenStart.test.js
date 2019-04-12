@@ -1,17 +1,19 @@
 import ScreenStart from "components/screens/ScreenStart";
 
 describe("ScreenStart", () => {
-  let props, wrapper;
+  let props, jsx, wrapper;
   beforeEach(() => {
     props = {
       modalShow: jest.fn(),
     };
 
-    wrapper = shallow(<ScreenStart {...props} />);
+    jsx = <ScreenStart {...props} />;
+
+    wrapper = shallow(jsx);
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 
   describe("newFile", () => {

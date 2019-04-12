@@ -1,7 +1,7 @@
 import StageboxLayer from "components/paint/StageboxLayer";
 
 describe("StageboxLayer", () => {
-  let props, wrapper;
+  let props, jsx;
   beforeEach(() => {
     props = {
       layer: {
@@ -18,10 +18,10 @@ describe("StageboxLayer", () => {
       },
       zoom: 10,
     };
-    wrapper = shallow(<StageboxLayer {...props} />);
+    jsx = <StageboxLayer {...props} />;
   });
 
   it("should render correctly", () => {
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(render(jsx)).toMatchSnapshot();
   });
 });
