@@ -15,8 +15,8 @@ class NameEditable extends React.Component {
   }
 
   render() {
-    let labelStyle = { display: "block" };
-    let inputStyle = { display: "none" };
+    const labelStyle = { display: "block" };
+    const inputStyle = { display: "none" };
 
     if (this.state.inputVisible === true) {
       labelStyle.display = "none";

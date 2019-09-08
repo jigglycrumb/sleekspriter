@@ -6,12 +6,12 @@ const fileToState = file => {
 
   layers = layers.map(layerToState);
 
-  let frameDict = {};
+  const frameDict = {};
   layers.forEach(layer => {
     frameDict[layer.id] = layer.frame;
   });
 
-  let mappedPixels = {};
+  const mappedPixels = {};
   pixels.forEach(p => {
     const pixel = {
       frame: frameDict[p[0]],

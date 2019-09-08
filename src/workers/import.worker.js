@@ -4,7 +4,7 @@
 self.onmessage = function(e) {
   const { frameSize, imageData, state, imageDimensions } = e.data;
 
-  let json = {
+  const json = {
     size: [frameSize.width, frameSize.height],
     frames: [state.frames.x, state.frames.y],
     layers: [],
@@ -21,7 +21,7 @@ self.onmessage = function(e) {
   }
 
   let frame = 1; // will also serve as layer id
-  let position = {
+  const position = {
     canvas: { x: 1, y: 1 },
     frame: { x: 1, y: 1 },
   };

@@ -17,7 +17,7 @@ function hash(point) {
 // function to get neighbors of a pixel
 function getAdjacentPixels(point, bounds) {
   let p; // helper point
-  let arr = []; // array for found neighbors
+  const arr = []; // array for found neighbors
 
   // get top neighbor
   p = { x: point.x, y: point.y - 1 };
@@ -36,7 +36,7 @@ function getAdjacentPixels(point, bounds) {
 }
 
 self.onmessage = function(e) {
-  let newPixels = {}; // the worker will return this
+  const newPixels = {}; // the worker will return this
 
   const { point, pixels, fillColor, layer, layerZ, frame, bounds } = e.data;
 
@@ -66,18 +66,18 @@ self.onmessage = function(e) {
     a: initialPixel.a,
   };
 
-  let filled = {};
+  const filled = {};
   let currentGeneration = [initialPixel];
 
   while (currentGeneration.length > 0) {
-    let nextGeneration = [];
-    let foundNeighbors = {};
+    const nextGeneration = [];
+    const foundNeighbors = {};
 
     currentGeneration.forEach(function(point) {
       // push pixel to filled array
       filled[hash(point)] = true;
 
-      let pixel = getByPosition(pixels, point);
+      const pixel = getByPosition(pixels, point);
       let pixelColor;
       let neighbors;
 

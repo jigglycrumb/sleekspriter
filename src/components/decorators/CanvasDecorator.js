@@ -46,7 +46,7 @@ function CanvasDecorator(DecoratedComponent) {
 
       let w = this.props.size.width;
       let h = this.props.size.height;
-      let style = {};
+      const style = {};
       let scale;
 
       if (w > h) scale = size / w;

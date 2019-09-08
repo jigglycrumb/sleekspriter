@@ -48,7 +48,7 @@ class ReferenceImage extends React.Component {
   }
 
   dragStart(e) {
-    let img = document.createElement("img");
+    const img = document.createElement("img");
     img.src =
       "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
     e.dataTransfer.setDragImage(img, 0, 0);
@@ -59,7 +59,7 @@ class ReferenceImage extends React.Component {
   }
 
   dragEnd(e) {
-    let pos = {
+    const pos = {
       x:
         e.pageX -
         document.querySelector(".screen.paint .area.left").clientWidth -

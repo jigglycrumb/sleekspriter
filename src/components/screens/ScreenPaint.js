@@ -114,7 +114,7 @@ class ScreenPaint extends React.Component {
       };
 
       if (file.type in allowed) {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = (function() {
           return function(e) {
             self.setState({

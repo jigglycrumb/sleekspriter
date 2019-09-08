@@ -6,7 +6,7 @@ const stateToFile = state => {
 
   layers = layers.map(layerToFile);
 
-  let mappedPixels = [];
+  const mappedPixels = [];
   Object.keys(pixels).map(frame => {
     Object.keys(pixels[frame]).map(layer => {
       Object.keys(pixels[frame][layer]).map(x => {

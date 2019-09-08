@@ -175,7 +175,7 @@ class ModalImportFile extends React.Component {
         reader.onload = (function() {
           return function(e) {
             const data = e.target.result;
-            let dummy = document.createElement("img");
+            const dummy = document.createElement("img");
             dummy.src = data;
             dummy.onload = () => {
               // remove file name extension

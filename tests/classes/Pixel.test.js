@@ -38,8 +38,7 @@ describe("Pixel", () => {
     it("updates the color from a given hex string", () => {
       const newColor = "#6666FF";
 
-      let pixel;
-      pixel = new Pixel(23, 42, 2, 3, 0, 0, 0, 1);
+      const pixel = new Pixel(23, 42, 2, 3, 0, 0, 0, 1);
       pixel.setColor(newColor);
       expect(pixel.toHex()).toBe(newColor);
     });

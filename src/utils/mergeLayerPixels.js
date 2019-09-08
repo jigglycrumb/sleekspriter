@@ -1,15 +1,15 @@
 import { merge } from "lodash";
-import sprout from "sprout-data";
+import { assoc, dissoc, get } from "sprout-data";
 
 // TODO this is buggy on undo
 
 const mergeLayerPixels = (frame, first, second, pixels = {}) => {
-  const firstLayerPixels = sprout.get(pixels, [frame, first], {});
-  const secondLayerPixels = sprout.get(pixels, [frame, second], {});
+  const firstLayerPixels = get(pixels, [frame, first], {});
+  const secondLayerPixels = get(pixels, [frame, second], {});
   const merged = merge(secondLayerPixels, firstLayerPixels);
 
-  pixels = sprout.dissoc(pixels, [frame, first]);
-  pixels = sprout.assoc(pixels, [frame, second], merged);
+  pixels = dissoc(pixels, [frame, first]);
+  pixels = assoc(pixels, [frame, second], merged);
 
   return pixels;
 };

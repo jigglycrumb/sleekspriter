@@ -14,15 +14,14 @@ const hex2rgb = function(hex) {
 };
 
 const rgb2hsl = function(rgb) {
-  let r = rgb[0] / 255;
-  let g = rgb[1] / 255;
-  let b = rgb[2] / 255;
-  let min = Math.min(r, g, b);
-  let max = Math.max(r, g, b);
-  let delta = max - min;
+  const r = rgb[0] / 255;
+  const g = rgb[1] / 255;
+  const b = rgb[2] / 255;
+  const min = Math.min(r, g, b);
+  const max = Math.max(r, g, b);
+  const delta = max - min;
   let h;
   let s;
-  let l;
 
   if (max === min) h = 0;
   else if (r === max) h = (g - b) / delta;
@@ -33,7 +32,7 @@ const rgb2hsl = function(rgb) {
 
   if (h < 0) h += 360;
 
-  l = (min + max) / 2;
+  const l = (min + max) / 2;
 
   if (max === min) s = 0;
   else if (l <= 0.5) s = delta / (max + min);
@@ -43,13 +42,11 @@ const rgb2hsl = function(rgb) {
 };
 
 const hsl2rgb = function(hsl) {
-  let h = hsl[0] / 360;
-  let s = hsl[1] / 100;
-  let l = hsl[2] / 100;
-  let t1;
+  const h = hsl[0] / 360;
+  const s = hsl[1] / 100;
+  const l = hsl[2] / 100;
   let t2;
   let t3;
-  let rgb;
   let val;
 
   if (s === 0) {
@@ -59,9 +56,9 @@ const hsl2rgb = function(hsl) {
 
   if (l < 0.5) t2 = l * (1 + s);
   else t2 = l + s - l * s;
-  t1 = 2 * l - t2;
+  const t1 = 2 * l - t2;
 
-  rgb = [0, 0, 0];
+  const rgb = [0, 0, 0];
   for (var i = 0; i < 3; i++) {
     t3 = h + (1 / 3) * -(i - 1);
     t3 < 0 && t3++;
@@ -79,7 +76,7 @@ const hsl2rgb = function(hsl) {
 };
 
 const changeColorLightness = function({ r, g, b }, delta) {
-  let hsl = rgb2hsl([r, g, b]);
+  const hsl = rgb2hsl([r, g, b]);
   let l = hsl[2];
 
   l += delta;

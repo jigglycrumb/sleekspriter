@@ -36,7 +36,7 @@ class Framebox extends React.Component {
         />
       );
 
-    let frames = [];
+    const frames = [];
     for (var i = 0; i < this.props.totalFrames; i++) frames.push(i + 1);
 
     return (
