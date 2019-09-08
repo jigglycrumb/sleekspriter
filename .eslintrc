@@ -22,10 +22,18 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "jest"],
+  "plugins": ["react", "react-hooks", "jest"],
   "rules": {
-    "no-template-curly-in-string": "off",
-    "no-self-assign": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "never"
+      }
+    ],
     "indent": [
       "error",
       2,
@@ -34,6 +42,14 @@
       }
     ],
     "linebreak-style": ["error", "unix"],
+    "no-console": ["error", { "allow": ["error", "warn", "log"] }],
+    "no-self-assign": "off",
+    "no-template-curly-in-string": "off",
+    "no-unused-vars": "warn",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error",
     "quotes": [
       "error",
       "double",
@@ -42,13 +58,7 @@
         "allowTemplateLiterals": true
       }
     ],
-    "semi": ["error", "always"],
-    "no-unused-vars": "warn",
-    "no-console": ["error", { "allow": ["error", "warn", "log"] }],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/valid-expect": "error",
+    "react/jsx-handler-names": "warn", // TODO: make error and fix
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-undef": "error",
     "react/jsx-uses-react": "error",
@@ -62,16 +72,9 @@
     "react/no-unknown-property": "error",
     "react/prop-types": "error",
     "react/react-in-jsx-scope": "error",
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "only-multiline",
-        "objects": "only-multiline",
-        "imports": "only-multiline",
-        "exports": "only-multiline",
-        "functions": "never"
-      }
-    ]
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "semi": ["error", "always"]
   },
   "globals": {
     "__dirname": false,

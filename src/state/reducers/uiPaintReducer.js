@@ -1,5 +1,5 @@
 import _ from "lodash";
-import sprout from "sprout-data";
+import { dissoc } from "sprout-data";
 
 import initialState from "../initialState";
 import { Point } from "../../classes";
@@ -76,7 +76,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "LAYER_DELETE": {
       const { allPixels, frame, layer } = action;
       let pixels = _.cloneDeep(allPixels);
-      pixels = sprout.dissoc(pixels, [frame, layer]);
+      pixels = dissoc(pixels, [frame, layer]);
       const spritePalette = _.uniq(flattenPixels(pixels).map(p => p.toHex()));
       return { ...state, spritePalette, layer: null };
     }

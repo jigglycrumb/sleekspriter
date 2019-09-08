@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import sprout from "sprout-data";
+import { get } from "sprout-data";
 
 import classnames from "classnames";
 import config from "../../config";
@@ -39,9 +39,8 @@ class Stagebox extends React.Component {
     this.mouseup = this.mouseup.bind(this);
     this.mousemove = this.mousemove.bind(this);
     this.mouseout = this.mouseout.bind(this);
-  }
 
-  componentWillMount() {
+    // setup worker
     this.worker = new PaintbucketWorker();
 
     this.worker.onmessage = m => {
@@ -66,7 +65,7 @@ class Stagebox extends React.Component {
     const centerAreaHeight =
       window.innerHeight - config.offset.top - config.offset.bottom;
 
-    let style = {
+    const style = {
       width: w,
       height: h,
     };
@@ -259,10 +258,10 @@ class Stagebox extends React.Component {
       // update color under cursor
       let cursorColorHex, cursorColorRGB;
 
-      const currentPixel = sprout.get(
+      const currentPixel = get(
         this.pixels,
         [x, y],
-        sprout.get(
+        get(
           this.props.pixels,
           [this.props.frame, this.props.layer, x, y],
           undefined
@@ -417,7 +416,7 @@ class Stagebox extends React.Component {
         !selectionIsActive(this.props.selection) ||
         insideBounds(this.props.selection, this.cursor)
       ) {
-        const p = sprout.get(
+        const p = get(
           this.props.pixels,
           [this.props.frame, this.props.layer, point.x, point.y],
           undefined
@@ -563,7 +562,7 @@ class Stagebox extends React.Component {
           };
         }
 
-        let data = {
+        const data = {
           point,
           frame: this.props.frame,
           layer: this.props.layer,
@@ -621,7 +620,7 @@ class Stagebox extends React.Component {
   }
 
   getLayerPixels(layerId) {
-    return sprout.get(this.props.pixels, [this.props.frame, layerId], {});
+    return get(this.props.pixels, [this.props.frame, layerId], {});
   }
 
   instantPaintPixel(pixel) {

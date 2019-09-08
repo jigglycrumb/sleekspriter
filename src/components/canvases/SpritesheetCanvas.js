@@ -71,12 +71,10 @@ class SpritesheetCanvas extends React.Component {
     }, this);
 
     // sort pixels via z value
-    let dict = this.props.pixels;
-    let flen;
+    const dict = this.props.pixels;
     let llen;
     let xlen;
     let ylen;
-    let frames;
     let f;
     let frame;
     let layers;
@@ -91,8 +89,8 @@ class SpritesheetCanvas extends React.Component {
     let zValue;
     let pixel;
 
-    frames = Object.keys(dict);
-    flen = frames.length;
+    const frames = Object.keys(dict);
+    const flen = frames.length;
 
     for (f = 0; f < flen; f++) {
       frame = frames[f];

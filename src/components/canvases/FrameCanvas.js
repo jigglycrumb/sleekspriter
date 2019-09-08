@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import sprout from "sprout-data";
+import { assoc, get } from "sprout-data";
 import { CanvasDecorator } from "../decorators";
 import { flattenPixels } from "../../utils";
 import { sizeShape } from "../../shapes";
@@ -52,10 +52,10 @@ class FrameCanvas extends React.Component {
 
   mapLayers() {
     // cache all layer z values by layer id
-    let zMap = {};
+    const zMap = {};
 
     // cache all layer visible values
-    let vMap = {};
+    const vMap = {};
 
     if (this.props.layers) {
       this.props.layers.forEach(layer => {
@@ -126,14 +126,14 @@ class FrameCanvas extends React.Component {
     flattenPixels(this.props.pixels || {}).forEach(pixel => {
       // if layer is visible
       if (vMap[pixel.layer] === true) {
-        let pixels = sprout.get(pMap, [pixel.x, pixel.y], []);
+        let pixels = get(pMap, [pixel.x, pixel.y], []);
 
         if (pixels.length === 0) pixels = [pixel];
         else {
           pixels = this.insertPixelInZOrder(zMap, pixels, pixel);
         }
 
-        pMap = sprout.assoc(pMap, [pixel.x, pixel.y], pixels);
+        pMap = assoc(pMap, [pixel.x, pixel.y], pixels);
       }
     });
 
@@ -148,7 +148,7 @@ class FrameCanvas extends React.Component {
 
     // if layer is visible
     if (vMap[pixel.layer] === true) {
-      let pixels = sprout.get(pMap, [x, y], []);
+      let pixels = get(pMap, [x, y], []);
 
       if (pixels.length === 0)
         this.props.paintSinglePixel(
@@ -182,7 +182,7 @@ class FrameCanvas extends React.Component {
 
     // if layer is visible
     if (vMap[pixel.layer] === true) {
-      let pixels = sprout.get(pMap, [x, y], []);
+      const pixels = get(pMap, [x, y], []);
 
       if (pixels.length > 0) {
         const findPixel = p => p.layer === pixel.layer;

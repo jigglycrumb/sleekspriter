@@ -13,13 +13,16 @@ import { ScreenBlocker } from "../screens";
 import { Hotkeys } from "../../classes";
 
 class App extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (this.props.screen !== nextProps.screen)
-      Hotkeys.unbind(this.props.screen);
+  componentDidUpdate(prevProps) {
+    if (prevProps.screen !== this.props.screen) {
+      Hotkeys.unbind(prevProps.screen);
+      Hotkeys.bind(this.props.screen);
+    }
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.resize, false);
+    Hotkeys.bind(this.props.screen);
   }
 
   componentWillUnmount() {
@@ -27,8 +30,6 @@ class App extends React.Component {
   }
 
   render() {
-    Hotkeys.bind(this.props.screen); // TODO move this to componentDidUpdate
-
     const windowClasses = classnames({
       window: true,
       [this.props.screen]: true,

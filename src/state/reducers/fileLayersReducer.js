@@ -5,7 +5,7 @@ import { duplicateLayers } from "../../utils";
 function fileLayersReducer(state = initialState.file.present.layers, action) {
   switch (action.type) {
     case "FILE_CREATE": {
-      let newState = [];
+      const newState = [];
       const totalFrames = action.frames.x * action.frames.y;
       for (let i = 1; i <= totalFrames; i++) {
         newState.push({
@@ -32,7 +32,9 @@ function fileLayersReducer(state = initialState.file.present.layers, action) {
 
     case "FRAME_DUPLICATE": {
       const { layers, target, nextLayerId } = action;
-      let stateCopy = copyState(state).filter(layer => layer.frame !== target);
+      const stateCopy = copyState(state).filter(
+        layer => layer.frame !== target
+      );
       const newLayers = duplicateLayers(layers, target, nextLayerId);
       return stateCopy.concat(newLayers);
     }

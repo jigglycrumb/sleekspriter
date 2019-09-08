@@ -1,6 +1,6 @@
 import initialState from "../initialState";
 import _ from "lodash";
-import sprout from "sprout-data";
+import { assoc, dissoc, get } from "sprout-data";
 import {
   createBounds,
   deletePixels,
@@ -25,10 +25,10 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
 
     case "FRAME_DUPLICATE": {
       const { layers, source, target, nextLayerId } = action;
-      const pixelsToDuplicate = sprout.get(state, [source], {});
+      const pixelsToDuplicate = get(state, [source], {});
       const newLayers = duplicateLayers(layers, target, nextLayerId);
 
-      let layerMap = {};
+      const layerMap = {};
       layers.map((layer, index) => {
         layerMap[layer.id] = newLayers[index].id;
       });
@@ -37,8 +37,8 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         pixelsToDuplicate,
         copyPixelToFrame.bind(this, target, layerMap)
       );
-      state = sprout.dissoc(state, [target]);
-      return sprout.assoc(state, [target], newPixels);
+      state = dissoc(state, [target]);
+      return assoc(state, [target], newPixels);
     }
 
     case "FRAME_FLIP_HORIZONTAL": {
@@ -49,8 +49,8 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         flipPixelHorizontal.bind(this, pivot, bounds)
       );
 
-      state = sprout.dissoc(state, [frame]);
-      return sprout.assoc(state, [frame], newPixels);
+      state = dissoc(state, [frame]);
+      return assoc(state, [frame], newPixels);
     }
 
     case "FRAME_FLIP_VERTICAL": {
@@ -61,8 +61,8 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         flipPixelVertical.bind(this, pivot, bounds)
       );
 
-      state = sprout.dissoc(state, [frame]);
-      return sprout.assoc(state, [frame], newPixels);
+      state = dissoc(state, [frame]);
+      return assoc(state, [frame], newPixels);
     }
 
     case "FRAME_ROTATE": {
@@ -73,12 +73,12 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
         rotatePixel.bind(this, angle, pivot, bounds)
       );
 
-      state = sprout.dissoc(state, [frame]);
-      return sprout.assoc(state, [frame], newPixels);
+      state = dissoc(state, [frame]);
+      return assoc(state, [frame], newPixels);
     }
 
     case "LAYER_DELETE": {
-      return sprout.dissoc(state, [action.frame, action.layer]);
+      return dissoc(state, [action.frame, action.layer]);
     }
 
     case "LAYER_MERGE": {
@@ -89,9 +89,9 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
     case "PIXELS_ADD":
     case "PIXELS_PASTE": {
       const { frame, layer, pixels } = action;
-      const px = sprout.get(state, [frame, layer], {});
+      const px = get(state, [frame, layer], {});
       const newPx = _.merge(px, pixels);
-      return sprout.assoc(state, [frame, layer], newPx);
+      return assoc(state, [frame, layer], newPx);
     }
 
     case "PIXELS_CUT":
@@ -109,7 +109,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       );
 
       state = deletePixels(state, frame, layer, pixels);
-      return sprout.assoc(state, [frame, layer], newPixels);
+      return assoc(state, [frame, layer], newPixels);
     }
 
     case "PIXELS_FLIP_VERTICAL": {
@@ -121,7 +121,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       );
 
       state = deletePixels(state, frame, layer, pixels);
-      return sprout.assoc(state, [frame, layer], newPixels);
+      return assoc(state, [frame, layer], newPixels);
     }
 
     case "PIXELS_MOVE": {
@@ -133,7 +133,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       );
 
       state = deletePixels(state, frame, layer, pixels);
-      return sprout.assoc(state, [frame, layer], newPixels);
+      return assoc(state, [frame, layer], newPixels);
     }
 
     case "PIXELS_ROTATE": {
@@ -145,7 +145,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       );
 
       state = deletePixels(state, frame, layer, pixels);
-      return sprout.assoc(state, [frame, layer], newPixels);
+      return assoc(state, [frame, layer], newPixels);
     }
 
     case "COLOR_REPLACE": {
@@ -177,8 +177,8 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
             replaceColor.bind(this, color, newColor, null)
           );
 
-          state = sprout.dissoc(state, [frame]);
-          return sprout.assoc(state, [frame], newPixels);
+          state = dissoc(state, [frame]);
+          return assoc(state, [frame], newPixels);
 
         case "layer": {
           const bounds = createBounds(size, selection);
@@ -188,7 +188,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
           );
 
           state = deletePixels(state, frame, layer, pixels);
-          return sprout.assoc(state, [frame, layer], newPixels);
+          return assoc(state, [frame, layer], newPixels);
         }
 
         default:
@@ -244,7 +244,7 @@ const replaceColor = (color, newColor, bounds, pixel) => {
 };
 
 function inflatePixels(pixels) {
-  let pixelMap = {};
+  const pixelMap = {};
   pixels.forEach(pixel => {
     if (!pixelMap[pixel.x]) pixelMap[pixel.x] = {};
     pixelMap[pixel.x][pixel.y] = pixel;
@@ -253,7 +253,7 @@ function inflatePixels(pixels) {
 }
 
 function inflateFramePixels(pixels) {
-  let pixelMap = {};
+  const pixelMap = {};
   pixels.forEach(pixel => {
     if (!pixelMap[pixel.layer]) pixelMap[pixel.layer] = {};
     if (!pixelMap[pixel.layer][pixel.x]) pixelMap[pixel.layer][pixel.x] = {};
@@ -263,7 +263,7 @@ function inflateFramePixels(pixels) {
 }
 
 function inflateSpritePixels(pixels) {
-  let pixelMap = {};
+  const pixelMap = {};
   pixels.forEach(pixel => {
     if (!pixelMap[pixel.frame]) pixelMap[pixel.frame] = {};
     if (!pixelMap[pixel.frame][pixel.layer])

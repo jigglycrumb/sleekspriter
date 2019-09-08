@@ -30,7 +30,7 @@ class Menu extends React.Component {
     this.onOutsideClick = this.onOutsideClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("mousedown", this.onOutsideClick, false);
   }
 
