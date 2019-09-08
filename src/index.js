@@ -1,4 +1,6 @@
+/* eslint-disable-next-line */
 import iconfont from "./fonts/flaticon";
+/* eslint-disable-next-line */
 import styles from "./styles";
 
 import React from "react";

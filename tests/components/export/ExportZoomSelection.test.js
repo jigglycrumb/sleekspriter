@@ -40,9 +40,7 @@ describe("ExportZoomSelection", () => {
       expect(props.setZoom).toHaveBeenCalledWith(1);
     });
 
-    it(`clamps the maximum zoom value to ${
-      config.zoom.max
-    } (config.zoom.max)`, () => {
+    it(`clamps the maximum zoom value to ${config.zoom.max} (config.zoom.max)`, () => {
       wrapper
         .find('input[type="range"]')
         .simulate("change", { target: { value: config.zoom.max + 10 } });
@@ -65,9 +63,7 @@ describe("ExportZoomSelection", () => {
       expect(props.setZoom).toHaveBeenCalledWith(1);
     });
 
-    it(`clamps the maximum zoom value to ${
-      config.zoom.max
-    } (config.zoom.max)`, () => {
+    it(`clamps the maximum zoom value to ${config.zoom.max} (config.zoom.max)`, () => {
       wrapper
         .find('input[type="number"]')
         .simulate("change", { target: { value: config.zoom.max + 10 } });

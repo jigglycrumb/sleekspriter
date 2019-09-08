@@ -499,12 +499,12 @@ class Stagebox extends React.Component {
         );
 
         // move the selection canvas
-        document.querySelector("#StageBoxSelectionCanvas").style.left = `${
-          offset.x
-        }px`;
-        document.querySelector("#StageBoxSelectionCanvas").style.top = `${
-          offset.y
-        }px`;
+        document.querySelector(
+          "#StageBoxSelectionCanvas"
+        ).style.left = `${offset.x}px`;
+        document.querySelector(
+          "#StageBoxSelectionCanvas"
+        ).style.top = `${offset.y}px`;
       }
     }
   }
