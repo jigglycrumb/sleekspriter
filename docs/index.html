@@ -1,68 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SleekSpriter</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="assets/homepage.css" />
+    <link rel="stylesheet" type="text/css" href="assets/ribbons.css" />
+    <link rel="stylesheet" type="text/css" href="assets/gallery.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>SleekSpriter</title>
-  <link rel="stylesheet" type="text/css" href="assets/homepage.css">
-  <link rel="stylesheet" type="text/css" href="assets/ribbons.css">
-  <link rel="stylesheet" type="text/css" href="assets/gallery.css">
-</head>
-
-<body>
-  <header>
-    <img src="assets/logo@x4.png" alt="SleekSpriter" />
-    <h1>A cross-platform pixel art editor</h1>
-  </header>
-
-  <main>
-    <div class="gallery items-3">
-      <div id="web" class="control-operator"></div>
-      <div id="desktop" class="control-operator"></div>
-      <div id="tablet" class="control-operator"></div>
-
-      <figure class="item">
-        <div class="browser-frame">
-          <div class="ribbon ribbon-top-right"><span>try me</span></div>
-          <div class="browser-frame-inner">
-            <iframe src="app/index.html"></iframe>
-          </div>
-        </div>
-      </figure>
-      <figure class="item">
-        <div class="generic-frame">
-          <div class="ribbon ribbon-top-right"><span>soon</span></div>
-          <div class="generic-frame-inner">
-            <iframe src="app/index.html"></iframe>
-          </div>
-        </div>
-      </figure>
-      <figure class="item">
-        <div class="generic-frame">
-          <div class="ribbon ribbon-top-right"><span>later</span></div>
-          <div class="generic-frame-inner">
-            <img src="assets/logo@x4.png" alt="dummy">
-          </div>
-        </div>
-      </figure>
-
-      <div class="controls">
-        <a href="#web" class="control-button">web</a>
-        <a href="#desktop" class="control-button">desktop</a>
-        <a href="#tablet" class="control-button">tablet</a>
+  <body>
+    <header>
+      <img src="assets/logo@x4.png" alt="SleekSpriter" />
+      <div class="headline">
+        <h1 class="shadow">A cross-platform pixel art editor</h1>
+        <h1>A cross-platform pixel art editor</h1>
       </div>
-    </div>
-  </main>
+    </header>
 
-  <footer>
-    &copy;
-    &nbsp;<a href="http://hpcodecraft.me" target="_blank">hpcodecraft</a>
-    &nbsp;<script>document.write(new Date().getFullYear())</script>
-  </footer>
+    <main>
+      <div class="gallery items-3">
+        <div id="web" class="control-operator"></div>
+        <div id="desktop" class="control-operator"></div>
+        <div id="tablet" class="control-operator"></div>
 
-  <script>
-    document.location.hash = "web";
-  </script>
-</body>
+        <figure class="item">
+          <div class="browser-frame">
+            <div class="ribbon ribbon-top-right"><span>try me</span></div>
+            <div class="browser-frame-inner">
+              <iframe src="app/index.html"></iframe>
+            </div>
+          </div>
+        </figure>
+        <figure class="item">
+          <div class="generic-frame">
+            <div class="ribbon ribbon-top-right"><span>soon</span></div>
+            <div class="generic-frame-inner">
+              <img src="assets/placeholder-desktop.png" alt="Desktop" />
+            </div>
+          </div>
+        </figure>
+        <figure class="item">
+          <div class="generic-frame">
+            <div class="ribbon ribbon-top-right"><span>later</span></div>
+            <div class="generic-frame-inner">
+              <img src="assets/placeholder-tablet.png" alt="Tablet" />
+            </div>
+          </div>
+        </figure>
 
+        <div class="controls">
+          <a href="#web" class="control-button">web</a>
+          <a href="#desktop" class="control-button">desktop</a>
+          <a href="#tablet" class="control-button">tablet</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      &copy; <a href="http://hpcodecraft.me" target="_blank">hpcodecraft</a>
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+    </footer>
+
+    <script>
+      document.location.hash = "web";
+    </script>
+  </body>
 </html>

@@ -1,14 +1,22 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:700);
 
 body {
+  align-items: center;
   color: #fcc71b;
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  font-family: "VT323", monospace;
+  letter-spacing: 0.15em;
   margin: 0;
-  text-align: center;
+}
+
+header {
+  height: 400px;
 }
 
 main {
   height: 900px;
+  width: 100%;
 }
 
 footer {
@@ -30,6 +38,22 @@ a:hover,
 a:active,
 a:visited {
   color: #fcc71b;
+}
+
+.headline {
+  margin: 0 auto;
+  position: relative;
+  width: 32em;
+}
+
+.headline h1 {
+  position: absolute;
+}
+
+.headline h1.shadow {
+  color: #444444;
+  left: 2px;
+  top: 2px;
 }
 
 .browser-frame {
@@ -70,6 +94,10 @@ a:visited {
 
 .generic-frame-inner {
   height: 100%;
+}
+
+.generic-frame-inner img {
+  border-radius: 5px;
 }
 
 .generic-frame iframe {

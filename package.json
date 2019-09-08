@@ -9,9 +9,9 @@
   "author": "Volker Wieban",
   "license": "All rights reserved",
   "scripts": {
-    "dev": "concurrently npm:web:dev npm:electron:dev",
-    "electron:dev": "electron-forge start",
-    "web:dev": "webpack-dev-server --config ./webpack.dev.js",
+    "start": "concurrently npm:web:start npm:electron:start",
+    "electron:start": "electron-forge start",
+    "web:start": "webpack-dev-server --config ./webpack.dev.js",
     "lint": "eslint \"./{src,tests}/**/*.js\"",
     "lint:fix": "eslint \"./{src,tests}/**/*.js\" --fix",
     "test": "jest",
