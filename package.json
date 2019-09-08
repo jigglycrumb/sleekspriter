@@ -1,14 +1,19 @@
 {
   "name": "sleekspriter",
+  "productName": "sleekspriter",
   "longname": "SleekSpriter",
   "version": "0.2.16",
   "description": "A pixel art editor",
   "private": true,
-  "main": "index.js",
+  "main": ".webpack/main",
   "author": "Volker Wieban",
   "license": "All rights reserved",
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.dev.js",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "web:dev": "webpack-dev-server --config ./webpack.dev.js",
     "build": "yarn build:browser",
     "build:browser": "webpack --config ./webpack.browser.js -p; ./scripts/update_homepage.sh",
     "lint": "eslint \"./{src,tests}/**/*.js\"",
@@ -19,7 +24,7 @@
     "prettier:format": "prettier-eslint --write \"{src,tests}/**/*.js\""
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-proposal-do-expressions": "^7.0.0",
@@ -39,8 +44,13 @@
     "@babel/plugin-transform-classes": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
+    "@electron-forge/cli": "6.0.0-beta.45",
+    "@electron-forge/maker-deb": "6.0.0-beta.45",
+    "@electron-forge/maker-rpm": "6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.45",
+    "@electron-forge/maker-zip": "6.0.0-beta.45",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.45",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-eslint": "^8.2.6",
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0",
@@ -48,6 +58,7 @@
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "css-loader": "^1.0.0",
+    "electron": "6.0.7",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
     "enzyme-to-json": "^3.3.5",
@@ -70,6 +81,7 @@
     "json-loader": "^0.5.4",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "node-loader": "^0.6.0",
     "prettier-eslint-cli": "^4.7.1",
     "react-test-renderer": "16.4.2",
     "style-loader": "^0.22.1",
@@ -84,6 +96,7 @@
     "@tweenjs/tween.js": "^16.6.0",
     "classnames": "^2.2.6",
     "crypto-js": "^3.1.9-1",
+    "electron-squirrel-startup": "^1.0.0",
     "gif.js": "^0.2.0",
     "lodash": "^4.17.10",
     "mousetrap": "^1.6.2",
@@ -95,5 +108,50 @@
     "redux": "^4.0.0",
     "redux-undo": "^0.6.1",
     "sprout-data": "^0.2.3"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "my_new_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/renderer.js",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
   }
 }
