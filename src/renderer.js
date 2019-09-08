@@ -28,11 +28,9 @@
 
 // import './index.css';
 
-console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack'
-);
-
+/* eslint-disable-next-line */
 import iconfont from "./fonts/flaticon";
+/* eslint-disable-next-line */
 import styles from "./styles";
 
 import React from "react";
@@ -41,6 +39,10 @@ import { Provider } from "react-redux";
 
 import AppContainer from "./components/containers/AppContainer";
 import store from "./state/store";
+
+console.log(
+  '👋 This message is being logged by "renderer.js", included via webpack'
+);
 
 window.onload = function() {
   ReactDOM.render(
