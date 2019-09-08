@@ -39,9 +39,8 @@ class Stagebox extends React.Component {
     this.mouseup = this.mouseup.bind(this);
     this.mousemove = this.mousemove.bind(this);
     this.mouseout = this.mouseout.bind(this);
-  }
 
-  componentWillMount() {
+    // setup worker
     this.worker = new PaintbucketWorker();
 
     this.worker.onmessage = m => {

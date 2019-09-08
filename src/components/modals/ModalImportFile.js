@@ -33,9 +33,8 @@ class ModalImportFile extends React.Component {
     this.cancel = this.cancel.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.import = this.import.bind(this);
-  }
 
-  componentWillMount() {
+    // setup worker
     this.worker = new ImportWorker();
 
     this.worker.onmessage = m => {
