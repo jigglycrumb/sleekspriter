@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExportPreviewSpritesheet should render correctly 1`] = `
+<div
+  class="preview checkerboard"
+  style="width:32px;height:32px"
+>
+  <canvas
+    height="32"
+    style="width:32px;height:32px"
+    width="32"
+  />
+</div>
+`;

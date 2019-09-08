@@ -1,9 +1,11 @@
 build
 dist
-doc
+docs/app/*
+!docs/app/*.gitkeep
 node_modules
 npm-debug.log
 release
 report
 test.html
 todo.txt
+yarn-error.log

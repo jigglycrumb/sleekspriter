@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpritesheetCanvas should render correctly 1`] = `
+<canvas
+  height="320"
+  style="width:320px;height:320px"
+  width="320"
+/>
+`;

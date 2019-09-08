@@ -1,0 +1,3 @@
+arrowParens: avoid
+jsxBracketSameLine: true
+trailingComma: es5

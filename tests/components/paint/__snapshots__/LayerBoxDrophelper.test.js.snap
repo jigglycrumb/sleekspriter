@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayerboxDrophelper should render correctly 1`] = `
+<div
+  class="dropzone"
+>
+  <div
+    class="dropzone-inner left"
+  />
+  <div
+    class="dropzone-inner center"
+  />
+  <div
+    class="dropzone-inner right"
+  />
+</div>
+`;

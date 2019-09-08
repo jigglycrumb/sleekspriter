@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getFrameLayersZSorted returns all layers of a given frame sorted by z value (descending) 1`] = `
+Array [
+  Object {
+    "frame": 1,
+    "id": 2,
+    "name": "Layer 2",
+    "opacity": 100,
+    "visible": true,
+    "z": 1,
+  },
+  Object {
+    "frame": 1,
+    "id": 1,
+    "name": "Layer 1",
+    "opacity": 100,
+    "visible": true,
+    "z": 0,
+  },
+  Object {
+    "frame": 1,
+    "id": 3,
+    "name": "Layer 3",
+    "opacity": 100,
+    "visible": true,
+    "z": 2,
+  },
+]
+`;

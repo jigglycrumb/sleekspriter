@@ -1,0 +1,6 @@
+build/
+grunt/
+legacy/
+node_modules/
+release/
+package-lock.json

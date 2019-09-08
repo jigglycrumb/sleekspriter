@@ -1,0 +1,472 @@
+// tame flaticon
+[class^="flaticon-"],
+[class*=" flaticon-"] {
+  font-family: Flaticon;
+  font-style: normal;
+  display: inline-block;
+  text-align: center;
+  width: 1em;
+}
+
+[class^="flaticon-"]:before,
+[class*=" flaticon-"]:before,
+[class^="flaticon-"]:after,
+[class*=" flaticon-"]:after {
+  font-size: inherit;
+  font-style: normal;
+  margin-left: inherit;
+}
+
+.flaticon-little9:before,
+.flaticon-hand118:before {
+  font-size: 0.6em;
+}
+
+.flaticon-paint2:before,
+.flaticon-selection7:before {
+  position: relative;
+  left: 0.25em;
+}
+
+.flaticon-plus25:before,
+.flaticon-minus18:before {
+  font-size: 0.8em;
+}
+
+.icon-checkmark {
+  content: "\f115"; // flaticon-done
+}
+
+.icon-eye {
+  content: "\f11f"; // flaticon-eye46
+}
+
+.icon-eye-slashed {
+  content: "\f11e"; // flaticon-eye48
+}
+
+.icon-arrow-down {
+  content: "\f10a"; // flaticon-little9
+}
+
+.icon-arrow-right {
+  content: "\f10b"; // flaticon-mini7
+}
+
+// general styles
+
+* {
+  user-select: none;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 600;
+  color: @font-color;
+  background: @dark;
+  line-height: 150%;
+  font-size: @small;
+  width: 100%;
+  height: 100%;
+  .letterpress;
+}
+
+textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+h4 {
+  margin: 0;
+  padding: 3px 5px;
+  border-bottom: 1px solid @dark;
+  .gradient;
+}
+
+h5,
+h6 {
+  margin: 0;
+  padding: 12px 10px;
+  font-size: 1em;
+  background: @light;
+  box-sizing: border-box;
+}
+
+button,
+.button {
+  .gradient-light;
+  border: 1px solid #303030;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: @font-color;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+}
+
+button[disabled],
+.button[disabled] {
+  .gradient;
+  color: darken(@font-color, 50%);
+  cursor: auto;
+}
+
+button:after,
+.button:after {
+  background: none;
+  border-top: 1px solid #909090;
+  border-bottom: 1px solid #6a6a6a;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: -2px;
+  pointer-events: none;
+}
+
+button.small {
+  height: 22px;
+}
+
+button.tiny {
+  height: 18px;
+
+  &:after {
+    border-bottom: none;
+  }
+}
+
+button.transparent {
+  background: transparent;
+  border: none;
+  outline: none;
+  .letterpress;
+}
+
+button.transparent:after {
+  background: none;
+  border: none;
+}
+
+button.transparent.active {
+  border-radius: 2px;
+  border-bottom: 1px solid darken(@font-color, 40%);
+  .gradient;
+  .inset-shadow;
+}
+
+// this style makes the delete layer button look disabled when only one layer is left
+button.transparent:not(.active)[disabled] {
+  color: darken(@font-color, 40%);
+}
+
+input {
+  -webkit-user-select: text;
+}
+
+input[type="text"],
+input[type="number"],
+input[spellcheck="false"] {
+  background: #3a3a3a;
+  .inset-shadow;
+  border-top: none;
+  border-left: 1px solid #303030;
+  border-right: 1px solid #303030;
+  border-bottom: 1px solid #696969;
+  color: @font-color;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  position: relative;
+  outline: none;
+}
+
+input[type="text"][disabled],
+input[type="number"][disabled] {
+  color: @light;
+  -webkit-user-select: none;
+}
+
+input[type="number"] {
+  text-align: right;
+  width: 3.2em;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  outline: none;
+  height: 8px;
+  border-top: 1px solid #232323;
+  border-bottom: 1px solid #696969;
+  border-radius: 50px;
+  .gradient;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 11px;
+  height: 11px;
+  border-radius: 6px;
+  border: 1px solid @dark;
+  position: relative;
+  top: -1px;
+  background: lighten(@light, 10%);
+}
+
+input[type="color"] {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  background: #535353;
+  width: 30px;
+  height: 34px;
+  margin: 2px 0 2px 2px;
+}
+
+canvas {
+  background: transparent;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#app-loading {
+  width: 10em;
+  height: 2em;
+  line-height: 2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -1em;
+  margin-left: -5em;
+  text-align: center;
+}
+
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.window {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 30px;
+  width: auto;
+  height: auto;
+  transition-property: all;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0;
+  z-index: 0;
+}
+
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &.debug,
+  &.helper {
+    display: none;
+  }
+}
+
+.area {
+  position: absolute;
+  z-index: 1;
+
+  &.statusbar .bar {
+    margin-top: 2px;
+    line-height: 22px;
+    height: 22px;
+    width: 100%;
+    .gradient;
+
+    label {
+      margin: 0;
+      padding: 0 10px;
+      line-height: 22px;
+    }
+  }
+}
+
+.box {
+  width: 100%;
+  // float: left;
+  background: @light;
+  margin-left: 3px;
+}
+
+.colorswatch {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #777777;
+  display: inline-block;
+}
+
+.hint {
+  font-style: italic;
+}
+
+.foldable-handle {
+  position: relative;
+  padding-left: 15px;
+  cursor: pointer;
+
+  &:before {
+    font-family: Flaticon;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    color: darken(@font-color, 20%);
+    .icon-arrow-down;
+    font-size: 0.6em;
+  }
+
+  &.folded:before {
+    top: 3px;
+    .icon-arrow-right;
+  }
+}
+
+.tab {
+  position: relative;
+  display: inline-block;
+  height: 19px;
+  line-height: 18px;
+  border-right: 1px solid @dark;
+  padding-left: 1em;
+  background-color: #3c3c3c;
+  color: #a6a6a6;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid @dark;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    height: 0;
+    left: 1px;
+    right: 1px;
+    border-bottom: 1px solid #4a4a4a;
+    content: "";
+  }
+}
+
+.tab.active {
+  background-color: @light;
+  color: @font-color;
+  cursor: default;
+  border-bottom: 1px solid transparent;
+
+  &:before {
+    border-bottom: 1px solid #6a6a6a;
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    height: 0;
+    left: 1em;
+    right: 1em;
+    border-top: 1px solid #6a6a6a;
+    content: "";
+  }
+}
+
+.statusbar {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 25px;
+  border: 1px solid @dark;
+
+  &:after {
+    background: none;
+    height: 0;
+    border-bottom: 1px solid #3a3a3a;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -1px;
+    top: 0;
+    right: -1px;
+    pointer-events: none;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.GridCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000000;
+  opacity: 0.75;
+}
+
+.error {
+  color: red !important;
+}
+
+.color-picker {
+  background: @medium;
+  border: 1px solid @dark;
+  width: 170px;
+
+  & > div {
+    margin: 5px 10px;
+    position: relative;
+  }
+
+  .title {
+    border-bottom: 1px solid @dark;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 0 10px 0;
+    padding-left: 10px;
+    .gradient;
+  }
+
+  .hue {
+    height: 10px;
+    margin-bottom: 10px;
+  }
+
+  .saturation {
+    height: 150px;
+  }
+
+  .input {
+    height: 20px;
+    margin-top: 10px;
+
+    input {
+      box-sizing: border-box;
+      float: left;
+      width: 100%;
+    }
+  }
+}

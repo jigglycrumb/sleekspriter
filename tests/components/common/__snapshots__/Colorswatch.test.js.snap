@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Colorswatch should render correctly 1`] = `
+<div
+  class="colorswatch"
+  style="background:#ff0000"
+  title="#ff0000"
+/>
+`;
+
+exports[`Colorswatch should render with a background color 1`] = `
+<div
+  class="colorswatch"
+  style="background:#ff0000"
+  title="#ff0000"
+/>
+`;

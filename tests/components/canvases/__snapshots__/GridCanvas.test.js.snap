@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GridCanvas should render correctly 1`] = `
+<canvas
+  class="GridCanvas"
+  height="128"
+  style="width:128px;height:128px"
+  width="128"
+/>
+`;

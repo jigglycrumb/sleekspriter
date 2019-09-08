@@ -1,0 +1,93 @@
+Tools: Tools
+Preview: Preview
+Frames: Frames
+Frame: Frame
+Toggle Onion Skinning: Toggle Onion Skinning (${key})
+Onion Skinning: Onion Skinning
+Fixed: Fixed
+Onion is always frame: Onion is always frame
+Relative: Relative
+Onion is: Onion is
+frame: frame
+frames: frames
+ahead: ahead
+behind: behind
+Layers: Layers
+Show/hide layer: Show/hide layer
+Click to select layer: Click to select layer
+Click to rename layer: Click to rename layer
+Layer opacity: Layer opacity
+New layer above selected layer: New layer above selected layer
+Delete selected layer: Delete selected layer
+Brush Tool: Brush Tool (${key})
+Eraser Tool: Eraser Tool (${key})
+Eyedropper Tool: Eyedropper Tool (${key})
+Selection Tool: Selection Tool (${key})
+Paint Bucket Tool: Paint Bucket Tool (${key})
+Brightness Tool: Brightness Tool (${key})
+Move Tool: Move Tool (${key})
+Zoom Tool: Zoom Tool (${key})
+Confirmation needed: Confirmation needed
+Are you sure you want to delete the layer ${name}?: Are you sure you want to delete the layer ${name}?
+Delete layer: Delete layer
+Cancel: Cancel
+pixels: pixels
+Toggle grid: Toggle grid (${key})
+Undo: Undo (${key})
+Redo: Redo (${key})
+Click a pixel to erase it.: Click a pixel to erase it.
+Hex: Hex
+RGB: RGB
+transparent: transparent
+Click any non-transparent pixel to pick its color.: Click any non-transparent pixel to pick its color.
+Select some pixels to work with!: Select some pixels to work with!
+Lighten pixels: Lighten pixels
+Darken pixels: Darken pixels
+Make existing pixels brighter or darker with this brush.: Make existing pixels brighter or darker with this brush.
+Darken: Darken
+Lighten: Lighten
+by: by
+Move pixels of a layer by dragging.: Move pixels of a layer by dragging.
+Zoom in: Zoom in
+Zoom out: Zoom out
+Zoom ×: Zoom ×
+Fit to screen: Fit to screen
+A pixel in your sprite is now ${size} pixels on your screen.: A pixel in your sprite is now ${size} pixels on your screen.
+${palette} (${size} colours): ${palette} (${size} colours)
+Error: Error
+Cannot change an invisible or completely transparent layer.: Cannot change an invisible or completely transparent layer.
+Ok: Ok
+Import file: Import file
+Drop image here: Drop image here
+Frame size: Frame size
+${w} x ${h} px: ${w} x ${h} px
+Open file: Open file
+Paste the contents of your last save here: Paste the contents of your last save here
+Open: Open
+Save file: Save file
+Please copy everything below to a .txt file: Please copy everything below to a .txt file
+Duplicate frame: Duplicate frame
+Copy a frame with its layers to another frame.: Copy a frame with its layers to another frame.
+The target frame will be replaced.: The target frame will be replaced.
+Source: Source
+Target: Target
+About: About
+Created by: Created by
+Made with: Made with
+and a lot of: and a lot of
+Icons made by: Icons made by
+Icons from: Icons from
+licensed by: licensed by
+Settings: Settings
+Export: Export
+Save as: Save as
+Zoom: Zoom
+"Image size: ${w}x${h} pixels": "Image size: ${w}x${h} pixels"
+"Frame size: ${w}x${h} pixels": "Frame size: ${w}x${h} pixels"
+"Spritesheet size: ${w}x${h} pixels": "Spritesheet size: ${w}x${h} pixels"
+Spritesheet as single image: Spritesheet as single image
+Export finished: Export finished
+New file: New file
+as image: as image
+Replace color: Replace color
+Background: Background
