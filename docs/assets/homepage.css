@@ -55,11 +55,6 @@ section {
   letter-spacing: -1ch;
 }
 
-.control-button {
-  text-shadow: 0 2px #666;
-  /* font-family: "lunchtime_doubly_soregular", monospace; */
-}
-
 .browser-frame {
   background-image: url(browser-frame.png);
   background-repeat: no-repeat;
