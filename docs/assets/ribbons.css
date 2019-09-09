@@ -12,7 +12,7 @@
   z-index: -1;
   content: "";
   display: block;
-  border: 5px solid #a43306;
+  border: 5px solid #b08703;
 }
 
 .ribbon span {
@@ -20,7 +20,7 @@
   display: block;
   width: 225px;
   padding: 10px 0;
-  background-color: #dd4408;
+  background-color: #fcc71a;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   color: #fff;
   font: 700 28px/1 "VT323", monospace;

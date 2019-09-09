@@ -59,7 +59,7 @@
   .control-operator:nth-of-type(5):target
   ~ .controls
   .control-button:nth-of-type(5) {
-  color: #dd2608;
+  color: #dd4408;
 }
 
 .gallery .item:first-of-type {
@@ -720,23 +720,21 @@
 }
 
 .gallery .item {
-  margin-top: 80px;
+  margin-top: 30px;
   height: 850px;
   overflow: hidden;
   text-align: center;
 }
 
 .gallery .controls {
-  position: absolute;
-  top: 0;
-  width: 100%;
+  margin-top: 30px;
   text-align: center;
 }
 
 .gallery .control-button {
   display: inline-block;
   margin: 0 0.3em;
-  font-size: 1.75em;
+  font-size: 2em;
   text-align: center;
   text-decoration: none;
   -webkit-transition: color 0.1s;

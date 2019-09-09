@@ -11,7 +11,7 @@ body {
 }
 
 header {
-  height: 400px;
+  text-align: center;
 }
 
 main {
@@ -40,20 +40,13 @@ a:visited {
   color: #fcc71b;
 }
 
-.headline {
-  margin: 0 auto;
-  position: relative;
-  width: 32em;
+h1 {
+  font-size: 2.5em;
+  text-shadow: 0 2px #666;
 }
 
-.headline h1 {
-  position: absolute;
-}
-
-.headline h1.shadow {
-  color: #444444;
-  left: 2px;
-  top: 2px;
+.control-button {
+  text-shadow: 0 2px #666;
 }
 
 .browser-frame {
