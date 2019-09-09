@@ -3,12 +3,14 @@ body {
   color: #fcc71b;
   display: flex;
   flex-direction: column;
-  font-family: "VT323", monospace;
-  letter-spacing: 0.15em;
-  margin: 0;
+  font-family: "coolvilleregular", monospace;
+  margin: 0 auto;
+  width: 1066px;
 }
 
 header {
+  /* font-family: "silkscreennormal", monospace; */
+  font-family: "lunchtime_doubly_soregular", monospace;
   text-align: center;
 }
 
@@ -43,8 +45,19 @@ h1 {
   text-shadow: 0 2px #666;
 }
 
+section {
+  margin-bottom: 2em;
+  width: 954px;
+}
+
+.quote {
+  font-family: "zelda_dx_tt_brkregular";
+  letter-spacing: -1ch;
+}
+
 .control-button {
   text-shadow: 0 2px #666;
+  /* font-family: "lunchtime_doubly_soregular", monospace; */
 }
 
 .browser-frame {
