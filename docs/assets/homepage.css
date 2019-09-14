@@ -13,9 +13,37 @@ header {
   text-align: center;
 }
 
+nav {
+  font-size: 2em;
+}
+
+nav a {
+  text-decoration: none;
+  margin: 0 0.75em;
+}
+
+nav a.active {
+  color: #fca61b;
+  text-decoration: underline;
+}
+
 main {
-  height: 830px;
-  width: 100%;
+  height: 841px;
+  position: relative;
+  width: 1066px;
+}
+
+main .preview {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1066px;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+main .preview.active {
+  opacity: 1;
 }
 
 footer {
@@ -45,6 +73,10 @@ h1 {
   margin-block-start: 1em;
 }
 
+h2 {
+  color: #fca61b;
+}
+
 section {
   font-size: 1.5em;
   margin-bottom: 2em;
@@ -61,6 +93,11 @@ section li {
   margin-bottom: 0.3em;
 }
 
+section li.q {
+  color: #fca61b;
+  font-weight: bold;
+}
+
 section li:nth-of-type(even) {
   margin-bottom: 1.5em;
 }
@@ -74,7 +111,7 @@ section li:nth-of-type(even) {
   background-image: url(browser-frame.png);
   background-repeat: no-repeat;
   background-position: top left;
-  height: 100%;
+  height: 841px;
   margin: 0 auto;
   position: relative;
   width: 1066px;
@@ -97,6 +134,15 @@ section li:nth-of-type(even) {
   z-index: 1;
 }
 
+.browser-frame .standalone {
+  bottom: 20px;
+  color: #fca61b;
+  font-size: 1.5em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
 .generic-frame {
   height: 736px;
   margin: 26px auto 0 auto;
@@ -116,4 +162,16 @@ section li:nth-of-type(even) {
 
 .generic-frame iframe {
   border-radius: 5px;
+}
+
+#preview-browser {
+  z-index: 2;
+}
+
+#preview-desktop {
+  z-index: 1;
+}
+
+#preview-tablet {
+  z-index: 0;
 }
