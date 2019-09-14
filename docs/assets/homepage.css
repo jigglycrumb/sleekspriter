@@ -46,8 +46,23 @@ h1 {
 }
 
 section {
+  font-size: 1.5em;
   margin-bottom: 2em;
   width: 954px;
+}
+
+section ul {
+  line-height: 120%;
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+
+section li {
+  margin-bottom: 0.3em;
+}
+
+section li:nth-of-type(even) {
+  margin-bottom: 1.5em;
 }
 
 .quote {
