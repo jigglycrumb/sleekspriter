@@ -1,22 +1,27 @@
 const path = require("path");
 
 module.exports = [
-  // Add support for native node modules
   {
-    test: /\.node$/,
-    use: "node-loader"
+    test: /\.(css|less)$/,
+    include: path.resolve(__dirname, "src"),
+    use: [
+      {
+        loader: "style-loader",
+      },
+      {
+        loader: "css-loader",
+        options: {
+          sourceMap: true,
+        },
+      },
+      {
+        loader: "less-loader",
+        options: {
+          sourceMap: true,
+        },
+      },
+    ],
   },
-  {
-    test: /\.(m?js|node)$/,
-    parser: { amd: false },
-    use: {
-      loader: "@marshallofsound/webpack-asset-relocator-loader",
-      options: {
-        outputAssetBase: "native_modules"
-      }
-    }
-  },
-  // own rules
   {
     test: /\.worker\.js$/,
     include: path.resolve(__dirname, "src/workers"),
@@ -24,20 +29,20 @@ module.exports = [
       {
         loader: "worker-loader",
         options: {
-          name: "[hash].app-worker.js"
-        }
-      }
-    ]
+          name: "[hash].app-worker.js",
+        },
+      },
+    ],
   },
   {
     test: /\.(js|jsx)$/,
     exclude: /node_modules/,
-    use: "babel-loader"
+    use: "babel-loader",
   },
 
   {
     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-    use: ["file-loader"]
+    use: ["file-loader"],
   },
   {
     test: /\.(woff|woff2)$/,
@@ -47,10 +52,10 @@ module.exports = [
         options: {
           prefix: "font",
           mimetype: "application/font-woff",
-          limit: 10000
-        }
-      }
-    ]
+          limit: 10000,
+        },
+      },
+    ],
   },
   {
     test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
@@ -59,10 +64,10 @@ module.exports = [
         loader: "url-loader",
         options: {
           mimetype: "application/octet-stream",
-          limit: 10000
-        }
-      }
-    ]
+          limit: 10000,
+        },
+      },
+    ],
   },
   {
     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -71,10 +76,10 @@ module.exports = [
         loader: "url-loader",
         options: {
           mimetype: "image/svg+xml",
-          limit: 10000
-        }
-      }
-    ]
+          limit: 10000,
+        },
+      },
+    ],
   },
   {
     test: /\.png(\?v=\d+\.\d+\.\d+)?$/,
@@ -83,13 +88,13 @@ module.exports = [
         loader: "url-loader",
         options: {
           mimetype: "image/png",
-          limit: 10000
-        }
-      }
-    ]
+          limit: 10000,
+        },
+      },
+    ],
   },
   {
     test: /\.ya?ml$/,
-    use: ["json-loader", "yaml-loader"]
-  }
+    use: ["json-loader", "yaml-loader"],
+  },
 ];
