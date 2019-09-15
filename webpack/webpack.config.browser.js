@@ -1,25 +1,25 @@
-const ENV = "dev";
+const ENV = "browser";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
-const metadata = require("./metadata.json");
+
+const extensions = require("./webpack.extensions");
+const { base, path, src } = require("./webpack.paths");
 const rules = require("./webpack.rules.common");
 
-console.log('----------------------- rules ----------------------------', rules);
+const metadata = require("../metadata.json");
 
 const config = {
-  mode: "development",
-  devtool: "source-map",
-  context: path.resolve(__dirname, "."),
+  mode: "production",
+  context: base,
   entry: {
-    app: "./src/index.js",
+    app: path.resolve(src, "index.js"),
   },
   output: {
-    filename: "[name].[hash].js",
-    globalObject: "typeof self !== 'undefined' ? self : this", // fix for "window not defined" in workers
+    path: path.resolve(base, "build/browser"),
+    filename: "bundle.js",
   },
   resolve: {
-    extensions: [".less", ".css", ".worker.js", ".js", ".json", ".jsx"],
+    extensions,
   },
   plugins: [
     new HtmlWebpackPlugin({

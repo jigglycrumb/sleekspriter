@@ -1,9 +1,9 @@
-const path = require("path");
+const { src, workers } = require("./webpack.paths");
 
 module.exports = [
   {
     test: /\.(css|less)$/,
-    include: path.resolve(__dirname, "src"),
+    include: src,
     use: [
       {
         loader: "style-loader",
@@ -24,7 +24,7 @@ module.exports = [
   },
   {
     test: /\.worker\.js$/,
-    include: path.resolve(__dirname, "src/workers"),
+    include: workers,
     use: [
       {
         loader: "worker-loader",

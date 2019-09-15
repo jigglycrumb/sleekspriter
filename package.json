@@ -11,7 +11,7 @@
   "scripts": {
     "start": "concurrently npm:web:start npm:electron:start",
     "electron:start": "electron-forge start",
-    "web:start": "webpack-dev-server --config ./webpack.config.development.js",
+    "web:start": "webpack-dev-server --config ./webpack/webpack.config.development.js",
     "prettier": "prettier-eslint --list-different \"{src,tests,docs}/**/*.js\"",
     "prettier:fix": "prettier-eslint --write \"{src,tests}/**/*.js\"",
     "lint": "eslint \"./{src,tests}/**/*.js\"",
@@ -19,7 +19,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "concurrently npm:web:build",
-    "web:build": "webpack --config ./webpack.config.browser.js; ./scripts/update_homepage.sh",
+    "web:build": "webpack --config ./webpack/webpack.config.browser.js; ./scripts/update_homepage.sh",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish"
@@ -141,9 +141,9 @@
         [
           "@electron-forge/plugin-webpack",
           {
-            "mainConfig": "./webpack.config.electron-main.js",
+            "mainConfig": "./webpack/webpack.config.electron-main.js",
             "renderer": {
-              "config": "./webpack.config.electron-renderer.js",
+              "config": "./webpack/webpack.config.electron-renderer.js",
               "entryPoints": [
                 {
                   "html": "./src/index.html",
