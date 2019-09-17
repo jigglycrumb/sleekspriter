@@ -26,8 +26,6 @@
  * ```
  */
 
-// import './index.css';
-
 /* eslint-disable-next-line */
 import iconfont from "./fonts/flaticon";
 /* eslint-disable-next-line */
