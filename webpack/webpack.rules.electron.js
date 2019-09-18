@@ -1,3 +1,5 @@
+const { workers } = require("./webpack.paths");
+
 module.exports = [
   // Add support for native node modules
   {
@@ -13,5 +15,19 @@ module.exports = [
         outputAssetBase: "native_modules",
       },
     },
+  },
+  // Inline workers
+  {
+    test: /\.worker\.js$/,
+    include: workers,
+    use: [
+      {
+        loader: "worker-loader",
+        options: {
+          inline: true,
+          fallback: false,
+        },
+      },
+    ],
   },
 ];

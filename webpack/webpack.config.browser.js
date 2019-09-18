@@ -1,10 +1,14 @@
 const ENV = "browser";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const extensions = require("./webpack.extensions");
 const { base, path, src } = require("./webpack.paths");
-const rules = require("./webpack.rules.common");
+const commonRules = require("./webpack.rules.common");
+const browserRules = require("./webpack.rules.browser");
+
+const rules = browserRules.concat(commonRules);
 
 const metadata = require("../metadata.json");
 
@@ -22,6 +26,7 @@ const config = {
     extensions,
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       favicon: "src/assets/logo@x1.png",
       meta: {

@@ -7,10 +7,10 @@ echo "-------------------------------------------"
 echo "Updating Github page build"
 echo "-------------------------------------------"
 
-echo "Cleaning up docs folder"
+echo "Removing old app from docs folder"
 rm -rf $target_folder
 
-echo "Copying app to docs folder"
+echo "Copying new app to docs folder"
 cp -R ./build/browser $target_folder
 
 # TODO remove when logo is somewhat final

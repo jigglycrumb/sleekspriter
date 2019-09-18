@@ -4,11 +4,17 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const extensions = require("./webpack.extensions");
 const { base, src, path } = require("./webpack.paths");
-const rules = require("./webpack.rules.common");
+const commonRules = require("./webpack.rules.common");
+const browserRules = require("./webpack.rules.browser");
+
+const rules = browserRules.concat(commonRules);
 
 const metadata = require("../metadata.json");
 
-console.log('----------------------- rules ----------------------------', rules);
+console.log(
+  "----------------------- rules ----------------------------",
+  rules
+);
 
 const config = {
   mode: "development",

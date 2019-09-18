@@ -1,4 +1,4 @@
-const { src, workers } = require("./webpack.paths");
+const { src } = require("./webpack.paths");
 
 module.exports = [
   {
@@ -18,18 +18,6 @@ module.exports = [
         loader: "less-loader",
         options: {
           sourceMap: true,
-        },
-      },
-    ],
-  },
-  {
-    test: /\.worker\.js$/,
-    include: workers,
-    use: [
-      {
-        loader: "worker-loader",
-        options: {
-          name: "[hash].app-worker.js",
         },
       },
     ],
