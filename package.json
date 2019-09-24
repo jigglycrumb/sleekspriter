@@ -96,7 +96,7 @@
     "yaml-loader": "^0.5.0"
   },
   "dependencies": {
-    "@tweenjs/tween.js": "^18.1.2",
+    "@tweenjs/tween.js": "^18.3.1",
     "classnames": "^2.2.6",
     "crypto-js": "^3.1.9-1",
     "electron-squirrel-startup": "^1.0.0",
