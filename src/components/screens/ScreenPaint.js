@@ -130,13 +130,23 @@ class ScreenPaint extends React.Component {
   }
 
   registerLayerCanvas(layerId, canvas) {
-    // console.log("layer reg", layerId, canvas);
     this.layerCanvases[layerId] = canvas;
+
+    console.log("layer reg", {
+      layerId,
+      canvas,
+      layerCanvases: this.layerCanvases,
+    });
   }
 
   registerFrameCanvas(frame, canvas) {
-    // console.log("frame reg", frame, canvas);
     this.frameCanvases[frame] = canvas;
+
+    console.log("frame reg", {
+      frame,
+      canvas,
+      frameCanvases: this.frameCanvases,
+    });
   }
 
   registerPreviewCanvas(canvas) {

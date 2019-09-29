@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { t } from "../../utils";
 
+import logo from "../../assets/logo.png";
+
 class ScreenStart extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,9 @@ class ScreenStart extends React.Component {
       <section className="screen start">
         <div className="splash">
           <div className="inner">
-            <div className="logo">{APPNAME}</div>
+            <div className="logo">
+              <img src={logo} alt={APPNAME} />
+            </div>
             <ul>
               <li>
                 <a onClick={this.newFile}>{t("New file")}</a>
