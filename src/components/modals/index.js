@@ -5,15 +5,8 @@ export { default as ModalEditImageSize } from "./ModalEditImageSize";
 export {
   default as ModalErrorInvisibleLayer,
 } from "./ModalErrorInvisibleLayer";
-export { default as ModalImportFile } from "./ModalImportFile";
+export { default as ModalImportFile } from "platform-specific/ModalImportFile";
+export { default as ModalLoadFile } from "platform-specific/ModalLoadFile";
 export { default as ModalNewFile } from "./ModalNewFile";
 export { default as ModalReplaceColor } from "./ModalReplaceColor";
-
-// Temporary
-// TODO: Put this only into browser bundle
-export {
-  default as ModalLoadFile,
-} from "../platform-specific/browser/ModalLoadFile";
-export {
-  default as ModalSaveFile,
-} from "../platform-specific/browser/ModalSaveFile";
+export { default as ModalSaveFile } from "platform-specific/ModalSaveFile";

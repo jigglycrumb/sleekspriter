@@ -10,13 +10,11 @@ import {
 } from "../../state/actions";
 import { GridCanvas } from "../canvases";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    hide: () => dispatch(modalHide()),
-    fileCreate: (frames, pixels) => dispatch(fileCreate(frames, pixels)),
-    screenSelect: screen => dispatch(screenSelect(screen)),
-    zoomFit: size => dispatch(zoomFit(size)),
-  };
+const mapDispatchToProps = {
+  modalHide,
+  fileCreate,
+  screenSelect,
+  zoomFit,
 };
 
 class ModalNewFile extends React.Component {
@@ -110,7 +108,7 @@ class ModalNewFile extends React.Component {
         </div>
         <div className="actions">
           <button onClick={this.fileCreate}>Ok</button>
-          <button onClick={this.props.hide}>Cancel</button>
+          <button onClick={this.props.modalHide}>Cancel</button>
         </div>
       </div>
     );
@@ -126,7 +124,7 @@ class ModalNewFile extends React.Component {
 
   fileCreate() {
     this.props.fileCreate(this.state.frames, this.state.size);
-    this.props.hide();
+    this.props.modalHide();
     this.props.screenSelect("paint");
     this.props.zoomFit(this.state.size);
   }
@@ -134,7 +132,7 @@ class ModalNewFile extends React.Component {
 
 ModalNewFile.propTypes = {
   fileCreate: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
   screenSelect: PropTypes.func.isRequired,
   zoomFit: PropTypes.func.isRequired,
 };

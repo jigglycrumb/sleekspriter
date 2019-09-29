@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { t } from "../../utils";
-import meta from "../../../metadata";
 
 class ScreenStart extends React.Component {
   constructor(props) {
@@ -17,7 +16,7 @@ class ScreenStart extends React.Component {
       <section className="screen start">
         <div className="splash">
           <div className="inner">
-            <div className="logo">{meta.name}</div>
+            <div className="logo">{APPNAME}</div>
             <ul>
               <li>
                 <a onClick={this.newFile}>{t("New file")}</a>
@@ -29,7 +28,7 @@ class ScreenStart extends React.Component {
           </div>
         </div>
         <div className="area statusbar">
-          <div className="bar">{meta.version}</div>
+          <div className="bar">{VERSION}</div>
         </div>
       </section>
     );

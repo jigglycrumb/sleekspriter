@@ -38,14 +38,14 @@ const mapStateToProps = state => ({
   zoom: getExportZoom(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  setBackground: background => dispatch(exportBackground(background)),
-  setFormat: format => dispatch(exportFormat(format)),
-  setFrame: frame => dispatch(exportFrame(frame)),
-  setPart: part => dispatch(exportPart(part)),
-  setStatus: status => dispatch(exportStatus(status)),
-  setZoom: zoom => dispatch(exportZoom(zoom)),
-});
+const mapDispatchToProps = {
+  exportBackground,
+  exportFormat,
+  exportFrame,
+  exportPart,
+  exportStatus,
+  exportZoom,
+};
 
 export default connect(
   mapStateToProps,

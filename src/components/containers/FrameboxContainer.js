@@ -29,12 +29,12 @@ const mapStateToProps = state => ({
   totalFrames: getTotalFrames(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  frameSelect: frame => dispatch(frameSelect(frame)),
-  onionFrame: (mode, frame) => dispatch(onionFrame(mode, frame)),
-  onionMode: mode => dispatch(onionMode(mode)),
-  onionToggle: () => dispatch(onionToggle()),
-});
+const mapDispatchToProps = {
+  frameSelect,
+  onionFrame,
+  onionMode,
+  onionToggle,
+};
 
 export default connect(
   mapStateToProps,

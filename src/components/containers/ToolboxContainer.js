@@ -26,9 +26,7 @@ const mapStateToProps = state => ({
   tool: getTool(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  toolSelect: tool => dispatch(toolSelect(tool)),
-});
+const mapDispatchToProps = { toolSelect };
 
 class ToolboxContainer extends React.Component {
   render() {

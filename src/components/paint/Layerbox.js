@@ -29,7 +29,7 @@ class Layerbox extends React.Component {
 
             return (
               <LayerboxLayer
-                key={`layer-${i}`}
+                key={layer.id}
                 layer={layer}
                 layerCount={this.props.layers.length}
                 pixels={pixels}

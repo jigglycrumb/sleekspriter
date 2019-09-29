@@ -1,4 +1,4 @@
-const { workers } = require("./webpack.paths");
+const { workers } = require("../webpack.paths");
 
 module.exports = [
   // Add support for native node modules

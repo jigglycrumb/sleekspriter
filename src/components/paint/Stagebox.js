@@ -46,6 +46,7 @@ class Stagebox extends React.Component {
     this.worker.onmessage = m => {
       document.getElementById("ScreenBlocker").style.display = "none";
       this.props.pixelsAdd(this.props.frame, this.props.layer, m.data);
+      this.props.fileDirty(true);
     };
 
     this.worker.onfail = e => {
@@ -73,12 +74,8 @@ class Stagebox extends React.Component {
     if (w > centerAreaWidth) style.left = 0;
     else style.left = (centerAreaWidth - w) / 2;
 
-    // if (style.left < 5) style.left = 5;
-
     if (h > centerAreaHeight) style.top = 0;
     else style.top = (centerAreaHeight - h) / 2;
-
-    // if (style.top < 5) style.top = 5;
 
     const cssClasses = classnames({
       checkerboard: !this.props.image,
@@ -311,6 +308,7 @@ class Stagebox extends React.Component {
         case "BrushTool":
         case "BrightnessTool":
           this.props.pixelsAdd(this.props.frame, this.props.layer, this.pixels);
+          this.props.fileDirty(true);
           this.pixels = {};
           break;
         case "EraserTool":
@@ -320,6 +318,7 @@ class Stagebox extends React.Component {
             this.pixels,
             this.props.pixels
           );
+          this.props.fileDirty(true);
           this.pixels = {};
           break;
         case "MoveTool":
@@ -511,15 +510,20 @@ class Stagebox extends React.Component {
   endMoveTool() {
     const { frame, layer, pixels, selection, size } = this.props;
     const distance = this.getMouseDownDistance();
-    // pixels = this.getLayerPixels(this.props.layer);
-    const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
 
-    // move pixels
-    this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
+    if (distance.x !== 0 && distance.y !== 0) {
+      // pixels = this.getLayerPixels(this.props.layer);
+      const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
 
-    // move selection
-    if (selectionIsActive(selection)) {
-      this.props.selectionMove(distance);
+      // move pixels
+      this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
+
+      // move selection
+      if (selectionIsActive(selection)) {
+        this.props.selectionMove(distance);
+      }
+
+      this.props.fileDirty(true);
     }
 
     // reset styles set by MoveTool preview
@@ -667,6 +671,7 @@ Stagebox.propTypes = {
   externalFrameCanvases: PropTypes.object,
   externalPreviewCanvas: PropTypes.object,
   externalLayerCanvases: PropTypes.object.isRequired,
+  fileDirty: PropTypes.func.isRequired,
   frame: PropTypes.number.isRequired,
   grid: PropTypes.bool.isRequired,
   image: PropTypes.bool.isRequired,

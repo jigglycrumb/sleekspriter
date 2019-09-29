@@ -14,9 +14,4 @@ const mapStateToProps = state => ({
   size: getFileSize(state),
 });
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Previewbox);
+export default connect(mapStateToProps)(Previewbox);

@@ -13,11 +13,7 @@ const mapStateToProps = state => ({
   layers: getFrameLayersZSorted(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-  load: json => dispatch(fileLoad(json)),
-  zoomFit: size => dispatch(zoomFit(size)),
-});
+const mapDispatchToProps = { fileLoad, modalHide, zoomFit };
 
 class ModalLoadFile extends React.Component {
   constructor(props) {
@@ -39,7 +35,7 @@ class ModalLoadFile extends React.Component {
         />
         <div className="actions">
           <button onClick={this.loadFile}>{t("Open")}</button>
-          <button onClick={this.props.hide}>{t("Cancel")}</button>
+          <button onClick={this.props.modalHide}>{t("Cancel")}</button>
         </div>
       </div>
     );
@@ -62,8 +58,8 @@ class ModalLoadFile extends React.Component {
 
     if (json) {
       const state = fileToState(json);
-      this.props.load(state);
-      this.props.hide();
+      this.props.fileLoad(state);
+      this.props.modalHide();
       this.props.zoomFit(state.size);
     } else {
       this.jsonInput.focus();
@@ -72,8 +68,8 @@ class ModalLoadFile extends React.Component {
 }
 
 ModalLoadFile.propTypes = {
-  hide: PropTypes.func.isRequired,
-  load: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
+  fileLoad: PropTypes.func.isRequired,
   zoomFit: PropTypes.func.isRequired,
 };
 

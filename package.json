@@ -1,7 +1,6 @@
 {
   "name": "sleekspriter",
-  "productName": "sleekspriter",
-  "longname": "SleekSpriter",
+  "productName": "SleekSpriter",
   "version": "0.2.17",
   "description": "A pixel art editor",
   "private": true,
@@ -10,19 +9,19 @@
   "license": "All rights reserved",
   "scripts": {
     "start": "concurrently npm:web:start npm:electron:start",
-    "electron:start": "electron-forge start",
-    "web:start": "webpack-dev-server --config ./webpack/webpack.config.development.js",
+    "build": "concurrently npm:web:build npm:electron:make",
     "prettier": "prettier-eslint --list-different \"{src,tests,docs}/**/*.js\"",
     "prettier:fix": "prettier-eslint --write \"{src,tests}/**/*.js\"",
     "lint": "eslint \"./{src,tests}/**/*.js\"",
     "lint:fix": "eslint \"./{src,tests}/**/*.js\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "concurrently npm:web:build",
+    "web:start": "webpack-dev-server --config ./webpack/webpack.config.development.js",
     "web:build": "webpack --config ./webpack/webpack.config.browser.js; ./scripts/update_homepage.sh",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "electron:start": "electron-forge start",
+    "electron:make": "electron-forge make",
+    "electron:publish": "electron-forge publish",
+    "electron:package": "electron-forge package"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -102,6 +101,8 @@
     "crypto-js": "^3.1.9-1",
     "electron-squirrel-startup": "^1.0.0",
     "gif.js": "^0.2.0",
+    "image-size": "^0.8.2",
+    "image-type": "^4.1.0",
     "lodash": "^4.17.15",
     "mousetrap": "^1.6.3",
     "prop-types": "^15.7.2",
@@ -147,7 +148,7 @@
               "config": "./webpack/webpack.config.electron-renderer.js",
               "entryPoints": [
                 {
-                  "html": "./src/index.html",
+                  "html": "./src/assets/index.html",
                   "js": "./src/renderer.js",
                   "name": "main_window"
                 }

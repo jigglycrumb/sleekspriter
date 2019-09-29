@@ -1,4 +1,4 @@
-const { src } = require("./webpack.paths");
+const { src } = require("../webpack.paths");
 
 module.exports = [
   {

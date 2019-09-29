@@ -12,6 +12,10 @@ import ScreenExportContainer from "../containers/ScreenExportContainer";
 import { ScreenBlocker } from "../screens";
 import { Hotkeys } from "../../classes";
 
+import { setWindowTitle } from "../../utils";
+
+console.log(`Greetings! Running ${APPNAME} ${VERSION} in ${PLATFORM}`);
+
 class App extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.screen !== this.props.screen) {
@@ -23,6 +27,9 @@ class App extends React.Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize, false);
     Hotkeys.bind(this.props.screen);
+    if (PLATFORM === "electron") {
+      setWindowTitle(false, false);
+    }
   }
 
   componentWillUnmount() {
@@ -32,6 +39,7 @@ class App extends React.Component {
   render() {
     const windowClasses = classnames({
       window: true,
+      [PLATFORM]: true,
       [this.props.screen]: true,
     });
 

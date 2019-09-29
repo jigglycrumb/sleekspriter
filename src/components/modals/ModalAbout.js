@@ -6,21 +6,17 @@ import { t } from "../../utils";
 import { modalHide } from "../../state/actions";
 import logo from "../../assets/logo@x2.png";
 
-import meta from "../../../metadata";
-
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-});
+const mapDispatchToProps = { modalHide };
 
 const ModalAbout = props => {
   return (
     <div className="dialog">
-      <div className="title">{`${t("About")} ${meta.name}`}</div>
+      <div className="title">{`${t("About")} ${APPNAME}`}</div>
       <div className="text">
         <div className="about-window">
           <div className="credits">
             <img src={logo} />
-            <div>{meta.version}</div>
+            <div>{VERSION}</div>
             <br />
 
             <h2>
@@ -29,7 +25,7 @@ const ModalAbout = props => {
                 target="_blank"
                 href="http://hpcodecraft.me"
                 rel="noopener noreferrer">
-                {meta.author}
+                {AUTHOR}
               </a>
             </h2>
             <br />
@@ -217,14 +213,14 @@ const ModalAbout = props => {
         </div>
       </div>
       <div className="actions">
-        <button onClick={props.hide}>{t("Ok")}</button>
+        <button onClick={props.modalHide}>{t("Ok")}</button>
       </div>
     </div>
   );
 };
 
 ModalAbout.propTypes = {
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
 };
 
 export default connect(

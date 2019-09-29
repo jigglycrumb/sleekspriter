@@ -30,16 +30,15 @@ const mapStateToProps = state => ({
   brightnessTool: getBrightnessTool(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  brightnessToolIntensity: intensity =>
-    dispatch(brightnessToolIntensity(intensity)),
-  brightnessToolMode: mode => dispatch(brightnessToolMode(mode)),
-  brushColor: color => dispatch(brushColor(color)),
-  zoomFit: fileSize => dispatch(zoomFit(fileSize)),
-  zoomIn: () => dispatch(zoomIn()),
-  zoomOut: () => dispatch(zoomOut()),
-  zoomSelect: zoom => dispatch(zoomSelect(zoom)),
-});
+const mapDispatchToProps = {
+  brightnessToolIntensity,
+  brightnessToolMode,
+  brushColor,
+  zoomIn,
+  zoomOut,
+  zoomSelect,
+  zoomFit,
+};
 
 const ToolContainer = props => {
   const ToolComponent = components[props.tool];

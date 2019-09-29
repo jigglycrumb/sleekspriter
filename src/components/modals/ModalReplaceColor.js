@@ -25,31 +25,7 @@ const mapStateToProps = state => ({
   size: getFileSize(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-  colorReplace: (
-    color,
-    newColor,
-    scope,
-    frame,
-    layer,
-    selection,
-    size,
-    pixels
-  ) =>
-    dispatch(
-      colorReplace(
-        color,
-        newColor,
-        scope,
-        frame,
-        layer,
-        selection,
-        size,
-        pixels
-      )
-    ),
-});
+const mapDispatchToProps = { colorReplace, modalHide };
 
 class ModalReplaceColor extends React.Component {
   constructor(props) {
@@ -128,7 +104,7 @@ class ModalReplaceColor extends React.Component {
         </div>
         <div className="actions">
           <button onClick={() => this.replaceColor()}>{t("Ok")}</button>
-          <button onClick={this.props.hide}>{t("Cancel")}</button>
+          <button onClick={this.props.modalHide}>{t("Cancel")}</button>
         </div>
       </div>
     );
@@ -146,7 +122,7 @@ class ModalReplaceColor extends React.Component {
     const { color, newColor, scope } = this.state;
     const {
       colorReplace,
-      hide,
+      modalHide,
       pixels,
       frame,
       layer,
@@ -154,13 +130,13 @@ class ModalReplaceColor extends React.Component {
       size,
     } = this.props;
     colorReplace(color, newColor, scope, frame, layer, selection, size, pixels);
-    hide();
+    modalHide();
   }
 }
 
 ModalReplaceColor.propTypes = {
   colorReplace: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
   palette: PropTypes.array.isRequired,
   pixels: PropTypes.object,
   frame: PropTypes.number.isRequired,

@@ -32,6 +32,11 @@ const state = {
         visible: false,
         dialog: null,
       },
+      file: {
+        folder: false,
+        name: false,
+        dirty: false,
+      },
     },
     paint: {
       brightnessTool: {

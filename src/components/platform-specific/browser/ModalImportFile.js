@@ -2,15 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { t, fileToState } from "../../utils";
-import { modalHide, fileLoad } from "../../state/actions";
-import { GridCanvas } from "../canvases";
-import ImportWorker from "../../workers/import";
+import { t, fileToState } from "../../../utils";
+import { fileLoad, modalHide, zoomFit } from "../../../state/actions";
+import { GridCanvas } from "../../canvases";
+import ImportWorker from "../../../workers/import";
 
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-  load: json => dispatch(fileLoad(json)),
-});
+const mapDispatchToProps = { fileLoad, modalHide, zoomFit };
 
 class ModalImportFile extends React.Component {
   constructor(props) {
@@ -40,8 +37,12 @@ class ModalImportFile extends React.Component {
     this.worker.onmessage = m => {
       // worker returns JSON like a saved *.pixels file,
       // so we'll treat it like a regular file load
-      this.props.load(fileToState(m.data));
-      this.props.hide();
+      this.props.fileLoad(fileToState(m.data));
+      this.props.zoomFit({
+        width: this.state.image.width,
+        height: this.state.image.height,
+      });
+      this.props.modalHide();
       document.getElementById("ScreenBlocker").style.display = "none";
     };
 
@@ -146,7 +147,7 @@ class ModalImportFile extends React.Component {
           <button onClick={this.import} disabled={okButtonDisabled}>
             {t("Ok")}
           </button>
-          <button onClick={this.props.hide}>{t("Cancel")}</button>
+          <button onClick={this.props.modalHide}>{t("Cancel")}</button>
         </div>
       </div>
     );
@@ -178,16 +179,16 @@ class ModalImportFile extends React.Component {
             dummy.src = data;
             dummy.onload = () => {
               // remove file name extension
-              let fileName = file.name.split(".");
-              fileName.pop();
-              fileName = fileName.join(".");
+              let name = file.name.split(".");
+              name.pop();
+              name = name.join(".");
 
               self.setState({
                 image: {
                   width: dummy.naturalWidth,
                   height: dummy.naturalHeight,
-                  name: fileName,
-                  data: data,
+                  name,
+                  data,
                 },
               });
             };
@@ -260,8 +261,9 @@ class ModalImportFile extends React.Component {
 }
 
 ModalImportFile.propTypes = {
-  hide: PropTypes.func.isRequired,
-  load: PropTypes.func.isRequired,
+  fileLoad: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
+  zoomFit: PropTypes.func.isRequired,
 };
 
 export default connect(

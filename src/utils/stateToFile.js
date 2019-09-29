@@ -12,7 +12,7 @@ const stateToFile = state => {
       Object.keys(pixels[frame][layer]).map(x => {
         Object.keys(pixels[frame][layer][x]).map(y => {
           const { r, g, b, a } = pixels[frame][layer][x][y];
-          mappedPixels.push([+layer, +x, +y, r, g, b, a]);
+          mappedPixels.push([+layer, +x, +y, r, g, b, +a]);
         });
       });
     });

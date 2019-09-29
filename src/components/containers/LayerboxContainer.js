@@ -32,19 +32,17 @@ const mapStateToProps = state => ({
   size: getFileSize(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  layerAdd: (newLayerId, frame, layer, layers) =>
-    dispatch(layerAdd(newLayerId, frame, layer, layers)),
-  layerMoveDown: (frame, layer, z) => dispatch(layerMoveDown(frame, layer, z)),
-  layerMoveUp: (frame, layer, z) => dispatch(layerMoveUp(frame, layer, z)),
-  layerName: (layer, name) => dispatch(layerName(layer, name)),
-  layerOpacity: (layer, opacity) => dispatch(layerOpacity(layer, opacity)),
-  layerSelect: layer => dispatch(layerSelect(layer)),
-  layerSelectTop: layers => dispatch(layerSelectTop(layers)),
-  layerVisibility: (layer, visible) =>
-    dispatch(layerVisibility(layer, visible)),
-  modalShow: modal => dispatch(modalShow(modal)),
-});
+const mapDispatchToProps = {
+  layerAdd,
+  layerMoveDown,
+  layerMoveUp,
+  layerName,
+  layerOpacity,
+  layerSelect,
+  layerSelectTop,
+  layerVisibility,
+  modalShow,
+};
 
 export default connect(
   mapStateToProps,

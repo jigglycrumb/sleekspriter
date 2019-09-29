@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import { t } from "../../utils";
 import { modalHide } from "../../state/actions";
 
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-});
+const mapDispatchToProps = { modalHide };
 
 const ModalErrorInvisibleLayer = props => {
   return (
@@ -17,14 +15,14 @@ const ModalErrorInvisibleLayer = props => {
         {t("Cannot change an invisible or completely transparent layer.")}
       </div>
       <div className="actions">
-        <button onClick={props.hide}>{t("Ok")}</button>
+        <button onClick={props.modalHide}>{t("Ok")}</button>
       </div>
     </div>
   );
 };
 
 ModalErrorInvisibleLayer.propTypes = {
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
 };
 
 export default connect(

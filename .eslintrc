@@ -42,7 +42,7 @@
       }
     ],
     "linebreak-style": ["error", "unix"],
-    "no-console": ["error", { "allow": ["error", "warn", "log"] }],
+    "no-console": ["warn", { "allow": ["error", "warn", "info"] }],
     "no-self-assign": "off",
     "no-template-curly-in-string": "off",
     "no-unused-vars": "warn",
@@ -81,6 +81,10 @@
     "console": false,
     "module": false,
     "require": false,
-    "onmessage": false
+    "onmessage": false,
+    "APPNAME": true,
+    "AUTHOR": true,
+    "PLATFORM": true,
+    "VERSION": true
   }
 }

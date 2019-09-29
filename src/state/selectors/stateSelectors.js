@@ -6,6 +6,7 @@ export const getExportPart = state => state.ui.export.part;
 export const getExportStatus = state => state.ui.export.status;
 export const getExportZoom = state => state.ui.export.zoom;
 
+export const getFileData = state => state.file.present;
 export const getFileFrames = state => state.file.present.frames;
 export const getFileLayers = state => state.file.present.layers;
 export const getFilePixels = state => state.file.present.pixels;
@@ -25,5 +26,6 @@ export const getSpritePalette = state => state.ui.paint.spritePalette;
 export const getTool = state => state.ui.paint.tool;
 export const getZoom = state => state.ui.paint.zoom;
 
+export const getFile = state => state.ui.app.file;
 export const getModal = state => state.ui.app.modal;
 export const getScreen = state => state.ui.app.screen;

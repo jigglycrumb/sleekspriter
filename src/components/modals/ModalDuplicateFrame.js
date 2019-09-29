@@ -18,11 +18,7 @@ const mapStateToProps = state => ({
   totalFrames: getTotalFrames(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  frameDuplicate: (layers, source, target, nextLayerId) =>
-    dispatch(frameDuplicate(layers, source, target, nextLayerId)),
-  hide: () => dispatch(modalHide()),
-});
+const mapDispatchToProps = { frameDuplicate, modalHide };
 
 class ModalDuplicateFrame extends React.Component {
   state = {
@@ -75,7 +71,7 @@ class ModalDuplicateFrame extends React.Component {
             disabled={this.state.error}>
             {t("Ok")}
           </button>
-          <button onClick={this.props.hide}>{t("Cancel")}</button>
+          <button onClick={this.props.modalHide}>{t("Cancel")}</button>
         </div>
       </div>
     );
@@ -98,14 +94,14 @@ class ModalDuplicateFrame extends React.Component {
         this.props.nextLayerId
       );
     }
-    this.props.hide();
+    this.props.modalHide();
   }
 }
 
 ModalDuplicateFrame.propTypes = {
   frame: PropTypes.number.isRequired,
   frameDuplicate: PropTypes.func.isRequired,
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
   layers: PropTypes.array.isRequired,
   nextLayerId: PropTypes.number.isRequired,
   totalFrames: PropTypes.number.isRequired,

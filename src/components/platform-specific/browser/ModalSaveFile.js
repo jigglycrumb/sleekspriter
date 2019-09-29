@@ -12,9 +12,7 @@ const mapStateToProps = state => ({
   file: state.file.present,
 });
 
-const mapDispatchToProps = dispatch => ({
-  hide: () => dispatch(modalHide()),
-});
+const mapDispatchToProps = { modalHide };
 
 class ModalSaveFile extends React.Component {
   componentDidMount() {
@@ -41,7 +39,7 @@ class ModalSaveFile extends React.Component {
           autoFocus
         />
         <div className="actions">
-          <button onClick={this.props.hide}>{t("Ok")}</button>
+          <button onClick={this.props.modalHide}>{t("Ok")}</button>
         </div>
       </div>
     );
@@ -50,7 +48,7 @@ class ModalSaveFile extends React.Component {
 
 ModalSaveFile.propTypes = {
   file: PropTypes.object.isRequired,
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
 };
 
 export default connect(

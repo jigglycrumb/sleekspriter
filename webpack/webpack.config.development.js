@@ -1,15 +1,24 @@
-const ENV = "dev";
+const PLATFORM = "browser";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const extensions = require("./webpack.extensions");
 const { base, src, path } = require("./webpack.paths");
-const commonRules = require("./webpack.rules.common");
-const browserRules = require("./webpack.rules.browser");
+const getPlugins = require("./webpack.plugins");
+const commonRules = require("./rules/common");
+const browserRules = require("./rules/browser");
 
 const rules = browserRules.concat(commonRules);
 
-const metadata = require("../metadata.json");
+const plugins = [
+  new CleanWebpackPlugin(),
+  new HtmlWebpackPlugin({
+    favicon: "src/assets/logo@x1.png",
+    template: "src/assets/index.html",
+  }),
+  ...getPlugins(PLATFORM),
+];
 
 console.log(
   "----------------------- rules ----------------------------",
@@ -28,18 +37,15 @@ const config = {
     globalObject: "typeof self !== 'undefined' ? self : this", // fix for "window not defined" in workers
   },
   resolve: {
+    alias: {
+      "platform-specific": path.resolve(
+        src,
+        `components/platform-specific/${PLATFORM}`
+      ),
+    },
     extensions,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      favicon: "src/assets/logo@x1.png",
-      meta: {
-        author: metadata.author,
-      },
-      template: "src/index.ejs",
-      title: metadata.name,
-    }),
-  ],
+  plugins,
   target: "web",
   devServer: {
     historyApiFallback: true,
@@ -50,11 +56,9 @@ const config = {
 };
 
 console.info("----------------------------------------");
-console.info(`Starting build for ENV ${ENV}`);
+console.info(`Starting build for platform ${PLATFORM}`);
 console.info("----------------------------------------");
-
-console.log("");
-
+console.info("");
 console.info("--- Webpack config ---------------------");
 console.info(config);
 console.info("----------------------------------------");

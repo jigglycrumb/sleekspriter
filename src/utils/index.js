@@ -12,6 +12,7 @@ export { default as inArray } from "./inArray";
 export { default as insideBounds } from "./insideBounds";
 export { default as mergeLayerPixels } from "./mergeLayerPixels";
 export { default as selectionIsActive } from "./selectionIsActive";
+export { default as setWindowTitle } from "./setWindowTitle";
 export { default as stateToFile } from "./stateToFile";
 export { default as t } from "./translate";
 export { default as zSorter } from "./zSorter";

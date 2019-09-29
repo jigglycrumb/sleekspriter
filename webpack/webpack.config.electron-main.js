@@ -1,6 +1,6 @@
 const { src, path } = require("./webpack.paths");
-const commonRules = require("./webpack.rules.common");
-const electronRules = require("./webpack.rules.electron");
+const commonRules = require("./rules/common");
+const electronRules = require("./rules/electron");
 
 const rules = electronRules.concat(commonRules);
 

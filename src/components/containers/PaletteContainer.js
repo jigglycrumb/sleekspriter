@@ -13,10 +13,7 @@ const mapStateToProps = state => ({
   selected: getPalette(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  paletteSelect: palette => dispatch(paletteSelect(palette)),
-  brushColor: color => dispatch(brushColor(color)),
-});
+const mapDispatchToProps = { brushColor, paletteSelect };
 
 const PaletteContainer = props => {
   const { selected, spritePalette, brushColor, paletteSelect } = props;

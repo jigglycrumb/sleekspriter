@@ -19,11 +19,7 @@ const mapStateToProps = state => ({
   pixels: getFilePixels(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  layerDelete: (frame, layer, allPixels) =>
-    dispatch(layerDelete(frame, layer, allPixels)),
-  hide: () => dispatch(modalHide()),
-});
+const mapDispatchToProps = { layerDelete, modalHide };
 
 class ModalConfirmDeleteLayer extends React.Component {
   constructor(props) {
@@ -44,7 +40,7 @@ class ModalConfirmDeleteLayer extends React.Component {
         </div>
         <div className="actions">
           <button onClick={this.layerDelete}>{t("Delete layer")}</button>
-          <button onClick={this.props.hide}>{t("Cancel")}</button>
+          <button onClick={this.props.modalHide}>{t("Cancel")}</button>
         </div>
       </div>
     );
@@ -56,10 +52,10 @@ class ModalConfirmDeleteLayer extends React.Component {
       frame,
       layer: { id },
       pixels,
-      hide,
+      modalHide,
     } = this.props;
     layerDelete(frame, id, pixels);
-    hide();
+    modalHide();
   }
 }
 
@@ -68,7 +64,7 @@ ModalConfirmDeleteLayer.propTypes = {
   frame: PropTypes.number.isRequired,
   layer: layerShape.isRequired,
   pixels: PropTypes.object,
-  hide: PropTypes.func.isRequired,
+  modalHide: PropTypes.func.isRequired,
 };
 
 export default connect(
