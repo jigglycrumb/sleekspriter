@@ -9,8 +9,8 @@ class Palette extends React.Component {
     this.swatchWidth = 28;
     this.swatchCount = props.colors.length;
 
-    this.scrollLeft = this.scrollLeft.bind(this);
-    this.scrollRight = this.scrollRight.bind(this);
+    this.handleScrollLeft = this.handleScrollLeft.bind(this);
+    this.handleScrollRight = this.handleScrollRight.bind(this);
   }
 
   render() {
@@ -19,7 +19,7 @@ class Palette extends React.Component {
         <button
           ref={n => (this.buttonScrollLeft = n)}
           className="scroll left"
-          onClick={this.scrollLeft}>
+          onClick={this.handleScrollLeft}>
           <i className="flaticon-arrow85" />
         </button>
         <div ref={n => (this.outer = n)} className="outer">
@@ -39,7 +39,7 @@ class Palette extends React.Component {
         <button
           ref={n => (this.buttonScrollRight = n)}
           className="scroll right"
-          onClick={this.scrollRight}>
+          onClick={this.handleScrollRight}>
           <i className="flaticon-mini7" />
         </button>
       </div>
@@ -86,7 +86,7 @@ class Palette extends React.Component {
     if (this.outer) this.outer.scrollLeft = x;
   }
 
-  scrollLeft() {
+  handleScrollLeft() {
     const ow = this.getOuterWidth();
     const scroll = this.getScrollPosition();
     const swatchesVisible = Math.floor(ow / this.swatchWidth);
@@ -96,7 +96,7 @@ class Palette extends React.Component {
     this.scrollTo(target);
   }
 
-  scrollRight() {
+  handleScrollRight() {
     const ow = this.getOuterWidth();
     const scroll = this.getScrollPosition();
     const swatchesVisible = Math.floor(ow / this.swatchWidth);
@@ -117,8 +117,8 @@ class Palette extends React.Component {
     new TWEEN.Tween(from)
       .to(to, 200)
       .easing(TWEEN.Easing.Sinusoidal.InOut)
-      .onUpdate(function() {
-        self.setScrollPosition(this.position);
+      .onUpdate(function({ position }) {
+        self.setScrollPosition(position);
       })
       .onComplete(function() {
         tweenComplete = true;
