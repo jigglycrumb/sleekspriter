@@ -40,7 +40,7 @@ class ScreenExport extends React.Component {
       format !== "jpeg" ? null : (
         <ExportBackgroundSelection
           background={background}
-          setBackground={this.props.setBackground}
+          setBackground={this.props.exportBackground}
         />
       );
 
@@ -50,8 +50,8 @@ class ScreenExport extends React.Component {
           frame={frame}
           part={part}
           totalFrames={totalFrames}
-          setFrame={this.props.setFrame}
-          setPart={this.props.setPart}
+          setFrame={this.props.exportFrame}
+          setPart={this.props.exportPart}
         />
       );
 
@@ -66,12 +66,12 @@ class ScreenExport extends React.Component {
               part={part}
               zoom={zoom}
               size={size}
-              setZoom={this.props.setZoom}
+              setZoom={this.props.exportZoom}
             />
             <ExportFormatSelection
               format={format}
               part={part}
-              setFormat={this.props.setFormat}
+              setFormat={this.props.exportFormat}
             />
             {backgroundSelection}
             <ExportButton export={this.export} />
@@ -93,7 +93,7 @@ class ScreenExport extends React.Component {
         </div>
 
         <div className="area statusbar">
-          <ExportStatus status={status} setStatus={this.props.setStatus} />
+          <ExportStatus status={status} setStatus={this.props.exportStatus} />
         </div>
       </section>
     );
@@ -115,28 +115,28 @@ class ScreenExport extends React.Component {
     downloadLink.click();
     document.body.removeChild(downloadLink);
 
-    this.props.setStatus(t("Export finished"));
+    this.props.exportStatus(t("Export finished"));
   }
 }
 
 ScreenExport.propTypes = {
   background: PropTypes.string.isRequired,
+  exportBackground: PropTypes.func.isRequired,
+  exportFormat: PropTypes.func.isRequired,
+  exportFrame: PropTypes.func.isRequired,
+  exportPart: PropTypes.func.isRequired,
+  exportStatus: PropTypes.func.isRequired,
+  exportZoom: PropTypes.func.isRequired,
   frame: PropTypes.number.isRequired,
   frames: framesShape.isRequired,
   format: PropTypes.string.isRequired,
   layers: PropTypes.array.isRequired,
   part: PropTypes.string.isRequired,
   pixels: PropTypes.object.isRequired,
-  setBackground: PropTypes.func.isRequired,
-  setFormat: PropTypes.func.isRequired,
-  setFrame: PropTypes.func.isRequired,
-  setPart: PropTypes.func.isRequired,
-  setStatus: PropTypes.func.isRequired,
-  setZoom: PropTypes.func.isRequired,
   size: sizeShape.isRequired,
   status: PropTypes.string.isRequired,
-  zoom: PropTypes.number.isRequired,
   totalFrames: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired,
 };
 
 export default ScreenExport;
