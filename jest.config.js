@@ -1,12 +1,14 @@
 module.exports = {
   verbose: true,
   moduleNameMapper: {
+    "^platform-specific(.*)$":
+      "<rootDir>/src/components/platform-specific/browser$1.js",
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|yml)$":
       "<rootDir>/tests/__mocks__/fileMock.js",
     "\\.(css|less|sass|scss)$": "<rootDir>/tests/__mocks__/styleMock.js",
   },
   moduleFileExtensions: ["worker.js", "js", "json"],
-  moduleDirectories: ["node_modules", "app/node_modules"],
+  moduleDirectories: ["node_modules"],
   modulePaths: ["src"],
   setupFiles: [
     "<rootDir>/tests/__setup__/enzyme",

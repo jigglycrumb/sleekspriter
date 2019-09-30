@@ -6,7 +6,7 @@ exports[`App should render correctly 1`] = `
 >
   <Connect(Menu) />
   <div
-    className="window start"
+    className="window browser start"
   >
     <Connect(ScreenStart) />
   </div>

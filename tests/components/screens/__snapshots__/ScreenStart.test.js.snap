@@ -13,7 +13,10 @@ exports[`ScreenStart should render correctly 1`] = `
       <div
         class="logo"
       >
-        SleekSpriter
+        <img
+          alt="SleekSpriter"
+          src="test-file-stub"
+        />
       </div>
       <ul>
         <li>
@@ -35,7 +38,7 @@ exports[`ScreenStart should render correctly 1`] = `
     <div
       class="bar"
     >
-      0.2.16
+      0.2.17
     </div>
   </div>
 </section>
