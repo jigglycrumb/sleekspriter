@@ -7,7 +7,7 @@ import { inArray } from "../../../utils";
 
 import { fileDefaultPath, save } from "./utils";
 
-const { app, Menu } = remote;
+const { app, dialog, Menu } = remote;
 
 const MenuComponent = props => {
   const { file, fileDirty, modalShow, screenSelect } = props;
@@ -83,19 +83,37 @@ const MenuComponent = props => {
         label: "Close",
         accelerator: "CmdOrCtrl+W",
         click: () => {
+          const messageBoxConfig = {
+            type: "question",
+            buttons: ["Save", "Don't save", "Cancel"],
+            title: "Unsaved changes",
+            message:
+              "Do you want to save your changes before the file is closed?",
+            defaultId: 0,
+            cancelId: 2,
+          };
+
+          let dialogInput = messageBoxConfig.defaultId;
+
           if (file.dirty) {
-            if (file.folder && file.name) {
-              // save
-              const filePath = fileDefaultPath(file);
-              save(filePath, props.data, error => console.error(error));
-              // set not dirty
-              fileDirty(false);
-            } else {
-              modalShow("ModalSaveFile");
+            dialogInput = dialog.showMessageBoxSync(messageBoxConfig);
+
+            if (dialogInput === messageBoxConfig.defaultId) {
+              if (file.folder && file.name) {
+                // save
+                const filePath = fileDefaultPath(file);
+                save(filePath, props.data, error => console.error(error));
+                // set not dirty
+                fileDirty(false);
+              } else {
+                modalShow("ModalSaveFile");
+              }
             }
           }
 
-          screenSelect("start");
+          if (dialogInput !== messageBoxConfig.cancelId) {
+            screenSelect("start");
+          }
         },
       },
     ],
