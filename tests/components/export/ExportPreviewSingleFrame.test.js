@@ -6,6 +6,7 @@ describe("ExportPreviewSingleFrame", () => {
     props = {
       format: "png",
       frame: 1,
+      layers: [],
       size: { width: 16, height: 16 },
       pixels: {},
       zoom: 1,

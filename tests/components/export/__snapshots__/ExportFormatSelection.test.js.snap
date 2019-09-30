@@ -9,15 +9,15 @@ exports[`ExportFormatSelection should render correctly 1`] = `
     <li>
       <select>
         <option
+          value="jpg"
+        >
+          jpg
+        </option>
+        <option
           selected=""
           value="png"
         >
           png
-        </option>
-        <option
-          value="jpeg"
-        >
-          jpg
         </option>
       </select>
     </li>

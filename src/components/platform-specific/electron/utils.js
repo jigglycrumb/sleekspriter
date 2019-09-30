@@ -12,10 +12,8 @@ export const save = (path, contents, errorHandler) => {
   });
 };
 
-export const load = path => {};
-
 export const fileInfoFromPath = path => {
-  const fileName = basename(path, config.fileExtension); // the file name without extension, e.g. "coin"
+  const fileName = basename(path, "." + config.fileExtension); // the file name without extension, e.g. "coin"
   const folder = dirname(path); // the complete absolute folder (same as path without the file name)
 
   return {
@@ -24,8 +22,10 @@ export const fileInfoFromPath = path => {
   };
 };
 
-export const fileDefaultPath = file => {
-  return file.folder && file.name
-    ? `${file.folder}/${file.name}${config.fileExtension}`
-    : `${config.defaultFolder}/${config.defaultName}${config.fileExtension}`;
+export const fileDefaultPath = (file, extension) => {
+  const folder = file.folder || config.defaultFolder;
+  const name = file.name || config.defaultName;
+  const ext = extension || config.fileExtension;
+
+  return `${folder}/${name}.${ext}`; // TODO: use platform-independent folder seperator
 };

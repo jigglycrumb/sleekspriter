@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { FrameCanvas } from "../canvases";
+import { exportFormats } from "../../const";
 import { sizeShape } from "../../shapes";
 
 const ExportPreviewSingleFrame = ({
@@ -16,14 +17,14 @@ const ExportPreviewSingleFrame = ({
 }) => {
   const classes = {
     preview: true,
-    checkerboard: !!(format === "png" || format === "gif"),
+    checkerboard: !!(format === exportFormats.png || format === "gif"),
   };
   const style = {
     width: size.width * zoom,
     height: size.height * zoom,
   };
 
-  background = format === "jpeg" ? background : null;
+  background = format === exportFormats.jpg ? background : null;
 
   return (
     <div className={classnames(classes)} style={style}>

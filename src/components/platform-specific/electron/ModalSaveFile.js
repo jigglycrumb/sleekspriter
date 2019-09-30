@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { remote } from "electron";
 
-import { t } from "../../../utils"; // TODO translations
 import { fileDirty, fileInfo, modalHide } from "../../../state/actions";
 
 import { getFile, getFileData } from "../../../state/selectors";

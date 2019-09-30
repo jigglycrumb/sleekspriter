@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 
 import { SpritesheetCanvas } from "../canvases";
+import { exportFormats } from "../../const";
 import { sizeShape, framesShape } from "../../shapes";
 
 const ExportPreviewSpritesheet = ({
@@ -16,14 +17,14 @@ const ExportPreviewSpritesheet = ({
 }) => {
   const classes = {
     preview: true,
-    checkerboard: !!(format === "png" || format === "gif"),
+    checkerboard: !!(format === exportFormats.png || format === "gif"),
   };
   const style = {
     width: frames.x * size.width * zoom,
     height: frames.y * size.height * zoom,
   };
 
-  background = format === "jpeg" ? background : null;
+  background = format === exportFormats.jpg ? background : null;
 
   return (
     <div className={classnames(classes)} style={style}>

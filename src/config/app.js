@@ -3,7 +3,7 @@ const config = {
   defaultName: "unnamed",
   fileEncryptionSecret:
     "61d1a52a671076b2f4894be9472cf46e202fa36cd95bd86bacc4e0be7c87a6e2",
-  fileExtension: ".pixels",
+  fileExtension: "pixels",
   offset: {
     top: PLATFORM === "electron" ? 0 : 40,
     right: 228,
