@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { sizeShape, framesShape } from "../../shapes";
+import config from "../../config";
 import { t } from "../../utils";
 
 import {
@@ -35,6 +36,8 @@ class ScreenExport extends React.Component {
       zoom,
       totalFrames,
     } = this.props;
+
+    console.log(this.props.file);
 
     const backgroundSelection =
       format !== "jpeg" ? null : (
@@ -101,7 +104,11 @@ class ScreenExport extends React.Component {
 
   export() {
     // TODO this is currently browser-only
-    const { format } = this.props;
+    const { file, format } = this.props;
+
+    const fileName = file.name || config.defaultName;
+    const folder = file.folder ? `${file.folder}` : "";
+
     const canvas = document
       .getElementById("ExportPreview")
       .querySelectorAll("canvas")[0];
@@ -109,7 +116,9 @@ class ScreenExport extends React.Component {
     const downloadLink = document.createElement("a");
 
     downloadLink.href = img;
-    downloadLink.download = `my-pixels.${format === "jpeg" ? "jpg" : format}`; // TODO name file?
+    downloadLink.download = `${folder}${fileName}.${
+      format === "jpeg" ? "jpg" : format
+    }`; // TODO name file?
 
     document.body.appendChild(downloadLink);
     downloadLink.click();
@@ -127,6 +136,7 @@ ScreenExport.propTypes = {
   exportPart: PropTypes.func.isRequired,
   exportStatus: PropTypes.func.isRequired,
   exportZoom: PropTypes.func.isRequired,
+  file: PropTypes.object.isRequired,
   frame: PropTypes.number.isRequired,
   frames: framesShape.isRequired,
   format: PropTypes.string.isRequired,

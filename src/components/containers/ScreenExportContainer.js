@@ -7,6 +7,7 @@ import {
   getExportStatus,
   getExportZoom,
   getFileFrames,
+  getFile,
   getFileLayers,
   getFilePixels,
   getFileSize,
@@ -26,6 +27,7 @@ import { ScreenExport } from "../screens";
 
 const mapStateToProps = state => ({
   background: getExportBackground(state),
+  file: getFile(state),
   format: getExportFormat(state),
   frame: getExportFrame(state),
   frames: getFileFrames(state),

@@ -86,6 +86,7 @@ class ModalLoadFile extends React.Component {
         this.props.zoomFit(state.size);
       }
 
+      this.props.modalHide();
       document.getElementById("ScreenBlocker").style.display = "none";
     });
   };
