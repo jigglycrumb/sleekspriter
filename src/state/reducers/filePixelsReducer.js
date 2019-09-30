@@ -90,8 +90,8 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
     case "PIXELS_PASTE": {
       const { frame, layer, pixels } = action;
       const px = get(state, [frame, layer], {});
-      const newPx = _.merge(px, pixels);
-      return assoc(state, [frame, layer], newPx);
+      const newPixels = { ..._.merge(px, pixels) };
+      return assoc(state, [frame, layer], newPixels);
     }
 
     case "PIXELS_CUT":
