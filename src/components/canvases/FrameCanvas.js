@@ -210,7 +210,7 @@ FrameCanvas.propTypes = {
   clear: PropTypes.func.isRequired,
   clearSinglePixel: PropTypes.func.isRequired,
   fitToSize: PropTypes.func.isRequired,
-  layers: PropTypes.array,
+  layers: PropTypes.array.isRequired,
   maxSize: PropTypes.number,
   noMargin: PropTypes.bool,
   paintSinglePixel: PropTypes.func.isRequired,
