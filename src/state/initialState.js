@@ -27,7 +27,7 @@ const state = {
   },
   ui: {
     app: {
-      screen: "start",
+      screen: "paint",
       modal: {
         visible: false,
         dialog: null,

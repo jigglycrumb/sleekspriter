@@ -32,6 +32,7 @@ class ScreenPaint extends React.Component {
 
     this.layerCanvases = {};
     this.frameCanvases = {};
+
     // this.previewCanvas = null;
   }
 
@@ -132,21 +133,21 @@ class ScreenPaint extends React.Component {
   registerLayerCanvas(layerId, canvas) {
     this.layerCanvases[layerId] = canvas;
 
-    console.log("layer reg", {
-      layerId,
-      canvas,
-      layerCanvases: this.layerCanvases,
-    });
+    // console.log("layer reg", {
+    //   layerId,
+    //   canvas,
+    //   layerCanvases: this.layerCanvases,
+    // });
   }
 
   registerFrameCanvas(frame, canvas) {
     this.frameCanvases[frame] = canvas;
 
-    console.log("frame reg", {
-      frame,
-      canvas,
-      frameCanvases: this.frameCanvases,
-    });
+    // console.log("frame reg", {
+    //   frame,
+    //   canvas,
+    //   frameCanvases: this.frameCanvases,
+    // });
   }
 
   registerPreviewCanvas(canvas) {

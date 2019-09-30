@@ -629,38 +629,50 @@ class Stagebox extends React.Component {
 
   instantPaintPixel(pixel) {
     // paint pixel live
+
+    // stage layer
     const stageLayerCanvas = this.layers[this.props.layer].layerCanvas
       .decoratedCanvas;
     stageLayerCanvas.paintPixel(pixel);
 
+    // layerbox
     const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
       .decoratedCanvas;
     layerBoxCanvas.paintPixel(pixel);
 
+    // preview
     const previewCanvas = this.props.externalPreviewCanvas.decoratedCanvas;
     previewCanvas.paintPixel(pixel);
 
-    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame]
-      .decoratedCanvas;
-    frameboxCanvas.paintPixel(pixel);
+    // framebox
+    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame];
+    if (frameboxCanvas) {
+      frameboxCanvas.decoratedCanvas.paintPixel(pixel);
+    }
   }
 
   instantClearPixel(pixel) {
     // clear pixel live
+
+    // stage layer
     const layerCanvas = this.layers[this.props.layer].layerCanvas
       .decoratedCanvas;
     layerCanvas.clearPixel(pixel);
 
+    // layerbox layer
     const layerBoxCanvas = this.props.externalLayerCanvases[this.props.layer]
       .decoratedCanvas;
     layerBoxCanvas.clearPixel(pixel);
 
+    // preview
     const previewCanvas = this.props.externalPreviewCanvas.decoratedCanvas;
     previewCanvas.clearPixel(pixel);
 
-    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame]
-      .decoratedCanvas;
-    frameboxCanvas.clearPixel(pixel);
+    // framebox
+    const frameboxCanvas = this.props.externalFrameCanvases[this.props.frame];
+    if (frameboxCanvas) {
+      frameboxCanvas.decoratedCanvas.clearPixel(pixel);
+    }
   }
 }
 

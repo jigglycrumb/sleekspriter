@@ -49,7 +49,7 @@ class LayerCanvas extends React.Component {
   }
 
   paint() {
-    this.props.clear();
+    this.props.clear(this.canvas);
 
     if (undefined !== this.props.pixels) {
       const xValues = Object.keys(this.props.pixels || {}); // TODO: pixels shouldn't be null here

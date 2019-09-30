@@ -49,7 +49,7 @@ class SpritesheetCanvas extends React.Component {
   }
 
   paint() {
-    this.props.clear();
+    this.props.clear(this.canvas);
 
     const { background } = this.props;
     const canvas = this.canvas;

@@ -32,7 +32,7 @@ class StageboxSelectionCanvas extends React.Component {
   }
 
   tick() {
-    this.props.clear();
+    this.props.clear(this.canvas);
 
     switch (this.props.tool) {
       case "RectangularSelectionTool":
@@ -60,7 +60,7 @@ class StageboxSelectionCanvas extends React.Component {
   }
 
   drawSelection(start, end) {
-    this.props.clear();
+    this.props.clear(this.canvas);
 
     const canvas = this.canvas;
     const zoom = this.props.zoom;

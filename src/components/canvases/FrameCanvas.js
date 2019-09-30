@@ -41,12 +41,10 @@ class FrameCanvas extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("FrameCanvas mount!", this.props);
     this.paint();
   }
 
   componentDidUpdate() {
-    // console.log("FrameCanvas update!");
     this.paint();
   }
 
@@ -71,8 +69,7 @@ class FrameCanvas extends React.Component {
   }
 
   paint() {
-    // console.log("FrameCanvas paint!", this.canvas, this.props.pixels);
-    this.props.clear();
+    this.props.clear(this.canvas);
 
     if (this.props.background) {
       const canvas = this.canvas;

@@ -24,13 +24,6 @@ class Previewbox extends React.Component {
       maxSize = maxHeight; // scale to height
     }
 
-    let pixels;
-    try {
-      pixels = this.props.pixels[this.props.frame];
-    } catch (e) {
-      pixels = null;
-    }
-
     return (
       <FrameCanvas
         ref={n => (this.previewCanvas = n)}
@@ -39,7 +32,7 @@ class Previewbox extends React.Component {
         size={this.props.size}
         maxSize={maxSize}
         noMargin
-        pixels={pixels}
+        pixels={this.props.pixels}
       />
     );
   }
@@ -48,7 +41,7 @@ class Previewbox extends React.Component {
 Previewbox.propTypes = {
   frame: PropTypes.number.isRequired,
   layers: PropTypes.array.isRequired,
-  pixels: PropTypes.object.isRequired,
+  pixels: PropTypes.object,
   registerPreviewCanvas: PropTypes.func.isRequired,
   size: sizeShape.isRequired,
 };

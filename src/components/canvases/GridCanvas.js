@@ -25,7 +25,7 @@ class GridCanvas extends React.Component {
   }
 
   componentDidUpdate() {
-    this.props.clear();
+    this.props.clear(this.canvas);
     this.drawGrid();
   }
 

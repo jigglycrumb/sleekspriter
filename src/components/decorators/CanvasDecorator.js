@@ -30,13 +30,6 @@ function CanvasDecorator(DecoratedComponent) {
       );
     }
 
-    clear() {
-      if (this.decoratedCanvas) {
-        const canvas = this.decoratedCanvas.canvas;
-        canvas.width = canvas.width;
-      }
-    }
-
     fitToSize(size, noMargin) {
       if (undefined === this.props.size) {
         console.warn(
@@ -80,6 +73,11 @@ function CanvasDecorator(DecoratedComponent) {
       ctx.globalAlpha = alpha;
       ctx.fillStyle = color;
       ctx.fillRect(cX, cY, scale, scale);
+    }
+
+    clear(canvas) {
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     clearSinglePixel(canvas, size, x, y) {
