@@ -107,7 +107,8 @@ class ScreenExport extends React.Component {
     const { file, format } = this.props;
 
     const fileName = file.name || config.defaultName;
-    const folder = file.folder ? `${file.folder}` : "";
+    // const folder = file.folder ? `${file.folder}` : "";
+    const folder = "";
 
     const canvas = document
       .getElementById("ExportPreview")
