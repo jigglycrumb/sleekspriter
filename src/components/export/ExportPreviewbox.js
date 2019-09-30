@@ -41,16 +41,21 @@ const ExportPreviewbox = ({
       break;
 
     case "frame":
-      preview = (
-        <ExportPreviewSingleFrame
-          background={background}
-          format={format}
-          frame={frame}
-          size={size}
-          pixels={pixels}
-          zoom={zoom}
-        />
-      );
+      {
+        const frameLayers = layers.filter(layer => layer.frame === frame);
+
+        preview = (
+          <ExportPreviewSingleFrame
+            background={background}
+            format={format}
+            frame={frame}
+            layers={frameLayers}
+            size={size}
+            pixels={pixels}
+            zoom={zoom}
+          />
+        );
+      }
       break;
 
     case "animation":

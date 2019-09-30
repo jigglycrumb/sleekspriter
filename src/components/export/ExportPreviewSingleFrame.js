@@ -9,6 +9,7 @@ const ExportPreviewSingleFrame = ({
   background,
   format,
   frame,
+  layers,
   size,
   pixels,
   zoom,
@@ -27,11 +28,12 @@ const ExportPreviewSingleFrame = ({
   return (
     <div className={classnames(classes)} style={style}>
       <FrameCanvas
+        background={background}
         frame={frame}
+        layers={layers}
+        pixels={pixels[frame] || null}
         size={size}
         zoom={zoom}
-        pixels={pixels[frame] || null}
-        background={background}
       />
     </div>
   );
@@ -41,6 +43,7 @@ ExportPreviewSingleFrame.propTypes = {
   background: PropTypes.string,
   format: PropTypes.string.isRequired,
   frame: PropTypes.number.isRequired,
+  layers: PropTypes.array.isRequired,
   pixels: PropTypes.object.isRequired,
   size: sizeShape.isRequired,
   zoom: PropTypes.number.isRequired,
