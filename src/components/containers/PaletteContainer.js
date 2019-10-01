@@ -17,9 +17,8 @@ const mapDispatchToProps = { brushColor, paletteSelect };
 
 const PaletteContainer = props => {
   const { selected, spritePalette, brushColor, paletteSelect } = props;
+  palettes[0].colors = spritePalette;
   const palette = palettes[selected];
-
-  if (selected === 0) palette.colors = spritePalette;
 
   return (
     <div className="palette">

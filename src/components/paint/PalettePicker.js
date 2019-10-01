@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import { t } from "../../utils";
 
 class PalettePicker extends React.Component {
+  state = {
+    showPalettes: false,
+  };
+
   componentDidMount() {
     document.addEventListener("mousedown", this.handleOutsideClick, false);
   }
@@ -21,35 +25,37 @@ class PalettePicker extends React.Component {
         <i className="icon flaticon-color1" />
         <i className="switch-arrow flaticon-little9" />
         <div className="name">{this.props.palette.short}</div>
-        <ul ref={n => (this.paletteList = n)} className="list">
-          {this.props.palettes.map(function(palette, i) {
-            return (
-              <li key={i} data-palette={i} onClick={this.handlePaletteSelect}>
-                {t("${palette} (${size} colours)", {
-                  palette: palette.title,
-                  size: palette.colors.length,
-                })}
-              </li>
-            );
-          }, this)}
-        </ul>
+        {this.state.showPalettes && (
+          <ul className="list">
+            {this.props.palettes.map(function(palette, i) {
+              return (
+                <li key={i} data-palette={i} onClick={this.handlePaletteSelect}>
+                  {t("${palette} (${size} colours)", {
+                    palette: palette.title,
+                    size: palette.colors.length,
+                  })}
+                </li>
+              );
+            }, this)}
+          </ul>
+        )}
       </div>
     );
   }
 
   handlePalettesShow = () => {
-    this.paletteList.style.display = "block";
+    this.setState({ showPalettes: true });
   };
 
   handlePalettesHide = () => {
-    this.paletteList.style.display = "none";
+    this.setState({ showPalettes: false });
   };
 
   handlePaletteSelect = e => {
     e.stopPropagation();
     const palette = e.currentTarget.getAttribute("data-palette");
-    this.handlePalettesHide();
     this.props.paletteSelect(palette);
+    this.handlePalettesHide();
   };
 
   handleOutsideClick = e => {
