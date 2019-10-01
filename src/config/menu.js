@@ -63,7 +63,7 @@ const getDefaultMenuConfig = props => {
       },
       {
         label: "Delete",
-        accelerator: "Delete",
+        accelerator: "Backspace",
         click: () => {
           const scopedPixels = getPixelsInScope(
             frame,

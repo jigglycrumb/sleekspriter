@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { t, stateToFile } from "../../../utils";
+import { getFileData } from "../../../state/selectors";
 import { modalHide } from "../../../state/actions";
 import { AES } from "crypto-js";
 import config from "../../../config";
 const { fileEncryptionSecret } = config;
 
 const mapStateToProps = state => ({
-  file: state.file.present,
+  file: getFileData(state),
 });
 
 const mapDispatchToProps = { modalHide };
