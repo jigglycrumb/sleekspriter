@@ -45,6 +45,7 @@ export const fileCreate = (frames, size) => ({
 export const fileDirty = dirty => ({ type: "FILE_DIRTY", dirty });
 export const fileInfo = (folder, name) => ({ type: "FILE_INFO", folder, name });
 export const fileLoad = json => ({ type: "FILE_LOAD", json });
+export const fileSave = () => ({ type: "FILE_SAVE" });
 export const fileSize = (frames, size) => ({ type: "FILE_SIZE", frames, size });
 export const frameDuplicate = (layers, source, target, nextLayerId) => ({
   type: "FRAME_DUPLICATE",

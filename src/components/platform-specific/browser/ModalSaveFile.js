@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { t, stateToFile } from "../../../utils";
 import { getFileData } from "../../../state/selectors";
-import { modalHide } from "../../../state/actions";
+import { fileSave, modalHide } from "../../../state/actions";
 import { AES } from "crypto-js";
 import config from "../../../config";
 const { fileEncryptionSecret } = config;
@@ -13,12 +13,13 @@ const mapStateToProps = state => ({
   file: getFileData(state),
 });
 
-const mapDispatchToProps = { modalHide };
+const mapDispatchToProps = { fileSave, modalHide };
 
 class ModalSaveFile extends React.Component {
   componentDidMount() {
     this.jsonInput.focus();
     this.jsonInput.select();
+    this.props.fileSave();
   }
 
   render() {
@@ -49,6 +50,7 @@ class ModalSaveFile extends React.Component {
 
 ModalSaveFile.propTypes = {
   file: PropTypes.object.isRequired,
+  fileSave: PropTypes.func.isRequired,
   modalHide: PropTypes.func.isRequired,
 };
 

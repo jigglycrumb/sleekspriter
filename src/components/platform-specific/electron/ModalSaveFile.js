@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { remote } from "electron";
 
-import { fileDirty, fileInfo, modalHide } from "../../../state/actions";
+import {
+  fileDirty,
+  fileInfo,
+  fileSave,
+  modalHide,
+} from "../../../state/actions";
 
 import { getFile, getFileData } from "../../../state/selectors";
 
@@ -16,7 +21,7 @@ const mapStateToProps = state => ({
   file: getFile(state),
 });
 
-const mapDispatchToProps = { fileDirty, fileInfo, modalHide };
+const mapDispatchToProps = { fileDirty, fileInfo, fileSave, modalHide };
 
 class ModalSaveFile extends React.Component {
   componentDidMount() {
@@ -30,10 +35,11 @@ class ModalSaveFile extends React.Component {
     if (filePath) {
       const { fileName, folder } = fileInfoFromPath(filePath);
 
-      save(filePath, this.props.data, this.handleError);
-
+      this.props.fileSave();
       this.props.fileDirty(false);
       this.props.fileInfo(folder, fileName);
+
+      save(filePath, this.props.data, this.handleError);
     }
 
     this.props.modalHide();
@@ -54,6 +60,7 @@ ModalSaveFile.propTypes = {
   file: PropTypes.object.isRequired,
   fileDirty: PropTypes.func.isRequired,
   fileInfo: PropTypes.func.isRequired,
+  fileSave: PropTypes.func.isRequired,
   modalHide: PropTypes.func.isRequired,
 };
 

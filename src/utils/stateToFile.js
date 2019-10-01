@@ -2,11 +2,11 @@
 // TODO: add animations
 
 const stateToFile = state => {
-  let { frames, layers, pixels, size } = state;
+  const { frames, layers, meta, pixels, size } = state;
 
-  layers = layers.map(layerToFile);
-
+  const mappedLayers = layers.map(layerToFile);
   const mappedPixels = [];
+
   Object.keys(pixels).map(frame => {
     Object.keys(pixels[frame]).map(layer => {
       Object.keys(pixels[frame][layer]).map(x => {
@@ -19,9 +19,10 @@ const stateToFile = state => {
   });
 
   return {
+    meta,
     size: [size.width, size.height],
     frames: [frames.x, frames.y],
-    layers,
+    layers: mappedLayers,
     pixels: mappedPixels,
   };
 };

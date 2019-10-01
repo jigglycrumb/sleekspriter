@@ -7,6 +7,7 @@ export const getExportStatus = state => state.ui.export.status;
 export const getExportZoom = state => state.ui.export.zoom;
 
 export const getFileData = state => state.file.present;
+export const getFileMeta = state => state.file.present.meta; // not used yet
 export const getFileFrames = state => state.file.present.frames;
 export const getFileLayers = state => state.file.present.layers;
 export const getFilePixels = state => state.file.present.pixels;

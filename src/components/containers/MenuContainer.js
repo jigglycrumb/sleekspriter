@@ -3,6 +3,7 @@ import Menu from "platform-specific/Menu";
 
 import {
   fileDirty,
+  fileSave,
   frameFlipHorizontal,
   frameFlipVertical,
   frameRotate,
@@ -52,6 +53,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   fileDirty,
+  fileSave,
   frameFlipHorizontal,
   frameFlipVertical,
   frameRotate,

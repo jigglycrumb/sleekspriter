@@ -1,7 +1,16 @@
+const now = new Date().toISOString();
+
 const state = {
   file: {
     past: [],
     present: {
+      meta: {
+        version: 1,
+        created: now,
+        updated: now,
+        author: "",
+        homepage: "",
+      },
       frames: {
         x: 3,
         y: 2,

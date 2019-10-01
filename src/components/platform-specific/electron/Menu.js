@@ -10,9 +10,7 @@ import { fileDefaultPath, save } from "./utils";
 const { app, dialog, Menu } = remote;
 
 const MenuComponent = props => {
-  const { file, fileDirty, modalShow, screenSelect } = props;
-
-  // console.log("file", file);
+  const { file, fileDirty, fileSave, modalShow, screenSelect } = props;
 
   const {
     appMenu,
@@ -54,11 +52,13 @@ const MenuComponent = props => {
         accelerator: "CmdOrCtrl+S",
         click: () => {
           if (file.folder && file.name) {
+            // update meta timestamp
+            fileSave();
+            // set not dirty
+            fileDirty(false);
             // save
             const filePath = fileDefaultPath(file);
             save(filePath, props.data, error => console.error(error));
-            // set not dirty
-            fileDirty(false);
           } else {
             modalShow("ModalSaveFile");
           }

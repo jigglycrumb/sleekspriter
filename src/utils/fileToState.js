@@ -2,7 +2,7 @@
 // TODO: add animations
 
 const fileToState = file => {
-  let { frames, layers, pixels, size } = file;
+  let { meta, frames, layers, pixels, size } = file;
 
   layers = layers.map(layerToState);
 
@@ -33,6 +33,7 @@ const fileToState = file => {
   });
 
   return {
+    meta,
     frames: {
       x: frames[0],
       y: frames[1],
