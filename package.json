@@ -1,7 +1,7 @@
 {
   "name": "sleekspriter",
   "productName": "SleekSpriter",
-  "version": "0.2.18",
+  "version": "0.2.19",
   "description": "A pixel art editor",
   "private": true,
   "main": ".webpack/main",

@@ -35,6 +35,12 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       };
     case "BRUSH_COLOR":
       return { ...state, color: action.color };
+    case "COLOR_REPLACE": {
+      // NOTE: this is not 100% accurate but the nearest solution without replaying the color replace here
+      // or creating an action of its own for it
+      const spritePalette = _.uniq([...state.spritePalette, action.newColor]);
+      return { ...state, spritePalette };
+    }
     case "FILE_CREATE":
       return {
         ...state,
