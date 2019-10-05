@@ -51,7 +51,11 @@ class ColorswatchPicker extends React.Component {
               <Saturation {...this.props} />
             </div>
             <div className="input">
-              <EditableInput value={hex} onChange={this.props.onChange} />
+              <EditableInput
+                value={hex}
+                label="hex"
+                onChange={this.props.onChange}
+              />
             </div>
           </div>
         )}
