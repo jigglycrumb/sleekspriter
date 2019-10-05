@@ -27,7 +27,7 @@ const config = {
     app: path.resolve(src, "index.js"),
   },
   output: {
-    path: path.resolve(base, "build/browser"),
+    path: path.resolve(base, "out/browser"),
     filename: "bundle.js",
   },
   resolve: {
