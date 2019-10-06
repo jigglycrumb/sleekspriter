@@ -45,8 +45,9 @@ class ScreenPaint extends React.Component {
     return (
       <section
         className="screen paint"
-        onDragOver={this.handleCancel}
-        onDrop={this.handleDrop}>
+        // onDragOver={this.handleCancel}
+        // onDrop={this.handleDrop}
+      >
         <div className="area top">
           <ToolContainer />
         </div>
