@@ -24,9 +24,11 @@
     </header>
 
     <nav>
-      <a href="#browser" data-platform="browser" class="active">browser</a>
-      <a href="#desktop" data-platform="desktop">desktop</a>
-      <a href="#tablet" data-platform="tablet">tablet</a>
+      <a id="nav-browser" href="#browser" data-platform="browser" class="active"
+        >browser</a
+      >
+      <a id="nav-desktop" href="#desktop" data-platform="desktop">desktop</a>
+      <a id="nav-tablet" href="#tablet" data-platform="tablet">tablet</a>
     </nav>
 
     <main>
@@ -59,49 +61,82 @@
       </div>
     </main>
 
-    <section>
+    <section class="features">
+      <h2>Features</h2>
+      <ul>
+        <li>Fullscreen mode</li>
+        <li>Different tools like eraser, paintbucket, selections etc</li>
+        <li>Keyboard shortcuts</li>
+        <li>11 built-in color palettes of old school systems</li>
+        <li>Spritesheets with multiple frames</li>
+        <li>Unlimited layers</li>
+        <li>Onion skinning</li>
+        <li>Import from JPG and PNG</li>
+        <li>Export single frames or the whole spritesheet</li>
+        <li>Export to JPG or PNG, zoom exported art up to 50 times</li>
+        <li>And more, just scroll up and try them out!</li>
+      </ul>
+    </section>
+
+    <section class="faq">
       <h2>FAQ</h2>
       <ul>
         <li class="q">Q: What is the current status of this?</li>
-        <li><strong>A:</strong> It's a public alpha version.</li>
+        <li>
+          <strong>A:</strong>
+          <span>It's a public alpha version.</span>
+        </li>
 
         <li class="q">Q: What are the next steps?</li>
         <li>
-          <strong>A:</strong> The focus lies on fixing bugs and preparing the
-          desktop version for app store releases. The tablet release will follow
-          later on.
+          <strong>A:</strong
+          ><span
+            >The focus lies on fixing bugs and preparing the desktop version for
+            app store releases. The tablet release will follow later on.</span
+          >
         </li>
 
         <li class="q">
           Q: Wait a second, app store? Will this cost money?
         </li>
         <li>
-          <strong>A:</strong> The desktop and tablet versions will have a
-          certain price tag, yes - It will be low though, promised! Additional
-          planned features are saving & loading unencrypted files and a sprite
-          animation suite. I plan to give registered users access to a DRM-free
-          version, too.
+          <strong>A:</strong
+          ><span
+            >The desktop and tablet versions will have a certain price tag, yes
+            - It will be low though, promised! Additional planned features are
+            saving & loading unencrypted files and a sprite animation suite. I
+            plan to give registered users access to a DRM-free version,
+            too.</span
+          >
         </li>
 
         <li class="q">Q: What about the browser version?</li>
         <li>
-          <strong>A:</strong> The current plan is that the browser version will
-          remain free, but will not feature sprite animation and only save to
-          encrypted files.
+          <strong>A:</strong
+          ><span
+            >The current plan is that the browser version will remain free, but
+            will not feature sprite animation and only save to encrypted
+            files.</span
+          >
         </li>
 
         <li class="q">
           Q: I found a bug or miss a feature, what should I do?
         </li>
         <li>
-          <strong>A:</strong> Please report it at the
-          <a
-            href="https://github.com/hpcodecraft/sleekspriter-issues"
-            target="_blank"
-            >issue tracker on Github</a
+          <strong>A:</strong
+          ><span
+            >Please report it at the
+            <a
+              href="https://github.com/hpcodecraft/sleekspriter-issues"
+              target="_blank"
+              >issue tracker on Github</a
+            >
+            or
+            <a href="mailto:sleekspriter-issues@hpcodecraft.me"
+              >write an email</a
+            >.</span
           >
-          or
-          <a href="malto:sleekspriter-issues@hpcodecraft.me">write an email</a>.
         </li>
       </ul>
     </section>
@@ -114,28 +149,36 @@
     </footer>
 
     <script>
-      document.location.hash = "browser";
-    </script>
-
-    <script>
       window.onload = function() {
+        var platforms = ["browser", "desktop", "tablet"];
+        var platform = document.location.hash.substr(1);
+
+        function navigateTo(navlink, platform) {
+          document.querySelectorAll("nav a").forEach(function(link) {
+            link.classList.remove("active");
+          });
+          navlink.classList.add("active");
+
+          document.querySelectorAll("main .preview").forEach(function(link) {
+            link.classList.remove("active");
+          });
+          document
+            .getElementById("preview-" + platform)
+            .classList.add("active");
+        }
+
         document.querySelectorAll("nav a").forEach(function(elem) {
           elem.onclick = function() {
             var platform = this.getAttribute("data-platform");
-
-            document.querySelectorAll("nav a").forEach(function(link) {
-              link.classList.remove("active");
-            });
-            this.classList.add("active");
-
-            document.querySelectorAll("main .preview").forEach(function(link) {
-              link.classList.remove("active");
-            });
-            document
-              .getElementById("preview-" + platform)
-              .classList.add("active");
+            navigateTo(this, platform);
           };
         });
+
+        if (platforms.indexOf(platform) > -1) {
+          navigateTo(document.getElementById("nav-" + platform), platform);
+        } else {
+          document.location.hash = "#browser";
+        }
       };
     </script>
   </body>

@@ -98,8 +98,20 @@ section li.q {
   font-weight: bold;
 }
 
-section li:nth-of-type(even) {
-  margin-bottom: 1.5em;
+section.features li:before {
+  content: "+";
+  margin-right: 0.9em;
+}
+
+section.faq li strong {
+  float: left;
+}
+
+section.faq li span {
+  float: left;
+  margin-bottom: 2em;
+  margin-left: 0.5em;
+  width: calc(100% - 2em);
 }
 
 .quote {
