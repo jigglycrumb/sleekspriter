@@ -1,5 +1,5 @@
 import { writeFile } from "fs";
-import { basename, dirname } from "path";
+import { basename, dirname, sep } from "path";
 
 import config from "../../../config";
 import { stateToFile } from "../../../utils";
@@ -22,10 +22,11 @@ export const fileInfoFromPath = path => {
   };
 };
 
-export const fileDefaultPath = (file, extension) => {
+export const fileDefaultPath = (file, extension, zoom) => {
   const folder = file.folder || config.defaultFolder;
   const name = file.name || config.defaultName;
   const ext = extension || config.fileExtension;
+  const z = zoom && zoom > 1 ? `@x${zoom}` : "";
 
-  return `${folder}/${name}.${ext}`; // TODO: use platform-independent folder seperator
+  return `${folder}${sep}${name}${z}.${ext}`;
 };

@@ -71,6 +71,7 @@ const ScreenExport = props => {
           <ExportButton
             file={file}
             format={format}
+            zoom={zoom}
             exportStatus={props.exportStatus}
           />
         </div>

@@ -32,9 +32,9 @@ const ExportButton = props => {
   };
 
   const exportFile = () => {
-    const { file, format, exportStatus } = props;
+    const { exportStatus, file, format, zoom } = props;
 
-    const defaultPath = fileDefaultPath(file, format);
+    const defaultPath = fileDefaultPath(file, format, zoom);
 
     const mimeType =
       format === exportFormats.jpg ? "image/jpeg" : `image/${format}`;
@@ -78,9 +78,10 @@ const ExportButton = props => {
 };
 
 ExportButton.propTypes = {
+  exportStatus: PropTypes.func.isRequired,
   file: PropTypes.object.isRequired,
   format: PropTypes.string.isRequired,
-  exportStatus: PropTypes.func.isRequired,
+  zoom: PropTypes.number.isRequired,
 };
 
 export default ExportButton;
