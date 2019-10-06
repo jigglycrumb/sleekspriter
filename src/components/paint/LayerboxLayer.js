@@ -9,12 +9,12 @@ import { sizeShape } from "../../shapes";
 class LayerboxLayer extends React.Component {
   constructor(props) {
     super(props);
-    this.moveDown = this.moveDown.bind(this);
-    this.moveUp = this.moveUp.bind(this);
-    this.visibility = this.visibility.bind(this);
-    this.name = this.name.bind(this);
-    this.opacity = this.opacity.bind(this);
-    this.select = this.select.bind(this);
+    this.handleMoveDown = this.handleMoveDown.bind(this);
+    this.handleMoveUp = this.handleMoveUp.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+    this.handleOpacityChange = this.handleOpacityChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
     this.layerCanvas = null;
   }
 
@@ -22,8 +22,8 @@ class LayerboxLayer extends React.Component {
     this.props.registerLayerCanvas(this.props.layer.id, this.layerCanvas);
   }
 
-  componentDidUpdate() {
-    this.props.registerLayerCanvas(this.props.layer.id, this.layerCanvas);
+  componentWillUnmount() {
+    this.props.unregisterLayerCanvas(this.props.layer.id);
   }
 
   render() {
@@ -37,17 +37,17 @@ class LayerboxLayer extends React.Component {
 
     return (
       <div id={htmlId} className={cssClass}>
-        <div className="order up" onClick={this.moveUp}>
+        <div className="order up" onClick={this.handleMoveUp}>
           <i className="flaticon-little16" />
         </div>
         <div className="visibility">
           <input
             type="checkbox"
             checked={this.props.layer.visible}
-            onChange={this.visibility}
+            onChange={this.handleVisibilityChange}
           />
         </div>
-        <div className="preview" onClick={this.select}>
+        <div className="preview" onClick={this.handleSelect}>
           <LayerCanvas
             ref={n => (this.layerCanvas = n)}
             frame={this.props.layer.frame}
@@ -57,14 +57,17 @@ class LayerboxLayer extends React.Component {
             maxSize={30}
           />
         </div>
-        <NameEditable name={this.props.layer.name} callback={this.name} />
+        <NameEditable
+          name={this.props.layer.name}
+          callback={this.onNameChange}
+        />
         <input
           type="range"
           className="opacity-slider"
           min="0"
           max="100"
           value={this.props.layer.opacity}
-          onChange={this.opacity}
+          onChange={this.handleOpacityChange}
         />
         <input
           type="number"
@@ -72,32 +75,32 @@ class LayerboxLayer extends React.Component {
           min="0"
           max="100"
           value={this.props.layer.opacity}
-          onChange={this.opacity}
+          onChange={this.handleOpacityChange}
         />
-        <div className="order down" onClick={this.moveDown}>
+        <div className="order down" onClick={this.handleMoveDown}>
           <i className="flaticon-little16" />
         </div>
       </div>
     );
   }
 
-  opacity(e) {
+  handleOpacityChange(e) {
     this.props.layerOpacity(this.props.layer.id, e.target.value);
   }
 
-  visibility(e) {
+  handleVisibilityChange(e) {
     this.props.layerVisibility(this.props.layer.id, e.target.checked);
   }
 
-  select() {
+  handleSelect() {
     this.props.layerSelect(this.props.layer.id);
   }
 
-  name(name) {
+  onNameChange(name) {
     this.props.layerName(this.props.layer.id, name);
   }
 
-  moveUp() {
+  handleMoveUp() {
     this.props.layerMoveUp(
       this.props.layer.frame,
       this.props.layer.id,
@@ -105,7 +108,7 @@ class LayerboxLayer extends React.Component {
     );
   }
 
-  moveDown() {
+  handleMoveDown() {
     this.props.layerMoveDown(
       this.props.layer.frame,
       this.props.layer.id,
@@ -135,6 +138,7 @@ LayerboxLayer.propTypes = {
   registerLayerCanvas: PropTypes.func.isRequired,
   selected: PropTypes.bool,
   size: sizeShape.isRequired,
+  unregisterLayerCanvas: PropTypes.func.isRequired,
 };
 
 export default LayerboxLayer;

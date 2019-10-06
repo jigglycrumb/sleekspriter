@@ -14,8 +14,8 @@ const onionHotkey = Hotkeys.bindings.paint[9].key;
 class Framebox extends React.Component {
   constructor(props) {
     super(props);
-    this.frameSelect = this.frameSelect.bind(this);
-    this.toggleOnion = this.toggleOnion.bind(this);
+    this.handleFrameSelect = this.handleFrameSelect.bind(this);
+    this.handleOnionToggle = this.handleOnionToggle.bind(this);
   }
 
   render() {
@@ -62,6 +62,7 @@ class Framebox extends React.Component {
                 frameSelect={this.props.frameSelect}
                 layers={layers}
                 registerFrameCanvas={this.props.registerFrameCanvas}
+                unregisterFrameCanvas={this.props.unregisterFrameCanvas}
               />
             );
           }, this)}
@@ -75,13 +76,13 @@ class Framebox extends React.Component {
             min="1"
             max={this.props.totalFrames}
             value={this.props.selected}
-            onChange={this.frameSelect}
+            onChange={this.handleFrameSelect}
           />
           &nbsp;/&nbsp;
           {this.props.totalFrames}
           <button
             className={onionButtonClasses}
-            onClick={this.toggleOnion}
+            onClick={this.handleOnionToggle}
             title={t("Toggle Onion Skinning", { key: onionHotkey })}>
             <i className="flaticon-vegetable38" />
           </button>
@@ -91,11 +92,11 @@ class Framebox extends React.Component {
     );
   }
 
-  frameSelect(e) {
+  handleFrameSelect(e) {
     this.props.frameSelect(e.target.value);
   }
 
-  toggleOnion() {
+  handleOnionToggle() {
     this.props.onionToggle();
   }
 }
@@ -114,6 +115,7 @@ Framebox.propTypes = {
   selected: PropTypes.number.isRequired,
   size: sizeShape.isRequired,
   totalFrames: PropTypes.number.isRequired,
+  unregisterFrameCanvas: PropTypes.func.isRequired,
 };
 
 export default Framebox;

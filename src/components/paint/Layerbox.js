@@ -8,8 +8,8 @@ import { t } from "../../utils";
 class Layerbox extends React.Component {
   constructor(props) {
     super(props);
-    this.layerAdd = this.layerAdd.bind(this);
-    this.confirmLayerDelete = this.confirmLayerDelete.bind(this);
+    this.handleLayerCreate = this.handleLayerCreate.bind(this);
+    this.handleLayerDelete = this.handleLayerDelete.bind(this);
   }
 
   render() {
@@ -43,6 +43,7 @@ class Layerbox extends React.Component {
                 layerSelect={this.props.layerSelect}
                 layerVisibility={this.props.layerVisibility}
                 registerLayerCanvas={this.props.registerLayerCanvas}
+                unregisterLayerCanvas={this.props.unregisterLayerCanvas}
               />
             );
           })}
@@ -51,14 +52,14 @@ class Layerbox extends React.Component {
           <button
             title={t("New layer above selected layer")}
             className="tiny transparent"
-            onClick={this.layerAdd}>
+            onClick={this.handleLayerCreate}>
             <i className="flaticon-plus25" />
           </button>
           <button
             title={t("Delete selected layer")}
             className="tiny transparent"
             disabled={deleteButtonDisabled}
-            onClick={this.confirmLayerDelete}>
+            onClick={this.handleLayerDelete}>
             <i className="flaticon-minus18" />
           </button>
         </div>
@@ -77,11 +78,11 @@ class Layerbox extends React.Component {
     }
   }
 
-  confirmLayerDelete() {
+  handleLayerDelete() {
     this.props.modalShow("ModalConfirmDeleteLayer");
   }
 
-  layerAdd() {
+  handleLayerCreate() {
     const { layerAdd, newLayerId, frame, selected, layers } = this.props;
     layerAdd(newLayerId, frame, selected, layers);
   }
@@ -117,6 +118,7 @@ Layerbox.propTypes = {
   registerLayerCanvas: PropTypes.func.isRequired,
   selected: PropTypes.number,
   size: sizeShape.isRequired,
+  unregisterLayerCanvas: PropTypes.func.isRequired,
 };
 
 export default Layerbox;

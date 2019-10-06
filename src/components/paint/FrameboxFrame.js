@@ -8,7 +8,7 @@ import { sizeShape } from "../../shapes";
 class FrameboxFrame extends React.Component {
   constructor(props) {
     super(props);
-    this.select = this.select.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.frameCanvas = null;
   }
 
@@ -16,12 +16,12 @@ class FrameboxFrame extends React.Component {
     this.props.registerFrameCanvas(this.props.frame, this.frameCanvas);
   }
 
-  componentDidUpdate() {
-    this.props.registerFrameCanvas(this.props.frame, this.frameCanvas);
+  componentWillUnmount() {
+    this.props.unregisterFrameCanvas(this.props.frame);
   }
 
   render() {
-    const id = `FrameBoxFrame-${this.props.frame}`;
+    const id = this.props.frame; // `FrameBoxFrame-${this.props.frame}`;
     const classes = classnames({
       frame: true,
       selected: this.props.frame === this.props.selected,
@@ -37,7 +37,7 @@ class FrameboxFrame extends React.Component {
         key={id}
         className={classes}
         style={frameStyle}
-        onClick={this.select}>
+        onClick={this.handleClick}>
         <FrameCanvas
           ref={n => (this.frameCanvas = n)}
           frame={this.props.frame}
@@ -51,7 +51,7 @@ class FrameboxFrame extends React.Component {
     );
   }
 
-  select() {
+  handleClick() {
     this.props.frameSelect(this.props.frame);
   }
 }
@@ -66,6 +66,7 @@ FrameboxFrame.propTypes = {
   registerFrameCanvas: PropTypes.func.isRequired,
   selected: PropTypes.number.isRequired,
   size: sizeShape.isRequired,
+  unregisterFrameCanvas: PropTypes.func.isRequired,
 };
 
 export default FrameboxFrame;

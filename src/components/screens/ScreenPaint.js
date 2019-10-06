@@ -26,9 +26,14 @@ class ScreenPaint extends React.Component {
 
     this.handleDrop = this.handleDrop.bind(this);
     this.removeReferenceImage = this.removeReferenceImage.bind(this);
+
     this.registerLayerCanvas = this.registerLayerCanvas.bind(this);
+    this.unregisterLayerCanvas = this.unregisterLayerCanvas.bind(this);
+
     this.registerPreviewCanvas = this.registerPreviewCanvas.bind(this);
+
     this.registerFrameCanvas = this.registerFrameCanvas.bind(this);
+    this.unregisterFrameCanvas = this.unregisterFrameCanvas.bind(this);
 
     this.layerCanvases = {};
     this.frameCanvases = {};
@@ -40,7 +45,7 @@ class ScreenPaint extends React.Component {
     return (
       <section
         className="screen paint"
-        onDragOver={this.cancel}
+        onDragOver={this.handleCancel}
         onDrop={this.handleDrop}>
         <div className="area top">
           <ToolContainer />
@@ -76,11 +81,15 @@ class ScreenPaint extends React.Component {
             <FoldableBox fold="frames" title={t("Frames")} id="FrameBox">
               <FrameboxContainer
                 registerFrameCanvas={this.registerFrameCanvas}
+                unregisterFrameCanvas={this.unregisterFrameCanvas}
               />
             </FoldableBox>
           )}
           <FoldableBox fold="layers" title={t("Layers")} id="LayerBox">
-            <LayerboxContainer registerLayerCanvas={this.registerLayerCanvas} />
+            <LayerboxContainer
+              registerLayerCanvas={this.registerLayerCanvas}
+              unregisterLayerCanvas={this.unregisterLayerCanvas}
+            />
           </FoldableBox>
         </div>
         <div className="area statusbar">
@@ -97,13 +106,13 @@ class ScreenPaint extends React.Component {
     });
   }
 
-  cancel(e) {
+  handleCancel(e) {
     e.stopPropagation();
     e.preventDefault();
   }
 
   handleDrop(e) {
-    this.cancel(e);
+    this.handleCancel(e);
 
     if (e.dataTransfer.files.length >= 1) {
       const self = this;
@@ -140,12 +149,30 @@ class ScreenPaint extends React.Component {
     // });
   }
 
+  unregisterLayerCanvas(layerId) {
+    delete this.layerCanvases[layerId];
+
+    // console.log("layer unreg", {
+    //   layerId,
+    //   layerCanvases: this.layerCanvases,
+    // });
+  }
+
   registerFrameCanvas(frame, canvas) {
     this.frameCanvases[frame] = canvas;
 
     // console.log("frame reg", {
     //   frame,
     //   canvas,
+    //   frameCanvases: this.frameCanvases,
+    // });
+  }
+
+  unregisterFrameCanvas(frame) {
+    delete this.frameCanvases[frame];
+
+    // console.log("frame unreg", {
+    //   frame,
     //   frameCanvases: this.frameCanvases,
     // });
   }
