@@ -10,7 +10,14 @@ import { fileDefaultPath, save } from "./utils";
 const { app, dialog, Menu } = remote;
 
 const MenuComponent = props => {
-  const { file, fileDirty, fileSave, modalShow, screenSelect } = props;
+  const {
+    file,
+    fileDirty,
+    fileSave,
+    modalHide,
+    modalShow,
+    screenSelect,
+  } = props;
 
   const {
     appMenu,
@@ -75,6 +82,7 @@ const MenuComponent = props => {
       {
         label: "Import…",
         click: () => {
+          modalHide();
           modalShow("ModalImportFile");
         },
       },

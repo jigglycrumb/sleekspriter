@@ -87,20 +87,18 @@ class ModalImportFile extends React.Component {
       }
 
       imageDropZone = (
-        <div>
-          <div className="image-import-dropzone-wrapper" style={wrapperCss}>
-            <img
-              src={this.state.image.data}
-              title={this.state.image.name}
-              ref={n => (this.importImage = n)}
-            />
-            <GridCanvas
-              width={this.state.image.width}
-              height={this.state.image.height}
-              columns={this.state.frames.x}
-              rows={this.state.frames.y}
-            />
-          </div>
+        <div className="image-import-dropzone-wrapper" style={wrapperCss}>
+          <img
+            src={this.state.image.data}
+            title={this.state.image.name}
+            ref={n => (this.importImage = n)}
+          />
+          <GridCanvas
+            width={this.state.image.width}
+            height={this.state.image.height}
+            columns={this.state.frames.x}
+            rows={this.state.frames.y}
+          />
         </div>
       );
 
