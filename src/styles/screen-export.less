@@ -120,9 +120,16 @@
     }
 
     .preview {
-      margin: 10px auto;
       background-color: #fff;
       box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.25);
+      margin: 10px auto;
+      position: relative;
+
+      canvas {
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
     }
   }
 
