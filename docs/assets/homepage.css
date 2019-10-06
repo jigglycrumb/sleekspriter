@@ -33,19 +33,6 @@ main {
   width: 1066px;
 }
 
-main .preview {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 1066px;
-  opacity: 0;
-  transition: opacity 500ms;
-}
-
-main .preview.active {
-  opacity: 1;
-}
-
 footer {
   margin-bottom: 50px;
 }
@@ -119,17 +106,47 @@ section.faq li span {
   letter-spacing: -1ch;
 }
 
-.browser-frame {
-  background-image: url(browser-frame.png);
+.ribbon-top-right {
+  top: 16px;
+  right: 46px;
+  z-index: 1;
+}
+
+.preview {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1066px;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.preview.active {
+  opacity: 1;
+}
+
+.preview-inner {
   background-repeat: no-repeat;
-  background-position: top left;
+  background-position: 0 0;
   height: 841px;
   margin: 0 auto;
   position: relative;
   width: 1066px;
 }
 
-.browser-frame-inner {
+.preview-inner.browser {
+  background-image: url(browser-frame.png);
+}
+
+.preview-inner.desktop {
+  background-image: url(desktop-preview.png);
+}
+
+.preview-inner.tablet {
+  background-image: url(tablet-preview.png);
+}
+
+.browser-app-wrapper {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 692px;
@@ -140,40 +157,13 @@ section.faq li span {
   width: 954px;
 }
 
-.browser-frame .ribbon-top-right {
-  top: 16px;
-  right: 46px;
-  z-index: 1;
-}
-
-.browser-frame .standalone {
+.browser-app-standalone {
   bottom: 20px;
   color: #fca61b;
   font-size: 1.5em;
   position: absolute;
   text-align: center;
   width: 100%;
-}
-
-.generic-frame {
-  height: 736px;
-  margin: 26px auto 0 auto;
-  position: relative;
-  width: 956px;
-  border-radius: 5px;
-  box-shadow: 0 0 9px 3px rgba(0, 0, 0, 0.2);
-}
-
-.generic-frame-inner {
-  height: 100%;
-}
-
-.generic-frame-inner img {
-  border-radius: 5px;
-}
-
-.generic-frame iframe {
-  border-radius: 5px;
 }
 
 #preview-browser {

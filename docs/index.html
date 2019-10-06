@@ -13,8 +13,8 @@
       type="text/css"
       href="assets/fonts/zelda/stylesheet.css"
     />
-    <link rel="stylesheet" type="text/css" href="assets/homepage.css" />
     <link rel="stylesheet" type="text/css" href="assets/ribbons.css" />
+    <link rel="stylesheet" type="text/css" href="assets/homepage.css" />
   </head>
 
   <body>
@@ -33,30 +33,26 @@
 
     <main>
       <div id="preview-browser" class="preview active">
-        <div class="browser-frame">
+        <div class="preview-inner browser">
           <div class="ribbon ribbon-top-right"><span>try me</span></div>
-          <div class="browser-frame-inner">
+          <div class="browser-app-wrapper">
             <iframe src="app/index.html"></iframe>
           </div>
-          <a href="app/" target="_blank" class="standalone">open standalone</a>
+          <a href="app/" target="_blank" class="browser-app-standalone"
+            >open standalone</a
+          >
         </div>
       </div>
 
       <div id="preview-desktop" class="preview">
-        <div class="generic-frame">
+        <div class="preview-inner desktop">
           <div class="ribbon ribbon-top-right"><span>soon</span></div>
-          <div class="generic-frame-inner">
-            <img src="assets/placeholder-desktop.png" alt="Desktop" />
-          </div>
         </div>
       </div>
 
       <div id="preview-tablet" class="preview">
-        <div class="generic-frame">
+        <div class="preview-inner tablet">
           <div class="ribbon ribbon-top-right"><span>later</span></div>
-          <div class="generic-frame-inner">
-            <img src="assets/placeholder-tablet.png" alt="Tablet" />
-          </div>
         </div>
       </div>
     </main>
