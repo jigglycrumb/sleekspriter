@@ -9,7 +9,7 @@ import {
 
 import { Colorswatch } from ".";
 
-const TICK_INTERVAL = 250;
+const KEYCODE_RETURN = 13;
 
 class ColorswatchPicker extends React.Component {
   state = {
@@ -18,11 +18,9 @@ class ColorswatchPicker extends React.Component {
 
   constructor(props) {
     super(props);
-    this.ticker = null;
 
     this.togglePicker = this.togglePicker.bind(this);
     this.onOutsideClick = this.onOutsideClick.bind(this);
-    this.tick = this.tick.bind(this);
   }
 
   componentWillUnmount() {
@@ -42,7 +40,14 @@ class ColorswatchPicker extends React.Component {
         />
 
         {pickerVisible && (
-          <div className="color-picker" ref={node => (this.picker = node)}>
+          <div
+            className="color-picker"
+            ref={node => (this.picker = node)}
+            onKeyUp={({ keyCode }) => {
+              if (keyCode === KEYCODE_RETURN) {
+                this.togglePicker();
+              }
+            }}>
             <div className="title">Pick a color</div>
             <div className="hue">
               <Hue {...this.props} />
@@ -69,8 +74,6 @@ class ColorswatchPicker extends React.Component {
       pickerVisible,
     });
 
-    this.startTicking(pickerVisible);
-
     if (pickerVisible) {
       document.addEventListener("click", this.onOutsideClick, true);
     }
@@ -83,25 +86,9 @@ class ColorswatchPicker extends React.Component {
   }
 
   onOutsideClick(e) {
-    e.stopPropagation();
-
     if (this.picker && !this.picker.contains(e.target)) {
       this.togglePicker();
     }
-  }
-
-  startTicking(startTicking = true) {
-    if (startTicking === true) {
-      this.ticker = setInterval(this.tick, TICK_INTERVAL);
-    } else {
-      clearInterval(this.ticker);
-      this.ticker = null;
-    }
-  }
-
-  tick() {
-    const { action, hex } = this.props;
-    action(hex);
   }
 }
 
