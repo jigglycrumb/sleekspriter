@@ -19,7 +19,7 @@
   position: absolute;
   display: block;
   width: 225px;
-  padding: 10px 0;
+  padding: 11px 0px 9px 12px;
   background-color: #fcc71a;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   color: #fff;
@@ -80,7 +80,7 @@
 }
 
 .ribbon-top-right span {
-  left: -25px;
+  left: -30px;
   top: 30px;
   transform: rotate(45deg);
 }
