@@ -40,29 +40,32 @@ class ColorswatchPicker extends React.Component {
         />
 
         {pickerVisible && (
-          <div
-            className="color-picker"
-            ref={node => (this.picker = node)}
-            onKeyUp={({ keyCode }) => {
-              if (keyCode === KEYCODE_RETURN) {
-                this.togglePicker();
-              }
-            }}>
-            <div className="title">Pick a color</div>
-            <div className="hue">
-              <Hue {...this.props} />
+          <>
+            <div className="color-picker-blocker" />
+            <div
+              className="color-picker"
+              ref={node => (this.picker = node)}
+              onKeyUp={({ keyCode }) => {
+                if (keyCode === KEYCODE_RETURN) {
+                  this.togglePicker();
+                }
+              }}>
+              <div className="title">Pick a color</div>
+              <div className="hue">
+                <Hue {...this.props} />
+              </div>
+              <div className="saturation">
+                <Saturation {...this.props} />
+              </div>
+              <div className="input">
+                <EditableInput
+                  value={hex}
+                  label="hex"
+                  onChange={this.props.onChange}
+                />
+              </div>
             </div>
-            <div className="saturation">
-              <Saturation {...this.props} />
-            </div>
-            <div className="input">
-              <EditableInput
-                value={hex}
-                label="hex"
-                onChange={this.props.onChange}
-              />
-            </div>
-          </div>
+          </>
         )}
       </div>
     );

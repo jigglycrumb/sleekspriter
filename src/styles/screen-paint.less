@@ -6,6 +6,7 @@
     height: 39px;
     background: @light;
     border-top: 1px solid @dark;
+    z-index: 2;
   }
 
   .ToolComponent {
@@ -711,9 +712,17 @@
     }
   }
 
+  .color-picker-blocker {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+  }
+
   .color-picker {
+    left: 44px;
     position: absolute;
     top: 40px;
-    left: 44px;
   }
 } // .screen.paint
