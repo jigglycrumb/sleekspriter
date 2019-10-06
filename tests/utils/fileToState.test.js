@@ -5,6 +5,13 @@ jest.unmock("utils");
 describe("fileToState", () => {
   it("maps JSON from file format to redux state", () => {
     const file = {
+      meta: {
+        version: 1,
+        created: "2019-10-01T04:22:29.395Z",
+        updated: "2019-10-01T04:26:05.162Z",
+        author: "Bumfrey Higgins",
+        homepage: "",
+      },
       size: [20, 20],
       frames: [7, 3],
       layers: [

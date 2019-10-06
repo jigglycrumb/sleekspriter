@@ -4,7 +4,16 @@ jest.unmock("utils");
 
 describe("stateToFile", () => {
   it("maps JSON from redux state to file format", () => {
+    const now = new Date("1970-01-01").toISOString();
+
     const state = {
+      meta: {
+        version: 1,
+        created: now,
+        updated: now,
+        author: "John Doe",
+        homepage: "https://example.com",
+      },
       frames: {
         x: 5,
         y: 3,

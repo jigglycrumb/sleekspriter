@@ -38,7 +38,7 @@ exports[`ScreenStart should render correctly 1`] = `
     <div
       class="bar"
     >
-      0.2.20
+      0.2.21
     </div>
   </div>
 </section>

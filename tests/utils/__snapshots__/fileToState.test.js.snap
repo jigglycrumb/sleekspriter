@@ -208,6 +208,13 @@ Object {
       "z": 0,
     },
   ],
+  "meta": Object {
+    "author": "Bumfrey Higgins",
+    "created": "2019-10-01T04:22:29.395Z",
+    "homepage": "",
+    "updated": "2019-10-01T04:26:05.162Z",
+    "version": 1,
+  },
   "pixels": Object {
     "1": Object {
       "4": Object {
