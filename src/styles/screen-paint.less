@@ -414,6 +414,10 @@
       border-top: 1px solid @dark;
       float: left;
 
+      h4 {
+        padding-left: 15px;
+      }
+
       .tab {
         width: 50%;
         box-sizing: border-box;
@@ -431,24 +435,10 @@
   }
 
   #LayerBox {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
 
     .layers {
       background: @dark;
-      flex: 1;
       overflow-y: auto;
-    }
-
-    .foldable-fold {
-      flex: 1;
-
-      & > div {
-        display: flex;
-        flex-flow: column;
-        height: 100%;
-      }
     }
 
     .LayerBoxLayer {

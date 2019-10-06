@@ -17,7 +17,7 @@ class Layerbox extends React.Component {
       this.props.layers.length <= 1 || this.props.selected === null;
 
     return (
-      <div>
+      <>
         <div className="layers" ref={n => (this.layerList = n)}>
           {this.props.layers.map((layer, i) => {
             let pixels;
@@ -63,7 +63,7 @@ class Layerbox extends React.Component {
             <i className="flaticon-minus18" />
           </button>
         </div>
-      </div>
+      </>
     );
   }
 
