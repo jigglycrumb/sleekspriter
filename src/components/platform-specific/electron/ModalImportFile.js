@@ -6,6 +6,7 @@ import { readFile } from "fs";
 import imageType from "image-type";
 import sizeOf from "image-size";
 
+import config from "../../../config";
 import { t, fileToState } from "../../../utils";
 import {
   fileDirty,
@@ -19,6 +20,7 @@ import ImportWorker from "../../../workers/import";
 
 import { fileInfoFromPath } from "./utils";
 
+const { limits } = config;
 const { dialog } = remote;
 
 const mapDispatchToProps = {
@@ -47,8 +49,8 @@ class ModalImportFile extends React.Component {
       },
     };
 
-    this.updateFrames = this.updateFrames.bind(this);
-    this.import = this.import.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleImport = this.handleImport.bind(this);
 
     // setup worker
     this.worker = new ImportWorker();
@@ -128,7 +130,7 @@ class ModalImportFile extends React.Component {
               <img
                 src={this.state.image.data}
                 title={this.state.image.name}
-                ref={n => (this.importImage = n)}
+                ref={n => (this.image = n)}
               />
               <GridCanvas
                 width={this.state.image.width}
@@ -143,18 +145,18 @@ class ModalImportFile extends React.Component {
               <label>{t("Frames")}</label>
               <input
                 type="number"
-                ref={n => (this.framesX = n)}
                 value={this.state.frames.x}
-                min="1"
-                onChange={this.updateFrames}
+                min={1}
+                max={limits.file.frames.x}
+                onChange={e => this.handleChange("x", e.target.value)}
               />
               x
               <input
                 type="number"
-                ref={n => (this.framesY = n)}
                 value={this.state.frames.y}
-                min="1"
-                onChange={this.updateFrames}
+                min={1}
+                max={limits.file.frames.y}
+                onChange={e => this.handleChange("y", e.target.value)}
               />
             </li>
             <li>
@@ -163,7 +165,7 @@ class ModalImportFile extends React.Component {
           </ul>
         </div>
         <div className="actions">
-          <button onClick={this.import} disabled={okButtonDisabled}>
+          <button onClick={this.handleImport} disabled={okButtonDisabled}>
             {t("Ok")}
           </button>
           <button onClick={this.props.modalHide}>{t("Cancel")}</button>
@@ -227,8 +229,11 @@ class ModalImportFile extends React.Component {
 
   validateFrameSize() {
     const s = this.calculateFrameSize();
-    const widthValid = s.width === parseInt(s.width, 10);
-    const heightValid = s.height === parseInt(s.height, 10);
+    const widthValid =
+      s.width === parseInt(s.width, 10) && s.width <= limits.file.size.width;
+    const heightValid =
+      s.height === parseInt(s.height, 10) &&
+      s.height <= limits.file.size.height;
 
     return {
       widthValid: widthValid,
@@ -237,23 +242,30 @@ class ModalImportFile extends React.Component {
     };
   }
 
-  updateFrames() {
-    this.setState({
-      frames: {
-        x: +this.framesX.value,
-        y: +this.framesY.value,
-      },
-    });
+  handleChange(dimension, value) {
+    const max = limits.file.frames[dimension];
+    if (value > max) {
+      value = max;
+    } else if (value < 1) {
+      value = 1;
+    }
+
+    const frames = {
+      ...this.state.frames,
+      [dimension]: +value,
+    };
+
+    this.setState({ frames });
   }
 
-  import() {
+  handleImport() {
     if (this.validateFrameSize().allValid) {
       document.getElementById("ScreenBlocker").style.display = "block";
 
       // create canvas element
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-      const image = this.importImage;
+      const image = this.image;
 
       canvas.width = image.width;
       canvas.height = image.height;

@@ -2,13 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import config from "../../config";
+
 import {
   modalHide,
   fileCreate,
   screenSelect,
   zoomFit,
 } from "../../state/actions";
+
 import { GridCanvas } from "../canvases";
+
+const { limits } = config;
 
 const mapDispatchToProps = {
   modalHide,
@@ -18,22 +23,16 @@ const mapDispatchToProps = {
 };
 
 class ModalNewFile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      frames: {
-        x: 1,
-        y: 1,
-      },
-      size: {
-        width: 16,
-        height: 16,
-      },
-    };
-
-    this.updateState = this.updateState.bind(this);
-    this.fileCreate = this.fileCreate.bind(this);
-  }
+  state = {
+    frames: {
+      x: 1,
+      y: 1,
+    },
+    size: {
+      width: 16,
+      height: 16,
+    },
+  };
 
   render() {
     var wrapperCss = {
@@ -65,36 +64,40 @@ class ModalNewFile extends React.Component {
               <label>Frames:</label>
               <input
                 type="number"
-                ref={n => (this.framesX = n)}
                 value={this.state.frames.x}
-                min="1"
-                onChange={this.updateState}
+                min={1}
+                max={limits.file.frames.x}
+                onChange={e => this.handleChange("frames", "x", e.target.value)}
               />
               x
               <input
                 type="number"
-                ref={n => (this.framesY = n)}
                 value={this.state.frames.y}
-                min="1"
-                onChange={this.updateState}
+                min={1}
+                max={limits.file.frames.y}
+                onChange={e => this.handleChange("frames", "y", e.target.value)}
               />
             </li>
             <li>
               <label>Frame size:</label>
               <input
                 type="number"
-                ref={n => (this.pixelsX = n)}
                 value={this.state.size.width}
-                min="1"
-                onChange={this.updateState}
+                min={1}
+                max={limits.file.frameSize}
+                onChange={e =>
+                  this.handleChange("size", "width", e.target.value)
+                }
               />
               x
               <input
                 type="number"
-                ref={n => (this.pixelsY = n)}
                 value={this.state.size.height}
-                min="1"
-                onChange={this.updateState}
+                min={1}
+                max={limits.file.frameSize}
+                onChange={e =>
+                  this.handleChange("size", "height", e.target.value)
+                }
               />
               px
             </li>
@@ -107,27 +110,38 @@ class ModalNewFile extends React.Component {
           </ul>
         </div>
         <div className="actions">
-          <button onClick={this.fileCreate}>Ok</button>
+          <button onClick={this.handleFileCreate}>Ok</button>
           <button onClick={this.props.modalHide}>Cancel</button>
         </div>
       </div>
     );
   }
 
-  updateState() {
-    var size = {
-      frames: { x: +this.framesX.value, y: +this.framesY.value },
-      size: { width: +this.pixelsX.value, height: +this.pixelsY.value },
+  handleChange(prop, dimension, value) {
+    const max = limits.file[prop][dimension];
+    if (value > max) {
+      value = max;
+    } else if (value < 1) {
+      value = 1;
+    }
+
+    const state = {
+      ...this.state,
+      [prop]: {
+        ...this.state[prop],
+        [dimension]: +value,
+      },
     };
-    this.setState(size);
+
+    this.setState(state);
   }
 
-  fileCreate() {
+  handleFileCreate = () => {
     this.props.fileCreate(this.state.frames, this.state.size);
     this.props.modalHide();
     this.props.screenSelect("paint");
     this.props.zoomFit(this.state.size);
-  }
+  };
 }
 
 ModalNewFile.propTypes = {

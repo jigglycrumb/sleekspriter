@@ -14,6 +14,18 @@ const config = {
     min: 1,
     max: 50,
   },
+  limits: {
+    file: {
+      size: {
+        height: 64,
+        width: 64,
+      },
+      frames: {
+        x: 8,
+        y: 8,
+      },
+    },
+  },
 };
 
 export default config;
