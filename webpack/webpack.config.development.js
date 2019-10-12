@@ -53,6 +53,17 @@ const config = {
   module: {
     rules,
   },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       commons: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: "vendor",
+  //         chunks: "initial",
+  //       },
+  //     },
+  //   },
+  // },
 };
 
 console.info("----------------------------------------");

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Hotkeys } from "../../classes";
-import { App } from "../common";
+import App from "platform-specific/App";
 
 import { getScreen } from "../../state/selectors";
 import { windowResize } from "../../state/actions";

@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { throttle } from "lodash";
 
-import MenuContainer from "../containers/MenuContainer";
-import ModalContainer from "../containers/ModalContainer";
-import ScreenPaintContainer from "../containers/ScreenPaintContainer";
-import ScreenStartContainer from "../containers/ScreenStartContainer";
-import ScreenExportContainer from "../containers/ScreenExportContainer";
+import MenuContainer from "../../containers/MenuContainer";
+import ModalContainer from "../../containers/ModalContainer";
+import ScreenPaintContainer from "../../containers/ScreenPaintContainer";
+import ScreenExportContainer from "../../containers/ScreenExportContainer";
 
-import { ScreenBlocker } from "../screens";
-import { Hotkeys } from "../../classes";
+import { ScreenBlocker } from "../../screens";
+import { Hotkeys } from "../../../classes";
 
-import { setWindowTitle } from "../../utils";
+import { setWindowTitle } from "../../../utils";
 
 console.log(`Greetings! Running ${APPNAME} ${VERSION} in ${PLATFORM}`);
 
@@ -51,12 +50,6 @@ class App extends React.Component {
 
       case "export":
         activeScreen = <ScreenExportContainer />;
-        break;
-
-      case "animate":
-      case "start":
-      default:
-        activeScreen = <ScreenStartContainer />;
         break;
     }
 

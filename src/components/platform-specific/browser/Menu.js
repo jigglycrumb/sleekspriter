@@ -71,17 +71,6 @@ class Menu extends React.Component {
             this.props.modalShow("ModalImportFile");
           },
         },
-        SEPERATOR,
-        {
-          label: "Close",
-          click: () => {
-            if (this.props.file.dirty) {
-              this.props.modalShow("ModalSaveFile");
-            }
-
-            this.props.screenSelect("start");
-          },
-        },
       ],
     };
 
