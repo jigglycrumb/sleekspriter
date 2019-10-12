@@ -1,4 +1,4 @@
-import App from "components/common/App";
+import App from "platform-specific/App";
 
 // jest.mock("platform-specific/Menu", () => "Menu");
 
@@ -6,7 +6,7 @@ import App from "components/common/App";
 
 describe("App", () => {
   const props = {
-    screen: "start",
+    screen: "paint",
     windowResize: jest.fn(),
   };
 

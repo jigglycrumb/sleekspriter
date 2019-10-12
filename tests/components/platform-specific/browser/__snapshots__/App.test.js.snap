@@ -6,9 +6,9 @@ exports[`App should render correctly 1`] = `
 >
   <Connect(Menu) />
   <div
-    className="window browser start"
+    className="window browser paint"
   >
-    <Connect(ScreenStart) />
+    <Connect(ScreenPaint) />
   </div>
   <Connect(ModalContainer) />
   <ScreenBlocker />
