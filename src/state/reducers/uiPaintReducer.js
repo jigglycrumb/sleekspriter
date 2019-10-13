@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { clamp, cloneDeep, max, uniq } from "lodash";
 import { dissoc } from "sprout-data";
 
 import initialState from "../initialState";
@@ -38,7 +38,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "COLOR_REPLACE": {
       // NOTE: this is not 100% accurate but the nearest solution without replaying the color replace here
       // or creating an action of its own for it
-      const spritePalette = _.uniq([...state.spritePalette, action.newColor]);
+      const spritePalette = uniq([...state.spritePalette, action.newColor]);
       return { ...state, spritePalette };
     }
     case "FILE_CREATE":
@@ -54,7 +54,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
         zoom: 10,
       };
     case "FILE_LOAD": {
-      const spritePalette = _.uniq(
+      const spritePalette = uniq(
         flattenPixels(action.json.pixels).map(p => p.toHex())
       );
       return {
@@ -81,26 +81,26 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
 
     case "LAYER_DELETE": {
       const { allPixels, frame, layer } = action;
-      let pixels = _.cloneDeep(allPixels);
+      let pixels = cloneDeep(allPixels);
       pixels = dissoc(pixels, [frame, layer]);
-      const spritePalette = _.uniq(flattenPixels(pixels).map(p => p.toHex()));
+      const spritePalette = uniq(flattenPixels(pixels).map(p => p.toHex()));
       return { ...state, spritePalette, layer: null };
     }
 
     case "LAYER_MERGE": {
       const { frame, first, second, allPixels } = action;
 
-      let pixels = _.cloneDeep(allPixels);
+      let pixels = cloneDeep(allPixels);
       pixels = mergeLayerPixels(frame, first, second, pixels);
 
-      const spritePalette = _.uniq(flattenPixels(pixels).map(p => p.toHex()));
+      const spritePalette = uniq(flattenPixels(pixels).map(p => p.toHex()));
       return { ...state, spritePalette, layer: null };
     }
 
     case "LAYER_SELECT":
       return { ...state, layer: +action.layer };
     case "LAYER_SELECT_TOP": {
-      const layer = _.max(action.layers, function(layer) {
+      const layer = max(action.layers, function(layer) {
         return layer.z;
       });
       return { ...state, layer: layer.id };
@@ -125,8 +125,8 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
 
     case "PIXELS_ADD":
     case "PIXELS_PASTE": {
-      const colors = _.uniq(flattenPixels(action.pixels).map(p => p.toHex()));
-      const spritePalette = _.uniq([...state.spritePalette, ...colors]);
+      const colors = uniq(flattenPixels(action.pixels).map(p => p.toHex()));
+      const spritePalette = uniq([...state.spritePalette, ...colors]);
       return { ...state, spritePalette };
     }
 
@@ -139,14 +139,14 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       const { allPixels, frame, layer, pixels } = action;
       const pixelMap = deletePixels(allPixels, frame, layer, pixels);
       const clipboard = action.pixels;
-      const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+      const spritePalette = uniq(flattenPixels(pixelMap).map(p => p.toHex()));
       return { ...state, clipboard, spritePalette };
     }
 
     case "PIXELS_DELETE": {
       const { allPixels, frame, layer, pixels } = action;
       const pixelMap = deletePixels(allPixels, frame, layer, pixels);
-      const spritePalette = _.uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+      const spritePalette = uniq(flattenPixels(pixelMap).map(p => p.toHex()));
       return { ...state, spritePalette };
     }
 
@@ -190,19 +190,25 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "ZOOM_SELECT":
       return { ...state, zoom: +action.zoom };
     case "ZOOM_FIT": {
+      // zoom to height
       let newZoom = Math.floor(
         (window.innerHeight - offset.top - offset.bottom) /
           action.fileSize.height
       );
+      // if height exceeds available area height...
       if (
         action.fileSize.width * newZoom >
         window.innerWidth - offset.left - offset.right
       ) {
+        // ... zoom to width
         newZoom = Math.floor(
           (window.innerWidth - offset.left - offset.right) /
             action.fileSize.width
         );
       }
+      // stay in app config boundaries
+      newZoom = clamp(newZoom, zoom.min, zoom.max);
+
       return { ...state, zoom: newZoom };
     }
     default:

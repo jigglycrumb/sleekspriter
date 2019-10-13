@@ -8,13 +8,13 @@ const { min, max } = config.zoom;
 class ZoomTool extends React.Component {
   constructor(props) {
     super(props);
-    this.zoomFit = this.zoomFit.bind(this);
-    this.zoomSelect = this.zoomSelect.bind(this);
+    this.handleZoomFit = this.handleZoomFit.bind(this);
+    this.handleZoom = this.handleZoom.bind(this);
   }
 
   render() {
-    const zoomInDisabled = this.props.zoom === max;
-    const zoomOutDisabled = this.props.zoom === min;
+    const zoomInDisabled = this.props.zoom >= max;
+    const zoomOutDisabled = this.props.zoom <= min;
 
     return (
       <div id="Zoom-Tool" className="ToolComponent">
@@ -38,7 +38,7 @@ class ZoomTool extends React.Component {
           min={min}
           max={max}
           value={this.props.zoom}
-          onChange={this.zoomSelect}
+          onChange={this.handleZoom}
         />
         <span>{t("Zoom ×")}</span>
         <input
@@ -46,9 +46,9 @@ class ZoomTool extends React.Component {
           min={min}
           max={max}
           value={this.props.zoom}
-          onChange={this.zoomSelect}
+          onChange={this.handleZoom}
         />
-        <button className="small" onClick={this.zoomFit}>
+        <button className="small" onClick={this.handleZoomFit}>
           {t("Fit to screen")}
         </button>
         <span className="spacer" />
@@ -61,11 +61,11 @@ class ZoomTool extends React.Component {
     );
   }
 
-  zoomSelect(e) {
+  handleZoom(e) {
     this.props.zoomSelect(e.target.value);
   }
 
-  zoomFit() {
+  handleZoomFit() {
     this.props.zoomFit(this.props.fileSize);
   }
 }
