@@ -2,6 +2,10 @@
 
 ## A cross-platform pixel art editor
 
+### Setup
+
+To build cross-platform: `brew install wine mono dpkg rpm fakeroot`
+
 ### Data handling
 
 The file data is held in a redux store in this format:

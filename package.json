@@ -20,6 +20,9 @@
     "web:build": "webpack --config ./webpack/webpack.config.browser.js; ./scripts/update_homepage.sh",
     "electron:start": "electron-forge start",
     "electron:make": "electron-forge make",
+    "electron:make:mac": "electron-forge make --platform=darwin",
+    "electron:make:windows": "electron-forge make --platform=win32 --arch=ia32,x64",
+    "electron:make:linux": "electron-forge make --platform=linux --arch=ia32,x64",
     "electron:publish": "electron-forge publish",
     "electron:package": "electron-forge package"
   },
