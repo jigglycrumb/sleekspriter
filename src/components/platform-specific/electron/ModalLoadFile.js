@@ -12,9 +12,10 @@ import {
   fileInfo,
   fileLoad,
   modalHide,
+  screenSelect,
   zoomFit,
 } from "../../../state/actions";
-import { getFrameLayersZSorted } from "../../../state/selectors";
+import { getScreen } from "../../../state/selectors";
 
 import { fileInfoFromPath } from "./utils";
 
@@ -22,7 +23,7 @@ const { fileEncryptionSecret } = config;
 const { dialog } = remote;
 
 const mapStateToProps = state => ({
-  layers: getFrameLayersZSorted(state),
+  screen: getScreen(state),
 });
 
 const mapDispatchToProps = {
@@ -30,6 +31,7 @@ const mapDispatchToProps = {
   fileInfo,
   fileLoad,
   modalHide,
+  screenSelect,
   zoomFit,
 };
 
@@ -88,6 +90,10 @@ class ModalLoadFile extends React.Component {
 
       this.props.modalHide();
       document.getElementById("ScreenBlocker").style.display = "none";
+
+      if (this.props.screen === "start") {
+        this.props.screenSelect("paint");
+      }
     });
   };
 
@@ -103,6 +109,8 @@ ModalLoadFile.propTypes = {
   fileInfo: PropTypes.func.isRequired,
   fileLoad: PropTypes.func.isRequired,
   modalHide: PropTypes.func.isRequired,
+  screen: PropTypes.string.isRequired,
+  screenSelect: PropTypes.func.isRequired,
   zoomFit: PropTypes.func.isRequired,
 };
 

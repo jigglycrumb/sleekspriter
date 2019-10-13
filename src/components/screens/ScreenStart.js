@@ -5,47 +5,30 @@ import { t } from "../../utils";
 
 import logo from "../../assets/logo.png";
 
-class ScreenStart extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.newFile = this.newFile.bind(this);
-    this.openFile = this.openFile.bind(this);
-  }
-
-  render() {
-    return (
-      <section className="screen start">
-        <div className="splash">
-          <div className="inner">
-            <div className="logo">
-              <img src={logo} alt={APPNAME} />
-            </div>
-            <ul>
-              <li>
-                <a onClick={this.newFile}>{t("New file")}</a>
-              </li>
-              <li>
-                <a onClick={this.openFile}>{t("Open file")}</a>
-              </li>
-            </ul>
+const ScreenStart = ({ modalShow }) => {
+  return (
+    <section className="screen start">
+      <div className="splash">
+        <div className="inner">
+          <div className="logo">
+            <img src={logo} alt={APPNAME} />
           </div>
+          <ul>
+            <li>
+              <a onClick={() => modalShow("ModalNewFile")}>{t("New file")}</a>
+            </li>
+            <li>
+              <a onClick={() => modalShow("ModalLoadFile")}>{t("Open file")}</a>
+            </li>
+          </ul>
         </div>
-        <div className="area statusbar">
-          <div className="bar">{VERSION}</div>
-        </div>
-      </section>
-    );
-  }
-
-  newFile() {
-    this.props.modalShow("ModalNewFile");
-  }
-
-  openFile() {
-    this.props.modalShow("ModalLoadFile");
-  }
-}
+      </div>
+      <div className="area statusbar">
+        <div className="bar">{VERSION}</div>
+      </div>
+    </section>
+  );
+};
 
 ScreenStart.propTypes = {
   modalShow: PropTypes.func.isRequired,
