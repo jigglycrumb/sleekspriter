@@ -13,8 +13,10 @@ import {
   fileInfo,
   fileLoad,
   modalHide,
+  screenSelect,
   zoomFit,
 } from "../../../state/actions";
+import { getScreen } from "../../../state/selectors";
 import { GridCanvas } from "../../canvases";
 import ImportWorker from "../../../workers/import";
 
@@ -23,11 +25,16 @@ import { fileInfoFromPath } from "./utils";
 const { limits } = config;
 const { dialog } = remote;
 
+const mapStateToProps = state => ({
+  screen: getScreen(state),
+});
+
 const mapDispatchToProps = {
   fileDirty,
   fileInfo,
   fileLoad,
   modalHide,
+  screenSelect,
   zoomFit,
 };
 
@@ -58,15 +65,18 @@ class ModalImportFile extends React.Component {
     this.worker.onmessage = m => {
       // worker returns JSON like a saved *.pixels file,
       // so we'll treat it like a regular file load
+      const { width, height } = this.calculateFrameSize();
+
       this.props.fileInfo(this.state.image.folder, this.state.image.name);
       this.props.fileDirty(false);
       this.props.fileLoad(fileToState(m.data));
-      this.props.zoomFit({
-        width: this.state.image.width,
-        height: this.state.image.height,
-      });
+      this.props.zoomFit({ width, height });
       this.props.modalHide();
       document.getElementById("ScreenBlocker").style.display = "none";
+
+      if (this.props.screen === "start") {
+        this.props.screenSelect("paint");
+      }
     };
 
     this.worker.onfail = e => {
@@ -296,10 +306,12 @@ ModalImportFile.propTypes = {
   fileInfo: PropTypes.func.isRequired,
   fileLoad: PropTypes.func.isRequired,
   modalHide: PropTypes.func.isRequired,
+  screen: PropTypes.string.isRequired,
+  screenSelect: PropTypes.func.isRequired,
   zoomFit: PropTypes.func.isRequired,
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ModalImportFile);

@@ -193,17 +193,17 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
       // zoom to height
       let newZoom = Math.floor(
         (window.innerHeight - offset.top - offset.bottom) /
-          action.fileSize.height
+          action.frameSize.height
       );
       // if height exceeds available area height...
       if (
-        action.fileSize.width * newZoom >
+        action.frameSize.width * newZoom >
         window.innerWidth - offset.left - offset.right
       ) {
         // ... zoom to width
         newZoom = Math.floor(
           (window.innerWidth - offset.left - offset.right) /
-            action.fileSize.width
+            action.frameSize.width
         );
       }
       // stay in app config boundaries

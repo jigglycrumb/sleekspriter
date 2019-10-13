@@ -9,6 +9,8 @@ import { fileDefaultPath, save } from "./utils";
 
 const { app, dialog, Menu } = remote;
 
+// TODO: translations
+
 const MenuComponent = props => {
   const {
     file,

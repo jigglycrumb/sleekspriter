@@ -40,11 +40,10 @@ class ModalImportFile extends React.Component {
     this.worker.onmessage = m => {
       // worker returns JSON like a saved *.pixels file,
       // so we'll treat it like a regular file load
+      const { width, height } = this.calculateFrameSize();
+
       this.props.fileLoad(fileToState(m.data));
-      this.props.zoomFit({
-        width: this.state.image.width,
-        height: this.state.image.height,
-      });
+      this.props.zoomFit({ width, height });
       this.props.modalHide();
       document.getElementById("ScreenBlocker").style.display = "none";
     };

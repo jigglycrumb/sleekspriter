@@ -208,4 +208,4 @@ export const windowResize = () => ({ type: "WINDOW_RESIZE" });
 export const zoomIn = () => ({ type: "ZOOM_IN" });
 export const zoomOut = () => ({ type: "ZOOM_OUT" });
 export const zoomSelect = zoom => ({ type: "ZOOM_SELECT", zoom });
-export const zoomFit = fileSize => ({ type: "ZOOM_FIT", fileSize });
+export const zoomFit = frameSize => ({ type: "ZOOM_FIT", frameSize });
