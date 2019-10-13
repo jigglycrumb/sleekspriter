@@ -35,10 +35,10 @@ class Stagebox extends React.Component {
     this.layerBackup = null; // a backup canvas for MoveTool
     this.layers = {}; // layer refs
 
-    this.mousedown = this.mousedown.bind(this);
-    this.mouseup = this.mouseup.bind(this);
-    this.mousemove = this.mousemove.bind(this);
-    this.mouseout = this.mouseout.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseOut = this.handleMouseOut.bind(this);
 
     // setup worker
     this.worker = new PaintbucketWorker();
@@ -72,21 +72,14 @@ class Stagebox extends React.Component {
     };
 
     if (w > centerAreaWidth) style.left = 0;
-    else style.left = (centerAreaWidth - w) / 2;
+    else style.left = Math.floor((centerAreaWidth - w) / 2);
 
     if (h > centerAreaHeight) style.top = 0;
-    else style.top = (centerAreaHeight - h) / 2;
+    else style.top = Math.floor((centerAreaHeight - h) / 2);
 
     const cssClasses = classnames({
       checkerboard: !this.props.image,
     });
-
-    let grid = null;
-    if (this.props.grid === true) {
-      grid = (
-        <GridCanvas width={w} height={h} columns={w / zoom} rows={h / zoom} />
-      );
-    }
 
     let onion = null;
     if (this.props.onion === true) {
@@ -115,10 +108,10 @@ class Stagebox extends React.Component {
         id="StageBox"
         className={cssClasses}
         style={style}
-        onMouseDown={this.mousedown}
-        onMouseMove={this.mousemove}
-        onMouseOut={this.mouseout}
-        onMouseUp={this.mouseup}>
+        onMouseDown={this.handleMouseDown}
+        onMouseMove={this.handleMouseMove}
+        onMouseOut={this.handleMouseOut}
+        onMouseUp={this.handleMouseUp}>
         <StageboxCursorCanvas
           ref={n => (this.cursorCanvas = n)}
           width={w}
@@ -133,7 +126,9 @@ class Stagebox extends React.Component {
           selection={this.props.selection}
           tool={tool}
         />
-        {grid}
+        {this.props.grid && (
+          <GridCanvas width={w} height={h} columns={w / zoom} rows={h / zoom} />
+        )}
 
         {this.props.layers.map(function(layer) {
           const pixels = this.getLayerPixels(layer.id);
@@ -162,7 +157,7 @@ class Stagebox extends React.Component {
     this.createLayerVisibilityMap();
   }
 
-  mousedown(e) {
+  handleMouseDown(e) {
     const point = this.getCoordinatesOnImage(e);
 
     this.mouse = {
@@ -197,7 +192,7 @@ class Stagebox extends React.Component {
     }
   }
 
-  mousemove(e) {
+  handleMouseMove(e) {
     const point = this.getCoordinatesOnImage(e);
     this.updateCursor(point);
 
@@ -222,7 +217,7 @@ class Stagebox extends React.Component {
     }
   }
 
-  mouseout() {
+  handleMouseOut() {
     this.cursorCanvas.clear();
     this.finishTool();
 
@@ -230,7 +225,7 @@ class Stagebox extends React.Component {
     document.getElementById("StatusBarCursorY").innerHTML = "Y: 0";
   }
 
-  mouseup(e) {
+  handleMouseUp(e) {
     const point = this.getCoordinatesOnImage(e);
 
     this.updateCursor(point, true);

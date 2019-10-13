@@ -56,7 +56,7 @@ class ScreenPaint extends React.Component {
           <SelectionPattern />
         </div>
         <div className="area center">
-          <div>
+          <>
             <StageboxContainer
               image={this.state.referenceImage !== null}
               externalLayerCanvases={this.layerCanvases}
@@ -70,7 +70,7 @@ class ScreenPaint extends React.Component {
                 removeHandler={this.removeReferenceImage}
               />
             )}
-          </div>
+          </>
         </div>
         <div className="area right">
           <FoldableBox fold="preview" title={t("Preview")} id="PreviewBox">

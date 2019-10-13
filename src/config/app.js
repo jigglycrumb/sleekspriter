@@ -5,9 +5,9 @@ const config = {
     "61d1a52a671076b2f4894be9472cf46e202fa36cd95bd86bacc4e0be7c87a6e2",
   fileExtension: "pixels",
   offset: {
-    top: PLATFORM === "electron" ? 0 : 40,
+    top: PLATFORM === "electron" ? 40 : 70,
     right: 228,
-    bottom: 47, // + 20 for scrollbar
+    bottom: 27,
     left: 45,
   },
   zoom: {
