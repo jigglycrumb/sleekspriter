@@ -34,7 +34,7 @@ class Menu extends React.Component {
     }
 
     const {
-      appMenu,
+      aboutOption,
       editMenu,
       selectMenu,
       layerMenu,
@@ -42,6 +42,12 @@ class Menu extends React.Component {
       windowMenu,
       SEPERATOR,
     } = getDefaultMenuConfig(this.props);
+
+    const appMenu = {
+      label: APPNAME,
+      screen: ["start", "paint", "export"],
+      submenu: [aboutOption],
+    };
 
     const fileMenu = {
       label: "File",

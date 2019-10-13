@@ -9,6 +9,8 @@ import { fileDefaultPath, save } from "./utils";
 
 const { app, dialog, Menu } = remote;
 
+const isMac = process.platform === "darwin";
+
 // TODO: translations
 
 const MenuComponent = props => {
@@ -22,7 +24,7 @@ const MenuComponent = props => {
   } = props;
 
   const {
-    appMenu,
+    aboutOption,
     editMenu,
     selectMenu,
     layerMenu,
@@ -30,6 +32,8 @@ const MenuComponent = props => {
     windowMenu,
     SEPERATOR,
   } = getDefaultMenuConfig(props);
+
+  let appMenu;
 
   const fileMenu = {
     label: "File",
@@ -140,39 +144,47 @@ const MenuComponent = props => {
     role: "quit",
   };
 
+  const minimizeOption = {
+    label: "Minimize",
+    accelerator: "CmdOrCtrl+M",
+    role: "minimize",
+  };
+
   switch (process.platform) {
-    case "darwin": // Mac OS specific menu items
-      appMenu.submenu = [
-        ...appMenu.submenu,
-        SEPERATOR,
-        {
-          role: "hide",
-        },
-        {
-          role: "hideothers",
-        },
-        {
-          role: "unhide",
-        },
-        SEPERATOR,
-        quitOption,
-      ];
+    case "darwin":
+      // Mac OS specific menu items
+      appMenu = {
+        label: APPNAME,
+        screen: ["start", "paint", "export"],
+        submenu: [
+          aboutOption,
+          SEPERATOR,
+          {
+            role: "hide",
+          },
+          {
+            role: "hideothers",
+          },
+          {
+            role: "unhide",
+          },
+          SEPERATOR,
+          quitOption,
+        ],
+      };
 
       windowMenu.submenu = [
         ...windowMenu.submenu,
         SEPERATOR,
         fullscreenOption,
-        {
-          label: "Minimize",
-          accelerator: "CmdOrCtrl+M",
-          role: "minimize",
-        },
+        minimizeOption,
         SEPERATOR,
         {
           label: "Bring All to Front",
           role: "front",
         },
       ];
+
       break;
 
     case "win32": // Windows specific menu items
@@ -182,8 +194,9 @@ const MenuComponent = props => {
         ...windowMenu.submenu,
         SEPERATOR,
         fullscreenOption,
+        minimizeOption,
         SEPERATOR,
-        appMenu.submenu[0], // about window
+        aboutOption,
       ];
       break;
 
@@ -205,8 +218,7 @@ const MenuComponent = props => {
       },
       {
         label: "Toggle Developer Tools",
-        accelerator:
-          process.platform === "darwin" ? "Alt+Command+I" : "Ctrl+Shift+I",
+        accelerator: isMac ? "Alt+Command+I" : "Ctrl+Shift+I",
         click(item, focusedWindow) {
           if (focusedWindow) focusedWindow.webContents.toggleDevTools();
         },
@@ -215,7 +227,6 @@ const MenuComponent = props => {
   }
 
   const menuConfig = [
-    process.platform === "darwin" && appMenu,
     fileMenu,
     editMenu,
     selectMenu,
@@ -223,6 +234,10 @@ const MenuComponent = props => {
     frameMenu,
     windowMenu,
   ];
+
+  if (isMac) {
+    menuConfig.unshift(appMenu);
+  }
 
   useEffect(() => {
     menuConfig.forEach(item => {

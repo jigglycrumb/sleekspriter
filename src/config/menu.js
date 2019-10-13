@@ -7,19 +7,11 @@ const getDefaultMenuConfig = props => {
 
   const SEPERATOR = { type: "separator" };
 
-  // -------------------------------------------------------------------------------------------
-
-  const appMenu = {
-    label: APPNAME,
-    screen: ["start", "paint", "export"],
-    submenu: [
-      {
-        label: `About ${APPNAME}`,
-        click: () => {
-          props.modalShow("ModalAbout");
-        },
-      },
-    ],
+  const aboutOption = {
+    label: `About ${APPNAME}`,
+    click: () => {
+      props.modalShow("ModalAbout");
+    },
   };
 
   // -------------------------------------------------------------------------------------------
@@ -290,7 +282,7 @@ const getDefaultMenuConfig = props => {
   // -------------------------------------------------------------------------------------------
 
   return {
-    appMenu,
+    aboutOption,
     editMenu,
     selectMenu,
     layerMenu,
