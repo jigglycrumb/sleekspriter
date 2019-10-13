@@ -36,6 +36,7 @@ const MenuComponent = props => {
     screen: ["paint", "export"],
     submenu: [
       {
+        enableOnScreen: ["start"],
         label: "New…",
         accelerator: "CmdOrCtrl+N",
         click: () => {
@@ -43,6 +44,7 @@ const MenuComponent = props => {
         },
       },
       {
+        enableOnScreen: ["start"],
         label: "Open…",
         accelerator: "CmdOrCtrl+O",
         click: () => {
@@ -82,6 +84,7 @@ const MenuComponent = props => {
       },
       SEPERATOR,
       {
+        enableOnScreen: ["start"],
         label: "Import…",
         click: () => {
           modalHide();
@@ -223,8 +226,15 @@ const MenuComponent = props => {
 
   useEffect(() => {
     menuConfig.forEach(item => {
-      const enabled = inArray(item.screen, props.screen);
+      const menuEnabled = inArray(item.screen, props.screen);
+
       item.submenu.forEach(subItem => {
+        const enabled = menuEnabled
+          ? true
+          : subItem.enableOnScreen
+          ? inArray(subItem.enableOnScreen, props.screen)
+          : false;
+
         subItem.enabled = enabled;
       });
     });
