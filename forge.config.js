@@ -17,6 +17,12 @@ module.exports = {
       //   background: "./assets/dmg-background.png",
       //   format: "ULFO",
       // },
+
+      config: {
+        // out: "./out/make/dmg",
+        overwrite: false,
+        // title:
+      },
     },
     {
       name: "@electron-forge/maker-deb",

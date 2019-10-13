@@ -1,7 +1,7 @@
 {
   "name": "sleekspriter",
   "productName": "SleekSpriter",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "description": "A pixel art editor",
   "private": true,
   "main": ".webpack/main",
@@ -19,7 +19,7 @@
     "web:start": "webpack-dev-server --config ./webpack/webpack.config.development.js",
     "web:build": "webpack --config ./webpack/webpack.config.browser.js; ./scripts/update_homepage.sh",
     "electron:start": "electron-forge start",
-    "electron:make": "electron-forge make",
+    "electron:make": "yarn electron:make:mac",
     "electron:make:mac": "electron-forge make --platform=darwin",
     "electron:make:windows": "electron-forge make --platform=win32 --arch=ia32,x64",
     "electron:make:linux": "electron-forge make --platform=linux --arch=ia32,x64",

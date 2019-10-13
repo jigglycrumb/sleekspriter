@@ -131,41 +131,59 @@ const MenuComponent = props => {
     role: "togglefullscreen",
   };
 
-  // Mac OS specific menu items
-  if (process.platform === "darwin") {
-    appMenu.submenu = [
-      ...appMenu.submenu,
-      SEPERATOR,
-      {
-        role: "hide",
-      },
-      {
-        role: "hideothers",
-      },
-      {
-        role: "unhide",
-      },
-      SEPERATOR,
-      {
-        role: "quit",
-      },
-    ];
+  const quitOption = {
+    role: "quit",
+  };
 
-    windowMenu.submenu = [
-      ...windowMenu.submenu,
-      SEPERATOR,
-      fullscreenOption,
-      {
-        label: "Minimize",
-        accelerator: "CmdOrCtrl+M",
-        role: "minimize",
-      },
-      SEPERATOR,
-      {
-        label: "Bring All to Front",
-        role: "front",
-      },
-    ];
+  switch (process.platform) {
+    case "darwin": // Mac OS specific menu items
+      appMenu.submenu = [
+        ...appMenu.submenu,
+        SEPERATOR,
+        {
+          role: "hide",
+        },
+        {
+          role: "hideothers",
+        },
+        {
+          role: "unhide",
+        },
+        SEPERATOR,
+        quitOption,
+      ];
+
+      windowMenu.submenu = [
+        ...windowMenu.submenu,
+        SEPERATOR,
+        fullscreenOption,
+        {
+          label: "Minimize",
+          accelerator: "CmdOrCtrl+M",
+          role: "minimize",
+        },
+        SEPERATOR,
+        {
+          label: "Bring All to Front",
+          role: "front",
+        },
+      ];
+      break;
+
+    case "win32": // Windows specific menu items
+      fileMenu.submenu = [...fileMenu.submenu, SEPERATOR, quitOption];
+
+      windowMenu.submenu = [
+        ...windowMenu.submenu,
+        SEPERATOR,
+        fullscreenOption,
+        SEPERATOR,
+        appMenu.submenu[0], // about window
+      ];
+      break;
+
+    case "linux": // Linux specific menu items
+      break;
   }
 
   // Add reload and devtools to development build menu
@@ -192,7 +210,7 @@ const MenuComponent = props => {
   }
 
   const menuConfig = [
-    appMenu,
+    process.platform === "darwin" && appMenu,
     fileMenu,
     editMenu,
     selectMenu,
