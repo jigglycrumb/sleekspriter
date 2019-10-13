@@ -10,7 +10,7 @@
   "scripts": {
     "start": "concurrently npm:web:start npm:electron:start",
     "build": "concurrently npm:web:build npm:electron:make",
-    "prettier": "prettier-eslint --list-different \"{src,tests,docs}/**/*.js\"",
+    "prettier": "prettier-eslint --list-different \"{src,tests}/**/*.js\"",
     "prettier:fix": "prettier-eslint --write \"{src,tests}/**/*.js\"",
     "lint": "eslint \"./{src,tests}/**/*.js\"",
     "lint:fix": "eslint \"./{src,tests}/**/*.js\" --fix",
