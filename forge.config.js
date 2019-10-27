@@ -7,21 +7,16 @@ module.exports = {
       //   name: "my_new_app",
       // },
     },
-    {
-      name: "@electron-forge/maker-zip",
-    },
+    // {
+    //   name: "@electron-forge/maker-zip",
+    // },
 
     {
       name: "@electron-forge/maker-dmg",
-      // config: {
-      //   background: "./assets/dmg-background.png",
-      //   format: "ULFO",
-      // },
-
       config: {
-        // out: "./out/make/dmg",
-        overwrite: false,
-        // title:
+        background: "./src/assets/dmg-background.png",
+        // format: "ULFO",
+        title: "SleekSpriter", // does this work?
       },
     },
     {
