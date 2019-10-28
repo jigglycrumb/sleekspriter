@@ -244,11 +244,12 @@ const MenuComponent = props => {
       const menuEnabled = inArray(item.screen, props.screen);
 
       item.submenu.forEach(subItem => {
-        const enabled = menuEnabled
-          ? true
-          : subItem.enableOnScreen
-          ? inArray(subItem.enableOnScreen, props.screen)
-          : false;
+        let enabled = false;
+        if (menuEnabled) {
+          enabled = true;
+        } else if (subItem.enableOnScreen) {
+          enabled = inArray(subItem.enableOnScreen, props.screen);
+        }
 
         subItem.enabled = enabled;
       });

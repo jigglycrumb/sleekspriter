@@ -194,10 +194,8 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-  file: PropTypes.object.isRequired,
   modalShow: PropTypes.func.isRequired,
   screen: PropTypes.string.isRequired,
-  screenSelect: PropTypes.func.isRequired,
 };
 
 export default Menu;
