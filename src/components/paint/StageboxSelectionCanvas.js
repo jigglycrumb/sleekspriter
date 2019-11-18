@@ -4,9 +4,24 @@ import PropTypes from "prop-types";
 import { CanvasDecorator } from "../decorators";
 import { selectionIsActive } from "../../utils";
 
+const DASH_SIZE = 8;
+const LINE_WIDTH = 2;
+
+const COLOR_BG = "white";
+const COLOR_DASH = "black";
+
+const DRAW_INTERVAL = 100;
+
 class StageboxSelectionCanvas extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      offset: 1,
+      offsetIncrease: true,
+    };
+
+    this.interval = null;
     this.tick = this.tick.bind(this);
   }
 
@@ -24,7 +39,7 @@ class StageboxSelectionCanvas extends React.Component {
 
   componentDidMount() {
     // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
-    this.interval = setInterval(this.tick, 200);
+    this.interval = setInterval(this.tick, DRAW_INTERVAL);
   }
 
   componentWillUnmount() {
@@ -57,6 +72,18 @@ class StageboxSelectionCanvas extends React.Component {
         if (selectionIsActive(this.props.selection)) this.drawLastSelection();
         break;
     }
+
+    let offset = this.state.offset;
+    let offsetIncrease = this.state.offsetIncrease;
+
+    if (offsetIncrease) {
+      offset++;
+      if (offset === DASH_SIZE) offsetIncrease = false;
+    } else {
+      offset--;
+      if (offset === 1) offsetIncrease = true;
+    }
+    this.setState({ offset, offsetIncrease });
   }
 
   drawSelection(start, end) {
@@ -65,16 +92,13 @@ class StageboxSelectionCanvas extends React.Component {
     const canvas = this.canvas;
     const zoom = this.props.zoom;
     const ctx = canvas.getContext("2d");
-    const pattern = ctx.createPattern(
-      document.getElementById("SelectionPattern"),
-      "repeat"
-    );
 
     let width = end.x - start.x;
     let height = end.y - start.y;
     let sx;
     let sy;
 
+    // TODO: check why this is there, write comment to explain
     if (width >= 0) {
       width++;
       sx = start.x - 1;
@@ -91,12 +115,64 @@ class StageboxSelectionCanvas extends React.Component {
       sy = start.y;
     }
 
-    ctx.strokeStyle = pattern;
-    ctx.strokeRect(
-      sx * zoom + 0.5,
-      sy * zoom + 0.5,
-      width * zoom - 1,
-      height * zoom - 1
+    const s = {
+      start: {
+        x: sx * zoom,
+        y: sy * zoom,
+      },
+      end: {
+        x: sx * zoom + width * zoom,
+        y: sy * zoom + height * zoom,
+      },
+    };
+
+    // draw solid background rectangle
+    ctx.fillStyle = COLOR_BG;
+
+    ctx.fillRect(
+      s.start.x - LINE_WIDTH / 2,
+      s.start.y - LINE_WIDTH / 2,
+      width * zoom + LINE_WIDTH,
+      height * zoom + LINE_WIDTH
+    );
+
+    // draw dashed border lines
+
+    ctx.lineWidth = LINE_WIDTH;
+    ctx.strokeStyle = COLOR_DASH;
+    ctx.lineDashOffset = this.state.offset;
+    ctx.setLineDash([DASH_SIZE, DASH_SIZE]);
+
+    // top horizontal line
+    ctx.beginPath();
+    ctx.moveTo(s.start.x, s.start.y);
+    ctx.lineTo(s.end.x, s.start.y);
+    ctx.stroke();
+
+    // right vertical line
+    ctx.beginPath();
+    ctx.moveTo(s.end.x, s.start.y);
+    ctx.lineTo(s.end.x, s.end.y);
+    ctx.stroke();
+
+    // bottom horizontal line
+    ctx.beginPath();
+    ctx.moveTo(s.end.x, s.end.y);
+    ctx.lineTo(s.start.x, s.end.y);
+    ctx.stroke();
+
+    // left vertical line
+    ctx.beginPath();
+    ctx.moveTo(s.start.x, s.end.y);
+    ctx.lineTo(s.start.x, s.start.y);
+    ctx.stroke();
+
+    // clear out inner area to leave a two-color dashed outline
+    ctx.clearRect(
+      s.start.x + LINE_WIDTH / 2,
+      s.start.y + LINE_WIDTH / 2,
+      width * zoom - LINE_WIDTH,
+      height * zoom - LINE_WIDTH
     );
   }
 
