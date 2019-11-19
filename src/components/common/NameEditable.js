@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _ from "lodash";
+import { isEmpty } from "lodash";
 
 class NameEditable extends React.Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class NameEditable extends React.Component {
       event.type === "blur" ||
       (event.type === "keydown" && event.keyCode === 13)
     ) {
-      if (!_.isEmpty(newName)) {
+      if (!isEmpty(newName)) {
         this.setState({ inputVisible: false });
         this.props.callback(newName);
       }

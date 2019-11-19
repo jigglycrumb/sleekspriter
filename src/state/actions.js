@@ -54,27 +54,21 @@ export const frameDuplicate = (layers, source, target, nextLayerId) => ({
   target,
   nextLayerId,
 });
-export const frameFlipHorizontal = (frame, pixels, pivot, size) => ({
+export const frameFlipHorizontal = (frame, size) => ({
   type: "FRAME_FLIP_HORIZONTAL",
   frame,
-  pixels,
-  pivot,
   size,
 });
-export const frameFlipVertical = (frame, pixels, pivot, size) => ({
+export const frameFlipVertical = (frame, size) => ({
   type: "FRAME_FLIP_VERTICAL",
   frame,
-  pixels,
-  pivot,
   size,
 });
-export const frameRotate = (frame, pixels, angle, pivot, size) => ({
+export const frameRotate = (frame, size, angle) => ({
   type: "FRAME_ROTATE",
   frame,
-  pixels,
-  angle,
-  pivot,
   size,
+  angle,
 });
 export const frameSelect = frame => ({ type: "FRAME_SELECT", frame });
 export const gridToggle = () => ({ type: "GRID_TOGGLE" });
@@ -159,29 +153,27 @@ export const pixelsDelete = (frame, layer, pixels, allPixels) => ({
   pixels,
   allPixels,
 });
-export const pixelsFlipHorizontal = (frame, layer, pixels, pivot, size) => ({
+export const pixelsFlipHorizontal = (frame, layer, size, selection) => ({
   type: "PIXELS_FLIP_HORIZONTAL",
   frame,
   layer,
-  pixels,
-  pivot,
   size,
+  selection,
 });
-export const pixelsFlipVertical = (frame, layer, pixels, pivot, size) => ({
+export const pixelsFlipVertical = (frame, layer, size, selection) => ({
   type: "PIXELS_FLIP_VERTICAL",
   frame,
   layer,
-  pixels,
-  pivot,
   size,
+  selection,
 });
-export const pixelsMove = (frame, layer, pixels, distance, size) => ({
+export const pixelsMove = (frame, layer, distance, size, selection) => ({
   type: "PIXELS_MOVE",
   frame,
   layer,
-  pixels,
   distance,
   size,
+  selection,
 });
 export const pixelsPaste = (frame, layer, pixels) => ({
   type: "PIXELS_PASTE",
@@ -189,14 +181,13 @@ export const pixelsPaste = (frame, layer, pixels) => ({
   layer,
   pixels,
 });
-export const pixelsRotate = (frame, layer, pixels, angle, pivot, size) => ({
+export const pixelsRotate = (frame, layer, size, selection, angle) => ({
   type: "PIXELS_ROTATE",
   frame,
   layer,
-  pixels,
-  angle,
-  pivot,
   size,
+  selection,
+  angle,
 });
 export const screenSelect = screen => ({ type: "SCREEN_SELECT", screen });
 export const selectionClear = () => ({ type: "SELECTION_CLEAR" });

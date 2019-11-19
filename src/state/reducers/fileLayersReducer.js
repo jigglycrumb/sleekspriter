@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { findIndex } from "lodash";
 import initialState from "../initialState";
 import { duplicateLayers } from "../../utils";
 
@@ -86,7 +86,7 @@ function fileLayersReducer(state = initialState.file.present.layers, action) {
 
     case "LAYER_MERGE": {
       const stateCopy = copyState(state);
-      const index = _.findIndex(stateCopy, { id: action.first });
+      const index = findIndex(stateCopy, { id: action.first });
       return stateCopy.slice(0, index).concat(stateCopy.slice(index + 1));
     }
 

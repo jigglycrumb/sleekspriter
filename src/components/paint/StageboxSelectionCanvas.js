@@ -38,7 +38,7 @@ class StageboxSelectionCanvas extends React.Component {
   }
 
   componentDidMount() {
-    // animate the selection by redrawing the selection pattern from offscreen canvas every 200ms
+    // start animating the selection
     this.interval = setInterval(this.tick, DRAW_INTERVAL);
   }
 
@@ -49,28 +49,8 @@ class StageboxSelectionCanvas extends React.Component {
   tick() {
     this.props.clear(this.canvas);
 
-    switch (this.props.tool) {
-      case "RectangularSelectionTool":
-        //   if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
-        //   else if(storeUtils.selection.isResizing) {
-        //     this.drawSelection(this.props.ui.selection.start, this.props.ui.selection.cursor);
-        //   }
-        //   else if(storeUtils.selection.isActive) this.drawLastSelection();
-
-        if (selectionIsActive(this.props.selection)) {
-          this.drawSelection(
-            this.props.selection.start,
-            this.props.selection.end
-          );
-        }
-        break;
-      // case "MoveTool":
-      //   if(storeUtils.selection.isMoving) this.moveSelection(this.props.ui.selection.distance);
-      //   else if(storeUtils.selection.isActive) this.drawLastSelection();
-      //   break;
-      default:
-        if (selectionIsActive(this.props.selection)) this.drawLastSelection();
-        break;
+    if (selectionIsActive(this.props.selection)) {
+      this.drawSelection(this.props.selection.start, this.props.selection.end);
     }
 
     let offset = this.state.offset;
@@ -81,7 +61,7 @@ class StageboxSelectionCanvas extends React.Component {
       if (offset === DASH_SIZE) offsetIncrease = false;
     } else {
       offset--;
-      if (offset === 1) offsetIncrease = true;
+      if (offset === 0) offsetIncrease = true;
     }
     this.setState({ offset, offsetIncrease });
   }
@@ -98,7 +78,7 @@ class StageboxSelectionCanvas extends React.Component {
     let sx;
     let sy;
 
-    // TODO: check why this is there, write comment to explain
+    // make selection 1 pixel wider and higher to frame the content
     if (width >= 0) {
       width++;
       sx = start.x - 1;
@@ -175,10 +155,6 @@ class StageboxSelectionCanvas extends React.Component {
       height * zoom - LINE_WIDTH
     );
   }
-
-  drawLastSelection() {
-    this.drawSelection(this.props.selection.start, this.props.selection.end);
-  }
 }
 
 StageboxSelectionCanvas.propTypes = {
@@ -188,7 +164,6 @@ StageboxSelectionCanvas.propTypes = {
     start: PropTypes.object,
     end: PropTypes.object,
   }),
-  tool: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
 };

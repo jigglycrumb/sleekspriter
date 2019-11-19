@@ -9,8 +9,13 @@ import { Color, Point, Pixel } from "../../classes";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
-import _ from "lodash";
-import { getPixelsInScope, selectionIsActive, insideBounds } from "../../utils";
+import { isEqual, merge } from "lodash";
+import {
+  createSelection,
+  hasDistance,
+  insideBounds,
+  selectionIsActive,
+} from "../../utils";
 import PaintbucketWorker from "../../workers/paintbucket";
 import { sizeShape, selectionShape } from "../../shapes";
 
@@ -32,8 +37,9 @@ class Stagebox extends React.Component {
 
     this.pixels = {}; // a map of pixels filled by the tools and then batch-sent to redux
     this.layerVisibilityMap = {}; // a helper map for easy access to layer visibilty
-    this.layerBackup = null; // a backup canvas for MoveTool
     this.layers = {}; // layer refs
+
+    this.lastCursorPosition = null; // used in MoveTool
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -58,7 +64,7 @@ class Stagebox extends React.Component {
   }
 
   render() {
-    const { onionFrameAbsolute, size, tool, zoom } = this.props;
+    const { onionFrameAbsolute, size, zoom } = this.props;
     const w = size.width * zoom;
     const h = size.height * zoom;
     const centerAreaWidth =
@@ -124,7 +130,6 @@ class Stagebox extends React.Component {
           height={h}
           zoom={zoom}
           selection={this.props.selection}
-          tool={tool}
         />
         {this.props.grid && (
           <GridCanvas width={w} height={h} columns={w / zoom} rows={h / zoom} />
@@ -178,9 +183,6 @@ class Stagebox extends React.Component {
       case "EyedropperTool":
         this.useEyedropperTool();
         break;
-      case "MoveTool":
-        this.startMoveTool();
-        break;
       case "PaintbucketTool":
         this.usePaintBucketTool(point);
         break;
@@ -208,7 +210,7 @@ class Stagebox extends React.Component {
           this.useEraserTool(point);
           break;
         case "MoveTool":
-          this.previewMoveTool();
+          this.useMoveTool();
           break;
         case "RectangularSelectionTool":
           this.resizeRectangularSelection(point);
@@ -238,7 +240,7 @@ class Stagebox extends React.Component {
     if (
       x > 0 &&
       y > 0 &&
-      (force || (x !== this.cursor.x || y !== this.cursor.y))
+      (force || x !== this.cursor.x || y !== this.cursor.y)
     ) {
       // update cursor position
       this.cursor = point;
@@ -317,7 +319,7 @@ class Stagebox extends React.Component {
           this.pixels = {};
           break;
         case "MoveTool":
-          this.endMoveTool();
+          this.lastCursorPosition = null;
           break;
         case "RectangularSelectionTool":
           this.endRectangularSelection(this.cursor); //, distance);
@@ -346,7 +348,7 @@ class Stagebox extends React.Component {
           a: 1,
         };
 
-        _.merge(this.pixels, {
+        merge(this.pixels, {
           [point.x]: {
             [point.y]: p,
           },
@@ -390,7 +392,7 @@ class Stagebox extends React.Component {
           a: 1,
         };
 
-        _.merge(this.pixels, {
+        merge(this.pixels, {
           [point.x]: {
             [point.y]: p,
           },
@@ -417,7 +419,7 @@ class Stagebox extends React.Component {
         );
 
         if (p) {
-          _.merge(this.pixels, {
+          merge(this.pixels, {
             [point.x]: {
               [point.y]: p,
             },
@@ -433,85 +435,19 @@ class Stagebox extends React.Component {
     this.props.zoomIn();
   }
 
-  startMoveTool() {
-    this.layerBackup = document.createElement("canvas");
-
-    const canvas = document
-      .getElementById(`StageBoxLayer-${this.props.layer}`)
-      .querySelector("canvas");
-    const backupCtx = this.layerBackup.getContext("2d");
-
-    this.layerBackup.width = canvas.width;
-    this.layerBackup.height = canvas.height;
-
-    // save main canvas contents
-    backupCtx.drawImage(canvas, 0, 0);
-  }
-
-  previewMoveTool() {
-    if (this.layerIsVisible()) {
-      const distance = this.getMouseDownDistance();
-      const offset = {
-        x: distance.x * this.props.zoom,
-        y: distance.y * this.props.zoom,
-      };
-      const canvas = document
-        .getElementById(`StageBoxLayer-${this.props.layer}`)
-        .querySelector("canvas");
-      const ctx = canvas.getContext("2d");
-
-      canvas.width = canvas.width;
-
-      if (!selectionIsActive(this.props.selection)) {
-        ctx.drawImage(this.layerBackup, offset.x, offset.y);
-      } else {
-        // draw the whole image
-        ctx.drawImage(this.layerBackup, 0, 0);
-        // clear out selection
-        const selectionX = (this.props.selection.start.x - 1) * this.props.zoom;
-        const selectionY = (this.props.selection.start.y - 1) * this.props.zoom;
-        const selectionWidth =
-          (this.props.selection.end.x - this.props.selection.start.x + 1) *
-          this.props.zoom;
-        const selectionHeight =
-          (this.props.selection.end.y - this.props.selection.start.y + 1) *
-          this.props.zoom;
-
-        ctx.clearRect(selectionX, selectionY, selectionWidth, selectionHeight);
-        // draw the selection
-        ctx.drawImage(
-          this.layerBackup,
-          selectionX,
-          selectionY,
-          selectionWidth,
-          selectionHeight,
-          selectionX + offset.x,
-          selectionY + offset.y,
-          selectionWidth,
-          selectionHeight
-        );
-
-        // move the selection canvas
-        document.querySelector(
-          "#StageBoxSelectionCanvas"
-        ).style.left = `${offset.x}px`;
-        document.querySelector(
-          "#StageBoxSelectionCanvas"
-        ).style.top = `${offset.y}px`;
-      }
+  useMoveTool() {
+    let distance;
+    if (!this.lastCursorPosition) {
+      distance = this.getMouseDownDistance();
+    } else {
+      distance = this.getMouseDownDistance(this.lastCursorPosition);
     }
-  }
 
-  endMoveTool() {
-    const { frame, layer, pixels, selection, size } = this.props;
-    const distance = this.getMouseDownDistance();
-
-    if (distance.x !== 0 && distance.y !== 0) {
-      // pixels = this.getLayerPixels(this.props.layer);
-      const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+    if (hasDistance(distance) && this.layerIsVisible()) {
+      const { frame, layer, selection, size } = this.props;
 
       // move pixels
-      this.props.pixelsMove(frame, layer, scopedPixels, distance, size);
+      this.props.pixelsMove(frame, layer, distance, size, selection);
 
       // move selection
       if (selectionIsActive(selection)) {
@@ -519,13 +455,9 @@ class Stagebox extends React.Component {
       }
 
       this.props.fileDirty(true);
+
+      this.lastCursorPosition = this.cursor;
     }
-
-    // reset styles set by MoveTool preview
-    document.querySelector("#StageBoxSelectionCanvas").style.left = "";
-    document.querySelector("#StageBoxSelectionCanvas").style.top = "";
-
-    this.layerBackup = null;
   }
 
   usePaintBucketTool(point) {
@@ -581,14 +513,12 @@ class Stagebox extends React.Component {
   }
 
   resizeRectangularSelection(point) {
-    this.selectionCanvas.decoratedCanvas.drawSelection(
-      this.props.selection.start,
-      point
-    );
+    const { start, end } = createSelection(this.props.selection.start, point);
+    this.selectionCanvas.decoratedCanvas.drawSelection(start, end);
   }
 
   endRectangularSelection(point) {
-    if (_.isEqual(point, this.mouse.downStart)) {
+    if (isEqual(point, this.mouse.downStart)) {
       this.props.selectionClear();
     } else {
       this.props.selectionEnd(point);
@@ -611,10 +541,10 @@ class Stagebox extends React.Component {
     return true;
   }
 
-  getMouseDownDistance() {
+  getMouseDownDistance(from = this.mouse.downStart) {
     return {
-      x: this.cursor.x - this.mouse.downStart.x,
-      y: this.cursor.y - this.mouse.downStart.y,
+      x: this.cursor.x - from.x,
+      y: this.cursor.y - from.y,
     };
   }
 

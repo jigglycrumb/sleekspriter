@@ -5,7 +5,12 @@ import initialState from "../initialState";
 import { Point } from "../../classes";
 import config from "../../config";
 
-import { deletePixels, flattenPixels, mergeLayerPixels } from "../../utils";
+import {
+  createSelection,
+  deletePixels,
+  flattenPixels,
+  mergeLayerPixels,
+} from "../../utils";
 const { zoom, offset } = config;
 
 function uiPaintReducer(state = initialState.ui.paint, action) {
@@ -167,13 +172,15 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
           ).translate(action.distance),
         },
       };
-    case "SELECTION_END":
-      // TODO: switch start & end if end < start
-      return { ...state, selection: { ...state.selection, end: action.point } };
+    case "SELECTION_END": {
+      const selection = createSelection(state.selection.start, action.point);
+      return { ...state, selection };
+    }
+
     case "SELECTION_START":
       return {
         ...state,
-        selection: { ...state.selection, start: action.point },
+        selection: { start: action.point, end: null },
       };
     case "TOOL_SELECT":
       return { ...state, tool: action.tool };

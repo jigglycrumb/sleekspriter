@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { cloneDeep } from "lodash";
 
 import { insideBounds, selectionIsActive } from "./";
 
@@ -13,7 +13,7 @@ const getPixelsInScope = (frame, layer, pixels, selection) => {
   let pixelsInScope = {};
 
   if (pixels[frame] && pixels[frame][layer]) {
-    pixelsInScope = _.cloneDeep(pixels[frame][layer]);
+    pixelsInScope = cloneDeep(pixels[frame][layer]);
   }
 
   if (selectionIsActive(selection)) {

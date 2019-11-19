@@ -1,11 +1,12 @@
 import initialState from "../initialState";
-import _ from "lodash";
+import { merge } from "lodash";
 import { assoc, dissoc, get } from "sprout-data";
 import {
   createBounds,
   deletePixels,
   duplicateLayers,
   flattenPixels,
+  getPivot,
   insideBounds,
   mergeLayerPixels,
 } from "../../utils";
@@ -41,36 +42,27 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       return assoc(state, [target], newPixels);
     }
 
-    case "FRAME_FLIP_HORIZONTAL": {
-      const { frame, pixels, pivot, size } = action;
-      const bounds = createBounds(size);
-      const newPixels = manipulateFramePixels(
-        pixels,
-        flipPixelHorizontal.bind(this, pivot, bounds)
-      );
-
-      state = dissoc(state, [frame]);
-      return assoc(state, [frame], newPixels);
-    }
-
-    case "FRAME_FLIP_VERTICAL": {
-      const { frame, pixels, pivot, size } = action;
-      const bounds = createBounds(size);
-      const newPixels = manipulateFramePixels(
-        pixels,
-        flipPixelVertical.bind(this, pivot, bounds)
-      );
-
-      state = dissoc(state, [frame]);
-      return assoc(state, [frame], newPixels);
-    }
-
+    case "FRAME_FLIP_HORIZONTAL":
+    case "FRAME_FLIP_VERTICAL":
     case "FRAME_ROTATE": {
-      const { frame, pixels, angle, pivot, size } = action;
+      const { angle, frame, size, type } = action;
+      const pixels = get(state, [frame], {});
+      const pivot = getPivot(size);
       const bounds = createBounds(size);
+
+      const handlers = {
+        FRAME_FLIP_HORIZONTAL: {
+          func: flipPixelHorizontal,
+          args: [pivot, bounds],
+        },
+        FRAME_FLIP_VERTICAL: { func: flipPixelVertical, args: [pivot, bounds] },
+        FRAME_ROTATE: { func: rotatePixel, args: [pivot, bounds, angle] },
+      };
+
       const newPixels = manipulateFramePixels(
         pixels,
-        rotatePixel.bind(this, angle, pivot, bounds)
+        handlers[type].func.bind(this, ...handlers[type].args),
+        createBounds(size)
       );
 
       state = dissoc(state, [frame]);
@@ -90,7 +82,7 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
     case "PIXELS_PASTE": {
       const { frame, layer, pixels } = action;
       const px = get(state, [frame, layer], {});
-      const newPixels = { ..._.merge(px, pixels) };
+      const newPixels = { ...merge(px, pixels) };
       return assoc(state, [frame, layer], newPixels);
     }
 
@@ -100,48 +92,48 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
       return deletePixels(state, frame, layer, pixels);
     }
 
-    case "PIXELS_FLIP_HORIZONTAL": {
-      const { frame, layer, pixels, pivot, size } = action;
-      const bounds = createBounds(size);
+    case "PIXELS_FLIP_HORIZONTAL":
+    case "PIXELS_FLIP_VERTICAL":
+    case "PIXELS_ROTATE": {
+      const { angle, frame, layer, size, selection, type } = action;
+
+      const pixels = get(state, [frame, layer], {});
+      const pivot = getPivot(size, selection);
+      const bounds = createBounds(size, selection);
+
+      const handlers = {
+        PIXELS_FLIP_HORIZONTAL: {
+          func: flipPixelHorizontal,
+          args: [pivot, bounds],
+        },
+        PIXELS_FLIP_VERTICAL: {
+          func: flipPixelVertical,
+          args: [pivot, bounds],
+        },
+        PIXELS_ROTATE: {
+          func: rotatePixel,
+          args: [pivot, bounds, angle],
+        },
+      };
+
       const newPixels = manipulatePixels(
         pixels,
-        flipPixelHorizontal.bind(this, pivot, bounds)
+        handlers[type].func.bind(this, ...handlers[type].args),
+        createBounds(size)
       );
 
-      state = deletePixels(state, frame, layer, pixels);
-      return assoc(state, [frame, layer], newPixels);
-    }
-
-    case "PIXELS_FLIP_VERTICAL": {
-      const { frame, layer, pixels, pivot, size } = action;
-      const bounds = createBounds(size);
-      const newPixels = manipulatePixels(
-        pixels,
-        flipPixelVertical.bind(this, pivot, bounds)
-      );
-
-      state = deletePixels(state, frame, layer, pixels);
+      state = dissoc(state, [frame, layer]);
       return assoc(state, [frame, layer], newPixels);
     }
 
     case "PIXELS_MOVE": {
-      const { frame, layer, pixels, distance, size } = action;
-      const bounds = createBounds(size);
+      const { frame, layer, distance, selection, size } = action;
+      const pixels = get(state, [frame, layer], {});
+      const bounds = createBounds(size, selection);
       const newPixels = manipulatePixels(
         pixels,
-        movePixel.bind(this, distance, bounds)
-      );
-
-      state = deletePixels(state, frame, layer, pixels);
-      return assoc(state, [frame, layer], newPixels);
-    }
-
-    case "PIXELS_ROTATE": {
-      const { frame, layer, pixels, angle, pivot, size } = action;
-      const bounds = createBounds(size);
-      const newPixels = manipulatePixels(
-        pixels,
-        rotatePixel.bind(this, angle, pivot, bounds)
+        movePixel.bind(this, distance, bounds),
+        createBounds(size)
       );
 
       state = deletePixels(state, frame, layer, pixels);
@@ -206,27 +198,23 @@ export default filePixelsReducer;
 // helper functions
 
 function movePixel(distance, bounds, pixel) {
-  pixel.translate(distance);
-  if (insideBounds(bounds, pixel)) return pixel;
-  else return false;
+  if (insideBounds(bounds, pixel)) return pixel.translate(distance);
+  else return pixel;
 }
 
-function rotatePixel(angle, pivot, bounds, pixel) {
-  pixel.rotate(angle, pivot);
-  if (insideBounds(bounds, pixel)) return pixel;
-  else return false;
+function rotatePixel(pivot, bounds, angle, pixel) {
+  if (insideBounds(bounds, pixel)) return pixel.rotate(angle, pivot);
+  else return pixel;
 }
 
 function flipPixelVertical(pivot, bounds, pixel) {
-  pixel.flipVertical(pivot);
-  if (insideBounds(bounds, pixel)) return pixel;
-  else return false;
+  if (insideBounds(bounds, pixel)) return pixel.flipVertical(pivot);
+  else return pixel;
 }
 
 function flipPixelHorizontal(pivot, bounds, pixel) {
-  pixel.flipHorizontal(pivot);
-  if (insideBounds(bounds, pixel)) return pixel;
-  else return false;
+  if (insideBounds(bounds, pixel)) return pixel.flipHorizontal(pivot);
+  else return pixel;
 }
 
 function copyPixelToFrame(frame, layerMap, pixel) {
@@ -275,23 +263,32 @@ function inflateSpritePixels(pixels) {
   return pixelMap;
 }
 
-function manipulatePixels(pixels, callback) {
+function manipulatePixels(pixels, callback, size) {
   pixels = flattenPixels(pixels);
-  pixels.forEach(callback, this);
+  pixels.forEach(callback);
+
+  if (size) pixels = pixels.filter(pixel => insideBounds(size, pixel)); // delete out of stage pixels
+
   pixels = inflatePixels(pixels);
   return pixels;
 }
 
-function manipulateFramePixels(pixels, callback) {
+function manipulateFramePixels(pixels, callback, size) {
   pixels = flattenPixels(pixels);
-  pixels.forEach(callback, this);
+  pixels.forEach(callback);
+
+  if (size) pixels = pixels.filter(pixel => insideBounds(size, pixel)); // delete out of stage pixels
+
   pixels = inflateFramePixels(pixels);
   return pixels;
 }
 
-function manipulateSpritePixels(pixels, callback) {
+function manipulateSpritePixels(pixels, callback, size) {
   pixels = flattenPixels(pixels);
-  pixels.forEach(callback, this);
+  pixels.forEach(callback);
+
+  if (size) pixels = pixels.filter(pixel => insideBounds(size, pixel)); // delete out of stage pixels
+
   pixels = inflateSpritePixels(pixels);
   return pixels;
 }

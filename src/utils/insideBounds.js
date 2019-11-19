@@ -1,9 +1,9 @@
-function insideBounds(selection, point) {
+function insideBounds(bounds, point) {
   return (
-    point.x >= selection.start.x &&
-    point.x <= selection.end.x &&
-    point.y >= selection.start.y &&
-    point.y <= selection.end.y
+    point.x >= bounds.start.x &&
+    point.x <= bounds.end.x &&
+    point.y >= bounds.start.y &&
+    point.y <= bounds.end.y
   );
 }
 

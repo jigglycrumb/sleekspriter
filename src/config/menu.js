@@ -1,6 +1,6 @@
 import { findIndex } from "lodash";
 
-import { getPixelsInFrame, getPixelsInScope, getPivot } from "../utils";
+import { getPixelsInScope } from "../utils";
 
 const getDefaultMenuConfig = props => {
   const { clipboard, frame, layer, layers, pixels, selection, size } = props;
@@ -70,67 +70,32 @@ const getDefaultMenuConfig = props => {
       {
         label: "Rotate 180°",
         click: () => {
-          const scopedPixels = getPixelsInScope(
-            frame,
-            layer,
-            pixels,
-            selection
-          );
-          const pivot = getPivot(size, selection);
-          props.pixelsRotate(frame, layer, scopedPixels, 180, pivot, size);
+          props.pixelsRotate(frame, layer, size, selection, 180);
         },
       },
       {
         label: "Rotate 90° CW",
         click: () => {
-          const scopedPixels = getPixelsInScope(
-            frame,
-            layer,
-            pixels,
-            selection
-          );
-          const pivot = getPivot(size, selection);
-          props.pixelsRotate(frame, layer, scopedPixels, 90, pivot, size);
+          props.pixelsRotate(frame, layer, size, selection, 90);
         },
       },
       {
         label: "Rotate 90° CCW",
         click: () => {
-          const scopedPixels = getPixelsInScope(
-            frame,
-            layer,
-            pixels,
-            selection
-          );
-          const pivot = getPivot(size, selection);
-          props.pixelsRotate(frame, layer, scopedPixels, -90, pivot, size);
+          props.pixelsRotate(frame, layer, size, selection, -90);
         },
       },
       SEPERATOR,
       {
         label: "Flip Horizontal",
         click: () => {
-          const scopedPixels = getPixelsInScope(
-            frame,
-            layer,
-            pixels,
-            selection
-          );
-          const pivot = getPivot(size, selection);
-          props.pixelsFlipHorizontal(frame, layer, scopedPixels, pivot, size);
+          props.pixelsFlipHorizontal(frame, layer, size, selection);
         },
       },
       {
         label: "Flip Vertical",
         click: () => {
-          const scopedPixels = getPixelsInScope(
-            frame,
-            layer,
-            pixels,
-            selection
-          );
-          const pivot = getPivot(size, selection);
-          props.pixelsFlipVertical(frame, layer, scopedPixels, pivot, size);
+          props.pixelsFlipVertical(frame, layer, size, selection);
         },
       },
       SEPERATOR,
@@ -208,42 +173,32 @@ const getDefaultMenuConfig = props => {
       {
         label: "Rotate 180°",
         click: () => {
-          const framePixels = getPixelsInFrame(frame, pixels);
-          const pivot = getPivot(size);
-          props.frameRotate(frame, framePixels, 180, pivot, size);
+          props.frameRotate(frame, size, 180);
         },
       },
       {
         label: "Rotate 90° CW",
         click: () => {
-          const framePixels = getPixelsInFrame(frame, pixels);
-          const pivot = getPivot(size);
-          props.frameRotate(frame, framePixels, 90, pivot, size);
+          props.frameRotate(frame, size, 90);
         },
       },
       {
         label: "Rotate 90° CCW",
         click: () => {
-          const framePixels = getPixelsInFrame(frame, pixels);
-          const pivot = getPivot(size);
-          props.frameRotate(frame, framePixels, -90, pivot, size);
+          props.frameRotate(frame, size, -90);
         },
       },
       SEPERATOR,
       {
         label: "Flip Horizontal",
         click: () => {
-          const framePixels = getPixelsInFrame(frame, pixels);
-          const pivot = getPivot(size);
-          props.frameFlipHorizontal(frame, framePixels, pivot, size);
+          props.frameFlipHorizontal(frame, size);
         },
       },
       {
         label: "Flip Vertical",
         click: () => {
-          const framePixels = getPixelsInFrame(frame, pixels);
-          const pivot = getPivot(size);
-          props.frameFlipVertical(frame, framePixels, pivot, size);
+          props.frameFlipVertical(frame, size);
         },
       },
       SEPERATOR,

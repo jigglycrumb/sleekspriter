@@ -1,6 +1,7 @@
 export { default as capitalizeFirstLetter } from "./capitalizeFirstLetter";
 export { default as createBounds } from "./createBounds";
 export { default as createNewLayerId } from "./createNewLayerId";
+export { default as createSelection } from "./createSelection";
 export { default as deletePixels } from "./deletePixels";
 export { default as duplicateLayers } from "./duplicateLayers";
 export { default as flattenPixels } from "./flattenPixels";
@@ -8,6 +9,7 @@ export { default as getPivot } from "./getPivot";
 export { default as getPixelsInFrame } from "./getPixelsInFrame";
 export { default as getPixelsInScope } from "./getPixelsInScope";
 export { default as fileToState } from "./fileToState";
+export { default as hasDistance } from "./hasDistance";
 export { default as inArray } from "./inArray";
 export { default as insideBounds } from "./insideBounds";
 export { default as mergeLayerPixels } from "./mergeLayerPixels";

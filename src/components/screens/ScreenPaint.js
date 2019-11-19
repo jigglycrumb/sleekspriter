@@ -13,6 +13,8 @@ import ReferenceImage from "../paint/ReferenceImage";
 import { t } from "../../utils";
 
 class ScreenPaint extends React.Component {
+  // static whyDidYouRender = true;
+
   constructor(props) {
     super(props);
 
