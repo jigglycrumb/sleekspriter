@@ -29,6 +29,8 @@ class Stagebox extends React.Component {
   constructor(props) {
     super(props);
 
+    // TODO remove pixels and selection from state and paint them directly
+    // for more performance
     this.state = {
       moveToolLayer: null,
       moveToolPixels: null,
@@ -520,12 +522,10 @@ class Stagebox extends React.Component {
     const { frame, layer, selection } = this.props;
     const distance = this.getMouseDownDistance();
 
-    if (hasDistance(distance) && this.layerIsVisible()) {
-      this.props.pixelsMove(frame, layer, this.state.moveToolPixels);
+    this.props.pixelsMove(frame, layer, this.state.moveToolPixels);
 
-      if (selectionIsActive(selection)) {
-        this.props.selectionMove(distance);
-      }
+    if (selectionIsActive(selection)) {
+      this.props.selectionMove(distance);
     }
 
     this.lastCursorPosition = null;
