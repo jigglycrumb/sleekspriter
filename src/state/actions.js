@@ -167,13 +167,11 @@ export const pixelsFlipVertical = (frame, layer, size, selection) => ({
   size,
   selection,
 });
-export const pixelsMove = (frame, layer, distance, size, selection) => ({
+export const pixelsMove = (frame, layer, pixels) => ({
   type: "PIXELS_MOVE",
   frame,
   layer,
-  distance,
-  size,
-  selection,
+  pixels,
 });
 export const pixelsPaste = (frame, layer, pixels) => ({
   type: "PIXELS_PASTE",

@@ -6,15 +6,21 @@ import classnames from "classnames";
 import config from "../../config";
 import { FrameCanvas, GridCanvas } from "../canvases";
 import { Color, Point, Pixel } from "../../classes";
+import MoveToolPreview from "./MoveToolPreview";
 import StageboxCursorCanvas from "./StageboxCursorCanvas";
 import StageboxSelectionCanvas from "./StageboxSelectionCanvas";
 import StageboxLayer from "./StageboxLayer";
 import { isEqual, merge } from "lodash";
 import {
+  createBounds,
   createSelection,
+  getPixelsInScope,
   hasDistance,
   insideBounds,
+  manipulatePixels,
+  movePixel,
   selectionIsActive,
+  translateSelection,
 } from "../../utils";
 import PaintbucketWorker from "../../workers/paintbucket";
 import { sizeShape, selectionShape } from "../../shapes";
@@ -22,6 +28,12 @@ import { sizeShape, selectionShape } from "../../shapes";
 class Stagebox extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      moveToolLayer: null,
+      moveToolPixels: null,
+      moveToolSelection: null,
+    };
 
     this.mouse = {
       down: false,
@@ -129,7 +141,7 @@ class Stagebox extends React.Component {
           width={w}
           height={h}
           zoom={zoom}
-          selection={this.props.selection}
+          selection={this.state.moveToolSelection || this.props.selection}
         />
         {this.props.grid && (
           <GridCanvas width={w} height={h} columns={w / zoom} rows={h / zoom} />
@@ -137,15 +149,26 @@ class Stagebox extends React.Component {
 
         {this.props.layers.map(function(layer) {
           const pixels = this.getLayerPixels(layer.id);
+
           return (
-            <StageboxLayer
-              key={layer.id}
-              layer={layer}
-              pixels={pixels}
-              size={size}
-              zoom={zoom}
-              ref={n => (this.layers[layer.id] = n)}
-            />
+            <React.Fragment key={layer.id}>
+              {layer.id === this.state.moveToolLayer && (
+                <MoveToolPreview
+                  layer={layer}
+                  pixels={this.state.moveToolPixels}
+                  size={size}
+                  zoom={zoom}
+                  ref={n => (this.layers[layer.id] = n)}
+                />
+              )}
+              <StageboxLayer
+                layer={layer}
+                pixels={pixels}
+                size={size}
+                zoom={zoom}
+                ref={n => (this.layers[layer.id] = n)}
+              />
+            </React.Fragment>
           );
         }, this)}
 
@@ -182,6 +205,9 @@ class Stagebox extends React.Component {
         break;
       case "EyedropperTool":
         this.useEyedropperTool();
+        break;
+      case "MoveTool":
+        this.startMoveTool();
         break;
       case "PaintbucketTool":
         this.usePaintBucketTool(point);
@@ -319,10 +345,11 @@ class Stagebox extends React.Component {
           this.pixels = {};
           break;
         case "MoveTool":
-          this.lastCursorPosition = null;
+          this.endMoveTool();
+
           break;
         case "RectangularSelectionTool":
-          this.endRectangularSelection(this.cursor); //, distance);
+          this.endRectangularSelection(this.cursor);
           break;
       }
 
@@ -435,6 +462,25 @@ class Stagebox extends React.Component {
     this.props.zoomIn();
   }
 
+  startMoveTool() {
+    if (this.layerIsVisible()) {
+      const { frame, layer, pixels, selection } = this.props;
+
+      const scopedPixels = getPixelsInScope(frame, layer, pixels, selection);
+
+      this.setState(
+        {
+          moveToolLayer: layer,
+          moveToolPixels: scopedPixels,
+          moveToolSelection: selectionIsActive(selection) ? selection : null,
+        },
+        () => {
+          this.props.pixelsDelete(frame, layer, scopedPixels);
+        }
+      );
+    }
+  }
+
   useMoveTool() {
     let distance;
     if (!this.lastCursorPosition) {
@@ -444,20 +490,51 @@ class Stagebox extends React.Component {
     }
 
     if (hasDistance(distance) && this.layerIsVisible()) {
-      const { frame, layer, selection, size } = this.props;
+      const { size } = this.props;
 
-      // move pixels
-      this.props.pixelsMove(frame, layer, distance, size, selection);
+      // move pixels on preview layer
+      const bounds = createBounds(size, this.state.moveToolSelection);
+      const moveToolPixels = manipulatePixels(
+        this.state.moveToolPixels,
+        movePixel.bind(this, distance, bounds),
+        createBounds(size)
+      );
 
-      // move selection
-      if (selectionIsActive(selection)) {
-        this.props.selectionMove(distance);
-      }
+      // move selection on preview layer, if active
+      const moveToolSelection = this.state.moveToolSelection
+        ? translateSelection(this.state.moveToolSelection, distance)
+        : null;
+
+      this.setState({
+        moveToolSelection,
+        moveToolPixels,
+      });
 
       this.props.fileDirty(true);
 
       this.lastCursorPosition = this.cursor;
     }
+  }
+
+  endMoveTool() {
+    const { frame, layer, selection } = this.props;
+    const distance = this.getMouseDownDistance();
+
+    if (hasDistance(distance) && this.layerIsVisible()) {
+      this.props.pixelsMove(frame, layer, this.state.moveToolPixels);
+
+      if (selectionIsActive(selection)) {
+        this.props.selectionMove(distance);
+      }
+    }
+
+    this.lastCursorPosition = null;
+
+    this.setState({
+      moveToolLayer: null,
+      moveToolPixels: null,
+      moveToolSelection: null,
+    });
   }
 
   usePaintBucketTool(point) {

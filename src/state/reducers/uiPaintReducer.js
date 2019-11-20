@@ -10,6 +10,7 @@ import {
   deletePixels,
   flattenPixels,
   mergeLayerPixels,
+  translateSelection,
 } from "../../utils";
 const { zoom, offset } = config;
 
@@ -150,9 +151,11 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
 
     case "PIXELS_DELETE": {
       const { allPixels, frame, layer, pixels } = action;
-      const pixelMap = deletePixels(allPixels, frame, layer, pixels);
-      const spritePalette = uniq(flattenPixels(pixelMap).map(p => p.toHex()));
-      return { ...state, spritePalette };
+      if (allPixels) {
+        const pixelMap = deletePixels(allPixels, frame, layer, pixels);
+        const spritePalette = uniq(flattenPixels(pixelMap).map(p => p.toHex()));
+        return { ...state, spritePalette };
+      } else return state;
     }
 
     case "SELECTION_CLEAR":
@@ -161,16 +164,7 @@ function uiPaintReducer(state = initialState.ui.paint, action) {
     case "SELECTION_MOVE":
       return {
         ...state,
-        selection: {
-          start: new Point(
-            state.selection.start.x,
-            state.selection.start.y
-          ).translate(action.distance),
-          end: new Point(
-            state.selection.end.x,
-            state.selection.end.y
-          ).translate(action.distance),
-        },
+        selection: translateSelection(state.selection, action.distance),
       };
     case "SELECTION_END": {
       const selection = createSelection(state.selection.start, action.point);

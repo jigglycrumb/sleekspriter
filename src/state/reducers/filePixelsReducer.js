@@ -8,6 +8,7 @@ import {
   flattenPixels,
   getPivot,
   insideBounds,
+  manipulatePixels,
   mergeLayerPixels,
 } from "../../utils";
 
@@ -127,16 +128,9 @@ function filePixelsReducer(state = initialState.file.present.pixels, action) {
     }
 
     case "PIXELS_MOVE": {
-      const { frame, layer, distance, selection, size } = action;
-      const pixels = get(state, [frame, layer], {});
-      const bounds = createBounds(size, selection);
-      const newPixels = manipulatePixels(
-        pixels,
-        movePixel.bind(this, distance, bounds),
-        createBounds(size)
-      );
-
-      state = deletePixels(state, frame, layer, pixels);
+      const { frame, layer, pixels } = action;
+      const oldPixels = get(state, [frame, layer], {});
+      const newPixels = { ...merge(oldPixels, pixels) };
       return assoc(state, [frame, layer], newPixels);
     }
 
@@ -197,11 +191,6 @@ export default filePixelsReducer;
 
 // helper functions
 
-function movePixel(distance, bounds, pixel) {
-  if (insideBounds(bounds, pixel)) return pixel.translate(distance);
-  else return pixel;
-}
-
 function rotatePixel(pivot, bounds, angle, pixel) {
   if (insideBounds(bounds, pixel)) return pixel.rotate(angle, pivot);
   else return pixel;
@@ -231,15 +220,6 @@ const replaceColor = (color, newColor, bounds, pixel) => {
   return pixel;
 };
 
-function inflatePixels(pixels) {
-  const pixelMap = {};
-  pixels.forEach(pixel => {
-    if (!pixelMap[pixel.x]) pixelMap[pixel.x] = {};
-    pixelMap[pixel.x][pixel.y] = pixel;
-  });
-  return pixelMap;
-}
-
 function inflateFramePixels(pixels) {
   const pixelMap = {};
   pixels.forEach(pixel => {
@@ -261,16 +241,6 @@ function inflateSpritePixels(pixels) {
     pixelMap[pixel.frame][pixel.layer][pixel.x][pixel.y] = pixel;
   });
   return pixelMap;
-}
-
-function manipulatePixels(pixels, callback, size) {
-  pixels = flattenPixels(pixels);
-  pixels.forEach(callback);
-
-  if (size) pixels = pixels.filter(pixel => insideBounds(size, pixel)); // delete out of stage pixels
-
-  pixels = inflatePixels(pixels);
-  return pixels;
 }
 
 function manipulateFramePixels(pixels, callback, size) {

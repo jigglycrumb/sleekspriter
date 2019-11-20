@@ -11,10 +11,15 @@ export { default as getPixelsInScope } from "./getPixelsInScope";
 export { default as fileToState } from "./fileToState";
 export { default as hasDistance } from "./hasDistance";
 export { default as inArray } from "./inArray";
+export { default as inflatePixels } from "./inflatePixels";
 export { default as insideBounds } from "./insideBounds";
+export { default as manipulatePixels } from "./manipulatePixels";
 export { default as mergeLayerPixels } from "./mergeLayerPixels";
 export { default as selectionIsActive } from "./selectionIsActive";
 export { default as setWindowTitle } from "./setWindowTitle";
 export { default as stateToFile } from "./stateToFile";
 export { default as t } from "./translate";
+export { default as translateSelection } from "./translateSelection";
 export { default as zSorter } from "./zSorter";
+
+export * from "./manipulatePixels";
