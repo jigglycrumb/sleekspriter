@@ -14,6 +14,7 @@ const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     backgroundColor: "#262626",
+    icon: "assets/icon.png",
     width: 1024,
     height: 768,
     webPreferences: {

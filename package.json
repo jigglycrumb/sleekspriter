@@ -1,7 +1,7 @@
 {
   "name": "sleekspriter",
   "productName": "SleekSpriter",
-  "version": "0.2.32",
+  "version": "0.2.34",
   "description": "A pixel art editor",
   "private": true,
   "main": ".webpack/main",
@@ -16,6 +16,7 @@
     "lint:fix": "eslint \"./{src,tests}/**/*.js\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:ci": "jest -w 1",
     "web:start": "webpack-dev-server --config ./webpack/webpack.config.development.js",
     "web:build": "webpack --config ./webpack/webpack.config.browser.js; ./scripts/update_homepage.sh",
     "electron:start": "electron-forge start",
