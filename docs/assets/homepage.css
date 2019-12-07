@@ -1,0 +1,179 @@
+body {
+  align-items: center;
+  color: #fcc71b;
+  display: flex;
+  flex-direction: column;
+  font-family: "coolvilleregular", monospace;
+  margin: 0 auto;
+  width: 1066px;
+}
+
+header {
+  margin-top: 50px;
+  text-align: center;
+}
+
+nav {
+  font-size: 2em;
+}
+
+nav a {
+  text-decoration: none;
+  margin: 0 0.75em;
+}
+
+nav a.active {
+  color: #fca61b;
+  text-decoration: underline;
+}
+
+main {
+  height: 841px;
+  position: relative;
+  width: 1066px;
+}
+
+footer {
+  margin-bottom: 50px;
+}
+
+iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+figure {
+  margin: 0;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: #fcc71b;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+}
+
+h2 {
+  color: #fca61b;
+}
+
+section {
+  font-size: 1.5em;
+  margin-bottom: 2em;
+  width: 954px;
+}
+
+section ul {
+  line-height: 120%;
+  list-style-type: none;
+  padding-left: 0.5em;
+}
+
+section li {
+  margin-bottom: 0.3em;
+}
+
+section li.q {
+  color: #fca61b;
+  font-weight: bold;
+}
+
+section.features li:before {
+  content: "+";
+  margin-right: 0.9em;
+}
+
+section.faq li strong {
+  float: left;
+}
+
+section.faq li span {
+  float: left;
+  margin-bottom: 2em;
+  margin-left: 0.5em;
+  width: calc(100% - 2em);
+}
+
+.quote {
+  font-family: "zelda_dx_tt_brkregular";
+  letter-spacing: -1ch;
+}
+
+.ribbon-top-right {
+  top: 16px;
+  right: 46px;
+  z-index: 1;
+}
+
+.preview {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1066px;
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.preview.active {
+  opacity: 1;
+}
+
+.preview-inner {
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  height: 841px;
+  margin: 0 auto;
+  position: relative;
+  width: 1066px;
+}
+
+.preview-inner.browser {
+  background-image: url(browser-frame.png);
+}
+
+.preview-inner.desktop {
+  background-image: url(desktop-preview.png);
+}
+
+.preview-inner.tablet {
+  background-image: url(tablet-preview.png);
+}
+
+.browser-app-wrapper {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 692px;
+  left: 56px;
+  overflow: hidden;
+  position: absolute;
+  top: 70px;
+  width: 954px;
+}
+
+.browser-app-standalone {
+  bottom: 20px;
+  color: #fca61b;
+  font-size: 1.5em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+#preview-browser {
+  z-index: 2;
+}
+
+#preview-desktop {
+  z-index: 1;
+}
+
+#preview-tablet {
+  z-index: 0;
+}
