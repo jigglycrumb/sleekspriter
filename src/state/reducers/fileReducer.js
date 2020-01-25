@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import undoable, { distinctState } from "redux-undo";
+import undoable from "redux-undo";
 
 import fileFramesReducer from "./fileFramesReducer";
 import fileLayersReducer from "./fileLayersReducer";
@@ -16,7 +16,6 @@ const fileReducer = undoable(
     size: fileSizeReducer,
   }),
   {
-    filter: distinctState(),
     limit: 10, // set a limit for the history // TODO historybox settings
   }
 );
