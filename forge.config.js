@@ -3,12 +3,12 @@ module.exports = {
     icon: "./src/assets/icon",
   },
   makers: [
-    {
-      name: "@electron-forge/maker-squirrel",
-      // config: {
-      //   name: "my_new_app",
-      // },
-    },
+    // {
+    //   name: "@electron-forge/maker-squirrel",
+    //   // config: {
+    //   //   name: "my_new_app",
+    //   // },
+    // },
     // {
     //   name: "@electron-forge/maker-zip",
     // },
@@ -21,14 +21,14 @@ module.exports = {
         title: "SleekSpriter", // does this work?
       },
     },
-    {
-      name: "@electron-forge/maker-deb",
-      config: {},
-    },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {},
-    },
+    // {
+    //   name: "@electron-forge/maker-deb",
+    //   config: {},
+    // },
+    // {
+    //   name: "@electron-forge/maker-rpm",
+    //   config: {},
+    // },
   ],
   plugins: [
     [
