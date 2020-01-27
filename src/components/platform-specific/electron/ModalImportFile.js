@@ -311,7 +311,4 @@ ModalImportFile.propTypes = {
   zoomFit: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalImportFile);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalImportFile);

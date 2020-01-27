@@ -65,7 +65,4 @@ const mapDispatchToProps = {
   zoomIn,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Stagebox);
+export default connect(mapStateToProps, mapDispatchToProps)(Stagebox);

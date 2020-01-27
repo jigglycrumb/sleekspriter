@@ -100,7 +100,4 @@ ToolboxContainer.propTypes = {
   toolSelect: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToolboxContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolboxContainer);

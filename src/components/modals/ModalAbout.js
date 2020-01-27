@@ -223,7 +223,4 @@ ModalAbout.propTypes = {
   modalHide: PropTypes.func.isRequired,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ModalAbout);
+export default connect(null, mapDispatchToProps)(ModalAbout);

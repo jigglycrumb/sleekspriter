@@ -64,7 +64,4 @@ ModalSaveFile.propTypes = {
   modalHide: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalSaveFile);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSaveFile);

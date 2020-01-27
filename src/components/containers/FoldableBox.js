@@ -45,7 +45,4 @@ FoldableBox.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FoldableBox);
+export default connect(mapStateToProps, mapDispatchToProps)(FoldableBox);

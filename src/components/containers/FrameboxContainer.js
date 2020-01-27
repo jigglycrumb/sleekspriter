@@ -36,7 +36,4 @@ const mapDispatchToProps = {
   onionToggle,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Framebox);
+export default connect(mapStateToProps, mapDispatchToProps)(Framebox);

@@ -75,7 +75,4 @@ const mapDispatchToProps = {
   selectionStart,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

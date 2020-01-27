@@ -25,7 +25,4 @@ ModalErrorInvisibleLayer.propTypes = {
   modalHide: PropTypes.func.isRequired,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(ModalErrorInvisibleLayer);
+export default connect(null, mapDispatchToProps)(ModalErrorInvisibleLayer);

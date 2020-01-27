@@ -49,7 +49,4 @@ ToolContainer.propTypes = {
   tool: PropTypes.string.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToolContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ToolContainer);

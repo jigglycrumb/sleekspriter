@@ -128,7 +128,4 @@ ModalEditImageSize.propTypes = {
   size: sizeShape.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalEditImageSize);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalEditImageSize);

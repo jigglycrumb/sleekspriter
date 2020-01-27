@@ -145,7 +145,4 @@ ModalReplaceColor.propTypes = {
   size: sizeShape.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalReplaceColor);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalReplaceColor);

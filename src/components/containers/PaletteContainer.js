@@ -39,7 +39,4 @@ PaletteContainer.propTypes = {
   spritePalette: PropTypes.array.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PaletteContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PaletteContainer);

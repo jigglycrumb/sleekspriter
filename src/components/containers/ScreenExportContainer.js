@@ -49,7 +49,4 @@ const mapDispatchToProps = {
   exportZoom,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ScreenExport);
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenExport);

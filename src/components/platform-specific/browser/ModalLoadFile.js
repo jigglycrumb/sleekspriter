@@ -73,7 +73,4 @@ ModalLoadFile.propTypes = {
   zoomFit: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ModalLoadFile);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalLoadFile);
