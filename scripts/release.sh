@@ -30,11 +30,8 @@ echo "Updating public homepage"
 cp -R $WD/docs .
 
 # copy changelog to public repo
-# echo "Updating public change log"
-# [TODO]
-
-# commit changelog
-# [TODO]
+echo "Updating public change log"
+cp $WD/CHANGELOG.md .
 
 # commit everything
 git commit -am "v$PACKAGE_VERSION"

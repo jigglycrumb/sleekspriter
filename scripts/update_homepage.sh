@@ -4,7 +4,7 @@ target_folder="./docs/app"
 
 echo ""
 echo "-------------------------------------------"
-echo "Updating Github page build"
+echo "Updating local page build"
 echo "-------------------------------------------"
 
 echo "Removing old app from docs folder"
