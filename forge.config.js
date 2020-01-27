@@ -9,9 +9,9 @@ module.exports = {
     //   //   name: "my_new_app",
     //   // },
     // },
-    // {
-    //   name: "@electron-forge/maker-zip",
-    // },
+    {
+      name: "@electron-forge/maker-zip",
+    },
 
     {
       name: "@electron-forge/maker-dmg",
