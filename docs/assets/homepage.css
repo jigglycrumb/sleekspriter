@@ -134,8 +134,8 @@ section.faq li span {
   width: 1066px;
 }
 
-.preview-inner.browser {
-  background-image: url(browser-frame.png);
+.preview-inner.web {
+  background-image: url(web-frame.png);
 }
 
 .preview-inner.desktop {
@@ -146,7 +146,7 @@ section.faq li span {
   background-image: url(tablet-preview.png);
 }
 
-.browser-app-wrapper {
+.web-app-wrapper {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 692px;
@@ -157,7 +157,7 @@ section.faq li span {
   width: 954px;
 }
 
-.browser-app-standalone {
+.web-app-standalone {
   bottom: 20px;
   color: #fca61b;
   font-size: 1.5em;
@@ -166,7 +166,7 @@ section.faq li span {
   width: 100%;
 }
 
-#preview-browser {
+#preview-web {
   z-index: 2;
 }
 
