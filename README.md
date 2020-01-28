@@ -1,6 +1,6 @@
 # SleekSpriter
 
-A pixel art editor.
+A cross-platform pixel art editor.
 
 ## Reporting bugs and requesting features
 
