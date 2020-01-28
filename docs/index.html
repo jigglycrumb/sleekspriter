@@ -25,21 +25,21 @@
     </header>
 
     <nav>
-      <a id="nav-browser" href="#browser" data-platform="browser" class="active"
-        >browser</a
+      <a id="nav-web" href="#web" data-platform="web" class="active"
+        >web</a
       >
       <a id="nav-desktop" href="#desktop" data-platform="desktop">desktop</a>
       <a id="nav-tablet" href="#tablet" data-platform="tablet">tablet</a>
     </nav>
 
     <main>
-      <div id="preview-browser" class="preview active">
-        <div class="preview-inner browser">
+      <div id="preview-web" class="preview active">
+        <div class="preview-inner web">
           <div class="ribbon ribbon-top-right"><span>try me</span></div>
-          <div class="browser-app-wrapper">
+          <div class="web-app-wrapper">
             <iframe src="web/index.html"></iframe>
           </div>
-          <a href="web/" target="_blank" class="browser-app-standalone"
+          <a href="web/" target="_blank" class="web-app-standalone"
             >open standalone</a
           >
         </div>
@@ -108,11 +108,11 @@
           >
         </li>
 
-        <li class="q">Q: What about the browser version?</li>
+        <li class="q">Q: What about the web version?</li>
         <li>
           <strong>A:</strong
           ><span
-            >The current plan is that the browser version will remain free, but
+            >The current plan is that the web version will remain free, but
             will not feature sprite animation and only save to encrypted
             files.</span
           >
@@ -148,7 +148,7 @@
 
     <script>
       window.onload = function() {
-        var platforms = ["browser", "desktop", "tablet"];
+        var platforms = ["web", "desktop", "tablet"];
         var platform = document.location.hash.substr(1);
 
         function navigateTo(navlink, platform) {
@@ -175,7 +175,7 @@
         if (platforms.indexOf(platform) > -1) {
           navigateTo(document.getElementById("nav-" + platform), platform);
         } else {
-          document.location.hash = "#browser";
+          document.location.hash = "#web";
         }
       };
     </script>
