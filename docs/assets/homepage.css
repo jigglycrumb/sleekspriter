@@ -1,3 +1,7 @@
+:root {
+  --page-width: 1020px;
+}
+
 body {
   align-items: center;
   color: #fcc71b;
@@ -5,7 +9,6 @@ body {
   flex-direction: column;
   font-family: "coolvilleregular", monospace;
   margin: 0 auto;
-  width: 1066px;
 }
 
 header {
@@ -30,7 +33,7 @@ nav a.active {
 main {
   height: 841px;
   position: relative;
-  width: 1066px;
+  width: var(--page-width);
 }
 
 footer {
@@ -67,7 +70,7 @@ h2 {
 section {
   font-size: 1.5em;
   margin-bottom: 2em;
-  width: 954px;
+  width: 920px;
 }
 
 section ul {
@@ -108,7 +111,7 @@ section.faq li span {
 
 .ribbon-top-right {
   top: 16px;
-  right: 46px;
+  right: 20px;
   z-index: 1;
 }
 
@@ -116,7 +119,7 @@ section.faq li span {
   left: 0;
   position: absolute;
   top: 0;
-  width: 1066px;
+  width: var(--page-width);
   opacity: 0;
   transition: opacity 500ms;
 }
@@ -127,11 +130,11 @@ section.faq li span {
 
 .preview-inner {
   background-repeat: no-repeat;
-  background-position: 0 0;
+  background-position: -20px 0;
   height: 841px;
   margin: 0 auto;
   position: relative;
-  width: 1066px;
+  width: var(--page-width);
 }
 
 .preview-inner.web {
@@ -150,7 +153,7 @@ section.faq li span {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 692px;
-  left: 56px;
+  left: 36px;
   overflow: hidden;
   position: absolute;
   top: 70px;
