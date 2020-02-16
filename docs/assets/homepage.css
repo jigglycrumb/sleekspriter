@@ -142,7 +142,7 @@ section.faq li span {
 }
 
 .preview-inner.desktop {
-  background-image: url(desktop-preview.png);
+  background-image: url(mac-preview.png);
 }
 
 .preview-inner.tablet {
@@ -160,13 +160,38 @@ section.faq li span {
   width: 954px;
 }
 
+.platform-links {
+  bottom: 50px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
 .web-app-standalone {
-  bottom: 20px;
-  color: #fca61b;
+  color: #fca61b !important;
   font-size: 1.5em;
-  position: absolute;
   text-align: center;
   width: 100%;
+  position: absolute;
+  top: 860px;
+}
+
+.desktop-download {
+  color: #fca61b !important;
+  font-size: 1.5em;
+  text-align: center;
+  width: 35%;
+}
+
+.desktop-download img {
+  position: relative;
+  top: 8px;
+  margin-right: 10px;
+}
+
+.ribbon-small-text {
+  font-size: 20px !important;
+  padding: 15px 0px 13px 12px !important;
 }
 
 #preview-web {
@@ -179,4 +204,8 @@ section.faq li span {
 
 #preview-tablet {
   z-index: 0;
+}
+
+.features {
+  margin-top: 3em;
 }

@@ -33,19 +33,39 @@
     <main>
       <div id="preview-web" class="preview active">
         <div class="preview-inner web">
-          <div class="ribbon ribbon-top-right"><span>try me</span></div>
+          <div class="ribbon ribbon-top-right"><span>try me!</span></div>
           <div class="web-app-wrapper">
             <iframe src="web/index.html"></iframe>
           </div>
-          <a href="web/" target="_blank" class="web-app-standalone"
-            >open standalone</a
-          >
+          <div class="platform-links">
+            <a href="web/" target="_blank" class="web-app-standalone"
+              >open standalone</a
+            >
+          </div>
         </div>
       </div>
 
       <div id="preview-desktop" class="preview">
         <div class="preview-inner desktop">
-          <div class="ribbon ribbon-top-right"><span>soon</span></div>
+          <div class="ribbon ribbon-top-right">
+            <span class="ribbon-small-text">linux soon!</span>
+          </div>
+        </div>
+        <div class="platform-links">
+          <a
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.38/SleekSpriter-0.2.38.dmg"
+            class="desktop-download"
+            data-platform="mac"
+            ><img src="assets/mac@x2.png" alt="Mac" />download for Mac OS X</a
+          >
+
+          <a
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.38/SleekSpriter-0.2.38.Setup.exe"
+            class="desktop-download"
+            data-platform="win"
+            ><img src="assets/windows@x2.png" alt="Mac" />download for
+            Windows</a
+          >
         </div>
       </div>
 
@@ -146,6 +166,8 @@
 
     <script>
       window.onload = function() {
+        // make platform links work
+
         var platforms = ["web", "desktop", "tablet"];
         var platform = document.location.hash.substr(1);
 
@@ -175,6 +197,16 @@
         } else {
           document.location.hash = "#web";
         }
+
+        var tick = 0;
+        setInterval(function() {
+          var backgrounds = ["mac", "windows"];
+          document.querySelector(
+            ".preview-inner.desktop"
+          ).style.backgroundImage =
+            "url(assets/" + backgrounds[tick % 2] + "-preview.png)";
+          tick++;
+        }, 5000);
       };
     </script>
   </body>
