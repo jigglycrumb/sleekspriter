@@ -221,5 +221,21 @@
         }, 5000);
       };
     </script>
+
+    <script>
+      var site = "sleekspriter.app";
+
+      fetch(
+        "https://maker.ifttt.com/trigger/visitor_" +
+          site +
+          "/with/key/dSscp_OKcfnlqc4jitN7yc?value1=" +
+          site +
+          "&value2=" +
+          document.location.href +
+          "&value3=" +
+          (document.referrer || "unknown"),
+        { mode: "no-cors" }
+      );
+    </script>
   </body>
 </html>
