@@ -62,7 +62,7 @@
           <a
             href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.38/SleekSpriter-0.2.38.Setup.exe"
             class="desktop-download"
-            data-platform="win"
+            data-platform="windows"
             ><img src="assets/windows@x2.png" alt="Mac" />download for
             Windows</a
           >
@@ -198,6 +198,18 @@
           document.location.hash = "#web";
         }
 
+        // change desktop preview on download link hover
+        document.querySelectorAll(".desktop-download").forEach(function(elem) {
+          elem.onmouseover = function() {
+            var platform = this.getAttribute("data-platform");
+            document.querySelector(
+              ".preview-inner.desktop"
+            ).style.backgroundImage =
+              "url(assets/" + platform + "-preview.png)";
+          };
+        });
+
+        // change desktop preview every 5s
         var tick = 0;
         setInterval(function() {
           var backgrounds = ["mac", "windows"];
