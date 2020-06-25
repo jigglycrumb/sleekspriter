@@ -1,3 +1,4 @@
+<!-- version: 0.2.41 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,14 +54,14 @@
         </div>
         <div class="platform-links">
           <a
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.38/SleekSpriter-0.2.38.dmg"
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.41/SleekSpriter-0.2.41.dmg"
             class="desktop-download"
             data-platform="mac"
             ><img src="assets/mac@x2.png" alt="Mac" />download for Mac OS X</a
           >
 
           <a
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.38/SleekSpriter-0.2.38.Setup.exe"
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.41/SleekSpriter-0.2.41.Setup.exe"
             class="desktop-download"
             data-platform="windows"
             ><img src="assets/windows@x2.png" alt="Mac" />download for
@@ -165,19 +166,19 @@
     </footer>
 
     <script>
-      window.onload = function() {
+      window.onload = function () {
         // make platform links work
 
         var platforms = ["web", "desktop", "tablet"];
         var platform = document.location.hash.substr(1);
 
         function navigateTo(navlink, platform) {
-          document.querySelectorAll("nav a").forEach(function(link) {
+          document.querySelectorAll("nav a").forEach(function (link) {
             link.classList.remove("active");
           });
           navlink.classList.add("active");
 
-          document.querySelectorAll("main .preview").forEach(function(link) {
+          document.querySelectorAll("main .preview").forEach(function (link) {
             link.classList.remove("active");
           });
           document
@@ -185,8 +186,8 @@
             .classList.add("active");
         }
 
-        document.querySelectorAll("nav a").forEach(function(elem) {
-          elem.onclick = function() {
+        document.querySelectorAll("nav a").forEach(function (elem) {
+          elem.onclick = function () {
             var platform = this.getAttribute("data-platform");
             navigateTo(this, platform);
           };
@@ -199,8 +200,8 @@
         }
 
         // change desktop preview on download link hover
-        document.querySelectorAll(".desktop-download").forEach(function(elem) {
-          elem.onmouseover = function() {
+        document.querySelectorAll(".desktop-download").forEach(function (elem) {
+          elem.onmouseover = function () {
             var platform = this.getAttribute("data-platform");
             document.querySelector(
               ".preview-inner.desktop"
@@ -211,7 +212,7 @@
 
         // change desktop preview every 5s
         var tick = 0;
-        setInterval(function() {
+        setInterval(function () {
           var backgrounds = ["mac", "windows"];
           document.querySelector(
             ".preview-inner.desktop"
