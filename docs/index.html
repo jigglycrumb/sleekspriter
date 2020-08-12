@@ -68,6 +68,7 @@
             Windows</a
           >
         </div>
+        <div class="desktop-version">latest release: 0.2.41</div>
       </div>
 
       <div id="preview-tablet" class="preview">
@@ -224,19 +225,21 @@
     </script>
 
     <script>
-      var site = "sleekspriter.app";
+      if (document.location.hostname !== "localhost") {
+        var site = "sleekspriter.app";
 
-      fetch(
-        "https://maker.ifttt.com/trigger/visitor_" +
-          site +
-          "/with/key/dSscp_OKcfnlqc4jitN7yc?value1=" +
-          site +
-          "&value2=" +
-          document.location.href +
-          "&value3=" +
-          (document.referrer || "unknown"),
-        { mode: "no-cors" }
-      );
+        fetch(
+          "https://maker.ifttt.com/trigger/visitor_" +
+            site +
+            "/with/key/dSscp_OKcfnlqc4jitN7yc?value1=" +
+            site +
+            "&value2=" +
+            document.location.href +
+            "&value3=" +
+            (document.referrer || "unknown"),
+          { mode: "no-cors" }
+        );
+      }
     </script>
   </body>
 </html>
