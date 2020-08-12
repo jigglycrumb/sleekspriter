@@ -163,7 +163,7 @@ section.faq li span {
 }
 
 .platform-links {
-  bottom: 50px;
+  bottom: 8px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -173,22 +173,31 @@ section.faq li span {
   color: #fca61b !important;
   font-size: 1.5em;
   text-align: center;
-  width: 100%;
+  padding: 8px;
   position: absolute;
-  top: 860px;
+  top: 838px;
 }
 
 .desktop-download {
+  align-items: center;
   color: #fca61b !important;
+  display: flex;
   font-size: 1.5em;
+  justify-content: center;
   text-align: center;
   width: 35%;
 }
 
 .desktop-download img {
+  margin-right: 8px;
   position: relative;
+  top: -2px;
+}
+
+.desktop-version {
+  position: relative;
+  text-align: center;
   top: 8px;
-  margin-right: 10px;
 }
 
 .ribbon-small-text {
