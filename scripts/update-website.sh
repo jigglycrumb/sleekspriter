@@ -2,7 +2,9 @@
 
 WD=$(pwd)
 
-PRODUCT_VERSION="$(cut -d'/' -f3 <<<"$GITHUB_REF")"
+PRODUCT_VERSION="$(echo $GITHUB_REF | cut -d'_' -f3)"
+
+# PRODUCT_VERSION="$(cut -d'/' -f3 <<<"$GITHUB_REF")"
 
 echo "Updating website for SleekSpriter $PRODUCT_VERSION"
 
