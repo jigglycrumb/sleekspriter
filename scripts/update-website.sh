@@ -1,7 +1,8 @@
 #!/bin/sh
 
 WD=$(pwd)
-PRODUCT_VERSION=$GITHUB_REF
+
+PRODUCT_VERSION="$(cut -d'/' -f3 <<<"$GITHUB_REF")"
 
 echo "Updating website for SleekSpriter $PRODUCT_VERSION"
 
