@@ -1,0 +1,17 @@
+name: Release website
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-and-deploy-website:
+    name: Update and deploy website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update website
+        run: ./scripts/update-website.sh

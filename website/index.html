@@ -1,0 +1,245 @@
+<!-- version: %VERSION% -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SleekSpriter</title>
+    <link rel="shortcut icon" href="assets/favicon.ico" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/fonts/coolville/stylesheet.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/fonts/zelda/stylesheet.css"
+    />
+    <link rel="stylesheet" type="text/css" href="assets/ribbons.css" />
+    <link rel="stylesheet" type="text/css" href="assets/homepage.css" />
+  </head>
+
+  <body>
+    <header>
+      <img src="assets/logo@x4.png" alt="SleekSpriter" />
+      <h1>A cross-platform pixel art editor</h1>
+    </header>
+
+    <nav>
+      <a id="nav-web" href="#web" data-platform="web" class="active">web</a>
+      <a id="nav-desktop" href="#desktop" data-platform="desktop">desktop</a>
+      <a id="nav-tablet" href="#tablet" data-platform="tablet">tablet</a>
+    </nav>
+
+    <main>
+      <div id="preview-web" class="preview active">
+        <div class="preview-inner web">
+          <div class="ribbon ribbon-top-right"><span>try me!</span></div>
+          <div class="web-app-wrapper">
+            <iframe src="web/index.html"></iframe>
+          </div>
+          <div class="platform-links">
+            <a href="web/" target="_blank" class="web-app-standalone"
+              >open standalone</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div id="preview-desktop" class="preview">
+        <div class="preview-inner desktop">
+          <div class="ribbon ribbon-top-right">
+            <span class="ribbon-small-text">linux soon!</span>
+          </div>
+        </div>
+        <div class="platform-links">
+          <a
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v%VERSION%/SleekSpriter-%VERSION%.dmg"
+            class="desktop-download"
+            data-platform="mac"
+            ><img src="assets/mac@x2.png" alt="Mac" />download for Mac OS X</a
+          >
+
+          <a
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v%VERSION%/SleekSpriter-%VERSION%.Setup.exe"
+            class="desktop-download"
+            data-platform="windows"
+            ><img src="assets/windows@x2.png" alt="Mac" />download for
+            Windows</a
+          >
+        </div>
+        <div class="desktop-version">latest release: %VERSION%</div>
+      </div>
+
+      <div id="preview-tablet" class="preview">
+        <div class="preview-inner tablet">
+          <div class="ribbon ribbon-top-right"><span>later</span></div>
+        </div>
+      </div>
+    </main>
+
+    <section class="features">
+      <h2>Features</h2>
+      <ul>
+        <li>Fullscreen mode</li>
+        <li>Different tools like eraser, paintbucket, selections etc</li>
+        <li>Keyboard shortcuts</li>
+        <li>12 built-in color palettes of old school systems</li>
+        <li>Spritesheets with multiple frames</li>
+        <li>Unlimited layers</li>
+        <li>Onion skinning</li>
+        <li>Import from JPG and PNG</li>
+        <li>Export single frames or the whole spritesheet</li>
+        <li>Export to JPG or PNG, zoom exported art up to 50 times</li>
+        <li>And more, just scroll up and try them out!</li>
+      </ul>
+    </section>
+
+    <section class="faq">
+      <h2>FAQ</h2>
+      <ul>
+        <li class="q">Q: What is the current status of this?</li>
+        <li>
+          <strong>A:</strong>
+          <span>It's a public alpha version.</span>
+        </li>
+
+        <li class="q">Q: What are the next steps?</li>
+        <li>
+          <strong>A:</strong
+          ><span
+            >The main focus lies on fixing bugs, improving performance and
+            preparing the desktop version for app store releases. The tablet
+            release will follow later on.</span
+          >
+        </li>
+
+        <li class="q">
+          Q: Wait a second, app store? Will this cost money?
+        </li>
+        <li>
+          <strong>A:</strong
+          ><span
+            >The desktop and tablet versions will have a certain price tag, yes
+            - It will be small though, promised! Additional planned features are
+            saving & loading unencrypted files and a sprite animation suite. I
+            want to give registered users access to a DRM-free version,
+            too.</span
+          >
+        </li>
+
+        <li class="q">Q: What about the web version?</li>
+        <li>
+          <strong>A:</strong
+          ><span
+            >The current plan is that the web version will remain free, but will
+            not feature sprite animation and only save to encrypted files.</span
+          >
+        </li>
+
+        <li class="q">
+          Q: I found a bug or miss a feature, what should I do?
+        </li>
+        <li>
+          <strong>A:</strong
+          ><span
+            >Please report it at the
+            <a
+              href="https://github.com/hpcodecraft/sleekspriter/issues"
+              target="_blank"
+              >issue tracker on Github</a
+            >
+
+            or
+            <a href="https://hpcodecraft.me/contact" target="_blank"
+              >contact me</a
+            >.</span
+          >
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      &copy; <a href="http://hpcodecraft.me" target="_blank">hpcodecraft</a>
+      <script>
+        document.write(new Date().getFullYear());
+      </script>
+    </footer>
+
+    <script>
+      window.onload = function() {
+        // make platform links work
+
+        var platforms = ["web", "desktop", "tablet"];
+        var platform = document.location.hash.substr(1);
+
+        function navigateTo(navlink, platform) {
+          document.querySelectorAll("nav a").forEach(function(link) {
+            link.classList.remove("active");
+          });
+          navlink.classList.add("active");
+
+          document.querySelectorAll("main .preview").forEach(function(link) {
+            link.classList.remove("active");
+          });
+          document
+            .getElementById("preview-" + platform)
+            .classList.add("active");
+        }
+
+        document.querySelectorAll("nav a").forEach(function(elem) {
+          elem.onclick = function() {
+            var platform = this.getAttribute("data-platform");
+            navigateTo(this, platform);
+          };
+        });
+
+        if (platforms.indexOf(platform) > -1) {
+          navigateTo(document.getElementById("nav-" + platform), platform);
+        } else {
+          document.location.hash = "#web";
+        }
+
+        // change desktop preview on download link hover
+        document.querySelectorAll(".desktop-download").forEach(function(elem) {
+          elem.onmouseover = function() {
+            var platform = this.getAttribute("data-platform");
+            document.querySelector(
+              ".preview-inner.desktop"
+            ).style.backgroundImage =
+              "url(assets/" + platform + "-preview.png)";
+          };
+        });
+
+        // change desktop preview every 5s
+        var tick = 0;
+        setInterval(function() {
+          var backgrounds = ["mac", "windows"];
+          document.querySelector(
+            ".preview-inner.desktop"
+          ).style.backgroundImage =
+            "url(assets/" + backgrounds[tick % 2] + "-preview.png)";
+          tick++;
+        }, 5000);
+      };
+    </script>
+
+    <script>
+      if (document.location.hostname !== "localhost") {
+        var site = "sleekspriter.app";
+
+        fetch(
+          "https://maker.ifttt.com/trigger/visitor_" +
+            site +
+            "/with/key/dSscp_OKcfnlqc4jitN7yc?value1=" +
+            site +
+            "&value2=" +
+            document.location.href +
+            "&value3=" +
+            (document.referrer || "unknown"),
+          { mode: "no-cors" }
+        );
+      }
+    </script>
+  </body>
+</html>
