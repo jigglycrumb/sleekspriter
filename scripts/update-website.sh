@@ -2,7 +2,9 @@
 
 WD=$(pwd)
 
-PRODUCT_VERSION="$(echo $GITHUB_REF | cut -d'_' -f3)"
+# GITHUB_REF="refs/tags/test-release-3"
+
+PRODUCT_VERSION="$(echo $GITHUB_REF | cut -d'/' -f3)"
 
 # PRODUCT_VERSION="$(cut -d'/' -f3 <<<"$GITHUB_REF")"
 
