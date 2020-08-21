@@ -15,3 +15,11 @@ jobs:
 
       - name: Update website
         run: ./scripts/update-website.sh
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: "Automated website release"
+          add: "docs"
