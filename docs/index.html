@@ -1,4 +1,4 @@
-<!-- version: 0.2.41 -->
+<!-- version: 0.3.0 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -47,33 +47,36 @@
       </div>
 
       <div id="preview-desktop" class="preview">
-        <div class="preview-inner desktop">
-          <div class="ribbon ribbon-top-right">
-            <span class="ribbon-small-text">linux soon!</span>
-          </div>
-        </div>
+        <div class="preview-inner desktop"></div>
         <div class="platform-links">
           <a
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.41/SleekSpriter-0.2.41.dmg"
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.0/SleekSpriter-0.3.0.dmg"
             class="desktop-download"
             data-platform="mac"
             ><img src="assets/mac@x2.png" alt="Mac" />download for Mac OS X</a
           >
 
           <a
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.2.41/SleekSpriter-0.2.41.Setup.exe"
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.0/SleekSpriter-0.3.0.Setup.exe"
             class="desktop-download"
             data-platform="windows"
-            ><img src="assets/windows@x2.png" alt="Mac" />download for
+            ><img src="assets/windows@x2.png" alt="Windows" />download for
             Windows</a
           >
+
+          <a
+            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.0/SleekSpriter-linux-x64-0.3.0.zip"
+            class="desktop-download"
+            data-platform="linux"
+            ><img src="assets/linux@x2.png" alt="Linux" />download for Linux</a
+          >
         </div>
-        <div class="desktop-version">latest release: 0.2.41</div>
+        <div class="desktop-version">latest release: 0.3.0</div>
       </div>
 
       <div id="preview-tablet" class="preview">
         <div class="preview-inner tablet">
-          <div class="ribbon ribbon-top-right"><span>later</span></div>
+          <div class="ribbon ribbon-top-right"><span>next up</span></div>
         </div>
       </div>
     </main>
@@ -81,16 +84,16 @@
     <section class="features">
       <h2>Features</h2>
       <ul>
-        <li>Fullscreen mode</li>
-        <li>Different tools like eraser, paintbucket, selections etc</li>
-        <li>Keyboard shortcuts</li>
-        <li>12 built-in color palettes of old school systems</li>
+        <li>Tools like eraser, paintbucket, selections etc.</li>
         <li>Spritesheets with multiple frames</li>
         <li>Unlimited layers</li>
         <li>Onion skinning</li>
+        <li>12 built-in color palettes of retro systems</li>
         <li>Import from JPG and PNG</li>
-        <li>Export single frames or the whole spritesheet</li>
-        <li>Export to JPG or PNG, zoom exported art up to 50 times</li>
+        <li>Export single frames or the whole spritesheet as JPG or PNG</li>
+        <li>Zoom exported art up to 50 times</li>
+        <li>Fullscreen mode</li>
+        <li>Keyboard shortcuts</li>
         <li>And more, just scroll up and try them out!</li>
       </ul>
     </section>
@@ -214,11 +217,13 @@
         // change desktop preview every 5s
         var tick = 0;
         setInterval(function() {
-          var backgrounds = ["mac", "windows"];
+          var backgrounds = ["mac", "windows", "linux"];
           document.querySelector(
             ".preview-inner.desktop"
           ).style.backgroundImage =
-            "url(assets/" + backgrounds[tick % 2] + "-preview.png)";
+            "url(assets/" +
+            backgrounds[tick % backgrounds.length] +
+            "-preview.png)";
           tick++;
         }, 5000);
       };
