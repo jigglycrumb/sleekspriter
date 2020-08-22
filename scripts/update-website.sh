@@ -2,9 +2,16 @@
 
 WD=$(pwd)
 
-# GITHUB_REF="refs/tags/test-release-3"
+# GITHUB_REF="refs/tags/vtest-release-3"
 
-PRODUCT_VERSION="$(echo $GITHUB_REF | cut -d'/' -f3)"
+if [ $1 ]; then
+  TAG=$1
+else
+  vTAG="$(echo $GITHUB_REF | cut -d'/' -f3)"
+  TAG=${vTAG:1}
+fi
+
+PRODUCT_VERSION=$TAG
 
 echo "Updating website for SleekSpriter $PRODUCT_VERSION"
 
