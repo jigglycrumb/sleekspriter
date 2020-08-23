@@ -20,3 +20,8 @@ cp -R $WD/website/* $WD/docs
 # TODO fallback to currently set version (read from docs or so) and set it
 
 sed "s/%VERSION%/$PRODUCT_VERSION/g" website/index.html >docs/index.html
+
+# commit everything
+git add -A
+git commit -m "Website build - v$PRODUCT_VERSION"
+git push
