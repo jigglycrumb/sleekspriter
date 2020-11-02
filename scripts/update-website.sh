@@ -8,7 +8,8 @@ if [ $1 ]; then
   TAG=$1
 else
   vTAG="$(echo $GITHUB_REF | cut -d'/' -f3)"
-  TAG=${vTAG:1}
+  echo "vTAG: $vTAG"
+  TAG="${vTAG:1}"
 fi
 
 PRODUCT_VERSION=$TAG
