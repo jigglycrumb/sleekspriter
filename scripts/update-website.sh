@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# manual usage:
+# ./update-website.sh v0.1.2
+
 WD=$(pwd)
 
 # GITHUB_REF="refs/tags/vtest-release-3"
