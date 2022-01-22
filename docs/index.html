@@ -50,6 +50,7 @@
         <div class="preview-inner desktop"></div>
         <div class="platform-links">
           <a
+            id="download-link-mac"
             href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.15/SleekSpriter-0.3.15-x64.dmg"
             class="desktop-download"
             data-platform="mac"
@@ -57,6 +58,7 @@
           >
 
           <a
+            id="download-link-windows"
             href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.15/SleekSpriter-0.3.15.Setup.exe"
             class="desktop-download"
             data-platform="windows"
@@ -80,6 +82,50 @@
         </div>
       </div>
     </main>
+
+    <div class="content-spacer"></div>
+
+    <section id="install-help-mac" class="install-help mac">
+      <h2>Thank you for downloading!</h2>
+      <h3>Installation note</h3>
+
+      <p>
+        This application is unsigned, so Mac OS will not allow you to open it when you try to run it the first time:
+      </p>
+      <img src="assets/mac-installation-1.png" class="dialog" alt="Mac blocking app" />
+
+      <p>
+        Click on "Cancel", open the System Preferences and find Security & Privacy.
+      </p>
+      <img src="assets/mac-installation-2.png" class="shadow" alt="Security & Privacy System Preference" />
+
+      <p>
+        On the bottom of the window, you'll now have an option to open the app. Click "Open Anyway".
+      </p>
+      <img src="assets/mac-installation-3.png" class="shadow" alt="Security & Privacy Open Anyway" />
+
+      <p>
+        Mac OS will now show you the first dialog again, but this time gives you the option to "Open".
+      </p>
+      <img src="assets/mac-installation-4.png" class="dialog" alt="Blocking Dialog with Open option" />
+
+      <p>That's it! <a onclick="document.getElementById('install-help-mac').style.display='none';">Hide installation note</a></p>
+    </section>
+
+    <section id="install-help-windows" class="install-help windows">
+      <h2>Thank you for downloading!</h2>
+      <h3>Installation note</h3>
+      <p>
+        This application is unsigned, so Windows will show a warning when you try to run it the first time:
+      </p>
+      <img src="assets/windows-installation-1.png" alt="Windows installation warning" />
+
+      <p>
+        To run the app, click on "more info" and then on the newly appeared "Run anyway" button:
+      </p>
+      <img src="assets/windows-installation-2.png" alt="Windows installation run anyway" />
+      <p>That's it! <a onclick="document.getElementById('install-help-windows').style.display='none';">Hide installation note</a></p>
+    </section>
 
     <section class="features">
       <h2>Features</h2>
@@ -213,6 +259,14 @@
               "url(assets/" + platform + "-preview.png)";
           };
         });
+
+        document.getElementById("download-link-mac").onclick = function() {
+          document.getElementById("install-help-mac").style.display = "flex";
+        };
+
+        document.getElementById("download-link-windows").onclick = function () {
+          document.getElementById("install-help-windows").style.display = "flex";
+        };
 
         // change desktop preview every 5s
         var tick = 0;
