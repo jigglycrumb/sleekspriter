@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # manual usage:
-# ./update-website.sh v0.1.2
+# ./scripts/update-website.sh 0.1.2
 
 WD=$(pwd)
 
