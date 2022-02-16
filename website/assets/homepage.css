@@ -198,6 +198,7 @@ section.faq li span {
   position: relative;
   text-align: center;
   top: 8px;
+  line-height: 120%;
 }
 
 .ribbon-small-text {
