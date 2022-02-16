@@ -2,6 +2,10 @@
 
 A cross-platform pixel art editor.
 
+Homepage: [https://sleekspriter.app/](https://sleekspriter.app/)
+
+[Web version](https://sleekspriter.app/web/) | [Desktop releases](https://github.com/hpcodecraft/sleekspriter/releases)
+
 ## Reporting bugs and requesting features
 
 Found a bug or want to request a feature in SleekSpriter?
