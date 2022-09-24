@@ -2,9 +2,9 @@
 
 A pixel art editor.
 
-Homepage: [https://sleekspriter.app/](https://sleekspriter.app/)
+Homepage: [https://sleekspriter.app](https://sleekspriter.app)
 
-[Application](https://sleekspriter.app/web/)
+Application: [https://sleekspriter.app/web](https://sleekspriter.app/web)
 
 ## Reporting bugs and requesting features
 
