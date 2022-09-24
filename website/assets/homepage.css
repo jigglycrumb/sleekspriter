@@ -16,20 +16,6 @@ header {
   text-align: center;
 }
 
-nav {
-  font-size: 2em;
-}
-
-nav a {
-  text-decoration: none;
-  margin: 0 0.75em;
-}
-
-nav a.active {
-  color: #fca61b;
-  text-decoration: underline;
-}
-
 main {
   height: 841px;
   position: relative;
@@ -104,6 +90,10 @@ section.faq li span {
   width: calc(100% - 2em);
 }
 
+.features {
+  margin-top: 2em;
+}
+
 .quote {
   font-family: "zelda_dx_tt_brkregular";
   letter-spacing: -1ch;
@@ -162,43 +152,13 @@ section.faq li span {
   width: 954px;
 }
 
-.platform-links {
-  bottom: 8px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
 .web-app-standalone {
   color: #fca61b !important;
-  font-size: 1.5em;
+  font-size: 3em;
   text-align: center;
   padding: 8px;
   position: absolute;
   top: 838px;
-}
-
-.desktop-download {
-  align-items: center;
-  color: #fca61b !important;
-  display: flex;
-  font-size: 1.5em;
-  justify-content: center;
-  text-align: center;
-  width: 33%;
-}
-
-.desktop-download img {
-  margin-right: 8px;
-  position: relative;
-  top: -2px;
-}
-
-.desktop-version {
-  position: relative;
-  text-align: center;
-  top: 8px;
-  line-height: 120%;
 }
 
 .ribbon-small-text {
@@ -206,35 +166,13 @@ section.faq li span {
   padding: 15px 0px 13px 12px !important;
 }
 
-.install-help {
-  display: none;
-  flex-direction: column;
-  width: 520px;
-}
-
-.install-help.mac img {
-  max-width: 100%;
-}
-
-.install-help.mac img.dialog {
-  margin-top: -2em;
-  margin-bottom: -2em;
-}
-
-.install-help.windows img,
-.install-help.mac img.shadow {
-  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
-}
-
-.install-help a {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.install-help img {
-  align-self: center;
+.platform-links {
+  bottom: 8px;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .content-spacer {
-  margin-top: 5em;
+  height: 2em;
 }
