@@ -1,4 +1,4 @@
-<!-- version: 0.3.16 -->
+<!-- version: 0.4 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,110 +22,23 @@
   <body>
     <header>
       <img src="assets/logo@x4.png" alt="SleekSpriter" />
-      <h1>A cross-platform pixel art editor</h1>
+      <h1>Pixel art editor</h1>
     </header>
 
-    <nav>
-      <a id="nav-web" href="#web" data-platform="web" class="active">web</a>
-      <a id="nav-desktop" href="#desktop" data-platform="desktop">desktop</a>
-      <a id="nav-tablet" href="#tablet" data-platform="tablet">tablet</a>
-    </nav>
-
     <main>
-      <div id="preview-web" class="preview active">
-        <div class="preview-inner web">
-          <div class="ribbon ribbon-top-right"><span>try me!</span></div>
-          <div class="web-app-wrapper">
-            <iframe src="web/index.html"></iframe>
-          </div>
-          <div class="platform-links">
-            <a href="web/" target="_blank" class="web-app-standalone"
-              >open standalone</a
-            >
-          </div>
+      <div class="preview">
+        <div class="ribbon ribbon-top-right"><span>try me!</span></div>
+        <div class="web-app-wrapper">
+          <iframe src="web/?screen=paint"></iframe>
         </div>
       </div>
 
-      <div id="preview-desktop" class="preview">
-        <div class="preview-inner desktop"></div>
-        <div class="platform-links">
-          <a
-            id="download-link-mac"
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.16/SleekSpriter-0.3.16-x64.dmg"
-            class="desktop-download"
-            data-platform="mac"
-            ><img src="assets/mac@x2.png" alt="Mac" />download for Mac OS X</a
-          >
+      <div class="app-version">latest version: 0.4</div>
 
-          <a
-            id="download-link-windows"
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.16/SleekSpriter-0.3.16.Setup.exe"
-            class="desktop-download"
-            data-platform="windows"
-            ><img src="assets/windows@x2.png" alt="Windows" />download for
-            Windows</a
-          >
-
-          <a
-            href="https://github.com/hpcodecraft/sleekspriter/releases/download/v0.3.16/SleekSpriter-linux-x64-0.3.16.zip"
-            class="desktop-download"
-            data-platform="linux"
-            ><img src="assets/linux@x2.png" alt="Linux" />download for Linux</a
-          >
-        </div>
-        <div class="desktop-version">latest release: 0.3.16 <br/><a href="https://github.com/hpcodecraft/sleekspriter/releases">all releases</a></div>
-      </div>
-
-      <div id="preview-tablet" class="preview">
-        <div class="preview-inner tablet">
-          <div class="ribbon ribbon-top-right"><span>next up</span></div>
-        </div>
+      <div class="app-links">
+          <a href="web/" target="_blank" class="web-app-standalone">start editor</a> 
       </div>
     </main>
-
-    <div class="content-spacer"></div>
-
-    <section id="install-help-mac" class="install-help mac">
-      <h2>Thank you for downloading!</h2>
-      <h3>Installation note</h3>
-
-      <p>
-        This application is unsigned, so Mac OS will not allow you to open it when you try to run it the first time:
-      </p>
-      <img src="assets/mac-installation-1.png" class="dialog" alt="Mac blocking app" />
-
-      <p>
-        Click on "Cancel", open the System Preferences and find Security & Privacy.
-      </p>
-      <img src="assets/mac-installation-2.png" class="shadow" alt="Security & Privacy System Preference" />
-
-      <p>
-        On the bottom of the window, you'll now have an option to open the app. Click "Open Anyway".
-      </p>
-      <img src="assets/mac-installation-3.png" class="shadow" alt="Security & Privacy Open Anyway" />
-
-      <p>
-        Mac OS will now show you the first dialog again, but this time gives you the option to "Open".
-      </p>
-      <img src="assets/mac-installation-4.png" class="dialog" alt="Blocking Dialog with Open option" />
-
-      <p>That's it! <a onclick="document.getElementById('install-help-mac').style.display='none';">Hide installation note</a></p>
-    </section>
-
-    <section id="install-help-windows" class="install-help windows">
-      <h2>Thank you for downloading!</h2>
-      <h3>Installation note</h3>
-      <p>
-        This application is unsigned, so Windows will show a warning when you try to run it the first time:
-      </p>
-      <img src="assets/windows-installation-1.png" alt="Windows installation warning" />
-
-      <p>
-        To run the app, click on "more info" and then on the newly appeared "Run anyway" button:
-      </p>
-      <img src="assets/windows-installation-2.png" alt="Windows installation run anyway" />
-      <p>That's it! <a onclick="document.getElementById('install-help-windows').style.display='none';">Hide installation note</a></p>
-    </section>
 
     <section class="features">
       <h2>Features</h2>
@@ -150,40 +63,20 @@
         <li class="q">Q: What is the current status of this?</li>
         <li>
           <strong>A:</strong>
-          <span>It's a public alpha version.</span>
+          <span>It is still in alpha stage.</span>
         </li>
 
         <li class="q">Q: What are the next steps?</li>
         <li>
           <strong>A:</strong
           ><span
-            >The main focus lies on fixing bugs, improving performance and
-            preparing the desktop version for app store releases. The tablet
-            release will follow later on.</span
-          >
-        </li>
-
-        <li class="q">
-          Q: Wait a second, app store? Will this cost money?
-        </li>
-        <li>
-          <strong>A:</strong
-          ><span
-            >The desktop and tablet versions will have a certain price tag, yes
-            - It will be small though, promised! Additional planned features are
-            saving & loading unencrypted files and a sprite animation suite. I
-            want to give registered users access to a DRM-free version,
-            too.</span
-          >
-        </li>
-
-        <li class="q">Q: What about the web version?</li>
-        <li>
-          <strong>A:</strong
-          ><span
-            >The current plan is that the web version will remain free, but will
-            not feature sprite animation and only save to encrypted files.</span
-          >
+            ><ul>
+              <li>fixing bugs</li>
+              <li>improving performance</li>
+              <li>adding UI for tablet and maybe phone use</li>
+              <li>adding an animation screen</li>
+            </ul>
+            </span>
         </li>
 
         <li class="q">
@@ -196,14 +89,12 @@
             <a
               href="https://github.com/hpcodecraft/sleekspriter/issues"
               target="_blank"
-              >issue tracker on Github</a
-            >
+              >issue tracker on Github</a>
 
             or
             <a href="https://hpcodecraft.me/contact" target="_blank"
-              >contact me</a
-            >.</span
-          >
+              >contact me</a>.
+            </span>
         </li>
       </ul>
     </section>
@@ -214,74 +105,6 @@
         document.write(new Date().getFullYear());
       </script>
     </footer>
-
-    <script>
-      window.onload = function() {
-        // make platform links work
-
-        var platforms = ["web", "desktop", "tablet"];
-        var platform = document.location.hash.substr(1);
-
-        function navigateTo(navlink, platform) {
-          document.querySelectorAll("nav a").forEach(function(link) {
-            link.classList.remove("active");
-          });
-          navlink.classList.add("active");
-
-          document.querySelectorAll("main .preview").forEach(function(link) {
-            link.classList.remove("active");
-          });
-          document
-            .getElementById("preview-" + platform)
-            .classList.add("active");
-        }
-
-        document.querySelectorAll("nav a").forEach(function(elem) {
-          elem.onclick = function() {
-            var platform = this.getAttribute("data-platform");
-            navigateTo(this, platform);
-          };
-        });
-
-        if (platforms.indexOf(platform) > -1) {
-          navigateTo(document.getElementById("nav-" + platform), platform);
-        } else {
-          document.location.hash = "#web";
-        }
-
-        // change desktop preview on download link hover
-        document.querySelectorAll(".desktop-download").forEach(function(elem) {
-          elem.onmouseover = function() {
-            var platform = this.getAttribute("data-platform");
-            document.querySelector(
-              ".preview-inner.desktop"
-            ).style.backgroundImage =
-              "url(assets/" + platform + "-preview.png)";
-          };
-        });
-
-        document.getElementById("download-link-mac").onclick = function() {
-          document.getElementById("install-help-mac").style.display = "flex";
-        };
-
-        document.getElementById("download-link-windows").onclick = function () {
-          document.getElementById("install-help-windows").style.display = "flex";
-        };
-
-        // change desktop preview every 5s
-        var tick = 0;
-        setInterval(function() {
-          var backgrounds = ["mac", "windows", "linux"];
-          document.querySelector(
-            ".preview-inner.desktop"
-          ).style.backgroundImage =
-            "url(assets/" +
-            backgrounds[tick % backgrounds.length] +
-            "-preview.png)";
-          tick++;
-        }, 5000);
-      };
-    </script>
 
     <script>
       if (document.location.hostname !== "localhost") {

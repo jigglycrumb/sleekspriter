@@ -16,26 +16,6 @@ header {
   text-align: center;
 }
 
-nav {
-  font-size: 2em;
-}
-
-nav a {
-  text-decoration: none;
-  margin: 0 0.75em;
-}
-
-nav a.active {
-  color: #fca61b;
-  text-decoration: underline;
-}
-
-main {
-  height: 841px;
-  position: relative;
-  width: var(--page-width);
-}
-
 footer {
   margin-bottom: 50px;
 }
@@ -104,6 +84,10 @@ section.faq li span {
   width: calc(100% - 2em);
 }
 
+.features {
+  margin-top: 2em;
+}
+
 .quote {
   font-family: "zelda_dx_tt_brkregular";
   letter-spacing: -1ch;
@@ -116,39 +100,13 @@ section.faq li span {
 }
 
 .preview {
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: var(--page-width);
-  opacity: 0;
-  transition: opacity 500ms;
-  z-index: 0;
-}
-
-.preview.active {
-  opacity: 1;
-  z-index: 1;
-}
-
-.preview-inner {
   background-repeat: no-repeat;
   background-position: -20px 0;
-  height: 841px;
+  height: 780px;
   margin: 0 auto;
   position: relative;
   width: var(--page-width);
-}
-
-.preview-inner.web {
   background-image: url(web-frame.png);
-}
-
-.preview-inner.desktop {
-  background-image: url(mac-preview.png);
-}
-
-.preview-inner.tablet {
-  background-image: url(tablet-preview.png);
 }
 
 .web-app-wrapper {
@@ -157,48 +115,31 @@ section.faq li span {
   height: 692px;
   left: 36px;
   overflow: hidden;
-  position: absolute;
+  position: relative;
   top: 70px;
   width: 954px;
 }
 
-.platform-links {
-  bottom: 8px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
 .web-app-standalone {
   color: #fca61b !important;
-  font-size: 1.5em;
+  font-size: 3em;
   text-align: center;
-  padding: 8px;
-  position: absolute;
-  top: 838px;
-}
-
-.desktop-download {
-  align-items: center;
-  color: #fca61b !important;
-  display: flex;
-  font-size: 1.5em;
-  justify-content: center;
-  text-align: center;
-  width: 33%;
-}
-
-.desktop-download img {
-  margin-right: 8px;
+  padding: 16px 24px 10px 24px;
+  border: 5px solid #fca61b;
+  text-decoration: none;
+  box-shadow: 5px 5px;
   position: relative;
-  top: -2px;
+  left: 5px;
 }
 
-.desktop-version {
-  position: relative;
-  text-align: center;
-  top: 8px;
-  line-height: 120%;
+.web-app-standalone:hover {
+  background: #fde79f;
+}
+
+.web-app-standalone:active {
+  box-shadow: none;
+  top: 5px;
+  left: 10px;
 }
 
 .ribbon-small-text {
@@ -206,35 +147,19 @@ section.faq li span {
   padding: 15px 0px 13px 12px !important;
 }
 
-.install-help {
-  display: none;
-  flex-direction: column;
-  width: 520px;
+.app-version {
+  display: flex;
+  justify-content: end;
+  position: relative;
+  margin-right: 20px;
 }
 
-.install-help.mac img {
-  max-width: 100%;
-}
-
-.install-help.mac img.dialog {
-  margin-top: -2em;
-  margin-bottom: -2em;
-}
-
-.install-help.windows img,
-.install-help.mac img.shadow {
-  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
-}
-
-.install-help a {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.install-help img {
-  align-self: center;
+.app-links {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
 }
 
 .content-spacer {
-  margin-top: 5em;
+  height: 2em;
 }
