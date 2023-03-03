@@ -27,7 +27,7 @@ sed "s/%VERSION%/$PRODUCT_VERSION/g" website/index.html >docs/index.html
 
 # commit everything
 git config --global user.email "thesquidpeople@gmail.com"
-git config --global user.name "hpcodecraft"
+git config --global user.name "jigglycrumb"
 
 git add -A
 git commit -m "Website build - v$PRODUCT_VERSION"
