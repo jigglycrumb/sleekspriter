@@ -7183,7 +7183,7 @@
                   n.exports = function (e) {
                     1 !== u.push(e) || r || t();
                   };
-                }.call(
+                }).call(
                   this,
                   void 0 !== t.g
                     ? t.g
@@ -7192,7 +7192,7 @@
                     : "undefined" != typeof window
                     ? window
                     : {}
-                ));
+                );
               },
               {},
             ],
@@ -7380,7 +7380,7 @@
                 (function (n) {
                   "use strict";
                   "function" != typeof n.Promise && (n.Promise = e(2));
-                }.call(
+                }).call(
                   this,
                   void 0 !== t.g
                     ? t.g
@@ -7389,7 +7389,7 @@
                     : "undefined" != typeof window
                     ? window
                     : {}
-                ));
+                );
               },
               { 2: 2 },
             ],
@@ -27763,7 +27763,7 @@
                         href: "http://jigglycrumb.me",
                         rel: "noopener noreferrer",
                       },
-                      "Volker Wieban"
+                      "jigglycrumb"
                     )
                   ),
                   E.createElement("br", null),
