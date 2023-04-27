@@ -27760,7 +27760,7 @@
                       "a",
                       {
                         target: "_blank",
-                        href: "http://jigglycrumb.me",
+                        href: "https://github.com/jigglycrumb",
                         rel: "noopener noreferrer",
                       },
                       "jigglycrumb"
